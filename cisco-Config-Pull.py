@@ -92,7 +92,7 @@ if site is None:
     print("-s site name is a required argument")
     sys.exit()
 else:
-    dev_inv_file = "device-inventory-" + site
+    dev_inv_file = "device-inventory-" + site + ".csv"
 
 # check if site's device inventory file exists
 if not os.path.isfile(dev_inv_file):
@@ -116,7 +116,7 @@ for line in fabric:
     username = line.split(",")[3]
     # password = line.split(",")[4]
     password = os.environ.get("cyberARK")
-    if vendor.lower() == "cisco_ios":
+    if vendor.lower() == "hp_procurve":
         now = datetime.now()
         start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
         print("-----------------------------------------------------")
@@ -166,10 +166,10 @@ for line in fabric:
         print(f"processing show version for {hostname}")
         output_ver = net_connect.send_command("show version", use_textfsm=True)
 
-        # Use textFSM to create a json object with show ip eigrp neighbors
-        print(f"processing show ip eigrp neighbors for {hostname}")
-        output_eigrp_ne = net_connect.send_command(
-            "show ip eigrp neighbors", use_textfsm=True
+        # Use textFSM to create a json object with show ip ospf neighbors
+        print(f"processing show ip ospf neighbors for {hostname}")
+        output_ospf_ne = net_connect.send_command(
+            "show ip ospf neighbors", use_textfsm=True
         )
 
         #  print(output_text)  # print the output as plain text on screen
@@ -243,13 +243,13 @@ for line in fabric:
             file.write(output_ver)
         # print()
 
-        # Write the eigrp JSON data to a file
+        # Write the ospf JSON data to a file
         loc = "D:/Users/Michael.Hubbard/Documents/netmiko-gl/CR-data/"
-        print(f"Writing eigrp data to {loc}{hostname}-eigrp.txt")
-        int_report = loc + hostname + "-eigrp_ne.txt"
+        print(f"Writing ospf data to {loc}{hostname}-ospf.txt")
+        int_report = loc + hostname + "-ospf_ne.txt"
         with open(int_report, "w") as file:
-            output_eigrp_ne = json.dumps(output_eigrp_ne, indent=2)
-            file.write(output_eigrp_ne)
+            output_ospf_ne = json.dumps(output_ospf_ne, indent=2)
+            file.write(output_ospf_ne)
         print()
         # close the session to the switch
 
