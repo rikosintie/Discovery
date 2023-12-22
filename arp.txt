@@ -1,0 +1,21 @@
+end
+show arp
+!***********
+show arp vrf training
+!***********
+show arp vrf admin
+!***********
+show arp vrf voice
+!***********
+show arp vrf voicesvr
+!***********
+show arp vrf Mgmt-vrf
+!***********
+show arp vrf datacenter-zone
+!***********
+show arp vrf sled-zone
+!***********
+show arp vrf trnDatacenter-Zone
+!***********
+ show arp vrf Mgmt-Zone
+!***********

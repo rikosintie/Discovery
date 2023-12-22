@@ -1,0 +1,6 @@
+bin/
+.vscode/
+.venv/
+lib/
+ntc_templates/
+lib64
