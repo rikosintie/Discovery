@@ -1,8 +1,12 @@
 """
 !!!!! Discovery Script - Does not change the running config !!!!!
 
-Usage
+Reference
 https://pynet.twb-tech.com/blog/netmiko-read-timeout.html
+https://stackoverflow.com/questions/9539921/how-do-i-define-a-function-with-optional-arguments
+
+
+Usage
 1. Create a new folder and copy cisco-Config-Push.py
 into it.
 
@@ -72,6 +76,17 @@ __license__ = "Unlicense"
 
 
 def get_current_path(sub_dir1, extension, sub_dir2=""):
+    """
+    returns a valid path regardless of the OS
+
+    Args:
+        sub_dir1 (str): name of the sub directory off the cwd required
+        extension (str): string appended after hostname - ex. -interface.txt
+        sub_dir2 (str, optional): if a nested sub_dir is used Defaults to "".
+
+    Returns:
+        str: full pathname of the file to be written
+    """
     current_path = os.getcwd()
     extension = hostname + extension
     int_report = os.path.join(current_path, sub_dir1, sub_dir2, extension)
@@ -79,6 +94,15 @@ def get_current_path(sub_dir1, extension, sub_dir2=""):
 
 
 def remove_empty_lines(filename):
+    """
+    Removes empty lines from the given file
+
+    Args:
+        filename (str): file in the cwd to be opened
+
+    Returns:
+        Nothing - updated file is written to disk
+    """
     if not os.path.isfile(filename):
         print("{} does not exist ".format(filename))
         return
