@@ -1,0 +1,1 @@
+"\nImage stamp:    /ws/swbuildm/rel_ajanta_arenal_qaoff/code/build/anm(swbuildm_rel_ajanta_arenal_qaoff_rel_ajanta_arenal)\n                Sep 27 2022 23:05:14\n                WB.16.10.0023\n                144\nBoot Image:     Primary\n\nBoot ROM Version:    WB.16.03\nActive Boot ROM:     Primary\n"

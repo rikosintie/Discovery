@@ -1,0 +1,222 @@
+ 
+HP-2920-24G-PoEP# configure terminal
+HP-2920-24G-PoEP(config)#  end
+HP-2920-24G-PoEP# no page
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show time
+Fri Dec 22 19:42:15 2023
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show uptime
+0000:00:23:07.70
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show version | i Boot|Ver
+Boot Image:     Primary
+Boot ROM Version:    WB.16.03
+Active Boot ROM:     Primary
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show ip
+
+ Internet (IP) Service
+
+  IP Routing : Enabled 
+
+
+  Default TTL     : 64   
+  Arp Age         : 20  
+  Domain Suffix   :                               
+  DNS server      :                                         
+
+                       |                                            Proxy ARP 
+  VLAN                 | IP Config  IP Address      Subnet Mask     Std  Local
+  -------------------- + ---------- --------------- --------------- ----------
+  DEFAULT_VLAN         | DHCP/Bootp
+  Home                 | Manual     192.168.10.52   255.255.255.0    No    No
+  test                 | Manual     10.10.100.1     255.255.255.0    No    No
+ 
+
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show ip source-interface
+
+ Source-IP Configuration Information
+
+  Protocol | Admin Selection Policy  IP Interface   IP Address     
+  -------- + ----------------------- -------------- ---------------
+  Tacacs   | Outgoing Interface      N/A            N/A            
+  Radius   | Outgoing Interface      N/A            N/A            
+  Syslog   | Outgoing Interface      N/A            N/A            
+  Telnet   | Outgoing Interface      N/A            N/A            
+  Tftp     | Outgoing Interface      N/A            N/A            
+  Sntp     | Outgoing Interface      N/A            N/A            
+  Sflow    | Outgoing Interface      N/A            N/A            
+  Tunne... | Outgoing Interface      N/A            N/A            
+  RADSEC   | Outgoing Interface      N/A            N/A            
+ HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show ip ospf interfaces
+Invalid input: interfaces
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show ip ospf neighbor
+
+ OSPF Configuration Information
+
+  OSPF protocol  : disabled
+  Router ID      :                
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show ip ospf general
+
+ OSPF Configuration Information
+
+  OSPF protocol  : disabled
+  Router ID      :                
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show ip ospf external-link-state
+
+ OSPF Configuration Information
+
+  OSPF protocol  : disabled
+  Router ID      :                
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show interface status
+  Port     Name       Status  Config-mode   Speed    Type       Tagged Untagged
+  -------- ---------- ------- ------------- -------- ---------- ------ --------
+  1                   Down    Auto          1000FDx  100/1000T  No     10      
+  2                   Down    Auto          1000FDx  100/1000T  No     1       
+  3                   Down    Auto          1000FDx  100/1000T  No     100     
+  4                   Down    Auto          1000FDx  100/1000T  No     1       
+  5                   Down    Auto          1000FDx  100/1000T  No     1       
+  6                   Down    Auto          1000FDx  100/1000T  No     1       
+  7                   Down    Auto          1000FDx  100/1000T  No     1       
+  8                   Down    Auto          1000FDx  100/1000T  No     1       
+  9                   Down    Auto          1000FDx  100/1000T  No     1       
+  10                  Down    Auto          1000FDx  100/1000T  No     1       
+  11                  Down    Auto          1000FDx  100/1000T  No     1       
+  12                  Down    Auto          1000FDx  100/1000T  No     1       
+  13                  Down    Auto          1000FDx  100/1000T  No     1       
+  14                  Down    Auto          1000FDx  100/1000T  No     1       
+  15                  Down    Auto          1000FDx  100/1000T  No     1       
+  16                  Down    Auto          1000FDx  100/1000T  No     1       
+  17                  Down    Auto          1000FDx  100/1000T  No     1       
+  18                  Down    Auto          1000FDx  100/1000T  No     1       
+  19                  Down    Auto          1000FDx  100/1000T  No     1       
+  20                  Down    Auto          1000FDx  100/1000T  No     1       
+  21                  Down    Auto          1000FDx  100/1000T  No     1       
+  22                  Down    Auto          1000FDx  100/1000T  No     1       
+  23                  Down    Auto          1000FDx  100/1000T  No     1       
+  24                  Up      Auto          1000FDx  100/1000T  No     10      
+ HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show int status | i connected
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show cdp neighbors
+
+ CDP neighbors information
+
+  Port   Device ID                     | Platform                     Capability 
+  ------ ----------------------------- + ---------------------------- -----------
+  24     fc ec da c4 6e 55             |                                         
+  24     Garage                        | NanoStation 5AC loc          T          
+  24     9c 8c d8 c9 17 ae             | ArubaOS (MODEL: 515), Ver...            
+  24     ea e6 4b 18 de 20             |  Darwin 21.6.0 Darwin Ker... S          
+ 
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show lldp neighbors
+Invalid input: neighbors
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# sh power-over-ethernet brief | i Del
+ 23     Yes  low      off     usage usage  1.9 W   1.9 W   Delivering   3   1  
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show power
+
+ Status and Counters - System Power Status
+
+  System Power Status    : No redundancy
+  PoE Power Status       : No redundancy
+
+ Chassis power-over-ethernet:
+
+  Total Available Power  :  370 W  
+  Total Failover Pwr Avl :    0 W
+  Total Redundancy Power :    0 W
+  Total Power Drawn      :    2 W +/- 6W       
+  Total Power Reserved   :    2 W              
+  Total Remaining Power  :  368 W              
+
+ Internal Power
+
+        Main Power                         
+  PS    (Watts)       Status               
+  ----- ------------- ---------------------
+  1     370           POE+ Connected       
+ 
+ External Power
+        EPS1   /Not Connected.                            
+ 
+ Refer to command's help option for field definitions
+
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show ip ssh
+
+  SSH Enabled     : Yes                 Secure Copy Enabled : No 
+  TCP Port Number : 22                  Timeout (sec)       : 120  
+  Rekey Enabled   : No                  Rekey Time (min)    : 60   
+                                        Rekey Volume (KB)   : 1048576   
+  Host Key Type   : DSA                 Host Key/Curve Size : 1024
+
+  Ciphers : aes256-ctr,aes256-cbc,rijndael-cbc@lysator.liu.se,aes192-ctr,
+            aes192-cbc,aes128-ctr,aes128-cbc,3des-cbc
+  MACs    : hmac-sha1-96,hmac-md5,hmac-sha1,hmac-md5-96
+
+  Ses Type     | Source IP                                      Port 
+  --- -------- + ---------------------------------------------- -----
+  1   console  |
+  2   ssh      | 192.168.10.115                                 44718
+  3   inactive |
+  4   inactive |
+  5   inactive |
+  6   inactive |
+  7   inactive |
+ 
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show mac-address | ex <enter the typical uplink port here>
+
+ Status and Counters - Port Address Table
+
+  MAC Address   Port  VLAN
+  ------------- ----- ----
+  000c29-337100 24    10  
+  000c29-4caa4e 24    10  
+  000c29-8413eb 24    10  
+  00e0b3-34562f 24    10  
+  04db56-edad58 24    10  
+  061413-0334ea 24    10  
+  085b0e-7c7930 24    10  
+  101f74-6341f8 24    10  
+  2428fd-28ae26 24    10  
+  28d0ea-932a42 24    10  
+  3817c3-c920c2 24    10  
+  446755-03d472 24    10  
+  50ed3c-22be32 24    10  
+  788cb5-1780c8 24    10  
+  8e93a6-f482f4 24    10  
+  9c8cd8-c917ae 24    10  
+  bcbac2-0f4fa4 24    10  
+  d8d43c-2e4bcb 24    10  
+  dc4f22-fa1708 24    10  
+  dc56e7-496195 24    10  
+  f84d89-7a1349 24    10  
+  fcecda-c46e55 24    10  
+  fcecda-c4770b 24    10  
+  fcecda-c56e55 24    10  
+  fcf152-6058fa 24    10  
+ 
+
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show arp
+
+ IP ARP table
+
+  IP Address       MAC Address       Type    Port
+  ---------------  ----------------- ------- ----
+  192.168.10.115   28d0ea-932a42     dynamic 24  
+  192.168.10.254   085b0e-7c7930     dynamic 24  
+
+
+HP-2920-24G-PoEP# 

@@ -71,6 +71,13 @@ __license__ = "Unlicense"
 #  Created by Michael Hubbard on 2023-12-20.
 
 
+def get_current_path(sub_dir1, extension, sub_dir2=""):
+    current_path = os.getcwd()
+    extension = hostname + extension
+    int_report = os.path.join(current_path, sub_dir1, sub_dir2, extension)
+    return int_report
+
+
 def remove_empty_lines(filename):
     if not os.path.isfile(filename):
         print("{} does not exist ".format(filename))
@@ -115,7 +122,9 @@ for line in fabric:
     hostname = line.split(",")[2]
     username = line.split(",")[3]
     # password = line.split(",")[4]
+    print(os.environ.get("cyberARK"))
     password = os.environ.get("cyberARK")
+    password = "H3lpd3sk"
     if vendor.lower() == "hp_procurve":
         now = datetime.now()
         start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
@@ -164,13 +173,14 @@ for line in fabric:
 
         # Use textFSM to create a json object with show version
         print(f"processing show version for {hostname}")
-        output_ver = net_connect.send_command("show version", use_textfsm=True)
+        output_ver = net_connect.send_command("show version", use_textfsm=False)
 
         # Use textFSM to create a json object with show ip ospf neighbors
-        print(f"processing show ip ospf neighbors for {hostname}")
-        output_ospf_ne = net_connect.send_command(
-            "show ip ospf neighbors", use_textfsm=True
-        )
+        # cisco only - not supported on procurve
+        # print(f"processing show ip ospf neighbors for {hostname}")
+        # output_ospf_ne = net_connect.send_command(
+        #     "show ip ospf neighbor", use_textfsm=True
+        # )
 
         #  print(output_text)  # print the output as plain text on screen
 
@@ -182,7 +192,6 @@ for line in fabric:
         output_text_arp = net_connect.send_config_from_file("arp.txt", read_timeout=200)
 
         # Send show running
-        loc = "D:/Users/Michael.Hubbard/Documents/netmiko-gl/Running/"
         print(f"Collecting show running-config from {hostname}")
         # print(net_connect.find_prompt())
         output_text_run = net_connect.send_command("show running", read_timeout=360)
@@ -190,68 +199,62 @@ for line in fabric:
         # Disconnect from the switch and start writing data to disk
         net_connect.disconnect()
 
-        #  Write the plain text output to disk
-        loc = "D:/Users/Michael.Hubbard/Documents/netmiko-gl/CR-data/"
-        print(f"Writing CR data to {loc}{hostname}-CR-data.txt")
-        int_report = loc + hostname + "-CR-data.txt"
+        #  Write the CR-data output to disk
+        int_report = get_current_path("CR-data", "-CR-data.txt")
+        print(int_report)
+        print(f"Writing CR data to {int_report}")
         with open(int_report, "w") as file:
             file.write(output_text)
 
-        # Write the mac-address plain text output to disk
-        loc = "D:/Users/Michael.Hubbard/Documents/netmiko-gl/port-maps/data/"
-        print(f"Writing MAC addresses to {loc}{hostname}-mac-addrss.txt")
-        int_report = loc + hostname + "-mac-address.txt"
+        # Write the mac-address output to disk
+        int_report = get_current_path("port-maps", "-mac-address.txt", "data")
+        print(f"Writing MAC addresses to {int_report}")
         with open(int_report, "w") as file:
             file.write(output_text_mac)
 
         # Write the arp table plain text output to disk
-        loc = "D:/Users/Michael.Hubbard/Documents/netmiko-gl/port-maps/data/"
-        print(f"Writing ARP data to {loc}{hostname}-arp.txt")
-        int_report = loc + hostname + "-arp.txt"
+        int_report = get_current_path("port-maps", "-arp.txt", "data")
+        print(f"Writing ARP data to {int_report}")
         with open(int_report, "w") as file:
             file.write(output_text_arp)
 
         #  Write the running config to disk
-        print(f"Writing show run to {loc}{hostname}-running-config.txt")
-        int_report = loc + hostname + "-running-config.txt"
+        print(f"Writing show run to {int_report}")
+        int_report = get_current_path("Running", "-running-config.txt")
         with open(int_report, "w") as file:
             file.write(output_text_run)
 
         #  Write the JSON interface data to a file
-        loc = "D:/Users/Michael.Hubbard/Documents/netmiko-gl/Interface/"
-        print(f"Writing interface data to {hostname}-interface.txt")
-        int_report = loc + hostname + "-interface.txt"
+        int_report = get_current_path("Interface", "-interface.txt")
+        print(f"Writing interface data to {int_report}")
         with open(int_report, "w") as file:
             output = json.dumps(output, indent=2)
             file.write(output)
 
         # Write the JSON cdp neighbor data to a file
-        loc = "D:/Users/Michael.Hubbard/Documents/netmiko-gl/Interface/"
-        print(f"Writing interface data to {loc}{hostname}-interface.txt")
-        int_report = loc + hostname + "-cdp.txt"
+        int_report = get_current_path("Interface", "-cdp.txt")
+        print(f"Writing interface data to {int_report}")
         with open(int_report, "w") as file:
             output_cdp = json.dumps(output_cdp, indent=2)
             file.write(output_cdp)
         # print()
 
         # Write the JSON version data to a file
-        loc = "D:/Users/Michael.Hubbard/Documents/netmiko-gl/Interface/"
-        print(f"Writing version data to {loc}{hostname}-ver.txt")
-        int_report = loc + hostname + "-ver.txt"
+        int_report = get_current_path("Interface", "-ver.txt")
+        print(f"Writing version data to {int_report}")
         with open(int_report, "w") as file:
             output_ver = json.dumps(output_ver, indent=2)
             file.write(output_ver)
         # print()
 
-        # Write the ospf JSON data to a file
-        loc = "D:/Users/Michael.Hubbard/Documents/netmiko-gl/CR-data/"
-        print(f"Writing ospf data to {loc}{hostname}-ospf.txt")
-        int_report = loc + hostname + "-ospf_ne.txt"
-        with open(int_report, "w") as file:
-            output_ospf_ne = json.dumps(output_ospf_ne, indent=2)
-            file.write(output_ospf_ne)
-        print()
-        # close the session to the switch
+        # Write the ospf ne JSON data to a file
+        # Only Cisco, not supported on procurve
+        # int_report = get_current_path("Interface", "-ospf_ne.txt")
+        # print(f"Writing ospf data to {int_report}")
+        # with open(int_report, "w") as file:
+        #     output_ospf_ne = json.dumps(output_ospf_ne, indent=2)
+        #     file.write(output_ospf_ne)
+        # print()
 
         ports = []
         count = 0
@@ -259,26 +262,25 @@ for line in fabric:
         #  This will match all ports with a 0 as the module number
         regexpattern = re.compile(r"G*[0-8]/0/[0-9]{1,2}")
 
-        # count number of interfaces
-        interfaces = json.loads(output)
-        for interface in interfaces:
-            a = re.findall(regexpattern, interface["interface"])
-            if interface["input_packets"] != "0" and len(a):
-                # if len(a):
-                count += 1
-
-    switch_uptime = json.loads(output_ver)
-    # Write the uptime data to a file
-    loc = "D:/Users/Michael.Hubbard/Documents/netmiko-gl/CR-data/"
-    int_report = loc + hostname + "-uptime.txt"
-    print(f"Writing uptime to {loc}{hostname}-CR-data.txt")
-    up = "Switch Uptime: " + switch_uptime[0]["uptime"]
-    restart = "Restart Reason: " + switch_uptime[0]["reload_reason"]
-    count = "Gigabit Ports without traffic: " + str(count)
-    details = [up, restart, count]
-    with open(int_report, "w") as file:
-        for item in details:
-            file.write("%s\n" % item)
+        # count number of interfaces - cisco only
+        # interfaces = json.loads(output)
+        # for interface in interfaces:
+        #     a = re.findall(regexpattern, interface["interface"])
+        #     if interface["input_packets"] != "0" and len(a):
+        #         # if len(a):
+        #         count += 1
+    # Cisco only
+    # switch_uptime = json.loads(output_ver)
+    # # Write the uptime data to a file
+    # int_report = get_current_path("CR-data", "-uptime.txt")
+    # print(f"Writing uptime to {int_report}")
+    # up = "Switch Uptime: " + switch_uptime[0]["uptime"]
+    # restart = "Restart Reason: " + switch_uptime[0]["reload_reason"]
+    # count = "Gigabit Ports without traffic: " + str(count)
+    # details = [up, restart, count]
+    # with open(int_report, "w") as file:
+    #     for item in details:
+    #         file.write("%s\n" % item)
     print("-" * (len(hostname) + 39))
     print(f"Successfully created config files for {hostname}")
     print("-" * (len(hostname) + 39))

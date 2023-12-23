@@ -5,13 +5,13 @@ show time
 
 show uptime
 
-show version | i Boot|Ver
+show version | i ROM
 
 show ip
 
 show ip source-interface
 
-show ip ospf interfaces
+show ip ospf interface
 
 show ip ospf neighbor
 
@@ -21,11 +21,11 @@ show ip ospf external-link-state
 
 show interface status
 
-show int status | i connected
+show int status | i Up
 
 show cdp neighbors
 
-show lldp neighbors
+show lldp information remote
 
 sh power-over-ethernet brief | i Del
 
