@@ -1,15 +1,13 @@
  
-HP-2920-24G-PoEP# 
-HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# configure terminal
 HP-2920-24G-PoEP(config)#  end
 HP-2920-24G-PoEP# no page
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show time
-Sun Dec 24 07:03:22 2023
+Sun Dec 24 07:06:19 2023
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show uptime
-0000:00:59:22.18
+0000:01:02:19.31
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show version | i ROM
 Boot ROM Version:    WB.16.03
@@ -95,7 +93,7 @@ HP-2920-24G-PoEP# show ip ospf general
   Area Border               : no 
   AS Border                 : yes
   External LSA Count        : 6          
-  External LSA Checksum Sum : 189230     
+  External LSA Checksum Sum : 190754     
   Originate New LSA Count   : 6          
   Receive New LSA Count     : 0          
 
@@ -119,12 +117,12 @@ HP-2920-24G-PoEP# show ip ospf external-link-state
 
   Link State ID   Router ID       Age  Sequence #  Checksum  
   --------------- --------------- ---- ----------- ----------
-  10.14.63.16     1.1.1.1         1700 0x80000002  0x00009459
-  10.14.64.16     1.1.1.1         1700 0x80000002  0x00008963
-  10.14.65.16     1.1.1.1         1700 0x80000002  0x00007e6d
-  10.14.66.16     1.1.1.1         1700 0x80000002  0x00007377
-  10.164.24.0     1.1.1.1         1700 0x80000002  0x0000fe88
-  192.168.10.0    1.1.1.1         1700 0x80000002  0x000022b8
+  10.14.63.16     1.1.1.1         17   0x80000003  0x0000925a
+  10.14.64.16     1.1.1.1         17   0x80000003  0x00008764
+  10.14.65.16     1.1.1.1         17   0x80000003  0x00007c6e
+  10.14.66.16     1.1.1.1         17   0x80000003  0x00007178
+  10.164.24.0     1.1.1.1         17   0x80000003  0x0000fc89
+  192.168.10.0    1.1.1.1         17   0x80000003  0x000020b9
  
 
 HP-2920-24G-PoEP# 
@@ -224,7 +222,7 @@ HP-2920-24G-PoEP# show ip ssh
   --- -------- + ---------------------------------------------- -----
   1   console  |
   2   ssh      | 192.168.10.115                                 49358
-  3   ssh      | 192.168.10.115                                 34442
+  3   ssh      | 192.168.10.115                                 50484
   4   inactive |
   5   inactive |
   6   inactive |
@@ -238,6 +236,7 @@ HP-2920-24G-PoEP# show mac-address | ex <enter the typical uplink port here>
   MAC Address   Port  VLAN
   ------------- ----- ----
   00e04c-360348 23    1   
+  000c29-337100 24    10  
   000c29-4caa4e 24    10  
   000c29-8413eb 24    10  
   00e0b3-34562f 24    10  
@@ -251,13 +250,13 @@ HP-2920-24G-PoEP# show mac-address | ex <enter the typical uplink port here>
   446755-03d472 24    10  
   50ed3c-22be32 24    10  
   788cb5-1780c8 24    10  
-  82b881-8bcb00 24    10  
-  8e93a6-f482f4 24    10  
   9c8cd8-c917ae 24    10  
   a4307a-8975e4 24    10  
+  ace010-ee5802 24    10  
   ba4d95-58f2f6 24    10  
   bcbac2-0f4fa4 24    10  
   dc56e7-496195 24    10  
+  f83002-36a609 24    10  
   f84d89-7a1349 24    10  
   fcecda-c46e55 24    10  
   fcecda-c4770b 24    10  
