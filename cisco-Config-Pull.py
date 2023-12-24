@@ -195,9 +195,9 @@ for line in fabric:
             "show cdp neighbor detail", use_textfsm=True
         )
 
-        # Use textFSM to create a json object with show version
+        # show version
         print(f"processing show version for {hostname}")
-        output_ver = net_connect.send_command("show version", use_textfsm=False)
+        output_ver = net_connect.send_command("show version")
 
         # Use textFSM to create a json object with show ip ospf neighbors
         # cisco only - not supported on procurve
