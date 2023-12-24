@@ -1,24 +1,6 @@
 '''
 Workspace for config snippets
 prints interfaces that are not shutdown
-
-router ospf 2 vrf training
- router-id 0.0.0.1
- redistribute static metric 1 subnets
- default-information originate metric 1
-
- interface Vlan3203
- description swche1r1-15 Training PtP
- ip vrf forwarding training
- ip address 192.168.115.142 255.255.255.254
- no ip redirects
- ip pim sparse-dense-mode
- ip igmp version 3
- ip ospf authentication message-digest
- ip ospf message-digest-key 1 md5 7 01040E1C0F2E143E371A6C2B2B0030
- ip ospf dead-interval 3
- ip ospf hello-interval 1
- ip ospf 2 area 0
 '''
 
 import re
