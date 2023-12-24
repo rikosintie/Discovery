@@ -258,8 +258,6 @@ for line in fabric:
         print(f"Writing interface data to {int_report}")
         with open(int_report, "w") as file:
             output_cdp = json.dumps(output_cdp, indent=2)
-            file.write(output_cdp)
-        # print()
 
         # Write the JSON version data to a file
         int_report = get_current_path("Interface", "-int_br.txt")
