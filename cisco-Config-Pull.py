@@ -197,7 +197,9 @@ for line in fabric:
 
         # Use textFSM to create a json object with interface stats
         print(f"processing show interfaces brief for {hostname}")
-        output_ver = net_connect.send_command("show interfaces brief", use_textfsm=True)
+        output_show_int_br = net_connect.send_command(
+            "show interfaces brief", use_textfsm=True
+        )
 
         # Use textFSM to create a json object with show ip
         print(f"processing show lldp neighbors for {hostname}")
@@ -263,8 +265,8 @@ for line in fabric:
         int_report = get_current_path("Interface", "-ver.txt")
         print(f"Writing version data to {int_report}")
         with open(int_report, "w") as file:
-            output_ver = json.dumps(output_ver, indent=2)
-            file.write(output_ver)
+            output_show_int_br = json.dumps(output_show_int_br, indent=2)
+            file.write(output_show_int_br)
         # print()
 
         # Write the show ip JSON data to a file
