@@ -148,7 +148,7 @@ for line in fabric:
     # password = line.split(",")[4]
     print(os.environ.get("cyberARK"))
     password = os.environ.get("cyberARK")
-    password = "H3lpd3sk"
+    # password = "H3lpd3sk"
     if vendor.lower() == "hp_procurve":
         now = datetime.now()
         start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
@@ -195,18 +195,15 @@ for line in fabric:
             "show cdp neighbor detail", use_textfsm=True
         )
 
-        # show version
-        print(f"processing show version for {hostname}")
-        output_ver = net_connect.send_command("show version")
+        # Use textFSM to create a json object with interface stats
+        print(f"processing show interfaces brief for {hostname}")
+        output_ver = net_connect.send_command("show interfaces brief", use_textfsm=True)
 
-        # Use textFSM to create a json object with show ip ospf neighbors
-        # cisco only - not supported on procurve
-        # print(f"processing show ip ospf neighbors for {hostname}")
-        # output_ospf_ne = net_connect.send_command(
-        #     "show ip ospf neighbor", use_textfsm=True
-        # )
-
-        #  print(output_text)  # print the output as plain text on screen
+        # Use textFSM to create a json object with show ip
+        print(f"processing show lldp neighbors for {hostname}")
+        output_show_lldp = net_connect.send_command(
+            "show lldp info remote", use_textfsm=True
+        )
 
         #  Send commands from mac.txt for human readable output
         print(f"processing show mac address for {hostname}")
@@ -225,7 +222,6 @@ for line in fabric:
 
         #  Write the CR-data output to disk
         int_report = get_current_path("CR-data", "-CR-data.txt")
-        print(int_report)
         print(f"Writing CR data to {int_report}")
         with open(int_report, "w") as file:
             file.write(output_text)
@@ -271,14 +267,13 @@ for line in fabric:
             file.write(output_ver)
         # print()
 
-        # Write the ospf ne JSON data to a file
-        # Only Cisco, not supported on procurve
-        # int_report = get_current_path("Interface", "-ospf_ne.txt")
-        # print(f"Writing ospf data to {int_report}")
-        # with open(int_report, "w") as file:
-        #     output_ospf_ne = json.dumps(output_ospf_ne, indent=2)
-        #     file.write(output_ospf_ne)
-        # print()
+        # Write the show ip JSON data to a file
+        int_report = get_current_path("Interface", "-lldp.txt")
+        print(f"Writing show ip data to {int_report}")
+        with open(int_report, "w") as file:
+            output_show_lldp = json.dumps(output_show_lldp, indent=2)
+            file.write(output_show_lldp)
+        print()
 
         ports = []
         count = 0

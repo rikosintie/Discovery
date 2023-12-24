@@ -1,1 +1,266 @@
-"\nImage stamp:    /ws/swbuildm/rel_ajanta_arenal_qaoff/code/build/anm(swbuildm_rel_ajanta_arenal_qaoff_rel_ajanta_arenal)\n                Sep 27 2022 23:05:14\n                WB.16.10.0023\n                144\nBoot Image:     Primary\n\nBoot ROM Version:    WB.16.03\nActive Boot ROM:     Primary\n"
+[
+  {
+    "port": "1",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "2",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "3",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "4",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "5",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "6",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "7",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "8",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "9",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "10",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "11",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "12",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "13",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "14",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "15",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "16",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "17",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "18",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "19",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "20",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "21",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "22",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "23",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Up",
+    "mode": "100FDx",
+    "mdi_mode": "MDIX",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "24",
+    "type": "100/1000T",
+    "intrusion_alert": "No",
+    "enabled": "Yes",
+    "status": "Up",
+    "mode": "1000FDx",
+    "mdi_mode": "MDIX",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  }
+]

@@ -1,23 +1,5 @@
 [
   {
-    "local_port": "1",
-    "neighbor_id": "3750x.pu.pri",
-    "neighbor_address": "10.254.34.17",
-    "neighbor_platform": "cisco WS-C3750X-48P",
-    "neighbor_capability": "Router Switch IGMP",
-    "neighbor_port": "GigabitEthernet1/0/1",
-    "neighbor_version": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
-  },
-  {
-    "local_port": "1",
-    "neighbor_id": "64 00 f1 01 6f 80",
-    "neighbor_address": "10.254.34.17",
-    "neighbor_platform": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...",
-    "neighbor_capability": "Router Switch",
-    "neighbor_port": "GigabitEthernet1/0/1",
-    "neighbor_version": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
-  },
-  {
     "local_port": "23",
     "neighbor_id": "e4 5f 01 85 86 a5",
     "neighbor_address": "192.168.4.1",
@@ -25,15 +7,6 @@
     "neighbor_capability": "Router",
     "neighbor_port": "eth0",
     "neighbor_version": "Raspbian GNU/Linux 10 (buster) Linux 5.10.103-v7+ #1529 ..."
-  },
-  {
-    "local_port": "24",
-    "neighbor_id": "fc ec da c4 6e 55",
-    "neighbor_address": "Unsupported format",
-    "neighbor_platform": " ",
-    "neighbor_capability": " ",
-    "neighbor_port": "eth0",
-    "neighbor_version": " "
   },
   {
     "local_port": "24",
@@ -61,5 +34,14 @@
     "neighbor_capability": "Switch",
     "neighbor_port": "en0",
     "neighbor_version": "Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ..."
+  },
+  {
+    "local_port": "24",
+    "neighbor_id": "fc ec da c4 6e 55",
+    "neighbor_address": "Unsupported format",
+    "neighbor_platform": " ",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": " "
   }
 ]

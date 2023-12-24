@@ -6,8 +6,6 @@ HP-2920-24G-PoEP# show mac-add 1
 
   MAC Address   VLANs       
   ------------- ------------
-  6400f1-016f81 850         
-  6400f1-016fd5 850         
  
 HP-2920-24G-PoEP# show mac-add 2
 
@@ -171,13 +169,10 @@ HP-2920-24G-PoEP# show mac-add 24
   MAC Address   VLANs       
   ------------- ------------
   000c29-4caa4e 10          
-  000c29-8413e1 10          
   000c29-8413eb 10          
   00e0b3-34562f 10          
   04db56-edad58 10          
-  061413-0334ea 10          
   085b0e-7c7930 10          
-  101f74-6341f8 10          
   2428fd-28ae26 10          
   28d0ea-932a42 10          
   3817c3-c920c2 10          
@@ -185,10 +180,12 @@ HP-2920-24G-PoEP# show mac-add 24
   446755-03d472 10          
   50ed3c-22be32 10          
   788cb5-1780c8 10          
-  8e93a6-f482f4 10          
+  82b881-8bcb00 10          
   9c8cd8-c917ae 10          
+  a4307a-8975e4 10          
+  ba4d95-58f2f6 10          
   bcbac2-0f4fa4 10          
-  d8d43c-651b3e 10          
+  d8d43c-651c6b 10          
   dc56e7-496195 10          
   f84d89-7a1349 10          
   fcecda-c46e55 10          
