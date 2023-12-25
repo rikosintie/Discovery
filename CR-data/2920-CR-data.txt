@@ -4,10 +4,10 @@ HP-2920-24G-PoEP(config)#  end
 HP-2920-24G-PoEP# no page
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show time
-Sun Dec 24 07:06:19 2023
+Mon Dec 25 01:17:48 2023
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show uptime
-0000:01:02:19.31
+0000:00:15:50.28
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show version | i ROM
 Boot ROM Version:    WB.16.03
@@ -80,7 +80,7 @@ HP-2920-24G-PoEP# show ip ospf general
  OSPF General Status
 
   OSPF protocol           : enabled 
-  Router ID               : 1.1.1.1        
+  Router ID               : 10.14.63.17    
   RFC 1583 compatibility  : compatible    
 
   Intra-area distance     : 110        
@@ -93,8 +93,8 @@ HP-2920-24G-PoEP# show ip ospf general
   Area Border               : no 
   AS Border                 : yes
   External LSA Count        : 6          
-  External LSA Checksum Sum : 190754     
-  Originate New LSA Count   : 6          
+  External LSA Checksum Sum : 283751     
+  Originate New LSA Count   : 7          
   Receive New LSA Count     : 0          
 
 
@@ -117,12 +117,12 @@ HP-2920-24G-PoEP# show ip ospf external-link-state
 
   Link State ID   Router ID       Age  Sequence #  Checksum  
   --------------- --------------- ---- ----------- ----------
-  10.14.63.16     1.1.1.1         17   0x80000003  0x0000925a
-  10.14.64.16     1.1.1.1         17   0x80000003  0x00008764
-  10.14.65.16     1.1.1.1         17   0x80000003  0x00007c6e
-  10.14.66.16     1.1.1.1         17   0x80000003  0x00007178
-  10.164.24.0     1.1.1.1         17   0x80000003  0x0000fc89
-  192.168.10.0    1.1.1.1         17   0x80000003  0x000020b9
+  10.14.63.16     10.14.63.17     933  0x80000001  0x0000c8c1
+  10.14.64.16     10.14.63.17     933  0x80000001  0x0000bdcb
+  10.14.65.16     10.14.63.17     933  0x80000001  0x0000b2d5
+  10.14.66.16     10.14.63.17     933  0x80000001  0x0000a7df
+  10.164.24.0     10.14.63.17     933  0x80000001  0x000033f0
+  192.168.10.0    10.14.63.17     933  0x80000001  0x00005621
  
 
 HP-2920-24G-PoEP# 
@@ -135,7 +135,7 @@ HP-2920-24G-PoEP# show interface status
   4                   Down    Auto          1000FDx  100/1000T  No     1       
   5                   Down    Auto          1000FDx  100/1000T  No     1       
   6                   Down    Auto          1000FDx  100/1000T  No     1       
-  7                   Down    Auto          1000FDx  100/1000T  No     1       
+  7                   Up      Auto          100FDx   100/1000T  No     1       
   8                   Down    Auto          1000FDx  100/1000T  No     1       
   9                   Down    Auto          1000FDx  100/1000T  No     1       
   10                  Down    Auto          1000FDx  100/1000T  No     1       
@@ -155,6 +155,7 @@ HP-2920-24G-PoEP# show interface status
   24                  Up      Auto          1000FDx  100/1000T  multi  10      
  HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show int status | i Up
+  7                   Up      Auto          100FDx   100/1000T  No     1       
   23                  Up      Auto          100FDx   100/1000T  No     1       
   24                  Up      Auto          1000FDx  100/1000T  multi  10      
 HP-2920-24G-PoEP# 
@@ -165,9 +166,9 @@ HP-2920-24G-PoEP# show cdp neighbors
   Port   Device ID                     | Platform                     Capability 
   ------ ----------------------------- + ---------------------------- -----------
   23     e4 5f 01 85 86 a5             | Raspbian GNU/Linux 10 (bu... R          
+  24     ea e6 4b 18 de 20             |  Darwin 21.6.0 Darwin Ker... S          
   24     Garage                        | NanoStation 5AC loc          T          
   24     9c 8c d8 c9 17 ae             | ArubaOS (MODEL: 515), Ver...            
-  24     ea e6 4b 18 de 20             |  Darwin 21.6.0 Darwin Ker... S          
   24     fc ec da c4 6e 55             |                                         
  
 HP-2920-24G-PoEP# 
@@ -221,8 +222,8 @@ HP-2920-24G-PoEP# show ip ssh
   Ses Type     | Source IP                                      Port 
   --- -------- + ---------------------------------------------- -----
   1   console  |
-  2   ssh      | 192.168.10.115                                 49358
-  3   ssh      | 192.168.10.115                                 50484
+  2   ssh      | 192.168.10.115                                 51756
+  3   inactive |
   4   inactive |
   5   inactive |
   6   inactive |
@@ -236,28 +237,26 @@ HP-2920-24G-PoEP# show mac-address | ex <enter the typical uplink port here>
   MAC Address   Port  VLAN
   ------------- ----- ----
   00e04c-360348 23    1   
-  000c29-337100 24    10  
   000c29-4caa4e 24    10  
+  000c29-8413e1 24    10  
   000c29-8413eb 24    10  
   00e0b3-34562f 24    10  
+  04db56-edad58 24    10  
   061413-0334ea 24    10  
   085b0e-7c7930 24    10  
-  101f74-6341f8 24    10  
   2428fd-28ae26 24    10  
   28d0ea-932a42 24    10  
   3817c3-c920c2 24    10  
   3c9bd6-aa323e 24    10  
   446755-03d472 24    10  
   50ed3c-22be32 24    10  
+  561428-2895f7 24    10  
   788cb5-1780c8 24    10  
   9c8cd8-c917ae 24    10  
-  a4307a-8975e4 24    10  
-  ace010-ee5802 24    10  
   ba4d95-58f2f6 24    10  
   bcbac2-0f4fa4 24    10  
+  d8d43c-651b3e 24    10  
   dc56e7-496195 24    10  
-  f83002-36a609 24    10  
-  f84d89-7a1349 24    10  
   fcecda-c46e55 24    10  
   fcecda-c4770b 24    10  
   fcecda-c56e55 24    10  
@@ -271,7 +270,6 @@ HP-2920-24G-PoEP# show arp
   IP Address       MAC Address       Type    Port
   ---------------  ----------------- ------- ----
   192.168.10.115   28d0ea-932a42     dynamic 24  
-  192.168.10.138   a4307a-8975e4     dynamic 24  
   192.168.10.254   085b0e-7c7930     dynamic 24  
 
 

@@ -71,11 +71,11 @@ __copyright__ = ""
 __license__ = "Unlicense"
 # -*- coding: utf-8 -*-
 #  cisco-Config-Pull.py
-#  DHS Change Request data collection
+#  Procurve Change Request data collection
 #  Created by Michael Hubbard on 2023-12-20.
 
 
-def get_current_path(sub_dir1, extension, sub_dir2=""):
+def get_current_path(sub_dir1: str, extension: str, sub_dir2="") -> str:
     """
     returns a valid path regardless of the OS
 
@@ -93,7 +93,7 @@ def get_current_path(sub_dir1, extension, sub_dir2=""):
     return int_report
 
 
-def remove_empty_lines(filename):
+def remove_empty_lines(filename: str) -> str:
     """
     Removes empty lines from the given file
 
@@ -210,6 +210,7 @@ for line in fabric:
         #  Send commands from mac.txt for human readable output
         print(f"processing show mac address for {hostname}")
         output_text_mac = net_connect.send_config_from_file("mac.txt", read_timeout=200)
+
         #  Send commands from arp.txt for human readable output
         print(f"processing show arp for {hostname}")
         output_text_arp = net_connect.send_config_from_file("arp.txt", read_timeout=200)
