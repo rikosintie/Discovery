@@ -7,7 +7,7 @@ import sys
 
 from icecream import ic
 
-ic.enable()
+# ic.enable()
 ic.disable()
 
 __author__ = "Michael Hubbard"
