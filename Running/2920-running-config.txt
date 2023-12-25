@@ -93,6 +93,9 @@ interface 20
    broadcast-limit 1
    speed-duplex 10-full
    exit
+interface loopback 0
+   ip address 1.1.1.1
+   exit
 snmp-server community "public" unrestricted
 oobm
    ip address dhcp-bootp
