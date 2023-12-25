@@ -95,7 +95,7 @@ def get_current_path(sub_dir1: str, extension: str, sub_dir2="") -> str:
 
 def remove_empty_lines(filename: str) -> str:
     """
-    Removes empty lines from the given file
+    Removes empty lines from the file
 
     Args:
         filename (str): file in the cwd to be opened

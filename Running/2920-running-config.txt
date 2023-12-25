@@ -38,6 +38,59 @@ ip source-interface radsec vlan 850
 key-chain "COR"
 key-chain "COR" key 1 key-string "O$FPkey4C0R"
 interface 7
+   broadcast-limit 1
+   speed-duplex 10-full
+   exit
+interface 8
+   broadcast-limit 1
+   speed-duplex 10-full
+   exit
+interface 9
+   broadcast-limit 1
+   speed-duplex 10-full
+   exit
+interface 10
+   broadcast-limit 1
+   speed-duplex 10-full
+   exit
+interface 11
+   broadcast-limit 1
+   speed-duplex 10-full
+   exit
+interface 12
+   broadcast-limit 1
+   speed-duplex 10-full
+   exit
+interface 13
+   broadcast-limit 1
+   speed-duplex 10-full
+   exit
+interface 14
+   broadcast-limit 1
+   speed-duplex 10-full
+   exit
+interface 15
+   broadcast-limit 1
+   speed-duplex 10-full
+   exit
+interface 16
+   broadcast-limit 1
+   speed-duplex 10-full
+   exit
+interface 17
+   broadcast-limit 1
+   speed-duplex 10-full
+   exit
+interface 18
+   broadcast-limit 1
+   speed-duplex 10-full
+   exit
+interface 19
+   broadcast-limit 1
+   speed-duplex 10-full
+   exit
+interface 20
+   broadcast-limit 1
    speed-duplex 10-full
    exit
 snmp-server community "public" unrestricted

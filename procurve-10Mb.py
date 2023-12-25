@@ -3,12 +3,11 @@
 import argparse
 import json
 import os
-import platform
 import sys
 
 from icecream import ic
 
-# ic.enable()
+ic.enable()
 ic.disable()
 
 __author__ = "Michael Hubbard"
@@ -17,114 +16,81 @@ __copyright__ = ""
 __license__ = "Unlicense"
 
 
-def get_current_path():
+def get_current_path(sub_dir1: str, extension: str, sub_dir2="") -> str:
+    """
+    returns a valid path regardless of the OS
+
+    Args:
+        sub_dir1 (str): name of the sub directory off the cwd required
+        extension (str): string appended after hostname - ex. -interface.txt
+        sub_dir2 (str, optional): if a nested sub_dir is used Defaults to "".
+
+    Returns:
+        str: full pathname of the file to be written
+    """
     current_path = os.getcwd()
-    return current_path
+    extension = hostname + extension
+    int_report = os.path.join(current_path, sub_dir1, sub_dir2, extension)
+    return int_report
 
 
-def remove_empty_lines(filename):
-    '''
-    #----------- Based on site name, read the inventory file --------
-    '''
+def remove_empty_lines(filename: str):
+    """
+    Removes empty lines from the file
+
+    Args:
+        filename (str): file in the cwd to be opened
+
+    Returns:
+        Nothing - updated file is written to disk
+    """
     if not os.path.isfile(filename):
         print("{} does not exist ".format(filename))
         return
     with open(filename) as filehandle:
         lines = filehandle.readlines()
 
-    with open(filename, 'w') as filehandle:
+    with open(filename, "w") as filehandle:
         lines = filter(lambda x: x.strip(), lines)
         filehandle.writelines(lines)
 
-# def extract_stack_info(json_data):
 
-#     # Extract the stack information
-
-#     hardware = data[0]['hardware']
-#     hardware_info = {}
-
-#     for item in hardware:
-#         if item not in hardware_info:
-#             hardware_info[item] = 1
-#         else:
-#             hardware_info[item] += 1
-
-#     return hardware_info
-
-
-def extract_stack_info(json_data):
-
-    # Extract the stack information
-    hardware_per_switch = []
-    for switch_data in data:
-        hardware = switch_data['hardware']
-        hardware_per_switch.extend(hardware)
-    return hardware_per_switch
-
-
-def extract_Interface_speed(json_data):
-    '''
+def extract_Interface_speed(json_data: list):
+    """
     extract_Interface_speed find interfaces with 10Mbps speed
+    10FDx or 10HDx in json data "mode"
 
     Arguments:
-        json_data -- json data from 'show interfaces, textFSM=True
+        json_data -- json data from 'show interfaces brief, textFSM=True
 
     Returns:
         a list of interfaces with 10Mbps
-    '''
+    """
     # Extract the stack information
     hardware_per_switch = []
     for switch_data in data:
-        hardware = switch_data['speed']
-        if hardware == '10Mb/s':
-            hardware = switch_data['interface'] + ': ' + hardware
-            # hardware_per_switch.extend(hardware)
+        hardware = switch_data["mode"]
+        if hardware == "10FDx" or hardware == "10HDx":
+            hardware = switch_data["port"] + " - " + hardware
             hardware_per_switch.append(hardware)
     return hardware_per_switch
 
 
-def switch_type(hardware_per_switch):
-    """
-    Build a list of switch ports per switch
-
-    Arguments:
-        hardware_per_switch -- List returned from function extract_stack_info
-    """
-    switch_ports = {}
-    for count, items in enumerate(hardware_per_switch):
-        if '24' in items:
-            sw_type = 'switch' + str(count) + ': ' + str(24)
-            print(type(sw_type))
-            switch_ports = switch_ports.append(sw_type)
-
-
-def parse_ver(stack_info):
-    """
-    pull out # of switches and ports per switch
-
-    Arguments:
-        stack_info -- a list returned by extract_stack_info funtion
-
-    """
-
-
-'''
+"""
 read the command line to find the site name
-open the <sitename>-interface.txt file and search for 10Mb/s
+open the <sitename>-int_br.txt file and search for 10FDx or 10HDx
 interfaces.
-'''
+"""
 
-System_name = platform.system()
-print('OS is ', System_name)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-s', '--site', dest='site_name', help='Site Name')
+parser.add_argument("-s", "--site", dest="site_name", help="Site Name")
 options = parser.parse_args()
 if options.site_name is None:
-    print('-s site name is a required argument')
+    print("-s site name is a required argument")
     sys.exit()
 else:
-    dev_inv_file = 'device-inventory-' + options.site_name
+    dev_inv_file = "device-inventory-" + options.site_name + ".csv"
 
 ic(dev_inv_file)
 
@@ -141,26 +107,27 @@ with open(dev_inv_file) as devices_file:
 
 for line in fabric:
     hostname = line.split(",")[2]
-
-    loc = get_current_path()
-    if System_name == "Darwin" or System_name == "Linux":
-        loc = loc + '/interface/'
-    else:
-        # Windows
-        loc = loc + '\\interface\\'
-
-    ver_file = loc + hostname + '-interface.txt'
-    ic(ver_file)
+    int_report = get_current_path("Interface", "-int_br.txt")
+    ic(int_report)
 
     # check if switch's version file exists
-    if not os.path.isfile(ver_file):
-        print("{} doesn't exist ".format(ver_file))
+    if not os.path.isfile(int_report):
+        print("{} doesn't exist ".format(int_report))
         sys.exit()
 
-    with open(ver_file, 'r', encoding='utf-8') as inputfile:
-        data = json.load(inputfile)
+    with open(int_report, "r", encoding="utf-8") as file:
+        data = json.load(file)
 
     stack_info = extract_Interface_speed(data)
+    if stack_info == []:
+        print("No 10Mbps interfaces found")
+        SystemExit()
+
+    int_report = get_current_path("CR-data", "-10Mb-Ports.txt")
+    print(f"Writing CR data to {int_report}")
+    with open(int_report, "w") as file:
+        for line in stack_info:
+            file.write(f"Interface {line}\n")
+
     for interface in stack_info:
-        interface = hostname + ': ' + interface
-        print(interface)
+        print(f"Hostname: {hostname} Interface: {interface}")
