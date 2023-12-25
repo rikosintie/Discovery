@@ -146,9 +146,7 @@ for line in fabric:
     hostname = line.split(",")[2]
     username = line.split(",")[3]
     # password = line.split(",")[4]
-    print(os.environ.get("cyberARK"))
     password = os.environ.get("cyberARK")
-    # password = "H3lpd3sk"
     if vendor.lower() == "hp_procurve":
         now = datetime.now()
         start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
@@ -185,34 +183,34 @@ for line in fabric:
         print(f"processing {cfg_file} for {hostname}")
         output_text = net_connect.send_config_from_file(cfg_file, read_timeout=360)
 
-        print(f"processing show interface for {hostname}")
         # Use textFSM to create a json object with interface stats
+        print(f"collecting show interface for {hostname}")
         output = net_connect.send_command("show interfaces", use_textfsm=True)
 
         # Use textFSM to create a json object with cdp neighbors
-        print(f"processing show cdp for {hostname}")
+        print(f"collecting show cdp for {hostname}")
         output_cdp = net_connect.send_command(
             "show cdp neighbor detail", use_textfsm=True
         )
 
         # Use textFSM to create a json object with interface stats
-        print(f"processing show interfaces brief for {hostname}")
+        print(f"collecting show interfaces brief for {hostname}")
         output_show_int_br = net_connect.send_command(
             "show interfaces brief", use_textfsm=True
         )
 
         # Use textFSM to create a json object with show ip
-        print(f"processing show lldp neighbors for {hostname}")
+        print(f"collecting show lldp neighbors for {hostname}")
         output_show_lldp = net_connect.send_command(
             "show lldp info remote", use_textfsm=True
         )
 
         #  Send commands from mac.txt for human readable output
-        print(f"processing show mac address for {hostname}")
+        print(f"collecting show mac address for {hostname}")
         output_text_mac = net_connect.send_config_from_file("mac.txt", read_timeout=200)
 
         #  Send commands from arp.txt for human readable output
-        print(f"processing show arp for {hostname}")
+        print(f"collecting show arp for {hostname}")
         output_text_arp = net_connect.send_config_from_file("arp.txt", read_timeout=200)
 
         # Send show running
@@ -249,24 +247,23 @@ for line in fabric:
 
         #  Write the JSON interface data to a file
         int_report = get_current_path("Interface", "-interface.txt")
-        print(f"Writing interface data to {int_report}")
+        print(f"Writing interfaces json data to {int_report}")
         with open(int_report, "w") as file:
             output = json.dumps(output, indent=2)
             file.write(output)
 
-        # Write the JSON cdp neighbor data to a file
-        int_report = get_current_path("Interface", "-cdp.txt")
-        print(f"Writing interface data to {int_report}")
-        with open(int_report, "w") as file:
-            output_cdp = json.dumps(output_cdp, indent=2)
-
-        # Write the JSON version data to a file
+        # Write the JSON interface brief data to a file
         int_report = get_current_path("Interface", "-int_br.txt")
-        print(f"Writing version data to {int_report}")
+        print(f"Writing interfaces brief data to {int_report}")
         with open(int_report, "w") as file:
             output_show_int_br = json.dumps(output_show_int_br, indent=2)
             file.write(output_show_int_br)
-        # print()
+
+        # Write the JSON cdp neighbor data to a file
+        int_report = get_current_path("Interface", "-cdp.txt")
+        print(f"Writing cdp neighbor data to {int_report}")
+        with open(int_report, "w") as file:
+            output_cdp = json.dumps(output_cdp, indent=2)
 
         # Write the show ip JSON data to a file
         int_report = get_current_path("Interface", "-lldp.txt")
