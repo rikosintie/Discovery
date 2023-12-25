@@ -37,6 +37,9 @@ ip source-interface tunneled-node-server vlan 850
 ip source-interface radsec vlan 850
 key-chain "COR"
 key-chain "COR" key 1 key-string "O$FPkey4C0R"
+interface 7
+   speed-duplex 10-full
+   exit
 snmp-server community "public" unrestricted
 oobm
    ip address dhcp-bootp

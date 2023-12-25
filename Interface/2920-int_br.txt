@@ -71,8 +71,8 @@
     "intrusion_alert": "No",
     "enabled": "Yes",
     "status": "Up",
-    "mode": "100FDx",
-    "mdi_mode": "MDIX",
+    "mode": "10FDx",
+    "mdi_mode": "MDI",
     "flow_ctrl": "off",
     "bcast_limit": "0"
   },

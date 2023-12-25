@@ -55,8 +55,8 @@
   },
   {
     "port": "7",
-    "total_bytes": "22,964",
-    "total_frames": "84",
+    "total_bytes": "136,671",
+    "total_frames": "436",
     "errors_rx": "0",
     "drops_tx": "0",
     "flow_ctrl": "off",
@@ -199,8 +199,8 @@
   },
   {
     "port": "23",
-    "total_bytes": "32,197",
-    "total_frames": "122",
+    "total_bytes": "211,991",
+    "total_frames": "745",
     "errors_rx": "0",
     "drops_tx": "0",
     "flow_ctrl": "off",
@@ -208,8 +208,8 @@
   },
   {
     "port": "24",
-    "total_bytes": "493,350",
-    "total_frames": "5466",
+    "total_bytes": "3,587,607",
+    "total_frames": "42,948",
     "errors_rx": "0",
     "drops_tx": "0",
     "flow_ctrl": "off",

@@ -4,10 +4,10 @@ HP-2920-24G-PoEP(config)#  end
 HP-2920-24G-PoEP# no page
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show time
-Mon Dec 25 01:17:48 2023
+Mon Dec 25 03:10:06 2023
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show uptime
-0000:00:15:50.28
+0000:02:08:08.75
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show version | i ROM
 Boot ROM Version:    WB.16.03
@@ -93,7 +93,7 @@ HP-2920-24G-PoEP# show ip ospf general
   Area Border               : no 
   AS Border                 : yes
   External LSA Count        : 6          
-  External LSA Checksum Sum : 283751     
+  External LSA Checksum Sum : 289847     
   Originate New LSA Count   : 7          
   Receive New LSA Count     : 0          
 
@@ -117,12 +117,12 @@ HP-2920-24G-PoEP# show ip ospf external-link-state
 
   Link State ID   Router ID       Age  Sequence #  Checksum  
   --------------- --------------- ---- ----------- ----------
-  10.14.63.16     10.14.63.17     933  0x80000001  0x0000c8c1
-  10.14.64.16     10.14.63.17     933  0x80000001  0x0000bdcb
-  10.14.65.16     10.14.63.17     933  0x80000001  0x0000b2d5
-  10.14.66.16     10.14.63.17     933  0x80000001  0x0000a7df
-  10.164.24.0     10.14.63.17     933  0x80000001  0x000033f0
-  192.168.10.0    10.14.63.17     933  0x80000001  0x00005621
+  10.14.63.16     10.14.63.17     231  0x80000005  0x0000c0c5
+  10.14.64.16     10.14.63.17     231  0x80000005  0x0000b5cf
+  10.14.65.16     10.14.63.17     231  0x80000005  0x0000aad9
+  10.14.66.16     10.14.63.17     231  0x80000005  0x00009fe3
+  10.164.24.0     10.14.63.17     231  0x80000005  0x00002bf4
+  192.168.10.0    10.14.63.17     231  0x80000005  0x00004e25
  
 
 HP-2920-24G-PoEP# 
@@ -135,7 +135,7 @@ HP-2920-24G-PoEP# show interface status
   4                   Down    Auto          1000FDx  100/1000T  No     1       
   5                   Down    Auto          1000FDx  100/1000T  No     1       
   6                   Down    Auto          1000FDx  100/1000T  No     1       
-  7                   Up      Auto          100FDx   100/1000T  No     1       
+  7                   Up      10FDx         10FDx    100/1000T  No     1       
   8                   Down    Auto          1000FDx  100/1000T  No     1       
   9                   Down    Auto          1000FDx  100/1000T  No     1       
   10                  Down    Auto          1000FDx  100/1000T  No     1       
@@ -155,7 +155,7 @@ HP-2920-24G-PoEP# show interface status
   24                  Up      Auto          1000FDx  100/1000T  multi  10      
  HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show int status | i Up
-  7                   Up      Auto          100FDx   100/1000T  No     1       
+  7                   Up      10FDx         10FDx    100/1000T  No     1       
   23                  Up      Auto          100FDx   100/1000T  No     1       
   24                  Up      Auto          1000FDx  100/1000T  multi  10      
 HP-2920-24G-PoEP# 
@@ -222,8 +222,8 @@ HP-2920-24G-PoEP# show ip ssh
   Ses Type     | Source IP                                      Port 
   --- -------- + ---------------------------------------------- -----
   1   console  |
-  2   ssh      | 192.168.10.115                                 51756
-  3   inactive |
+  2   ssh      | 192.168.10.115                                 37180
+  3   ssh      | 192.168.10.115                                 40776
   4   inactive |
   5   inactive |
   6   inactive |
@@ -238,12 +238,12 @@ HP-2920-24G-PoEP# show mac-address | ex <enter the typical uplink port here>
   ------------- ----- ----
   00e04c-360348 23    1   
   000c29-4caa4e 24    10  
-  000c29-8413e1 24    10  
   000c29-8413eb 24    10  
   00e0b3-34562f 24    10  
   04db56-edad58 24    10  
   061413-0334ea 24    10  
   085b0e-7c7930 24    10  
+  101f74-6341f8 24    10  
   2428fd-28ae26 24    10  
   28d0ea-932a42 24    10  
   3817c3-c920c2 24    10  
@@ -252,14 +252,18 @@ HP-2920-24G-PoEP# show mac-address | ex <enter the typical uplink port here>
   50ed3c-22be32 24    10  
   561428-2895f7 24    10  
   788cb5-1780c8 24    10  
+  82b881-8bcb00 24    10  
   9c8cd8-c917ae 24    10  
   ba4d95-58f2f6 24    10  
   bcbac2-0f4fa4 24    10  
-  d8d43c-651b3e 24    10  
+  d8d43c-2e4bcb 24    10  
+  dc4f22-fa1708 24    10  
   dc56e7-496195 24    10  
+  f83002-36a609 24    10  
   fcecda-c46e55 24    10  
   fcecda-c4770b 24    10  
   fcecda-c56e55 24    10  
+  fcf152-6058fa 24    10  
  
 
 HP-2920-24G-PoEP# 
