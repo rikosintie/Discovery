@@ -8,13 +8,6 @@
   },
   {
     "local_port": "24",
-    "neighbor_chassis_id": "ea e6 4b 18 de 20",
-    "neighbor_portid": "50 ed 3c 22 be 32",
-    "neighbor_descr": "en0",
-    "neighbor_sysname": "hp8600-2328.local"
-  },
-  {
-    "local_port": "24",
     "neighbor_chassis_id": "Garage",
     "neighbor_portid": "br0",
     "neighbor_descr": "NanoStation",

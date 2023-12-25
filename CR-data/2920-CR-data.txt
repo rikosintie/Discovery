@@ -4,10 +4,10 @@ HP-2920-24G-PoEP(config)#  end
 HP-2920-24G-PoEP# no page
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show time
-Mon Dec 25 05:04:06 2023
+Mon Dec 25 05:29:35 2023
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show uptime
-0000:04:02:08.82
+0000:04:27:37.66
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show version | i ROM
 Boot ROM Version:    WB.16.03
@@ -93,7 +93,7 @@ HP-2920-24G-PoEP# show ip ospf general
   Area Border               : no 
   AS Border                 : yes
   External LSA Count        : 6          
-  External LSA Checksum Sum : 294419     
+  External LSA Checksum Sum : 295943     
   Originate New LSA Count   : 7          
   Receive New LSA Count     : 0          
 
@@ -117,12 +117,12 @@ HP-2920-24G-PoEP# show ip ospf external-link-state
 
   Link State ID   Router ID       Age  Sequence #  Checksum  
   --------------- --------------- ---- ----------- ----------
-  10.14.63.16     10.14.63.17     1491 0x80000008  0x0000bac8
-  10.14.64.16     10.14.63.17     1491 0x80000008  0x0000afd2
-  10.14.65.16     10.14.63.17     1491 0x80000008  0x0000a4dc
-  10.14.66.16     10.14.63.17     1491 0x80000008  0x000099e6
-  10.164.24.0     10.14.63.17     1491 0x80000008  0x000025f7
-  192.168.10.0    10.14.63.17     1491 0x80000008  0x00004828
+  10.14.63.16     10.14.63.17     1160 0x80000009  0x0000b8c9
+  10.14.64.16     10.14.63.17     1160 0x80000009  0x0000add3
+  10.14.65.16     10.14.63.17     1160 0x80000009  0x0000a2dd
+  10.14.66.16     10.14.63.17     1160 0x80000009  0x000097e7
+  10.164.24.0     10.14.63.17     1160 0x80000009  0x000023f8
+  192.168.10.0    10.14.63.17     1160 0x80000009  0x00004629
  
 
 HP-2920-24G-PoEP# 
@@ -166,7 +166,6 @@ HP-2920-24G-PoEP# show cdp neighbors
   Port   Device ID                     | Platform                     Capability 
   ------ ----------------------------- + ---------------------------- -----------
   23     e4 5f 01 85 86 a5             | Raspbian GNU/Linux 10 (bu... R          
-  24     ea e6 4b 18 de 20             |  Darwin 21.6.0 Darwin Ker... S          
   24     Garage                        | NanoStation 5AC loc          T          
   24     9c 8c d8 c9 17 ae             | ArubaOS (MODEL: 515), Ver...            
   24     fc ec da c4 6e 55             |                                         
@@ -223,7 +222,7 @@ HP-2920-24G-PoEP# show ip ssh
   --- -------- + ---------------------------------------------- -----
   1   console  |
   2   ssh      | 192.168.10.115                                 37180
-  3   ssh      | 192.168.10.115                                 40992
+  3   ssh      | 192.168.10.115                                 38008
   4   inactive |
   5   inactive |
   6   inactive |
@@ -238,15 +237,14 @@ HP-2920-24G-PoEP# show mac-address | ex <enter the typical uplink port here>
   ------------- ----- ----
   00e04c-360348 23    1   
   000c29-4caa4e 24    10  
-  000c29-8413e1 24    10  
   000c29-8413eb 24    10  
   00e0b3-34562f 24    10  
   04db56-edad58 24    10  
   061413-0334ea 24    10  
   085b0e-7c7930 24    10  
+  101f74-6341f8 24    10  
   2428fd-28ae26 24    10  
   28d0ea-932a42 24    10  
-  3817c3-c920c2 24    10  
   3c9bd6-aa323e 24    10  
   446755-03d472 24    10  
   50ed3c-22be32 24    10  
@@ -258,7 +256,6 @@ HP-2920-24G-PoEP# show mac-address | ex <enter the typical uplink port here>
   ba4d95-58f2f6 24    10  
   bcbac2-0f4fa4 24    10  
   dc56e7-496195 24    10  
-  f84d89-7a1349 24    10  
   fcecda-c46e55 24    10  
   fcecda-c4770b 24    10  
   fcecda-c56e55 24    10  
