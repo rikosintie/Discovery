@@ -54,6 +54,7 @@ import re
 import sys
 from datetime import datetime
 
+from icecream import ic
 from netmiko import ConnectHandler
 
 # from netmiko import exceptions
@@ -73,6 +74,10 @@ __license__ = "Unlicense"
 #  cisco-Config-Pull.py
 #  Procurve Change Request data collection
 #  Created by Michael Hubbard on 2023-12-20.
+
+# comment out ic.disable() and uncomment ic.enable() to use icecream
+# ic.enable()
+ic.disable()
 
 
 def get_current_path(sub_dir1: str, extension: str, sub_dir2="") -> str:
@@ -192,14 +197,14 @@ for line in fabric:
         output_cdp = net_connect.send_command(
             "show cdp neighbor detail", use_textfsm=True
         )
-
+        ic(output_cdp)
         # Use textFSM to create a json object with interface stats
         print(f"collecting show interfaces brief for {hostname}")
         output_show_int_br = net_connect.send_command(
             "show interfaces brief", use_textfsm=True
         )
 
-        # Use textFSM to create a json object with show ip
+        # Use textFSM to create a json object with show lldp info remote
         print(f"collecting show lldp neighbors for {hostname}")
         output_show_lldp = net_connect.send_command(
             "show lldp info remote", use_textfsm=True
@@ -264,10 +269,11 @@ for line in fabric:
         print(f"Writing cdp neighbor data to {int_report}")
         with open(int_report, "w") as file:
             output_cdp = json.dumps(output_cdp, indent=2)
+            file.write(output_cdp)
 
-        # Write the show ip JSON data to a file
+        # Write the show lldp JSON data to a file
         int_report = get_current_path("Interface", "-lldp.txt")
-        print(f"Writing show ip data to {int_report}")
+        print(f"Writing show lldp data to {int_report}")
         with open(int_report, "w") as file:
             output_show_lldp = json.dumps(output_show_lldp, indent=2)
             file.write(output_show_lldp)
