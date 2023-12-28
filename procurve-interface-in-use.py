@@ -14,6 +14,10 @@ __author__ = "Michael Hubbard"
 __author_email__ = "mhubbard@vectorusa.com"
 __copyright__ = ""
 __license__ = "Unlicense"
+# -*- coding: utf-8 -*-
+#  procurve-interface-in-use.py
+#  Procurve Change Request data collection Helper program
+#  Created by Michael Hubbard on 2023-27-20.
 
 
 def get_current_path(sub_dir1: str, extension: str, sub_dir2="") -> str:
