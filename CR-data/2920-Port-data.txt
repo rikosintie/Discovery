@@ -1,3 +1,4 @@
+ interfaces with traffic: 3
 Interface 1 - total_bytes 0
 Interface 2 - total_bytes 0
 Interface 3 - total_bytes 0

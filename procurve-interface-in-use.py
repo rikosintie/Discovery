@@ -71,11 +71,14 @@ def extract_Interface_bytes(json_data: list):
     """
 
     hardware_per_switch = []
+    count: int = 0
     for switch_data in data:
         bytes = switch_data["total_bytes"]
         interface_data = switch_data["port"] + " - " + "total_bytes " + bytes
         hardware_per_switch.append(interface_data)
-    return hardware_per_switch
+        if bytes != "0":
+            count += 1
+    return hardware_per_switch, count
 
 
 """
@@ -120,7 +123,7 @@ for line in fabric:
     with open(int_report, "r", encoding="utf-8") as file:
         data = json.load(file)
 
-    stack_info = extract_Interface_bytes(data)
+    stack_info, count = extract_Interface_bytes(data)
     if stack_info == []:
         print("No interfaces with 0 Total_Bytes found")
         SystemExit()
@@ -128,8 +131,11 @@ for line in fabric:
     int_report = get_current_path("CR-data", "-Port-data.txt")
     print(f"Writing CR data to {int_report}")
     with open(int_report, "w") as file:
+        file.write(f" interfaces with traffic: {count}\n")
         for line in stack_info:
             file.write(f"Interface {line}\n")
 
+    print()
+    print(f"Number of Interfaces with traffic: {count}\n")
     for interface in stack_info:
         print(f"Hostname: {hostname} Interface: {interface}")
