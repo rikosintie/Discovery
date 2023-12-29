@@ -11,6 +11,8 @@ show ip
 
 show ip source-interface
 
+show ip route ospf
+
 show ip ospf interface
 
 show ip ospf neighbor
@@ -23,6 +25,8 @@ show interface status
 
 show int status | i Up
 
+show interfaces transceiver detail
+
 show cdp neighbors
 
 show lldp information remote
@@ -30,6 +34,8 @@ show lldp information remote
 sh power-over-ethernet brief | i Del
 
 show power
+
+show modules
 
 show ip ssh
 
