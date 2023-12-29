@@ -120,7 +120,7 @@ def remove_empty_lines(filename: str) -> str:
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-s", "--site", help="Site name - ex. MVMS")
+parser.add_argument("-s", "--site", help="Site name - ex. HQ")
 args = parser.parse_args()
 site = args.site
 
