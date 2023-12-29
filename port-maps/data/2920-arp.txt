@@ -7,7 +7,9 @@ HP-2920-24G-PoEP# show arp
   IP Address       MAC Address       Type    Port
   ---------------  ----------------- ------- ----
   192.168.10.115   28d0ea-932a42     dynamic 24  
+  192.168.10.221   000c29-4caa4e     dynamic 24  
   192.168.10.254   085b0e-7c7930     dynamic 24  
+  10.254.34.17     6400f1-016fd5     dynamic 1   
 
 
 HP-2920-24G-PoEP# 

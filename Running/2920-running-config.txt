@@ -37,62 +37,6 @@ ip source-interface tunneled-node-server vlan 850
 ip source-interface radsec vlan 850
 key-chain "COR"
 key-chain "COR" key 1 key-string "O$FPkey4C0R"
-interface 7
-   broadcast-limit 1
-   speed-duplex 10-full
-   exit
-interface 8
-   broadcast-limit 1
-   speed-duplex 10-full
-   exit
-interface 9
-   broadcast-limit 1
-   speed-duplex 10-full
-   exit
-interface 10
-   broadcast-limit 1
-   speed-duplex 10-full
-   exit
-interface 11
-   broadcast-limit 1
-   speed-duplex 10-full
-   exit
-interface 12
-   broadcast-limit 1
-   speed-duplex 10-full
-   exit
-interface 13
-   broadcast-limit 1
-   speed-duplex 10-full
-   exit
-interface 14
-   broadcast-limit 1
-   speed-duplex 10-full
-   exit
-interface 15
-   broadcast-limit 1
-   speed-duplex 10-full
-   exit
-interface 16
-   broadcast-limit 1
-   speed-duplex 10-full
-   exit
-interface 17
-   broadcast-limit 1
-   speed-duplex 10-full
-   exit
-interface 18
-   broadcast-limit 1
-   speed-duplex 10-full
-   exit
-interface 19
-   broadcast-limit 1
-   speed-duplex 10-full
-   exit
-interface 20
-   broadcast-limit 1
-   speed-duplex 10-full
-   exit
 interface loopback 0
    ip address 1.1.1.1
    exit
@@ -167,6 +111,7 @@ vlan 850
    ip ospf 10.254.34.18 area backbone
    exit
 primary-vlan 850
+allow-unsupported-transceiver
 no tftp server
 no autorun
 no dhcp config-file-update
