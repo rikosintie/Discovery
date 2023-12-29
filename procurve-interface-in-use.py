@@ -131,7 +131,7 @@ for line in fabric:
     int_report = get_current_path("CR-data", "-Port-data.txt")
     print(f"Writing CR data to {int_report}")
     with open(int_report, "w") as file:
-        file.write(f" interfaces with traffic: {count}\n")
+        file.write(f"Number of Interfaces with traffic: {count}\n")
         for line in stack_info:
             file.write(f"Interface {line}\n")
 
