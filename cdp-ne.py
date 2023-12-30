@@ -1,22 +1,27 @@
 """
-    Creates a text file from the cdp file with:
+    Creates a csv file from the cdp file with:
+    "local_port"
     "neighbor_id"
     "neighbor_address"
     "neighbor_platform"
     "neighbor_port"
-    "local_port":
-    "neighbor_version":
+
+    Prints a table to the terminal
 
 Returns:
     Nothing - creates files in CR-data directory
 """
 
 import argparse
+import csv
 import json
 import os
 import sys
 
 from icecream import ic
+
+# from prettytable.colortable import ColorTable, Themes
+from prettytable import PrettyTable
 
 # ic.enable()
 ic.disable()
@@ -120,10 +125,35 @@ for line in fabric:
     with open(cdp_file, "r", encoding="utf-8") as file:
         cdp_neighbor = json.load(file)
 
-    print("     Port    Hostname     IP Address Platform   interface  software")
+    # table = ColorTable(theme=Themes.OCEAN)
+    table = PrettyTable()
+    table.field_names = cdp_neighbor[0].keys()
 
-    for value in cdp_neighbor:
-        # if "cisco WS" in value["platform"]:
-        print(
-            f'{hostname}: {value["local_port"]},  {value["neighbor_id"]},{value["neighbor_address"]},{value["neighbor_platform"]}, {value["neighbor_port"]}, {value["neighbor_version"]}'
+    # Add data to the table
+    for row in cdp_neighbor:
+        table.add_row(row.values())
+    # Only print the following columns. neighbor_version is not so useful
+    print(
+        table.get_string(
+            fields=[
+                "local_port",
+                "neighbor_id",
+                "neighbor_address",
+                "neighbor_platform",
+                "neighbor_capability",
+                "neighbor_port",
+            ]
         )
+    )
+
+    cdp_out = table.get_string()
+
+    #  Write the cdp output to disk
+    int_report = get_current_path("CR-data", "-cdp-data.csv")
+    print(f"Writing cdp data to {int_report}")
+    with open(int_report, "w") as csv_file:
+        csv_writer = csv.writer(csv_file)
+        # Write the header
+        csv_writer.writerow(table.field_names)
+        # Write the data rows
+        csv_writer.writerows(table.rows)
