@@ -101,17 +101,8 @@ with open(dev_inv_file) as devices_file:
 
 uptime = []
 for line in fabric:
-    # line = line.strip("\n")
-    # ipaddr = line.split(",")[0]
-    # vendor = line.split(",")[1]
     hostname = line.split(",")[2]
-    # username = line.split(",")[3]
-    # password = line.split(",")[4]
 
-    #
-    # loc = get_current_path()
-    # loc = loc + "\\interface\\"
-    # cdp_file = loc + hostname + "-cdp.txt"
     cdp_file = get_current_path("Interface", "-cdp.txt")
     ic(cdp_file)
 
