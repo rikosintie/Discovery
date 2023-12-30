@@ -137,8 +137,6 @@ for line in fabric:
         )
     )
 
-    cdp_out = table.get_string()
-
     #  Write the cdp output to disk
     int_report = get_current_path("CR-data", "-cdp-data.csv")
     print(f"Writing cdp data to {int_report}")
