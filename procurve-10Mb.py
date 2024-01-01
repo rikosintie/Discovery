@@ -1,5 +1,14 @@
 # !!!!! Helper Script - Run on offline data !!!!!
 
+"""
+        Reads the interface file created by procurve-Config-pull.py and
+        builds a list of interfaces running at 10Mb full or half. Aruba and Cisco smartrate (mGig) ports do not support 10Mb connections.
+
+
+    Returns:
+        Nothing : a file is written to the CR-data directory as hostname-10Mb-Ports.txt
+"""
+
 import argparse
 import json
 import os
@@ -14,6 +23,10 @@ __author__ = "Michael Hubbard"
 __author_email__ = "mhubbard@vectorusa.com"
 __copyright__ = ""
 __license__ = "Unlicense"
+# -*- coding: utf-8 -*-
+#  procurve-10Mb.py
+#  Procurve Change Request data collection
+#  Created by Michael Hubbard on 2023-28-20.
 
 
 def get_current_path(sub_dir1: str, extension: str, sub_dir2="") -> str:
