@@ -20,7 +20,7 @@ from icecream import ic
 ic.disable()
 
 __author__ = "Michael Hubbard"
-__author_email__ = "mhubbard@vectorusa.com"
+__author_email__ = "michael.hubbard99@gmail.com"
 __copyright__ = ""
 __license__ = "Unlicense"
 # -*- coding: utf-8 -*-
