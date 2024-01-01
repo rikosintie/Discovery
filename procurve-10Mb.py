@@ -1,8 +1,8 @@
 # !!!!! Helper Script - Run on offline data !!!!!
 
 """
-        Reads the interface file created by procurve-Config-pull.py and
-        builds a list of interfaces running at 10Mb full or half. Aruba and Cisco smartrate (mGig) ports do not support 10Mb connections.
+    Reads the interface file created by procurve-Config-pull.py and
+    builds a list of interfaces running at 10Mb full or half. Aruba and Cisco smartrate (mGig) ports do not support 10Mb connections.
 
 
     Returns:
