@@ -10,6 +10,8 @@ The "procurve-Config-pull.py" script uses the <https://github.com/ktbyers/netmik
 
 Once the data has been collected, there are helper scripts that create port maps, CDP neighbor tables, LLDP neighbor tables, OSPF neighbor tables, etc.
 
-A "show run structured" file is created. There is also a text file of show commands sent. This file can be edited to collect any show commands.
+A "show run structured" file is created in the "Running" directory. The Procurve firmware allows you to include the "structured" keyword after the "show ruuning" command. This groups the output in an easier to read format.
+
+There is also a text file of show commands sent. This file can be edited to collect any show commands.
 
 The data is saved to various directories for easy access.
