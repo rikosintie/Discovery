@@ -178,9 +178,8 @@ for line in fabric:
             break
         print(f"Processing {hostname}")
         #  all switches use the same config file
-        #  cfg_file = 'gl' + "-config-file.txt"
-        # for data collection, first line must be end
-        cfg_file = "gl" + "-config-file.txt"
+        # for data collection, the first line in the file must be end
+        cfg_file = "procurve" + "-config-file.txt"
         print()
         print(net_connect.find_prompt())
 
