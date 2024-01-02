@@ -7,6 +7,8 @@ show uptime
 
 show version | i ROM
 
+show vlan custom id name:20 ipaddr state
+
 show ip
 
 show ip source-interface
@@ -31,7 +33,7 @@ show cdp neighbors
 
 show lldp information remote
 
-sh power-over-ethernet brief | i Del
+show power-over-ethernet brief | i Del
 
 show power
 
