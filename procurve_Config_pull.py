@@ -221,7 +221,9 @@ for line in fabric:
         # Send show running
         print(f"Collecting show running-config from {hostname}")
         # print(net_connect.find_prompt())
-        output_text_run = net_connect.send_command("show running", read_timeout=360)
+        output_text_run = net_connect.send_command(
+            "show running structured", read_timeout=360
+        )
 
         # Disconnect from the switch and start writing data to disk
         net_connect.disconnect()
