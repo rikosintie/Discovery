@@ -6,7 +6,7 @@ This project was created to make the discovery process for a network refresh eas
 
 ## The Process
 
-The "procurve-Config-pull.py" script uses the <https://github.com/ktbyers/netmiko> library and the Google [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run show commands and create JSON files.
+The "procurve-Config-pull.py" script uses the [netmiko](https://github.com/ktbyers/netmiko) library and the Google [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run show commands and create JSON files.
 
 Once the data has been collected, there are helper scripts that create port maps, CDP neighbor tables, LLDP neighbor tables, OSPF neighbor tables, etc.
 
