@@ -14,6 +14,13 @@ A "show run structured" file is created in the "Running" directory. The Procurve
 
 There is also a text file of "show commands" sent. This file can be edited to send any show commands you need. The filename is procurve-config-file.txt.
 
+On the Procurve switches you can customize the output of show vlans. This HPE Techpub article shows how to do it:
+[Customizing the show VLANs output](https://techhub.hpe.com/eginfolib/networking/docs/switches/K-KA-KB/15-18/atmg/content/ch01s06.html)
+
+The procurve-config-file.txt uses the following customizations:
+
+`show vlan custom id name:20 ipaddr state`
+
 The data is saved to various directories for easy access.
 
 ## Getting Started
