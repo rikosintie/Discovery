@@ -63,6 +63,12 @@ On macOS/Linux
 
 `source venv/bin/activate`
 
+Here is what my terminal looks like after activating:
+
+<p align="center" width="100%">
+<img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/venv.png" alt="venv">
+</p>
+
 ### 4. Install Dependencies
 
 You can use `pip list` to list the dependencies. If you run it now you will see:
@@ -78,6 +84,48 @@ setuptools 69.0.3
 Now run the following:
 
 `pip install -r requirements.txt`
+
+You will see all the dependencies being downloaded and installed. Here is a snippet of the dependencies.
+
+```bash
+$ pip install -r requirements.txt
+Collecting asttokens~=2.4.1 (from -r requirements.txt (line 1))
+  Downloading asttokens-2.4.1-py2.py3-none-any.whl.metadata (5.2 kB)
+Collecting bcrypt~=4.1.2 (from -r requirements.txt (line 2))
+  Downloading bcrypt-4.1.2-cp39-abi3-manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+```
+
+Now if we run `pip list` we will see that the dependencies have been installed:
+
+```bash
+$ pip list
+Package       Version
+------------- -------
+asttokens     2.4.1
+bcrypt        4.1.2
+cffi          1.16.0
+colorama      0.4.6
+cryptography  41.0.7
+executing     2.0.1
+future        0.18.3
+icecream      2.1.3
+netmiko       4.3.0
+ntc_templates 4.1.0
+paramiko      3.4.0
+pip           23.3.2
+prettytable   3.9.0
+pycparser     2.21
+Pygments      2.17.2
+PyNaCl        1.5.0
+pyserial      3.5
+PyYAML        6.0.1
+scp           0.14.5
+setuptools    69.0.3
+six           1.16.0
+textfsm       1.1.3
+wcwidth       0.2.12
+
+```
 
 ### 6. Deactivate the Virtual Environment
 
