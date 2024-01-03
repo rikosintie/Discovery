@@ -65,7 +65,19 @@ On macOS/Linux
 
 ### 4. Install Dependencies
 
-`python setup.py install`
+You can use `pip list` to list the dependencies. If you run it now you will see:
+
+```bash
+$ pip list
+Package    Version
+---------- -------
+pip        23.3.2
+setuptools 69.0.3
+```
+
+Now run the following:
+
+`pip install -r requirements.txt`
 
 ### 6. Deactivate the Virtual Environment
 
