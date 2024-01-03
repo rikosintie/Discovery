@@ -1,0 +1,14 @@
+{
+    "MD033": {
+        "allowed_elements": [
+            "nobr",
+            "sup",
+            "img",
+            "p",
+            "a"
+        ]
+    },
+    "default": true,
+    "MD013":false,
+    "MD036":false
+}

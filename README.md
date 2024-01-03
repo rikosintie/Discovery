@@ -4,6 +4,8 @@
 
 This project was created to make the discovery process for a network refresh easy, consistent and comprehensive. The discovery data can be used to create a change request for the customer and will make troubleshooting any issues after a switch is replaced easier.
 
+----------------------------------------------------------------
+
 ## The Process
 
 The "procurve-Config-pull.py" script uses the [netmiko](https://github.com/ktbyers/netmiko) library and the Google [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run show commands and create JSON files.
@@ -15,6 +17,7 @@ A "show run structured" file is created in the "Running" directory. The Procurve
 There is also a text file of "show commands" sent. This file can be edited to send any show commands you need. The filename is procurve-config-file.txt.
 
 On the Procurve switches you can customize the output of show vlans. This HPE Techpub article shows how to do it:
+
 [Customizing the show VLANs output](https://techhub.hpe.com/eginfolib/networking/docs/switches/K-KA-KB/15-18/atmg/content/ch01s06.html)
 
 The procurve-config-file.txt uses the following customizations:
@@ -22,6 +25,8 @@ The procurve-config-file.txt uses the following customizations:
 `show vlan custom id name:20 ipaddr state`
 
 The data is saved to various directories for easy access.
+
+----------------------------------------------------------------
 
 ## Getting Started
 
@@ -35,6 +40,10 @@ cd Discovery
 ```
 
 If you don't have git installed, you can download the zip file from the [repository](https://github.com/rikosintie/Discovery). Click on the green "Code" button and select "Download ZIP". Then unzip the file.
+
+<p align="center" width="100%">
+<img width="60%" src="[github](https://github.com/rikosintie/Discovery/blob/main/images/GitHub-Code.png)" alt="Github ZIP file">
+</p>
 
 ### 2. Create a Virtual Environment
 
@@ -126,7 +135,7 @@ I recommend running the script on one switch the first time instead of a long li
 
 The files will be saved in the following directories:
 
-- CR-data - files that need further processing
+- CR-data - files that are ready for viewing
 - Interface - files that need further processing
 - Running - The "show running structured" output for each switch
 
