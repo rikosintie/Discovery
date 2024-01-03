@@ -41,7 +41,7 @@ cd Discovery
 
 If you don't have git installed, you can download the zip file from the [repository](https://github.com/rikosintie/Discovery). Click on the green "Code" button and select "Download ZIP". Then unzip the file.
 
-<p align="center" width="100%">
+<p align="center" width="60%">
 <img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/GitHub-Code.png" alt="Github ZIP file">
 </p>
 
