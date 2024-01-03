@@ -66,7 +66,7 @@ On macOS/Linux
 Here is what my terminal looks like after activating:
 
 <p align="center" width="100%">
-<img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/venv.png" alt="venv">
+<img width="100%" src="https://github.com/rikosintie/Discovery/blob/main/images/venv.png" alt="venv">
 </p>
 
 ### 4. Install Dependencies
