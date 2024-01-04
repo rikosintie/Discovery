@@ -56,9 +56,11 @@ The script will pull any information that you put into the procurve-config file 
   - size
   - material
 - What are the asset Tag requirements?
+- Is an escort required when we are on site?
 - What firmware version should be installed?
 - Do you have a standard for host names?
-- Do you have a management vlan?
+- Is DHCP used for non-server hosts i.e. cameras, door access panels, etc?
+- Do you have a management vlan?s
 - If so, what are the management vlan IP addresses?
 - default gateway or gateway of last resort IP address?
 - Authentication Server IP address
@@ -77,6 +79,13 @@ The script will pull any information that you put into the procurve-config file 
   - Host Key type?
   - Ciphers?
   - MACs?
+  - key length?
+- Power cord connector requirements
+  - NEMA 5-15
+  - NEMA L5-20
+  - NEMA L6-20
+  - IEC C14
+  - etc
 
 ----------------------------------------------------------------
 
