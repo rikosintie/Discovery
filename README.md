@@ -39,9 +39,44 @@ Status and Counters - VLAN Information - Custom view
  100    test            10.10.100.1     255.255.255.0   Manual     Down  No    No
  850    OSPF-Peering    10.254.34.18    255.255.255.252 Manual     Up    No    No
 ```
-This output is very functional, you get
+
+This output is very functional, you get enough information to build a detailed cutover plan.
 
 The script saves the data to various directories for easy access.
+
+----------------------------------------------------------------
+
+## Deployment questions for Discovery
+
+The script will pull any information that you put into the procurve-config file but it can't answer all the questions! Here are some questions I ask during the kickoff meeting with the customer. This is not a exhaustive list, feel free to add to it.
+
+- What are the labeling requirements
+  - Location
+  - What information
+  - size
+  - material
+- What are the asset Tag requirements?
+- What firmware version should be installed?
+- Do you have a standard for host names?
+- Do you have a management vlan?
+- If so, what are the management vlan IP addresses?
+- default gateway or gateway of last resort IP address?
+- Authentication Server IP address
+- Authentication Server credentials
+- NTP Server
+  - IP address
+  - Authentication credentials
+- Username/password for base configuration installation
+- Enable password for base configuration
+- snmp requirements
+  - Version
+  - community names
+  - location
+  - Required traps
+- ssh
+  - Host Key type?
+  - Ciphers?
+  - MACs?
 
 ----------------------------------------------------------------
 
