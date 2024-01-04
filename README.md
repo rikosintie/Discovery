@@ -1,5 +1,16 @@
 # HPE Procurve Discovery Project<!-- omit from toc -->
 
+- [Purpose](#purpose)
+- [The Process](#the-process)
+- [Deployment questions for Discovery](#deployment-questions-for-discovery)
+- [Getting Started](#getting-started)
+  - [1. Clone the Repository](#1-clone-the-repository)
+  - [2. Create a Virtual Environment](#2-create-a-virtual-environment)
+  - [3. Activate the Virtual Environment](#3-activate-the-virtual-environment)
+  - [4. Install Dependencies](#4-install-dependencies)
+  - [5. Deactivate the Virtual Environment](#5-deactivate-the-virtual-environment)
+- [License](#license)
+
 ## Purpose
 
 This project was created to make the discovery process for a network refresh easy, consistent and comprehensive. The discovery data can be used to create a change request for the customer and will make troubleshooting any issues after a switch is replaced easier.
@@ -10,7 +21,12 @@ This project was created to make the discovery process for a network refresh eas
 
 The "procurve-Config-pull.py" script uses the [netmiko](https://github.com/ktbyers/netmiko) library and the Google [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run show commands and create JSON files.
 
-Once the data has been collected, there are helper scripts that create port maps, CDP neighbor tables, LLDP neighbor tables, OSPF neighbor tables, etc.
+Once the data has been collected, there are helper scripts that create:
+
+- port maps
+- CDP neighbor tables
+- LLDP neighbor tables
+- OSPF neighbor tables
 
 A "show run structured" file is created in the "Running" directory. The Procurve firmware allows you to include the "structured" keyword after the "show running" command. This groups the output in an easier to read format.
 
@@ -134,7 +150,7 @@ Here is what my terminal looks like after activating:
 
 ### 4. Install Dependencies
 
-You can use `pip list` to list the dependencies. If you run it now you will see:
+You can use `pip list` to list the packages currently installed. If you run it now you will see:
 
 ```bash
 $ pip list
