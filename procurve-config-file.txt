@@ -61,6 +61,8 @@ show logging -r -e
 
 show logging -r -m
 
+show crypto host-public-key fingerprint
+
 show mac-address | ex 24
 
 show arp
