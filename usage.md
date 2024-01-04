@@ -32,7 +32,7 @@ There is a sample file named device-inventory-area1.csv in the project
 
 ## Password
 
-This is always an area of concern. The script supports two method:
+This is always an area of concern. The script supports two methods:
 
 - Create an environment variable "cyberARK" and save the password to the variable.
 - Include the password in the inventory file.
