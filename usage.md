@@ -21,7 +21,7 @@ For example,
 
 Create one line for every switch that you want to process.
 
-You can use either a spreadsheet program or a text editor to create the inventory file but it must have a ".csv" file extension. If you use vscode, there is a plugin called Rainbow csv that allows you to work with csv files right in vscode. It also allows you to use SQL syntax to query the file. Very nice if you file get to be long.
+You can use either a spreadsheet program or a text editor to create the inventory file but it must have a ".csv" file extension. If you use vscode, there is a plugin called Rainbow csv that allows you to work with csv files in vscode. It also allows you to use SQL syntax to query the file. Very nice if the file gets to be long.
 
 Save the file as `device-inventory-<site name>.csv` in the root of the project folder.
 
@@ -32,10 +32,12 @@ There is a sample file named device-inventory-area1.csv in the project
 
 ## Password
 
-This is always an area of contention. The scrip supports two method:
+This is always an area of concern. The script supports two method:
 
 - Create an environment variable "cyberARK" and save the password to the variable.
 - Include the password in the inventory file.
+
+Neither method is perfect but using the environment variable is probably more secure than having a csv file with plaintext passwords in it.
 
 ### Creating an Environment Variable
 
