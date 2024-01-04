@@ -22,9 +22,26 @@ On the Procurve switches you can customize the output of show vlans. This HPE Te
 
 The procurve-config-file.txt uses the following customizations:
 
-`show vlan custom id name:20 ipaddr state`
+```bash
+show vlan custom id name:15 ipaddr ipmask ipconfig state voice jumbo
 
-The data is saved to various directories for easy access.
+Status and Counters - VLAN Information - Custom view
+
+ VLANID VLAN name       IP Addr         IP Mask         IPConfig   State Voice Jumbo
+ ------ --------------- --------------- --------------- ---------- ----- ----- -----
+ 1      DEFAULT_VLAN                                    DHCP/Bootp Up    No    No
+ 10     User            192.168.10.52   255.255.255.0   Manual     Up    No    No
+ 20     Voice           10.164.24.200   255.255.255.0   Manual     Up    Yes   No
+ 60     IOT0            10.14.66.17     255.255.255.248 Manual     Up    No    No
+ 61     IOT1            10.14.65.17     255.255.255.248 Manual     Up    No    No
+ 62     IOT2            10.14.64.17     255.255.255.248 Manual     Up    No    No
+ 63     IOT3            10.14.63.17     255.255.255.248 Manual     Up    No    No
+ 100    test            10.10.100.1     255.255.255.0   Manual     Down  No    No
+ 850    OSPF-Peering    10.254.34.18    255.255.255.252 Manual     Up    No    No
+```
+This output is very functional, you get
+
+The script saves the data to various directories for easy access.
 
 ----------------------------------------------------------------
 
@@ -45,13 +62,15 @@ If you don't have git installed, you can download the zip file from the [reposit
 <img width="40%" src="https://github.com/rikosintie/Discovery/blob/main/images/GitHub-Code.png" alt="Github ZIP file">
 </p>
 
+NOTE: Once you have the repository cloned it is linked to the repository on github.com. You should issue a `git pull` once in a while to pull down any changes that have been made to the repository.
+
 ### 2. Create a Virtual Environment
 
 `python -m venv venv --upgrade-deps --prompt="Discovery"`
 
 This will create the standard "venv" directory but when activated will display "Discovery". I prefer this over using `python -m venv Discovery` because it's the standard way to create the virtual environment. But I like seeing Discovery instead of venv when I activate the environment.
 
-The `--upgrade-deps` argument tells python to upgrade pip to the latest version while creating the virtual environment. You need internet access for pip to be upgraded. If you don't have internet access, remove the `--upgrade-deps` argument.
+The `--upgrade-deps` argument tells python to upgrade pip to the latest version when creating the virtual environment. You need internet access for pip to be upgraded. If you don't have internet access, remove the `--upgrade-deps` argument.
 
 ### 3. Activate the Virtual Environment
 
@@ -127,13 +146,21 @@ wcwidth       0.2.12
 
 ```
 
-### 6. Deactivate the Virtual Environment
+### 5. Deactivate the Virtual Environment
 
 When you are finished, deactivate the environment
 
 `deactivate`
 
+----------------------------------------------------------------
+
 ## Usage
+
+There are a few steps needed to be ready to do the discovery process:
+
+- Create a device inventory file
+- Decide how you want store the password
+- Update the mac.txt file to match the format of the switches
 
 ### Create the device inventory file
 
@@ -151,6 +178,8 @@ Save the file as `device-inventory-<site name>.csv` in the root of the project f
 
 For example,
 `device-inventory-hq.csv`
+
+There is a sample file named device-inventory-area1.csv in the project
 
 ### Password
 
@@ -183,7 +212,7 @@ And change it to
     # password = os.environ.get("cyberARK")
 ```
 
-The "#" symbols is the comment command in python. Any line starting with a "#" will be ignored.
+The "#" symbol is the comment command in python. Any line starting with a "#" will be ignored.
 
 Now that the project is set up and the inventory file is created, you can run the script.
 
