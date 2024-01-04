@@ -3,11 +3,25 @@ HP-2920-24G-PoEP# configure terminal
 HP-2920-24G-PoEP(config)#  end
 HP-2920-24G-PoEP# no page
 HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show config status
+
+The running configuration matches the saved configuration.
+
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show config oobm
+
+Startup configuration: 38
+
+oobm
+   ip address dhcp-bootp
+   exit
+
+HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show time
-Wed Jan  3 19:06:56 2024
+Wed Jan  3 23:53:12 2024
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show uptime
-0000:02:57:48.08
+0000:07:44:04.70
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show ntp status
 
@@ -16,14 +30,14 @@ HP-2920-24G-PoEP# show ntp status
   NTP Status             : Enabled         NTP Mode        : Unicast         
   Synchronization Status : Synchronized    Peer Dispersion : 0.00000 sec     
   Stratum Number         : 2               Leap Direction  : 0               
-  Reference Assoc ID     : 0               Clock Offset    : 0.00021 sec     
-  Reference ID           : 129.6.15.29     Root Delay      : 0.07133 sec     
-  Precision              : 2**-18          Root Dispersion : 0.07598 sec     
-  NTP Up Time            : 0d 0h 31m       Time Resolution : 1395 nsec       
+  Reference Assoc ID     : 0               Clock Offset    : 0.03045 sec     
+  Reference ID           : 129.6.15.29     Root Delay      : 0.07368 sec     
+  Precision              : 2**-18          Root Dispersion : 1.18275 sec     
+  NTP Up Time            : 0d 5h 17m       Time Resolution : 1394 nsec       
   Drift                  : 0.00000 sec/sec 
 
-  System Time            : Wed Jan  3 19:06:56 2024                
-  Reference Time         : Wed Jan  3 18:44:16 2024                
+  System Time            : Wed Jan  3 23:53:13 2024                
+  Reference Time         : Wed Jan  3 22:28:16 2024                
 
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show ntp associations
@@ -33,8 +47,8 @@ HP-2920-24G-PoEP# show ntp associations
 
  Remote          St   T    When   Poll  Reach    Delay    Offset   Dispersion
  --------------- ---- ---- ------ ----- -------- -------- -------- ----------
- 192.168.10.221  1    u    1872   8     77       0.000    0.000    14.08919  
- 129.6.15.29     1    u    1872   13    77       0.000    0.000    14.09122  
+ 192.168.10.221  1    u    19048  10    37       0.000    0.000    15.96813  
+ 129.6.15.29     1    u    19048  13    37       0.000    0.000    15.97025  
 
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show ntp server
@@ -61,6 +75,84 @@ HP-2920-24G-PoEP#
 HP-2920-24G-PoEP# show version | i ROM
 Boot ROM Version:    WB.16.03
 Active Boot ROM:     Primary
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show config vlan
+
+Startup configuration: 38
+
+vlan 1
+   name "DEFAULT_VLAN"
+   no untagged 1,3,24,Trk1
+   untagged 2,4-20,23
+   ip address dhcp-bootp
+   exit
+vlan 10
+   name "User"
+   untagged 24
+   ip helper-address 10.10.83.20
+   ip helper-address 10.10.100.50
+   ip address 192.168.10.52 255.255.255.0
+   ip source-interface sntp vlan
+   exit
+vlan 20
+   name "Voice"
+   tagged 24
+   ip helper-address 10.10.83.20
+   ip helper-address 10.10.100.50
+   ip address 10.164.24.200 255.255.255.0
+   voice
+   exit
+vlan 60
+   name "IOT0"
+   tagged 24
+   ip helper-address 10.10.83.20
+   ip helper-address 10.10.100.50
+   ip address 10.14.66.17 255.255.255.248
+   exit
+vlan 61
+   name "IOT1"
+   tagged 24
+   ip helper-address 10.10.83.20
+   ip helper-address 10.10.100.50
+   ip address 10.14.65.17 255.255.255.248
+   exit
+vlan 62
+   name "IOT2"
+   tagged 24
+   ip helper-address 10.10.83.20
+   ip helper-address 10.10.100.50
+   ip address 10.14.64.17 255.255.255.248
+   exit
+vlan 63
+   name "IOT3"
+   tagged 24
+   ip helper-address 10.10.83.20
+   ip helper-address 10.10.100.50
+   ip address 10.14.63.17 255.255.255.248
+   exit
+vlan 100
+   name "test"
+   untagged 3
+   ip address 10.10.100.1 255.255.255.0
+   dhcp-server
+   exit
+vlan 850
+   name "OSPF-Peering"
+   tagged Trk1
+   untagged 1
+   ip address 10.254.34.18 255.255.255.252
+   ip ospf 10.254.34.18 area backbone
+   ip source-interface tacacs vlan
+   ip source-interface radius vlan
+   ip source-interface syslog vlan
+   ip source-interface telnet vlan
+   ip source-interface tftp vlan
+   ip source-interface sflow vlan
+   ip source-interface tunneled-node-server vlan
+   ip source-interface radsec vlan
+   primary-vlan
+   exit
+
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show vlan custom id name:15 ipaddr ipmask ipconfig state voice jumbo
 
@@ -140,6 +232,17 @@ HP-2920-24G-PoEP# show ip route 0.0.0.0
  
 
 HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show config router ospf
+
+Startup configuration: 38
+
+router ospf
+   area backbone
+   redistribute connected route-map "SITE30"
+   enable
+   exit
+
+HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show ip route ospf
 
                                                                                                                                                                                                                                                        IP Route Entries
@@ -184,7 +287,7 @@ HP-2920-24G-PoEP# show ip ospf general
   Area Border               : no 
   AS Border                 : yes
   External LSA Count        : 7          
-  External LSA Checksum Sum : 210186     
+  External LSA Checksum Sum : 226443     
   Originate New LSA Count   : 6          
   Receive New LSA Count     : 1          
 
@@ -208,13 +311,13 @@ HP-2920-24G-PoEP# show ip ospf external-link-state
 
   Link State ID   Router ID       Age  Sequence #  Checksum  
   --------------- --------------- ---- ----------- ----------
-  1.1.1.1         1.1.1.1         1367 0x80000006  0x00000c3a
-  10.14.63.16     1.1.1.1         1367 0x80000006  0x00008c5d
-  10.14.64.16     1.1.1.1         1367 0x80000006  0x00008167
-  10.14.65.16     1.1.1.1         1367 0x80000006  0x00007671
-  10.14.66.16     1.1.1.1         1367 0x80000006  0x00006b7b
-  10.164.24.0     1.1.1.1         1367 0x80000006  0x0000f68c
-  192.168.10.0    1.1.1.1         1367 0x80000006  0x00001abc
+  1.1.1.1         1.1.1.1         1804 0x8000000f  0x0000f943
+  10.14.63.16     1.1.1.1         1804 0x8000000f  0x00007a66
+  10.14.64.16     1.1.1.1         1804 0x8000000f  0x00006f70
+  10.14.65.16     1.1.1.1         1804 0x8000000f  0x0000647a
+  10.14.66.16     1.1.1.1         1804 0x8000000f  0x00005984
+  10.164.24.0     1.1.1.1         1804 0x8000000f  0x0000e495
+  192.168.10.0    1.1.1.1         1804 0x8000000f  0x000008c5
  
 
 HP-2920-24G-PoEP# 
@@ -401,7 +504,7 @@ HP-2920-24G-PoEP# show ip ssh
   --- -------- + ---------------------------------------------- -----
   1   console  |
   2   ssh      | 192.168.10.115                                 49238
-  3   ssh      | 192.168.10.115                                 53950
+  3   ssh      | 192.168.10.115                                 54564
   4   inactive |
   5   inactive |
   6   inactive |
@@ -468,11 +571,87 @@ HP-2920-24G-PoEP# show logging -r -e
 ----  Reverse event Log listing: Events Since Boot  ----
 ----  Top of Log : Events Listed = 0  ----
 HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show logging -r -i
+ Keys:   W=Warning   I=Information
+         M=Major     D=Debug E=Error
+----  Reverse event Log listing: Events Since Boot  ----
+I 01/03/24 23:53:11 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/03/24 23:53:10 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/03/24 23:49:07 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/03/24 23:49:07 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/03/24 23:48:47 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/03/24 23:48:46 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/03/24 23:00:01 04612 job: Job 'wrmem' completed
+I 01/03/24 22:30:18 04910 ntp: All the NTP server associations reset.
+I 01/03/24 22:30:18 04908 ntp: The system clock time was changed by 0 sec
+            30447479 nsec.	 The new time is Wed Jan  3 22:30:18 2024
+.
+I 01/03/24 20:22:14 04910 ntp: All the NTP server associations reset.
+I 01/03/24 20:22:14 04908 ntp: The system clock time was changed by 0 sec
+            17232226 nsec.	 The new time is Wed Jan  3 20:22:14 2024
+.
+I 01/03/24 19:18:12 04910 ntp: All the NTP server associations reset.
+I 01/03/24 19:07:15 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/03/24 19:07:14 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/03/24 19:06:55 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/03/24 19:06:54 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/03/24 19:06:32 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/03/24 19:06:32 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/03/24 19:06:12 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/03/24 19:06:12 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/03/24 19:02:39 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+I 01/03/24 19:02:12 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/03/24 19:02:11 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/03/24 19:00:27 00184 mgr: Log cleared as a result of  'clear logging' 
+            command
+----  Top of Log : Events Listed = 24  ----
+HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show logging -r -m
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
 ----  Top of Log : Events Listed = 0  ----
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show logging -r -w
+ Keys:   W=Warning   I=Information
+         M=Major     D=Debug E=Error
+----  Reverse event Log listing: Events Since Boot  ----
+W 01/03/24 23:49:07 00641 ssh: read error Connection reset by peer, session
+            aborted
+W 01/03/24 19:07:14 00641 ssh: read error Connection reset by peer, session
+            aborted
+W 01/03/24 19:06:32 00641 ssh: read error Connection reset by peer, session
+            aborted
+----  Top of Log : Events Listed = 3  ----
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show crypto host-public-key fingerprint
+1024 cb:a8:d6:c7:da:bd:67:53:91:8c:c0:1b:49:d1:a1:2d: host_ssh2.pub
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show config files
+
+Configuration files:
+
+ id | act pri sec | name
+ ---+-------------+------------------------------------------------
+  1 |  *   *   *  | config1
+  2 |             | backup
+  3 |             | 
+  4 |             | 
+  5 |             | 
+
+HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show mac-address | ex 24
 
@@ -494,10 +673,8 @@ HP-2920-24G-PoEP# show arp
   IP Address       MAC Address       Type    Port
   ---------------  ----------------- ------- ----
   192.168.10.115   28d0ea-932a42     dynamic 24  
-  192.168.10.117   b099d7-f9dad5     dynamic 24  
   192.168.10.221   000c29-4caa4e     dynamic 24  
   192.168.10.254   085b0e-7c7930     dynamic 24  
-  10.254.34.17     6400f1-016fd5     dynamic Trk1
 
 
 HP-2920-24G-PoEP# 

@@ -67,7 +67,11 @@ show snmp-server
 
 show logging -r -e
 
+show logging -r -i
+
 show logging -r -m
+
+show logging -r -w
 
 show crypto host-public-key fingerprint
 
