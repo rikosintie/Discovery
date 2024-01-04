@@ -11,7 +11,13 @@
   - [5. Deactivate the Virtual Environment](#5-deactivate-the-virtual-environment)
 - [License](#license)
 
+There are additional sections to this documentation:
+
+- [Usage](https://github.com/rikosintie/Discovery/blob/main/usage.md)
+
 ## Purpose
+
+
 
 This project was created to make the discovery process for a network refresh easy, consistent and comprehensive. The discovery data can be used to create a change request for the customer and will make troubleshooting any issues after a switch is replaced easier.
 
@@ -30,7 +36,7 @@ Once the data has been collected, there are helper scripts that create:
 
 A "show run structured" file is created in the "Running" directory. The Procurve firmware allows you to include the "structured" keyword after the "show running" command. This groups the output in an easier to read format.
 
-There is also a text file of "show commands" sent. This file can be edited to send any show commands you need. The filename is procurve-config-file.txt.
+There is also a text file of "show commands" sent. This file can be edited to send any show commands you need. The filename is [procurve-config-file.txt](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt).
 
 On the Procurve switches you can customize the output of show vlans. This HPE Techpub article shows how to do it:
 
