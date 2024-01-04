@@ -7,6 +7,7 @@
 
 There are additional sections to this documentation:
 
+- [Getting Started](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)
 - [Usage](https://github.com/rikosintie/Discovery/blob/main/usage.md)
 
 ## Purpose
