@@ -55,6 +55,12 @@ show cdp neighbors
 
 show lldp info remote
 
+show spanning-tree
+
+show spanning-tree inconsistent-ports
+
+show spanning-tree bpdu-protection
+
 show power-over-ethernet brief | i Del
 
 show power
