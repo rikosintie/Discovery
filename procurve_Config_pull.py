@@ -45,13 +45,13 @@ but the  script halts.
 """
 
 # !!!!! Discovery Script - Does not change the running config !!!!!
-
 import argparse
 import json
 import logging
 import os
 import re
 import sys
+import timeit
 from datetime import datetime
 
 from icecream import ic
@@ -119,6 +119,7 @@ def remove_empty_lines(filename: str) -> str:
         filehandle.writelines(lines)
 
 
+start = timeit.default_timer()
 parser = argparse.ArgumentParser()
 parser.add_argument("-s", "--site", help="Site name - ex. HQ")
 args = parser.parse_args()
@@ -313,3 +314,9 @@ for line in fabric:
     print("-" * (len(hostname) + 39))
     print(f"Successfully created config files for {hostname}")
     print("-" * (len(hostname) + 39))
+stop = timeit.default_timer()
+total_time = stop - start
+# output running time in a nice format.
+mins, secs = divmod(total_time, 60)
+hours, mins = divmod(mins, 60)
+print(f"Total running time: {hours} Hours {mins} Minutes {round(secs,2)} Seconds\n")
