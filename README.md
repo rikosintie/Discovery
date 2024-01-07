@@ -74,7 +74,7 @@ The script saves the data to various directories for easy access.
 
 ## Deployment questions for Discovery
 
-The script will pull any information that you put into the procurve-config file but it can't answer all the questions! Here are some questions I ask during the kickoff meeting with the customer. Some of these questions are open ended and are meant to get the customer engaged in a conversation.
+The script will pull any information that you put into the procurve-config file but it can't answer all the questions! Here are some questions I ask during the kickoff meeting with the customer. Some of these questions are open ended and are meant to get the customer engaged in a conversation about the refresh.
 
 This is not a exhaustive list, feel free to add to it.
 
