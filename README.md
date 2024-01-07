@@ -101,11 +101,30 @@ This is not a exhaustive list, feel free to add to it.
   - Authentication credentials
 - Username/password for base configuration installation
 - Enable password for base configuration
+- Power cord connector requirements
+  - NEMA 5-15 (Standard 120v plug)
+  - NEMA L5-20 (120v twistlok plug)
+  - NEMA L6-20 (240v twistlok plug)
+  - IEC C14 (PDU Style plug)
 - Routing protocols
   - Authentication type
   - IPv4
   - IPv6
   - number of areas
+- Rate Limits on edge ports
+  - rate-limit bcast
+  - rate-limit mcast
+  - rate-limit unknown-unicast in
+- Security
+  - DHCP Snooping?
+  - Dynamic ARP Inspection
+  - Authorized Managers
+  - no tftp-server (only scp for copying files)
+- snmp requirements
+  - Version
+  - community names
+  - location
+  - Required traps
 - spanning-tree
   - Priority
   - root-guard
@@ -115,32 +134,12 @@ This is not a exhaustive list, feel free to add to it.
   - admin-edge-port
   - bpdu-protection
   - spanning-tree bpdu-protection-timeout 90
-- Rate Limits on edge ports
-  - rate-limit bcast
-  - rate-limit mcast
-  - rate-limit unknown-unicast in
-- snmp requirements
-  - Version
-  - community names
-  - location
-  - Required traps
 - ssh - Old ciphers should be removed
   - Host Key type?
   - Ciphers?
   - MACs?
   - key length?
   - Do you use ssh keys instead of passwords?
-- Security
-  - DHCP Snooping?
-  - Dynamic ARP Inspection
-  - Authorized Managers
-  - no tftp-server (only scp for copying files)
-- Power cord connector requirements
-  - NEMA 5-15
-  - NEMA L5-20
-  - NEMA L6-20
-  - IEC C14
-  - etc
 
 ----------------------------------------------------------------
 
