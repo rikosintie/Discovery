@@ -1,3 +1,9 @@
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/rikosintie/Discovery)](https%3A%2F%2Fgithub.com%2Frikosintie%2FDiscovery)
+[![Website](https://img.shields.io/badge/Works_with-Procurve-blue)](https://github.com/rikosintie/CookBook)
+[![Website](https://img.shields.io/badge/Blog-Visit-blue)](https://mwhubbard.blogspot.com)
+[![License](https://img.shields.io/github/license/rikosintie/Discovery?color=0096FF)](https://github.com/rikosintie/Discovery)
+[![X](https://img.shields.io/twitter/follow/rikosintie?style=social&logo=x)](https://twitter.com/rikosintie)
+
 # HPE Procurve Discovery Project<!-- omit from toc -->
 
 - [Purpose](#purpose)
@@ -8,7 +14,7 @@
 
 There are additional sections to this documentation:
 
-- [Getting Started](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)
+- [Getting Started](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)<!-- omit from toc -->
 - [Usage](https://github.com/rikosintie/Discovery/blob/main/usage.md)
 
 ## Purpose
