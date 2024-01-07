@@ -106,6 +106,19 @@ This is not a exhaustive list, feel free to add to it.
   - IPv4
   - IPv6
   - number of areas
+- spanning-tree
+  - Priority
+  - root-guard
+  - tcn-guard
+  - loop-guard
+  - mode
+  - admin-edge-port
+  - bpdu-protection
+  - spanning-tree bpdu-protection-timeout 90
+- Rate Limits on edge ports
+  - rate-limit bcast
+  - rate-limit mcast
+  - rate-limit unknown-unicast in
 - snmp requirements
   - Version
   - community names
@@ -121,6 +134,7 @@ This is not a exhaustive list, feel free to add to it.
   - DHCP Snooping?
   - Dynamic ARP Inspection
   - Authorized Managers
+  - no tftp-server (only scp for copying files)
 - Power cord connector requirements
   - NEMA 5-15
   - NEMA L5-20
