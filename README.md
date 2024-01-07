@@ -19,7 +19,11 @@ There are additional sections to this documentation:
 
 ## Purpose
 
-This project was created to make the discovery process for a network refresh easy, consistent and comprehensive. The discovery data can be used to create a change request for the customer and will make troubleshooting any issues after a switch is replaced easier.
+This project was created to make the discovery process for a network refresh easy, consistent and comprehensive. The discovery data can be used to create a change request, and cut over plan for the customer. The data is also valuable when troubleshooting any issues after a switch is replaced.
+
+You are free to customize the [procurve-config-file.txt](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt) file to add or remove show commands as needed for your discovery.
+
+The script saves the data to various directories for easy access.
 
 ### Who is this project for
 
@@ -66,10 +70,6 @@ Status and Counters - VLAN Information - Custom view
  850    OSPF-Peering    10.254.34.18    255.255.255.252 Manual     Up    No    No
 ```
 
-This project output is very functional, you get enough information to build a detailed cut over plan. You are free to customize the [procurve-config-file.txt](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt) file to add or remove show commands as needed.
-
-The script saves the data to various directories for easy access.
-
 ----------------------------------------------------------------
 
 ## Deployment questions for Discovery
@@ -111,12 +111,12 @@ This is not a exhaustive list, feel free to add to it.
   - community names
   - location
   - Required traps
-- ssh
+- ssh - Old ciphers should be removed
   - Host Key type?
   - Ciphers?
   - MACs?
   - key length?
-  - So you use ssh keys instead of passwords
+  - Do you use ssh keys instead of passwords?
 - Security
   - DHCP Snooping?
   - Dynamic ARP Inspection
