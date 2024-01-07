@@ -1,17 +1,35 @@
 end
 no page
 
+show config status
+
+show config oobm
+
 show time
 
 show uptime
 
+show ntp status
+
+show ntp associations
+
+show ntp server
+
+show job
+
 show version | i ROM
 
-show vlan custom id name:20 ipaddr state
+show config vlan
+
+show vlan custom id name:15 ipaddr ipmask ipconfig state voice jumbo
 
 show ip
 
 show ip source-interface
+
+show ip route 0.0.0.0
+
+show config router ospf
 
 show ip route ospf
 
@@ -29,9 +47,13 @@ show int status | i Up
 
 show interfaces transceiver detail
 
+show trunks
+
+show lacp peer
+
 show cdp neighbors
 
-show lldp information remote
+show lldp info remote
 
 show power-over-ethernet brief | i Del
 
@@ -41,6 +63,21 @@ show modules
 
 show ip ssh
 
-show mac-address | ex <enter the typical uplink port here>
+show snmp-server
+
+show logging -r -e
+
+show logging -r -i
+
+show logging -r -m
+
+show logging -r -w
+
+show crypto host-public-key fingerprint
+
+show config files
+
+
+show mac-address | ex 24
 
 show arp

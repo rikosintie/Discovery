@@ -150,8 +150,13 @@ for line in fabric:
     vendor = line.split(",")[1]
     hostname = line.split(",")[2]
     username = line.split(",")[3]
-    # password = line.split(",")[4]
-    password = os.environ.get("cyberARK")
+    linelen = len(line.split(","))
+    ic(linelen)
+    if linelen == 5:
+        password = line.split(",")[4]
+        ic(password)
+    else:
+        password = os.environ.get("cyberARK")
     if vendor.lower() == "hp_procurve":
         now = datetime.now()
         start_time = now.strftime("%m/%d/%Y, %H:%M:%S")

@@ -1,0 +1,218 @@
+[
+  {
+    "port": "1",
+    "total_bytes": "13,975,378",
+    "total_frames": "145,215",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "2",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "3",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "4",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "5",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "6",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "7",
+    "total_bytes": "1,880,346",
+    "total_frames": "22,551",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "8",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "9",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "10",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "11",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "12",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "13",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "14",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "15",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "16",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "17",
+    "total_bytes": "2,098,028",
+    "total_frames": "23,484",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "18",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "19",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "20",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "21-Trk1",
+    "total_bytes": "2,130,517",
+    "total_frames": "20,545",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "22-Trk1",
+    "total_bytes": "46,203,805",
+    "total_frames": "569,274",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "23",
+    "total_bytes": "0",
+    "total_frames": "0",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  },
+  {
+    "port": "24",
+    "total_bytes": "16,877,201",
+    "total_frames": "179,888",
+    "errors_rx": "0",
+    "drops_tx": "0",
+    "flow_ctrl": "off",
+    "bcast_limit": "0"
+  }
+]

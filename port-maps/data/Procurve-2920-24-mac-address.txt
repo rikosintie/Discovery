@@ -1,0 +1,241 @@
+ configure terminal
+HP-2920-24G-PoEP(config)#  end
+HP-2920-24G-PoEP# show mac-add 1
+
+ Status and Counters - Port Address Table - 1
+
+  MAC Address   VLANs       
+  ------------- ------------
+  6400f1-016f81 850         
+ 
+HP-2920-24G-PoEP# show mac-add 2
+
+ Status and Counters - Port Address Table - 2
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 3
+
+ Status and Counters - Port Address Table - 3
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 4
+
+ Status and Counters - Port Address Table - 4
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 5
+
+ Status and Counters - Port Address Table - 5
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 6
+
+ Status and Counters - Port Address Table - 6
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 7
+
+ Status and Counters - Port Address Table - 7
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 8
+
+ Status and Counters - Port Address Table - 8
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 9
+
+ Status and Counters - Port Address Table - 9
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 10
+
+ Status and Counters - Port Address Table - 10
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 11
+
+ Status and Counters - Port Address Table - 11
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 12
+
+ Status and Counters - Port Address Table - 12
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 13
+
+ Status and Counters - Port Address Table - 13
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 14
+
+ Status and Counters - Port Address Table - 14
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 15
+
+ Status and Counters - Port Address Table - 15
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 16
+
+ Status and Counters - Port Address Table - 16
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 17
+
+ Status and Counters - Port Address Table - 17
+
+  MAC Address   VLANs       
+  ------------- ------------
+  00e04c-360348 1           
+ 
+HP-2920-24G-PoEP# show mac-add 18
+
+ Status and Counters - Port Address Table - 18
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 19
+
+ Status and Counters - Port Address Table - 19
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 20
+
+ Status and Counters - Port Address Table - 20
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 21
+
+ Status and Counters - Port Address Table - 21
+
+Cannot display MAC addresses. (Port is a member of a trunk.)
+
+HP-2920-24G-PoEP# show mac-add 22
+
+ Status and Counters - Port Address Table - 22
+
+Cannot display MAC addresses. (Port is a member of a trunk.)
+
+HP-2920-24G-PoEP# show mac-add 23
+
+ Status and Counters - Port Address Table - 23
+
+  MAC Address   VLANs       
+  ------------- ------------
+ 
+HP-2920-24G-PoEP# show mac-add 24
+
+ Status and Counters - Port Address Table - 24
+
+  MAC Address   VLANs       
+  ------------- ------------
+  000c29-4caa4e 10          
+  000c29-8413e1 10          
+  000c29-8413eb 10          
+  00e0b3-34562f 10          
+  085b0e-7c7930 10          
+  101f74-6341f8 10          
+  2428fd-28ae26 10          
+  28d0ea-932a42 10          
+  3817c3-c920c2 10          
+  3c9bd6-aa323e 10          
+  446755-03d472 10          
+  788cb5-1780c8 10          
+  9c8cd8-c917ae 10          
+  ba4d95-58f2f6 10          
+  bcbac2-0f4fa4 10          
+  d8d43c-651c59 10          
+  d8d43c-651c6b 10          
+  dc56e7-496195 10          
+  f84d89-7a1349 10          
+  fcecda-c46e55 10          
+  fcecda-c4770b 10          
+  fcecda-c56e55 10          
+ 
+HP-2920-24G-PoEP# show mac-add 25
+Module not present for port or invalid port: 25
+HP-2920-24G-PoEP# show mac-add 26
+Module not present for port or invalid port: 26
+HP-2920-24G-PoEP# show mac-add 27
+Module not present for port or invalid port: 27
+HP-2920-24G-PoEP# show mac-add 28
+Module not present for port or invalid port: 28
+HP-2920-24G-PoEP# show mac-add 29
+Module not present for port or invalid port: 29
+HP-2920-24G-PoEP# show mac-add 30
+Module not present for port or invalid port: 30
+HP-2920-24G-PoEP# show mac-add 31
+Module not present for port or invalid port: 31
+HP-2920-24G-PoEP# show mac-add 32
+Module not present for port or invalid port: 32
+HP-2920-24G-PoEP# show mac-add 33
+Module not present for port or invalid port: 33
+HP-2920-24G-PoEP# show mac-add 34
+Module not present for port or invalid port: 34
+HP-2920-24G-PoEP# show mac-add 35
+Module not present for port or invalid port: 35
+HP-2920-24G-PoEP# show mac-add 36
+Module not present for port or invalid port: 36
+HP-2920-24G-PoEP# show mac-add 37
+Module not present for port or invalid port: 37
+HP-2920-24G-PoEP# show mac-add 38
+Module not present for port or invalid port: 38
+HP-2920-24G-PoEP# show mac-add 39
+Module not present for port or invalid port: 39
+HP-2920-24G-PoEP# show mac-add 40
+Module not present for port or invalid port: 40
+HP-2920-24G-PoEP# show mac-add 41
+Module not present for port or invalid port: 41
+HP-2920-24G-PoEP# show mac-add 42
+Module not present for port or invalid port: 42
+HP-2920-24G-PoEP# show mac-add 43
+Module not present for port or invalid port: 43
+HP-2920-24G-PoEP# show mac-add 44
+Module not present for port or invalid port: 44
+HP-2920-24G-PoEP# show mac-add 45
+Module not present for port or invalid port: 45
+HP-2920-24G-PoEP# show mac-add 46
+Module not present for port or invalid port: 46
+HP-2920-24G-PoEP# show mac-add 47
+Module not present for port or invalid port: 47
+HP-2920-24G-PoEP# show mac-add 48
+Module not present for port or invalid port: 48
+HP-2920-24G-PoEP# 

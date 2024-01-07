@@ -1,0 +1,14 @@
+ configure terminal
+HP-2920-24G-PoEP(config)#  end
+HP-2920-24G-PoEP# show arp
+
+ IP ARP table
+
+  IP Address       MAC Address       Type    Port
+  ---------------  ----------------- ------- ----
+  192.168.10.115   28d0ea-932a42     dynamic 24  
+  192.168.10.221   000c29-4caa4e     dynamic 24  
+  192.168.10.254   085b0e-7c7930     dynamic 24  
+
+
+HP-2920-24G-PoEP# 
