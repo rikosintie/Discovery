@@ -74,7 +74,9 @@ The script saves the data to various directories for easy access.
 
 ## Deployment questions for Discovery
 
-The script will pull any information that you put into the procurve-config file but it can't answer all the questions! Here are some questions I ask during the kickoff meeting with the customer. This is not a exhaustive list, feel free to add to it.
+The script will pull any information that you put into the procurve-config file but it can't answer all the questions! Here are some questions I ask during the kickoff meeting with the customer. Some of these questions are open ended and are meant to get the customer engaged in a conversation.
+
+This is not a exhaustive list, feel free to add to it.
 
 - What are the labeling requirements
   - Location
@@ -85,6 +87,9 @@ The script will pull any information that you put into the procurve-config file 
 - Is an escort required when we are on site?
 - What firmware version should be installed?
 - Do you have a standard for host names?
+- Does the network team have access to M&O devices such as Environmental monitoring (BACnet), surveillance cameras, door access controls?
+- Are we allowed to connect our laptops to the network?
+- Can we use tools like nmap and Wireshark to discover devices? Here are some [nmap discovery scripts](https://github.com/rikosintie/nmap-python)
 - Is DHCP used for non-server hosts i.e. cameras, door access panels, etc?
 - Do you have a management vlan?s
 - If so, what are the management vlan IP addresses?
@@ -96,6 +101,11 @@ The script will pull any information that you put into the procurve-config file 
   - Authentication credentials
 - Username/password for base configuration installation
 - Enable password for base configuration
+- Routing protocols
+  - Authentication type
+  - IPv4
+  - IPv6
+  - number of areas
 - snmp requirements
   - Version
   - community names
@@ -106,6 +116,11 @@ The script will pull any information that you put into the procurve-config file 
   - Ciphers?
   - MACs?
   - key length?
+  - So you use ssh keys instead of passwords
+- Security
+  - DHCP Snooping?
+  - Dynamic ARP Inspection
+  - Authorized Managers
 - Power cord connector requirements
   - NEMA 5-15
   - NEMA L5-20
