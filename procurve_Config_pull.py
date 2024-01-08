@@ -56,6 +56,7 @@ from datetime import datetime
 
 from icecream import ic
 from netmiko import ConnectHandler
+from netmiko.exceptions import AuthenticationException, NetmikoTimeoutException
 
 # from netmiko import exceptions
 from paramiko.ssh_exception import SSHException
@@ -174,14 +175,29 @@ for line in fabric:
             }
             net_connect = ConnectHandler(**device)
 
-        except (EOFError, SSHException):
+        except NetmikoTimeoutException:
+            end_time = datetime.now()
+            print(f"\nExec time: {end_time - now}\n")
             print(
-                f"Could not connect to {hostname}, remove it"
+                f"Could not connect to {hostname} at {ipaddr}. The connection timed out. Remove it from the device inventory file"
+            )
+            continue
+        except AuthenticationException:
+            end_time = datetime.now()
+            print(f"\nExec time: {end_time - now}\n")
+            print(
+                f"Could not connect to {hostname} at {ipaddr}. The Credentials failed.  Remove it from the device inventory file"
+            )
+            continue
+        except (EOFError, SSHException):
+            # catch unexpected exceptions
+            print(
+                f"Could not connect to {hostname} at {ipaddr}, remove it"
                 " from the device inventory file"
             )
             end_time = datetime.now()
             print(f"\nExec time: {end_time - now}\n")
-            break
+            continue
         print(f"Processing {hostname}")
         #  all switches use the same config file
         # for data collection, the first line in the file must be end
