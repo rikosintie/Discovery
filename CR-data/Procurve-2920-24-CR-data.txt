@@ -5,12 +5,12 @@ HP-2920-24G-PoEP# no page
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show config status
 
-The running configuration matches the saved configuration.
+The running configuration has been modified and not yet saved.
 
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show config oobm
 
-Startup configuration: 38
+Startup configuration: 40
 
 oobm
    ip address dhcp-bootp
@@ -18,10 +18,10 @@ oobm
 
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show time
-Wed Jan  3 23:53:12 2024
+Sun Jan  7 19:07:40 2024
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show uptime
-0000:07:44:04.70
+0000:03:53:18.17
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show ntp status
 
@@ -30,14 +30,14 @@ HP-2920-24G-PoEP# show ntp status
   NTP Status             : Enabled         NTP Mode        : Unicast         
   Synchronization Status : Synchronized    Peer Dispersion : 0.00000 sec     
   Stratum Number         : 2               Leap Direction  : 0               
-  Reference Assoc ID     : 0               Clock Offset    : 0.03045 sec     
-  Reference ID           : 129.6.15.29     Root Delay      : 0.07368 sec     
-  Precision              : 2**-18          Root Dispersion : 1.18275 sec     
-  NTP Up Time            : 0d 5h 17m       Time Resolution : 1394 nsec       
+  Reference Assoc ID     : 0               Clock Offset    : 0.04150 sec     
+  Reference ID           : 129.6.15.29     Root Delay      : 0.07210 sec     
+  Precision              : 2**-18          Root Dispersion : 1.05481 sec     
+  NTP Up Time            : 0d 3h 53m       Time Resolution : 697 nsec        
   Drift                  : 0.00000 sec/sec 
 
-  System Time            : Wed Jan  3 23:53:13 2024                
-  Reference Time         : Wed Jan  3 22:28:16 2024                
+  System Time            : Sun Jan  7 19:07:40 2024                
+  Reference Time         : Sun Jan  7 18:59:12 2024                
 
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show ntp associations
@@ -47,8 +47,8 @@ HP-2920-24G-PoEP# show ntp associations
 
  Remote          St   T    When   Poll  Reach    Delay    Offset   Dispersion
  --------------- ---- ---- ------ ----- -------- -------- -------- ----------
- 192.168.10.221  1    u    19048  10    37       0.000    0.000    15.96813  
- 129.6.15.29     1    u    19048  13    37       0.000    0.000    15.97025  
+ 129.6.15.29     1    u    13991  17    1        0.000    0.000    16.00000  
+ 192.168.10.221  1    u    13991  17    1        0.000    0.000    16.00000  
 
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show ntp server
@@ -59,6 +59,28 @@ HP-2920-24G-PoEP# show ntp server
  ------------------
  129.6.15.29       
  192.168.10.221    
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show ip dns
+
+  DNS Mode              :   Manual
+
+  DNS Domain Names Configured:
+  ---------------------------
+
+  No.      DNS Domain Name
+  ---      ---------------
+  1.       pu.pri
+
+
+  DNS Servers Configured:
+  ----------------------
+
+  Priority DNS Server Addresses                    OOBM 
+  -------- --------------------------------------- ---- 
+    1.     192.168.10.221                           NO
+
+
+
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show job
 
@@ -78,7 +100,7 @@ Active Boot ROM:     Primary
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show config vlan
 
-Startup configuration: 38
+Startup configuration: 40
 
 vlan 1
    name "DEFAULT_VLAN"
@@ -180,8 +202,8 @@ HP-2920-24G-PoEP# show ip
 
   Default TTL     : 64   
   Arp Age         : 20  
-  Domain Suffix   :                               
-  DNS server      :                                         
+  Domain Suffix   : pu.pri                        
+  DNS server      : 192.168.10.221                          
 
                        |                                            Proxy ARP 
   VLAN                 | IP Config  IP Address      Subnet Mask     Std  Local
@@ -234,7 +256,7 @@ HP-2920-24G-PoEP# show ip route 0.0.0.0
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show config router ospf
 
-Startup configuration: 38
+Startup configuration: 40
 
 router ospf
    area backbone
@@ -265,7 +287,7 @@ HP-2920-24G-PoEP# show ip ospf neighbor
 
   Router ID       Pri IP Address      NbIfState State    QLen  Events Status
   --------------- --- --------------- --------- -------- ----- ------ ------
-  2.2.2.2         1   10.254.34.17              INIT     0     8      None  
+  2.2.2.2         1   10.254.34.17              INIT     0     2      None  
  
 
 HP-2920-24G-PoEP# 
@@ -287,9 +309,9 @@ HP-2920-24G-PoEP# show ip ospf general
   Area Border               : no 
   AS Border                 : yes
   External LSA Count        : 7          
-  External LSA Checksum Sum : 226443     
+  External LSA Checksum Sum : 215266     
   Originate New LSA Count   : 6          
-  Receive New LSA Count     : 1          
+  Receive New LSA Count     : 0          
 
 
   Graceful Restart Interval            : 120        
@@ -311,13 +333,13 @@ HP-2920-24G-PoEP# show ip ospf external-link-state
 
   Link State ID   Router ID       Age  Sequence #  Checksum  
   --------------- --------------- ---- ----------- ----------
-  1.1.1.1         1.1.1.1         1804 0x8000000f  0x0000f943
-  10.14.63.16     1.1.1.1         1804 0x8000000f  0x00007a66
-  10.14.64.16     1.1.1.1         1804 0x8000000f  0x00006f70
-  10.14.65.16     1.1.1.1         1804 0x8000000f  0x0000647a
-  10.14.66.16     1.1.1.1         1804 0x8000000f  0x00005984
-  10.164.24.0     1.1.1.1         1804 0x8000000f  0x0000e495
-  192.168.10.0    1.1.1.1         1804 0x8000000f  0x000008c5
+  1.1.1.1         1.1.1.1         978  0x80000008  0x0000083c
+  10.14.63.16     1.1.1.1         678  0x80000009  0x00008660
+  10.14.64.16     1.1.1.1         678  0x80000009  0x00007b6a
+  10.14.65.16     1.1.1.1         678  0x80000009  0x00007074
+  10.14.66.16     1.1.1.1         678  0x80000009  0x0000657e
+  10.164.24.0     1.1.1.1         678  0x80000009  0x0000f08f
+  192.168.10.0    1.1.1.1         678  0x80000009  0x000014bf
  
 
 HP-2920-24G-PoEP# 
@@ -420,9 +442,9 @@ HP-2920-24G-PoEP# show cdp neighbors
   21     64 00 f1 01 6f 80             | Cisco IOS Software, C3750... R S        
   22     3750x.pu.pri                  | cisco WS-C3750X-48P          R S I      
   22     64 00 f1 01 6f 80             | Cisco IOS Software, C3750... R S        
-  24     9c 8c d8 c9 17 ae             | ArubaOS (MODEL: 515), Ver...            
   24     fc ec da c4 6e 55             |                                         
   24     Garage                        | NanoStation 5AC loc          T          
+  24     9c 8c d8 c9 17 ae             | ArubaOS (MODEL: 515), Ver...            
  
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show lldp info remote
@@ -438,10 +460,54 @@ HP-2920-24G-PoEP# show lldp info remote
   21        | 64 00 f1 01 6f 80  Gi1/1/2            Gigabi... 3750x.pu.pri      
   22        | 3750x.pu.pri       GigabitEthernet...           cisco WS-C3750X...
   22        | 64 00 f1 01 6f 80  Gi1/1/4            Gigabi... 3750x.pu.pri      
-  24        | 9c 8c d8 c9 17 ae  9c 8c d8 c9 17 ae  eth0      IAP-515           
   24        | fc ec da c4 6e 55  eth0                                           
   24        | Garage             br0                          NanoStation 5AC...
+  24        | 9c 8c d8 c9 17 ae  9c 8c d8 c9 17 ae  eth0      IAP-515           
  
+
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show spanning-tree
+
+ Spanning Tree Information
+
+  STP Enabled          [No] : Yes                                     
+  Mode                      : RPVST               
+  Extended System ID        : Enabled             
+  Ignore PVID Inconsistency : Disabled            
+  RPVST Enabled VLANs       : 1,10,20,60-63,100,850                                                                                                                                                                                   
+  Switch MAC Address        : 98f2b3-fe8880                           
+  Root Guard Ports          : 
+  Loop Guard Ports          : 2-20
+  TCN Guard Ports           : 
+  BPDU Protected Ports      : 2-20                                        
+  BPDU Filtered Ports       :                                         
+  Auto Edge Ports           : 1-20,23-24,Trk1                                        
+  Admin Edge Ports          :                                         
+
+  VLAN  Root Mac        Root       Root       Root                 Hello    
+  ID    Address         Priority   Path-Cost  Port                 Time(sec)
+  ----- --------------- ---------- ---------- -------------------- ---------
+  1     98f2b3-fe8880   32,768     0          This switch is root  2        
+  10    98f2b3-fe8880   32,768     0          This switch is root  2        
+  20    98f2b3-fe8880   32,768     0          This switch is root  2        
+  60    98f2b3-fe8880   32,768     0          This switch is root  2        
+  61    98f2b3-fe8880   32,768     0          This switch is root  2        
+  62    98f2b3-fe8880   32,768     0          This switch is root  2        
+  63    98f2b3-fe8880   32,768     0          This switch is root  2        
+  100   98f2b3-fe8880   32,768     0          This switch is root  2        
+  850   6400f1-016f80   32,768     20,000     Trk1                 2        
+ 
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show spanning-tree inconsistent-ports
+ VLAN ID    Blocked Port Reason                   
+ ---------- ------------ -------------------------
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show spanning-tree bpdu-protection
+
+ Status and Counters - STP Port(s) BPDU Protection Information
+
+ BPDU Protection Timeout (sec) : 90                    
+ BPDU Protected Ports : 2-20                                                                            
 
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show power-over-ethernet brief | i Del
@@ -503,8 +569,8 @@ HP-2920-24G-PoEP# show ip ssh
   Ses Type     | Source IP                                      Port 
   --- -------- + ---------------------------------------------- -----
   1   console  |
-  2   ssh      | 192.168.10.115                                 49238
-  3   ssh      | 192.168.10.115                                 54564
+  2   ssh      | 192.168.10.115                                 43484
+  3   ssh      | 192.168.10.115                                 59526
   4   inactive |
   5   inactive |
   6   inactive |
@@ -569,72 +635,353 @@ HP-2920-24G-PoEP# show logging -r -e
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
-----  Top of Log : Events Listed = 0  ----
+M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
+----  Top of Log : Events Listed = 1  ----
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show logging -r -i
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
-I 01/03/24 23:53:11 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/03/24 23:53:10 03362 auth: User 'vector' logged in from 192.168.10.115 to
+I 01/07/24 19:07:39 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/07/24 19:07:38 03362 auth: User 'vector' logged in from 192.168.10.115 to
             SSH  session
-I 01/03/24 23:49:07 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-W 01/03/24 23:49:07 00641 ssh: read error Connection reset by peer, session
-            aborted
-I 01/03/24 23:48:47 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/03/24 23:48:46 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/03/24 23:00:01 04612 job: Job 'wrmem' completed
-I 01/03/24 22:30:18 04910 ntp: All the NTP server associations reset.
-I 01/03/24 22:30:18 04908 ntp: The system clock time was changed by 0 sec
-            30447479 nsec.	 The new time is Wed Jan  3 22:30:18 2024
+I 01/07/24 19:01:14 04910 ntp: All the NTP server associations reset.
+I 01/07/24 19:01:14 04908 ntp: The system clock time was changed by 0 sec
+            41504306 nsec.	 The new time is Sun Jan  7 19:01:14 2024
 .
-I 01/03/24 20:22:14 04910 ntp: All the NTP server associations reset.
-I 01/03/24 20:22:14 04908 ntp: The system clock time was changed by 0 sec
-            17232226 nsec.	 The new time is Wed Jan  3 20:22:14 2024
+I 01/07/24 18:54:50 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/07/24 18:54:50 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/07/24 18:54:27 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/07/24 18:54:26 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/07/24 17:49:55 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/07/24 17:49:54 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/07/24 17:49:30 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/07/24 17:49:29 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/07/24 17:45:37 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/07/24 17:45:37 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/07/24 17:45:14 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/07/24 17:45:13 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/07/24 16:53:09 04910 ntp: All the NTP server associations reset.
+I 01/07/24 16:53:09 04908 ntp: The system clock time was changed by 0 sec
+            14106617 nsec.	 The new time is Sun Jan  7 16:53:08 2024
 .
-I 01/03/24 19:18:12 04910 ntp: All the NTP server associations reset.
-I 01/03/24 19:07:15 03363 auth: User 'vector' logged out of SSH  session from 
+I 01/07/24 16:38:59 03363 auth: User 'vector' logged out of SSH  session from 
             192.168.10.115
-W 01/03/24 19:07:14 00641 ssh: read error Connection reset by peer, session
+W 01/07/24 16:38:59 00641 ssh: read error Connection reset by peer, session
             aborted
-I 01/03/24 19:06:55 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/03/24 19:06:54 03362 auth: User 'vector' logged in from 192.168.10.115 to
+I 01/07/24 16:38:35 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/07/24 16:38:35 03362 auth: User 'vector' logged in from 192.168.10.115 to
             SSH  session
-I 01/03/24 19:06:32 03363 auth: User 'vector' logged out of SSH  session from 
+I 01/07/24 16:02:38 03363 auth: User 'vector' logged out of SSH  session from 
             192.168.10.115
-W 01/03/24 19:06:32 00641 ssh: read error Connection reset by peer, session
+W 01/07/24 16:02:38 00641 ssh: read error Connection reset by peer, session
             aborted
-I 01/03/24 19:06:12 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/03/24 19:06:12 03362 auth: User 'vector' logged in from 192.168.10.115 to
+I 01/07/24 16:02:10 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/07/24 16:02:10 03362 auth: User 'vector' logged in from 192.168.10.115 to
             SSH  session
-I 01/03/24 19:02:39 03363 auth: User 'vector' logged out of SSH  session from 
+I 01/07/24 16:00:01 03363 auth: User 'vector' logged out of SSH  session from 
             192.168.10.115
-I 01/03/24 19:02:12 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/03/24 19:02:11 03362 auth: User 'vector' logged in from 192.168.10.115 to
+W 01/07/24 16:00:01 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/07/24 15:59:38 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/07/24 15:59:37 03362 auth: User 'vector' logged in from 192.168.10.115 to
             SSH  session
-I 01/03/24 19:00:27 00184 mgr: Log cleared as a result of  'clear logging' 
-            command
-----  Top of Log : Events Listed = 24  ----
+I 01/07/24 15:57:58 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+I 01/07/24 15:57:49 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/07/24 15:57:48 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/07/24 15:49:05 04910 ntp: All the NTP server associations reset.
+I 01/07/24 15:46:58 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/07/24 15:46:58 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/07/24 15:46:29 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/07/24 15:46:28 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/07/24 15:31:55 03125 mgr: Startup configuration changed by CLI.  New seq.
+            number 40
+I 01/07/24 15:30:37 03125 mgr: Startup configuration changed by CLI.  New seq.
+            number 39
+I 01/07/24 15:30:27 00077 ports: port 11 is now off-line
+I 01/07/24 15:30:16 00076 ports: port 11 is now on-line
+I 01/07/24 15:28:00 00077 ports: port 3 is now off-line
+I 01/07/24 15:27:59 00077 ports: port 11 is now off-line
+I 01/07/24 15:27:59 00898 ports: BPDU protect(5) has disabled port 11
+W 01/07/24 15:27:59 00840 stp: port 11 disabled - BPDU received on protected
+            port.
+I 01/07/24 15:27:59 00828 lldp: PVID mismatch on port 11(VID 1)with peer device
+            port 3(VID 100)(1)
+I 01/07/24 15:27:59 00828 lldp: PVID mismatch on port 3(VID 100)with peer device
+            port 11(VID 1)(1)
+I 01/07/24 15:27:58 00076 ports: port 3 is now on-line
+I 01/07/24 15:27:58 00076 ports: port 11 is now on-line
+I 01/07/24 15:24:34 05219 activate: A system software update is available to
+            version WB.16.10.0024.
+I 01/07/24 15:24:34 05223 activate: Successfully established connection with the
+            Activate server;parsing final software update service response.
+I 01/07/24 15:24:31 05226 activate: Successfully resolved the Activate server
+            address devices-v2.arubanetworks.com to 35.82.154.193.
+I 01/07/24 15:24:31 05225 activate: Loading security certificates and
+            synchronizing time.
+I 01/07/24 15:19:37 02639 srcip: SNTP src IP addr 192.168.10.52 is selected from
+            'VLAN-10' interface
+I 01/07/24 15:19:37 02638 srcip: SNTP oper policy is 'configured ip interface'
+I 01/07/24 15:19:36 00001 vlan: IOT3 virtual LAN enabled
+I 01/07/24 15:19:36 00001 vlan: IOT2 virtual LAN enabled
+I 01/07/24 15:19:36 00001 vlan: IOT1 virtual LAN enabled
+I 01/07/24 15:19:36 00001 vlan: IOT0 virtual LAN enabled
+I 01/07/24 15:19:36 00001 vlan: Voice virtual LAN enabled
+I 01/07/24 15:19:36 00001 vlan: User virtual LAN enabled
+I 01/07/24 15:19:36 00001 vlan: DEFAULT_VLAN virtual LAN enabled
+I 01/07/24 15:19:36 02639 srcip: RADSEC src IP addr 10.254.34.18 is selected
+            from 'VLAN-850' interface
+I 01/07/24 15:19:36 02638 srcip: RADSEC oper policy is 'configured ip interface'
+I 01/07/24 15:19:36 02639 srcip: TUNNELED-NODE-SERVE src IP addr 10.254.34.18 is
+            selected from 'VLAN-850' interface
+I 01/07/24 15:19:36 02638 srcip: TUNNELED-NODE-SERVE oper policy is 'configured
+            ip interface'
+I 01/07/24 15:19:36 02639 srcip: SFLOW src IP addr 10.254.34.18 is selected from
+            'VLAN-850' interface
+I 01/07/24 15:19:36 02638 srcip: SFLOW oper policy is 'configured ip interface'
+I 01/07/24 15:19:36 02639 srcip: TFTP src IP addr 10.254.34.18 is selected from
+            'VLAN-850' interface
+I 01/07/24 15:19:36 02638 srcip: TFTP oper policy is 'configured ip interface'
+I 01/07/24 15:19:36 02639 srcip: TELNET src IP addr 10.254.34.18 is selected
+            from 'VLAN-850' interface
+I 01/07/24 15:19:36 02638 srcip: TELNET oper policy is 'configured ip interface'
+I 01/07/24 15:19:36 02639 srcip: SYSLOG src IP addr 10.254.34.18 is selected
+            from 'VLAN-850' interface
+I 01/07/24 15:19:36 02638 srcip: SYSLOG oper policy is 'configured ip interface'
+I 01/07/24 15:19:36 02639 srcip: RADIUS src IP addr 10.254.34.18 is selected
+            from 'VLAN-850' interface
+I 01/07/24 15:19:36 02638 srcip: RADIUS oper policy is 'configured ip interface'
+I 01/07/24 15:19:36 02639 srcip: TACACS src IP addr 10.254.34.18 is selected
+            from 'VLAN-850' interface
+I 01/07/24 15:19:36 02638 srcip: TACACS oper policy is 'configured ip interface'
+I 01/07/24 15:19:35 03816 stp: VLAN 850 - Root changed from 32768: (this device)
+            to 32768: 6400f1-016f80
+I 01/07/24 15:19:35 02638 srcip: RADSEC oper policy is 'outgoing interface'
+I 01/07/24 15:19:35 02638 srcip: TUNNELED-NODE-SERVE oper policy is 'outgoing
+            interface'
+I 01/07/24 15:19:35 02638 srcip: SFLOW oper policy is 'outgoing interface'
+I 01/07/24 15:19:35 02638 srcip: TFTP oper policy is 'outgoing interface'
+I 01/07/24 15:19:35 02638 srcip: TELNET oper policy is 'outgoing interface'
+I 01/07/24 15:19:35 02638 srcip: SYSLOG oper policy is 'outgoing interface'
+I 01/07/24 15:19:35 02638 srcip: RADIUS oper policy is 'outgoing interface'
+I 01/07/24 15:19:35 02638 srcip: TACACS oper policy is 'outgoing interface'
+I 01/07/24 15:19:35 02638 srcip: SNTP oper policy is 'outgoing interface'
+I 01/07/24 15:19:34 00002 vlan: OSPF-Peering virtual LAN disabled
+I 01/07/24 15:19:34 00002 vlan: IOT3 virtual LAN disabled
+I 01/07/24 15:19:34 00002 vlan: IOT2 virtual LAN disabled
+I 01/07/24 15:19:34 00002 vlan: IOT1 virtual LAN disabled
+I 01/07/24 15:19:34 00002 vlan: IOT0 virtual LAN disabled
+I 01/07/24 15:19:34 00002 vlan: Voice virtual LAN disabled
+I 01/07/24 15:19:34 00002 vlan: User virtual LAN disabled
+I 01/07/24 15:19:34 00002 vlan: DEFAULT_VLAN virtual LAN disabled
+I 01/07/24 15:19:33 03811 stp: VLAN 850 - RPVST enabled
+I 01/07/24 15:19:33 03811 stp: VLAN 100 - RPVST enabled
+I 01/07/24 15:19:33 03811 stp: VLAN 63 - RPVST enabled
+I 01/07/24 15:19:33 03811 stp: VLAN 62 - RPVST enabled
+I 01/07/24 15:19:33 03811 stp: VLAN 61 - RPVST enabled
+I 01/07/24 15:19:33 03811 stp: VLAN 60 - RPVST enabled
+I 01/07/24 15:19:33 03811 stp: VLAN 20 - RPVST enabled
+I 01/07/24 15:19:33 03811 stp: VLAN 10 - RPVST enabled
+I 01/07/24 15:19:33 03811 stp: VLAN 1 - RPVST enabled
+I 01/07/24 15:19:23 00828 lldp: PVID mismatch on port 22(VID unknown)with peer
+            device port Gi1/1/4(VID 10)(1)
+I 01/07/24 15:19:20 00828 lldp: PVID mismatch on port 21(VID unknown)with peer
+            device port Gi1/1/2(VID 1)(1)
+I 01/07/24 15:19:19 00076 ports: port 22 in Trk1 is now on-line
+I 01/07/24 15:19:19 00076 ports: port 21 in Trk1 is now on-line
+I 01/07/24 15:19:19 00078 ports: trunk Trk1 is now active
+I 01/07/24 15:19:16 00435 ports: port 22 is Blocked by LACP
+I 01/07/24 15:19:16 00435 ports: port 21 is Blocked by LACP
+I 01/07/24 15:19:13 00077 ports: port 22 in Trk1 is now off-line
+I 01/07/24 15:19:12 00435 ports: port 22 is Blocked by LACP
+I 01/07/24 15:19:07 02639 srcip: RADSEC src IP addr 10.254.34.18 is selected
+            from 'VLAN-850' interface
+I 01/07/24 15:19:07 02638 srcip: RADSEC oper policy is 'configured ip interface'
+I 01/07/24 15:19:07 02639 srcip: TUNNELED-NODE-SERVE src IP addr 10.254.34.18 is
+            selected from 'VLAN-850' interface
+I 01/07/24 15:19:07 02638 srcip: TUNNELED-NODE-SERVE oper policy is 'configured
+            ip interface'
+I 01/07/24 15:19:07 02639 srcip: SFLOW src IP addr 10.254.34.18 is selected from
+            'VLAN-850' interface
+I 01/07/24 15:19:07 02638 srcip: SFLOW oper policy is 'configured ip interface'
+I 01/07/24 15:19:07 02639 srcip: TFTP src IP addr 10.254.34.18 is selected from
+            'VLAN-850' interface
+I 01/07/24 15:19:07 02638 srcip: TFTP oper policy is 'configured ip interface'
+I 01/07/24 15:19:07 02639 srcip: TELNET src IP addr 10.254.34.18 is selected
+            from 'VLAN-850' interface
+I 01/07/24 15:19:07 02638 srcip: TELNET oper policy is 'configured ip interface'
+I 01/07/24 15:19:07 02639 srcip: SYSLOG src IP addr 10.254.34.18 is selected
+            from 'VLAN-850' interface
+I 01/07/24 15:19:07 02638 srcip: SYSLOG oper policy is 'configured ip interface'
+I 01/07/24 15:19:07 02639 srcip: RADIUS src IP addr 10.254.34.18 is selected
+            from 'VLAN-850' interface
+I 01/07/24 15:19:07 02638 srcip: RADIUS oper policy is 'configured ip interface'
+I 01/07/24 15:19:07 02639 srcip: TACACS src IP addr 10.254.34.18 is selected
+            from 'VLAN-850' interface
+I 01/07/24 15:19:07 02638 srcip: TACACS oper policy is 'configured ip interface'
+I 01/07/24 15:19:06 00001 vlan: OSPF-Peering virtual LAN enabled
+I 01/07/24 15:19:06 00076 ports: port 1 is now on-line
+I 01/07/24 15:17:03 04910 ntp: All the NTP server associations reset.
+I 01/07/24 15:16:06 05101 amp-server: AMP server configuration is disabled due
+            to first configuration.
+I 01/07/24 15:15:58 04611 job: Job Scheduler enabled
+I 01/07/24 15:15:52 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/07/24 15:15:50 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/07/24 15:15:45 04910 ntp: All the NTP server associations reset.
+I 01/07/24 15:15:45 04909 ntp: The NTP Stratum was changed from 16 to 2.
+I 01/07/24 15:15:45 04908 ntp: The system clock time was changed by 1073517238
+            sec 266949534 nsec.	 The new time is Sun Jan  7 15:15:44 2024
+.
+W 01/01/90 00:01:40 00419 auth: Invalid user name/password on SSH session User
+            'vector' is trying to login from 192.168.10.115
+I 01/01/90 00:01:33 04911 ntp: The NTP Server 129.6.15.29 is unreachable.
+I 01/01/90 00:01:16 00076 ports: port 17 is now on-line
+I 01/01/90 00:01:14 00077 ports: port 17 is now off-line
+I 01/01/90 00:01:11 04911 ntp: The NTP Server 192.168.10.221 is unreachable.
+I 01/01/90 00:01:01 00076 ports: port 17 is now on-line
+I 01/01/90 00:01:00 00561 ports: port 17 Applying Power to PD.
+I 01/01/90 00:01:00 00560 ports: port 17 PD Detected.
+I 01/01/90 00:00:53 05083 chassis: Ports 13-24: PoE Software updated from
+            version 04 to 38.
+I 01/01/90 00:00:47 02639 srcip: SNTP src IP addr 192.168.10.52 is selected from
+            'VLAN-10' interface
+I 01/01/90 00:00:47 02638 srcip: SNTP oper policy is 'configured ip interface'
+I 01/01/90 00:00:46 00001 vlan: IOT3 virtual LAN enabled
+I 01/01/90 00:00:46 00001 vlan: IOT2 virtual LAN enabled
+I 01/01/90 00:00:46 00001 vlan: IOT1 virtual LAN enabled
+I 01/01/90 00:00:46 00001 vlan: IOT0 virtual LAN enabled
+I 01/01/90 00:00:46 00001 vlan: Voice virtual LAN enabled
+I 01/01/90 00:00:46 00001 vlan: User virtual LAN enabled
+I 01/01/90 00:00:46 00076 ports: port 24 is now on-line
+I 01/01/90 00:00:45 05083 chassis: Ports 1-12: PoE Software updated from version
+            04 to 38.
+I 01/01/90 00:00:45 00001 vlan: DEFAULT_VLAN virtual LAN enabled
+I 01/01/90 00:00:45 00076 ports: port 7 is now on-line
+I 01/01/90 00:00:43 02555 chassis: Co-processor Ready
+I 01/01/90 00:00:41 03803 chassis: System Self test completed on 1-24 
+I 01/01/90 00:00:36 03802 chassis: System Self test started on 1-24 
+I 01/01/90 00:00:36 03401 crypto: Function POWER UP passed selftest.
+I 01/01/90 00:00:35 04262 dhcp-server: All IP addresses are removed from the
+            conflict-logging database
+I 01/01/90 00:00:35 04250 dhcp-server: DHCP server is enabled globally
+I 01/01/90 00:00:35 02553 chassis: Loading of Co-processor OS image complete.
+I 01/01/90 00:00:34 02552 chassis: Loading of Co-processor OS image in progress.
+I 01/01/90 00:00:34 02550 chassis: Requesting Co-processor OS image location in
+            flash.
+I 01/01/90 00:00:33 00066 system: System Booted
+I 01/01/90 00:00:32 04274 dhcp-server: DHCP server is listening for DHCP packets
+I 01/01/90 00:00:32 04255 dhcp-server: DHCP server is enabled on VLAN 100
+I 01/01/90 00:00:32 04260 dhcp-server: Conflict-logging is disabled
+I 01/01/90 00:00:32 04257 dhcp-server: Ping-check configured with retry count =
+            2, timeout = 1
+I 01/01/90 00:00:32 02012 mtm: A non-multicast client: Non-Mcast client Op, is
+            registered with client ID:  1
+I 01/01/90 00:00:31 04905 ntp: NTP Client enabled
+I 01/01/90 00:00:31 00410 SNTP: Client is enabled.
+I 01/01/90 00:00:31 02633 SNTP: Client authentication is disabled.
+I 01/01/90 00:00:31 00688 lldp: LLDP - enabled
+I 01/01/90 00:00:31 00417 cdp: CDP enabled
+I 01/01/90 00:00:31 04695 auth: Command authorization method set to none.
+I 01/01/90 00:00:31 00433 ssh: Ssh server enabled
+I 01/01/90 00:00:29 00110 telnet: telnetd service enabled
+I 01/01/90 00:00:29 00116 telnet: telnetd service enabled on OOBM
+I 01/01/90 00:00:28 02638 srcip: RADIUS oper policy for IPv6 is 'outgoing
+            interface'
+I 01/01/90 00:00:28 02637 srcip: RADIUS admin policy for IPv6 is 'outgoing
+            interface'
+I 01/01/90 00:00:28 02638 srcip: RADSEC oper policy is 'outgoing interface'
+I 01/01/90 00:00:28 02637 srcip: RADSEC admin policy is 'configured ip
+            interface'
+I 01/01/90 00:00:28 02638 srcip: TUNNELED-NODE-SERVE oper policy is 'outgoing
+            interface'
+I 01/01/90 00:00:28 02637 srcip: TUNNELED-NODE-SERVE admin policy is 'configured
+            ip interface'
+I 01/01/90 00:00:28 02638 srcip: SFLOW oper policy is 'outgoing interface'
+I 01/01/90 00:00:28 02637 srcip: SFLOW admin policy is 'configured ip interface'
+I 01/01/90 00:00:28 02638 srcip: SNTP oper policy is 'outgoing interface'
+I 01/01/90 00:00:28 02637 srcip: SNTP admin policy is 'configured ip interface'
+I 01/01/90 00:00:28 02638 srcip: TFTP oper policy is 'outgoing interface'
+I 01/01/90 00:00:28 02637 srcip: TFTP admin policy is 'configured ip interface'
+I 01/01/90 00:00:28 02638 srcip: TELNET oper policy is 'outgoing interface'
+I 01/01/90 00:00:28 02637 srcip: TELNET admin policy is 'configured ip
+            interface'
+I 01/01/90 00:00:28 02638 srcip: SYSLOG oper policy is 'outgoing interface'
+I 01/01/90 00:00:28 02637 srcip: SYSLOG admin policy is 'configured ip
+            interface'
+I 01/01/90 00:00:28 02638 srcip: RADIUS oper policy is 'outgoing interface'
+I 01/01/90 00:00:28 02637 srcip: RADIUS admin policy is 'configured ip
+            interface'
+I 01/01/90 00:00:28 02638 srcip: TACACS oper policy is 'outgoing interface'
+I 01/01/90 00:00:28 02637 srcip: TACACS admin policy is 'configured ip
+            interface'
+I 01/01/90 00:00:28 00690 udpf: DHCP relay agent feature enabled
+I 01/01/90 00:00:28 02604 dhcpv6r: Inclusion of client link-layer address in
+            DHCPv6 relay message is disabled.
+I 01/01/90 00:00:27 02682 OOBM: OOBM - Enabled globally.
+I 01/01/90 00:00:27 03705 ports: Allow-Unsupported-Transceiver feature enabled.
+I 01/01/90 00:00:26 02751 chassis: LEDs for Ports 1-24 configured ON.
+I 01/01/90 00:00:26 02759 chassis: Savepower LED timer is OFF.
+I 01/01/90 00:00:26 02712 console: USB console cable disconnected
+I 01/01/90 00:00:26 02712 console: USB console cable disconnected
+M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
+I 01/01/90 00:00:26 00062 system: Member 1 went down without saving crash
+            information
+I 01/01/90 00:00:26 00061 system: -----------------------------------------
+I 01/01/90 00:00:26 05578 profile-manager: With this SW release the poe-value
+            field is not allowed to be set when poe-alloc-by is not value.
+            Changing to default value of 17w.
+I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master 
+I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
+I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master 
+I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
+----  Top of Log : Events Listed = 222  ----
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show logging -r -m
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
-----  Top of Log : Events Listed = 0  ----
+M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
+----  Top of Log : Events Listed = 1  ----
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show logging -r -w
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
-W 01/03/24 23:49:07 00641 ssh: read error Connection reset by peer, session
+W 01/07/24 18:54:50 00641 ssh: read error Connection reset by peer, session
             aborted
-W 01/03/24 19:07:14 00641 ssh: read error Connection reset by peer, session
+W 01/07/24 17:49:54 00641 ssh: read error Connection reset by peer, session
             aborted
-W 01/03/24 19:06:32 00641 ssh: read error Connection reset by peer, session
+W 01/07/24 17:45:37 00641 ssh: read error Connection reset by peer, session
             aborted
-----  Top of Log : Events Listed = 3  ----
+W 01/07/24 16:38:59 00641 ssh: read error Connection reset by peer, session
+            aborted
+W 01/07/24 16:02:38 00641 ssh: read error Connection reset by peer, session
+            aborted
+W 01/07/24 16:00:01 00641 ssh: read error Connection reset by peer, session
+            aborted
+W 01/07/24 15:46:58 00641 ssh: read error Connection reset by peer, session
+            aborted
+W 01/07/24 15:27:59 00840 stp: port 11 disabled - BPDU received on protected
+            port.
+W 01/01/90 00:01:40 00419 auth: Invalid user name/password on SSH session User
+            'vector' is trying to login from 192.168.10.115
+M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
+----  Top of Log : Events Listed = 10  ----
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show crypto host-public-key fingerprint
 1024 cb:a8:d6:c7:da:bd:67:53:91:8c:c0:1b:49:d1:a1:2d: host_ssh2.pub

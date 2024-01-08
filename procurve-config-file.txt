@@ -3,7 +3,9 @@ no page
 
 show config status
 
-show config oobm
+show oobm
+
+show oobm ip
 
 show time
 

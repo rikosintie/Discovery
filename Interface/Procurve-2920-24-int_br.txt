@@ -6,7 +6,7 @@
     "enabled": "Yes",
     "status": "Up",
     "mode": "1000FDx",
-    "mdi_mode": "MDIX",
+    "mdi_mode": "MDI",
     "flow_ctrl": "off",
     "bcast_limit": "0"
   },
@@ -28,7 +28,7 @@
     "enabled": "Yes",
     "status": "Down",
     "mode": "1000FDx",
-    "mdi_mode": "Auto",
+    "mdi_mode": "NA",
     "flow_ctrl": "off",
     "bcast_limit": "0"
   },
@@ -72,7 +72,7 @@
     "enabled": "Yes",
     "status": "Up",
     "mode": "100FDx",
-    "mdi_mode": "MDI",
+    "mdi_mode": "MDIX",
     "flow_ctrl": "off",
     "bcast_limit": "0"
   },
@@ -116,7 +116,7 @@
     "enabled": "Yes",
     "status": "Down",
     "mode": "1000FDx",
-    "mdi_mode": "Auto",
+    "mdi_mode": "NA",
     "flow_ctrl": "off",
     "bcast_limit": "0"
   },
@@ -259,7 +259,7 @@
     "enabled": "Yes",
     "status": "Up",
     "mode": "1000FDx",
-    "mdi_mode": "MDIX",
+    "mdi_mode": "MDI",
     "flow_ctrl": "off",
     "bcast_limit": "0"
   }

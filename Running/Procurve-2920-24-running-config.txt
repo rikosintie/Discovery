@@ -9,8 +9,32 @@ module 1 type j9727a
 time daylight-time-rule continental-us-and-canada
 time timezone -480
 trunk 21-22 trk1 lacp
+spanning-tree
+spanning-tree 2 loop-guard bpdu-protection
+spanning-tree 3 loop-guard bpdu-protection
+spanning-tree 4 loop-guard bpdu-protection
+spanning-tree 5 loop-guard bpdu-protection
+spanning-tree 6 loop-guard bpdu-protection
+spanning-tree 7 loop-guard bpdu-protection
+spanning-tree 8 loop-guard bpdu-protection
+spanning-tree 9 loop-guard bpdu-protection
+spanning-tree 10 loop-guard bpdu-protection
+spanning-tree 11 loop-guard bpdu-protection
+spanning-tree 12 loop-guard bpdu-protection
+spanning-tree 13 loop-guard bpdu-protection
+spanning-tree 14 loop-guard bpdu-protection
+spanning-tree 15 loop-guard bpdu-protection
+spanning-tree 16 loop-guard bpdu-protection
+spanning-tree 17 loop-guard bpdu-protection
+spanning-tree 18 loop-guard bpdu-protection
+spanning-tree 19 loop-guard bpdu-protection
+spanning-tree 20 loop-guard bpdu-protection
 spanning-tree Trk1 priority 4
+spanning-tree mode rapid-pvst
+spanning-tree bpdu-protection-timeout 90
 ip default-gateway 192.168.10.254
+ip dns domain-name "pu.pri"
+ip dns server-address priority 1 192.168.10.221
 ip route 0.0.0.0 0.0.0.0 192.168.10.254
 ip routing
 ip source-interface tacacs vlan 850
@@ -39,60 +63,79 @@ interface 1
    exit
 interface 2
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 3
    untagged vlan 100
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 4
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 5
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 6
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 7
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 8
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 9
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 10
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 11
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 12
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 13
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 14
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 15
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 16
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 17
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 18
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 19
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 20
    untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
    exit
 interface 21
    trunk trk1 lacp
