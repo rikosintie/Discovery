@@ -100,12 +100,12 @@ For example, create a new text file - ip.txt. If you are using vs code and the R
 
 That will return all the IP addresses.
 
-At the bottom of vs code, click `query` next to Rainbow off.
+At the bottom of vs code, click `query`.
 
 <p align="center" width="100%">
 <img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/Rainbow-query.png" alt="Rainbow SQL query">
 
-When the query page opens, enter `select a1` and clieck `run`.
+When the query page opens, enter `select a1` and click `run`.
 
 <p align="center" width="100%">
 <img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/Rainbow-parameters.png" alt="Select Query">
