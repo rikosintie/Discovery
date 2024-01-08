@@ -88,13 +88,13 @@ The files will be saved in the following directories:
 
 ## Failure to connect to a switch
 
-If a does not respond or if the the credentials are incorrect, a message will be printed to the console and script will continue processing the next switch.
+If a switch does not respond or if the the credentials are incorrect, a message will be printed to the console and the script will continue processing the next switch.
 
-It's really disruptive to the discovery process if switches fail. That means you have to fix the problem and then create a new inventory file, then rerun it.
+It's really disruptive to the discovery process if switches fail. That means you have to fix the problem and then create a new inventory file with just the failed switches, then rerun it.
 
 I recommend saving the switch IP addresses in a plain text file, one per line, and then using nmap to verify that ssh is working.
 
-For example, create a new text file ip.txt:
+For example, create a new text file - ip.txt:
 
 ```bash
 192.168.10.50
@@ -106,6 +106,8 @@ For example, create a new text file ip.txt:
 And run nmap with these arguments:
 
 `nmap -v -p 22 -iL ip.txt --reason -oN ip-dead.txt`
+
+This tells nmap to use ip.txt for the target IP addresses, include the reason and save the output to ip-dead.txt.
 
 In this example only 3 devices are working:
 
