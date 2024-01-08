@@ -143,3 +143,10 @@ PORT   STATE SERVICE
 ```
 
 Then use `grep -Eir -b6 "No valid" accounts.txt` to find the devices with no valid accounts.
+
+**Grep Arguments:**
+
+- E extended
+- i case-insensitive
+- r recursive
+- -b6 show 6 lines before the match
