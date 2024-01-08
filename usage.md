@@ -24,11 +24,11 @@ There are a few steps needed before starting the discovery process:
 
 You must create a csv file that contains the following:
 
-`ip_address,hp_procurve,hostname`
+`ip_address,hp_procurve,hostname,username`
 
 For example,
 
-`198.51.100.52,hp_procurve,Procurve-2920-24`
+`198.51.100.52,hp_procurve,Procurve-2920-24,mhubbard`
 
 Create one line for every switch that you want to process.
 
@@ -94,7 +94,24 @@ It's really disruptive to the discovery process if switches fail. That means you
 
 I recommend saving the switch IP addresses in a plain text file, one per line, and then using nmap to verify that ssh is working.
 
-For example, create a new text file - ip.txt:
+For example, create a new text file - ip.txt. If you are using vs code and the Rainbow csv extension you can simply run a query:
+
+`select a1`
+
+That will return all the IP addresses.
+
+At the bottom of vs code, click `query` next to Rainbow off.
+
+<p align="center" width="100%">
+<img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/Rainbow-query.png" alt="Rainbow SQL query">
+
+When the query page opens, enter `select a1` and clieck `run`.
+
+<p align="center" width="100%">
+<img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/Rainbow-parameters.png" alt="Select Query">
+</p>
+
+The query will return a list of IP addresses, 1 per line.
 
 ```bash
 192.168.10.50
