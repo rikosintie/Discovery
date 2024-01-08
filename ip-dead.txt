@@ -1,0 +1,22 @@
+# Nmap 7.91 scan initiated Sun Jan  7 20:07:27 2024 as: nmap -v -p 22 -iL ip.txt --reason -oN ip-dead.txt
+Nmap scan report for 192.168.10.230 [host down, received no-response]
+Nmap scan report for 192.168.10.50
+Host is up, received syn-ack (0.0024s latency).
+
+PORT   STATE SERVICE REASON
+22/tcp open  ssh     syn-ack
+
+Nmap scan report for 192.168.10.52
+Host is up, received syn-ack (0.0027s latency).
+
+PORT   STATE SERVICE REASON
+22/tcp open  ssh     syn-ack
+
+Nmap scan report for 192.168.10.111
+Host is up, received conn-refused (0.0026s latency).
+
+PORT   STATE SERVICE REASON
+22/tcp open  ssh     syn-ack
+
+Read data files from: /usr/local/bin/../share/nmap
+# Nmap done at Sun Jan  7 20:07:28 2024 -- 4 IP addresses (3 hosts up) scanned in 1.32 seconds

