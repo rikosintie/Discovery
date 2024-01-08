@@ -46,6 +46,7 @@ but the  script halts.
 
 # !!!!! Discovery Script - Does not change the running config !!!!!
 import argparse
+import getpass
 import json
 import logging
 import os
@@ -57,8 +58,6 @@ from datetime import datetime
 from icecream import ic
 from netmiko import ConnectHandler
 from netmiko.exceptions import AuthenticationException, NetmikoTimeoutException
-
-# from netmiko import exceptions
 from paramiko.ssh_exception import SSHException
 
 # !!!!! Discovery Script - Does not change the running config !!!!!
@@ -121,10 +120,36 @@ def remove_empty_lines(filename: str) -> str:
 
 
 start = timeit.default_timer()
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(description="-s site, -p 1 prompt for password")
 parser.add_argument("-s", "--site", help="Site name - ex. HQ")
+parser.add_argument(
+    "-p",
+    "--password",  # Optional (but recommended) long version
+    default="",
+    help="use -p 1 to be prompted for password",
+)
 args = parser.parse_args()
 site = args.site
+
+# Check for the password, exit if it doesn't exist
+password = ""
+if args.password != "":
+    password = getpass.getpass(prompt="Input the Password:")
+elif os.environ.get("cyberARK"):
+    password = os.environ.get("cyberARK")
+else:
+    print("\n" * 3)
+    print("-" * 87)
+    print("No password has been found. Use")
+    print()
+    print("    python procurve-Config-pull.py -s site -p 1")
+    print()
+    print(
+        "on the terminal to be prompted for a password or set the environment variable cyberARK"
+    )
+    print("-" * 87)
+    print()
+    sys.exit()
 
 if site is None:
     print("-s site name is a required argument")
@@ -152,13 +177,7 @@ for line in fabric:
     vendor = line.split(",")[1]
     hostname = line.split(",")[2]
     username = line.split(",")[3]
-    linelen = len(line.split(","))
-    ic(linelen)
-    if linelen == 5:
-        password = line.split(",")[4]
-        ic(password)
-    else:
-        password = os.environ.get("cyberARK")
+
     if vendor.lower() == "hp_procurve":
         now = datetime.now()
         start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
