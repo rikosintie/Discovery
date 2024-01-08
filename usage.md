@@ -140,5 +140,6 @@ PORT   STATE SERVICE
 | ssh-brute:
 |   Accounts: No valid accounts found
 |_  Statistics: Performed 2 guesses in 4 seconds, average tps: 0.5
-`
+```
+
 Then use `grep -Eir -b6 "No valid" accounts.txt` to find the devices with no valid accounts.
