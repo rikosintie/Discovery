@@ -7,12 +7,14 @@
   - [Being prompted for the password](#being-prompted-for-the-password)
 - [Failure to connect to a switch](#failure-to-connect-to-a-switch)
 
+----------------------------------------------------------------
+
 ## Before you can run the script
 
 There are a few steps needed before starting the discovery process:
 
 - Create a device inventory file
-- Make changes to the procurve-config-file.txt file
+- Make changes to tShe procurve-config-file.txt file
 - Decide how you want store the password
 - Update the mac.txt file to match the format of the switches
 
