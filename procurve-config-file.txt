@@ -1,6 +1,8 @@
 end
 no page
 
+show system
+
 show config status
 
 show oobm
@@ -26,6 +28,8 @@ show version | i ROM
 show config vlan
 
 show vlan custom id name:15 ipaddr ipmask ipconfig state voice jumbo
+
+show config interface
 
 show ip
 
@@ -55,9 +59,17 @@ show trunks
 
 show lacp peer
 
+show lacp local
+
+show lacp mad-passthrough
+
 show cdp neighbors
 
+show cdp nei d
+
 show lldp info remote
+
+show lldp info remote d
 
 show spanning-tree
 
