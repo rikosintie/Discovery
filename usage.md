@@ -14,7 +14,7 @@
 There are a few steps needed before starting the discovery process:
 
 - Create a device inventory file
-- Make changes to tShe procurve-config-file.txt file
+- Make changes to the procurve-config-file.txt file
 - Decide how you want store the password
 - Update the mac.txt file to match the format of the switches
 
@@ -60,7 +60,7 @@ From the terminal that you will run the script in `export cyberARK=Password`. Yo
 
 ### Being prompted for the password
 
-This is easier than setting up environment variable. You simple add `-p 1` to the command line.
+This is easier than setting up environment variable. You simply add `-p 1` to the command line.
 
 For example, to run the script for a site named HQ:
 
