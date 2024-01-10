@@ -3,25 +3,63 @@ HP-2920-24G-PoEP# configure terminal
 HP-2920-24G-PoEP(config)#  end
 HP-2920-24G-PoEP# no page
 HP-2920-24G-PoEP# 
-HP-2920-24G-PoEP# show config status
+HP-2920-24G-PoEP# show system
 
-The running configuration has been modified and not yet saved.
+ Status and Counters - General System Information
+
+  System Name        : HP-2920-24G-PoEP                                
+  System Contact     : 
+  System Location    : 
+
+  MAC Age Time (sec) : 300    
+
+  Time Zone          : -480 
+  Daylight Time Rule : Continental-US-and-Canada 
+
+  Software revision  : WB.16.10.0023        Base MAC Addr      : 98f2b3-fe8880
+  ROM Version        : WB.16.03             Serial Number      : SG78FLXH0B  
+
+  Up Time            : 27 mins              Memory   - Total   : 72,483,328  
+  CPU Util (%)       : 54                              Free    : 40,356,656  
+
+  IP Mgmt  - Pkts Rx : 2585                 Packet   - Total   : 6750        
+             Pkts Tx : 1949                 Buffers    Free    : 5009        
+                                                       Lowest  : 4994        
+                                                       Missed  : 0           
 
 HP-2920-24G-PoEP# 
-HP-2920-24G-PoEP# show config oobm
+HP-2920-24G-PoEP# show config status
 
-Startup configuration: 40
+The running configuration matches the saved configuration.
 
-oobm
-   ip address dhcp-bootp
-   exit
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show oobm
+
+ Global OOBM Configuration 
+  OOBM Enabled           : Yes  
+  OOBM Port Type         : 10/100TX    
+  OOBM Interface Status  : Up              
+  OOBM Port              : Enabled     
+  OOBM Port Speed        : Auto        
+  MAC Address            : 98f2b3-fe8881
+
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show oobm ip
+
+  IPv4 Status          : Enabled 
+  IPv4 Default Gateway : 192.168.10.254                                
+
+        |                                     Address  Interface
+ Member | IP Config IP Address/Prefix Length  Status   Status   
+ ------ + --------- ------------------------- -------- ---------
+ Global | dhcp      192.168.10.112/24                  Up       
 
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show time
-Sun Jan  7 19:07:40 2024
+Wed Jan 10 09:32:25 2024
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show uptime
-0000:03:53:18.17
+0000:00:27:26.74
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show ntp status
 
@@ -30,14 +68,14 @@ HP-2920-24G-PoEP# show ntp status
   NTP Status             : Enabled         NTP Mode        : Unicast         
   Synchronization Status : Synchronized    Peer Dispersion : 0.00000 sec     
   Stratum Number         : 2               Leap Direction  : 0               
-  Reference Assoc ID     : 0               Clock Offset    : 0.04150 sec     
-  Reference ID           : 129.6.15.29     Root Delay      : 0.07210 sec     
-  Precision              : 2**-18          Root Dispersion : 1.05481 sec     
-  NTP Up Time            : 0d 3h 53m       Time Resolution : 697 nsec        
+  Reference Assoc ID     : 0               Clock Offset    : 0.00012 sec     
+  Reference ID           : 129.6.15.29     Root Delay      : 0.06919 sec     
+  Precision              : 2**-18          Root Dispersion : 0.03679 sec     
+  NTP Up Time            : 0d 0h 27m       Time Resolution : 698 nsec        
   Drift                  : 0.00000 sec/sec 
 
-  System Time            : Sun Jan  7 19:07:40 2024                
-  Reference Time         : Sun Jan  7 18:59:12 2024                
+  System Time            : Wed Jan 10 09:32:26 2024                
+  Reference Time         : Wed Jan 10 09:06:08 2024                
 
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show ntp associations
@@ -47,8 +85,8 @@ HP-2920-24G-PoEP# show ntp associations
 
  Remote          St   T    When   Poll  Reach    Delay    Offset   Dispersion
  --------------- ---- ---- ------ ----- -------- -------- -------- ----------
- 129.6.15.29     1    u    13991  17    1        0.000    0.000    16.00000  
- 192.168.10.221  1    u    13991  17    1        0.000    0.000    16.00000  
+ 129.6.15.29     1    u    1639   13    177      0.000    0.000    12.07924  
+ 192.168.10.221  1    u    1639   8     177      0.000    0.000    12.07895  
 
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show ntp server
@@ -100,17 +138,17 @@ Active Boot ROM:     Primary
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show config vlan
 
-Startup configuration: 40
+Startup configuration: 42
 
 vlan 1
    name "DEFAULT_VLAN"
-   no untagged 1,3,24,Trk1
-   untagged 2,4-20,23
+   no untagged 1,3,17,24,Trk1
+   untagged 2,4-16,18-20,23
    ip address dhcp-bootp
    exit
 vlan 10
    name "User"
-   untagged 24
+   untagged 17,24
    ip helper-address 10.10.83.20
    ip helper-address 10.10.100.50
    ip address 192.168.10.52 255.255.255.0
@@ -193,6 +231,123 @@ Status and Counters - VLAN Information - Custom view
  850    OSPF-Peering    10.254.34.18    255.255.255.252 Manual     Up    No    No   
 
 HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show config interface
+
+Startup configuration: 42
+
+interface 1
+   untagged vlan 850
+   exit
+interface 2
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 3
+   untagged vlan 100
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 4
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 5
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 6
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 7
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 8
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 9
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 10
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 11
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 12
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 13
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 14
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 15
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 16
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 17
+   untagged vlan 10
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 18
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 19
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 20
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 21
+   trunk trk1 lacp
+   exit
+interface 22
+   trunk trk1 lacp
+   exit
+interface 23
+   untagged vlan 1
+   exit
+interface 24
+   tagged vlan 20,60-63
+   untagged vlan 10
+   exit
+interface A1
+   untagged vlan 1
+   exit
+interface A2
+   untagged vlan 1
+   exit
+interface B1
+   untagged vlan 1
+   exit
+interface B2
+   untagged vlan 1
+   exit
+interface Trk1
+   tagged vlan 850
+   spanning-tree priority 4
+   exit
+interface loopback 0
+   ip address 1.1.1.1
+   exit
+
+HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show ip
 
  Internet (IP) Service
@@ -256,7 +411,7 @@ HP-2920-24G-PoEP# show ip route 0.0.0.0
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show config router ospf
 
-Startup configuration: 40
+Startup configuration: 42
 
 router ospf
    area backbone
@@ -309,7 +464,7 @@ HP-2920-24G-PoEP# show ip ospf general
   Area Border               : no 
   AS Border                 : yes
   External LSA Count        : 7          
-  External LSA Checksum Sum : 215266     
+  External LSA Checksum Sum : 201041     
   Originate New LSA Count   : 6          
   Receive New LSA Count     : 0          
 
@@ -333,13 +488,13 @@ HP-2920-24G-PoEP# show ip ospf external-link-state
 
   Link State ID   Router ID       Age  Sequence #  Checksum  
   --------------- --------------- ---- ----------- ----------
-  1.1.1.1         1.1.1.1         978  0x80000008  0x0000083c
-  10.14.63.16     1.1.1.1         678  0x80000009  0x00008660
-  10.14.64.16     1.1.1.1         678  0x80000009  0x00007b6a
-  10.14.65.16     1.1.1.1         678  0x80000009  0x00007074
-  10.14.66.16     1.1.1.1         678  0x80000009  0x0000657e
-  10.164.24.0     1.1.1.1         678  0x80000009  0x0000f08f
-  192.168.10.0    1.1.1.1         678  0x80000009  0x000014bf
+  1.1.1.1         1.1.1.1         1647 0x80000001  0x00001635
+  10.14.63.16     1.1.1.1         1626 0x80000001  0x00009658
+  10.14.64.16     1.1.1.1         1626 0x80000001  0x00008b62
+  10.14.65.16     1.1.1.1         1626 0x80000001  0x0000806c
+  10.14.66.16     1.1.1.1         1626 0x80000001  0x00007576
+  10.164.24.0     1.1.1.1         1626 0x80000001  0x00000187
+  192.168.10.0    1.1.1.1         1626 0x80000001  0x000024b7
  
 
 HP-2920-24G-PoEP# 
@@ -362,7 +517,7 @@ HP-2920-24G-PoEP# show interface status
   14                  Down    Auto          1000FDx  100/1000T  No     1       
   15                  Down    Auto          1000FDx  100/1000T  No     1       
   16                  Down    Auto          1000FDx  100/1000T  No     1       
-  17                  Up      Auto          100FDx   100/1000T  No     1       
+  17                  Down    Auto          1000FDx  100/1000T  No     10      
   18                  Down    Auto          1000FDx  100/1000T  No     1       
   19                  Down    Auto          1000FDx  100/1000T  No     1       
   20                  Down    Auto          1000FDx  100/1000T  No     1       
@@ -374,7 +529,6 @@ HP-2920-24G-PoEP# show interface status
 HP-2920-24G-PoEP# show int status | i Up
   1                   Up      Auto          1000FDx  100/1000T  No     850     
   7                   Up      Auto          100FDx   100/1000T  No     1       
-  17                  Up      Auto          100FDx   100/1000T  No     1       
   21-Trk1             Up      Auto-1000     1000FDx  1000T-SFP  850    No      
   22-Trk1             Up      Auto-1000     1000FDx  1000T-SFP  850    No      
   24                  Up      Auto          1000FDx  100/1000T  multi  10      
@@ -429,6 +583,28 @@ System ID: 98f2b3-fe8880
  
 
 HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show lacp local
+
+LACP Local Information.
+
+
+System ID: 98f2b3-fe8880 
+
+
+              LACP                 Tx     Rx Timer
+  Port Trunk  Mode     Aggregated  Timer  Expired 
+  ---- ------ -------- ----------- ------ --------
+  21   Trk1   Active   Yes         Slow   No      
+  22   Trk1   Active   Yes         Slow   No      
+ 
+
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show lacp mad-passthrough
+
+  Trunk-Group  LACP-MAD-PASSTHROUGH
+  ------------ ---------------------
+  Trk1         Disabled             
+ HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show cdp neighbors
 
  CDP neighbors information
@@ -437,15 +613,140 @@ HP-2920-24G-PoEP# show cdp neighbors
   ------ ----------------------------- + ---------------------------- -----------
   1      3750x.pu.pri                  | cisco WS-C3750X-48P          R S I      
   1      64 00 f1 01 6f 80             | Cisco IOS Software, C3750... R S        
-  17     e4 5f 01 85 86 a5             | Raspbian GNU/Linux 10 (bu... R          
   21     3750x.pu.pri                  | cisco WS-C3750X-48P          R S I      
   21     64 00 f1 01 6f 80             | Cisco IOS Software, C3750... R S        
   22     3750x.pu.pri                  | cisco WS-C3750X-48P          R S I      
   22     64 00 f1 01 6f 80             | Cisco IOS Software, C3750... R S        
   24     fc ec da c4 6e 55             |                                         
-  24     Garage                        | NanoStation 5AC loc          T          
   24     9c 8c d8 c9 17 ae             | ArubaOS (MODEL: 515), Ver...            
+  24     98 f2 b3 fe 88 80             | HP J9727A 2920-24G-PoE+ S... R S        
+  24     ea e6 4b 18 de 20             |  Darwin 21.6.0 Darwin Ker... S          
+  24     Garage                        | NanoStation 5AC loc          T          
  
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show cdp nei d
+
+ CDP neighbors information
+
+  Port : 1     
+  Device ID : 3750x.pu.pri                                                  
+  Address Type : IP          
+  Address      : 10.254.34.17                                                
+  Platform     : cisco WS-C3750X-48P                                        
+  Capability   : Router Switch IGMP                                         
+  Device Port  : GigabitEthernet1/0/1                                       
+  Version      : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+
+------------------------------------------------------------------------------
+
+  Port : 1     
+  Device ID : 64 00 f1 01 6f 80                                             
+  Address Type : IP          
+  Address      : 10.254.34.17                                                
+  Platform     : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+  Capability   : Router Switch                                              
+  Device Port  : GigabitEthernet1/0/1                                       
+  Version      : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+
+------------------------------------------------------------------------------
+
+  Port : 21    
+  Device ID : 3750x.pu.pri                                                  
+  Address Type : IP          
+  Address      : 192.168.1.1                                                 
+  Platform     : cisco WS-C3750X-48P                                        
+  Capability   : Router Switch IGMP                                         
+  Device Port  : GigabitEthernet1/1/2                                       
+  Version      : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+
+------------------------------------------------------------------------------
+
+  Port : 21    
+  Device ID : 64 00 f1 01 6f 80                                             
+  Address Type : IP          
+  Address      : 192.168.1.1                                                 
+  Platform     : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+  Capability   : Router Switch                                              
+  Device Port  : GigabitEthernet1/1/2                                       
+  Version      : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+
+------------------------------------------------------------------------------
+
+  Port : 22    
+  Device ID : 3750x.pu.pri                                                  
+  Address Type : IP          
+  Address      : 192.168.1.1                                                 
+  Platform     : cisco WS-C3750X-48P                                        
+  Capability   : Router Switch IGMP                                         
+  Device Port  : GigabitEthernet1/1/4                                       
+  Version      : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+
+------------------------------------------------------------------------------
+
+  Port : 22    
+  Device ID : 64 00 f1 01 6f 80                                             
+  Address Type : IP          
+  Address      : 192.168.1.1                                                 
+  Platform     : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+  Capability   : Router Switch                                              
+  Device Port  : GigabitEthernet1/1/4                                       
+  Version      : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+
+------------------------------------------------------------------------------
+
+  Port : 24    
+  Device ID : fc ec da c4 6e 55                                             
+  Address Type : UNKNOWN     
+  Address      : Unsupported format                                          
+  Platform     :                                                            
+  Capability   :                                                            
+  Device Port  : eth0                                                       
+  Version      :                                                            
+
+------------------------------------------------------------------------------
+
+  Port : 24    
+  Device ID : 9c 8c d8 c9 17 ae                                             
+  Address Type : IP          
+  Address      : 192.168.10.144                                              
+  Platform     : ArubaOS (MODEL: 515), Version Aruba IAP                    
+  Capability   :                                                            
+  Device Port  : eth0                                                       
+  Version      : ArubaOS (MODEL: 515), Version Aruba IAP                    
+
+------------------------------------------------------------------------------
+
+  Port : 24    
+  Device ID : 98 f2 b3 fe 88 80                                             
+  Address Type : IP          
+  Address      : 192.168.10.112                                              
+  Platform     : HP J9727A 2920-24G-PoE+ Switch, revision WB.16.10.0023, ...
+  Capability   : Router Switch                                              
+  Device Port  : OOBM                                                       
+  Version      : HP J9727A 2920-24G-PoE+ Switch, revision WB.16.10.0023, ...
+
+------------------------------------------------------------------------------
+
+  Port : 24    
+  Device ID : ea e6 4b 18 de 20                                             
+  Address Type : IP          
+  Address      : 192.168.10.106                                              
+  Platform     :  Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ...
+  Capability   : Switch                                                     
+  Device Port  : en0                                                        
+  Version      :  Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ...
+
+------------------------------------------------------------------------------
+
+  Port : 24    
+  Device ID : Garage                                                        
+  Address Type : IP          
+  Address      : 192.168.10.51                                               
+  Platform     : NanoStation 5AC loc                                        
+  Capability   : Trans Bridge                                               
+  Device Port  : br0                                                        
+  Version      : WA.ar934x.v8.7.1.42832.200623.1641                         
+
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show lldp info remote
 
@@ -455,15 +756,295 @@ HP-2920-24G-PoEP# show lldp info remote
   --------- + ------------------ ------------------ --------- ------------------
   1         | 3750x.pu.pri       GigabitEthernet...           cisco WS-C3750X...
   1         | 64 00 f1 01 6f 80  Gi1/0/1            Gigabi... 3750x.pu.pri      
-  17        | e4 5f 01 85 86 a5  00 e0 4c 36 03 48  eth0      piconsole-v2      
   21        | 3750x.pu.pri       GigabitEthernet...           cisco WS-C3750X...
   21        | 64 00 f1 01 6f 80  Gi1/1/2            Gigabi... 3750x.pu.pri      
   22        | 3750x.pu.pri       GigabitEthernet...           cisco WS-C3750X...
   22        | 64 00 f1 01 6f 80  Gi1/1/4            Gigabi... 3750x.pu.pri      
   24        | fc ec da c4 6e 55  eth0                                           
-  24        | Garage             br0                          NanoStation 5AC...
   24        | 9c 8c d8 c9 17 ae  9c 8c d8 c9 17 ae  eth0      IAP-515           
+  24        | 98 f2 b3 fe 88 80  4000               OOBM      HP-2920-24G-PoEP  
+  24        | ea e6 4b 18 de 20  50 ed 3c 22 be 32  en0       hp8600-2328.local 
+  24        | Garage             br0                          NanoStation 5AC...
+  OOBM      | ea e6 4b 18 de 20  50 ed 3c 22 be 32  en0       hp8600-2328.local 
+  OOBM      | 98 f2 b3 fe 88 80  24                 24        HP-2920-24G-PoEP  
+  OOBM      | fc ec da c4 6e 55  eth0                                           
+  OOBM      | 9c 8c d8 c9 17 ae  9c 8c d8 c9 17 ae  eth0      IAP-515           
  
+
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show lldp info remote d
+
+ LLDP Remote Device Information Detail
+
+  Local Port   : 1
+  ChassisType  : local               
+  ChassisId    : 3750x.pu.pri             
+  PortType     : local                                                     
+  PortId       : GigabitEthernet1/0/1                                      
+  SysName      : cisco WS-C3750X-48P             
+  System Descr : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
+  PortDescr    :                                                             
+  Pvid         :                          
+
+  System Capabilities Supported  : bridge, router
+  System Capabilities Enabled    : bridge, router
+
+  Remote Management Address
+     Type    : ipv4
+     Address : 10.254.34.17
+
+------------------------------------------------------------------------------
+  Local Port   : 1
+  ChassisType  : mac-address         
+  ChassisId    : 64 00 f1 01 6f 80        
+  PortType     : interface-name                                            
+  PortId       : Gi1/0/1                                                   
+  SysName      : 3750x.pu.pri                    
+  System Descr : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
+  PortDescr    : GigabitEthernet1/0/1                                        
+  Pvid         : 850                      
+
+  System Capabilities Supported  : bridge, router
+  System Capabilities Enabled    : bridge, router
+
+  Remote Management Address
+     Type    : ipv4
+     Address : 10.254.34.17
+
+------------------------------------------------------------------------------
+  Local Port   : 21
+  ChassisType  : local               
+  ChassisId    : 3750x.pu.pri             
+  PortType     : local                                                     
+  PortId       : GigabitEthernet1/1/2                                      
+  SysName      : cisco WS-C3750X-48P             
+  System Descr : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
+  PortDescr    :                                                             
+  Pvid         :                          
+
+  System Capabilities Supported  : bridge, router
+  System Capabilities Enabled    : bridge, router
+
+  Remote Management Address
+     Type    : ipv4
+     Address : 192.168.1.1
+
+------------------------------------------------------------------------------
+  Local Port   : 21
+  ChassisType  : mac-address         
+  ChassisId    : 64 00 f1 01 6f 80        
+  PortType     : interface-name                                            
+  PortId       : Gi1/1/2                                                   
+  SysName      : 3750x.pu.pri                    
+  System Descr : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
+  PortDescr    : GigabitEthernet1/1/2                                        
+  Pvid         : 1                        
+
+  System Capabilities Supported  : bridge, router
+  System Capabilities Enabled    : bridge, router
+
+  Remote Management Address
+     Type    : ipv4
+     Address : 192.168.1.1
+
+------------------------------------------------------------------------------
+  Local Port   : 22
+  ChassisType  : local               
+  ChassisId    : 3750x.pu.pri             
+  PortType     : local                                                     
+  PortId       : GigabitEthernet1/1/4                                      
+  SysName      : cisco WS-C3750X-48P             
+  System Descr : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
+  PortDescr    :                                                             
+  Pvid         :                          
+
+  System Capabilities Supported  : bridge, router
+  System Capabilities Enabled    : bridge, router
+
+  Remote Management Address
+     Type    : ipv4
+     Address : 192.168.1.1
+
+------------------------------------------------------------------------------
+  Local Port   : 22
+  ChassisType  : mac-address         
+  ChassisId    : 64 00 f1 01 6f 80        
+  PortType     : interface-name                                            
+  PortId       : Gi1/1/4                                                   
+  SysName      : 3750x.pu.pri                    
+  System Descr : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
+  PortDescr    : GigabitEthernet1/1/4                                        
+  Pvid         : 10                       
+
+  System Capabilities Supported  : bridge, router
+  System Capabilities Enabled    : bridge, router
+
+  Remote Management Address
+     Type    : ipv4
+     Address : 192.168.1.1
+
+------------------------------------------------------------------------------
+  Local Port   : 24
+  ChassisType  : mac-address         
+  ChassisId    : fc ec da c4 6e 55        
+  PortType     : local                                                     
+  PortId       : eth0                                                      
+  SysName      :                                 
+  System Descr :                                                             
+  PortDescr    :                                                             
+  Pvid         :                          
+
+  System Capabilities Supported  : 
+  System Capabilities Enabled    : 
+
+  Remote Management Address
+
+------------------------------------------------------------------------------
+  Local Port   : 24
+  ChassisType  : mac-address         
+  ChassisId    : 9c 8c d8 c9 17 ae        
+  PortType     : mac-address                                               
+  PortId       : 9c 8c d8 c9 17 ae                                         
+  SysName      : IAP-515                         
+  System Descr : ArubaOS (MODEL: 515), Version Aruba IAP                     
+  PortDescr    : eth0                                                        
+  Pvid         :                          
+
+  System Capabilities Supported  : bridge, wlan-access-point
+  System Capabilities Enabled    : wlan-access-point
+
+  Remote Management Address
+     Type    : ipv4
+     Address : 192.168.10.144
+
+------------------------------------------------------------------------------
+  Local Port   : 24
+  ChassisType  : mac-address         
+  ChassisId    : 98 f2 b3 fe 88 80        
+  PortType     : local                                                     
+  PortId       : 4000                                                      
+  SysName      : HP-2920-24G-PoEP                
+  System Descr : HP J9727A 2920-24G-PoE+ Switch, revision WB.16.10.0023, R...
+  PortDescr    : OOBM                                                        
+  Pvid         :                          
+
+  System Capabilities Supported  : bridge, router
+  System Capabilities Enabled    : bridge, router
+
+  Remote Management Address
+     Type    : ipv4
+     Address : 192.168.10.112
+
+------------------------------------------------------------------------------
+  Local Port   : 24
+  ChassisType  : mac-address         
+  ChassisId    : ea e6 4b 18 de 20        
+  PortType     : mac-address                                               
+  PortId       : 50 ed 3c 22 be 32                                         
+  SysName      : hp8600-2328.local               
+  System Descr :  Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 0...
+  PortDescr    : en0                                                         
+  Pvid         :                          
+
+  System Capabilities Supported  : bridge, wlan-access-point, router
+  System Capabilities Enabled    : bridge, wlan-access-point
+
+  Remote Management Address
+     Type    : ipv4
+     Address : 192.168.10.106
+     Type    : ipv6
+     Address : fe80::1
+
+------------------------------------------------------------------------------
+  Local Port   : 24
+  ChassisType  : local               
+  ChassisId    : Garage                   
+  PortType     : local                                                     
+  PortId       : br0                                                       
+  SysName      : NanoStation 5AC loc             
+  System Descr : WA.ar934x.v8.7.1.42832.200623.1641                          
+  PortDescr    :                                                             
+  Pvid         :                          
+
+  System Capabilities Supported  : 
+  System Capabilities Enabled    : 
+
+  Remote Management Address
+     Type    : ipv4
+     Address : 192.168.10.51
+
+------------------------------------------------------------------------------
+  Local Port   : OOBM
+  ChassisType  : mac-address         
+  ChassisId    : ea e6 4b 18 de 20        
+  PortType     : mac-address                                               
+  PortId       : 50 ed 3c 22 be 32                                         
+  SysName      : hp8600-2328.local               
+  System Descr :  Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 0...
+  PortDescr    : en0                                                         
+  Pvid         :                          
+
+  System Capabilities Supported  : bridge, wlan-access-point, router
+  System Capabilities Enabled    : bridge, wlan-access-point
+
+  Remote Management Address
+     Type    : ipv4
+     Address : 192.168.10.106
+     Type    : ipv6
+     Address : fe80::1
+
+------------------------------------------------------------------------------
+  Local Port   : OOBM
+  ChassisType  : mac-address         
+  ChassisId    : 98 f2 b3 fe 88 80        
+  PortType     : local                                                     
+  PortId       : 24                                                        
+  SysName      : HP-2920-24G-PoEP                
+  System Descr : HP J9727A 2920-24G-PoE+ Switch, revision WB.16.10.0023, R...
+  PortDescr    : 24                                                          
+  Pvid         :                          
+
+  System Capabilities Supported  : bridge, router
+  System Capabilities Enabled    : bridge, router
+
+  Remote Management Address
+     Type    : ipv4
+     Address : 192.168.10.52
+
+------------------------------------------------------------------------------
+  Local Port   : OOBM
+  ChassisType  : mac-address         
+  ChassisId    : fc ec da c4 6e 55        
+  PortType     : local                                                     
+  PortId       : eth0                                                      
+  SysName      :                                 
+  System Descr :                                                             
+  PortDescr    :                                                             
+  Pvid         :                          
+
+  System Capabilities Supported  : 
+  System Capabilities Enabled    : 
+
+  Remote Management Address
+
+------------------------------------------------------------------------------
+  Local Port   : OOBM
+  ChassisType  : mac-address         
+  ChassisId    : 9c 8c d8 c9 17 ae        
+  PortType     : mac-address                                               
+  PortId       : 9c 8c d8 c9 17 ae                                         
+  SysName      : IAP-515                         
+  System Descr : ArubaOS (MODEL: 515), Version Aruba IAP                     
+  PortDescr    : eth0                                                        
+  Pvid         :                          
+
+  System Capabilities Supported  : bridge, wlan-access-point
+  System Capabilities Enabled    : wlan-access-point
+
+  Remote Management Address
+     Type    : ipv4
+     Address : 192.168.10.144
+
 
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show spanning-tree
@@ -511,7 +1092,6 @@ HP-2920-24G-PoEP# show spanning-tree bpdu-protection
 
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show power-over-ethernet brief | i Del
- 17     Yes  low      off     usage usage  2.4 W   2.3 W   Delivering   3   1  
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show power
 
@@ -525,9 +1105,9 @@ HP-2920-24G-PoEP# show power
   Total Available Power  :  370 W  
   Total Failover Pwr Avl :    0 W
   Total Redundancy Power :    0 W
-  Total Power Drawn      :    3 W +/- 6W       
-  Total Power Reserved   :    3 W              
-  Total Remaining Power  :  367 W              
+  Total Power Drawn      :    0 W +/- 6W       
+  Total Power Reserved   :    0 W              
+  Total Remaining Power  :  370 W              
 
  Internal Power
 
@@ -569,8 +1149,8 @@ HP-2920-24G-PoEP# show ip ssh
   Ses Type     | Source IP                                      Port 
   --- -------- + ---------------------------------------------- -----
   1   console  |
-  2   ssh      | 192.168.10.115                                 43484
-  3   ssh      | 192.168.10.115                                 59526
+  2   ssh      | 192.168.10.115                                 37816
+  3   ssh      | 192.168.10.115                                 37514
   4   inactive |
   5   inactive |
   6   inactive |
@@ -635,247 +1215,114 @@ HP-2920-24G-PoEP# show logging -r -e
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
-M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
+M 01/01/90 00:00:27 03001 system: System reboot due to Power Failure
 ----  Top of Log : Events Listed = 1  ----
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show logging -r -i
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
-I 01/07/24 19:07:39 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/07/24 19:07:38 03362 auth: User 'vector' logged in from 192.168.10.115 to
+I 01/10/24 09:32:24 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/10/24 09:32:23 03362 auth: User 'vector' logged in from 192.168.10.115 to
             SSH  session
-I 01/07/24 19:01:14 04910 ntp: All the NTP server associations reset.
-I 01/07/24 19:01:14 04908 ntp: The system clock time was changed by 0 sec
-            41504306 nsec.	 The new time is Sun Jan  7 19:01:14 2024
-.
-I 01/07/24 18:54:50 03363 auth: User 'vector' logged out of SSH  session from 
+I 01/10/24 09:24:06 03363 auth: User 'vector' logged out of SSH  session from 
             192.168.10.115
-W 01/07/24 18:54:50 00641 ssh: read error Connection reset by peer, session
+W 01/10/24 09:24:06 00641 ssh: read error Connection reset by peer, session
             aborted
-I 01/07/24 18:54:27 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/07/24 18:54:26 03362 auth: User 'vector' logged in from 192.168.10.115 to
+I 01/10/24 09:23:40 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/10/24 09:23:40 03362 auth: User 'vector' logged in from 192.168.10.115 to
             SSH  session
-I 01/07/24 17:49:55 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-W 01/07/24 17:49:54 00641 ssh: read error Connection reset by peer, session
-            aborted
-I 01/07/24 17:49:30 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/07/24 17:49:29 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/07/24 17:45:37 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-W 01/07/24 17:45:37 00641 ssh: read error Connection reset by peer, session
-            aborted
-I 01/07/24 17:45:14 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/07/24 17:45:13 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/07/24 16:53:09 04910 ntp: All the NTP server associations reset.
-I 01/07/24 16:53:09 04908 ntp: The system clock time was changed by 0 sec
-            14106617 nsec.	 The new time is Sun Jan  7 16:53:08 2024
-.
-I 01/07/24 16:38:59 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-W 01/07/24 16:38:59 00641 ssh: read error Connection reset by peer, session
-            aborted
-I 01/07/24 16:38:35 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/07/24 16:38:35 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/07/24 16:02:38 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-W 01/07/24 16:02:38 00641 ssh: read error Connection reset by peer, session
-            aborted
-I 01/07/24 16:02:10 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/07/24 16:02:10 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/07/24 16:00:01 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-W 01/07/24 16:00:01 00641 ssh: read error Connection reset by peer, session
-            aborted
-I 01/07/24 15:59:38 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/07/24 15:59:37 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/07/24 15:57:58 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-I 01/07/24 15:57:49 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/07/24 15:57:48 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/07/24 15:49:05 04910 ntp: All the NTP server associations reset.
-I 01/07/24 15:46:58 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-W 01/07/24 15:46:58 00641 ssh: read error Connection reset by peer, session
-            aborted
-I 01/07/24 15:46:29 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/07/24 15:46:28 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/07/24 15:31:55 03125 mgr: Startup configuration changed by CLI.  New seq.
-            number 40
-I 01/07/24 15:30:37 03125 mgr: Startup configuration changed by CLI.  New seq.
-            number 39
-I 01/07/24 15:30:27 00077 ports: port 11 is now off-line
-I 01/07/24 15:30:16 00076 ports: port 11 is now on-line
-I 01/07/24 15:28:00 00077 ports: port 3 is now off-line
-I 01/07/24 15:27:59 00077 ports: port 11 is now off-line
-I 01/07/24 15:27:59 00898 ports: BPDU protect(5) has disabled port 11
-W 01/07/24 15:27:59 00840 stp: port 11 disabled - BPDU received on protected
-            port.
-I 01/07/24 15:27:59 00828 lldp: PVID mismatch on port 11(VID 1)with peer device
-            port 3(VID 100)(1)
-I 01/07/24 15:27:59 00828 lldp: PVID mismatch on port 3(VID 100)with peer device
-            port 11(VID 1)(1)
-I 01/07/24 15:27:58 00076 ports: port 3 is now on-line
-I 01/07/24 15:27:58 00076 ports: port 11 is now on-line
-I 01/07/24 15:24:34 05219 activate: A system software update is available to
+I 01/10/24 09:15:11 05219 activate: A system software update is available to
             version WB.16.10.0024.
-I 01/07/24 15:24:34 05223 activate: Successfully established connection with the
+I 01/10/24 09:15:11 05223 activate: Successfully established connection with the
             Activate server;parsing final software update service response.
-I 01/07/24 15:24:31 05226 activate: Successfully resolved the Activate server
+I 01/10/24 09:15:08 05226 activate: Successfully resolved the Activate server
             address devices-v2.arubanetworks.com to 35.82.154.193.
-I 01/07/24 15:24:31 05225 activate: Loading security certificates and
+I 01/10/24 09:15:08 05225 activate: Loading security certificates and
             synchronizing time.
-I 01/07/24 15:19:37 02639 srcip: SNTP src IP addr 192.168.10.52 is selected from
-            'VLAN-10' interface
-I 01/07/24 15:19:37 02638 srcip: SNTP oper policy is 'configured ip interface'
-I 01/07/24 15:19:36 00001 vlan: IOT3 virtual LAN enabled
-I 01/07/24 15:19:36 00001 vlan: IOT2 virtual LAN enabled
-I 01/07/24 15:19:36 00001 vlan: IOT1 virtual LAN enabled
-I 01/07/24 15:19:36 00001 vlan: IOT0 virtual LAN enabled
-I 01/07/24 15:19:36 00001 vlan: Voice virtual LAN enabled
-I 01/07/24 15:19:36 00001 vlan: User virtual LAN enabled
-I 01/07/24 15:19:36 00001 vlan: DEFAULT_VLAN virtual LAN enabled
-I 01/07/24 15:19:36 02639 srcip: RADSEC src IP addr 10.254.34.18 is selected
-            from 'VLAN-850' interface
-I 01/07/24 15:19:36 02638 srcip: RADSEC oper policy is 'configured ip interface'
-I 01/07/24 15:19:36 02639 srcip: TUNNELED-NODE-SERVE src IP addr 10.254.34.18 is
-            selected from 'VLAN-850' interface
-I 01/07/24 15:19:36 02638 srcip: TUNNELED-NODE-SERVE oper policy is 'configured
-            ip interface'
-I 01/07/24 15:19:36 02639 srcip: SFLOW src IP addr 10.254.34.18 is selected from
-            'VLAN-850' interface
-I 01/07/24 15:19:36 02638 srcip: SFLOW oper policy is 'configured ip interface'
-I 01/07/24 15:19:36 02639 srcip: TFTP src IP addr 10.254.34.18 is selected from
-            'VLAN-850' interface
-I 01/07/24 15:19:36 02638 srcip: TFTP oper policy is 'configured ip interface'
-I 01/07/24 15:19:36 02639 srcip: TELNET src IP addr 10.254.34.18 is selected
-            from 'VLAN-850' interface
-I 01/07/24 15:19:36 02638 srcip: TELNET oper policy is 'configured ip interface'
-I 01/07/24 15:19:36 02639 srcip: SYSLOG src IP addr 10.254.34.18 is selected
-            from 'VLAN-850' interface
-I 01/07/24 15:19:36 02638 srcip: SYSLOG oper policy is 'configured ip interface'
-I 01/07/24 15:19:36 02639 srcip: RADIUS src IP addr 10.254.34.18 is selected
-            from 'VLAN-850' interface
-I 01/07/24 15:19:36 02638 srcip: RADIUS oper policy is 'configured ip interface'
-I 01/07/24 15:19:36 02639 srcip: TACACS src IP addr 10.254.34.18 is selected
-            from 'VLAN-850' interface
-I 01/07/24 15:19:36 02638 srcip: TACACS oper policy is 'configured ip interface'
-I 01/07/24 15:19:35 03816 stp: VLAN 850 - Root changed from 32768: (this device)
-            to 32768: 6400f1-016f80
-I 01/07/24 15:19:35 02638 srcip: RADSEC oper policy is 'outgoing interface'
-I 01/07/24 15:19:35 02638 srcip: TUNNELED-NODE-SERVE oper policy is 'outgoing
-            interface'
-I 01/07/24 15:19:35 02638 srcip: SFLOW oper policy is 'outgoing interface'
-I 01/07/24 15:19:35 02638 srcip: TFTP oper policy is 'outgoing interface'
-I 01/07/24 15:19:35 02638 srcip: TELNET oper policy is 'outgoing interface'
-I 01/07/24 15:19:35 02638 srcip: SYSLOG oper policy is 'outgoing interface'
-I 01/07/24 15:19:35 02638 srcip: RADIUS oper policy is 'outgoing interface'
-I 01/07/24 15:19:35 02638 srcip: TACACS oper policy is 'outgoing interface'
-I 01/07/24 15:19:35 02638 srcip: SNTP oper policy is 'outgoing interface'
-I 01/07/24 15:19:34 00002 vlan: OSPF-Peering virtual LAN disabled
-I 01/07/24 15:19:34 00002 vlan: IOT3 virtual LAN disabled
-I 01/07/24 15:19:34 00002 vlan: IOT2 virtual LAN disabled
-I 01/07/24 15:19:34 00002 vlan: IOT1 virtual LAN disabled
-I 01/07/24 15:19:34 00002 vlan: IOT0 virtual LAN disabled
-I 01/07/24 15:19:34 00002 vlan: Voice virtual LAN disabled
-I 01/07/24 15:19:34 00002 vlan: User virtual LAN disabled
-I 01/07/24 15:19:34 00002 vlan: DEFAULT_VLAN virtual LAN disabled
-I 01/07/24 15:19:33 03811 stp: VLAN 850 - RPVST enabled
-I 01/07/24 15:19:33 03811 stp: VLAN 100 - RPVST enabled
-I 01/07/24 15:19:33 03811 stp: VLAN 63 - RPVST enabled
-I 01/07/24 15:19:33 03811 stp: VLAN 62 - RPVST enabled
-I 01/07/24 15:19:33 03811 stp: VLAN 61 - RPVST enabled
-I 01/07/24 15:19:33 03811 stp: VLAN 60 - RPVST enabled
-I 01/07/24 15:19:33 03811 stp: VLAN 20 - RPVST enabled
-I 01/07/24 15:19:33 03811 stp: VLAN 10 - RPVST enabled
-I 01/07/24 15:19:33 03811 stp: VLAN 1 - RPVST enabled
-I 01/07/24 15:19:23 00828 lldp: PVID mismatch on port 22(VID unknown)with peer
+I 01/10/24 09:10:00 00828 lldp: PVID mismatch on port 22(VID unknown)with peer
             device port Gi1/1/4(VID 10)(1)
-I 01/07/24 15:19:20 00828 lldp: PVID mismatch on port 21(VID unknown)with peer
+I 01/10/24 09:09:58 00828 lldp: PVID mismatch on port 21(VID unknown)with peer
             device port Gi1/1/2(VID 1)(1)
-I 01/07/24 15:19:19 00076 ports: port 22 in Trk1 is now on-line
-I 01/07/24 15:19:19 00076 ports: port 21 in Trk1 is now on-line
-I 01/07/24 15:19:19 00078 ports: trunk Trk1 is now active
-I 01/07/24 15:19:16 00435 ports: port 22 is Blocked by LACP
-I 01/07/24 15:19:16 00435 ports: port 21 is Blocked by LACP
-I 01/07/24 15:19:13 00077 ports: port 22 in Trk1 is now off-line
-I 01/07/24 15:19:12 00435 ports: port 22 is Blocked by LACP
-I 01/07/24 15:19:07 02639 srcip: RADSEC src IP addr 10.254.34.18 is selected
+I 01/10/24 09:09:58 03816 stp: VLAN 850 - Root changed from 32768: (this device)
+            to 32768: 6400f1-016f80
+I 01/10/24 09:09:56 00076 ports: port 21 in Trk1 is now on-line
+I 01/10/24 09:09:56 00076 ports: port 22 in Trk1 is now on-line
+I 01/10/24 09:09:56 00078 ports: trunk Trk1 is now active
+I 01/10/24 09:09:54 00435 ports: port 22 is Blocked by LACP
+I 01/10/24 09:09:54 00435 ports: port 21 is Blocked by LACP
+I 01/10/24 09:09:51 00077 ports: port 22 in Trk1 is now off-line
+I 01/10/24 09:09:50 00435 ports: port 22 is Blocked by LACP
+I 01/10/24 09:09:46 02639 srcip: RADSEC src IP addr 10.254.34.18 is selected
             from 'VLAN-850' interface
-I 01/07/24 15:19:07 02638 srcip: RADSEC oper policy is 'configured ip interface'
-I 01/07/24 15:19:07 02639 srcip: TUNNELED-NODE-SERVE src IP addr 10.254.34.18 is
+I 01/10/24 09:09:46 02638 srcip: RADSEC oper policy is 'configured ip interface'
+I 01/10/24 09:09:46 02639 srcip: TUNNELED-NODE-SERVE src IP addr 10.254.34.18 is
             selected from 'VLAN-850' interface
-I 01/07/24 15:19:07 02638 srcip: TUNNELED-NODE-SERVE oper policy is 'configured
+I 01/10/24 09:09:46 02638 srcip: TUNNELED-NODE-SERVE oper policy is 'configured
             ip interface'
-I 01/07/24 15:19:07 02639 srcip: SFLOW src IP addr 10.254.34.18 is selected from
+I 01/10/24 09:09:46 02639 srcip: SFLOW src IP addr 10.254.34.18 is selected from
             'VLAN-850' interface
-I 01/07/24 15:19:07 02638 srcip: SFLOW oper policy is 'configured ip interface'
-I 01/07/24 15:19:07 02639 srcip: TFTP src IP addr 10.254.34.18 is selected from
+I 01/10/24 09:09:46 02638 srcip: SFLOW oper policy is 'configured ip interface'
+I 01/10/24 09:09:46 02639 srcip: TFTP src IP addr 10.254.34.18 is selected from
             'VLAN-850' interface
-I 01/07/24 15:19:07 02638 srcip: TFTP oper policy is 'configured ip interface'
-I 01/07/24 15:19:07 02639 srcip: TELNET src IP addr 10.254.34.18 is selected
+I 01/10/24 09:09:46 02638 srcip: TFTP oper policy is 'configured ip interface'
+I 01/10/24 09:09:46 02639 srcip: TELNET src IP addr 10.254.34.18 is selected
             from 'VLAN-850' interface
-I 01/07/24 15:19:07 02638 srcip: TELNET oper policy is 'configured ip interface'
-I 01/07/24 15:19:07 02639 srcip: SYSLOG src IP addr 10.254.34.18 is selected
+I 01/10/24 09:09:46 02638 srcip: TELNET oper policy is 'configured ip interface'
+I 01/10/24 09:09:46 02639 srcip: SYSLOG src IP addr 10.254.34.18 is selected
             from 'VLAN-850' interface
-I 01/07/24 15:19:07 02638 srcip: SYSLOG oper policy is 'configured ip interface'
-I 01/07/24 15:19:07 02639 srcip: RADIUS src IP addr 10.254.34.18 is selected
+I 01/10/24 09:09:46 02638 srcip: SYSLOG oper policy is 'configured ip interface'
+I 01/10/24 09:09:46 02639 srcip: RADIUS src IP addr 10.254.34.18 is selected
             from 'VLAN-850' interface
-I 01/07/24 15:19:07 02638 srcip: RADIUS oper policy is 'configured ip interface'
-I 01/07/24 15:19:07 02639 srcip: TACACS src IP addr 10.254.34.18 is selected
+I 01/10/24 09:09:46 02638 srcip: RADIUS oper policy is 'configured ip interface'
+I 01/10/24 09:09:46 02639 srcip: TACACS src IP addr 10.254.34.18 is selected
             from 'VLAN-850' interface
-I 01/07/24 15:19:07 02638 srcip: TACACS oper policy is 'configured ip interface'
-I 01/07/24 15:19:06 00001 vlan: OSPF-Peering virtual LAN enabled
-I 01/07/24 15:19:06 00076 ports: port 1 is now on-line
-I 01/07/24 15:17:03 04910 ntp: All the NTP server associations reset.
-I 01/07/24 15:16:06 05101 amp-server: AMP server configuration is disabled due
+I 01/10/24 09:09:46 02638 srcip: TACACS oper policy is 'configured ip interface'
+I 01/10/24 09:09:45 00001 vlan: OSPF-Peering virtual LAN enabled
+I 01/10/24 09:09:44 00076 ports: port 1 is now on-line
+I 01/10/24 09:08:41 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/10/24 09:08:40 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/10/24 09:08:19 05101 amp-server: AMP server configuration is disabled due
             to first configuration.
-I 01/07/24 15:15:58 04611 job: Job Scheduler enabled
-I 01/07/24 15:15:52 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/07/24 15:15:50 03362 auth: User 'vector' logged in from 192.168.10.115 to
+I 01/10/24 09:08:18 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/10/24 09:08:17 03362 auth: User 'vector' logged in from 192.168.10.115 to
             SSH  session
-I 01/07/24 15:15:45 04910 ntp: All the NTP server associations reset.
-I 01/07/24 15:15:45 04909 ntp: The NTP Stratum was changed from 16 to 2.
-I 01/07/24 15:15:45 04908 ntp: The system clock time was changed by 1073517238
-            sec 266949534 nsec.	 The new time is Sun Jan  7 15:15:44 2024
-.
-W 01/01/90 00:01:40 00419 auth: Invalid user name/password on SSH session User
+I 01/10/24 09:07:39 04910 ntp: All the NTP server associations reset.
+I 01/10/24 09:06:43 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/10/24 09:06:41 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/10/24 09:06:35 04611 job: Job Scheduler enabled
+W 01/10/24 09:06:26 00419 auth: Invalid user name/password on SSH session User
             'vector' is trying to login from 192.168.10.115
+I 01/10/24 09:06:22 04910 ntp: All the NTP server associations reset.
+I 01/10/24 09:06:22 04909 ntp: The NTP Stratum was changed from 16 to 2.
+I 01/10/24 09:06:22 04908 ntp: The system clock time was changed by 1073754275
+            sec 487879992 nsec.	 The new time is Wed Jan 10 09:06:22 2024
+.
 I 01/01/90 00:01:33 04911 ntp: The NTP Server 129.6.15.29 is unreachable.
-I 01/01/90 00:01:16 00076 ports: port 17 is now on-line
-I 01/01/90 00:01:14 00077 ports: port 17 is now off-line
 I 01/01/90 00:01:11 04911 ntp: The NTP Server 192.168.10.221 is unreachable.
-I 01/01/90 00:01:01 00076 ports: port 17 is now on-line
-I 01/01/90 00:01:00 00561 ports: port 17 Applying Power to PD.
-I 01/01/90 00:01:00 00560 ports: port 17 PD Detected.
 I 01/01/90 00:00:53 05083 chassis: Ports 13-24: PoE Software updated from
             version 04 to 38.
-I 01/01/90 00:00:47 02639 srcip: SNTP src IP addr 192.168.10.52 is selected from
+I 01/01/90 00:00:49 02639 srcip: SNTP src IP addr 192.168.10.52 is selected from
             'VLAN-10' interface
-I 01/01/90 00:00:47 02638 srcip: SNTP oper policy is 'configured ip interface'
-I 01/01/90 00:00:46 00001 vlan: IOT3 virtual LAN enabled
-I 01/01/90 00:00:46 00001 vlan: IOT2 virtual LAN enabled
-I 01/01/90 00:00:46 00001 vlan: IOT1 virtual LAN enabled
-I 01/01/90 00:00:46 00001 vlan: IOT0 virtual LAN enabled
-I 01/01/90 00:00:46 00001 vlan: Voice virtual LAN enabled
-I 01/01/90 00:00:46 00001 vlan: User virtual LAN enabled
+I 01/01/90 00:00:49 02638 srcip: SNTP oper policy is 'configured ip interface'
+I 01/01/90 00:00:48 00001 vlan: IOT3 virtual LAN enabled
+I 01/01/90 00:00:48 00001 vlan: IOT2 virtual LAN enabled
+I 01/01/90 00:00:48 00001 vlan: IOT1 virtual LAN enabled
+I 01/01/90 00:00:48 00001 vlan: IOT0 virtual LAN enabled
+I 01/01/90 00:00:48 00001 vlan: Voice virtual LAN enabled
+I 01/01/90 00:00:48 00001 vlan: User virtual LAN enabled
+I 01/01/90 00:00:47 00001 vlan: DEFAULT_VLAN virtual LAN enabled
 I 01/01/90 00:00:46 00076 ports: port 24 is now on-line
 I 01/01/90 00:00:45 05083 chassis: Ports 1-12: PoE Software updated from version
             04 to 38.
-I 01/01/90 00:00:45 00001 vlan: DEFAULT_VLAN virtual LAN enabled
 I 01/01/90 00:00:45 00076 ports: port 7 is now on-line
-I 01/01/90 00:00:43 02555 chassis: Co-processor Ready
-I 01/01/90 00:00:41 03803 chassis: System Self test completed on 1-24 
-I 01/01/90 00:00:36 03802 chassis: System Self test started on 1-24 
+I 01/01/90 00:00:42 02555 chassis: Co-processor Ready
+I 01/01/90 00:00:40 03803 chassis: System Self test completed on 1-24 
 I 01/01/90 00:00:36 03401 crypto: Function POWER UP passed selftest.
+I 01/01/90 00:00:36 03802 chassis: System Self test started on 1-24 
 I 01/01/90 00:00:35 04262 dhcp-server: All IP addresses are removed from the
             conflict-logging database
 I 01/01/90 00:00:35 04250 dhcp-server: DHCP server is enabled globally
@@ -898,6 +1345,15 @@ I 01/01/90 00:00:31 00688 lldp: LLDP - enabled
 I 01/01/90 00:00:31 00417 cdp: CDP enabled
 I 01/01/90 00:00:31 04695 auth: Command authorization method set to none.
 I 01/01/90 00:00:31 00433 ssh: Ssh server enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 850 - RPVST enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 100 - RPVST enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 63 - RPVST enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 62 - RPVST enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 61 - RPVST enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 60 - RPVST enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 20 - RPVST enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 10 - RPVST enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 1 - RPVST enabled
 I 01/01/90 00:00:29 00110 telnet: telnetd service enabled
 I 01/01/90 00:00:29 00116 telnet: telnetd service enabled on OOBM
 I 01/01/90 00:00:28 02638 srcip: RADIUS oper policy for IPv6 is 'outgoing
@@ -934,14 +1390,14 @@ I 01/01/90 00:00:28 02604 dhcpv6r: Inclusion of client link-layer address in
             DHCPv6 relay message is disabled.
 I 01/01/90 00:00:27 02682 OOBM: OOBM - Enabled globally.
 I 01/01/90 00:00:27 03705 ports: Allow-Unsupported-Transceiver feature enabled.
-I 01/01/90 00:00:26 02751 chassis: LEDs for Ports 1-24 configured ON.
-I 01/01/90 00:00:26 02759 chassis: Savepower LED timer is OFF.
-I 01/01/90 00:00:26 02712 console: USB console cable disconnected
-I 01/01/90 00:00:26 02712 console: USB console cable disconnected
-M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
-I 01/01/90 00:00:26 00062 system: Member 1 went down without saving crash
+I 01/01/90 00:00:27 02751 chassis: LEDs for Ports 1-24 configured ON.
+I 01/01/90 00:00:27 02759 chassis: Savepower LED timer is OFF.
+I 01/01/90 00:00:27 02712 console: USB console cable disconnected
+I 01/01/90 00:00:27 02712 console: USB console cable disconnected
+M 01/01/90 00:00:27 03001 system: System reboot due to Power Failure
+I 01/01/90 00:00:27 00062 system: Member 1 went down without saving crash
             information
-I 01/01/90 00:00:26 00061 system: -----------------------------------------
+I 01/01/90 00:00:27 00061 system: -----------------------------------------
 I 01/01/90 00:00:26 05578 profile-manager: With this SW release the poe-value
             field is not allowed to be set when poe-alloc-by is not value.
             Changing to default value of 17w.
@@ -949,39 +1405,27 @@ I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master
 I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
 I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master 
 I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
-----  Top of Log : Events Listed = 222  ----
+----  Top of Log : Events Listed = 135  ----
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show logging -r -m
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
-M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
+M 01/01/90 00:00:27 03001 system: System reboot due to Power Failure
 ----  Top of Log : Events Listed = 1  ----
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show logging -r -w
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
-W 01/07/24 18:54:50 00641 ssh: read error Connection reset by peer, session
+W 01/10/24 09:24:06 00641 ssh: read error Connection reset by peer, session
             aborted
-W 01/07/24 17:49:54 00641 ssh: read error Connection reset by peer, session
+W 01/10/24 09:08:40 00641 ssh: read error Connection reset by peer, session
             aborted
-W 01/07/24 17:45:37 00641 ssh: read error Connection reset by peer, session
-            aborted
-W 01/07/24 16:38:59 00641 ssh: read error Connection reset by peer, session
-            aborted
-W 01/07/24 16:02:38 00641 ssh: read error Connection reset by peer, session
-            aborted
-W 01/07/24 16:00:01 00641 ssh: read error Connection reset by peer, session
-            aborted
-W 01/07/24 15:46:58 00641 ssh: read error Connection reset by peer, session
-            aborted
-W 01/07/24 15:27:59 00840 stp: port 11 disabled - BPDU received on protected
-            port.
-W 01/01/90 00:01:40 00419 auth: Invalid user name/password on SSH session User
+W 01/10/24 09:06:26 00419 auth: Invalid user name/password on SSH session User
             'vector' is trying to login from 192.168.10.115
-M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
-----  Top of Log : Events Listed = 10  ----
+M 01/01/90 00:00:27 03001 system: System reboot due to Power Failure
+----  Top of Log : Events Listed = 4  ----
 HP-2920-24G-PoEP# 
 HP-2920-24G-PoEP# show crypto host-public-key fingerprint
 1024 cb:a8:d6:c7:da:bd:67:53:91:8c:c0:1b:49:d1:a1:2d: host_ssh2.pub
@@ -1006,7 +1450,6 @@ HP-2920-24G-PoEP# show mac-address | ex 24
 
   MAC Address   Port    VLAN
   ------------- ------- ----
-  00e04c-360348 17      1   
   6400f1-016f81 1       850 
   6400f1-016fb4 Trk1    850 
   6400f1-016fd5 Trk1    850 

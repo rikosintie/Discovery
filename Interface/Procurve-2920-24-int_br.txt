@@ -6,7 +6,7 @@
     "enabled": "Yes",
     "status": "Up",
     "mode": "1000FDx",
-    "mdi_mode": "MDI",
+    "mdi_mode": "MDIX",
     "flow_ctrl": "off",
     "bcast_limit": "0"
   },
@@ -28,7 +28,7 @@
     "enabled": "Yes",
     "status": "Down",
     "mode": "1000FDx",
-    "mdi_mode": "NA",
+    "mdi_mode": "Auto",
     "flow_ctrl": "off",
     "bcast_limit": "0"
   },
@@ -116,7 +116,7 @@
     "enabled": "Yes",
     "status": "Down",
     "mode": "1000FDx",
-    "mdi_mode": "NA",
+    "mdi_mode": "Auto",
     "flow_ctrl": "off",
     "bcast_limit": "0"
   },
@@ -180,9 +180,9 @@
     "type": "100/1000T",
     "intrusion_alert": "No",
     "enabled": "Yes",
-    "status": "Up",
-    "mode": "100FDx",
-    "mdi_mode": "MDIX",
+    "status": "Down",
+    "mode": "1000FDx",
+    "mdi_mode": "Auto",
     "flow_ctrl": "off",
     "bcast_limit": "0"
   },

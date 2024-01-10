@@ -1,8 +1,8 @@
 [
   {
     "port": "1",
-    "total_bytes": "1,661,136",
-    "total_frames": "19,036",
+    "total_bytes": "171,792",
+    "total_frames": "1924",
     "errors_rx": "0",
     "drops_tx": "0",
     "flow_ctrl": "off",
@@ -19,8 +19,8 @@
   },
   {
     "port": "3",
-    "total_bytes": "940",
-    "total_frames": "4",
+    "total_bytes": "0",
+    "total_frames": "0",
     "errors_rx": "0",
     "drops_tx": "0",
     "flow_ctrl": "off",
@@ -55,8 +55,8 @@
   },
   {
     "port": "7",
-    "total_bytes": "1,149,200",
-    "total_frames": "14,472",
+    "total_bytes": "128,128",
+    "total_frames": "1708",
     "errors_rx": "0",
     "drops_tx": "0",
     "flow_ctrl": "off",
@@ -91,8 +91,8 @@
   },
   {
     "port": "11",
-    "total_bytes": "1866",
-    "total_frames": "18",
+    "total_bytes": "0",
+    "total_frames": "0",
     "errors_rx": "0",
     "drops_tx": "0",
     "flow_ctrl": "off",
@@ -145,8 +145,8 @@
   },
   {
     "port": "17",
-    "total_bytes": "1,271,420",
-    "total_frames": "14,984",
+    "total_bytes": "0",
+    "total_frames": "0",
     "errors_rx": "0",
     "drops_tx": "0",
     "flow_ctrl": "off",
@@ -181,8 +181,8 @@
   },
   {
     "port": "21-Trk1",
-    "total_bytes": "1,107,670",
-    "total_frames": "10,741",
+    "total_bytes": "116,080",
+    "total_frames": "1103",
     "errors_rx": "0",
     "drops_tx": "0",
     "flow_ctrl": "off",
@@ -190,8 +190,8 @@
   },
   {
     "port": "22-Trk1",
-    "total_bytes": "16,933,184",
-    "total_frames": "222,656",
+    "total_bytes": "1,689,208",
+    "total_frames": "22,178",
     "errors_rx": "0",
     "drops_tx": "0",
     "flow_ctrl": "off",
@@ -208,8 +208,8 @@
   },
   {
     "port": "24",
-    "total_bytes": "12,302,849",
-    "total_frames": "138,272",
+    "total_bytes": "1,849,661",
+    "total_frames": "18,323",
     "errors_rx": "0",
     "drops_tx": "0",
     "flow_ctrl": "off",

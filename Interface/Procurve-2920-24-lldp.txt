@@ -14,13 +14,6 @@
     "neighbor_sysname": "3750x.pu.pri"
   },
   {
-    "local_port": "17",
-    "neighbor_chassis_id": "e4 5f 01 85 86 a5",
-    "neighbor_portid": "00 e0 4c 36 03 48",
-    "neighbor_descr": "eth0",
-    "neighbor_sysname": "piconsole-v2"
-  },
-  {
     "local_port": "21",
     "neighbor_chassis_id": "3750x.pu.pri",
     "neighbor_portid": "GigabitEthernet...",
@@ -57,13 +50,55 @@
   },
   {
     "local_port": "24",
+    "neighbor_chassis_id": "9c 8c d8 c9 17 ae",
+    "neighbor_portid": "9c 8c d8 c9 17 ae",
+    "neighbor_descr": "eth0",
+    "neighbor_sysname": "IAP-515"
+  },
+  {
+    "local_port": "24",
+    "neighbor_chassis_id": "98 f2 b3 fe 88 80",
+    "neighbor_portid": "4000",
+    "neighbor_descr": "OOBM",
+    "neighbor_sysname": "HP-2920-24G-PoEP"
+  },
+  {
+    "local_port": "24",
+    "neighbor_chassis_id": "ea e6 4b 18 de 20",
+    "neighbor_portid": "50 ed 3c 22 be 32",
+    "neighbor_descr": "en0",
+    "neighbor_sysname": "hp8600-2328.local"
+  },
+  {
+    "local_port": "24",
     "neighbor_chassis_id": "Garage",
     "neighbor_portid": "br0",
     "neighbor_descr": "NanoStation",
     "neighbor_sysname": "5AC..."
   },
   {
-    "local_port": "24",
+    "local_port": "OOBM",
+    "neighbor_chassis_id": "ea e6 4b 18 de 20",
+    "neighbor_portid": "50 ed 3c 22 be 32",
+    "neighbor_descr": "en0",
+    "neighbor_sysname": "hp8600-2328.local"
+  },
+  {
+    "local_port": "OOBM",
+    "neighbor_chassis_id": "98 f2 b3 fe 88 80",
+    "neighbor_portid": "24",
+    "neighbor_descr": "24",
+    "neighbor_sysname": "HP-2920-24G-PoEP"
+  },
+  {
+    "local_port": "OOBM",
+    "neighbor_chassis_id": "fc ec da c4 6e 55",
+    "neighbor_portid": "eth0",
+    "neighbor_descr": "",
+    "neighbor_sysname": ""
+  },
+  {
+    "local_port": "OOBM",
     "neighbor_chassis_id": "9c 8c d8 c9 17 ae",
     "neighbor_portid": "9c 8c d8 c9 17 ae",
     "neighbor_descr": "eth0",

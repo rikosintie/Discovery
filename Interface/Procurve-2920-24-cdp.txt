@@ -18,15 +18,6 @@
     "neighbor_version": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
   },
   {
-    "local_port": "17",
-    "neighbor_id": "e4 5f 01 85 86 a5",
-    "neighbor_address": "192.168.4.1",
-    "neighbor_platform": "Raspbian GNU/Linux 10 (buster) Linux 5.10.103-v7+ #1529 ...",
-    "neighbor_capability": "Router",
-    "neighbor_port": "eth0",
-    "neighbor_version": "Raspbian GNU/Linux 10 (buster) Linux 5.10.103-v7+ #1529 ..."
-  },
-  {
     "local_port": "21",
     "neighbor_id": "3750x.pu.pri",
     "neighbor_address": "192.168.1.1",
@@ -73,20 +64,38 @@
   },
   {
     "local_port": "24",
-    "neighbor_id": "Garage",
-    "neighbor_address": "192.168.10.51",
-    "neighbor_platform": "NanoStation 5AC loc",
-    "neighbor_capability": "Trans Bridge",
-    "neighbor_port": "br0",
-    "neighbor_version": "WA.ar934x.v8.7.1.42832.200623.1641"
-  },
-  {
-    "local_port": "24",
     "neighbor_id": "9c 8c d8 c9 17 ae",
     "neighbor_address": "192.168.10.144",
     "neighbor_platform": "ArubaOS (MODEL: 515), Version Aruba IAP",
     "neighbor_capability": " ",
     "neighbor_port": "eth0",
     "neighbor_version": "ArubaOS (MODEL: 515), Version Aruba IAP"
+  },
+  {
+    "local_port": "24",
+    "neighbor_id": "98 f2 b3 fe 88 80",
+    "neighbor_address": "192.168.10.112",
+    "neighbor_platform": "HP J9727A 2920-24G-PoE+ Switch, revision WB.16.10.0023, ...",
+    "neighbor_capability": "Router Switch",
+    "neighbor_port": "OOBM",
+    "neighbor_version": "HP J9727A 2920-24G-PoE+ Switch, revision WB.16.10.0023, ..."
+  },
+  {
+    "local_port": "24",
+    "neighbor_id": "ea e6 4b 18 de 20",
+    "neighbor_address": "192.168.10.106",
+    "neighbor_platform": "Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "en0",
+    "neighbor_version": "Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ..."
+  },
+  {
+    "local_port": "24",
+    "neighbor_id": "Garage",
+    "neighbor_address": "192.168.10.51",
+    "neighbor_platform": "NanoStation 5AC loc",
+    "neighbor_capability": "Trans Bridge",
+    "neighbor_port": "br0",
+    "neighbor_version": "WA.ar934x.v8.7.1.42832.200623.1641"
   }
 ]
