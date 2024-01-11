@@ -224,9 +224,21 @@ for line in fabric:
         print()
         print(net_connect.find_prompt())
 
-        #  Send commands from cfg_file for human readable output
+        print("-" * (len(cfg_file) + len(hostname) + 16))
         print(f"processing {cfg_file} for {hostname}")
-        output_text = net_connect.send_config_from_file(cfg_file, read_timeout=360)
+        print("-" * (len(cfg_file) + len(hostname) + 16))
+        remove_empty_lines(cfg_file)
+        with open(cfg_file) as config_file:
+            show_commands = config_file.readlines()
+
+        # Netmiko normally allows 100 seconds for send_command to complete
+        # delay_factor=2 would allow 200 seconds.
+        output_show_str: str = ""
+        for command in show_commands:
+            output_show = net_connect.send_command(
+                command, strip_command=False, delay_factor=1
+            )
+            output_show_str = output_show_str + "\n" + "!---" + "\n" + output_show
 
         # Use textFSM to create a json object with interface stats
         print(f"collecting show interface for {hostname}")
@@ -268,11 +280,11 @@ for line in fabric:
         # Disconnect from the switch and start writing data to disk
         net_connect.disconnect()
 
-        #  Write the CR-data output to disk
-        int_report = get_current_path("CR-data", "-CR-data.txt")
-        print(f"Writing CR data to {int_report}")
+        #  Write the show commands output to disk
+        int_report = get_current_path("CR-data", "-CR-data1.txt")
+        print(f"Writing show commands to {int_report}")
         with open(int_report, "w") as file:
-            file.write(output_text)
+            file.write(output_show_str)
 
         # Write the mac-address output to disk
         int_report = get_current_path("port-maps", "-mac-address.txt", "data")
