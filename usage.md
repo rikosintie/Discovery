@@ -5,6 +5,7 @@
 - [Password](#password)
   - [Creating an Environment Variable](#creating-an-environment-variable)
   - [Being prompted for the password](#being-prompted-for-the-password)
+  - [Update the mac.txt file](#update-the-mactxt-file)
 - [Failure to connect to a switch](#failure-to-connect-to-a-switch)
 
 ----------------------------------------------------------------
@@ -14,7 +15,7 @@
 There are a few steps needed before starting the discovery process:
 
 - Create a device inventory file
-- Make changes to the procurve-config-file.txt file
+- Make changes to the procurve-config-file.txt file (if needed)
 - Decide how you want store the password
 - Update the mac.txt file to match the format of the switches
 
@@ -67,6 +68,18 @@ For example, to run the script for a site named HQ:
 `python3 procurve-Config-pull.py -s HQ -p 1`
 
 When you press enter, you will see "Input the Password:" on the command line. Enter the password and press [enter]
+
+----------------------------------------------------------------
+
+### Update the mac.txt file
+
+To create the port maps the mac-address table must be saved but it has to saved by interface.
+
+Since the procurve switches can be stacked and the 5400 series has modules, the port numbers change depending on the model and stacking.
+
+The mac.txt file that is in the project is built for a single 48 port switch. If you are pulling the data from a stack or 5400 series, you have to modify the port numbers in the mac.txt file.
+
+
 
 ----------------------------------------------------------------
 
