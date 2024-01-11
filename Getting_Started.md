@@ -111,4 +111,6 @@ When you are finished, deactivate the environment
 
 `deactivate`
 
+You will need to activate the virtual environment each time you want to run the scripts.
+
 ----------------------------------------------------------------
