@@ -55,15 +55,6 @@
   },
   {
     "local_port": "24",
-    "neighbor_id": "fc ec da c4 6e 55",
-    "neighbor_address": "Unsupported format",
-    "neighbor_platform": " ",
-    "neighbor_capability": " ",
-    "neighbor_port": "eth0",
-    "neighbor_version": " "
-  },
-  {
-    "local_port": "24",
     "neighbor_id": "9c 8c d8 c9 17 ae",
     "neighbor_address": "192.168.10.144",
     "neighbor_platform": "ArubaOS (MODEL: 515), Version Aruba IAP",
@@ -73,21 +64,21 @@
   },
   {
     "local_port": "24",
+    "neighbor_id": "fc ec da c4 6e 55",
+    "neighbor_address": "Unsupported format",
+    "neighbor_platform": " ",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": " "
+  },
+  {
+    "local_port": "24",
     "neighbor_id": "98 f2 b3 fe 88 80",
-    "neighbor_address": "192.168.10.112",
+    "neighbor_address": "192.168.10.113",
     "neighbor_platform": "HP J9727A 2920-24G-PoE+ Switch, revision WB.16.10.0023, ...",
     "neighbor_capability": "Router Switch",
     "neighbor_port": "OOBM",
     "neighbor_version": "HP J9727A 2920-24G-PoE+ Switch, revision WB.16.10.0023, ..."
-  },
-  {
-    "local_port": "24",
-    "neighbor_id": "ea e6 4b 18 de 20",
-    "neighbor_address": "192.168.10.106",
-    "neighbor_platform": "Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ...",
-    "neighbor_capability": "Switch",
-    "neighbor_port": "en0",
-    "neighbor_version": "Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ..."
   },
   {
     "local_port": "24",

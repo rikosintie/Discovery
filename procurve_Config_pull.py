@@ -281,7 +281,7 @@ for line in fabric:
         net_connect.disconnect()
 
         #  Write the show commands output to disk
-        int_report = get_current_path("CR-data", "-CR-data1.txt")
+        int_report = get_current_path("CR-data", "-CR-data.txt")
         print(f"Writing show commands to {int_report}")
         with open(int_report, "w") as file:
             file.write(output_show_str)
