@@ -1,0 +1,90 @@
+destination_host: 3750x.pu.pri
+management_ip: 10.254.34.17
+platform: cisco WS-C3750X-48P
+remote_port: GigabitEthernet1/0/1
+local_port: 1
+software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+
+
+------------------------------
+destination_host: 64 00 f1 01 6f 80
+management_ip: 10.254.34.17
+platform: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+remote_port: GigabitEthernet1/0/1
+local_port: 1
+software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+
+
+------------------------------
+destination_host: 3750x.pu.pri
+management_ip: 192.168.1.1
+platform: cisco WS-C3750X-48P
+remote_port: GigabitEthernet1/1/2
+local_port: 21
+software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+
+
+------------------------------
+destination_host: 64 00 f1 01 6f 80
+management_ip: 192.168.1.1
+platform: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+remote_port: GigabitEthernet1/1/2
+local_port: 21
+software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+
+
+------------------------------
+destination_host: 3750x.pu.pri
+management_ip: 192.168.1.1
+platform: cisco WS-C3750X-48P
+remote_port: GigabitEthernet1/1/4
+local_port: 22
+software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+
+
+------------------------------
+destination_host: 64 00 f1 01 6f 80
+management_ip: 192.168.1.1
+platform: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+remote_port: GigabitEthernet1/1/4
+local_port: 22
+software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+
+
+------------------------------
+destination_host: 9c 8c d8 c9 17 ae
+management_ip: 192.168.10.144
+platform: ArubaOS (MODEL: 515), Version Aruba IAP
+remote_port: eth0
+local_port: 24
+software_version: ArubaOS (MODEL: 515), Version Aruba IAP
+
+
+------------------------------
+destination_host: fc ec da c4 6e 55
+management_ip: Unsupported format
+platform:  
+remote_port: eth0
+local_port: 24
+software_version:  
+
+
+------------------------------
+destination_host: 98 f2 b3 fe 88 80
+management_ip: 192.168.10.113
+platform: HP J9727A 2920-24G-PoE+ Switch, revision WB.16.10.0023, ...
+remote_port: OOBM
+local_port: 24
+software_version: HP J9727A 2920-24G-PoE+ Switch, revision WB.16.10.0023, ...
+
+
+------------------------------
+destination_host: Garage
+management_ip: 192.168.10.51
+platform: NanoStation 5AC loc
+remote_port: br0
+local_port: 24
+software_version: WA.ar934x.v8.7.1.42832.200623.1641
+
+
+------------------------------
