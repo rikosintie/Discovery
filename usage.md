@@ -6,6 +6,7 @@
   - [Creating an Environment Variable](#creating-an-environment-variable)
   - [Being prompted for the password](#being-prompted-for-the-password)
   - [Update the mac.txt file](#update-the-mactxt-file)
+- [Run the discovery script](#run-the-discovery-script)
 - [Failure to connect to a switch](#failure-to-connect-to-a-switch)
 
 ----------------------------------------------------------------
@@ -79,9 +80,12 @@ Since the procurve switches can be stacked and the 5400 series has modules, the 
 
 The mac.txt file that is in the project is built for a single 48 port switch. If you are pulling the data from a stack or 5400 series, you have to modify the port numbers in the mac.txt file.
 
+There is a file [procurve-show-mac-interfaces.txt](https://github.com/rikosintie/Discovery/blob/main/procurve-show-mac-interfaces.txt) in the project that has `show mac-address` commands for the 5400 series, individual 2930 switches and stacked switches up to 8.
 
+Simply open the file, copy the interfaces you need and save them into the mac.txt file before running the discovery script.
 
 ----------------------------------------------------------------
+## Run the discovery script
 
 Now that the project is set up and the inventory file is created, you can run the script.
 
