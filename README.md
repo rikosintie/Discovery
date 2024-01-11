@@ -78,7 +78,9 @@ Status and Counters - VLAN Information - Custom view
  850    OSPF-Peering    10.254.34.18    255.255.255.252 Manual     Up    No    No
 ```
 
-I like output of this command. You can see vlan id, vlan name, IP Address, IP Mask, Config method, state, voice and jumbo all in one table.
+I like output of this command. You can see vlan id, vlan name, IP Address, IP Mask, Config method, state, voice and jumbo all in one table. This would make a nice alias on the switch.
+
+`alias "vlan" "show vlan custom id name:15 ipaddr ipmask ipconfig state voice jumbo"`
 
 ### What are the JSON files used for
 
