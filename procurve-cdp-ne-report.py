@@ -59,7 +59,7 @@ file_list = [f for f in os.listdir(loc) if f.endswith("cdp.txt")]
 
 for file_name in file_list:
     file_name_ne = file_name[0:-7]
-    file_name_ne = file_name_ne + "cdp.txt"
+    file_name_ne = file_name_ne + "cdp-report.txt"
     file_path = os.path.join(loc, file_name)
     file_path_ne = os.path.join(loc1, file_name_ne)
     if os.path.exists(file_path_ne):
