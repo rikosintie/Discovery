@@ -9,8 +9,12 @@
 - [Purpose](#purpose)
   - [Who is this project for](#who-is-this-project-for)
 - [The Process](#the-process)
+  - [show commands](#show-commands)
+  - [What are the JSON files used for](#what-are-the-json-files-used-for)
+  - [show running-config](#show-running-config)
 - [Deployment questions for Discovery](#deployment-questions-for-discovery)
 - [License](#license)
+- [SBOM](#sbom)
 
 There are additional sections to this documentation:
 
@@ -33,18 +37,22 @@ Anyone that needs to pull data from HPE Procurve switches. You do not need to wr
 
 ## The Process
 
-The [procurve-Config-pull](https://github.com/rikosintie/Discovery/blob/main/procurve_Config_pull.py) script uses the [netmiko](https://github.com/ktbyers/netmiko) library and the Google [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run ***show commands*** and create JSON files.
+There are two types of scripts in the project:
 
-Once the data has been collected, there are helper scripts that create:
+- Discovery - These are switches that use netmiko to connect to a switch and pull down data.
+- Helper - These are scripts that take JSON data that was collected with the discovery script and convert it into human readable format.
 
-- port maps
-- CDP neighbor tables
-- LLDP neighbor tables
-- OSPF neighbor tables
+The [procurve-Config-pull.py](https://github.com/rikosintie/Discovery/blob/main/procurve_Config_pull.py) python script uses the [netmiko](https://github.com/ktbyers/netmiko) library and the Google [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run ***show commands*** and create JSON files.
 
-The Procurve firmware allows you to include the "structured" keyword after the "show running" command. This groups the output in an easier to read format. A [show run structured](https://github.com/rikosintie/Discovery/blob/main/Running/Procurve-2920-24-running-config.txt) file is created in the "Running" directory.
+### show commands
 
-There is also a text file of ***show commands*** sent. This file can be edited to send any show commands you need. The filename is [procurve-config-file.txt](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt).
+The show commands are saved to a file named [procurve-config-file.txt](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt). This file can be edited to send any show commands you need.
+
+The format is:
+
+`show command` with each command on a separate line.
+
+The show commands are saved to the CR-data directory using the format [hostname]-CR-data.txt. For example, if the hostname is "Procurve-2920-24" the filename is Procurve-2920-24-CR-data.txt.
 
 On the Procurve switches you can customize the output of show vlans. This HPE Techpub article shows how to do it:
 
@@ -69,6 +77,20 @@ Status and Counters - VLAN Information - Custom view
  100    test            10.10.100.1     255.255.255.0   Manual     Down  No    No
  850    OSPF-Peering    10.254.34.18    255.255.255.252 Manual     Up    No    No
 ```
+
+I like output of this command. You can see vlan id, vlan name, IP Address, IP Mask, Config method, state, voice and jumbo all in one table.
+
+### What are the JSON files used for
+
+Once the data has been collected, there are helper scripts that use the JSON structured data to create:
+
+- CDP neighbor tables
+- LLDP neighbor tables
+- OSPF neighbor tables
+
+### show running-config
+
+The Procurve firmware allows you to include the "structured" keyword after the "show running" command. This groups the output in an easier to read format. A [show run structured](https://github.com/rikosintie/Discovery/blob/main/Running/Procurve-2920-24-running-config.txt) file is created in the "Running" directory.
 
 ----------------------------------------------------------------
 
@@ -148,3 +170,9 @@ This is not a exhaustive list, feel free to add to it.
 This project is licensed under the Unlicense - see the LICENSE file for details.
 
 <https://unlicense.org/>
+
+----------------------------------------------------------------
+
+## SBOM
+
+You can create the JSON format data file of an SPDX compatible SBOM file using Insights, Dependancy Graph, Export SBOM from the repository home page. The filename is sbom.json for this project.
