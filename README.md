@@ -12,7 +12,7 @@
   - [show commands](#show-commands)
   - [What are the JSON files used for](#what-are-the-json-files-used-for)
   - [show running-config](#show-running-config)
-- [Deployment questions for Discovery](#deployment-questions-for-discovery)
+- [Questions for Discovery and Deployment](#questions-for-discovery-and-deployment)
 - [License](#license)
 - [SBOM](#sbom)
 
@@ -96,7 +96,7 @@ The Procurve firmware allows you to include the "structured" keyword after the "
 
 ----------------------------------------------------------------
 
-## Deployment questions for Discovery
+## Questions for Discovery and Deployment
 
 The script will pull any information that you put into the procurve-config file but it can't answer all the questions! Here are some questions I ask during the kickoff meeting with the customer. Some of these questions are open ended and are meant to get the customer engaged in a conversation about the refresh.
 
@@ -109,6 +109,8 @@ This is not a exhaustive list, feel free to add to it.
   - material
 - What are the asset Tag requirements?
 - Is an escort required when we are on site?
+- How is access (Keys, codes, alarm codes, etc) granted?
+- If after hours cut overs are required, who is the after hours contact?
 - Is a change request document required?
   - If so, how many days before the cut over?
   - Who creates the document?
@@ -119,7 +121,8 @@ This is not a exhaustive list, feel free to add to it.
 - Do you have a standard for host names?
 - Does the network team have access to M&O devices such as Environmental monitoring (BACnet), surveillance cameras, door access controls?
 - Are we allowed to connect our laptops to the network?
-- Can we use tools like nmap and Wireshark to discover devices? Here are some [nmap discovery scripts](https://github.com/rikosintie/nmap-python)
+- Can we use tools like nmap and Wireshark to discover devices?
+  - Here are some [nmap scripts](https://github.com/rikosintie/nmap-python) that I wrote for discovery.
 - Is DHCP used for non-server hosts i.e. cameras, door access panels, etc?
 - Do you have a management vlan?s
 - If so, what are the management vlan IP addresses?
