@@ -109,6 +109,12 @@ This is not a exhaustive list, feel free to add to it.
   - material
 - What are the asset Tag requirements?
 - Is an escort required when we are on site?
+- Is a change request document required?
+  - If so, how many days before the cut over?
+  - Who creates the document?
+  - Is there a template for the request?
+- Is a monitoring tool such as Solarwinds Orion in use?
+  - If so, who disables alerts for the devices being cut over?
 - What firmware version should be installed?
 - Do you have a standard for host names?
 - Does the network team have access to M&O devices such as Environmental monitoring (BACnet), surveillance cameras, door access controls?
