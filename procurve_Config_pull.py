@@ -76,8 +76,8 @@ __license__ = "Unlicense"
 #  Created by Michael Hubbard on 2023-12-20.
 
 # comment out ic.disable() and uncomment ic.enable() to use icecream
-# ic.enable()
-ic.disable()
+ic.enable()
+# ic.disable()
 
 
 def get_current_path(sub_dir1: str, extension: str, sub_dir2="") -> str:
@@ -236,8 +236,9 @@ for line in fabric:
         output_show_str: str = ""
         for command in show_commands:
             output_show = net_connect.send_command(
-                command, strip_command=False, delay_factor=1
+                command, strip_command=False, delay_factor=3
             )
+            ic(output_show)
             output_show_str = output_show_str + "\n" + "!---" + "\n" + output_show
 
         # Use textFSM to create a json object with interface stats
@@ -249,7 +250,6 @@ for line in fabric:
         output_cdp = net_connect.send_command(
             "show cdp neighbor detail", use_textfsm=True
         )
-        ic(output_cdp)
         # Use textFSM to create a json object with interface stats
         print(f"collecting show interfaces brief for {hostname}")
         output_show_int_br = net_connect.send_command(
