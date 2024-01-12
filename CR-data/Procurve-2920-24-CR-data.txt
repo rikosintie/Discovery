@@ -16,11 +16,11 @@ show system
   Software revision  : WB.16.10.0023        Base MAC Addr      : 98f2b3-fe8880
   ROM Version        : WB.16.03             Serial Number      : SG78FLXH0B  
 
-  Up Time            : 15 hours             Memory   - Total   : 72,483,328  
-  CPU Util (%)       : 30                              Free    : 40,106,800  
+  Up Time            : 21 hours             Memory   - Total   : 72,483,328  
+  CPU Util (%)       : 32                              Free    : 40,102,188  
 
-  IP Mgmt  - Pkts Rx : 25,122               Packet   - Total   : 6750        
-             Pkts Tx : 15,496               Buffers    Free    : 5009        
+  IP Mgmt  - Pkts Rx : 32,866               Packet   - Total   : 6750        
+             Pkts Tx : 20,858               Buffers    Free    : 5009        
                                                        Lowest  : 4992        
                                                        Missed  : 0           
 
@@ -53,10 +53,10 @@ show oobm ip
 
 !---
 show time
-Thu Jan 11 10:42:29 2024
+Thu Jan 11 16:28:59 2024
 !---
 show uptime
-0000:15:45:39.76
+0000:21:32:09.03
 !---
 show ntp status
 
@@ -65,14 +65,14 @@ show ntp status
   NTP Status             : Enabled         NTP Mode        : Unicast         
   Synchronization Status : Synchronized    Peer Dispersion : 0.00000 sec     
   Stratum Number         : 2               Leap Direction  : 0               
-  Reference Assoc ID     : 0               Clock Offset    : 0.06692 sec     
-  Reference ID           : 129.6.15.29     Root Delay      : 0.07358 sec     
-  Precision              : 2**-18          Root Dispersion : 0.69950 sec     
-  NTP Up Time            : 0d 15h 45m      Time Resolution : 697 nsec        
+  Reference Assoc ID     : 0               Clock Offset    : 0.08633 sec     
+  Reference ID           : 129.6.15.29     Root Delay      : 0.07309 sec     
+  Precision              : 2**-18          Root Dispersion : 0.62052 sec     
+  NTP Up Time            : 0d 21h 32m      Time Resolution : 698 nsec        
   Drift                  : 0.00002 sec/sec 
 
-  System Time            : Thu Jan 11 10:42:30 2024                
-  Reference Time         : Thu Jan 11 07:15:12 2024                
+  System Time            : Thu Jan 11 16:28:59 2024                
+  Reference Time         : Thu Jan 11 15:47:12 2024                
 
 !---
 show ntp associations
@@ -82,8 +82,8 @@ show ntp associations
 
  Remote          St   T    When   Poll  Reach    Delay    Offset   Dispersion
  --------------- ---- ---- ------ ----- -------- -------- -------- ----------
- 129.6.15.29     1    u    6248   13    17777    0.074    0.057    2.07963   
- 192.168.10.221  1    u    7299   10    7777     0.003    123.856  2.68726   
+ 129.6.15.29     1    u    77522  13    7        0.000    0.000    16.00000  
+ 192.168.10.221  1    u    77522  11    3        0.000    0.000    16.00000  
 
 !---
 show ntp server
@@ -461,7 +461,7 @@ show ip ospf general
   Area Border               : no 
   AS Border                 : yes
   External LSA Count        : 7          
-  External LSA Checksum Sum : 255146     
+  External LSA Checksum Sum : 274704     
   Originate New LSA Count   : 6          
   Receive New LSA Count     : 0          
 
@@ -485,13 +485,13 @@ show ip ospf external-link-state
 
   Link State ID   Router ID       Age  Sequence #  Checksum  
   --------------- --------------- ---- ----------- ----------
-  1.1.1.1         1.1.1.1         941  0x8000001f  0x0000d953
-  10.14.63.16     1.1.1.1         941  0x8000001f  0x00005a76
-  10.14.64.16     1.1.1.1         941  0x8000001f  0x00004f80
-  10.14.65.16     1.1.1.1         941  0x8000001f  0x0000448a
-  10.14.66.16     1.1.1.1         941  0x8000001f  0x00003994
-  10.164.24.0     1.1.1.1         941  0x8000001f  0x0000c4a5
-  192.168.10.0    1.1.1.1         941  0x8000001f  0x0000e7d5
+  1.1.1.1         1.1.1.1         1271 0x8000002a  0x0000c35e
+  10.14.63.16     1.1.1.1         1271 0x8000002a  0x00004481
+  10.14.64.16     1.1.1.1         1271 0x8000002a  0x0000398b
+  10.14.65.16     1.1.1.1         1271 0x8000002a  0x00002e95
+  10.14.66.16     1.1.1.1         1271 0x8000002a  0x0000239f
+  10.164.24.0     1.1.1.1         1271 0x8000002a  0x0000aeb0
+  192.168.10.0    1.1.1.1         1271 0x8000002a  0x0000d1e0
  
 
 !---
@@ -1093,7 +1093,7 @@ show ip ssh
   --- -------- + ---------------------------------------------- -----
   1   console  |
   2   ssh      | 192.168.10.115                                 57240
-  3   ssh      | 192.168.10.115                                 52546
+  3   ssh      | 192.168.10.115                                 52646
   4   inactive |
   5   inactive |
   6   inactive |
@@ -1182,6 +1182,35 @@ show logging -r -i
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
+I 01/11/24 16:28:57 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/11/24 16:28:56 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/11/24 16:26:34 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/11/24 16:26:33 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/11/24 16:26:04 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/11/24 16:26:03 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/11/24 16:04:52 04910 ntp: All the NTP server associations reset.
+I 01/11/24 16:04:52 04908 ntp: The system clock time was changed by 0 sec
+            86333555 nsec.	 The new time is Thu Jan 11 16:04:51 2024
+.
+I 01/11/24 12:21:45 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/11/24 12:21:44 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/11/24 12:21:09 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/11/24 12:21:08 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/11/24 11:14:59 04910 ntp: All the NTP server associations reset.
+I 01/11/24 11:14:59 04908 ntp: The system clock time was changed by 0 sec
+            79458701 nsec.	 The new time is Thu Jan 11 11:14:59 2024
+.
+I 01/11/24 10:43:09 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/11/24 10:43:09 00641 ssh: read error Connection reset by peer, session
+            aborted
 I 01/11/24 10:42:28 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
 I 01/11/24 10:42:27 03362 auth: User 'vector' logged in from 192.168.10.115 to
             SSH  session
@@ -1453,7 +1482,7 @@ I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master
 I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
 I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master 
 I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
-----  Top of Log : Events Listed = 186  ----
+----  Top of Log : Events Listed = 202  ----
 !---
 show logging -r -m
  Keys:   W=Warning   I=Information
@@ -1466,10 +1495,16 @@ show logging -r -w
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
+W 01/11/24 16:26:33 00641 ssh: read error Connection reset by peer, session
+            aborted
+W 01/11/24 12:21:44 00641 ssh: read error Connection reset by peer, session
+            aborted
+W 01/11/24 10:43:09 00641 ssh: read error Connection reset by peer, session
+            aborted
 W 01/10/24 19:39:06 00641 ssh: read error Connection reset by peer, session
             aborted
 M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
-----  Top of Log : Events Listed = 2  ----
+----  Top of Log : Events Listed = 5  ----
 !---
 show crypto host-public-key fingerprint
 1024 cb:a8:d6:c7:da:bd:67:53:91:8c:c0:1b:49:d1:a1:2d: host_ssh2.pub
