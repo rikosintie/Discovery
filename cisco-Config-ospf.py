@@ -1,4 +1,4 @@
-'''
+"""
 !!!!!!! Intrusive Script - Use with care !!!!!!!!
 Usage
 https://pynet.twb-tech.com/blog/netmiko-read-timeout.html
@@ -36,20 +36,22 @@ The script will also create a file with a show running configuration
 The connect handler is wrapped in a try/except block.
 If a time out occurs when connecting to a switch it is trapped
 but the  script halts.
-'''
+"""
 
 # !!!!!!! Intrusive Script - Use with care !!!!!!!!
 
+import argparse
+import json
+import logging
+import os
+import re
+import sys
 from datetime import datetime
+
 from netmiko import ConnectHandler
+
 # from netmiko import exceptions
 from paramiko.ssh_exception import SSHException
-import os
-import argparse
-import sys
-import json
-import re
-import logging
 
 # !!!!!!! Intrusive Script - Use with care !!!!!!!!
 #  log all reads and writes on the SSH channel
@@ -69,21 +71,21 @@ def remove_empty_lines(filename):
     with open(filename) as filehandle:
         lines = filehandle.readlines()
 
-    with open(filename, 'w') as filehandle:
+    with open(filename, "w") as filehandle:
         lines = filter(lambda x: x.strip(), lines)
         filehandle.writelines(lines)
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-s", "--site", help="Site name - ex. MVMS")
+parser.add_argument("-s", "--site", help="Site name - ex. HQ")
 args = parser.parse_args()
 site = args.site
 
 if site is None:
-    print('-s site name is a required argument')
+    print("-s site name is a required argument")
     sys.exit()
 else:
-    dev_inv_file = 'device-inventory-' + site
+    dev_inv_file = "device-inventory-" + site
 
 # check if site's device inventory file exists
 if not os.path.isfile(dev_inv_file):
@@ -95,9 +97,9 @@ remove_empty_lines(dev_inv_file)
 with open(dev_inv_file) as devices_file:
     fabric = devices_file.readlines()
 
-print('-' * (len(dev_inv_file) + 23))
-print(f'Reading devices from: {dev_inv_file}')
-print('-' * (len(dev_inv_file) + 23))
+print("-" * (len(dev_inv_file) + 23))
+print(f"Reading devices from: {dev_inv_file}")
+print("-" * (len(dev_inv_file) + 23))
 uptime = []
 for line in fabric:
     line = line.strip("\n")
@@ -106,42 +108,44 @@ for line in fabric:
     hostname = line.split(",")[2]
     username = line.split(",")[3]
     # password = line.split(",")[4]
-    password = os.environ.get('cyberARK')
+    password = os.environ.get("cyberARK")
     if vendor.lower() == "cisco_ios":
         now = datetime.now()
         start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-        print('-----------------------------------------------------')
-        print((str(start_time) +
-              " Connecting to switch {}".format(hostname)))
-        print('-----------------------------------------------------')
+        print("-----------------------------------------------------")
+        print((str(start_time) + " Connecting to switch {}".format(hostname)))
+        print("-----------------------------------------------------")
         try:
-            device = {'device_type': vendor,
-                      'ip': ipaddr,
-                      'username': username,
-                      'password': password,
-                      'conn_timeout': 800,
-
-                    }
+            device = {
+                "device_type": vendor,
+                "ip": ipaddr,
+                "username": username,
+                "password": password,
+                "conn_timeout": 800,
+            }
             net_connect = ConnectHandler(**device)
         except (EOFError, SSHException):
-            print(f'Could not connect to {hostname}, remove it'
-                  ' from the device inventory file')
+            print(
+                f"Could not connect to {hostname}, remove it"
+                " from the device inventory file"
+            )
             end_time = datetime.now()
             print(f"\nExec time: {end_time - now}\n")
             break
-        print(f'Processing {hostname}')
+        print(f"Processing {hostname}")
 
         #  each switch has its config file
-        loc = 'D:/Users/Michael.Hubbard/Documents/netmiko-gl/ospf/'
+        loc = "D:/Users/Michael.Hubbard/Documents/netmiko-gl/ospf/"
         # cfg_file = loc + 'ospf-' + hostname + ".txt"
         cfg_file = loc + hostname + ".txt"
         print()
         print(net_connect.find_prompt())
 
         # Use textFSM to create a json object with cdp neighbors
-        print(f'processing show cdp for {hostname}')
-        output_cdp = net_connect.send_command("show cdp neighbor detail",
-                                           use_textfsm=True)
+        print(f"processing show cdp for {hostname}")
+        output_cdp = net_connect.send_command(
+            "show cdp neighbor detail", use_textfsm=True
+        )
 
         # # Use textFSM to create a json object with show version
         # print(f'processing show version for {hostname}')
@@ -149,15 +153,14 @@ for line in fabric:
         #                                    use_textfsm=True)
 
         # Use textFSM to create a json object with show ip eigrp neighbors
-        print(f'processing show eigrp ne for {hostname}')
-        output_eigrp_ne = net_connect.send_command("show ip eigrp neighbors",
-                                           use_textfsm=True)
+        print(f"processing show eigrp ne for {hostname}")
+        output_eigrp_ne = net_connect.send_command(
+            "show ip eigrp neighbors", use_textfsm=True
+        )
 
         #  Send commands from cfg_file to configure ospf
-        print(f'processing {cfg_file} for {hostname}')
-        output_text_ospf = net_connect.send_config_from_file(cfg_file,
-                                                        read_timeout=360)
-
+        print(f"processing {cfg_file} for {hostname}")
+        output_text_ospf = net_connect.send_config_from_file(cfg_file, read_timeout=360)
 
         # Send commands from mac.txt for human readable output
         # print(f'processing show mac address for {hostname}')
@@ -165,15 +168,15 @@ for line in fabric:
         #                                                 read_timeout=200)
 
         # Send commands from arp.txt for human readable output
-        # print(f'processing show arp for {hostname}')        
+        # print(f'processing show arp for {hostname}')
         # output_text_arp = net_connect.send_config_from_file('arp.txt',
-        #                                                 read_timeout=200)        
+        #                                                 read_timeout=200)
 
         #  Write the ospf command output to disk
-        loc = 'D:/Users/Michael.Hubbard/Documents/netmiko-gl/ospf-data/'
-        print(f'Writing OSPF data to {loc}{hostname}-ospf_cmd.txt')
+        loc = "D:/Users/Michael.Hubbard/Documents/netmiko-gl/ospf-data/"
+        print(f"Writing OSPF data to {loc}{hostname}-ospf_cmd.txt")
         int_report = loc + hostname + "-OSPF_cmd.txt"
-        with open(int_report, 'w') as file:
+        with open(int_report, "w") as file:
             file.write(output_text_ospf)
 
         # Write the running config to disk
@@ -182,10 +185,9 @@ for line in fabric:
         # with open(int_report, 'w') as file:
         #     file.write(output_text_ospf)
 
-        print(f'processing show IP OSPF NE for {hostname}')
+        print(f"processing show IP OSPF NE for {hostname}")
         # Use textFSM to create a json object with osspf ne
-        output = net_connect.send_command("show ip ospf neighbor",
-                                         use_textfsm=True)
+        output = net_connect.send_command("show ip ospf neighbor", use_textfsm=True)
 
         # Write the mac-address plain text output to disk
         # loc = 'D:/Users/Michael.Hubbard/Documents/netmiko-gl/port-maps/data/'
@@ -202,30 +204,30 @@ for line in fabric:
         #     file.write(output_text_arp)
 
         # Comment out to capture just mac/arp data
-        loc = 'D:/Users/Michael.Hubbard/Documents/netmiko-gl/Running-ospf/'
-        print(f'Collecting show running-config from {hostname}')
+        loc = "D:/Users/Michael.Hubbard/Documents/netmiko-gl/Running-ospf/"
+        print(f"Collecting show running-config from {hostname}")
         # print(net_connect.find_prompt())
         output_text = net_connect.send_command("show running", read_timeout=360)
-        
+
         #  Write the running config to disk
-        print(f'Writing show run to {loc}{hostname}-running-config.txt')
+        print(f"Writing show run to {loc}{hostname}-running-config.txt")
         int_report = loc + hostname + "-ospf-running.txt"
-        with open(int_report, 'w') as file:
+        with open(int_report, "w") as file:
             file.write(output_text)
 
         #  Write the JSON OSPF NE data to a file
-        loc = 'D:/Users/Michael.Hubbard/Documents/netmiko-gl/ospf-data/'
-        print(f'Writing ospf ne data to {hostname}-ospf_ne.txt')
+        loc = "D:/Users/Michael.Hubbard/Documents/netmiko-gl/ospf-data/"
+        print(f"Writing ospf ne data to {hostname}-ospf_ne.txt")
         int_report = loc + hostname + "-ospf_ne.txt"
-        with open(int_report, 'w') as file:
+        with open(int_report, "w") as file:
             output = json.dumps(output, indent=2)
             file.write(output)
 
         # Write the JSON cdp neighbor data to a file
-        loc = 'D:/Users/Michael.Hubbard/Documents/netmiko-gl/ospf-data/'
-        print(f'Writing cdp ne data to {loc}{hostname}-cdp_ne.txt')
+        loc = "D:/Users/Michael.Hubbard/Documents/netmiko-gl/ospf-data/"
+        print(f"Writing cdp ne data to {loc}{hostname}-cdp_ne.txt")
         int_report = loc + hostname + "-cdp_ne.txt"
-        with open(int_report, 'w') as file:
+        with open(int_report, "w") as file:
             output_cdp = json.dumps(output_cdp, indent=2)
             file.write(output_cdp)
         print()
@@ -253,7 +255,7 @@ for line in fabric:
         #  Create a regex to match any port with [0-8]/0/[0-9]{1,2}
         #  This will match all ports with a 0 as the module number
 
-        regexpattern = re.compile(r'G*[0-8]/0/[0-9]{1,2}')
+        regexpattern = re.compile(r"G*[0-8]/0/[0-9]{1,2}")
 
         # count number of interfaces
         # interfaces = json.loads(output)
