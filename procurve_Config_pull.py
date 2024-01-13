@@ -259,7 +259,7 @@ for line in fabric:
         # Use textFSM to create a json object with show lldp info remote
         print(f"collecting show lldp neighbors for {hostname}")
         output_show_lldp = net_connect.send_command(
-            "show lldp info remote", use_textfsm=True
+            "show lldp info remote detail", use_textfsm=True
         )
 
         #  Send commands from mac.txt for human readable output
