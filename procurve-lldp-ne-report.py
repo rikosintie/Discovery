@@ -78,38 +78,26 @@ for file_name in file_list:
             counter = 0
             for value in data:
                 fname = file_name
-                neighbor_chassis_type = (
-                    "      neighbor_chassis_type: "
-                    + data[counter]["neighbor_chassis_type"]
-                )
-                neighbor_chassis_id = (
-                    "        neighbor_chassis_id: "
-                    + data[counter]["neighbor_chassis_id"]
-                )
-                remote_management_address = (
-                    "  remote_management_address: "
-                    + data[counter]["remote_management_address"]
-                )
                 neighbor_sysname = (
-                    "           neighbor_sysname: " + data[counter]["neighbor_sysname"]
+                    f'{"neighbor_sysname: " :>29}{data[counter]["neighbor_sysname"]}'
                 )
+                neighbor_chassis_type = f'{"neighbor_chassis_type: " :>29}{data[counter]["neighbor_chassis_type"]}'
+
+                neighbor_chassis_id = f'{"neighbor_chassis_id: " :>29}{data[counter]["neighbor_chassis_id"]}'
+
+                remote_management_address = f'{"remote_management_address: " :>29}{data[counter]["remote_management_address"]}'
+
                 neighbor_portid = (
-                    "            neighbor_portid: " + data[counter]["neighbor_portid"]
+                    f'{"neighbor_portid: " :>29}{data[counter]["neighbor_portid"]}'
                 )
-                local_port = (
-                    "                 local_port: " + data[counter]["local_port"]
-                )
-                system_descr = (
-                    "               system_descr: " + data[counter]["system_descr"]
-                )
-                pvid = "                       PVID: " + data[counter]["pvid"]
-                port_descr = (
-                    "                 port_descr: " + data[counter]["port_descr"]
-                )
-                system_capabilities_enabled = (
-                    "system_capabilities_enabled: "
-                    + data[counter]["system_capabilities_enabled"]
-                )
+                local_port = f'{"local_port: " :>29}{data[counter]["local_port"]}'
+
+                system_descr = f'{"system_descr: " :>29}{data[counter]["system_descr"]}'
+                pvid = f'{"PVID: " :>29}{data[counter]["pvid"]}'
+
+                port_descr = f'{"port_descr: " :>29}{data[counter]["port_descr"]}'
+                system_capabilities_enabled = f'system_capabilities_enabled: {data[counter]["system_capabilities_enabled"]}'
+
                 divider = "-" * 30
                 print()
                 counter += 1
