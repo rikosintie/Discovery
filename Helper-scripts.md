@@ -87,7 +87,7 @@ software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
 
 Here is a screenshot of the csv report in vs code using the Rainbow csv extension:
 
-<p align="center" width="100%">
+<p align="left" width="100%">
 <img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/csv-snippet.png" alt="CSV format">
 </p>
 
