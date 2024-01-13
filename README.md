@@ -51,7 +51,14 @@ The show commands are saved to a file named [procurve-config-file.txt](https://g
 
 The format is:
 
-`show command` with each command on a separate line.
+`show command` with each command on a separate line. Here is a snippet of the file:
+
+```bash
+show system
+show config status
+show oobm
+show oobm ip
+```
 
 The show commands are saved to the CR-data directory using the format [hostname]-CR-data.txt. For example, if the hostname is "Procurve-2920-24" the filename is Procurve-2920-24-CR-data.txt.
 
