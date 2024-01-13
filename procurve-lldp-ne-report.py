@@ -25,6 +25,7 @@ Returns:
 
 import json
 import os
+import sys
 
 from icecream import ic
 
@@ -36,9 +37,9 @@ __author_email__ = "mhubbard@vectorusa.com"
 __copyright__ = ""
 __license__ = "Unlicense"
 # -*- coding: utf-8 -*-
-#  procurve-cdp-ne-report.py
+#  procurve-lldp-ne-report.py
 #  Procurve Change Request data collection
-#  Created by Michael Hubbard on 2024-1-11.
+#  Created by Michael Hubbard on 2024-1-12.
 
 
 def get_current_path(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
@@ -75,8 +76,8 @@ for file_name in file_list:
         try:
             data = json.load(file)
             lldp_neighbors = []
-            counter = 0
-            for value in data:
+
+            for counter, value in enumerate(data):
                 fname = file_name
                 neighbor_sysname = (
                     f'{"neighbor_sysname: " :>29}{data[counter]["neighbor_sysname"]}'
@@ -100,7 +101,7 @@ for file_name in file_list:
 
                 divider = "-" * 30
                 print()
-                counter += 1
+                # counter += 1
                 lldp_neighbors = [
                     neighbor_sysname,
                     remote_management_address,
@@ -119,5 +120,11 @@ for file_name in file_list:
                 with open(file_path_ne, "a") as file:
                     for item in lldp_neighbors:
                         file.write("%s\n" % item)
-        except NameError:
+        # except NameError:
+        except Exception as Error:
+            print("An error occurred:", type(Error).__name__)
+        except KeyboardInterrupt:
+            print("ctrl+c was pressed")
+            sys.exit()
+        except ValueError:
             print(f"Error parsing JSON in file {file_path}:")
