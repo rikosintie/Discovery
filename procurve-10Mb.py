@@ -1,13 +1,13 @@
-# !!!!! Helper Script - Run on offline data !!!!!
+# !!!!! Helper Script - Runs on offline data !!!!!
 
 """
-    Reads the interface file created by procurve-Config-pull.py and
-    builds a list of interfaces running at 10Mb full or half. Aruba and Cisco smartrate (mGig) ports do not support 10Mb connections.
+    Reads the interface file (hostname-int_br.txt) created by procurve-Config-pull.py and builds a list of interfaces running at 10Mb full or half. Aruba and Cisco smartrate (mGig) ports do not support 10Mb connections.
 
 
     Returns:
         Nothing : a file is written to the CR-data directory as hostname-10Mb-Ports.txt
 """
+# !!!!! Helper Script - Runs on offline data !!!!!
 
 import argparse
 import json
@@ -79,7 +79,7 @@ def extract_Interface_speed(json_data: list):
     Returns:
         a list of interfaces with 10Mbps
     """
-    # Extract the stack information
+    # Extract the port mode information
     hardware_per_switch = []
     for switch_data in data:
         hardware = switch_data["mode"]
@@ -133,8 +133,8 @@ for line in fabric:
 
     stack_info = extract_Interface_speed(data)
     if stack_info == []:
-        print("No 10Mbps interfaces found")
-        SystemExit()
+        print(f"No 10Mbps interfaces found for {hostname}")
+        continue
 
     int_report = get_current_path("CR-data", "-10Mb-Ports.txt")
     print(f"Writing CR data to {int_report}")
