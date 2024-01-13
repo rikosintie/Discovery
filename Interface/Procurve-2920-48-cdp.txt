@@ -1,0 +1,110 @@
+[
+  {
+    "local_port": "1",
+    "neighbor_id": "3750x.pu.pri",
+    "neighbor_address": "10.254.34.17",
+    "neighbor_platform": "cisco WS-C3750X-48P",
+    "neighbor_capability": "Router Switch IGMP",
+    "neighbor_port": "GigabitEthernet1/0/1",
+    "neighbor_version": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
+  },
+  {
+    "local_port": "1",
+    "neighbor_id": "64 00 f1 01 6f 80",
+    "neighbor_address": "10.254.34.17",
+    "neighbor_platform": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...",
+    "neighbor_capability": "Router Switch",
+    "neighbor_port": "GigabitEthernet1/0/1",
+    "neighbor_version": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
+  },
+  {
+    "local_port": "21",
+    "neighbor_id": "3750x.pu.pri",
+    "neighbor_address": "192.168.1.1",
+    "neighbor_platform": "cisco WS-C3750X-48P",
+    "neighbor_capability": "Router Switch IGMP",
+    "neighbor_port": "GigabitEthernet1/1/2",
+    "neighbor_version": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
+  },
+  {
+    "local_port": "21",
+    "neighbor_id": "64 00 f1 01 6f 80",
+    "neighbor_address": "192.168.1.1",
+    "neighbor_platform": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...",
+    "neighbor_capability": "Router Switch",
+    "neighbor_port": "GigabitEthernet1/1/2",
+    "neighbor_version": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
+  },
+  {
+    "local_port": "22",
+    "neighbor_id": "3750x.pu.pri",
+    "neighbor_address": "192.168.1.1",
+    "neighbor_platform": "cisco WS-C3750X-48P",
+    "neighbor_capability": "Router Switch IGMP",
+    "neighbor_port": "GigabitEthernet1/1/4",
+    "neighbor_version": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
+  },
+  {
+    "local_port": "22",
+    "neighbor_id": "64 00 f1 01 6f 80",
+    "neighbor_address": "192.168.1.1",
+    "neighbor_platform": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...",
+    "neighbor_capability": "Router Switch",
+    "neighbor_port": "GigabitEthernet1/1/4",
+    "neighbor_version": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
+  },
+  {
+    "local_port": "24",
+    "neighbor_id": "fc ec da c4 6e 55",
+    "neighbor_address": "Unsupported format",
+    "neighbor_platform": " ",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": " "
+  },
+  {
+    "local_port": "24",
+    "neighbor_id": "ea e6 4b 18 de 20",
+    "neighbor_address": "192.168.10.106",
+    "neighbor_platform": "Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "en0",
+    "neighbor_version": "Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ..."
+  },
+  {
+    "local_port": "24",
+    "neighbor_id": "9c 8c d8 c9 17 ae",
+    "neighbor_address": "192.168.10.144",
+    "neighbor_platform": "ArubaOS (MODEL: 515), Version Aruba IAP",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "ArubaOS (MODEL: 515), Version Aruba IAP"
+  },
+  {
+    "local_port": "24",
+    "neighbor_id": "Garage",
+    "neighbor_address": "192.168.10.51",
+    "neighbor_platform": "NanoStation 5AC loc",
+    "neighbor_capability": "Trans Bridge",
+    "neighbor_port": "br0",
+    "neighbor_version": "WA.ar934x.v8.7.1.42832.200623.1641"
+  },
+  {
+    "local_port": "24",
+    "neighbor_id": "3750x.pu.pri",
+    "neighbor_address": "192.168.1.1",
+    "neighbor_platform": "cisco WS-C3750X-48P",
+    "neighbor_capability": "Router Switch IGMP",
+    "neighbor_port": "GigabitEthernet1/0/48",
+    "neighbor_version": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
+  },
+  {
+    "local_port": "24",
+    "neighbor_id": "64 00 f1 01 6f 80",
+    "neighbor_address": "192.168.1.1",
+    "neighbor_platform": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...",
+    "neighbor_capability": "Router Switch",
+    "neighbor_port": "< Aruba 225 >",
+    "neighbor_version": "Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
+  }
+]

@@ -1,0 +1,275 @@
+
+Running configuration:
+
+; J9727A Configuration Editor; Created on release #WB.16.10.0023
+; Ver #14:21.44.08.15.9b.3f.b3.b8.ee.34.79.3c.29.eb.9f.fc.f3.ff.37.ef:29
+
+hostname "HP-2920-24G-PoEP"
+module 1 type j9727a
+time daylight-time-rule continental-us-and-canada
+time timezone -480
+trunk 21-22 trk1 lacp
+spanning-tree
+spanning-tree 2 loop-guard bpdu-protection
+spanning-tree 3 loop-guard bpdu-protection
+spanning-tree 4 loop-guard bpdu-protection
+spanning-tree 5 loop-guard bpdu-protection
+spanning-tree 6 loop-guard bpdu-protection
+spanning-tree 7 loop-guard bpdu-protection
+spanning-tree 8 loop-guard bpdu-protection
+spanning-tree 9 loop-guard bpdu-protection
+spanning-tree 10 loop-guard bpdu-protection
+spanning-tree 11 loop-guard bpdu-protection
+spanning-tree 12 loop-guard bpdu-protection
+spanning-tree 13 loop-guard bpdu-protection
+spanning-tree 14 loop-guard bpdu-protection
+spanning-tree 15 loop-guard bpdu-protection
+spanning-tree 16 loop-guard bpdu-protection
+spanning-tree 17 loop-guard bpdu-protection
+spanning-tree 18 loop-guard bpdu-protection
+spanning-tree 19 loop-guard bpdu-protection
+spanning-tree 20 loop-guard bpdu-protection
+spanning-tree Trk1 priority 4
+spanning-tree mode rapid-pvst
+spanning-tree bpdu-protection-timeout 90
+ip default-gateway 192.168.10.254
+ip dns domain-name "pu.pri"
+ip dns server-address priority 1 192.168.10.221
+ip route 0.0.0.0 0.0.0.0 192.168.10.254
+ip routing
+ip source-interface tacacs vlan 850
+ip source-interface radius vlan 850
+ip source-interface syslog vlan 850
+ip source-interface telnet vlan 850
+ip source-interface tftp vlan 850
+ip source-interface sntp vlan 10
+ip source-interface sflow vlan 850
+ip source-interface tunneled-node-server vlan 850
+ip source-interface radsec vlan 850
+router ospf
+   area backbone
+   redistribute connected route-map "SITE30"
+   enable
+   exit
+timesync ntp
+ntp unicast
+ntp server 129.6.15.29 iburst
+ntp server 192.168.10.221
+ntp enable
+snmp-server community "SuperSecret" operator unrestricted
+snmp-server mib hpSwitchAuthMIB excluded
+interface 1
+   untagged vlan 850
+   exit
+interface 2
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 3
+   untagged vlan 100
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 4
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 5
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 6
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 7
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 8
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 9
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 10
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 11
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 12
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 13
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 14
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 15
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 16
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 17
+   untagged vlan 10
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 18
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 19
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 20
+   untagged vlan 1
+   spanning-tree loop-guard bpdu-protection
+   exit
+interface 21
+   trunk trk1 lacp
+   exit
+interface 22
+   trunk trk1 lacp
+   exit
+interface 23
+   untagged vlan 1
+   exit
+interface 24
+   tagged vlan 20,60-63
+   untagged vlan 10
+   exit
+interface A1
+   untagged vlan 1
+   exit
+interface A2
+   untagged vlan 1
+   exit
+interface B1
+   untagged vlan 1
+   exit
+interface B2
+   untagged vlan 1
+   exit
+interface Trk1
+   tagged vlan 850
+   spanning-tree priority 4
+   exit
+interface loopback 0
+   ip address 1.1.1.1
+   exit
+vlan 1
+   name "DEFAULT_VLAN"
+   no untagged 1,3,17,24,Trk1
+   untagged 2,4-16,18-20,23
+   ip address dhcp-bootp
+   exit
+vlan 10
+   name "User"
+   untagged 17,24
+   ip address 192.168.10.52 255.255.255.0
+   ip helper-address 10.10.83.20
+   ip helper-address 10.10.100.50
+   exit
+vlan 20
+   name "Voice"
+   tagged 24
+   ip address 10.164.24.200 255.255.255.0
+   ip helper-address 10.10.83.20
+   ip helper-address 10.10.100.50
+   voice
+   exit
+vlan 60
+   name "IOT0"
+   tagged 24
+   ip address 10.14.66.17 255.255.255.248
+   ip helper-address 10.10.83.20
+   ip helper-address 10.10.100.50
+   exit
+vlan 61
+   name "IOT1"
+   tagged 24
+   ip address 10.14.65.17 255.255.255.248
+   ip helper-address 10.10.83.20
+   ip helper-address 10.10.100.50
+   exit
+vlan 62
+   name "IOT2"
+   tagged 24
+   ip address 10.14.64.17 255.255.255.248
+   ip helper-address 10.10.83.20
+   ip helper-address 10.10.100.50
+   exit
+vlan 63
+   name "IOT3"
+   tagged 24
+   ip address 10.14.63.17 255.255.255.248
+   ip helper-address 10.10.83.20
+   ip helper-address 10.10.100.50
+   exit
+vlan 100
+   name "test"
+   untagged 3
+   ip address 10.10.100.1 255.255.255.0
+   dhcp-server
+   exit
+vlan 850
+   name "OSPF-Peering"
+   untagged 1
+   tagged Trk1
+   ip address 10.254.34.18 255.255.255.252
+   ip ospf 10.254.34.18 area backbone
+   exit
+alias "aaa" "show run | in aaa"
+alias "pwr" "sh power br | i Delivering"
+alias "sid" "show name"
+alias "sis" "show interface status"
+alias "spi" "show power brief"
+alias "uid" "chassislocate member $1 blink"
+alias "cppm" "show port-access clients"
+alias "lans" "show vlan custom id name:15 ipaddr ipmask:17 ipconfig state jumbo"
+alias "ospf" "sh ip ospf interface VLAN 850"
+alias "siib" "show ip"
+alias "snmp" "show run | in snmp"
+alias "user" "sh ip ssh strict"
+alias "vlan" "show vlan custom id name:15 ipaddr ipmask ipconfig state voice jumbo"
+alias "ospfne" "sh ip ospf neighbor"
+alias "uidoff" "chassislocate member $1 off"
+alias "ospfext" "sh ip ospf external-link-state"
+key-chain "COR"
+key-chain "COR" key 1 key-string "O$FPkey4C0R"
+oobm
+   ip address dhcp-bootp
+   exit
+primary-vlan 850
+allow-unsupported-transceiver
+no tftp server
+no autorun
+no dhcp config-file-update
+no dhcp image-file-update
+no dhcp tr69-acs-url
+job "wrmem" at 23:00 "write memory"
+route-map "SITE30" permit seq 10
+   set tag 850
+   exit
+dhcp-server pool "10-10-100-0"
+   authoritative
+   default-router "10.10.100.1"
+   dns-server "1.1.1.1"
+   domain-name "pu.org"
+   lease 00:00:10
+   network 10.10.100.0 255.255.255.0
+   range 10.10.100.100 10.10.100.120
+   exit
+dhcp-server enable
