@@ -1,13 +1,21 @@
 """
 !!!!! Helper Script !!!!!!
 
-    Creates a text file from the cdp file with:
-    "neighbor_id"
-    "neighbor_address"
-    "neighbor_platform"
-    "neighbor_port"
+    Creates a text file from the lldp file with:
     "local_port":
-    "neighbor_version":
+    "neighbor_chassis_type"
+    "neighbor_chassis_id"
+    "neighbor_portid"
+    "neighbor_sysname"
+    "system_descr"
+    "pvid"
+    "system_capabilities_enabled"
+    "remote_management_address"
+    "system_capabilities_enabled"
+
+
+
+
 
 Returns:
     Nothing - creates files in the Interface\neighbors folder.
@@ -54,11 +62,11 @@ def get_current_path(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
 # Build path to Interface/neighbors and build list of cdp files
 loc = os.path.join("Interface")
 loc1 = os.path.join("Interface", "neighbors")
-file_list = [f for f in os.listdir(loc) if f.endswith("cdp.txt")]
+file_list = [f for f in os.listdir(loc) if f.endswith("lldp.txt")]
 
 for file_name in file_list:
-    file_name_ne = file_name[0:-7]
-    file_name_ne = file_name_ne + "cdp-report.txt"
+    file_name_ne = file_name[0:-8]
+    file_name_ne = file_name_ne + "lldp-report.txt"
     file_path = os.path.join(loc, file_name)
     file_path_ne = os.path.join(loc1, file_name_ne)
     if os.path.exists(file_path_ne):
@@ -66,33 +74,62 @@ for file_name in file_list:
     with open(file_path, "r") as file:
         try:
             data = json.load(file)
-            cdp_neighbors = []
+            lldp_neighbors = []
             counter = 0
             for value in data:
                 fname = file_name
-                destination_host = "destination_host: " + data[counter]["neighbor_id"]
-                management_ip = "management_ip: " + data[counter]["neighbor_address"]
-                platform = "platform: " + data[counter]["neighbor_platform"]
-                remote_port = "remote_port: " + data[counter]["neighbor_port"]
-                local_port = "local_port: " + data[counter]["local_port"]
-                software_version = (
-                    "software_version: " + data[counter]["neighbor_version"]
+                neighbor_chassis_type = (
+                    "      neighbor_chassis_type: "
+                    + data[counter]["neighbor_chassis_type"]
+                )
+                neighbor_chassis_id = (
+                    "        neighbor_chassis_id: "
+                    + data[counter]["neighbor_chassis_id"]
+                )
+                remote_management_address = (
+                    "  remote_management_address: "
+                    + data[counter]["remote_management_address"]
+                )
+                neighbor_sysname = (
+                    "           neighbor_sysname: " + data[counter]["neighbor_sysname"]
+                )
+                neighbor_portid = (
+                    "            neighbor_portid: " + data[counter]["neighbor_portid"]
+                )
+                local_port = (
+                    "                 local_port: " + data[counter]["local_port"]
+                )
+                system_descr = (
+                    "               system_descr: " + data[counter]["system_descr"]
+                )
+                pvid = "                       PVID: " + data[counter]["pvid"]
+                port_descr = (
+                    "                 port_descr: " + data[counter]["port_descr"]
+                )
+                system_capabilities_enabled = (
+                    "system_capabilities_enabled: "
+                    + data[counter]["system_capabilities_enabled"]
                 )
                 divider = "-" * 30
                 print()
                 counter += 1
-                cdp_neighbors = [
-                    destination_host,
-                    management_ip,
-                    platform,
-                    remote_port,
+                lldp_neighbors = [
+                    neighbor_sysname,
+                    remote_management_address,
+                    neighbor_chassis_type,
+                    neighbor_chassis_id,
+                    system_descr,
+                    neighbor_portid,
                     local_port,
-                    software_version,
+                    system_descr,
+                    pvid,
+                    port_descr,
+                    system_capabilities_enabled,
                     "\n",
                     divider,
                 ]
                 with open(file_path_ne, "a") as file:
-                    for item in cdp_neighbors:
+                    for item in lldp_neighbors:
                         file.write("%s\n" % item)
         except NameError:
             print(f"Error parsing JSON in file {file_path}:")
