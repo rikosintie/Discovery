@@ -128,13 +128,14 @@ This is not a exhaustive list, feel free to add to it.
   - Will we have access to monitor progress during the cut over?
 - Firmware
   - What firmware version should be installed?
-  - If the project spans months, who will upgrade the switches that have been deployed?
-- Do you have a standard for host names?
+  - If the project spans months, will switches be put on the current firmware before being deployed?
+  - Who will upgrade the switches that have already been deployed?
 - Does the network team have access to M&O devices such as Environmental monitoring (BACnet), surveillance cameras, door access controls?
 - Are we allowed to connect our laptops to the network?
 - Can we use tools like nmap and Wireshark to discover devices?
   - Here are some [nmap scripts](https://github.com/rikosintie/nmap-python) that I wrote for discovery.
 - Is DHCP used for non-server hosts i.e. cameras, door access panels, etc?
+- Do you have a standard for host names?
 - Do you have a management vlan?s
 - If so, what are the management vlan IP addresses?
 - default gateway or gateway of last resort IP address?
@@ -169,7 +170,7 @@ This is not a exhaustive list, feel free to add to it.
   - community names
   - location
   - Required traps
-- spanning-tree
+- What are the spanning-tree requirements?
   - Priority
   - root-guard
   - tcn-guard
