@@ -20,6 +20,7 @@ There are additional sections to this documentation:
 
 - [Getting Started](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)<!-- omit from toc -->
 - [Usage](https://github.com/rikosintie/Discovery/blob/main/usage.md)
+- [The Helper Scripts](https://github.com/rikosintie/Discovery/blob/main/Helper-scripts.md)
 
 ## Purpose
 
