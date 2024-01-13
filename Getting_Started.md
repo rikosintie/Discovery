@@ -1,3 +1,5 @@
+[Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
+
 # Getting Started<!-- omit from toc -->
 
 - [1. Clone the Repository](#1-clone-the-repository)
@@ -114,3 +116,5 @@ When you are finished, deactivate the environment
 You will need to activate the virtual environment each time you want to run the scripts.
 
 ----------------------------------------------------------------
+
+[Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
