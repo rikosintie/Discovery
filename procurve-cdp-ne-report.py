@@ -10,7 +10,7 @@
     "neighbor_version":
 
 Returns:
-    Nothing - creates files in the ospf-data\neighbors folder.
+    Nothing - creates files in the Interface\neighbors folder.
 """
 
 # !!!!! Helper Script !!!!!!
@@ -51,8 +51,7 @@ def get_current_path(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
     return int_report
 
 
-# Read the cdp neighbor file to pull in the stack count
-int_report = os.getcwd()
+# Build path to Interface/neighbors and build list of cdp files
 loc = os.path.join("Interface")
 loc1 = os.path.join("Interface", "neighbors")
 file_list = [f for f in os.listdir(loc) if f.endswith("cdp.txt")]
