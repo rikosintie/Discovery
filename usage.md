@@ -113,8 +113,7 @@ It's really disruptive to the discovery process if switches fail. That means you
 
 I recommend saving the switch IP addresses in a plain text file, one per line, and then using nmap to verify that ssh is working.
 
-For example, create a new text file
-`ip.txt`. If you are using vs code and the Rainbow csv extension you can simply run a query:
+For example, create a new text file named `ip.txt`. If you are using vs code and the Rainbow csv extension you can simply run a query:
 
 `select a1`
 
