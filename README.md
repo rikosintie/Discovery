@@ -26,7 +26,7 @@ There are additional sections to this documentation:
 
 This project was created to make the discovery process for a network refresh easy, consistent and comprehensive. The discovery data can be used to create a change request, and cut over plan for the customer. The data is also valuable when troubleshooting any issues after a switch is replaced.
 
-You are free to customize the [procurve-config-file.txt](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt) file to add or remove show commands as needed for your discovery.
+A plain text file [procurve-config-file.txt](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt) is used to store the `show commands` that are sent to the switches. You are free to customize the [procurve-config-file.txt](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt) file to add or remove show commands as needed for your discovery.
 
 The script saves the data to various directories for easy access.
 
