@@ -32,7 +32,7 @@ The script saves the data to various directories for easy access.
 
 ### Who is this project for
 
-Anyone that needs to pull data from HPE Procurve switches. You do not need to write any python code. Text files are used to configure the information pulled by the script.
+Anyone that needs to pull data from HPE Procurve switches. You do not need to write any python code. Text files are used to configure the information used by the script.
 
 ----------------------------------------------------------------
 
