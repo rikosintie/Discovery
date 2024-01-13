@@ -122,10 +122,13 @@ This is not a exhaustive list, feel free to add to it.
 - Is a change request document required?
   - If so, how many days before the cut over?
   - Who creates the document?
-  - Is there a template for the request?
+  - Is there a template for the change request document?
+- Who will do the post cut over testing?
+- How long after the cut over until a sign off is completed?
 - If a monitoring tool such as Solarwinds Orion in use:
   - Who disables alerts for the devices being cut over?
   - Will we have access to monitor progress during the cut over?
+- Is a syslog server available that we can access?
 - Firmware
   - What firmware version should be installed?
   - If the project spans months, will switches be put on the current firmware before being deployed?
