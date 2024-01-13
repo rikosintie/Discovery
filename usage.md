@@ -1,3 +1,5 @@
+[Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
+
 # Usage<!-- omit from toc -->
 
 - [Before you can run the script](#before-you-can-run-the-script)
@@ -111,7 +113,8 @@ It's really disruptive to the discovery process if switches fail. That means you
 
 I recommend saving the switch IP addresses in a plain text file, one per line, and then using nmap to verify that ssh is working.
 
-For example, create a new text file - ip.txt. If you are using vs code and the Rainbow csv extension you can simply run a query:
+For example, create a new text file
+`ip.txt`. If you are using vs code and the Rainbow csv extension you can simply run a query:
 
 `select a1`
 
@@ -186,3 +189,5 @@ Then use `grep -Eir -b6 "No valid" accounts.txt` to find the devices with no val
 - i - case-insensitive
 - r - recursive
 - -b6 - show 6 lines before the match
+
+[Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
