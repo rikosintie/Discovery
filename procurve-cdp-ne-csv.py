@@ -138,7 +138,8 @@ for line in fabric:
     )
 
     #  Write the cdp output to disk
-    int_report = get_current_path("CR-data", "-cdp-data.csv")
+    # int_report = get_current_path("CR-data", "-cdp-data.csv")
+    int_report = get_current_path("Interface", "-cdp-data.csv", "neighbors")
     print(f"Writing cdp data to {int_report}")
     with open(int_report, "w") as csv_file:
         csv_writer = csv.writer(csv_file)
