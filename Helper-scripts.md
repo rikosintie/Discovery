@@ -1,3 +1,5 @@
+[Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
+
 # The Helper Scripts<!-- omit from toc -->
 
 After the `procurve-Config-pull.py` script finishes, you can use the ***hostname-CR-data.txt*** files to get started planning. But the script also creates JSON files for cdp neighbors, lldp neighbors and OSPF neighbors.
@@ -71,7 +73,7 @@ Each of these scripts uses the same device-inventory file as the procurve-Config
 
 The reports are saved into the "Interface\neighbors" directory.
 
-### The cdp neighbor text report
+### The cdp neighbor text reports
 
 Here is a snippet of the cdp neighbor text report:
 
@@ -85,7 +87,7 @@ destination_host: 3750x.pu.pri
 software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
 ```
 
-Here is a screenshot of the csv report in vs code using the Rainbow csv extension:
+Here is a screenshot of the csv report in Libre Office Calc:
 
 <p align="left" width="100%">
 <img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/csv-snippet.png" alt="CSV format">
@@ -113,3 +115,5 @@ sh lldp config
   1     | Tx_Rx       False               False
   2     | Tx_Rx       False               False
 ```
+
+[Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
