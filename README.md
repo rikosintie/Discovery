@@ -123,9 +123,12 @@ This is not a exhaustive list, feel free to add to it.
   - If so, how many days before the cut over?
   - Who creates the document?
   - Is there a template for the request?
-- Is a monitoring tool such as Solarwinds Orion in use?
-  - If so, who disables alerts for the devices being cut over?
-- What firmware version should be installed?
+- If a monitoring tool such as Solarwinds Orion in use:
+  - Who disables alerts for the devices being cut over?
+  - Will we have access to monitor progress during the cut over?
+- Firmware
+  - What firmware version should be installed?
+  - If the project spans months, who will upgrade the switches that have been deployed?
 - Do you have a standard for host names?
 - Does the network team have access to M&O devices such as Environmental monitoring (BACnet), surveillance cameras, door access controls?
 - Are we allowed to connect our laptops to the network?
