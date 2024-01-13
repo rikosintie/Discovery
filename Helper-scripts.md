@@ -66,10 +66,30 @@ I wrote the script that creates the csv file so that you could use a spreadsheet
 
 Each of these scripts uses the same device-inventory file as the procurve-Config-pull.py script so there is no configuration needed. Just use:
 
-- `python3 procurve-cdp-ne-report.py`
-- `python3 procurve-cdp-ne-csv.py`
+- `python3 procurve-cdp-ne-report.py -s sitename`
+- `python3 procurve-cdp-ne-csv.py -s sitename`
 
 The reports are saved into the "Interface\neighbors" directory.
+
+### The cdp neighbor text report
+
+Here is a snippet of the cdp neighbor text report:
+
+```bash
+------------------------------
+destination_host: 3750x.pu.pri
+   management_ip: 192.168.1.1
+        platform: cisco WS-C3750X-48P
+     remote_port: GigabitEthernet1/1/2
+      local_port: 21
+software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+```
+
+Here is a screenshot of the csv report in vs code using the Rainbow csv extension:
+
+<p align="center" width="100%">
+<img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/csv-snippet.png" alt="CSV format">
+</p>
 
 ## Reviewing LLDP neighbors
 

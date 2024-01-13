@@ -70,13 +70,17 @@ for file_name in file_list:
             counter = 0
             for value in data:
                 fname = file_name
-                destination_host = "destination_host: " + data[counter]["neighbor_id"]
-                management_ip = "management_ip: " + data[counter]["neighbor_address"]
-                platform = "platform: " + data[counter]["neighbor_platform"]
-                remote_port = "remote_port: " + data[counter]["neighbor_port"]
-                local_port = "local_port: " + data[counter]["local_port"]
+                destination_host = (
+                    f'{"destination_host: " :>18}{data[counter]["neighbor_id"]}'
+                )
+                management_ip = (
+                    f'{"management_ip: " :>18}{data[counter]["neighbor_address"]}'
+                )
+                platform = f'{"platform: " :>18}{data[counter]["neighbor_platform"]}'
+                remote_port = f'{"remote_port: " :>18}{data[counter]["neighbor_port"]}'
+                local_port = f'{"local_port: " :>18}{data[counter]["local_port"]}'
                 software_version = (
-                    "software_version: " + data[counter]["neighbor_version"]
+                    f'{"software_version: " :>18}{data[counter]["neighbor_version"]}'
                 )
                 divider = "-" * 30
                 print()

@@ -1,0 +1,11 @@
+local_port,neighbor_id,neighbor_address,neighbor_platform,neighbor_capability,neighbor_port,neighbor_version
+1,3750x.pu.pri,10.254.34.17,cisco WS-C3750X-48P,Router Switch IGMP,GigabitEthernet1/0/1,"Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
+1,64 00 f1 01 6f 80,10.254.34.17,"Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...",Router Switch,GigabitEthernet1/0/1,"Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
+21,3750x.pu.pri,192.168.1.1,cisco WS-C3750X-48P,Router Switch IGMP,GigabitEthernet1/1/2,"Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
+21,64 00 f1 01 6f 80,192.168.1.1,"Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...",Router Switch,GigabitEthernet1/1/2,"Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
+22,3750x.pu.pri,192.168.1.1,cisco WS-C3750X-48P,Router Switch IGMP,GigabitEthernet1/1/4,"Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
+22,64 00 f1 01 6f 80,192.168.1.1,"Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...",Router Switch,GigabitEthernet1/1/4,"Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-..."
+24,9c 8c d8 c9 17 ae,192.168.10.144,"ArubaOS (MODEL: 515), Version Aruba IAP", ,eth0,"ArubaOS (MODEL: 515), Version Aruba IAP"
+24,fc ec da c4 6e 55,Unsupported format, , ,eth0, 
+24,98 f2 b3 fe 88 80,192.168.10.113,"HP J9727A 2920-24G-PoE+ Switch, revision WB.16.10.0023, ...",Router Switch,OOBM,"HP J9727A 2920-24G-PoE+ Switch, revision WB.16.10.0023, ..."
+24,Garage,192.168.10.51,NanoStation 5AC loc,Trans Bridge,br0,WA.ar934x.v8.7.1.42832.200623.1641
