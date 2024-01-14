@@ -143,7 +143,8 @@ Here is my Ubuntu laptop as seen by the 2920:
 ```bash
   LocalPort | ChassisId          PortId             PortDescr SysName
   --------- + ------------------ ------------------ --------- ------------------
-24        | 54 bf 64 3b 9c 68  28 d0 ea 93 2a 42  wlp61s0   1S1K-G5-5587 `
+  24      | 54 bf 64 3b 9c 68  28 d0 ea 93 2a 42  wlp61s0   1S1K-G5-5587
+```
 
 Explanation of output:
 
