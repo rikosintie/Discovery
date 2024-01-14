@@ -101,20 +101,29 @@ destination_host: 3750x.pu.pri
 software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
 ```
 
-You can use it as is but since it's text you can use grep to filter anything you want. For example, to filter on uplink ports on a Cisco switch:
+You can use it as is but since it's text so you can use grep to filter anything you want. For example, to filter on uplink ports on a Cisco switch:
 
 `grep -Eir -b4 "GigabitEthernet1/1/" *cdp-report.txt`
 
 Here is a snippet of the output:
 
 ```bash
-Procurve-2920-48-cdp-report.txt-554-------------------------------
-Procurve-2920-48-cdp-report.txt-585-destination_host: 3750x.pu.pri
-Procurve-2920-48-cdp-report.txt-616-   management_ip: 192.168.1.1
-Procurve-2920-48-cdp-report.txt-646-        platform: cisco WS-C3750X-48P
-Procurve-2920-48-cdp-report.txt:684:     remote_port: GigabitEthernet1/1/2
-Procurve-2920-48-cdp-report.txt-723-      local_port: 21
-Procurve-2920-48-cdp-report.txt-744-software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+Procurve-2920-48-cdp-report.txt-824-------------------------------
+Procurve-2920-48-cdp-report.txt-855-destination_host: 64 00 f1 01 6f 80
+Procurve-2920-48-cdp-report.txt-891-   management_ip: 192.168.1.1
+Procurve-2920-48-cdp-report.txt-921-        platform: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+Procurve-2920-48-cdp-report.txt:999:     remote_port: GigabitEthernet1/1/2
+Procurve-2920-48-cdp-report.txt-1038-      local_port: 21
+Procurve-2920-48-cdp-report.txt-1059-software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+Procurve-2920-48-cdp-report.txt-1137-
+Procurve-2920-48-cdp-report.txt-1138-
+Procurve-2920-48-cdp-report.txt-1139-------------------------------
+Procurve-2920-48-cdp-report.txt-1170-destination_host: 3750x.pu.pri
+Procurve-2920-48-cdp-report.txt-1201-   management_ip: 192.168.1.1
+Procurve-2920-48-cdp-report.txt-1231-        platform: cisco WS-C3750X-48P
+Procurve-2920-48-cdp-report.txt:1269:     remote_port: GigabitEthernet1/1/4
+Procurve-2920-48-cdp-report.txt-1308-      local_port: 22
+Procurve-2920-48-cdp-report.txt-1329-software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
 ```
 
 Here is a screenshot of the csv report in Libre Office Calc:
