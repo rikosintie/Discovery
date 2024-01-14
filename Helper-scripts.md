@@ -139,6 +139,7 @@ Here is a screenshot of the csv report in Libre Office Calc:
 The Procurve switches support the Link Layer discovery protocol (lldp). LLDP is an open standard protocol so it will be found on most non-Cisco devices. If you are using Mac/Linux you can install the LLDP daemon and participate. I recommend doing that because it's very useful to be able to see what you are connected to. Also, if you run `show lldp` on a switch, you will see your device.
 
 Here is my Ubuntu laptop as seen by the 2920:
+
 `24        | 54 bf 64 3b 9c 68  28 d0 ea 93 2a 42  wlp61s0   1S1K-G5-5587 `
 
 Here is an explanation of of output:
