@@ -20,7 +20,9 @@ In the "Interface" folder
 
 This section will discuss the scripts that convert the JSON into reports.
 
-## Reviewing CDP Neighbors
+----------------------------------------------------------------
+
+## CDP Neighbor Reports
 
 The Procurve switches support cisco discovery protocol (cdp) even though it's a Cisco proprietary protocol. By default it's not running. If you want to use cdp you have to enable it.
 
@@ -83,7 +85,7 @@ Each of these scripts uses the same device-inventory file as the procurve-Config
 
 The reports are saved into the "Interface\neighbors" directory.
 
-### The cdp neighbor text reports
+### The cdp neighbor text report
 
 Here is a snippet of the cdp neighbor text report:
 
@@ -103,7 +105,9 @@ Here is a screenshot of the csv report in Libre Office Calc:
 <img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/csv-snippet.png" alt="CSV format">
 </p>
 
-## Reviewing LLDP neighbors
+----------------------------------------------------------------
+
+## LLDP neighbor Report
 
 The Procurve switches support the Link Layer discovery protocol (lldp). LLDP is an open standard protocol so it will be found on most non-Cisco devices. If you are using Mac/Linux you can install the LLDP daemon and participate. I recommend doing that because it's very useful to be able to see what you are connected to. Also, if you run `show lldp` on a switch, you will see your device.
 
@@ -114,6 +118,8 @@ This [blog](https://blog.marquis.co/posts/2015-09-07-installing-lldp-on-ubuntu/)
 ### Installing LLDP on macOS
 
 I use [homebrew](https://formulae.brew.sh/formula/lldpd) to install applications on the Mac and lldp is just `brew install lldp`.
+
+### Enabling LLDP on switch
 
 By default lldp is  not running. If you want to use lldp you have to enable it using:
 
@@ -159,9 +165,10 @@ HP-2920-24G-PoEP(config)# lldp
  run                   Start LLDP on the device.
  top-change-notify     Enable LLDP MED topology change notification.
 ```
+
 As you can see there are a lot of options available. Setting these options is beyond the scope of this article.
 
-But it is interesting to note that you can change the basic Type, Length, Value (TLV) parameters to advertise on the specified ports.
+But it is interesting to note that you can change the basic Type, Length, Value (TLV) parameters that are advertised.
 
 ```bash
 HP-2920-24G-PoEP(config)# lldp config
@@ -183,5 +190,44 @@ HP-2920-24G-PoEP(config)# lldp config 1 basicTlvEnable
 
 ```
 
+### Running the script
+
+The script uses the same device-inventory file as the procurve-Config-pull.py script so there is no configuration needed. Just use:
+
+- `python3 procurve-lldp-ne-report.py -s sitename`
+
+Here is a snippet of the report:
+
+```bash
+           neighbor_sysname: 3750x.pu.pri
+  remote_management_address: 10.254.34.17
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 64 00 f1 01 6f 80
+               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
+            neighbor_portid: Gi1/0/1
+                 local_port: 1
+               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
+                       PVID: 850
+                 port_descr: GigabitEthernet1/0/1
+system_capabilities_enabled: bridge, router
+```
+
+I left the labels just as they are in the `show command`. If you want to change them it's fairly obvious in the script. For example, to change "remote_management_address" to "remote IP address" look for this line:
+
+`remote_management_address = f'{"remote_management_address: " :>29}{data[counter]["remote_management_address"]}'`
+
+and change "remote_management_address: " to "remote IP address: ".
+
+----------------------------------------------------------------
+
+## The System Report
+
+----------------------------------------------------------------
+
+## The Interface Reports
+
+----------------------------------------------------------------
+
+## The OSPF neighbor Report
 
 [Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
