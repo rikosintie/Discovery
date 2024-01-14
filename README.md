@@ -119,6 +119,9 @@ This is not a exhaustive list, feel free to add to it.
 - Is an escort required when we are on site?
 - How is access (Keys, codes, alarm codes, etc) granted?
 - If after hours cut overs are required, who is the after hours contact?
+- Are we allowed to connect our laptops to the network?
+- Can we use tools like nmap and Wireshark to discover devices?
+  - Here are some [nmap scripts](https://github.com/rikosintie/nmap-python) that I wrote for discovery.
 - Is a change request document required?
   - If so, how many days before the cut over?
   - Who creates the document?
@@ -134,13 +137,12 @@ This is not a exhaustive list, feel free to add to it.
   - If the project spans months, will switches be put on the current firmware before being deployed?
   - Who will upgrade the switches that have already been deployed?
 - Does the network team have access to M&O devices such as Environmental monitoring (BACnet), surveillance cameras, door access controls?
-- Are we allowed to connect our laptops to the network?
-- Can we use tools like nmap and Wireshark to discover devices?
-  - Here are some [nmap scripts](https://github.com/rikosintie/nmap-python) that I wrote for discovery.
 - Is DHCP used for non-server hosts i.e. cameras, door access panels, etc?
+  - If ClearPass will be used, DHCP allows devices to be profiled.
 - Do you have a standard for host names?
+  - A refresh is a good time to make a host name changes if needed.
 - Do you have a management vlan?s
-- If so, what are the management vlan IP addresses?
+  - If so, what are the management vlan IP addresses?
 - default gateway or gateway of last resort IP address?
 - Authentication Server IP address
 - Authentication Server credentials
