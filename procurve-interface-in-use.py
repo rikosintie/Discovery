@@ -153,7 +153,7 @@ for line in fabric:
     stack_info, count = extract_Interface_bytes(data)
     if stack_info == []:
         print("No interfaces with 0 Total_Bytes found")
-        SystemExit()
+        sys.exit()
 
     int_report = get_current_path("CR-data", "-Port-data.txt")
     print(f"Writing CR data to {int_report}")

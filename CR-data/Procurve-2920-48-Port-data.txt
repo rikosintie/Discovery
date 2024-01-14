@@ -1,11 +1,14 @@
+
+System Uptime: 3 hours
+
 Number of Interfaces with traffic: 5
-Interface 1 - total_bytes 1,279,891
+Interface 1 - total_bytes 1,510,198
 Interface 2 - total_bytes 0
 Interface 3 - total_bytes 0
 Interface 4 - total_bytes 0
 Interface 5 - total_bytes 0
 Interface 6 - total_bytes 0
-Interface 7 - total_bytes 831,550
+Interface 7 - total_bytes 1,054,112
 Interface 8 - total_bytes 0
 Interface 9 - total_bytes 0
 Interface 10 - total_bytes 0
@@ -19,7 +22,7 @@ Interface 17 - total_bytes 0
 Interface 18 - total_bytes 0
 Interface 19 - total_bytes 0
 Interface 20 - total_bytes 0
-Interface 21-Trk1 - total_bytes 2,883,311
-Interface 22-Trk1 - total_bytes 13,314,849
+Interface 21-Trk1 - total_bytes 623,499
+Interface 22-Trk1 - total_bytes 2,814,004
 Interface 23 - total_bytes 0
-Interface 24 - total_bytes 19,714,283
+Interface 24 - total_bytes 28,137,180

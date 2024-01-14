@@ -1,3 +1,6 @@
+
+System Uptime: 3 hours
+
 Number of Interfaces with traffic: 5
 Interface 1 - total_bytes 9,324,832
 Interface 2 - total_bytes 0
