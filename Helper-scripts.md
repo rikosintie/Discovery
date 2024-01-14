@@ -24,10 +24,10 @@ This section will discuss the scripts that convert the JSON into reports.
 
 ## CDP Neighbor Reports
 
-The Procurve switches support cisco discovery protocol (cdp) even though it's a Cisco proprietary protocol. By default it's not running. If you want to use cdp you have to enable it.
+The Procurve switches support the Cisco discovery protocol (cdp) even though it's a Cisco proprietary protocol. By default it's not running. If you want to use cdp you have to enable it.
 
 ```bash
-config t
+HP-2920-24G-PoEP# config t
 HP-2920-24G-PoEP(config)# cdp run
 ```
 
@@ -75,6 +75,22 @@ cdp ?
 
 - procurve-cdp-ne-report.py - This script creates a text file for the cdp neighbors
 - procurve-cdp-ne-csv.py - This script creates a CSV file for the cdp neighbors
+
+The first script creates a nicely formatted text file. You can use it as is but since it's text you can use grep to filter anything you want. For example, to filter on uplink ports on a Cisco switch:
+
+`grep -Eir -b4 "GigabitEthernet1/1/" *cdp-report.txt`
+
+Here is a snippet of the output:
+
+```bash
+Procurve-2920-48-cdp-report.txt-554-------------------------------
+Procurve-2920-48-cdp-report.txt-585-destination_host: 3750x.pu.pri
+Procurve-2920-48-cdp-report.txt-616-   management_ip: 192.168.1.1
+Procurve-2920-48-cdp-report.txt-646-        platform: cisco WS-C3750X-48P
+Procurve-2920-48-cdp-report.txt:684:     remote_port: GigabitEthernet1/1/2
+Procurve-2920-48-cdp-report.txt-723-      local_port: 21
+Procurve-2920-48-cdp-report.txt-744-software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+```
 
 I wrote the script that creates the csv file so that you could use a spreadsheet or the Rainbow csv extension to sort the data.
 
@@ -196,6 +212,8 @@ The script uses the same device-inventory file as the procurve-Config-pull.py sc
 
 - `python3 procurve-lldp-ne-report.py -s sitename`
 
+The report is saved into the "Interface\neighbors" directory.
+
 Here is a snippet of the report:
 
 ```bash
@@ -216,7 +234,7 @@ I left the labels just as they are in the `show command`. If you want to change 
 
 `remote_management_address = f'{"remote_management_address: " :>29}{data[counter]["remote_management_address"]}'`
 
-and change "remote_management_address: " to "remote IP address: ".
+and change "remote_management_address: " to "remote IP address: "
 
 ----------------------------------------------------------------
 
