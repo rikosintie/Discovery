@@ -298,11 +298,13 @@ software_version: WB.16.10.0023
 There are two scripts for interfaces:
 
 - procurve-10Mb.py - Creates a list of interfaces that are running at 10Mbps full or half duplex.
-- procurve-interface-in-use.py - Creates a list of interfaces that have a "total_byte" not equal to 0.
+- procurve-interface-in-use.py - Creates a list of interfaces that have a "total_byte" count not equal to 0.
 
 I wrote the script that creates the 10Mbps list because smartrate and mGig ports don't support 10Mbps rates. From personal experience I can tell you that it's better to find out in the discovery phase than the deployment phase.
 
-The interface report for "in use" was requested so that decisions about consolidating interfaces could be made. It has the "uptime" of the switch as the first line in the file so that there is some context about the zero bytes.
+Devices running at 10Mbps full or half are usually door access controllers or Building Automation controllers. You will not have any success getting them replaced before the deployment phase begins. To verify you can use the port maps and look up the manufacturer.
+
+The interface report for "in use" was requested so that decisions about consolidating interfaces could be made. It has the "uptime" of the switch as the first line in the file so that there is some context about the zero bytes. For example, if the switch has an uptime of a few days then the ports not in use could be employees on vacation for devices that are used infrequently.
 
 Each of these scripts uses the same device-inventory file as the procurve-Config-pull.py script so there is no configuration needed. Just use:
 
@@ -313,7 +315,7 @@ The reports are saved into the "CR-data" directory.
 
 ### The 10Mbps interfaces report
 
-This script creates a simple text file with the name format of hostname-10Mb-Ports.txt. For example:
+This script creates a simple text file with the filename format of "hostname-10Mb-Ports.txt". For example:
 
 `Procurve-2930-48-10Mb-Ports.txt`
 
@@ -326,7 +328,7 @@ Interface 3 - 10HDx
 
 ### The ports in use report
 
-This script creates a simple text file with the name format of hostname-Port-data.txt. For example:
+This script creates a simple text file with the filename format of hostname-Port-data.txt. For example:
 
 `Procurve-2920-48-Port-data.txt`
 
