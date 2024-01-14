@@ -352,4 +352,8 @@ Interface 7 - total_bytes 1,054,112
 
 ## The OSPF neighbor Report
 
+----------------------------------------------------------------
+
+## Convert MAC addresses
+
 [Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
