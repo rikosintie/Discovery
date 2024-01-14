@@ -245,6 +245,10 @@ for line in fabric:
         print(f"collecting show interface for {hostname}")
         output = net_connect.send_command("show interfaces", use_textfsm=True)
 
+        # Use textFSM to create a json object of show system
+        print(f"collecting show interface for {hostname}")
+        output_system = net_connect.send_command("show system", use_textfsm=True)
+
         # Use textFSM to create a json object with cdp neighbors
         print(f"collecting show cdp for {hostname}")
         output_cdp = net_connect.send_command(
@@ -303,6 +307,13 @@ for line in fabric:
         int_report = get_current_path("Running", "-running-config.txt")
         with open(int_report, "w") as file:
             file.write(output_text_run)
+
+        #  Write the JSON system data to a file
+        int_report = get_current_path("Interface", "-system.txt")
+        print(f"Writing interfaces json data to {int_report}")
+        with open(int_report, "w") as file:
+            output_system = json.dumps(output_system, indent=2)
+            file.write(output_system)
 
         #  Write the JSON interface data to a file
         int_report = get_current_path("Interface", "-interface.txt")
