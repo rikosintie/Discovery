@@ -140,9 +140,12 @@ The Procurve switches support the Link Layer discovery protocol (lldp). LLDP is 
 
 Here is my Ubuntu laptop as seen by the 2920:
 
-`24        | 54 bf 64 3b 9c 68  28 d0 ea 93 2a 42  wlp61s0   1S1K-G5-5587 `
+```bash
+  LocalPort | ChassisId          PortId             PortDescr SysName
+  --------- + ------------------ ------------------ --------- ------------------
+24        | 54 bf 64 3b 9c 68  28 d0 ea 93 2a 42  wlp61s0   1S1K-G5-5587 `
 
-Here is an explanation of of output:
+Explanation of output:
 
 - 24 - The port the lldp neighbor is connected to
 - 54 bf 64 3b 9c 68 - The Chassis ID. In this case, it's the mac address of my laptop's ethernet interface
