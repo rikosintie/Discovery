@@ -109,7 +109,6 @@ remove_empty_lines(dev_inv_file)
 with open(dev_inv_file) as devices_file:
     fabric = devices_file.readlines()
 
-# - - - - -  - - - - - - - - - - - - - - - - -
 # Build path to Interface/neighbors and build list of system files
 loc = os.path.join("Interface")
 loc1 = os.path.join("Interface", "neighbors")
@@ -137,7 +136,6 @@ for file_name in file_list:
             sys.exit()
         except ValueError:
             print(f"Error parsing JSON in file {file_path}:")
-# - - - - -  - - - - - - - - - - - - - - - - -
 
 for line in fabric:
     hostname = line.split(",")[2]
