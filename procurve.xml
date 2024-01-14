@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl" type="text/xsl"?>
+<!-- Nmap 7.91 scan initiated Sun Jan 14 15:43:19 2024 as: nmap -sT -T4 -sC -p22 -oA procurve -n -Pn -&#45;open -&#45;stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52 -->
+<nmaprun scanner="nmap" args="nmap -sT -T4 -sC -p22 -oA procurve -n -Pn -&#45;open -&#45;stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52" start="1705275799" startstr="Sun Jan 14 15:43:19 2024" version="7.91" xmloutputversion="1.05">
+<scaninfo type="connect" protocol="tcp" numservices="1" services="22"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1705275800" endtime="1705275802"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="192.168.10.52" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="ssh" method="table" conf="3"/><script id="ssh-hostkey" output="&#xa;  1024 cb:a8:d6:c7:da:bd:67:53:91:8c:c0:1b:49:d1:a1:2d (DSA)"><table>
+<elem key="type">ssh-dss</elem>
+<elem key="fingerprint">cba8d6c7dabd6753918cc01b49d1a12d</elem>
+<elem key="bits">1024</elem>
+<elem key="key">AAAAB3NzaC1kc3MAAACBANolp/9LPdPhMFEjDaVyvGYvWJUCkSaHtcnyzurXLoPqsCRB8fZi86fNLrsqepTp8FzZpMY1LCY92T5Ymm9GtHV6b5ON2mxAc/hBjllnrA3en7aoa8kZ0OAYsKwKrlZuWzcTnJCQ9AIAQcP1Dqvfp1bVnvHqSqR57nEx38Eujj0ZAAAAFQCjG4aqbLjMXIDppojAgo6HC7gj9wAAAIEAtOn4lahiA1/35aCfxl3QfbptnDoeOYYjbu/wJWZprszElTPuB2k13jGa6VwaTdRSBC76tFiiHxpwyZ3cc8cUyfDIz2vS5ISp07TkGcrTr2uTvQVtVDx6wyWWN0LaKVY+N1nfZMPXCXuUKotWOPRQqelm74Cm4euB3HS8LTdFKigAAACAVp9Tsy0c8YHxXC8Is/WBtrvwVNVty4ky9zJ+xdZqA04LIzJzPwyZjzBfi9ke9i20atCb+ut7sK0W5++voQMbyhrqjoXidMDJhKoXfmSX3D5EsC2sPQhrQPktxz+dOL4/ZBN73TkWlTKFKbyiwWgNXuk/o71bh0gnH4hJ8CUV0wk=</elem>
+</table>
+</script><script id="ssh-os" output="&#xa;  SSH Banner: SSH-2.0-Mocana SSH 6.3&#xd;&#xa;"><elem key="SSH Banner">SSH-2.0-Mocana SSH 6.3&#xd;&#xa;</elem>
+</script></port>
+</ports>
+<hostscript><script id="smbv2-enabled" output="ERROR: Script execution failed (use -d to debug)"/></hostscript><times srtt="50063" rttvar="50063" to="250315"/>
+</host>
+<runstats><finished time="1705275802" timestr="Sun Jan 14 15:43:22 2024" summary="Nmap done at Sun Jan 14 15:43:22 2024; 1 IP address (1 host up) scanned in 3.38 seconds" elapsed="3.38" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

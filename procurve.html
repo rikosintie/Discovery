@@ -1,0 +1,221 @@
+<html lang="en">
+   <head>
+      <link rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            crossorigin="anonymous"/>
+      <link rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+            integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+            crossorigin="anonymous"/>
+      <link rel="stylesheet"
+            type="text/css"
+            href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css"/>
+      <script src="https://code.jquery.com/jquery-3.3.1.js"/>
+      <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"/>
+      <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"/>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+              integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+              crossorigin="anonymous"/>
+      <style>
+          .target:before {
+            content: "";
+            display: block;
+            height: 50px;
+            margin: -20px 0 0;
+          }
+          @media only screen and (min-width:1900px) {
+            .container {
+              width: 1800px;
+              }
+          }
+          .footer {
+            margin-top:60px;
+            padding-top:60px;
+            width: 100%;
+            height: 180px;
+            background-color: #f5f5f5;
+          }
+        </style>
+      <title>Scan Report Nmap 7.91</title>
+   </head>
+   <body>
+      <nav class="navbar navbar-default navbar-fixed-top">
+         <div class="container-fluid">
+            <div class="navbar-header">
+               <button type="button"
+                       class="navbar-toggle collapsed"
+                       data-toggle="collapse"
+                       data-target="#bs-example-navbar-collapse-1"
+                       aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"/>
+                  <span class="icon-bar"/>
+                  <span class="icon-bar"/>
+               </button>
+               <a class="navbar-brand" href="#">
+                  <span class="glyphicon glyphicon-home"/>
+               </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+               <ul class="nav navbar-nav">
+                  <li>
+                     <a href="#scannedhosts">Scanned Hosts</a>
+                  </li>
+                  <li>
+                     <a href="#onlinehosts">Online Hosts</a>
+                  </li>
+                  <li>
+                     <a href="#openservices">Open Services</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+      <div class="container">
+         <div class="jumbotron">
+            <h1>Scan Report<br/>
+               <small>Nmap 7.91</small>
+            </h1>
+            <pre style="white-space:pre-wrap; word-wrap:break-word;">nmap -sT -T4 -sC -p22 -oA procurve -n -Pn --open --stylesheet nmap-bootstrap.xsl 192.168.10.52</pre>
+            <p class="lead">Sun Jan 14 14:57:51 2024 – Sun Jan 14 14:57:52 2024<br/>1 hosts scanned.
+              1 hosts up.
+              0 hosts down.
+            </p>
+            <div class="progress">
+               <div class="progress-bar progress-bar-success" style="width:100%;">1<span class="sr-only"/>
+               </div>
+               <div class="progress-bar progress-bar-danger" style="width:0%;">0<span class="sr-only"/>
+               </div>
+            </div>
+         </div>
+         <h2 id="scannedhosts" class="target">Scanned Hosts</h2>
+         <div class="table-responsive">
+            <table id="table-overview"
+                   class="table table-striped dataTable"
+                   role="grid">
+               <thead>
+                  <tr>
+                     <th>State</th>
+                     <th>Address</th>
+                     <th>Hostname</th>
+                     <th>TCP (open)</th>
+                     <th>UDP (open)</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td>
+                        <span class="label label-success">up</span>
+                     </td>
+                     <td>192.168.10.52</td>
+                     <td/>
+                     <td>1</td>
+                     <td>0</td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <script>
+            $(document).ready(function() {
+              $('#table-overview').DataTable();
+            });
+          </script>
+         <h2 id="onlinehosts" class="target">Online Hosts</h2>
+         <div class="panel panel-default">
+            <div class="panel-heading">
+               <h3 class="panel-title">192.168.10.52</h3>
+            </div>
+            <div class="panel-body">
+               <h4>Ports</h4>
+               <div class="table-responsive">
+                  <table class="table table-bordered">
+                     <thead>
+                        <tr>
+                           <th>Port</th>
+                           <th>Protocol</th>
+                           <th>State<br/>Reason</th>
+                           <th>Service</th>
+                           <th>Product</th>
+                           <th>Version</th>
+                           <th>Extra Info</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr class="success">
+                           <td title="Port">22</td>
+                           <td title="Protocol">tcp</td>
+                           <td title="State / Reason">open<br/>syn-ack</td>
+                           <td title="Service">ssh</td>
+                           <td title="Product"/>
+                           <td title="Version"/>
+                           <td title="Extra Info"/>
+                        </tr>
+                        <tr>
+                           <td colspan="7">
+                              <a href="https://nvd.nist.gov/vuln/search/results?form_type=Advanced&amp;cves=on&amp;cpe_version="/>
+                              <h5>ssh-hostkey</h5>
+                              <pre style="white-space:pre-wrap; word-wrap:break-word;">
+  1024 cb:a8:d6:c7:da:bd:67:53:91:8c:c0:1b:49:d1:a1:2d (DSA)</pre>
+                              <h5>ssh-os</h5>
+                              <pre style="white-space:pre-wrap; word-wrap:break-word;">
+  SSH Banner: SSH-2.0-Mocana SSH 6.3&#xD;
+</pre>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <h4>Host Script</h4>
+               <h5>smbv2-enabled</h5>
+               <pre style="white-space:pre-wrap; word-wrap:break-word;">ERROR: Script execution failed (use -d to debug)</pre>
+            </div>
+         </div>
+         <h2 id="openservices" class="target">Open Services</h2>
+         <div class="table-responsive">
+            <table id="table-services"
+                   class="table table-striped dataTable"
+                   role="grid">
+               <thead>
+                  <tr>
+                     <th>Address</th>
+                     <th>Port</th>
+                     <th>Protocol</th>
+                     <th>Service</th>
+                     <th>Product</th>
+                     <th>Version</th>
+                     <th>CPE</th>
+                     <th>Extra info</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td>192.168.10.52</td>
+                     <td>22</td>
+                     <td>tcp</td>
+                     <td>ssh</td>
+                     <td/>
+                     <td/>
+                     <td/>
+                     <td/>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <script>
+            $(document).ready(function() {
+              $('#table-services').DataTable();
+            });
+          </script>
+      </div>
+      <footer class="footer">
+         <div class="container">
+            <p class="text-muted">
+              This report was generated with <a href="https://github.com/honze-net/nmap-bootstrap-xsl">Nmap Bootstrap XSL</a>.<br/>
+              Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons BY-SA</a>.<br/>
+              Designed and built by Andreas Hontzia (<a href="https://www.twitter.com/honze_net">@honze_net</a>).<br/>
+            </p>
+         </div>
+      </footer>
+   </body>
+</html>
