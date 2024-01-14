@@ -76,7 +76,32 @@ cdp ?
 - procurve-cdp-ne-report.py - This script creates a text file for the cdp neighbors
 - procurve-cdp-ne-csv.py - This script creates a CSV file for the cdp neighbors
 
-The first script creates a nicely formatted text file. You can use it as is but since it's text you can use grep to filter anything you want. For example, to filter on uplink ports on a Cisco switch:
+I wrote the script that creates the csv file so that you could use a spreadsheet or the Rainbow csv extension to sort the data.
+
+Each of these scripts uses the same device-inventory file as the procurve-Config-pull.py script so there is no configuration needed. Just use:
+
+- `python3 procurve-cdp-ne-report.py -s sitename`
+- `python3 procurve-cdp-ne-csv.py -s sitename`
+
+The reports are saved into the "Interface\neighbors" directory.
+
+### The cdp neighbor text report
+
+The first script creates a nicely formatted text file.
+
+Here is a snippet of the cdp neighbor text report:
+
+```bash
+------------------------------
+destination_host: 3750x.pu.pri
+   management_ip: 192.168.1.1
+        platform: cisco WS-C3750X-48P
+     remote_port: GigabitEthernet1/1/2
+      local_port: 21
+software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+```
+
+You can use it as is but since it's text you can use grep to filter anything you want. For example, to filter on uplink ports on a Cisco switch:
 
 `grep -Eir -b4 "GigabitEthernet1/1/" *cdp-report.txt`
 
@@ -90,29 +115,6 @@ Procurve-2920-48-cdp-report.txt-646-        platform: cisco WS-C3750X-48P
 Procurve-2920-48-cdp-report.txt:684:     remote_port: GigabitEthernet1/1/2
 Procurve-2920-48-cdp-report.txt-723-      local_port: 21
 Procurve-2920-48-cdp-report.txt-744-software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
-```
-
-I wrote the script that creates the csv file so that you could use a spreadsheet or the Rainbow csv extension to sort the data.
-
-Each of these scripts uses the same device-inventory file as the procurve-Config-pull.py script so there is no configuration needed. Just use:
-
-- `python3 procurve-cdp-ne-report.py -s sitename`
-- `python3 procurve-cdp-ne-csv.py -s sitename`
-
-The reports are saved into the "Interface\neighbors" directory.
-
-### The cdp neighbor text report
-
-Here is a snippet of the cdp neighbor text report:
-
-```bash
-------------------------------
-destination_host: 3750x.pu.pri
-   management_ip: 192.168.1.1
-        platform: cisco WS-C3750X-48P
-     remote_port: GigabitEthernet1/1/2
-      local_port: 21
-software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
 ```
 
 Here is a screenshot of the csv report in Libre Office Calc:
