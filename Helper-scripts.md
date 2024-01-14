@@ -267,6 +267,31 @@ and change "remote_management_address: " to "remote IP address: "
 
 ## The System Report
 
+The system report will be useful for filling out the Change request form. Again, being a plain text file you will be able to use grep to filter. For example:
+
+`grep -Eir -b4 "serial number" *system-report.txt`
+
+To pull a list of serial numbers from the system reports.
+
+Here is a snippet of the system report:
+
+```bash
+       Hostname: HP-2920-24G-PoEP
+  snmp location: Home Lab
+   snmp contact: Michael Hubbard
+MAC address age: 300
+       timezone: -480
+  daylight_rule: Continental-US-and-Canada
+software_version: WB.16.10.0023
+    rom_version: WB.16.03
+    mac address: 98f2b3-fe8880
+  serial number: SG78FLXH0B
+  system_uptime: 3 hours
+cpu_utilization: 47
+       mem_free: 40,344,656
+```
+
+
 ----------------------------------------------------------------
 
 ## The Interface Reports
