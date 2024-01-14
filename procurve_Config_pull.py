@@ -63,15 +63,15 @@ from paramiko.ssh_exception import SSHException
 # !!!!! Discovery Script - Does not change the running config !!!!!
 
 #  log all reads and writes on the SSH channel
-# logging.basicConfig(filename="test.txt", level=logging.DEBUG) # It will
+# logging.basicConfig(filename="log.txt", level=logging.DEBUG) # It will
 # logger = logging.getLogger("netmiko")
 
 __author__ = "Michael Hubbard"
-__author_email__ = "mhubbard@vectorusa.com"
+__author_email__ = "michael.hubbard999@gmail.com"
 __copyright__ = ""
 __license__ = "Unlicense"
 # -*- coding: utf-8 -*-
-#  cisco-Config-Pull.py
+#  cisco_Config_Pull.py
 #  Procurve Change Request data collection
 #  Created by Michael Hubbard on 2023-12-20.
 
