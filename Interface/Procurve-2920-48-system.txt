@@ -1,0 +1,25 @@
+[
+  {
+    "name": "HP-2920-24G-PoEP",
+    "contact": "Michael Hubbard",
+    "location": "Home Lab",
+    "mac_age": "300",
+    "timezone": "-480",
+    "daylight_rule": "Continental-US-and-Canada",
+    "software_version": "WB.16.10.0023",
+    "rom_version": "WB.16.03",
+    "allow_mods": "",
+    "mac_address": "98f2b3-fe8880",
+    "serial": "SG78FLXH0B",
+    "uptime": "3 hours",
+    "cpu_util": "47",
+    "mem_tot": "72,483,328",
+    "mem_free": "40,344,656",
+    "packets_rx": "17,992",
+    "packets_tx": "15,143",
+    "packets_tot": "6750",
+    "buffers_free": "5009",
+    "buffers_lowest": "4994",
+    "buffers_missed": "0"
+  }
+]
