@@ -109,6 +109,35 @@ remove_empty_lines(dev_inv_file)
 with open(dev_inv_file) as devices_file:
     fabric = devices_file.readlines()
 
+# - - - - -  - - - - - - - - - - - - - - - - -
+# Build path to Interface/neighbors and build list of system files
+loc = os.path.join("Interface")
+loc1 = os.path.join("Interface", "neighbors")
+file_list = [f for f in os.listdir(loc) if f.endswith("system.txt")]
+
+for file_name in file_list:
+    file_name_ne = file_name[0:-10]
+    file_name_ne = file_name_ne + "system-report.txt"
+    file_path = os.path.join(loc, file_name)
+    file_path_ne = os.path.join(loc1, file_name_ne)
+    if os.path.exists(file_path_ne):
+        os.remove(file_path_ne)
+    with open(file_path, "r") as file:
+        try:
+            data = json.load(file)
+            system = []
+
+            for counter, value in enumerate(data):
+                fname = file_name
+                uptime = f'\n{"System Uptime: "}{data[counter]["uptime"]}\n\n'
+        except Exception as Error:
+            print("An error occurred:", type(Error).__name__)
+        except KeyboardInterrupt:
+            print("ctrl+c was pressed")
+            sys.exit()
+        except ValueError:
+            print(f"Error parsing JSON in file {file_path}:")
+# - - - - -  - - - - - - - - - - - - - - - - -
 
 for line in fabric:
     hostname = line.split(",")[2]
@@ -131,6 +160,7 @@ for line in fabric:
     int_report = get_current_path("CR-data", "-Port-data.txt")
     print(f"Writing CR data to {int_report}")
     with open(int_report, "w") as file:
+        file.write(uptime)
         file.write(f"Number of Interfaces with traffic: {count}\n")
         for line in stack_info:
             file.write(f"Interface {line}\n")
