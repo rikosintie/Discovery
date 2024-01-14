@@ -10,6 +10,7 @@
   - [Update the mac.txt file](#update-the-mactxt-file)
 - [Run the discovery script](#run-the-discovery-script)
 - [Failure to connect to a switch](#failure-to-connect-to-a-switch)
+- [Building a list of switches](#building-a-list-of-switches)
 
 ----------------------------------------------------------------
 
@@ -188,5 +189,63 @@ Then use `grep -Eir -b6 "No valid" accounts.txt` to find the devices with no val
 - i - case-insensitive
 - r - recursive
 - -b6 - show 6 lines before the match
+
+----------------------------------------------------------------
+
+## Building a list of switches
+
+Not all customers will have a clean list of switch IP addresses and host names. If there is a management network you may be able to look at the arp table and pull out the switches. As a last resort you can use the following process to build a list of switches.
+
+Run this nmap command to find devices with ssh open.
+
+`nmap -sT -T4 -sC -p22 -oA procurve -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl  <target ips>`
+
+Note: the stylesheet is from [honze-net-nmap-bootstrap-xsl](https://github.com/honze-net/nmap-bootstrap-xsl). This is a repository for creating nmap reports. Well worth a look.
+
+The "stylesheet" argument creates an xsl file to format the XML file that the script creates. You will be able to right-click on the xml file and open it in Firefox so see a nicely formatted report. That is required, it's just nice. Here is a simple example from my home lab:
+
+<p align="center" width="100%">
+<img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/nmap-bootstarp-stylesheet.png" alt="nmap-report">
+</p>
+
+If you want to open it in a Chromium browser you will need to do the following:
+
+- Open this [page](https://www.freeformatter.com/xsl-transformer.html#before-output) in Chrome/Edge
+- Paste the text from procurve.xml into "Option 1: Copy-paste your XML document here"
+- Open nmap-bootstrap-xsl and on line 8, delete -  doctype-system="about:legacy-compat"
+- Paste the text into "Option 2: Option 1: Copy-paste your XSL document here"
+- click `Transform XML`
+- Save the new text as procurve.html. You lose a little bit of the report but it's still usable.
+
+The `-oA procurve` switch will create the following files:
+
+- procurve.xml
+- procurve.nmap
+- procurve.gnmap
+
+The output will look something like this:
+
+```bash
+nmap -sT -T4 -sC -p22 -oA procurve -n -Pn --open --stylesheet [nmap-bootstrap.xsl](https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl) 192.168.10.52
+Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
+Starting Nmap 7.91 ( https://nmap.org ) at 2024-01-14 12:50 PST
+Nmap scan report for 192.168.10.52
+Host is up (0.0034s latency).
+
+PORT   STATE SERVICE
+22/tcp open  ssh
+| ssh-hostkey:
+|_  1024 cb:a8:d6:c7:da:bd:67:53:91:8c:c0:1b:49:d1:a1:2d (DSA)
+| ssh-os:
+|_  SSH Banner: SSH-2.0-Mocana SSH 6.3\x0D
+
+Host script results:
+|_smbv2-enabled: ERROR: Script execution failed (use -d to debug)
+
+Nmap done: 1 IP address (1 host up) scanned in 1.13 seconds
+```
+
+
+If you are on Mac/Linux or Windows WSL you can use grep to pull out a list of the switches.
 
 [Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
