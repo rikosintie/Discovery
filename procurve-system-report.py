@@ -61,32 +61,32 @@ for file_name in file_list:
 
             for counter, value in enumerate(data):
                 fname = file_name
-                name = f'{"Hostname: " :>17}{data[counter]["name"]}'
-                contact = f'{"snmp contact: " :>17}{data[counter]["contact"]}'
+                name = f'{"Hostname: " :>18}{data[counter]["name"]}'
+                contact = f'{"snmp contact: " :>18}{data[counter]["contact"]}'
 
-                location = f'{"snmp location: " :>17}{data[counter]["location"]}'
+                location = f'{"snmp location: " :>18}{data[counter]["location"]}'
 
                 software_version = (
-                    f'{"software_version: " :>17}{data[counter]["software_version"]}'
+                    f'{"software_version: " :>18}{data[counter]["software_version"]}'
                 )
 
-                rom_version = f'{"rom_version: " :>17}{data[counter]["rom_version"]}'
+                rom_version = f'{"rom_version: " :>18}{data[counter]["rom_version"]}'
 
-                mac_address = f'{"mac address: " :>17}{data[counter]["mac_address"]}'
+                mac_address = f'{"mac address: " :>18}{data[counter]["mac_address"]}'
 
-                mac_age = f'{"MAC address age: " :>17}{data[counter]["mac_age"]}'
+                mac_age = f'{"MAC address age: " :>18}{data[counter]["mac_age"]}'
 
-                serial = f'{"serial number: " :>17}{data[counter]["serial"]}'
+                serial = f'{"serial number: " :>18}{data[counter]["serial"]}'
 
-                timezone = f'{"timezone: " :>17}{data[counter]["timezone"]}'
+                timezone = f'{"timezone: " :>18}{data[counter]["timezone"]}'
                 daylight_rule = (
-                    f'{"daylight_rule: " :>17}{data[counter]["daylight_rule"]}'
+                    f'{"daylight_rule: " :>18}{data[counter]["daylight_rule"]}'
                 )
 
-                uptime = f'{"system_uptime: " :>17}{data[counter]["uptime"]}'
+                uptime = f'{"system_uptime: " :>18}{data[counter]["uptime"]}'
 
-                cpu_util = f'{"cpu_utilization: " :>17}{data[counter]["cpu_util"]}'
-                mem_free = f'{"mem_free: " :>17}{data[counter]["mem_free"]}'
+                cpu_util = f'{"cpu_utilization: " :>18}{data[counter]["cpu_util"]}'
+                mem_free = f'{"mem_free: " :>18}{data[counter]["mem_free"]}'
 
                 divider = "-" * 30
                 print()
