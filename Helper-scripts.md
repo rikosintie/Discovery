@@ -267,7 +267,7 @@ and change "remote_management_address: " to "remote IP address: "
 
 ## The System Report
 
-The system report will be useful for filling out the Change request form. Again, being a plain text file you will be able to use grep to filter. For example:
+The system report will be useful for filling out the Change request form or a transmittal. Again, being a plain text file you will be able to use grep to filter. For example:
 
 `grep -Eir -b4 "serial number" *system-report.txt`
 
@@ -276,25 +276,75 @@ To pull a list of serial numbers from the system reports.
 Here is a snippet of the system report:
 
 ```bash
-       Hostname: HP-2920-24G-PoEP
-  snmp location: Home Lab
-   snmp contact: Michael Hubbard
-MAC address age: 300
-       timezone: -480
-  daylight_rule: Continental-US-and-Canada
+        Hostname: HP-2920-24G-PoEP
+   snmp location: Home Lab
+    snmp contact: Michael Hubbard
+ MAC address age: 300
+        timezone: -480
+   daylight_rule: Continental-US-and-Canada
 software_version: WB.16.10.0023
-    rom_version: WB.16.03
-    mac address: 98f2b3-fe8880
-  serial number: SG78FLXH0B
-  system_uptime: 3 hours
-cpu_utilization: 47
-       mem_free: 40,344,656
+     rom_version: WB.16.03
+     mac address: 98f2b3-fe8880
+   serial number: SG78FLXH0B
+   system_uptime: 3 hours
+ cpu_utilization: 47
+        mem_free: 40,344,656
 ```
-
 
 ----------------------------------------------------------------
 
-## The Interface Reports
+## The Interface scripts
+
+There are two scripts for interfaces:
+
+- procurve-10Mb.py - Creates a list of interfaces that are running at 10Mbps full or half duplex.
+- procurve-interface-in-use.py - Creates a list of interfaces that have a "total_byte" not equal to 0.
+
+I wrote the script that creates the 10Mbps list because smartrate and mGig ports don't support 10Mbps rates. From personal experience I can tell you that it's better to find out in the discovery phase than the deployment phase.
+
+The interface report for "in use" was requested so that decisions about consolidating interfaces could be made. It has the "uptime" of the switch as the first line in the file so that there is some context about the zero bytes.
+
+Each of these scripts uses the same device-inventory file as the procurve-Config-pull.py script so there is no configuration needed. Just use:
+
+- `python3 procurve-10Mb.py -s sitename`
+- `python3 procurve-interface-in-use.py -s sitename`
+
+The reports are saved into the "CR-data" directory.
+
+### The 10Mbps interfaces report
+
+This script creates a simple text file with the name format of hostname-10Mb-Ports.txt. For example:
+
+`Procurve-2930-48-10Mb-Ports.txt`
+
+Here is a snippet of the cdp neighbor text report:
+
+```bash
+Interface 2 - 10FDx
+Interface 3 - 10HDx
+```
+
+### The ports in use report
+
+This script creates a simple text file with the name format of hostname-Port-data.txt. For example:
+
+`Procurve-2920-48-Port-data.txt`
+
+Here is a snippet of the cdp neighbor text report:
+
+```bash
+
+System Uptime: 3 hours
+
+Number of Interfaces with traffic: 5
+Interface 1 - total_bytes 1,510,198
+Interface 2 - total_bytes 0
+Interface 3 - total_bytes 0
+Interface 4 - total_bytes 0
+Interface 5 - total_bytes 0
+Interface 6 - total_bytes 0
+Interface 7 - total_bytes 1,054,112
+```
 
 ----------------------------------------------------------------
 
