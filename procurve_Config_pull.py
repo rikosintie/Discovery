@@ -62,10 +62,6 @@ from paramiko.ssh_exception import SSHException
 
 # !!!!! Discovery Script - Does not change the running config !!!!!
 
-#  log all reads and writes on the SSH channel
-# logging.basicConfig(filename="log.txt", level=logging.DEBUG) # It will
-# logger = logging.getLogger("netmiko")
-
 __author__ = "Michael Hubbard"
 __author_email__ = "michael.hubbard999@gmail.com"
 __copyright__ = ""
@@ -120,8 +116,16 @@ def remove_empty_lines(filename: str) -> str:
 
 
 start = timeit.default_timer()
-parser = argparse.ArgumentParser(description="-s site, -p 1 prompt for password")
+parser = argparse.ArgumentParser(
+    description="-s site, -l 1 create log.txt, -p 1 prompt for password"
+)
 parser.add_argument("-s", "--site", help="Site name - ex. HQ")
+parser.add_argument(
+    "-l",
+    "--logging",  # Optional (but recommended) long version
+    default="",
+    help="use -l 1 to enable logging",
+)
 parser.add_argument(
     "-p",
     "--password",  # Optional (but recommended) long version
@@ -130,6 +134,12 @@ parser.add_argument(
 )
 args = parser.parse_args()
 site = args.site
+
+# if -l 1 is passed, turn on logging
+if args.logging != "":
+    #  log all reads and writes on the SSH channel
+    logging.basicConfig(filename="log.txt", level=logging.DEBUG)
+    logger = logging.getLogger("netmiko")
 
 # Check for the password, exit if it doesn't exist
 password = ""
