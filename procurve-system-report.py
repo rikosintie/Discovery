@@ -42,7 +42,7 @@ __license__ = "Unlicense"
 #  Created by Michael Hubbard on 2024-1-13.
 
 
-# Build path to Interface/neighbors and build list of cdp files
+# Build path to Interface/neighbors and build list of system files
 loc = os.path.join("Interface")
 loc1 = os.path.join("Interface", "neighbors")
 file_list = [f for f in os.listdir(loc) if f.endswith("system.txt")]
