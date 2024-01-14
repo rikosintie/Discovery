@@ -1,16 +1,16 @@
-       Hostname: HP-2920-24G-PoEP
-  snmp location: Home Lab
-   snmp contact: Michael Hubbard
-MAC address age: 300
-       timezone: -480
-  daylight_rule: Continental-US-and-Canada
+        Hostname: HP-2920-24G-PoEP
+   snmp location: Home Lab
+    snmp contact: Michael Hubbard
+ MAC address age: 300
+        timezone: -480
+   daylight_rule: Continental-US-and-Canada
 software_version: WB.16.10.0023
-    rom_version: WB.16.03
-    mac address: 98f2b3-fe8880
-  serial number: SG78FLXH0B
-  system_uptime: 3 hours
-cpu_utilization: 47
-       mem_free: 40,344,656
+     rom_version: WB.16.03
+     mac address: 98f2b3-fe8880
+   serial number: SG78FLXH0B
+   system_uptime: 3 hours
+ cpu_utilization: 47
+        mem_free: 40,344,656
 
 
 ------------------------------
