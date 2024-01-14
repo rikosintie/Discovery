@@ -3,7 +3,7 @@
 
 Usage
 https://pynet.twb-tech.com/blog/netmiko-read-timeout.html
-1. Create a new folder and copy cisco-Config-ospf.py
+1. Create a new folder and copy cisco-pull-ospf-ne.py
 into it.
 
 2. Create a file named device-inventory-<site>.
@@ -150,7 +150,7 @@ for line in fabric:
         )
 
         print(f"processing show IP OSPF NE for {hostname}")
-        # Use textFSM to create a json object with osspf ne
+        # Use textFSM to create a json object with ospf ne
         output = net_connect.send_command("show ip ospf neighbor", use_textfsm=True)
 
         # Write the config diff data to a file
