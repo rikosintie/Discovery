@@ -11,6 +11,7 @@
 - [Run the discovery script](#run-the-discovery-script)
 - [Failure to connect to a switch](#failure-to-connect-to-a-switch)
 - [Building a list of switches](#building-a-list-of-switches)
+  - [Review the bootstrap report](#review-the-bootstrap-report)
 
 ----------------------------------------------------------------
 
@@ -202,21 +203,6 @@ Run this nmap command to find devices with ssh open.
 
 Note: the stylesheet is from [honze-net-nmap-bootstrap-xsl](https://github.com/honze-net/nmap-bootstrap-xsl). This is a repository for creating nmap reports. Well worth a look.
 
-The "stylesheet" argument creates an xsl file to format the XML file that the script creates. You will be able to right-click on the xml file and open it in Firefox so see a nicely formatted report. That is required, it's just nice. Here is a simple example from my home lab:
-
-<p align="center" width="100%">
-<img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/nmap-bootstarp-stylesheet.png" alt="nmap-report">
-</p>
-
-If you want to open it in a Chromium browser you will need to do the following:
-
-- Open this [page](https://www.freeformatter.com/xsl-transformer.html#before-output) in Chrome/Edge
-- Paste the text from procurve.xml into "Option 1: Copy-paste your XML document here"
-- Open nmap-bootstrap-xsl and on line 8, delete -  doctype-system="about:legacy-compat"
-- Paste the text into "Option 2: Option 1: Copy-paste your XSL document here"
-- click `Transform XML`
-- Save the new text as procurve.html. You lose a little bit of the report but it's still usable.
-
 The `-oA procurve` switch will create the following files:
 
 - procurve.xml
@@ -244,6 +230,23 @@ Host script results:
 
 Nmap done: 1 IP address (1 host up) scanned in 1.13 seconds
 ```
+
+### Review the bootstrap report
+
+The "stylesheet" argument creates an xsl file to format the XML file that the script creates. You will be able to right-click on the xml file and open it in Firefox so see a nicely formatted report. That isn't required, it's just nice. Here is a simple example from my home lab:
+
+<p align="center" width="100%">
+<img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/nmap-bootstarp-stylesheet.png" alt="nmap-report">
+</p>
+
+If you want to open it in a Chromium browser you will need to do the following:
+
+- Open this [page](https://www.freeformatter.com/xsl-transformer.html#before-output) in Chrome/Edge
+- Paste the text from procurve.xml into "Option 1: Copy-paste your XML document here"
+- Open nmap-bootstrap-xsl in a text editor and on line 8, delete -  `doctype-system="about:legacy-compat"`
+- Paste the text into "Option 2: Option 1: Copy-paste your XSL document here"
+- click `Transform XML`
+- Save the new text as procurve.html. You lose a little bit of the report but it's still usable.
 
 
 If you are on Mac/Linux or Windows WSL you can use grep to pull out a list of the switches.
