@@ -388,4 +388,6 @@ total_time = stop - start
 # output running time in a nice format.
 mins, secs = divmod(total_time, 60)
 hours, mins = divmod(mins, 60)
-print(f"Total running time: {hours} Hours {mins} Minutes {round(secs,2)} Seconds\n")
+print(
+    f"\nData collection is complete.\nTotal running time: {hours} Hours {mins} Minutes {round(secs,2)} Seconds\n"
+)
