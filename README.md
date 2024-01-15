@@ -43,7 +43,7 @@ There are two types of scripts in the project:
 - Discovery - These are switches that use netmiko to connect to a switch and pull down data.
 - Helper - These are scripts that take JSON data that was collected with the discovery script and convert it into human readable format.
 
-The [procurve-Config-pull.py](https://github.com/rikosintie/Discovery/blob/main/procurve_Config_pull.py) python script uses the [netmiko](https://github.com/ktbyers/netmiko) library and the Google [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run ***show commands*** and create JSON files.
+The python discovery script [procurve-Config-pull.py](https://github.com/rikosintie/Discovery/blob/main/procurve_Config_pull.py) uses the [netmiko](https://github.com/ktbyers/netmiko) library and the Google [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run ***show commands*** and create JSON files.
 
 ### show commands
 
