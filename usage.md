@@ -274,14 +274,14 @@ Host: 192.168.10.52 ()  Ports: 22/open/tcp//ssh///, 161/open|filtered/udp//snmp/
 # Nmap done at Sun Jan 14 17:13:54 2024 -- 1 IP address (1 host up) scanned in 15.09 seconds
 ```
 
- We can use this to find the switches in the procurve.gnmap file. Using the following grep/awk command:
+If you are on Mac/Linux or Windows WSL you can use grep to pull out a list of the switches from procurve-scan.gnmap file. Use the following grep/awk command:
 
  ```bash
  grep -Eir  "22/open/tcp//ssh///, 161/open|filtered/udp//snmp//" procurve.gnmap | awk '{ print $2 }'
 192.168.10.52
  ```
 
-The `grep` found just the ssh, snmp string and `awk` printed the data in column 2.
+The `grep` found just the "ssh, snmp" string and `awk` printed the data in column 2.
 
 ### Review the bootstrap report
 
@@ -299,9 +299,6 @@ If you want to open it in a Chromium browser you will need to do the following:
 - Paste the text into "Option 2: Option 1: Copy-paste your XSL document here"
 - click `Transform XML`
 - Save the new text as procurve.html. You lose a little bit of the report but it's still usable.
-
-
-If you are on Mac/Linux or Windows WSL you can use grep to pull out a list of the switches.
 
 ### An alternative way to view the report in a Chromium browser
 
