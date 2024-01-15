@@ -1,6 +1,6 @@
-# Nmap 7.91 scan initiated Sun Jan 14 17:59:30 2024 as: nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52
+# Nmap 7.91 scan initiated Sun Jan 14 18:18:33 2024 as: nmap -sU -sS -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52
 Nmap scan report for 192.168.10.52
-Host is up (0.0031s latency).
+Host is up (0.0028s latency).
 
 PORT    STATE         SERVICE
 22/tcp  open          ssh
@@ -14,10 +14,10 @@ PORT    STATE         SERVICE
 |   engineIDFormat: unknown
 |   engineIDData: 000098f2b3fe8880
 |   snmpEngineBoots: 108
-|_  snmpEngineTime: 6h30m31s
+|_  snmpEngineTime: 6h49m34s
 MAC Address: 98:F2:B3:FE:88:80 (Hewlett Packard Enterprise)
 
 Host script results:
 |_smbv2-enabled: ERROR: Script execution failed (use -d to debug)
 
-# Nmap done at Sun Jan 14 17:59:44 2024 -- 1 IP address (1 host up) scanned in 14.85 seconds
+# Nmap done at Sun Jan 14 18:18:48 2024 -- 1 IP address (1 host up) scanned in 15.10 seconds

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE nmaprun>
 <?xml-stylesheet href="https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl" type="text/xsl"?>
-<!-- Nmap 7.91 scan initiated Sun Jan 14 17:59:30 2024 as: nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn -&#45;open -&#45;stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52 -->
-<nmaprun scanner="nmap" args="nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn -&#45;open -&#45;stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52" start="1705283970" startstr="Sun Jan 14 17:59:30 2024" version="7.91" xmloutputversion="1.05">
-<scaninfo type="connect" protocol="tcp" numservices="1" services="22"/>
+<!-- Nmap 7.91 scan initiated Sun Jan 14 18:18:33 2024 as: nmap -sU -sS -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn -&#45;open -&#45;stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52 -->
+<nmaprun scanner="nmap" args="nmap -sU -sS -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn -&#45;open -&#45;stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52" start="1705285113" startstr="Sun Jan 14 18:18:33 2024" version="7.91" xmloutputversion="1.05">
+<scaninfo type="syn" protocol="tcp" numservices="1" services="22"/>
 <scaninfo type="udp" protocol="udp" numservices="1" services="161"/>
 <verbose level="0"/>
 <debugging level="0"/>
@@ -13,28 +13,28 @@
 <hostnames>
 </hostnames>
 </hosthint>
-<host starttime="1705283970" endtime="1705283984"><status state="up" reason="arp-response" reason_ttl="0"/>
+<host starttime="1705285113" endtime="1705285128"><status state="up" reason="arp-response" reason_ttl="0"/>
 <address addr="192.168.10.52" addrtype="ipv4"/>
 <address addr="98:F2:B3:FE:88:80" addrtype="mac" vendor="Hewlett Packard Enterprise"/>
 <hostnames>
 </hostnames>
-<ports><port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="ssh" method="table" conf="3"/><script id="ssh-hostkey" output="&#xa;  1024 cb:a8:d6:c7:da:bd:67:53:91:8c:c0:1b:49:d1:a1:2d (DSA)"><table>
-<elem key="type">ssh-dss</elem>
+<ports><port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" method="table" conf="3"/><script id="ssh-hostkey" output="&#xa;  1024 cb:a8:d6:c7:da:bd:67:53:91:8c:c0:1b:49:d1:a1:2d (DSA)"><table>
 <elem key="fingerprint">cba8d6c7dabd6753918cc01b49d1a12d</elem>
+<elem key="type">ssh-dss</elem>
 <elem key="key">AAAAB3NzaC1kc3MAAACBANolp/9LPdPhMFEjDaVyvGYvWJUCkSaHtcnyzurXLoPqsCRB8fZi86fNLrsqepTp8FzZpMY1LCY92T5Ymm9GtHV6b5ON2mxAc/hBjllnrA3en7aoa8kZ0OAYsKwKrlZuWzcTnJCQ9AIAQcP1Dqvfp1bVnvHqSqR57nEx38Eujj0ZAAAAFQCjG4aqbLjMXIDppojAgo6HC7gj9wAAAIEAtOn4lahiA1/35aCfxl3QfbptnDoeOYYjbu/wJWZprszElTPuB2k13jGa6VwaTdRSBC76tFiiHxpwyZ3cc8cUyfDIz2vS5ISp07TkGcrTr2uTvQVtVDx6wyWWN0LaKVY+N1nfZMPXCXuUKotWOPRQqelm74Cm4euB3HS8LTdFKigAAACAVp9Tsy0c8YHxXC8Is/WBtrvwVNVty4ky9zJ+xdZqA04LIzJzPwyZjzBfi9ke9i20atCb+ut7sK0W5++voQMbyhrqjoXidMDJhKoXfmSX3D5EsC2sPQhrQPktxz+dOL4/ZBN73TkWlTKFKbyiwWgNXuk/o71bh0gnH4hJ8CUV0wk=</elem>
 <elem key="bits">1024</elem>
 </table>
 </script><script id="ssh-os" output="&#xa;  SSH Banner: SSH-2.0-Mocana SSH 6.3&#xd;&#xa;"><elem key="SSH Banner">SSH-2.0-Mocana SSH 6.3&#xd;&#xa;</elem>
 </script></port>
-<port protocol="udp" portid="161"><state state="open|filtered" reason="no-response" reason_ttl="0"/><service name="snmp" product="Hewlett-Packard SNMPv3 server" method="probed" conf="10"/><script id="snmp-info" output="&#xa;  enterprise: Hewlett-Packard&#xa;  engineIDFormat: unknown&#xa;  engineIDData: 000098f2b3fe8880&#xa;  snmpEngineBoots: 108&#xa;  snmpEngineTime: 6h30m31s"><elem key="enterprise">Hewlett-Packard</elem>
+<port protocol="udp" portid="161"><state state="open|filtered" reason="no-response" reason_ttl="0"/><service name="snmp" product="Hewlett-Packard SNMPv3 server" method="probed" conf="10"/><script id="snmp-info" output="&#xa;  enterprise: Hewlett-Packard&#xa;  engineIDFormat: unknown&#xa;  engineIDData: 000098f2b3fe8880&#xa;  snmpEngineBoots: 108&#xa;  snmpEngineTime: 6h49m34s"><elem key="enterprise">Hewlett-Packard</elem>
 <elem key="engineIDFormat">unknown</elem>
 <elem key="engineIDData">000098f2b3fe8880</elem>
 <elem key="snmpEngineBoots">108</elem>
-<elem key="snmpEngineTime">6h30m31s</elem>
+<elem key="snmpEngineTime">6h49m34s</elem>
 </script></port>
 </ports>
-<hostscript><script id="smbv2-enabled" output="ERROR: Script execution failed (use -d to debug)"/></hostscript><times srtt="3101" rttvar="3828" to="100000"/>
+<hostscript><script id="smbv2-enabled" output="ERROR: Script execution failed (use -d to debug)"/></hostscript><times srtt="2756" rttvar="3759" to="100000"/>
 </host>
-<runstats><finished time="1705283984" timestr="Sun Jan 14 17:59:44 2024" summary="Nmap done at Sun Jan 14 17:59:44 2024; 1 IP address (1 host up) scanned in 14.85 seconds" elapsed="14.85" exit="success"/><hosts up="1" down="0" total="1"/>
+<runstats><finished time="1705285128" timestr="Sun Jan 14 18:18:48 2024" summary="Nmap done at Sun Jan 14 18:18:48 2024; 1 IP address (1 host up) scanned in 15.10 seconds" elapsed="15.10" exit="success"/><hosts up="1" down="0" total="1"/>
 </runstats>
 </nmaprun>
