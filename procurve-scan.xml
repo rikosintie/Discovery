@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE nmaprun>
-<?xml-stylesheet href="nmap-bootstrap.xsl" type="text/xsl"?>
-<!-- Nmap 7.91 scan initiated Sun Jan 14 17:13:39 2024 as: nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn -&#45;open -&#45;stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52 -->
-<nmaprun scanner="nmap" args="nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn -&#45;open -&#45;stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52" start="1705281219" startstr="Sun Jan 14 17:13:39 2024" version="7.91" xmloutputversion="1.05">
+<?xml-stylesheet href="https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl" type="text/xsl"?>
+<!-- Nmap 7.91 scan initiated Sun Jan 14 17:59:30 2024 as: nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn -&#45;open -&#45;stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52 -->
+<nmaprun scanner="nmap" args="nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn -&#45;open -&#45;stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52" start="1705283970" startstr="Sun Jan 14 17:59:30 2024" version="7.91" xmloutputversion="1.05">
 <scaninfo type="connect" protocol="tcp" numservices="1" services="22"/>
 <scaninfo type="udp" protocol="udp" numservices="1" services="161"/>
 <verbose level="0"/>
@@ -13,7 +13,7 @@
 <hostnames>
 </hostnames>
 </hosthint>
-<host starttime="1705281219" endtime="1705281234"><status state="up" reason="arp-response" reason_ttl="0"/>
+<host starttime="1705283970" endtime="1705283984"><status state="up" reason="arp-response" reason_ttl="0"/>
 <address addr="192.168.10.52" addrtype="ipv4"/>
 <address addr="98:F2:B3:FE:88:80" addrtype="mac" vendor="Hewlett Packard Enterprise"/>
 <hostnames>
@@ -26,15 +26,15 @@
 </table>
 </script><script id="ssh-os" output="&#xa;  SSH Banner: SSH-2.0-Mocana SSH 6.3&#xd;&#xa;"><elem key="SSH Banner">SSH-2.0-Mocana SSH 6.3&#xd;&#xa;</elem>
 </script></port>
-<port protocol="udp" portid="161"><state state="open|filtered" reason="no-response" reason_ttl="0"/><service name="snmp" product="Hewlett-Packard SNMPv3 server" method="probed" conf="10"/><script id="snmp-info" output="&#xa;  enterprise: Hewlett-Packard&#xa;  engineIDFormat: unknown&#xa;  engineIDData: 000098f2b3fe8880&#xa;  snmpEngineBoots: 108&#xa;  snmpEngineTime: 5h44m40s"><elem key="enterprise">Hewlett-Packard</elem>
+<port protocol="udp" portid="161"><state state="open|filtered" reason="no-response" reason_ttl="0"/><service name="snmp" product="Hewlett-Packard SNMPv3 server" method="probed" conf="10"/><script id="snmp-info" output="&#xa;  enterprise: Hewlett-Packard&#xa;  engineIDFormat: unknown&#xa;  engineIDData: 000098f2b3fe8880&#xa;  snmpEngineBoots: 108&#xa;  snmpEngineTime: 6h30m31s"><elem key="enterprise">Hewlett-Packard</elem>
 <elem key="engineIDFormat">unknown</elem>
 <elem key="engineIDData">000098f2b3fe8880</elem>
 <elem key="snmpEngineBoots">108</elem>
-<elem key="snmpEngineTime">5h44m40s</elem>
+<elem key="snmpEngineTime">6h30m31s</elem>
 </script></port>
 </ports>
-<hostscript><script id="smbv2-enabled" output="ERROR: Script execution failed (use -d to debug)"/></hostscript><times srtt="2345" rttvar="3847" to="100000"/>
+<hostscript><script id="smbv2-enabled" output="ERROR: Script execution failed (use -d to debug)"/></hostscript><times srtt="3101" rttvar="3828" to="100000"/>
 </host>
-<runstats><finished time="1705281234" timestr="Sun Jan 14 17:13:54 2024" summary="Nmap done at Sun Jan 14 17:13:54 2024; 1 IP address (1 host up) scanned in 15.09 seconds" elapsed="15.09" exit="success"/><hosts up="1" down="0" total="1"/>
+<runstats><finished time="1705283984" timestr="Sun Jan 14 17:59:44 2024" summary="Nmap done at Sun Jan 14 17:59:44 2024; 1 IP address (1 host up) scanned in 14.85 seconds" elapsed="14.85" exit="success"/><hosts up="1" down="0" total="1"/>
 </runstats>
 </nmaprun>
