@@ -21,8 +21,8 @@ Converts any format mac address to:
 
 
 def format_mac(mac: str) -> str:
-    """Converts most common MAC address formats
-    into aa:bb:cc:dd:ee:ff format
+    """
+    Converts most common MAC address formats into all formats
 
     '008041aefd7e',  # valid
     '00:80:41:ae:fd:7e',  # valid
@@ -30,14 +30,6 @@ def format_mac(mac: str) -> str:
     '00:80:41:aE:Fd:7E',  # valid
     '00-80-41-ae-fd-7e',  # valid
     '0080.41ae.fd7e',  # valid
-    '00 : 80 : 41 : ae : fd : 7e',  # valid
-    '  00:80:41:ae:fd:7e  ',  # valid
-    '00:80:41:ae:fd:7e\n\t',  # valid
-
-    'aa:00:80:41:ae:fd:7e',  # invalid
-    '0:80:41:ae:fd:7e',  # invalid
-    'ae:fd:7e',  # invalid
-    '$$:80:41:ae:fd:7e',  # invalid
 
     Args:
         mac (str): A valid mac address format
