@@ -309,7 +309,8 @@ The URL restriction occurs because the xsl file comes from an https server (gith
 
 ```bash
 procurve-scan.xml:3  Unsafe attempt to load URL https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl
-from frame with URL file:///home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/procurve-scan.xml.
+from frame with URL
+file:///home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/procurve-scan.xml.
 'file:' URLs are treated as unique security origins.
 ```
 
