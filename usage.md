@@ -302,7 +302,13 @@ If you want to open it in a Chromium browser you will need to do the following:
 
 ### An alternative way to view the report in a Chromium browser
 
-The URL restriction occurs because the xsl file comes from an https server (github) and the file is on disk. You can use the xsl file that comes from cloning the repository.
+The URL restriction occurs because the xsl file comes from an https server (github) and the file is on disk. If you use "settings, Developer tools, console", you will see this message:
+
+```bash
+procurve-scan.xml:3  Unsafe attempt to load URL https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl from frame with URL file:///home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/procurve-scan.xml. 'file:' URLs are treated as unique security origins.
+```
+
+You can use the xsl file that comes from cloning the repository. The drawback to this is that if you want to share the report, you have to include the xsl file.
 
 Change the nmap command to:
 
