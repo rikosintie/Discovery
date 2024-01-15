@@ -9,6 +9,7 @@
   - [Being prompted for the password](#being-prompted-for-the-password)
   - [Update the mac.txt file](#update-the-mactxt-file)
 - [Run the discovery script](#run-the-discovery-script)
+  - [What options are available](#what-options-are-available)
 - [Failure to connect to a switch](#failure-to-connect-to-a-switch)
 - [Building a list of switches](#building-a-list-of-switches)
   - [Review the bootstrap report](#review-the-bootstrap-report)
@@ -94,7 +95,39 @@ Simply open the file, copy the interfaces you need and save them into the mac.tx
 ----------------------------------------------------------------
 ## Run the discovery script
 
-Now that the project is set up and the inventory file is created, you can run the script.
+Now that the project is set up and the inventory file is created, you can run the script. Make sure you are in the Discovery directory and run:
+
+```bash
+~/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery on  main
+$ source bin/activate
+```
+
+To activate the the virtual environment.
+
+### What options are available
+
+You can run the script with -h to get help:
+
+```bash
+python3 procurve_Config_pull.py -h
+usage: procurve_Config_pull.py [-h] [-s SITE] [-l LOGGING] [-p PASSWORD]
+
+-s site, -l 1 create log.txt, -p 1 prompt for password
+
+options:
+  -h, --help            show this help message and exit
+  -s SITE, --site SITE  Site name - ex. HQ
+  -l LOGGING, --logging LOGGING
+                        use -l 1 to enable logging
+  -p PASSWORD, --password PASSWORD
+                        use -p 1 to be prompted for password
+(Discovery)
+```
+
+If you want to be prompted for password add `-p 1`. If you don't use -p 1 you must set an environment variable cyberARK wit the password.
+If you want to enable ssh logging add `-l 1`. You would do that if you are getting "time out" errors.
+
+The minimum is to use -s for the site:
 
 `python3 procurve-Config-pull.py -s HQ`
 
