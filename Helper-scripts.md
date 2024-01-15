@@ -2,13 +2,30 @@
 
 # The Helper Scripts<!-- omit from toc -->
 
+- [CDP Neighbor Reports](#cdp-neighbor-reports)
+  - [The cdp scripts](#the-cdp-scripts)
+  - [The cdp neighbor text report](#the-cdp-neighbor-text-report)
+- [LLDP neighbor Report](#lldp-neighbor-report)
+  - [Installing LLDP on Ubuntu](#installing-lldp-on-ubuntu)
+  - [Installing LLDP on macOS](#installing-lldp-on-macos)
+  - [Enabling LLDP on the switch](#enabling-lldp-on-the-switch)
+  - [Running the script](#running-the-script)
+- [The System Report](#the-system-report)
+- [The Interface scripts](#the-interface-scripts)
+  - [The 10Mbps interfaces report](#the-10mbps-interfaces-report)
+  - [The ports in use report](#the-ports-in-use-report)
+- [Convert MAC addresses](#convert-mac-addresses)
+
 After the `procurve-Config-pull.py` script finishes, you can use the ***hostname-CR-data.txt*** files to get started planning. But the script also creates JSON files for:
 
 - cdp neighbors
 - lldp neighbors
-- OSPF neighbors
 - system data
 - interface statistics
+
+In addition, there is a script to convert mac addresses between different formats
+
+- Convert MAC address formats
 
 In the "Interface" folder
 
@@ -351,6 +368,23 @@ Interface 7 - total_bytes 1,054,112
 ----------------------------------------------------------------
 
 ## Convert MAC addresses
+
+This simple script takes 1 argument, a MAC address in any of the following formats and returns it in all of the formats.
+
+- 64:e8:81:43:cc:4e
+- 64e881-43cc4e
+- 64e8.8143.cc4e
+- 64-e8-81-43-cc-4e
+- 64e88143cc4e
+
+```bash
+python3 convert-mac.py --mac 64:e8:81:43:cc:4e
+64:e8:81:43:cc:4e
+64e881-43cc4e
+64e8.8143.cc4e
+64-e8-81-43-cc-4e
+64e88143cc4e
+```
 
 ----------------------------------------------------------------
 
