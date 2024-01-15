@@ -376,6 +376,7 @@ Learning to use the python http server is a good skill. For example, if you have
 - [Enabling Internet Explorer Mode in Microsoft Edge](https://csuf-erp.screenstepslive.com/m/70023/l/1650548-enabling-internet-explorer-mode-in-microsoft-edge)
 - [nmap-bootstrap-xsl](https://github.com/honze-net/nmap-bootstrap-xsl)
 
+----------------------------------------------------------------
 
 [Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
 [Getting Started](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)
