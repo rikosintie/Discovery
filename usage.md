@@ -12,6 +12,7 @@
 - [Failure to connect to a switch](#failure-to-connect-to-a-switch)
 - [Building a list of switches](#building-a-list-of-switches)
   - [Review the bootstrap report](#review-the-bootstrap-report)
+    - [References](#references)
 
 ----------------------------------------------------------------
 
@@ -197,39 +198,87 @@ Then use `grep -Eir -b6 "No valid" accounts.txt` to find the devices with no val
 
 Not all customers will have a clean list of switch IP addresses and host names. If there is a management network you may be able to look at the arp table and pull out the switches. As a last resort you can use the following process to build a list of switches.
 
-Run this nmap command to find devices with ssh open.
+Run this nmap command to find devices with ssh and snmp open. Most devices that have ssh and snmp open are switches. You may have to do some additional filtering.
 
-`nmap -sT -T4 -sC -p22 -oA procurve -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl  <target ips>`
+`sudo nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl  <target ips>`
 
 Note: the stylesheet is from [honze-net-nmap-bootstrap-xsl](https://github.com/honze-net/nmap-bootstrap-xsl). This is a repository for creating nmap reports. Well worth a look.
 
 The `-oA procurve` switch will create the following files:
 
-- procurve.xml
-- procurve.nmap
-- procurve.gnmap
+- procurve-scan.xml - a standard XML format file
+- procurve-scan.nmap - an nmap format file
+- procurve-scan.gnmap - a greppable nmap format file
+
+but they will be owned by the root account since we used `sudo` because of the UDP scan. Here are the permissions:
+
+```bash
+$ ls -l procurve-scan*
+-rw-r--r-- 1 root root  477 2024-01-14 17:13 procurve-scan.gnmap
+-rw-r--r-- 1 root root  926 2024-01-14 17:13 procurve-scan.nmap
+-rw-r--r-- 1 root root 3.6K 2024-01-14 17:13 procurve-scan.xml
+```
+
+Run the following to take ownership of the files:
+
+`sudo chown $USER procurve-scan*`
+
+The results:
+
+```bash
+ls -l procurve-scan*
+-rw-r--r-- 1 mhubbard root  477 2024-01-14 17:13 procurve-scan.gnmap
+-rw-r--r-- 1 mhubbard root  926 2024-01-14 17:13 procurve-scan.nmap
+-rw-r--r-- 1 mhubbard root 3.6K 2024-01-14 17:13 procurve-scan.xml
+```
 
 The output will look something like this:
 
 ```bash
-nmap -sT -T4 -sC -p22 -oA procurve -n -Pn --open --stylesheet [nmap-bootstrap.xsl](https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl) 192.168.10.52
+sudo nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet [nmap-bootstrap.xsl](https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl) 192.168.10.52
 Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
-Starting Nmap 7.91 ( https://nmap.org ) at 2024-01-14 12:50 PST
+Starting Nmap 7.91 ( https://nmap.org ) at 2024-01-14 17:09 PST
 Nmap scan report for 192.168.10.52
-Host is up (0.0034s latency).
+Host is up (0.0032s latency).
 
-PORT   STATE SERVICE
-22/tcp open  ssh
+PORT    STATE         SERVICE
+22/tcp  open          ssh
 | ssh-hostkey:
 |_  1024 cb:a8:d6:c7:da:bd:67:53:91:8c:c0:1b:49:d1:a1:2d (DSA)
 | ssh-os:
 |_  SSH Banner: SSH-2.0-Mocana SSH 6.3\x0D
+161/udp open|filtered snmp
+| snmp-info:
+|   enterprise: Hewlett-Packard
+|   engineIDFormat: unknown
+|   engineIDData: 000098f2b3fe8880
+|   snmpEngineBoots: 108
+|_  snmpEngineTime: 5h40m26s
+MAC Address: 98:F2:B3:FE:88:80 (Hewlett Packard Enterprise)
 
 Host script results:
 |_smbv2-enabled: ERROR: Script execution failed (use -d to debug)
 
-Nmap done: 1 IP address (1 host up) scanned in 1.13 seconds
+Nmap done: 1 IP address (1 host up) scanned in 15.03 seconds
 ```
+
+Let's look at the contents of the procurve-scan.gnmap file:
+
+```bash
+# Nmap 7.91 scan initiated Sun Jan 14 17:13:39 2024 as: nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52
+Host: 192.168.10.52 ()  Status: Up
+Host: 192.168.10.52 ()  Ports: 22/open/tcp//ssh///, 161/open|filtered/udp//snmp//Hewlett-Packard SNMPv3 server/
+# Nmap done at Sun Jan 14 17:13:54 2024 -- 1 IP address (1 host up) scanned in 15.09 seconds
+```
+
+ We can use this to find the switches in the procurve.gnmap file. Using the following grep/awk command:
+
+ ```bash
+ grep -Eir  "22/open/tcp//ssh///, 161/open|filtered/udp//snmp//" procurve.gnmap | awk '{ print $2 }'
+192.168.10.52
+ ```
+
+The `grep` found just the ssh, snmp string and `awk` printed the data in column 2.
 
 ### Review the bootstrap report
 
@@ -250,5 +299,14 @@ If you want to open it in a Chromium browser you will need to do the following:
 
 
 If you are on Mac/Linux or Windows WSL you can use grep to pull out a list of the switches.
+
+#### References
+
+XSL Transformer - XSLT
+- [Restrictions on File Urls](https://textslashplain.com/2019/10/09/navigating-to-file-urls/)
+- [Transform XML+XSLT to plain html so that it loads without blocking](https://gist.github.com/ericlaw1979/deb716d8436890420c41c8a593bfd509)
+- [Enabling Internet Explorer Mode in Microsoft Edge](https://csuf-erp.screenstepslive.com/m/70023/l/1650548-enabling-internet-explorer-mode-in-microsoft-edge)
+- [nmap-bootstrap-xsl](https://github.com/honze-net/nmap-bootstrap-xsl)
+
 
 [Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
