@@ -378,6 +378,6 @@ Learning to use the python http server is a good skill. For example, if you have
 
 ----------------------------------------------------------------
 
-[Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
-[Getting Started](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)
+[Home - ](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
+[Getting Started - ](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)
 [The Helper Scripts](https://github.com/rikosintie/Discovery/blob/main/Helper-scripts.md)<!-- omit from toc -->

@@ -207,7 +207,7 @@ You can create the JSON format data file of an SPDX compatible SBOM file using I
 
 ----------------------------------------------------------------
 
-[Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
-[Getting Started](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)<!-- omit from toc -->
-[Usage](https://github.com/rikosintie/Discovery/blob/main/usage.md)<!-- omit from toc -->
+[Home - ](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
+[Getting Started - ](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)<!-- omit from toc -->
+[Usage - ](https://github.com/rikosintie/Discovery/blob/main/usage.md)<!-- omit from toc -->
 [The Helper Scripts](https://github.com/rikosintie/Discovery/blob/main/Helper-scripts.md)<!-- omit from toc -->

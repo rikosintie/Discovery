@@ -117,6 +117,6 @@ You will need to activate the virtual environment each time you want to run the 
 
 ----------------------------------------------------------------
 
-[Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
-[Usage](https://github.com/rikosintie/Discovery/blob/main/usage.md)<!-- omit from toc -->
+[Home - ](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
+[Usage - ](https://github.com/rikosintie/Discovery/blob/main/usage.md)<!-- omit from toc -->
 [The Helper Scripts](https://github.com/rikosintie/Discovery/blob/main/Helper-scripts.md)<!-- omit from toc -->
