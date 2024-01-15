@@ -68,7 +68,7 @@ def format_mac(mac: str) -> str:
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-a", "--mac", help="mac  address - ex. 64:e8:81:43:cc:4e")
+parser.add_argument("-m", "--mac", help="mac  address - ex. 64:e8:81:43:cc:4e")
 args = parser.parse_args()
 mac = args.mac
 
