@@ -1,54 +1,27 @@
-destination_host: 3750x.pu.pri
-   management_ip: 10.254.34.17
-        platform: cisco WS-C3750X-48P
-     remote_port: GigabitEthernet1/0/1
-      local_port: 1
-software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+destination_host: 9c 8c d8 c9 17 ae
+   management_ip: 192.168.10.144
+        platform: ArubaOS (MODEL: 515), Version Aruba IAP
+     remote_port: eth0
+      local_port: 24
+software_version: ArubaOS (MODEL: 515), Version Aruba IAP
 
 
 ------------------------------
-destination_host: 64 00 f1 01 6f 80
-   management_ip: 10.254.34.17
-        platform: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
-     remote_port: GigabitEthernet1/0/1
-      local_port: 1
-software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+destination_host: 54 bf 64 3b 9c 68
+   management_ip: 172.17.0.1
+        platform: Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM...
+     remote_port: wlp61s0
+      local_port: 24
+software_version: Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM...
 
 
 ------------------------------
-destination_host: 3750x.pu.pri
-   management_ip: 192.168.1.1
-        platform: cisco WS-C3750X-48P
-     remote_port: GigabitEthernet1/1/2
-      local_port: 21
-software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
-
-
-------------------------------
-destination_host: 64 00 f1 01 6f 80
-   management_ip: 192.168.1.1
-        platform: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
-     remote_port: GigabitEthernet1/1/2
-      local_port: 21
-software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
-
-
-------------------------------
-destination_host: 3750x.pu.pri
-   management_ip: 192.168.1.1
-        platform: cisco WS-C3750X-48P
-     remote_port: GigabitEthernet1/1/4
-      local_port: 22
-software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
-
-
-------------------------------
-destination_host: 64 00 f1 01 6f 80
-   management_ip: 192.168.1.1
-        platform: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
-     remote_port: GigabitEthernet1/1/4
-      local_port: 22
-software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+destination_host: Garage
+   management_ip: 192.168.10.51
+        platform: NanoStation 5AC loc
+     remote_port: br0
+      local_port: 24
+software_version: WA.ar934x.v8.7.1.42832.200623.1641
 
 
 ------------------------------
@@ -67,42 +40,6 @@ destination_host: ea e6 4b 18 de 20
      remote_port: en0
       local_port: 24
 software_version: Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ...
-
-
-------------------------------
-destination_host: 9c 8c d8 c9 17 ae
-   management_ip: 192.168.10.144
-        platform: ArubaOS (MODEL: 515), Version Aruba IAP
-     remote_port: eth0
-      local_port: 24
-software_version: ArubaOS (MODEL: 515), Version Aruba IAP
-
-
-------------------------------
-destination_host: Garage
-   management_ip: 192.168.10.51
-        platform: NanoStation 5AC loc
-     remote_port: br0
-      local_port: 24
-software_version: WA.ar934x.v8.7.1.42832.200623.1641
-
-
-------------------------------
-destination_host: 3750x.pu.pri
-   management_ip: 192.168.1.1
-        platform: cisco WS-C3750X-48P
-     remote_port: GigabitEthernet1/0/48
-      local_port: 24
-software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
-
-
-------------------------------
-destination_host: 64 00 f1 01 6f 80
-   management_ip: 192.168.1.1
-        platform: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
-     remote_port: < Aruba 225 >
-      local_port: 24
-software_version: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
 
 
 ------------------------------

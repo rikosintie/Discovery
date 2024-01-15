@@ -1,84 +1,42 @@
-           neighbor_sysname: cisco WS-C3750X-48P
-  remote_management_address: 10.254.34.17
+           neighbor_sysname: IAP-515
+  remote_management_address: 192.168.10.144
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 9c 8c d8 c9 17 ae
+               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
+            neighbor_portid: 9c 8c d8 c9 17 ae
+                 local_port: 24
+               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: wlan-access-point
+
+
+------------------------------
+           neighbor_sysname: 1S1K-G5-5587
+  remote_management_address: fe80::f422:a6ff:fe02:d7d
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 54 bf 64 3b 9c 68
+               system_descr: Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEMP...
+            neighbor_portid: 28 d0 ea 93 2a 42
+                 local_port: 24
+               system_descr: Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEMP...
+                       PVID: 
+                 port_descr: wlp61s0
+system_capabilities_enabled: bridge, wlan-access-point, router
+
+
+------------------------------
+           neighbor_sysname: NanoStation 5AC loc
+  remote_management_address: 192.168.10.51
       neighbor_chassis_type: local
-        neighbor_chassis_id: 3750x.pu.pri
-               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-            neighbor_portid: GigabitEthernet1/0/1
-                 local_port: 1
-               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
+        neighbor_chassis_id: Garage
+               system_descr: WA.ar934x.v8.7.1.42832.200623.1641
+            neighbor_portid: br0
+                 local_port: 24
+               system_descr: WA.ar934x.v8.7.1.42832.200623.1641
                        PVID: 
                  port_descr: 
-system_capabilities_enabled: bridge, router
-
-
-------------------------------
-           neighbor_sysname: 3750x.pu.pri
-  remote_management_address: 10.254.34.17
-      neighbor_chassis_type: mac-address
-        neighbor_chassis_id: 64 00 f1 01 6f 80
-               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-            neighbor_portid: Gi1/0/1
-                 local_port: 1
-               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-                       PVID: 850
-                 port_descr: GigabitEthernet1/0/1
-system_capabilities_enabled: bridge, router
-
-
-------------------------------
-           neighbor_sysname: cisco WS-C3750X-48P
-  remote_management_address: 192.168.1.1
-      neighbor_chassis_type: local
-        neighbor_chassis_id: 3750x.pu.pri
-               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-            neighbor_portid: GigabitEthernet1/1/2
-                 local_port: 21
-               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-                       PVID: 
-                 port_descr: 
-system_capabilities_enabled: bridge, router
-
-
-------------------------------
-           neighbor_sysname: 3750x.pu.pri
-  remote_management_address: 192.168.1.1
-      neighbor_chassis_type: mac-address
-        neighbor_chassis_id: 64 00 f1 01 6f 80
-               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-            neighbor_portid: Gi1/1/2
-                 local_port: 21
-               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-                       PVID: 850
-                 port_descr: GigabitEthernet1/1/2
-system_capabilities_enabled: bridge, router
-
-
-------------------------------
-           neighbor_sysname: cisco WS-C3750X-48P
-  remote_management_address: 192.168.1.1
-      neighbor_chassis_type: local
-        neighbor_chassis_id: 3750x.pu.pri
-               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-            neighbor_portid: GigabitEthernet1/1/4
-                 local_port: 22
-               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-                       PVID: 
-                 port_descr: 
-system_capabilities_enabled: bridge, router
-
-
-------------------------------
-           neighbor_sysname: 3750x.pu.pri
-  remote_management_address: 192.168.1.1
-      neighbor_chassis_type: mac-address
-        neighbor_chassis_id: 64 00 f1 01 6f 80
-               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-            neighbor_portid: Gi1/1/4
-                 local_port: 22
-               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-                       PVID: 850
-                 port_descr: GigabitEthernet1/1/4
-system_capabilities_enabled: bridge, router
+system_capabilities_enabled: 
 
 
 ------------------------------
@@ -107,62 +65,6 @@ system_capabilities_enabled:
                        PVID: 
                  port_descr: en0
 system_capabilities_enabled: bridge, wlan-access-point
-
-
-------------------------------
-           neighbor_sysname: IAP-515
-  remote_management_address: 192.168.10.144
-      neighbor_chassis_type: mac-address
-        neighbor_chassis_id: 9c 8c d8 c9 17 ae
-               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
-            neighbor_portid: 9c 8c d8 c9 17 ae
-                 local_port: 24
-               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
-                       PVID: 
-                 port_descr: eth0
-system_capabilities_enabled: wlan-access-point
-
-
-------------------------------
-           neighbor_sysname: NanoStation 5AC loc
-  remote_management_address: 192.168.10.51
-      neighbor_chassis_type: local
-        neighbor_chassis_id: Garage
-               system_descr: WA.ar934x.v8.7.1.42832.200623.1641
-            neighbor_portid: br0
-                 local_port: 24
-               system_descr: WA.ar934x.v8.7.1.42832.200623.1641
-                       PVID: 
-                 port_descr: 
-system_capabilities_enabled: 
-
-
-------------------------------
-           neighbor_sysname: cisco WS-C3750X-48P
-  remote_management_address: 192.168.1.1
-      neighbor_chassis_type: local
-        neighbor_chassis_id: 3750x.pu.pri
-               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-            neighbor_portid: GigabitEthernet1/0/48
-                 local_port: 24
-               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-                       PVID: 
-                 port_descr: 
-system_capabilities_enabled: bridge, router
-
-
-------------------------------
-           neighbor_sysname: 3750x.pu.pri
-  remote_management_address: 192.168.1.1
-      neighbor_chassis_type: mac-address
-        neighbor_chassis_id: 64 00 f1 01 6f 80
-               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-            neighbor_portid: Gi1/0/48
-                 local_port: 24
-               system_descr: Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-                       PVID: 10
-                 port_descr: < Aruba 225 >
-system_capabilities_enabled: bridge, router
 
 
 ------------------------------
