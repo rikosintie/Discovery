@@ -20,7 +20,7 @@ __license__ = "Unlicense"
 #  Created by Michael Hubbard on 2023-27-20.
 
 
-def get_current_path(sub_dir1: str, extension: str, sub_dir2="") -> str:
+def get_current_path(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
     """
     returns a valid path regardless of the OS
 
