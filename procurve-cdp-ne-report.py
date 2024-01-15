@@ -33,24 +33,6 @@ __license__ = "Unlicense"
 #  Created by Michael Hubbard on 2024-1-11.
 
 
-def get_current_path(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
-    """
-    returns a valid path regardless of the OS
-
-    Args:
-        sub_dir1 (str): name of the sub directory off the cwd required
-        extension (str): string appended after hostname - ex. -interface.txt
-        sub_dir2 (str, optional): if a nested sub_dir is used Defaults to "".
-
-    Returns:
-        str: full pathname of the file to be written
-    """
-    current_path = os.getcwd()
-    extension = hostname + extension
-    int_report = os.path.join(current_path, sub_dir1, sub_dir2, extension)
-    return int_report
-
-
 # Build path to Interface/neighbors and build list of cdp files
 loc = os.path.join("Interface")
 loc1 = os.path.join("Interface", "neighbors")
