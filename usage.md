@@ -12,6 +12,7 @@
 - [Failure to connect to a switch](#failure-to-connect-to-a-switch)
 - [Building a list of switches](#building-a-list-of-switches)
   - [Review the bootstrap report](#review-the-bootstrap-report)
+  - [An alternative way to view the report in a Chromium browser](#an-alternative-way-to-view-the-report-in-a-chromium-browser)
     - [References](#references)
 
 ----------------------------------------------------------------
@@ -262,6 +263,8 @@ Host script results:
 Nmap done: 1 IP address (1 host up) scanned in 15.03 seconds
 ```
 
+The "SSH Banner: SSH-2.0-Mocana SSH 6.3" is the ssh server that is running on the procurve switch. Over the years HPE has used different versions of ssh but this banner will help identify procurve switches.
+
 Let's look at the contents of the procurve-scan.gnmap file:
 
 ```bash
@@ -282,7 +285,7 @@ The `grep` found just the ssh, snmp string and `awk` printed the data in column 
 
 ### Review the bootstrap report
 
-The "stylesheet" argument creates an xsl file to format the XML file that the script creates. You will be able to right-click on the xml file and open it in Firefox so see a nicely formatted report. That isn't required, it's just nice. Here is a simple example from my home lab:
+The "stylesheet" argument creates an xsl file to format the XML file that the script creates. You will be able to right-click on the xml file and open it in Firefox to see a nicely formatted report. That isn't required, it's just nice extra that you can give the customer. Here is a simple example from my home lab:
 
 <p align="center" width="100%">
 <img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/nmap-bootstarp-stylesheet.png" alt="nmap-report">
@@ -300,9 +303,31 @@ If you want to open it in a Chromium browser you will need to do the following:
 
 If you are on Mac/Linux or Windows WSL you can use grep to pull out a list of the switches.
 
+### An alternative way to view the report in a Chromium browser
+
+The URL restriction occurs because the xsl file comes from an https server (github) and the file is on disk. You can use the xsl file that comes from cloning the repository.
+
+Change the nmap command to:
+
+```bash
+nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet nmap-bootstrap.xsl 192.168.10.52
+```
+
+Now spin up an http server using python:
+
+`python3 -m http.server 8000`
+
+Open a Chromium based browser and enter:
+
+`http://localhost:8000/procurve-scan.xml`
+
+The report will open and not be a limited version.
+
+Learning to use the python http server is a good skill. For example, if you have Aruba APs running in IAP mode and there are a mix of models you have to use http to upgrade them. This method works great on a laptop.
+
 #### References
 
-XSL Transformer - XSLT
+- [XSL Transformer - XSLT](https://www.freeformatter.com/xsl-transformer.html#before-output)
 - [Restrictions on File Urls](https://textslashplain.com/2019/10/09/navigating-to-file-urls/)
 - [Transform XML+XSLT to plain html so that it loads without blocking](https://gist.github.com/ericlaw1979/deb716d8436890420c41c8a593bfd509)
 - [Enabling Internet Explorer Mode in Microsoft Edge](https://csuf-erp.screenstepslive.com/m/70023/l/1650548-enabling-internet-explorer-mode-in-microsoft-edge)
