@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE nmaprun>
-<?xml-stylesheet href="https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl" type="text/xsl"?>
+<?xml-stylesheet href="nmap-bootstrap.xsl" type="text/xsl"?>
 <!-- Nmap 7.91 scan initiated Sun Jan 14 17:13:39 2024 as: nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn -&#45;open -&#45;stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52 -->
 <nmaprun scanner="nmap" args="nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn -&#45;open -&#45;stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52" start="1705281219" startstr="Sun Jan 14 17:13:39 2024" version="7.91" xmloutputversion="1.05">
 <scaninfo type="connect" protocol="tcp" numservices="1" services="22"/>
