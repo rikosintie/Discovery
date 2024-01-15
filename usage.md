@@ -124,7 +124,7 @@ options:
 (Discovery)
 ```
 
-If you want to be prompted for password add `-p 1`. If you don't use -p 1 you must set an environment variable cyberARK wit the password.
+If you want to be prompted for a password add `-p 1`. If you don't use -p 1 you must set an environment variable cyberARK with the password. That is covered above in the "password" section.
 If you want to enable ssh logging add `-l 1`. You would do that if you are getting "time out" errors.
 
 The minimum is to use -s for the site:
@@ -378,3 +378,5 @@ Learning to use the python http server is a good skill. For example, if you have
 
 
 [Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
+[Getting Started](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)
+[The Helper Scripts](https://github.com/rikosintie/Discovery/blob/main/Helper-scripts.md)<!-- omit from toc -->
