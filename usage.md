@@ -12,6 +12,7 @@
 - [Failure to connect to a switch](#failure-to-connect-to-a-switch)
 - [Building a list of switches](#building-a-list-of-switches)
   - [Review the bootstrap report](#review-the-bootstrap-report)
+  - [Opening the report in a Chromium based browser](#opening-the-report-in-a-chromium-based-browser)
   - [An alternative way to view the report in a Chromium browser](#an-alternative-way-to-view-the-report-in-a-chromium-browser)
     - [References](#references)
 
@@ -199,19 +200,19 @@ Then use `grep -Eir -b6 "No valid" accounts.txt` to find the devices with no val
 
 Not all customers will have a clean list of switch IP addresses and host names. If there is a management network you may be able to look at the arp table and pull out the switches. As a last resort you can use the following process to build a list of switches.
 
-Run this nmap command to find devices with ssh and snmp open. Most devices that have ssh and snmp open are switches. You may have to do some additional filtering.
+Run this nmap command to find devices with ssh **and** snmp open. Most devices that have ssh and snmp open are switches. You may have to do some additional filtering.
 
-`sudo nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl  <target ips>`
+`sudo nmap -sU -sS -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl  <target ips>`
 
 Note: the stylesheet is from [honze-net-nmap-bootstrap-xsl](https://github.com/honze-net/nmap-bootstrap-xsl). This is a repository for creating nmap reports. Well worth a look.
 
-The `-oA procurve` switch will create the following files:
+The `-oA procurve-scan` argument will create the following files:
 
-- procurve-scan.xml - a standard XML format file
+- procurve-scan.xml - a standard XML file with the xsl link embedded
 - procurve-scan.nmap - an nmap format file
 - procurve-scan.gnmap - a greppable nmap format file
 
-but they will be owned by the root account since we used `sudo` because of the UDP scan. Here are the permissions:
+The files will be owned by the root account since we need `sudo` for the UDP scan. Here are the permissions:
 
 ```bash
 $ ls -l procurve-scan*
@@ -236,7 +237,7 @@ ls -l procurve-scan*
 The output will look something like this:
 
 ```bash
-sudo nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet [nmap-bootstrap.xsl](https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl) 192.168.10.52
+sudo nmap -sU -sS -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet [nmap-bootstrap.xsl](https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl) 192.168.10.52
 Host discovery disabled (-Pn). All addresses will be marked 'up' and scan times will be slower.
 Starting Nmap 7.91 ( https://nmap.org ) at 2024-01-14 17:09 PST
 Nmap scan report for 192.168.10.52
@@ -263,18 +264,18 @@ Host script results:
 Nmap done: 1 IP address (1 host up) scanned in 15.03 seconds
 ```
 
-The "SSH Banner: SSH-2.0-Mocana SSH 6.3" is the ssh server that is running on the procurve switch. Over the years HPE has used different versions of ssh but this banner will help identify procurve switches.
+The "SSH Banner: SSH-2.0-Mocana SSH 6.3" is the ssh server that is running on the procurve switch. Over the years HPE has used different ssh servers but this banner will help identify procurve switches.
 
 Let's look at the contents of the procurve-scan.gnmap file:
 
 ```bash
-# Nmap 7.91 scan initiated Sun Jan 14 17:13:39 2024 as: nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52
+# Nmap 7.91 scan initiated Sun Jan 14 17:13:39 2024 as: nmap -sU -sS -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52
 Host: 192.168.10.52 ()  Status: Up
 Host: 192.168.10.52 ()  Ports: 22/open/tcp//ssh///, 161/open|filtered/udp//snmp//Hewlett-Packard SNMPv3 server/
 # Nmap done at Sun Jan 14 17:13:54 2024 -- 1 IP address (1 host up) scanned in 15.09 seconds
 ```
 
-If you are on Mac/Linux or Windows WSL you can use grep to pull out a list of the switches from procurve-scan.gnmap file. Use the following grep/awk command:
+If you are on Mac/Linux/Windows WSL or have git bash installed you can use grep to pull out a list of the switches from procurve-scan.gnmap file. Use the following grep/awk command:
 
  ```bash
  grep -Eir  "22/open/tcp//ssh///, 161/open|filtered/udp//snmp//" procurve.gnmap | awk '{ print $2 }'
@@ -285,27 +286,31 @@ The `grep` found just the "ssh, snmp" string and `awk` printed the data in colum
 
 ### Review the bootstrap report
 
-The "stylesheet" argument creates an xsl file to format the XML file that the script creates. You will be able to right-click on the xml file and open it in Firefox to see a nicely formatted report. That isn't required, it's just nice extra that you can give the customer. Here is a simple example from my home lab:
+The "stylesheet" argument creates an xsl file to format the XML file that the script creates. You will be able to right-click on the xml file and open it in Firefox to see a nicely formatted report. This isn't required, it's just nice extra and you can give it the customer as documentation. Here is a simple example from my home lab:
 
 <p align="center" width="100%">
 <img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/nmap-bootstarp-stylesheet.png" alt="nmap-report">
 </p>
 
-If you want to open it in a Chromium browser you will need to do the following:
+### Opening the report in a Chromium based browser
+
+If you want to open the report in a Chromium browser you will need to do the following:
 
 - Open this [page](https://www.freeformatter.com/xsl-transformer.html#before-output) in Chrome/Edge
-- Paste the text from procurve.xml into "Option 1: Copy-paste your XML document here"
+- Paste the text from procurve-scan.xml into "Option 1: Copy-paste your XML document here"
 - Open nmap-bootstrap-xsl in a text editor and on line 8, delete -  `doctype-system="about:legacy-compat"`
 - Paste the text into "Option 2: Option 1: Copy-paste your XSL document here"
 - click `Transform XML`
-- Save the new text as procurve.html. You lose a little bit of the report but it's still usable.
+- Save the new text as procurve-scan.html. You lose a little bit of the report but it's still usable.
 
 ### An alternative way to view the report in a Chromium browser
 
 The URL restriction occurs because the xsl file comes from an https server (github) and the file is on disk. If you use "settings, Developer tools, console", you will see this message:
 
 ```bash
-procurve-scan.xml:3  Unsafe attempt to load URL https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl from frame with URL file:///home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/procurve-scan.xml. 'file:' URLs are treated as unique security origins.
+procurve-scan.xml:3  Unsafe attempt to load URL https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl
+from frame with URL file:///home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/procurve-scan.xml.
+'file:' URLs are treated as unique security origins.
 ```
 
 You can use the xsl file that comes from cloning the repository. The drawback to this is that if you want to share the report, you have to include the xsl file.
@@ -313,7 +318,7 @@ You can use the xsl file that comes from cloning the repository. The drawback to
 Change the nmap command to:
 
 ```bash
-nmap -sU -sT -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet nmap-bootstrap.xsl 192.168.10.52
+nmap -sU -sS -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet nmap-bootstrap.xsl 192.168.10.52
 ```
 
 Now spin up an http server using python:
