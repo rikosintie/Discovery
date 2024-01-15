@@ -5,8 +5,8 @@ show system
  Status and Counters - General System Information
 
   System Name        : HP-2920-24G-PoEP                                
-  System Contact     : 
-  System Location    : 
+  System Contact     : Michael Hubbard
+  System Location    : Home Lab
 
   MAC Age Time (sec) : 300    
 
@@ -16,12 +16,12 @@ show system
   Software revision  : WB.16.10.0023        Base MAC Addr      : 98f2b3-fe8880
   ROM Version        : WB.16.03             Serial Number      : SG78FLXH0B  
 
-  Up Time            : 3 hours              Memory   - Total   : 72,483,328  
-  CPU Util (%)       : 29                              Free    : 40,431,548  
+  Up Time            : 9 hours              Memory   - Total   : 72,483,328  
+  CPU Util (%)       : 32                              Free    : 39,982,792  
 
-  IP Mgmt  - Pkts Rx : 17,492               Packet   - Total   : 6750        
-             Pkts Tx : 14,695               Buffers    Free    : 5009        
-                                                       Lowest  : 4994        
+  IP Mgmt  - Pkts Rx : 8973                 Packet   - Total   : 6750        
+             Pkts Tx : 3601                 Buffers    Free    : 5009        
+                                                       Lowest  : 4988        
                                                        Missed  : 0           
 
 !---
@@ -53,10 +53,10 @@ show oobm ip
 
 !---
 show time
-Sat Jan 13 15:50:27 2024
+Sun Jan 14 20:59:32 2024
 !---
 show uptime
-0000:03:48:17.13
+0000:09:30:08.99
 !---
 show ntp status
 
@@ -65,14 +65,14 @@ show ntp status
   NTP Status             : Enabled         NTP Mode        : Unicast         
   Synchronization Status : Synchronized    Peer Dispersion : 0.00000 sec     
   Stratum Number         : 2               Leap Direction  : 0               
-  Reference Assoc ID     : 0               Clock Offset    : 0.02072 sec     
-  Reference ID           : 129.6.15.29     Root Delay      : 0.07243 sec     
-  Precision              : 2**-18          Root Dispersion : 1.10560 sec     
-  NTP Up Time            : 0d 3h 48m       Time Resolution : 697 nsec        
+  Reference Assoc ID     : 0               Clock Offset    : 0.03329 sec     
+  Reference ID           : 129.6.15.29     Root Delay      : 0.07251 sec     
+  Precision              : 2**-18          Root Dispersion : 1.66588 sec     
+  NTP Up Time            : 0d 9h 30m       Time Resolution : 1395 nsec       
   Drift                  : 0.00000 sec/sec 
 
-  System Time            : Sat Jan 13 15:50:27 2024                
-  Reference Time         : Sat Jan 13 15:47:12 2024                
+  System Time            : Sun Jan 14 20:59:33 2024                
+  Reference Time         : Sun Jan 14 18:05:52 2024                
 
 !---
 show ntp associations
@@ -82,8 +82,8 @@ show ntp associations
 
  Remote          St   T    When   Poll  Reach    Delay    Offset   Dispersion
  --------------- ---- ---- ------ ----- -------- -------- -------- ----------
- 129.6.15.29     1    u    13690  17    1        0.000    0.000    16.00000  
- 192.168.10.221  1    u    13690  17    1        0.000    0.000    16.00000  
+ 129.6.15.29     1    u    1139   13    3777     0.073    0.043    2.07370   
+ 192.168.10.221  1    u    3221   10    3777     0.003    126.052  1.92039   
 
 !---
 show ntp server
@@ -135,7 +135,7 @@ Active Boot ROM:     Primary
 !---
 show config vlan
 
-Startup configuration: 43
+Startup configuration: 44
 
 vlan 1
    name "DEFAULT_VLAN"
@@ -225,12 +225,12 @@ Status and Counters - VLAN Information - Custom view
  62     IOT2            10.14.64.17     255.255.255.248 Manual     Up    No    No   
  63     IOT3            10.14.63.17     255.255.255.248 Manual     Up    No    No   
  100    test            10.10.100.1     255.255.255.0   Manual     Down  No    No   
- 850    OSPF-Peering    10.254.34.18    255.255.255.252 Manual     Up    No    No   
+ 850    OSPF-Peering    10.254.34.18    255.255.255.252 Manual     Down  No    No   
 
 !---
 show config interface
 
-Startup configuration: 43
+Startup configuration: 44
 
 interface 1
    untagged vlan 850
@@ -408,7 +408,7 @@ show ip route 0.0.0.0
 !---
 show config router ospf
 
-Startup configuration: 43
+Startup configuration: 44
 
 router ospf
    area backbone
@@ -429,7 +429,7 @@ show ip ospf interface
 
   IP Address      Status   Area ID         State    Auth-type Cost  Pri Passive
   --------------- -------- --------------- -------- --------- ----- --- -------
-  10.254.34.18    enabled  backbone        DR       none      1     1   no     
+  10.254.34.18    enabled  backbone        DOWN     none      1     1   no     
  
 
 !---
@@ -460,9 +460,9 @@ show ip ospf general
   Area Border               : no 
   AS Border                 : yes
   External LSA Count        : 7          
-  External LSA Checksum Sum : 213742     
+  External LSA Checksum Sum : 233810     
   Originate New LSA Count   : 6          
-  Receive New LSA Count     : 1          
+  Receive New LSA Count     : 0          
 
 
   Graceful Restart Interval            : 120        
@@ -484,20 +484,20 @@ show ip ospf external-link-state
 
   Link State ID   Router ID       Age  Sequence #  Checksum  
   --------------- --------------- ---- ----------- ----------
-  1.1.1.1         1.1.1.1         679  0x80000008  0x0000083c
-  10.14.63.16     1.1.1.1         679  0x80000008  0x0000885f
-  10.14.64.16     1.1.1.1         679  0x80000008  0x00007d69
-  10.14.65.16     1.1.1.1         679  0x80000008  0x00007273
-  10.14.66.16     1.1.1.1         679  0x80000008  0x0000677d
-  10.164.24.0     1.1.1.1         679  0x80000008  0x0000f28e
-  192.168.10.0    1.1.1.1         679  0x80000008  0x000016be
+  1.1.1.1         1.1.1.1         731  0x80000013  0x0000f147
+  10.14.63.16     1.1.1.1         731  0x80000013  0x0000726a
+  10.14.64.16     1.1.1.1         731  0x80000013  0x00006774
+  10.14.65.16     1.1.1.1         731  0x80000013  0x00005c7e
+  10.14.66.16     1.1.1.1         731  0x80000013  0x00005188
+  10.164.24.0     1.1.1.1         731  0x80000013  0x0000dc99
+  192.168.10.0    1.1.1.1         731  0x80000013  0x0000ffc9
  
 
 !---
 show interface status
   Port     Name       Status  Config-mode   Speed    Type       Tagged Untagged
   -------- ---------- ------- ------------- -------- ---------- ------ --------
-  1                   Up      Auto          1000FDx  100/1000T  No     850     
+  1                   Down    Auto          1000FDx  100/1000T  No     850     
   2                   Down    Auto          1000FDx  100/1000T  No     1       
   3                   Down    Auto          1000FDx  100/1000T  No     100     
   4                   Down    Auto          1000FDx  100/1000T  No     1       
@@ -523,7 +523,6 @@ show interface status
   24                  Up      Auto          1000FDx  100/1000T  multi  10      
 !---
 show int status | i Up
-  1                   Up      Auto          1000FDx  100/1000T  No     850     
   7                   Up      Auto          100FDx   100/1000T  No     1       
   24                  Up      Auto          1000FDx  100/1000T  multi  10      
 !---
@@ -572,8 +571,8 @@ System ID: 98f2b3-fe8880
   Local  Local                       Port      Oper    LACP     Tx   
   Port   Trunk  System ID      Port  Priority  Key     Mode     Timer
   ------ ------ -------------- ----- --------- ------- -------- -----
-  21     Trk1   000000-000000  21    0         0       Passive  Slow 
-  22     Trk1   000000-000000  22    0         0       Passive  Slow 
+  21     Trk1   000000-000000  21    0         0       Passive  Fast 
+  22     Trk1   000000-000000  22    0         0       Passive  Fast 
  
 
 !---
@@ -605,38 +604,36 @@ show cdp neighbors
 
   Port   Device ID                     | Platform                     Capability 
   ------ ----------------------------- + ---------------------------- -----------
-  1      3750x.pu.pri                  | cisco WS-C3750X-48P          R S I      
-  1      64 00 f1 01 6f 80             | Cisco IOS Software, C3750... R S        
+  24     9c 8c d8 c9 17 ae             | ArubaOS (MODEL: 515), Ver...            
+  24     54 bf 64 3b 9c 68             | Ubuntu 23.10 Linux 6.5.0-... R S        
   24     Garage                        | NanoStation 5AC loc          T          
   24     fc ec da c4 6e 55             |                                         
-  24     9c 8c d8 c9 17 ae             | ArubaOS (MODEL: 515), Ver...            
-  24     3750x.pu.pri                  | cisco WS-C3750X-48P          R S I      
-  24     64 00 f1 01 6f 80             | Cisco IOS Software, C3750... R S        
+  24     ea e6 4b 18 de 20             |  Darwin 21.6.0 Darwin Ker... S          
  
 !---
 show cdp nei d
 
  CDP neighbors information
 
-  Port : 1     
-  Device ID : 3750x.pu.pri                                                  
+  Port : 24    
+  Device ID : 9c 8c d8 c9 17 ae                                             
   Address Type : IP          
-  Address      : 10.254.34.17                                                
-  Platform     : cisco WS-C3750X-48P                                        
-  Capability   : Router Switch IGMP                                         
-  Device Port  : GigabitEthernet1/0/1                                       
-  Version      : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+  Address      : 192.168.10.144                                              
+  Platform     : ArubaOS (MODEL: 515), Version Aruba IAP                    
+  Capability   :                                                            
+  Device Port  : eth0                                                       
+  Version      : ArubaOS (MODEL: 515), Version Aruba IAP                    
 
 ------------------------------------------------------------------------------
 
-  Port : 1     
-  Device ID : 64 00 f1 01 6f 80                                             
+  Port : 24    
+  Device ID : 54 bf 64 3b 9c 68                                             
   Address Type : IP          
-  Address      : 10.254.34.17                                                
-  Platform     : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+  Address      : 172.17.0.1                                                  
+  Platform     : Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM...
   Capability   : Router Switch                                              
-  Device Port  : GigabitEthernet1/0/1                                       
-  Version      : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+  Device Port  : wlp61s0                                                    
+  Version      : Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM...
 
 ------------------------------------------------------------------------------
 
@@ -663,35 +660,13 @@ show cdp nei d
 ------------------------------------------------------------------------------
 
   Port : 24    
-  Device ID : 9c 8c d8 c9 17 ae                                             
+  Device ID : ea e6 4b 18 de 20                                             
   Address Type : IP          
-  Address      : 192.168.10.144                                              
-  Platform     : ArubaOS (MODEL: 515), Version Aruba IAP                    
-  Capability   :                                                            
-  Device Port  : eth0                                                       
-  Version      : ArubaOS (MODEL: 515), Version Aruba IAP                    
-
-------------------------------------------------------------------------------
-
-  Port : 24    
-  Device ID : 3750x.pu.pri                                                  
-  Address Type : IP          
-  Address      : 192.168.1.1                                                 
-  Platform     : cisco WS-C3750X-48P                                        
-  Capability   : Router Switch IGMP                                         
-  Device Port  : GigabitEthernet1/0/48                                      
-  Version      : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
-
-------------------------------------------------------------------------------
-
-  Port : 24    
-  Device ID : 64 00 f1 01 6f 80                                             
-  Address Type : IP          
-  Address      : 192.168.1.1                                                 
-  Platform     : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
-  Capability   : Router Switch                                              
-  Device Port  : < Aruba 225 >                                              
-  Version      : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-...
+  Address      : 192.168.10.106                                              
+  Platform     :  Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ...
+  Capability   : Switch                                                     
+  Device Port  : en0                                                        
+  Version      :  Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ...
 
 !---
 show lldp info remote
@@ -700,13 +675,11 @@ show lldp info remote
 
   LocalPort | ChassisId          PortId             PortDescr SysName           
   --------- + ------------------ ------------------ --------- ------------------
-  1         | 3750x.pu.pri       GigabitEthernet...           cisco WS-C3750X...
-  1         | 64 00 f1 01 6f 80  Gi1/0/1            Gigabi... 3750x.pu.pri      
+  24        | 9c 8c d8 c9 17 ae  9c 8c d8 c9 17 ae  eth0      IAP-515           
+  24        | 54 bf 64 3b 9c 68  28 d0 ea 93 2a 42  wlp61s0   1S1K-G5-5587      
   24        | Garage             br0                          NanoStation 5AC...
   24        | fc ec da c4 6e 55  eth0                                           
-  24        | 9c 8c d8 c9 17 ae  9c 8c d8 c9 17 ae  eth0      IAP-515           
-  24        | 3750x.pu.pri       GigabitEthernet...           cisco WS-C3750X...
-  24        | 64 00 f1 01 6f 80  Gi1/0/48           < Arub... 3750x.pu.pri      
+  24        | ea e6 4b 18 de 20  50 ed 3c 22 be 32  en0       hp8600-2328.local 
  
 
 !---
@@ -714,40 +687,42 @@ show lldp info remote d
 
  LLDP Remote Device Information Detail
 
-  Local Port   : 1
-  ChassisType  : local               
-  ChassisId    : 3750x.pu.pri             
-  PortType     : local                                                     
-  PortId       : GigabitEthernet1/0/1                                      
-  SysName      : cisco WS-C3750X-48P             
-  System Descr : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-  PortDescr    :                                                             
+  Local Port   : 24
+  ChassisType  : mac-address         
+  ChassisId    : 9c 8c d8 c9 17 ae        
+  PortType     : mac-address                                               
+  PortId       : 9c 8c d8 c9 17 ae                                         
+  SysName      : IAP-515                         
+  System Descr : ArubaOS (MODEL: 515), Version Aruba IAP                     
+  PortDescr    : eth0                                                        
   Pvid         :                          
 
-  System Capabilities Supported  : bridge, router
-  System Capabilities Enabled    : bridge, router
+  System Capabilities Supported  : bridge, wlan-access-point
+  System Capabilities Enabled    : wlan-access-point
 
   Remote Management Address
      Type    : ipv4
-     Address : 10.254.34.17
+     Address : 192.168.10.144
 
 ------------------------------------------------------------------------------
-  Local Port   : 1
+  Local Port   : 24
   ChassisType  : mac-address         
-  ChassisId    : 64 00 f1 01 6f 80        
-  PortType     : interface-name                                            
-  PortId       : Gi1/0/1                                                   
-  SysName      : 3750x.pu.pri                    
-  System Descr : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-  PortDescr    : GigabitEthernet1/0/1                                        
-  Pvid         : 850                      
+  ChassisId    : 54 bf 64 3b 9c 68        
+  PortType     : mac-address                                               
+  PortId       : 28 d0 ea 93 2a 42                                         
+  SysName      : 1S1K-G5-5587                    
+  System Descr : Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEMP...
+  PortDescr    : wlp61s0                                                     
+  Pvid         :                          
 
-  System Capabilities Supported  : bridge, router
-  System Capabilities Enabled    : bridge, router
+  System Capabilities Supported  : bridge, wlan-access-point, router
+  System Capabilities Enabled    : bridge, wlan-access-point, router
 
   Remote Management Address
      Type    : ipv4
-     Address : 10.254.34.17
+     Address : 172.17.0.1
+     Type    : ipv6
+     Address : fe80::f422:a6ff:fe02:d7d
 
 ------------------------------------------------------------------------------
   Local Port   : 24
@@ -786,56 +761,22 @@ show lldp info remote d
 ------------------------------------------------------------------------------
   Local Port   : 24
   ChassisType  : mac-address         
-  ChassisId    : 9c 8c d8 c9 17 ae        
+  ChassisId    : ea e6 4b 18 de 20        
   PortType     : mac-address                                               
-  PortId       : 9c 8c d8 c9 17 ae                                         
-  SysName      : IAP-515                         
-  System Descr : ArubaOS (MODEL: 515), Version Aruba IAP                     
-  PortDescr    : eth0                                                        
+  PortId       : 50 ed 3c 22 be 32                                         
+  SysName      : hp8600-2328.local               
+  System Descr :  Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 0...
+  PortDescr    : en0                                                         
   Pvid         :                          
 
-  System Capabilities Supported  : bridge, wlan-access-point
-  System Capabilities Enabled    : wlan-access-point
+  System Capabilities Supported  : bridge, wlan-access-point, router
+  System Capabilities Enabled    : bridge, wlan-access-point
 
   Remote Management Address
      Type    : ipv4
-     Address : 192.168.10.144
-
-------------------------------------------------------------------------------
-  Local Port   : 24
-  ChassisType  : local               
-  ChassisId    : 3750x.pu.pri             
-  PortType     : local                                                     
-  PortId       : GigabitEthernet1/0/48                                     
-  SysName      : cisco WS-C3750X-48P             
-  System Descr : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-  PortDescr    :                                                             
-  Pvid         :                          
-
-  System Capabilities Supported  : bridge, router
-  System Capabilities Enabled    : bridge, router
-
-  Remote Management Address
-     Type    : ipv4
-     Address : 192.168.1.1
-
-------------------------------------------------------------------------------
-  Local Port   : 24
-  ChassisType  : mac-address         
-  ChassisId    : 64 00 f1 01 6f 80        
-  PortType     : interface-name                                            
-  PortId       : Gi1/0/48                                                  
-  SysName      : 3750x.pu.pri                    
-  System Descr : Cisco IOS Software, C3750E Software (C3750E-UNIVERSALK9-M...
-  PortDescr    : < Aruba 225 >                                               
-  Pvid         : 10                       
-
-  System Capabilities Supported  : bridge, router
-  System Capabilities Enabled    : bridge, router
-
-  Remote Management Address
-     Type    : ipv4
-     Address : 192.168.1.1
+     Address : 192.168.10.106
+     Type    : ipv6
+     Address : fe80::1
 
 
 !---
@@ -861,12 +802,12 @@ show spanning-tree
   ID    Address         Priority   Path-Cost  Port                 Time(sec)
   ----- --------------- ---------- ---------- -------------------- ---------
   1     98f2b3-fe8880   32,768     0          This switch is root  2        
-  10    6400f1-016f80   32,768     20,000     24                   2        
+  10    98f2b3-fe8880   32,768     0          This switch is root  2        
   20    98f2b3-fe8880   32,768     0          This switch is root  2        
-  60    6400f1-016f80   32,768     20,000     24                   2        
+  60    98f2b3-fe8880   32,768     0          This switch is root  2        
   61    98f2b3-fe8880   32,768     0          This switch is root  2        
   62    98f2b3-fe8880   32,768     0          This switch is root  2        
-  63    6400f1-016f80   32,768     20,000     24                   2        
+  63    98f2b3-fe8880   32,768     0          This switch is root  2        
   100   98f2b3-fe8880   32,768     0          This switch is root  2        
   850   98f2b3-fe8880   32,768     0          This switch is root  2        
  
@@ -941,8 +882,8 @@ show ip ssh
   Ses Type     | Source IP                                      Port 
   --- -------- + ---------------------------------------------- -----
   1   console  |
-  2   ssh      | 192.168.10.115                                 59208
-  3   ssh      | 192.168.10.115                                 36740
+  2   ssh      | 192.168.10.115                                 52164
+  3   ssh      | 192.168.10.115                                 44088
   4   inactive |
   5   inactive |
   6   inactive |
@@ -1024,131 +965,94 @@ show logging -r -e
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
-E 01/13/24 12:39:30 02703 OSPF: ADJCHG: Neighbor with Router ID 2.2.2.2 on
-            vlan-850 moved to Down state - adjacency lost.
 M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
-----  Top of Log : Events Listed = 2  ----
+----  Top of Log : Events Listed = 1  ----
 !---
 show logging -r -i
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
-I 01/13/24 15:50:25 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/13/24 15:50:24 03362 auth: User 'vector' logged in from 192.168.10.115 to
+I 01/14/24 20:59:31 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/14/24 20:59:30 03362 auth: User 'vector' logged in from 192.168.10.115 to
             SSH  session
-I 01/13/24 15:49:08 04910 ntp: All the NTP server associations reset.
-I 01/13/24 15:49:08 04908 ntp: The system clock time was changed by 0 sec
-            20717392 nsec.	 The new time is Sat Jan 13 15:49:08 2024
-.
-I 01/13/24 13:41:02 04910 ntp: All the NTP server associations reset.
-I 01/13/24 13:41:02 04908 ntp: The system clock time was changed by 0 sec
-            12128309 nsec.	 The new time is Sat Jan 13 13:41:02 2024
-.
-I 01/13/24 12:40:51 05101 amp-server: AMP server configuration is disabled due
-            to first configuration.
-E 01/13/24 12:39:30 02703 OSPF: ADJCHG: Neighbor with Router ID 2.2.2.2 on
-            vlan-850 moved to Down state - adjacency lost.
-I 01/13/24 12:38:52 00077 ports: port 22 in Trk1 is now off-line
-I 01/13/24 12:38:52 03816 stp: VLAN 850 - Root changed from 32768: 6400f1-016f80
-            to 32768: (this device)
-I 01/13/24 12:38:52 00079 ports: trunk Trk1 is now inactive
-I 01/13/24 12:38:52 00077 ports: port 21 in Trk1 is now off-line
-I 01/13/24 12:36:52 04910 ntp: All the NTP server associations reset.
-I 01/13/24 12:35:18 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/13/24 12:30:27 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-W 01/13/24 12:29:49 00419 auth: Invalid user name/password on SSH session User
-            'vector' is trying to login from 192.168.10.115
-I 01/13/24 12:27:18 03363 auth: User 'vector' logged out of SSH  session from 
+I 01/14/24 20:58:01 03363 auth: User 'vector' logged out of SSH  session from 
             192.168.10.115
-I 01/13/24 12:12:24 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/13/24 12:12:23 03362 auth: User 'vector' logged in from 192.168.10.115 to
+W 01/14/24 20:58:01 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/14/24 20:57:52 05101 amp-server: AMP server configuration is disabled due
+            to first configuration.
+I 01/14/24 20:57:31 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/14/24 20:57:30 03362 auth: User 'vector' logged in from 192.168.10.115 to
             SSH  session
-I 01/13/24 12:12:22 05219 activate: A system software update is available to
+W 01/14/24 18:18:34 00236 snmp: Security access violation from 192.168.10.115
+            for the community name or user name : public (9 times in 60 seconds)
+I 01/14/24 18:06:56 04910 ntp: All the NTP server associations reset.
+I 01/14/24 18:06:56 04908 ntp: The system clock time was changed by 0 sec
+            33286349 nsec.	 The new time is Sun Jan 14 18:06:56 2024
+.
+W 01/14/24 17:59:31 00236 snmp: Security access violation from 192.168.10.115
+            for the community name or user name : public (9 times in 60 seconds)
+W 01/14/24 17:13:40 00236 snmp: Security access violation from 192.168.10.115
+            for the community name or user name : public (9 times in 60 seconds)
+W 01/14/24 17:09:26 00236 snmp: Security access violation from 192.168.10.115
+            for the community name or user name : public (8 times in 60 seconds)
+W 01/14/24 17:08:13 00236 snmp: Security access violation from 192.168.10.115
+            for the community name or user name : public (9 times in 60 seconds)
+W 01/14/24 17:03:21 00236 snmp: Security access violation from 192.168.10.115
+            for the community name or user name : public
+I 01/14/24 15:16:17 04910 ntp: All the NTP server associations reset.
+I 01/14/24 15:16:17 04908 ntp: The system clock time was changed by 0 sec
+            42675028 nsec.	 The new time is Sun Jan 14 15:16:16 2024
+.
+I 01/14/24 13:08:15 04910 ntp: All the NTP server associations reset.
+I 01/14/24 13:08:15 04908 ntp: The system clock time was changed by 0 sec
+            9697556 nsec.	 The new time is Sun Jan 14 13:08:15 2024
+.
+I 01/14/24 12:30:34 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/14/24 12:30:33 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/14/24 12:04:10 04910 ntp: All the NTP server associations reset.
+I 01/14/24 11:39:36 05219 activate: A system software update is available to
             version WB.16.10.0024.
-I 01/13/24 12:12:22 05223 activate: Successfully established connection with the
+I 01/14/24 11:39:36 05223 activate: Successfully established connection with the
             Activate server;parsing final software update service response.
-I 01/13/24 12:12:19 05226 activate: Successfully resolved the Activate server
-            address devices-v2.arubanetworks.com to 35.85.163.200.
-I 01/13/24 12:12:19 05225 activate: Loading security certificates and
+I 01/14/24 11:39:33 05226 activate: Successfully resolved the Activate server
+            address devices-v2.arubanetworks.com to 52.34.71.189.
+I 01/14/24 11:39:33 05225 activate: Loading security certificates and
             synchronizing time.
-I 01/13/24 12:07:54 02703 OSPF: ADJCHG: Neighbor with Router ID 2.2.2.2 on
-            vlan-850 moved to Full state - adjacency formed.
-I 01/13/24 12:07:14 03816 stp: VLAN 850 - Root changed from 32768: (this device)
-            to 32768: 6400f1-016f80
-I 01/13/24 12:07:13 00076 ports: port 21 in Trk1 is now on-line
-I 01/13/24 12:07:13 00076 ports: port 22 in Trk1 is now on-line
-I 01/13/24 12:07:13 00078 ports: trunk Trk1 is now active
-I 01/13/24 12:07:10 00435 ports: port 22 is Blocked by LACP
-I 01/13/24 12:07:10 00435 ports: port 21 is Blocked by LACP
-I 01/13/24 12:07:08 00077 ports: port 22 in Trk1 is now off-line
-I 01/13/24 12:07:06 00435 ports: port 22 is Blocked by LACP
-I 01/13/24 12:07:03 03816 stp: VLAN 63 - Root changed from 32768: (this device)
-            to 32768: 6400f1-016f80
-I 01/13/24 12:07:03 03816 stp: VLAN 60 - Root changed from 32768: (this device)
-            to 32768: 6400f1-016f80
-I 01/13/24 12:07:03 03816 stp: VLAN 10 - Root changed from 32768: (this device)
-            to 32768: 6400f1-016f80
-I 01/13/24 12:07:02 02639 srcip: RADSEC src IP addr 10.254.34.18 is selected
-            from 'VLAN-850' interface
-I 01/13/24 12:07:02 02638 srcip: RADSEC oper policy is 'configured ip interface'
-I 01/13/24 12:07:02 02639 srcip: TUNNELED-NODE-SERVE src IP addr 10.254.34.18 is
-            selected from 'VLAN-850' interface
-I 01/13/24 12:07:02 02638 srcip: TUNNELED-NODE-SERVE oper policy is 'configured
-            ip interface'
-I 01/13/24 12:07:02 02639 srcip: SFLOW src IP addr 10.254.34.18 is selected from
-            'VLAN-850' interface
-I 01/13/24 12:07:02 02638 srcip: SFLOW oper policy is 'configured ip interface'
-I 01/13/24 12:07:02 02639 srcip: TFTP src IP addr 10.254.34.18 is selected from
-            'VLAN-850' interface
-I 01/13/24 12:07:02 02638 srcip: TFTP oper policy is 'configured ip interface'
-I 01/13/24 12:07:02 02639 srcip: TELNET src IP addr 10.254.34.18 is selected
-            from 'VLAN-850' interface
-I 01/13/24 12:07:02 02638 srcip: TELNET oper policy is 'configured ip interface'
-I 01/13/24 12:07:02 02639 srcip: SYSLOG src IP addr 10.254.34.18 is selected
-            from 'VLAN-850' interface
-I 01/13/24 12:07:02 02638 srcip: SYSLOG oper policy is 'configured ip interface'
-I 01/13/24 12:07:02 02639 srcip: RADIUS src IP addr 10.254.34.18 is selected
-            from 'VLAN-850' interface
-I 01/13/24 12:07:02 02638 srcip: RADIUS oper policy is 'configured ip interface'
-I 01/13/24 12:07:02 02639 srcip: TACACS src IP addr 10.254.34.18 is selected
-            from 'VLAN-850' interface
-I 01/13/24 12:07:02 02638 srcip: TACACS oper policy is 'configured ip interface'
-I 01/13/24 12:07:01 00001 vlan: OSPF-Peering virtual LAN enabled
-I 01/13/24 12:06:59 00076 ports: port 1 is now on-line
-I 01/13/24 12:04:50 04910 ntp: All the NTP server associations reset.
-I 01/13/24 12:03:47 04611 job: Job Scheduler enabled
-I 01/13/24 12:03:32 04910 ntp: All the NTP server associations reset.
-I 01/13/24 12:03:32 04909 ntp: The NTP Stratum was changed from 16 to 2.
-I 01/13/24 12:03:32 04908 ntp: The system clock time was changed by 1074024106
-            sec 703451872 nsec.	 The new time is Sat Jan 13 12:03:32 2024
+I 01/14/24 11:32:04 04910 ntp: All the NTP server associations reset.
+I 01/14/24 11:31:01 04611 job: Job Scheduler enabled
+I 01/14/24 11:30:47 04910 ntp: All the NTP server associations reset.
+I 01/14/24 11:30:47 04909 ntp: The NTP Stratum was changed from 16 to 2.
+I 01/14/24 11:30:47 04908 ntp: The system clock time was changed by 1074108540
+            sec 68478584 nsec.	 The new time is Sun Jan 14 11:30:46 2024
 .
 I 01/01/90 00:01:33 04911 ntp: The NTP Server 129.6.15.29 is unreachable.
 I 01/01/90 00:01:11 04911 ntp: The NTP Server 192.168.10.221 is unreachable.
-I 01/01/90 00:00:52 05083 chassis: Ports 13-24: PoE Software updated from
+I 01/01/90 00:00:53 05083 chassis: Ports 13-24: PoE Software updated from
             version 04 to 38.
-I 01/01/90 00:00:49 02639 srcip: SNTP src IP addr 192.168.10.52 is selected from
+I 01/01/90 00:00:50 02639 srcip: SNTP src IP addr 192.168.10.52 is selected from
             'VLAN-10' interface
-I 01/01/90 00:00:49 02638 srcip: SNTP oper policy is 'configured ip interface'
-I 01/01/90 00:00:48 00001 vlan: IOT3 virtual LAN enabled
-I 01/01/90 00:00:48 00001 vlan: IOT2 virtual LAN enabled
-I 01/01/90 00:00:48 00001 vlan: IOT1 virtual LAN enabled
-I 01/01/90 00:00:48 00001 vlan: IOT0 virtual LAN enabled
-I 01/01/90 00:00:48 00001 vlan: Voice virtual LAN enabled
-I 01/01/90 00:00:48 00001 vlan: User virtual LAN enabled
+I 01/01/90 00:00:50 02638 srcip: SNTP oper policy is 'configured ip interface'
+I 01/01/90 00:00:49 00001 vlan: IOT3 virtual LAN enabled
+I 01/01/90 00:00:49 00001 vlan: IOT2 virtual LAN enabled
+I 01/01/90 00:00:49 00001 vlan: IOT1 virtual LAN enabled
+I 01/01/90 00:00:49 00001 vlan: IOT0 virtual LAN enabled
+I 01/01/90 00:00:49 00001 vlan: Voice virtual LAN enabled
+I 01/01/90 00:00:49 00001 vlan: User virtual LAN enabled
 I 01/01/90 00:00:47 00001 vlan: DEFAULT_VLAN virtual LAN enabled
-I 01/01/90 00:00:46 00076 ports: port 24 is now on-line
+I 01/01/90 00:00:47 00076 ports: port 24 is now on-line
 I 01/01/90 00:00:45 05083 chassis: Ports 1-12: PoE Software updated from version
             04 to 38.
 I 01/01/90 00:00:45 00076 ports: port 7 is now on-line
-I 01/01/90 00:00:42 02555 chassis: Co-processor Ready
-I 01/01/90 00:00:40 03803 chassis: System Self test completed on 1-24 
+I 01/01/90 00:00:43 02555 chassis: Co-processor Ready
+I 01/01/90 00:00:41 03803 chassis: System Self test completed on 1-24 
+I 01/01/90 00:00:36 03802 chassis: System Self test started on 1-24 
 I 01/01/90 00:00:36 03401 crypto: Function POWER UP passed selftest.
-I 01/01/90 00:00:35 03802 chassis: System Self test started on 1-24 
 I 01/01/90 00:00:35 04262 dhcp-server: All IP addresses are removed from the
             conflict-logging database
 I 01/01/90 00:00:35 04250 dhcp-server: DHCP server is enabled globally
-I 01/01/90 00:00:34 02553 chassis: Loading of Co-processor OS image complete.
+I 01/01/90 00:00:35 02553 chassis: Loading of Co-processor OS image complete.
 I 01/01/90 00:00:34 02552 chassis: Loading of Co-processor OS image in progress.
 I 01/01/90 00:00:34 02550 chassis: Requesting Co-processor OS image location in
             flash.
@@ -1227,7 +1131,7 @@ I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master
 I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
 I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master 
 I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
-----  Top of Log : Events Listed = 142  ----
+----  Top of Log : Events Listed = 115  ----
 !---
 show logging -r -m
  Keys:   W=Warning   I=Information
@@ -1240,12 +1144,22 @@ show logging -r -w
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
-E 01/13/24 12:39:30 02703 OSPF: ADJCHG: Neighbor with Router ID 2.2.2.2 on
-            vlan-850 moved to Down state - adjacency lost.
-W 01/13/24 12:29:49 00419 auth: Invalid user name/password on SSH session User
-            'vector' is trying to login from 192.168.10.115
+W 01/14/24 20:58:01 00641 ssh: read error Connection reset by peer, session
+            aborted
+W 01/14/24 18:18:34 00236 snmp: Security access violation from 192.168.10.115
+            for the community name or user name : public (9 times in 60 seconds)
+W 01/14/24 17:59:31 00236 snmp: Security access violation from 192.168.10.115
+            for the community name or user name : public (9 times in 60 seconds)
+W 01/14/24 17:13:40 00236 snmp: Security access violation from 192.168.10.115
+            for the community name or user name : public (9 times in 60 seconds)
+W 01/14/24 17:09:26 00236 snmp: Security access violation from 192.168.10.115
+            for the community name or user name : public (8 times in 60 seconds)
+W 01/14/24 17:08:13 00236 snmp: Security access violation from 192.168.10.115
+            for the community name or user name : public (9 times in 60 seconds)
+W 01/14/24 17:03:21 00236 snmp: Security access violation from 192.168.10.115
+            for the community name or user name : public
 M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
-----  Top of Log : Events Listed = 3  ----
+----  Top of Log : Events Listed = 8  ----
 !---
 show crypto host-public-key fingerprint
 1024 cb:a8:d6:c7:da:bd:67:53:91:8c:c0:1b:49:d1:a1:2d: host_ssh2.pub
@@ -1269,7 +1183,6 @@ show mac-address | ex 24
 
   MAC Address   Port    VLAN
   ------------- ------- ----
-  6400f1-016f81 1       850 
  
 
 !---
@@ -1280,7 +1193,6 @@ show arp
   IP Address       MAC Address       Type    Port
   ---------------  ----------------- ------- ----
   192.168.10.115   28d0ea-932a42     dynamic 24  
-  192.168.10.117   b099d7-f9dad5     dynamic 24  
   192.168.10.221   000c29-4caa4e     dynamic 24  
   192.168.10.254   085b0e-7c7930     dynamic 24  
 

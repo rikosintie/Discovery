@@ -72,8 +72,8 @@ __license__ = "Unlicense"
 #  Created by Michael Hubbard on 2023-12-20.
 
 # comment out ic.disable() and uncomment ic.enable() to use icecream
-ic.enable()
-# ic.disable()
+# ic.enable()
+ic.disable()
 
 
 # def get_current_path(sub_dir1: str, extension: str, sub_dir2="") -> str:

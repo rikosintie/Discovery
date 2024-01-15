@@ -58,6 +58,7 @@ ntp server 192.168.10.221
 ntp enable
 snmp-server community "SuperSecret" operator unrestricted
 snmp-server mib hpSwitchAuthMIB excluded
+snmp-server contact "Michael Hubbard" location "Home Lab"
 interface 1
    untagged vlan 850
    exit

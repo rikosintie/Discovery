@@ -4,9 +4,9 @@
     "type": "100/1000T",
     "intrusion_alert": "No",
     "enabled": "Yes",
-    "status": "Up",
+    "status": "Down",
     "mode": "1000FDx",
-    "mdi_mode": "MDIX",
+    "mdi_mode": "Auto",
     "flow_ctrl": "off",
     "bcast_limit": "0"
   },
@@ -259,7 +259,7 @@
     "enabled": "Yes",
     "status": "Up",
     "mode": "1000FDx",
-    "mdi_mode": "MDIX",
+    "mdi_mode": "MDI",
     "flow_ctrl": "off",
     "bcast_limit": "0"
   }
