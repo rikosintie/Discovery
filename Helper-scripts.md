@@ -357,3 +357,5 @@ Interface 7 - total_bytes 1,054,112
 ## Convert MAC addresses
 
 [Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
+[Getting Started](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)<!-- omit from toc -->
+[Usage](https://github.com/rikosintie/Discovery/blob/main/usage.md)<!-- omit from toc -->

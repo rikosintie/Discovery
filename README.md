@@ -206,6 +206,6 @@ This project is licensed under the Unlicense - see the LICENSE file for details.
 You can create the JSON format data file of an SPDX compatible SBOM file using Insights, Dependency Graph, Export SBOM from the repository home page. The filename is sbom.json for this project.
 
 [Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
-[Getting Started](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)
+[Getting Started](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)<!-- omit from toc -->
 [Usage](https://github.com/rikosintie/Discovery/blob/main/usage.md)<!-- omit from toc -->
 [The Helper Scripts](https://github.com/rikosintie/Discovery/blob/main/Helper-scripts.md)<!-- omit from toc -->
