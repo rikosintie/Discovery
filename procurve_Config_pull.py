@@ -255,7 +255,7 @@ for line in fabric:
                 command, strip_command=False, delay_factor=3
             )
             ic(output_show)
-            output_show_str = output_show_str + "\n" + "!---" + "\n" + output_show
+            output_show_str = f"{output_show_str} \n !++++++++++++++ \n  {output_show}"
 
         # pull logs. Logs tend to time out because they are so large
         # you can set the timeout value up if they are timing out.
