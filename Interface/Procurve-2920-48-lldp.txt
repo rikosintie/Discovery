@@ -2,20 +2,6 @@
   {
     "local_port": "24",
     "neighbor_chassis_type": "mac-address",
-    "neighbor_chassis_id": "ea e6 4b 18 de 20",
-    "port_type": "mac-address",
-    "neighbor_portid": "50 ed 3c 22 be 32",
-    "neighbor_sysname": "hp8600-2328.local",
-    "system_descr": " Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 0...",
-    "port_descr": "en0",
-    "pvid": "",
-    "system_capabilities_supported": "bridge, wlan-access-point, router",
-    "system_capabilities_enabled": "bridge, wlan-access-point",
-    "remote_management_address": "fe80::1"
-  },
-  {
-    "local_port": "24",
-    "neighbor_chassis_type": "mac-address",
     "neighbor_chassis_id": "54 bf 64 3b 9c 68",
     "port_type": "mac-address",
     "neighbor_portid": "28 d0 ea 93 2a 42",

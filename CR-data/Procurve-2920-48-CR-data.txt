@@ -1,6 +1,6 @@
-
-!---
-show system
+ 
+ !++++++++++++++ 
+  show system
 
  Status and Counters - General System Information
 
@@ -16,21 +16,21 @@ show system
   Software revision  : WB.16.10.0023        Base MAC Addr      : 98f2b3-fe8880
   ROM Version        : WB.16.03             Serial Number      : SG78FLXH0B  
 
-  Up Time            : 72 mins              Memory   - Total   : 72,483,328  
-  CPU Util (%)       : 30                              Free    : 40,300,912  
+  Up Time            : 3 hours              Memory   - Total   : 72,483,328  
+  CPU Util (%)       : 22                              Free    : 40,293,684  
 
-  IP Mgmt  - Pkts Rx : 5034                 Packet   - Total   : 6750        
-             Pkts Tx : 4104                 Buffers    Free    : 5009        
+  IP Mgmt  - Pkts Rx : 10,298               Packet   - Total   : 6750        
+             Pkts Tx : 7949                 Buffers    Free    : 5009        
                                                        Lowest  : 4993        
                                                        Missed  : 0           
-
-!---
-show config status
+ 
+ !++++++++++++++ 
+  show config status
 
 The running configuration matches the saved configuration.
-
-!---
-show oobm
+ 
+ !++++++++++++++ 
+  show oobm
 
  Global OOBM Configuration 
   OOBM Enabled           : Yes  
@@ -39,9 +39,9 @@ show oobm
   OOBM Port              : Enabled     
   OOBM Port Speed        : Auto        
   MAC Address            : 98f2b3-fe8881
-
-!---
-show oobm ip
+ 
+ !++++++++++++++ 
+  show oobm ip
 
   IPv4 Status          : Enabled 
   IPv4 Default Gateway :                                               
@@ -50,52 +50,52 @@ show oobm ip
  Member | IP Config IP Address/Prefix Length  Status   Status   
  ------ + --------- ------------------------- -------- ---------
  Global | dhcp                                         Down     
-
-!---
-show time
-Tue Jan 16 12:23:14 2024
-!---
-show uptime
-0000:01:12:03.69
-!---
-show ntp status
+ 
+ !++++++++++++++ 
+  show time
+Tue Jan 16 14:46:56 2024 
+ !++++++++++++++ 
+  show uptime
+0000:03:35:45.39 
+ !++++++++++++++ 
+  show ntp status
 
  NTP Status Information
 
   NTP Status             : Enabled         NTP Mode        : Unicast         
   Synchronization Status : Synchronized    Peer Dispersion : 0.00000 sec     
   Stratum Number         : 2               Leap Direction  : 0               
-  Reference Assoc ID     : 0               Clock Offset    : 0.00461 sec     
-  Reference ID           : 129.6.15.29     Root Delay      : 0.07085 sec     
-  Precision              : 2**-18          Root Dispersion : 0.17802 sec     
-  NTP Up Time            : 0d 1h 11m       Time Resolution : 697 nsec        
+  Reference Assoc ID     : 0               Clock Offset    : 0.01107 sec     
+  Reference ID           : 129.6.15.29     Root Delay      : 0.07125 sec     
+  Precision              : 2**-18          Root Dispersion : 0.57886 sec     
+  NTP Up Time            : 0d 3h 35m       Time Resolution : 697 nsec        
   Drift                  : 0.00000 sec/sec 
 
-  System Time            : Tue Jan 16 12:23:15 2024                
-  Reference Time         : Tue Jan 16 11:44:00 2024                
-
-!---
-show ntp associations
+  System Time            : Tue Jan 16 14:46:56 2024                
+  Reference Time         : Tue Jan 16 12:48:00 2024                
+ 
+ !++++++++++++++ 
+  show ntp associations
 
                             NTP Associations Entries
 
 
  Remote          St   T    When   Poll  Reach    Delay    Offset   Dispersion
  --------------- ---- ---- ------ ----- -------- -------- -------- ----------
- 129.6.15.29     1    u    4317   13    37       0.000    0.000    15.18137  
- 192.168.10.221  1    u    4317   9     37       0.000    0.000    15.17957  
-
-!---
-show ntp server
+ 129.6.15.29     1    u    12938  13    377      0.000    0.000    8.88811   
+ 192.168.10.221  1    u    12938  10    377      0.000    0.000    8.89138   
+ 
+ !++++++++++++++ 
+  show ntp server
 
                              NTP Server Information
 
  Server address    
  ------------------
  129.6.15.29       
- 192.168.10.221    
-!---
-show ip dns
+ 192.168.10.221     
+ !++++++++++++++ 
+  show ip dns
 
   DNS Mode              :   Manual
 
@@ -115,9 +115,9 @@ show ip dns
     1.     192.168.10.221                           NO
 
 
-
-!---
-show job
+ 
+ !++++++++++++++ 
+  show job
 
  Job Scheduler Status and Configuration
 
@@ -127,13 +127,13 @@ show job
   Name               Time                 Count  Cfg  Command
   ------------------ -------------------- ------ ---- -------------------------
   wrmem              23:00                --     No   write memory
-
-!---
-show version | i ROM
+ 
+ !++++++++++++++ 
+  show version | i ROM
 Boot ROM Version:    WB.16.03
-Active Boot ROM:     Primary
-!---
-show config vlan
+Active Boot ROM:     Primary 
+ !++++++++++++++ 
+  show config vlan
 
 Startup configuration: 44
 
@@ -209,9 +209,9 @@ vlan 850
    ip source-interface radsec vlan
    primary-vlan
    exit
-
-!---
-show vlan custom id name:15 ipaddr ipmask ipconfig state voice jumbo
+ 
+ !++++++++++++++ 
+  show vlan custom id name:15 ipaddr ipmask ipconfig state voice jumbo
 
 Status and Counters - VLAN Information - Custom view
 
@@ -226,9 +226,9 @@ Status and Counters - VLAN Information - Custom view
  63     IOT3            10.14.63.17     255.255.255.248 Manual     Up    No    No   
  100    test            10.10.100.1     255.255.255.0   Manual     Down  No    No   
  850    OSPF-Peering    10.254.34.18    255.255.255.252 Manual     Down  No    No   
-
-!---
-show config interface
+ 
+ !++++++++++++++ 
+  show config interface
 
 Startup configuration: 44
 
@@ -343,9 +343,9 @@ interface Trk1
 interface loopback 0
    ip address 1.1.1.1
    exit
-
-!---
-show ip
+ 
+ !++++++++++++++ 
+  show ip
 
  Internet (IP) Service
 
@@ -378,9 +378,9 @@ show ip
   ------------ + ------------ --------------- ---------------
            lo0 | Manual                1.1.1.1 255.255.255.255
 
-
-!---
-show ip source-interface
+ 
+ !++++++++++++++ 
+  show ip source-interface
 
  Source-IP Configuration Information
 
@@ -394,9 +394,9 @@ show ip source-interface
   Sntp     | Configured IP Interface vlan-10        192.168.10.52  
   Sflow    | Configured IP Interface vlan-850       10.254.34.18   
   Tunne... | Configured IP Interface vlan-850       10.254.34.18   
-  RADSEC   | Configured IP Interface vlan-850       10.254.34.18   
-!---
-show ip route 0.0.0.0
+  RADSEC   | Configured IP Interface vlan-850       10.254.34.18    
+ !++++++++++++++ 
+  show ip route 0.0.0.0
 
                                                                                                                                                                                                                                                   IP Route Entries to 0.0.0.0
 
@@ -404,9 +404,9 @@ show ip route 0.0.0.0
   ------------------ --------------- ---- --------- ---------- ---------- -----
   0.0.0.0/0          192.168.10.254  10   static               1          1    
  
-
-!---
-show config router ospf
+ 
+ !++++++++++++++ 
+  show config router ospf
 
 Startup configuration: 44
 
@@ -415,15 +415,15 @@ router ospf
    redistribute connected route-map "SITE30"
    enable
    exit
-
-!---
-show ip route ospf
+ 
+ !++++++++++++++ 
+  show ip route ospf
 
                                                                                                                                                                                                                                                        IP Route Entries
 
-
-!---
-show ip ospf interface
+ 
+ !++++++++++++++ 
+  show ip ospf interface
 
  OSPF Interface Status
 
@@ -431,18 +431,18 @@ show ip ospf interface
   --------------- -------- --------------- -------- --------- ----- --- -------
   10.254.34.18    enabled  backbone        DOWN     none      1     1   no     
  
-
-!---
-show ip ospf neighbor
+ 
+ !++++++++++++++ 
+  show ip ospf neighbor
 
  OSPF Neighbor Information
 
   Router ID       Pri IP Address      NbIfState State    QLen  Events Status
   --------------- --- --------------- --------- -------- ----- ------ ------
  
-
-!---
-show ip ospf general
+ 
+ !++++++++++++++ 
+  show ip ospf general
 
  OSPF General Status
 
@@ -460,7 +460,7 @@ show ip ospf general
   Area Border               : no 
   AS Border                 : yes
   External LSA Count        : 7          
-  External LSA Checksum Sum : 204852     
+  External LSA Checksum Sum : 211964     
   Originate New LSA Count   : 6          
   Receive New LSA Count     : 0          
 
@@ -476,25 +476,25 @@ show ip ospf general
   Wait Interval          : 0          
   Maximum Wait Time      : 0          
   Current Wait Interval  : 5          
-
-!---
-show ip ospf external-link-state
+ 
+ !++++++++++++++ 
+  show ip ospf external-link-state
 
  OSPF External LSAs
 
   Link State ID   Router ID       Age  Sequence #  Checksum  
   --------------- --------------- ---- ----------- ----------
-  1.1.1.1         1.1.1.1         605  0x80000003  0x00001237
-  10.14.63.16     1.1.1.1         605  0x80000003  0x0000925a
-  10.14.64.16     1.1.1.1         605  0x80000003  0x00008764
-  10.14.65.16     1.1.1.1         605  0x80000003  0x00007c6e
-  10.14.66.16     1.1.1.1         605  0x80000003  0x00007178
-  10.164.24.0     1.1.1.1         605  0x80000003  0x0000fc89
-  192.168.10.0    1.1.1.1         605  0x80000003  0x000020b9
+  1.1.1.1         1.1.1.1         1787 0x80000007  0x00000a3b
+  10.14.63.16     1.1.1.1         1787 0x80000007  0x00008a5e
+  10.14.64.16     1.1.1.1         1787 0x80000007  0x00007f68
+  10.14.65.16     1.1.1.1         1787 0x80000007  0x00007472
+  10.14.66.16     1.1.1.1         1787 0x80000007  0x0000697c
+  10.164.24.0     1.1.1.1         1787 0x80000007  0x0000f48d
+  192.168.10.0    1.1.1.1         1787 0x80000007  0x000018bd
  
-
-!---
-show interface status
+ 
+ !++++++++++++++ 
+  show interface status
   Port     Name       Status  Config-mode   Speed    Type       Tagged Untagged
   -------- ---------- ------- ------------- -------- ---------- ------ --------
   1                   Down    Auto          1000FDx  100/1000T  No     850     
@@ -520,13 +520,13 @@ show interface status
   21-Trk1             Down    Auto-1000     1000FDx  1000T-SFP  850    No      
   22-Trk1             Down    Auto-1000     1000FDx  1000T-SFP  850    No      
   23                  Down    Auto          1000FDx  100/1000T  No     1       
-  24                  Up      Auto          1000FDx  100/1000T  multi  10      
-!---
-show int status | i Up
+  24                  Up      Auto          1000FDx  100/1000T  multi  10       
+ !++++++++++++++ 
+  show int status | i Up
   7                   Up      Auto          100FDx   100/1000T  No     1       
-  24                  Up      Auto          1000FDx  100/1000T  multi  10      
-!---
-show interfaces transceiver detail
+  24                  Up      Auto          1000FDx  100/1000T  multi  10       
+ !++++++++++++++ 
+  show interfaces transceiver detail
 
 Transceiver in 21*
    Interface Index    : 21  
@@ -547,9 +547,9 @@ Transceiver in 22*
    Transfer Distance  : 100m (copper),                                  
    Diagnostic Support : None  
    Serial Number      : unsupported     
-* third-party transceiver
-!---
-show trunks
+* third-party transceiver 
+ !++++++++++++++ 
+  show trunks
 
  Load Balancing Method:  L3-based (default)
 
@@ -558,9 +558,9 @@ show trunks
   21     |                                  1000T-SFP  | Trk1  LACP    
   22     |                                  1000T-SFP  | Trk1  LACP    
  
-
-!---
-show lacp peer
+ 
+ !++++++++++++++ 
+  show lacp peer
 
 LACP Peer Information.
 
@@ -574,9 +574,9 @@ System ID: 98f2b3-fe8880
   21     Trk1   000000-000000  21    0         0       Passive  Fast 
   22     Trk1   000000-000000  22    0         0       Passive  Fast 
  
-
-!---
-show lacp local
+ 
+ !++++++++++++++ 
+  show lacp local
 
 LACP Local Information.
 
@@ -590,15 +590,15 @@ System ID: 98f2b3-fe8880
   21   Trk1   Active   Yes         Slow   No      
   22   Trk1   Active   Yes         Slow   No      
  
-
-!---
-show lacp mad-passthrough
+ 
+ !++++++++++++++ 
+  show lacp mad-passthrough
 
   Trunk-Group  LACP-MAD-PASSTHROUGH
   ------------ ---------------------
-  Trk1         Disabled             
-!---
-show cdp neighbors
+  Trk1         Disabled              
+ !++++++++++++++ 
+  show cdp neighbors
 
  CDP neighbors information
 
@@ -608,9 +608,9 @@ show cdp neighbors
   24     9c 8c d8 c9 17 ae             | ArubaOS (MODEL: 515), Ver...            
   24     fc ec da c4 6e 55             |                                         
   24     Garage                        | NanoStation 5AC loc          T          
- 
-!---
-show cdp nei d
+  
+ !++++++++++++++ 
+  show cdp nei d
 
  CDP neighbors information
 
@@ -655,9 +655,9 @@ show cdp nei d
   Capability   : Trans Bridge                                               
   Device Port  : br0                                                        
   Version      : WA.ar934x.v8.7.1.42832.200623.1641                         
-
-!---
-show lldp info remote
+ 
+ !++++++++++++++ 
+  show lldp info remote
 
  LLDP Remote Devices Information
 
@@ -668,9 +668,9 @@ show lldp info remote
   24        | fc ec da c4 6e 55  eth0                                           
   24        | Garage             br0                          NanoStation 5AC...
  
-
-!---
-show lldp info remote d
+ 
+ !++++++++++++++ 
+  show lldp info remote d
 
  LLDP Remote Device Information Detail
 
@@ -745,9 +745,9 @@ show lldp info remote d
      Type    : ipv4
      Address : 192.168.10.51
 
-
-!---
-show spanning-tree
+ 
+ !++++++++++++++ 
+  show spanning-tree
 
  Spanning Tree Information
 
@@ -777,23 +777,23 @@ show spanning-tree
   63    98f2b3-fe8880   32,768     0          This switch is root  2        
   100   98f2b3-fe8880   32,768     0          This switch is root  2        
   850   98f2b3-fe8880   32,768     0          This switch is root  2        
- 
-!---
-show spanning-tree inconsistent-ports
+  
+ !++++++++++++++ 
+  show spanning-tree inconsistent-ports
  VLAN ID    Blocked Port Reason                   
- ---------- ------------ -------------------------
-!---
-show spanning-tree bpdu-protection
+ ---------- ------------ ------------------------- 
+ !++++++++++++++ 
+  show spanning-tree bpdu-protection
 
  Status and Counters - STP Port(s) BPDU Protection Information
 
  BPDU Protection Timeout (sec) : 90                    
  BPDU Protected Ports : 2-20                                                                            
-
-!---
-show power-over-ethernet brief | i Del
-!---
-show power
+ 
+ !++++++++++++++ 
+  show power-over-ethernet brief | i Del 
+ !++++++++++++++ 
+  show power
 
  Status and Counters - System Power Status
 
@@ -820,9 +820,9 @@ show power
         EPS1   /Not Connected.                            
  
  Refer to command's help option for field definitions
-
-!---
-show modules
+ 
+ !++++++++++++++ 
+  show modules
 
  Status and Counters - Module Information
 
@@ -832,9 +832,9 @@ show modules
   Slot  Module Description                         Serial Number    Status    
   ----- ------------------------------------------ ---------------- ----------
 
-
-!---
-show ip ssh
+ 
+ !++++++++++++++ 
+  show ip ssh
 
   SSH Enabled     : Yes                 Secure Copy Enabled : No 
   TCP Port Number : 22                  Timeout (sec)       : 120  
@@ -850,14 +850,14 @@ show ip ssh
   --- -------- + ---------------------------------------------- -----
   1   console  |
   2   ssh      | 192.168.10.115                                 53122
-  3   ssh      | 192.168.10.115                                 60974
+  3   ssh      | 192.168.10.115                                 60582
   4   inactive |
   5   inactive |
   6   inactive |
   7   inactive |
- 
-!---
-show snmp-server
+  
+ !++++++++++++++ 
+  show snmp-server
 
  SNMP Communities
 
@@ -909,15 +909,15 @@ show snmp-server
 
   Selection Policy   : rfc1517             
 
-
-!---
-show dhcp-server binding
+ 
+ !++++++++++++++ 
+  show dhcp-server binding
 
  DHCP Server Bindings
 
-
-!---
-show dhcp-server pool
+ 
+ !++++++++++++++ 
+  show dhcp-server pool
 
  Status and Counters - DHCP Server Pools
 
@@ -926,210 +926,12 @@ show dhcp-server pool
   Low Threshold  : 5         
   High Threshold : 17        
   Free Leases    : 21        
-
-!---
-show logging -r -e
- Keys:   W=Warning   I=Information
-         M=Major     D=Debug E=Error
-----  Reverse event Log listing: Events Since Boot  ----
-M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
-----  Top of Log : Events Listed = 1  ----
-!---
-show logging -r -i
- Keys:   W=Warning   I=Information
-         M=Major     D=Debug E=Error
-----  Reverse event Log listing: Events Since Boot  ----
-I 01/16/24 12:23:13 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/16/24 12:23:12 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/16/24 12:22:22 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-I 01/16/24 12:20:51 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/16/24 12:20:50 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/16/24 12:18:24 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-I 01/16/24 12:11:42 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/16/24 12:11:41 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/16/24 12:11:23 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-I 01/16/24 12:10:34 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/16/24 12:10:33 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/16/24 12:08:58 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-I 01/16/24 12:08:09 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/16/24 12:08:08 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/16/24 12:06:30 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-I 01/16/24 12:05:27 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/16/24 12:05:26 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/16/24 11:59:38 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/16/24 11:59:35 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/16/24 11:45:54 04910 ntp: All the NTP server associations reset.
-I 01/16/24 11:25:17 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-W 01/16/24 11:25:17 00641 ssh: read error Connection reset by peer, session
-            aborted
-I 01/16/24 11:23:57 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/16/24 11:23:56 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/16/24 11:21:23 05219 activate: A system software update is available to
-            version WB.16.10.0024.
-I 01/16/24 11:21:23 05223 activate: Successfully established connection with the
-            Activate server;parsing final software update service response.
-I 01/16/24 11:21:20 05226 activate: Successfully resolved the Activate server
-            address devices-v2.arubanetworks.com to 52.34.71.189.
-I 01/16/24 11:21:20 05225 activate: Loading security certificates and
-            synchronizing time.
-I 01/16/24 11:15:21 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-W 01/16/24 11:15:21 00641 ssh: read error Connection reset by peer, session
-            aborted
-I 01/16/24 11:15:12 05101 amp-server: AMP server configuration is disabled due
-            to first configuration.
-I 01/16/24 11:14:04 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/16/24 11:14:04 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/16/24 11:13:51 04910 ntp: All the NTP server associations reset.
-I 01/16/24 11:12:48 04611 job: Job Scheduler enabled
-I 01/16/24 11:12:33 04910 ntp: All the NTP server associations reset.
-I 01/16/24 11:12:33 04909 ntp: The NTP Stratum was changed from 16 to 2.
-I 01/16/24 11:12:33 04908 ntp: The system clock time was changed by 1074280247
-            sec 48199177 nsec.	 The new time is Tue Jan 16 11:12:33 2024
-.
-I 01/01/90 00:01:33 04911 ntp: The NTP Server 129.6.15.29 is unreachable.
-I 01/01/90 00:01:11 04911 ntp: The NTP Server 192.168.10.221 is unreachable.
-I 01/01/90 00:00:52 05083 chassis: Ports 13-24: PoE Software updated from
-            version 04 to 38.
-I 01/01/90 00:00:49 02639 srcip: SNTP src IP addr 192.168.10.52 is selected from
-            'VLAN-10' interface
-I 01/01/90 00:00:49 02638 srcip: SNTP oper policy is 'configured ip interface'
-I 01/01/90 00:00:48 00001 vlan: IOT3 virtual LAN enabled
-I 01/01/90 00:00:48 00001 vlan: IOT2 virtual LAN enabled
-I 01/01/90 00:00:48 00001 vlan: IOT1 virtual LAN enabled
-I 01/01/90 00:00:48 00001 vlan: IOT0 virtual LAN enabled
-I 01/01/90 00:00:48 00001 vlan: Voice virtual LAN enabled
-I 01/01/90 00:00:48 00001 vlan: User virtual LAN enabled
-I 01/01/90 00:00:47 00001 vlan: DEFAULT_VLAN virtual LAN enabled
-I 01/01/90 00:00:46 00076 ports: port 24 is now on-line
-I 01/01/90 00:00:45 05083 chassis: Ports 1-12: PoE Software updated from version
-            04 to 38.
-I 01/01/90 00:00:45 00076 ports: port 7 is now on-line
-I 01/01/90 00:00:42 02555 chassis: Co-processor Ready
-I 01/01/90 00:00:40 03803 chassis: System Self test completed on 1-24 
-I 01/01/90 00:00:36 03401 crypto: Function POWER UP passed selftest.
-I 01/01/90 00:00:35 03802 chassis: System Self test started on 1-24 
-I 01/01/90 00:00:35 04262 dhcp-server: All IP addresses are removed from the
-            conflict-logging database
-I 01/01/90 00:00:35 04250 dhcp-server: DHCP server is enabled globally
-I 01/01/90 00:00:34 02553 chassis: Loading of Co-processor OS image complete.
-I 01/01/90 00:00:33 02552 chassis: Loading of Co-processor OS image in progress.
-I 01/01/90 00:00:33 02550 chassis: Requesting Co-processor OS image location in
-            flash.
-I 01/01/90 00:00:33 00066 system: System Booted
-I 01/01/90 00:00:32 04274 dhcp-server: DHCP server is listening for DHCP packets
-I 01/01/90 00:00:32 04255 dhcp-server: DHCP server is enabled on VLAN 100
-I 01/01/90 00:00:32 04260 dhcp-server: Conflict-logging is disabled
-I 01/01/90 00:00:32 04257 dhcp-server: Ping-check configured with retry count =
-            2, timeout = 1
-I 01/01/90 00:00:32 02012 mtm: A non-multicast client: Non-Mcast client Op, is
-            registered with client ID:  1
-I 01/01/90 00:00:31 04905 ntp: NTP Client enabled
-I 01/01/90 00:00:31 00410 SNTP: Client is enabled.
-I 01/01/90 00:00:31 02633 SNTP: Client authentication is disabled.
-I 01/01/90 00:00:31 00688 lldp: LLDP - enabled
-I 01/01/90 00:00:31 00417 cdp: CDP enabled
-I 01/01/90 00:00:31 04695 auth: Command authorization method set to none.
-I 01/01/90 00:00:31 00433 ssh: Ssh server enabled
-I 01/01/90 00:00:31 03811 stp: VLAN 850 - RPVST enabled
-I 01/01/90 00:00:31 03811 stp: VLAN 100 - RPVST enabled
-I 01/01/90 00:00:31 03811 stp: VLAN 63 - RPVST enabled
-I 01/01/90 00:00:31 03811 stp: VLAN 62 - RPVST enabled
-I 01/01/90 00:00:31 03811 stp: VLAN 61 - RPVST enabled
-I 01/01/90 00:00:31 03811 stp: VLAN 60 - RPVST enabled
-I 01/01/90 00:00:31 03811 stp: VLAN 20 - RPVST enabled
-I 01/01/90 00:00:31 03811 stp: VLAN 10 - RPVST enabled
-I 01/01/90 00:00:31 03811 stp: VLAN 1 - RPVST enabled
-I 01/01/90 00:00:29 00110 telnet: telnetd service enabled
-I 01/01/90 00:00:29 00116 telnet: telnetd service enabled on OOBM
-I 01/01/90 00:00:28 02638 srcip: RADIUS oper policy for IPv6 is 'outgoing
-            interface'
-I 01/01/90 00:00:28 02637 srcip: RADIUS admin policy for IPv6 is 'outgoing
-            interface'
-I 01/01/90 00:00:28 02638 srcip: RADSEC oper policy is 'outgoing interface'
-I 01/01/90 00:00:28 02637 srcip: RADSEC admin policy is 'configured ip
-            interface'
-I 01/01/90 00:00:28 02638 srcip: TUNNELED-NODE-SERVE oper policy is 'outgoing
-            interface'
-I 01/01/90 00:00:28 02637 srcip: TUNNELED-NODE-SERVE admin policy is 'configured
-            ip interface'
-I 01/01/90 00:00:28 02638 srcip: SFLOW oper policy is 'outgoing interface'
-I 01/01/90 00:00:28 02637 srcip: SFLOW admin policy is 'configured ip interface'
-I 01/01/90 00:00:28 02638 srcip: SNTP oper policy is 'outgoing interface'
-I 01/01/90 00:00:28 02637 srcip: SNTP admin policy is 'configured ip interface'
-I 01/01/90 00:00:28 02638 srcip: TFTP oper policy is 'outgoing interface'
-I 01/01/90 00:00:28 02637 srcip: TFTP admin policy is 'configured ip interface'
-I 01/01/90 00:00:28 02638 srcip: TELNET oper policy is 'outgoing interface'
-I 01/01/90 00:00:28 02637 srcip: TELNET admin policy is 'configured ip
-            interface'
-I 01/01/90 00:00:28 02638 srcip: SYSLOG oper policy is 'outgoing interface'
-I 01/01/90 00:00:28 02637 srcip: SYSLOG admin policy is 'configured ip
-            interface'
-I 01/01/90 00:00:28 02638 srcip: RADIUS oper policy is 'outgoing interface'
-I 01/01/90 00:00:28 02637 srcip: RADIUS admin policy is 'configured ip
-            interface'
-I 01/01/90 00:00:28 02638 srcip: TACACS oper policy is 'outgoing interface'
-I 01/01/90 00:00:28 02637 srcip: TACACS admin policy is 'configured ip
-            interface'
-I 01/01/90 00:00:28 00690 udpf: DHCP relay agent feature enabled
-I 01/01/90 00:00:28 02604 dhcpv6r: Inclusion of client link-layer address in
-            DHCPv6 relay message is disabled.
-I 01/01/90 00:00:27 02682 OOBM: OOBM - Enabled globally.
-I 01/01/90 00:00:27 03705 ports: Allow-Unsupported-Transceiver feature enabled.
-I 01/01/90 00:00:26 02751 chassis: LEDs for Ports 1-24 configured ON.
-I 01/01/90 00:00:26 02759 chassis: Savepower LED timer is OFF.
-I 01/01/90 00:00:26 02712 console: USB console cable disconnected
-I 01/01/90 00:00:26 02712 console: USB console cable disconnected
-M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
-I 01/01/90 00:00:26 00062 system: Member 1 went down without saving crash
-            information
-I 01/01/90 00:00:26 00061 system: -----------------------------------------
-I 01/01/90 00:00:26 05578 profile-manager: With this SW release the poe-value
-            field is not allowed to be set when poe-alloc-by is not value.
-            Changing to default value of 17w.
-I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master 
-I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
-I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master 
-I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
-----  Top of Log : Events Listed = 122  ----
-!---
-show logging -r -m
- Keys:   W=Warning   I=Information
-         M=Major     D=Debug E=Error
-----  Reverse event Log listing: Events Since Boot  ----
-M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
-----  Top of Log : Events Listed = 1  ----
-!---
-show logging -r -w
- Keys:   W=Warning   I=Information
-         M=Major     D=Debug E=Error
-----  Reverse event Log listing: Events Since Boot  ----
-W 01/16/24 11:25:17 00641 ssh: read error Connection reset by peer, session
-            aborted
-W 01/16/24 11:15:21 00641 ssh: read error Connection reset by peer, session
-            aborted
-M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
-----  Top of Log : Events Listed = 3  ----
-!---
-show crypto host-public-key fingerprint
-1024 cb:a8:d6:c7:da:bd:67:53:91:8c:c0:1b:49:d1:a1:2d: host_ssh2.pub
-!---
-show config files
+ 
+ !++++++++++++++ 
+  show crypto host-public-key fingerprint
+1024 cb:a8:d6:c7:da:bd:67:53:91:8c:c0:1b:49:d1:a1:2d: host_ssh2.pub 
+ !++++++++++++++ 
+  show config files
 
 Configuration files:
 
@@ -1140,18 +942,18 @@ Configuration files:
   3 |             | 
   4 |             | 
   5 |             | 
-
-!---
-show mac-address | ex 24
+ 
+ !++++++++++++++ 
+  show mac-address | ex 24
 
  Status and Counters - Port Address Table
 
   MAC Address   Port    VLAN
   ------------- ------- ----
  
-
-!---
-show arp
+ 
+ !++++++++++++++ 
+  show arp
 
  IP ARP table
 

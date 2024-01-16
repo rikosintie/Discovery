@@ -2,9 +2,19 @@ show logging -r -w
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
+W 01/16/24 14:46:26 00641 ssh: read error Connection reset by peer, session
+            aborted
+W 01/16/24 14:45:00 00641 ssh: read error Connection reset by peer, session
+            aborted
+W 01/16/24 14:43:27 00641 ssh: read error Connection reset by peer, session
+            aborted
+W 01/16/24 14:41:56 00641 ssh: read error Connection reset by peer, session
+            aborted
+W 01/16/24 12:25:34 00641 ssh: read error Connection reset by peer, session
+            aborted
 W 01/16/24 11:25:17 00641 ssh: read error Connection reset by peer, session
             aborted
 W 01/16/24 11:15:21 00641 ssh: read error Connection reset by peer, session
             aborted
 M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
-----  Top of Log : Events Listed = 3  ----
+----  Top of Log : Events Listed = 8  ----
