@@ -1,0 +1,172 @@
+show logging -r -I
+ Keys:   W=Warning   I=Information
+         M=Major     D=Debug E=Error
+----  Reverse event Log listing: Events Since Boot  ----
+I 01/16/24 12:23:13 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 12:23:12 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/16/24 12:22:22 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+I 01/16/24 12:20:51 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 12:20:50 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/16/24 12:18:24 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+I 01/16/24 12:11:42 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 12:11:41 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/16/24 12:11:23 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+I 01/16/24 12:10:34 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 12:10:33 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/16/24 12:08:58 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+I 01/16/24 12:08:09 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 12:08:08 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/16/24 12:06:30 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+I 01/16/24 12:05:27 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 12:05:26 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/16/24 11:59:38 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 11:59:35 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/16/24 11:45:54 04910 ntp: All the NTP server associations reset.
+I 01/16/24 11:25:17 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/16/24 11:25:17 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/16/24 11:23:57 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 11:23:56 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/16/24 11:21:23 05219 activate: A system software update is available to
+            version WB.16.10.0024.
+I 01/16/24 11:21:23 05223 activate: Successfully established connection with the
+            Activate server;parsing final software update service response.
+I 01/16/24 11:21:20 05226 activate: Successfully resolved the Activate server
+            address devices-v2.arubanetworks.com to 52.34.71.189.
+I 01/16/24 11:21:20 05225 activate: Loading security certificates and
+            synchronizing time.
+I 01/16/24 11:15:21 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/16/24 11:15:21 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/16/24 11:15:12 05101 amp-server: AMP server configuration is disabled due
+            to first configuration.
+I 01/16/24 11:14:04 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 11:14:04 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/16/24 11:13:51 04910 ntp: All the NTP server associations reset.
+I 01/16/24 11:12:48 04611 job: Job Scheduler enabled
+I 01/16/24 11:12:33 04910 ntp: All the NTP server associations reset.
+I 01/16/24 11:12:33 04909 ntp: The NTP Stratum was changed from 16 to 2.
+I 01/16/24 11:12:33 04908 ntp: The system clock time was changed by 1074280247
+            sec 48199177 nsec.	 The new time is Tue Jan 16 11:12:33 2024
+.
+I 01/01/90 00:01:33 04911 ntp: The NTP Server 129.6.15.29 is unreachable.
+I 01/01/90 00:01:11 04911 ntp: The NTP Server 192.168.10.221 is unreachable.
+I 01/01/90 00:00:52 05083 chassis: Ports 13-24: PoE Software updated from
+            version 04 to 38.
+I 01/01/90 00:00:49 02639 srcip: SNTP src IP addr 192.168.10.52 is selected from
+            'VLAN-10' interface
+I 01/01/90 00:00:49 02638 srcip: SNTP oper policy is 'configured ip interface'
+I 01/01/90 00:00:48 00001 vlan: IOT3 virtual LAN enabled
+I 01/01/90 00:00:48 00001 vlan: IOT2 virtual LAN enabled
+I 01/01/90 00:00:48 00001 vlan: IOT1 virtual LAN enabled
+I 01/01/90 00:00:48 00001 vlan: IOT0 virtual LAN enabled
+I 01/01/90 00:00:48 00001 vlan: Voice virtual LAN enabled
+I 01/01/90 00:00:48 00001 vlan: User virtual LAN enabled
+I 01/01/90 00:00:47 00001 vlan: DEFAULT_VLAN virtual LAN enabled
+I 01/01/90 00:00:46 00076 ports: port 24 is now on-line
+I 01/01/90 00:00:45 05083 chassis: Ports 1-12: PoE Software updated from version
+            04 to 38.
+I 01/01/90 00:00:45 00076 ports: port 7 is now on-line
+I 01/01/90 00:00:42 02555 chassis: Co-processor Ready
+I 01/01/90 00:00:40 03803 chassis: System Self test completed on 1-24 
+I 01/01/90 00:00:36 03401 crypto: Function POWER UP passed selftest.
+I 01/01/90 00:00:35 03802 chassis: System Self test started on 1-24 
+I 01/01/90 00:00:35 04262 dhcp-server: All IP addresses are removed from the
+            conflict-logging database
+I 01/01/90 00:00:35 04250 dhcp-server: DHCP server is enabled globally
+I 01/01/90 00:00:34 02553 chassis: Loading of Co-processor OS image complete.
+I 01/01/90 00:00:33 02552 chassis: Loading of Co-processor OS image in progress.
+I 01/01/90 00:00:33 02550 chassis: Requesting Co-processor OS image location in
+            flash.
+I 01/01/90 00:00:33 00066 system: System Booted
+I 01/01/90 00:00:32 04274 dhcp-server: DHCP server is listening for DHCP packets
+I 01/01/90 00:00:32 04255 dhcp-server: DHCP server is enabled on VLAN 100
+I 01/01/90 00:00:32 04260 dhcp-server: Conflict-logging is disabled
+I 01/01/90 00:00:32 04257 dhcp-server: Ping-check configured with retry count =
+            2, timeout = 1
+I 01/01/90 00:00:32 02012 mtm: A non-multicast client: Non-Mcast client Op, is
+            registered with client ID:  1
+I 01/01/90 00:00:31 04905 ntp: NTP Client enabled
+I 01/01/90 00:00:31 00410 SNTP: Client is enabled.
+I 01/01/90 00:00:31 02633 SNTP: Client authentication is disabled.
+I 01/01/90 00:00:31 00688 lldp: LLDP - enabled
+I 01/01/90 00:00:31 00417 cdp: CDP enabled
+I 01/01/90 00:00:31 04695 auth: Command authorization method set to none.
+I 01/01/90 00:00:31 00433 ssh: Ssh server enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 850 - RPVST enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 100 - RPVST enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 63 - RPVST enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 62 - RPVST enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 61 - RPVST enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 60 - RPVST enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 20 - RPVST enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 10 - RPVST enabled
+I 01/01/90 00:00:31 03811 stp: VLAN 1 - RPVST enabled
+I 01/01/90 00:00:29 00110 telnet: telnetd service enabled
+I 01/01/90 00:00:29 00116 telnet: telnetd service enabled on OOBM
+I 01/01/90 00:00:28 02638 srcip: RADIUS oper policy for IPv6 is 'outgoing
+            interface'
+I 01/01/90 00:00:28 02637 srcip: RADIUS admin policy for IPv6 is 'outgoing
+            interface'
+I 01/01/90 00:00:28 02638 srcip: RADSEC oper policy is 'outgoing interface'
+I 01/01/90 00:00:28 02637 srcip: RADSEC admin policy is 'configured ip
+            interface'
+I 01/01/90 00:00:28 02638 srcip: TUNNELED-NODE-SERVE oper policy is 'outgoing
+            interface'
+I 01/01/90 00:00:28 02637 srcip: TUNNELED-NODE-SERVE admin policy is 'configured
+            ip interface'
+I 01/01/90 00:00:28 02638 srcip: SFLOW oper policy is 'outgoing interface'
+I 01/01/90 00:00:28 02637 srcip: SFLOW admin policy is 'configured ip interface'
+I 01/01/90 00:00:28 02638 srcip: SNTP oper policy is 'outgoing interface'
+I 01/01/90 00:00:28 02637 srcip: SNTP admin policy is 'configured ip interface'
+I 01/01/90 00:00:28 02638 srcip: TFTP oper policy is 'outgoing interface'
+I 01/01/90 00:00:28 02637 srcip: TFTP admin policy is 'configured ip interface'
+I 01/01/90 00:00:28 02638 srcip: TELNET oper policy is 'outgoing interface'
+I 01/01/90 00:00:28 02637 srcip: TELNET admin policy is 'configured ip
+            interface'
+I 01/01/90 00:00:28 02638 srcip: SYSLOG oper policy is 'outgoing interface'
+I 01/01/90 00:00:28 02637 srcip: SYSLOG admin policy is 'configured ip
+            interface'
+I 01/01/90 00:00:28 02638 srcip: RADIUS oper policy is 'outgoing interface'
+I 01/01/90 00:00:28 02637 srcip: RADIUS admin policy is 'configured ip
+            interface'
+I 01/01/90 00:00:28 02638 srcip: TACACS oper policy is 'outgoing interface'
+I 01/01/90 00:00:28 02637 srcip: TACACS admin policy is 'configured ip
+            interface'
+I 01/01/90 00:00:28 00690 udpf: DHCP relay agent feature enabled
+I 01/01/90 00:00:28 02604 dhcpv6r: Inclusion of client link-layer address in
+            DHCPv6 relay message is disabled.
+I 01/01/90 00:00:27 02682 OOBM: OOBM - Enabled globally.
+I 01/01/90 00:00:27 03705 ports: Allow-Unsupported-Transceiver feature enabled.
+I 01/01/90 00:00:26 02751 chassis: LEDs for Ports 1-24 configured ON.
+I 01/01/90 00:00:26 02759 chassis: Savepower LED timer is OFF.
+I 01/01/90 00:00:26 02712 console: USB console cable disconnected
+I 01/01/90 00:00:26 02712 console: USB console cable disconnected
+M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
+I 01/01/90 00:00:26 00062 system: Member 1 went down without saving crash
+            information
+I 01/01/90 00:00:26 00061 system: -----------------------------------------
+I 01/01/90 00:00:26 05578 profile-manager: With this SW release the poe-value
+            field is not allowed to be set when poe-alloc-by is not value.
+            Changing to default value of 17w.
+I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master 
+I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
+I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master 
+I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
+----  Top of Log : Events Listed = 122  ----

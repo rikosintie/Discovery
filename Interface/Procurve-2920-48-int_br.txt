@@ -259,7 +259,7 @@
     "enabled": "Yes",
     "status": "Up",
     "mode": "1000FDx",
-    "mdi_mode": "MDI",
+    "mdi_mode": "MDIX",
     "flow_ctrl": "off",
     "bcast_limit": "0"
   }

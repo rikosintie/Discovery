@@ -2,16 +2,16 @@
   {
     "local_port": "24",
     "neighbor_chassis_type": "mac-address",
-    "neighbor_chassis_id": "9c 8c d8 c9 17 ae",
+    "neighbor_chassis_id": "ea e6 4b 18 de 20",
     "port_type": "mac-address",
-    "neighbor_portid": "9c 8c d8 c9 17 ae",
-    "neighbor_sysname": "IAP-515",
-    "system_descr": "ArubaOS (MODEL: 515), Version Aruba IAP",
-    "port_descr": "eth0",
+    "neighbor_portid": "50 ed 3c 22 be 32",
+    "neighbor_sysname": "hp8600-2328.local",
+    "system_descr": " Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 0...",
+    "port_descr": "en0",
     "pvid": "",
-    "system_capabilities_supported": "bridge, wlan-access-point",
-    "system_capabilities_enabled": "wlan-access-point",
-    "remote_management_address": "192.168.10.144"
+    "system_capabilities_supported": "bridge, wlan-access-point, router",
+    "system_capabilities_enabled": "bridge, wlan-access-point",
+    "remote_management_address": "fe80::1"
   },
   {
     "local_port": "24",
@@ -29,17 +29,17 @@
   },
   {
     "local_port": "24",
-    "neighbor_chassis_type": "local",
-    "neighbor_chassis_id": "Garage",
-    "port_type": "local",
-    "neighbor_portid": "br0",
-    "neighbor_sysname": "NanoStation 5AC loc",
-    "system_descr": "WA.ar934x.v8.7.1.42832.200623.1641",
-    "port_descr": "",
+    "neighbor_chassis_type": "mac-address",
+    "neighbor_chassis_id": "9c 8c d8 c9 17 ae",
+    "port_type": "mac-address",
+    "neighbor_portid": "9c 8c d8 c9 17 ae",
+    "neighbor_sysname": "IAP-515",
+    "system_descr": "ArubaOS (MODEL: 515), Version Aruba IAP",
+    "port_descr": "eth0",
     "pvid": "",
-    "system_capabilities_supported": "",
-    "system_capabilities_enabled": "",
-    "remote_management_address": "192.168.10.51"
+    "system_capabilities_supported": "bridge, wlan-access-point",
+    "system_capabilities_enabled": "wlan-access-point",
+    "remote_management_address": "192.168.10.144"
   },
   {
     "local_port": "24",
@@ -57,16 +57,16 @@
   },
   {
     "local_port": "24",
-    "neighbor_chassis_type": "mac-address",
-    "neighbor_chassis_id": "ea e6 4b 18 de 20",
-    "port_type": "mac-address",
-    "neighbor_portid": "50 ed 3c 22 be 32",
-    "neighbor_sysname": "hp8600-2328.local",
-    "system_descr": " Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 0...",
-    "port_descr": "en0",
+    "neighbor_chassis_type": "local",
+    "neighbor_chassis_id": "Garage",
+    "port_type": "local",
+    "neighbor_portid": "br0",
+    "neighbor_sysname": "NanoStation 5AC loc",
+    "system_descr": "WA.ar934x.v8.7.1.42832.200623.1641",
+    "port_descr": "",
     "pvid": "",
-    "system_capabilities_supported": "bridge, wlan-access-point, router",
-    "system_capabilities_enabled": "bridge, wlan-access-point",
-    "remote_management_address": "fe80::1"
+    "system_capabilities_supported": "",
+    "system_capabilities_enabled": "",
+    "remote_management_address": "192.168.10.51"
   }
 ]

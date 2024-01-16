@@ -16,12 +16,12 @@ show system
   Software revision  : WB.16.10.0023        Base MAC Addr      : 98f2b3-fe8880
   ROM Version        : WB.16.03             Serial Number      : SG78FLXH0B  
 
-  Up Time            : 9 hours              Memory   - Total   : 72,483,328  
-  CPU Util (%)       : 32                              Free    : 39,982,792  
+  Up Time            : 72 mins              Memory   - Total   : 72,483,328  
+  CPU Util (%)       : 30                              Free    : 40,300,912  
 
-  IP Mgmt  - Pkts Rx : 8973                 Packet   - Total   : 6750        
-             Pkts Tx : 3601                 Buffers    Free    : 5009        
-                                                       Lowest  : 4988        
+  IP Mgmt  - Pkts Rx : 5034                 Packet   - Total   : 6750        
+             Pkts Tx : 4104                 Buffers    Free    : 5009        
+                                                       Lowest  : 4993        
                                                        Missed  : 0           
 
 !---
@@ -53,10 +53,10 @@ show oobm ip
 
 !---
 show time
-Sun Jan 14 20:59:32 2024
+Tue Jan 16 12:23:14 2024
 !---
 show uptime
-0000:09:30:08.99
+0000:01:12:03.69
 !---
 show ntp status
 
@@ -65,14 +65,14 @@ show ntp status
   NTP Status             : Enabled         NTP Mode        : Unicast         
   Synchronization Status : Synchronized    Peer Dispersion : 0.00000 sec     
   Stratum Number         : 2               Leap Direction  : 0               
-  Reference Assoc ID     : 0               Clock Offset    : 0.03329 sec     
-  Reference ID           : 129.6.15.29     Root Delay      : 0.07251 sec     
-  Precision              : 2**-18          Root Dispersion : 1.66588 sec     
-  NTP Up Time            : 0d 9h 30m       Time Resolution : 1395 nsec       
+  Reference Assoc ID     : 0               Clock Offset    : 0.00461 sec     
+  Reference ID           : 129.6.15.29     Root Delay      : 0.07085 sec     
+  Precision              : 2**-18          Root Dispersion : 0.17802 sec     
+  NTP Up Time            : 0d 1h 11m       Time Resolution : 697 nsec        
   Drift                  : 0.00000 sec/sec 
 
-  System Time            : Sun Jan 14 20:59:33 2024                
-  Reference Time         : Sun Jan 14 18:05:52 2024                
+  System Time            : Tue Jan 16 12:23:15 2024                
+  Reference Time         : Tue Jan 16 11:44:00 2024                
 
 !---
 show ntp associations
@@ -82,8 +82,8 @@ show ntp associations
 
  Remote          St   T    When   Poll  Reach    Delay    Offset   Dispersion
  --------------- ---- ---- ------ ----- -------- -------- -------- ----------
- 129.6.15.29     1    u    1139   13    3777     0.073    0.043    2.07370   
- 192.168.10.221  1    u    3221   10    3777     0.003    126.052  1.92039   
+ 129.6.15.29     1    u    4317   13    37       0.000    0.000    15.18137  
+ 192.168.10.221  1    u    4317   9     37       0.000    0.000    15.17957  
 
 !---
 show ntp server
@@ -460,7 +460,7 @@ show ip ospf general
   Area Border               : no 
   AS Border                 : yes
   External LSA Count        : 7          
-  External LSA Checksum Sum : 233810     
+  External LSA Checksum Sum : 204852     
   Originate New LSA Count   : 6          
   Receive New LSA Count     : 0          
 
@@ -484,13 +484,13 @@ show ip ospf external-link-state
 
   Link State ID   Router ID       Age  Sequence #  Checksum  
   --------------- --------------- ---- ----------- ----------
-  1.1.1.1         1.1.1.1         731  0x80000013  0x0000f147
-  10.14.63.16     1.1.1.1         731  0x80000013  0x0000726a
-  10.14.64.16     1.1.1.1         731  0x80000013  0x00006774
-  10.14.65.16     1.1.1.1         731  0x80000013  0x00005c7e
-  10.14.66.16     1.1.1.1         731  0x80000013  0x00005188
-  10.164.24.0     1.1.1.1         731  0x80000013  0x0000dc99
-  192.168.10.0    1.1.1.1         731  0x80000013  0x0000ffc9
+  1.1.1.1         1.1.1.1         605  0x80000003  0x00001237
+  10.14.63.16     1.1.1.1         605  0x80000003  0x0000925a
+  10.14.64.16     1.1.1.1         605  0x80000003  0x00008764
+  10.14.65.16     1.1.1.1         605  0x80000003  0x00007c6e
+  10.14.66.16     1.1.1.1         605  0x80000003  0x00007178
+  10.164.24.0     1.1.1.1         605  0x80000003  0x0000fc89
+  192.168.10.0    1.1.1.1         605  0x80000003  0x000020b9
  
 
 !---
@@ -604,27 +604,15 @@ show cdp neighbors
 
   Port   Device ID                     | Platform                     Capability 
   ------ ----------------------------- + ---------------------------- -----------
-  24     9c 8c d8 c9 17 ae             | ArubaOS (MODEL: 515), Ver...            
   24     54 bf 64 3b 9c 68             | Ubuntu 23.10 Linux 6.5.0-... R S        
-  24     Garage                        | NanoStation 5AC loc          T          
+  24     9c 8c d8 c9 17 ae             | ArubaOS (MODEL: 515), Ver...            
   24     fc ec da c4 6e 55             |                                         
-  24     ea e6 4b 18 de 20             |  Darwin 21.6.0 Darwin Ker... S          
+  24     Garage                        | NanoStation 5AC loc          T          
  
 !---
 show cdp nei d
 
  CDP neighbors information
-
-  Port : 24    
-  Device ID : 9c 8c d8 c9 17 ae                                             
-  Address Type : IP          
-  Address      : 192.168.10.144                                              
-  Platform     : ArubaOS (MODEL: 515), Version Aruba IAP                    
-  Capability   :                                                            
-  Device Port  : eth0                                                       
-  Version      : ArubaOS (MODEL: 515), Version Aruba IAP                    
-
-------------------------------------------------------------------------------
 
   Port : 24    
   Device ID : 54 bf 64 3b 9c 68                                             
@@ -638,13 +626,13 @@ show cdp nei d
 ------------------------------------------------------------------------------
 
   Port : 24    
-  Device ID : Garage                                                        
+  Device ID : 9c 8c d8 c9 17 ae                                             
   Address Type : IP          
-  Address      : 192.168.10.51                                               
-  Platform     : NanoStation 5AC loc                                        
-  Capability   : Trans Bridge                                               
-  Device Port  : br0                                                        
-  Version      : WA.ar934x.v8.7.1.42832.200623.1641                         
+  Address      : 192.168.10.144                                              
+  Platform     : ArubaOS (MODEL: 515), Version Aruba IAP                    
+  Capability   :                                                            
+  Device Port  : eth0                                                       
+  Version      : ArubaOS (MODEL: 515), Version Aruba IAP                    
 
 ------------------------------------------------------------------------------
 
@@ -660,13 +648,13 @@ show cdp nei d
 ------------------------------------------------------------------------------
 
   Port : 24    
-  Device ID : ea e6 4b 18 de 20                                             
+  Device ID : Garage                                                        
   Address Type : IP          
-  Address      : 192.168.10.106                                              
-  Platform     :  Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ...
-  Capability   : Switch                                                     
-  Device Port  : en0                                                        
-  Version      :  Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ...
+  Address      : 192.168.10.51                                               
+  Platform     : NanoStation 5AC loc                                        
+  Capability   : Trans Bridge                                               
+  Device Port  : br0                                                        
+  Version      : WA.ar934x.v8.7.1.42832.200623.1641                         
 
 !---
 show lldp info remote
@@ -675,11 +663,10 @@ show lldp info remote
 
   LocalPort | ChassisId          PortId             PortDescr SysName           
   --------- + ------------------ ------------------ --------- ------------------
-  24        | 9c 8c d8 c9 17 ae  9c 8c d8 c9 17 ae  eth0      IAP-515           
   24        | 54 bf 64 3b 9c 68  28 d0 ea 93 2a 42  wlp61s0   1S1K-G5-5587      
-  24        | Garage             br0                          NanoStation 5AC...
+  24        | 9c 8c d8 c9 17 ae  9c 8c d8 c9 17 ae  eth0      IAP-515           
   24        | fc ec da c4 6e 55  eth0                                           
-  24        | ea e6 4b 18 de 20  50 ed 3c 22 be 32  en0       hp8600-2328.local 
+  24        | Garage             br0                          NanoStation 5AC...
  
 
 !---
@@ -687,24 +674,6 @@ show lldp info remote d
 
  LLDP Remote Device Information Detail
 
-  Local Port   : 24
-  ChassisType  : mac-address         
-  ChassisId    : 9c 8c d8 c9 17 ae        
-  PortType     : mac-address                                               
-  PortId       : 9c 8c d8 c9 17 ae                                         
-  SysName      : IAP-515                         
-  System Descr : ArubaOS (MODEL: 515), Version Aruba IAP                     
-  PortDescr    : eth0                                                        
-  Pvid         :                          
-
-  System Capabilities Supported  : bridge, wlan-access-point
-  System Capabilities Enabled    : wlan-access-point
-
-  Remote Management Address
-     Type    : ipv4
-     Address : 192.168.10.144
-
-------------------------------------------------------------------------------
   Local Port   : 24
   ChassisType  : mac-address         
   ChassisId    : 54 bf 64 3b 9c 68        
@@ -726,21 +695,21 @@ show lldp info remote d
 
 ------------------------------------------------------------------------------
   Local Port   : 24
-  ChassisType  : local               
-  ChassisId    : Garage                   
-  PortType     : local                                                     
-  PortId       : br0                                                       
-  SysName      : NanoStation 5AC loc             
-  System Descr : WA.ar934x.v8.7.1.42832.200623.1641                          
-  PortDescr    :                                                             
+  ChassisType  : mac-address         
+  ChassisId    : 9c 8c d8 c9 17 ae        
+  PortType     : mac-address                                               
+  PortId       : 9c 8c d8 c9 17 ae                                         
+  SysName      : IAP-515                         
+  System Descr : ArubaOS (MODEL: 515), Version Aruba IAP                     
+  PortDescr    : eth0                                                        
   Pvid         :                          
 
-  System Capabilities Supported  : 
-  System Capabilities Enabled    : 
+  System Capabilities Supported  : bridge, wlan-access-point
+  System Capabilities Enabled    : wlan-access-point
 
   Remote Management Address
      Type    : ipv4
-     Address : 192.168.10.51
+     Address : 192.168.10.144
 
 ------------------------------------------------------------------------------
   Local Port   : 24
@@ -760,23 +729,21 @@ show lldp info remote d
 
 ------------------------------------------------------------------------------
   Local Port   : 24
-  ChassisType  : mac-address         
-  ChassisId    : ea e6 4b 18 de 20        
-  PortType     : mac-address                                               
-  PortId       : 50 ed 3c 22 be 32                                         
-  SysName      : hp8600-2328.local               
-  System Descr :  Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 0...
-  PortDescr    : en0                                                         
+  ChassisType  : local               
+  ChassisId    : Garage                   
+  PortType     : local                                                     
+  PortId       : br0                                                       
+  SysName      : NanoStation 5AC loc             
+  System Descr : WA.ar934x.v8.7.1.42832.200623.1641                          
+  PortDescr    :                                                             
   Pvid         :                          
 
-  System Capabilities Supported  : bridge, wlan-access-point, router
-  System Capabilities Enabled    : bridge, wlan-access-point
+  System Capabilities Supported  : 
+  System Capabilities Enabled    : 
 
   Remote Management Address
      Type    : ipv4
-     Address : 192.168.10.106
-     Type    : ipv6
-     Address : fe80::1
+     Address : 192.168.10.51
 
 
 !---
@@ -882,8 +849,8 @@ show ip ssh
   Ses Type     | Source IP                                      Port 
   --- -------- + ---------------------------------------------- -----
   1   console  |
-  2   ssh      | 192.168.10.115                                 52164
-  3   ssh      | 192.168.10.115                                 44088
+  2   ssh      | 192.168.10.115                                 53122
+  3   ssh      | 192.168.10.115                                 60974
   4   inactive |
   5   inactive |
   6   inactive |
@@ -972,89 +939,97 @@ show logging -r -i
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
-I 01/14/24 20:59:31 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/14/24 20:59:30 03362 auth: User 'vector' logged in from 192.168.10.115 to
+I 01/16/24 12:23:13 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 12:23:12 03362 auth: User 'vector' logged in from 192.168.10.115 to
             SSH  session
-I 01/14/24 20:58:01 03363 auth: User 'vector' logged out of SSH  session from 
+I 01/16/24 12:22:22 03363 auth: User 'vector' logged out of SSH  session from 
             192.168.10.115
-W 01/14/24 20:58:01 00641 ssh: read error Connection reset by peer, session
+I 01/16/24 12:20:51 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 12:20:50 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/16/24 12:18:24 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+I 01/16/24 12:11:42 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 12:11:41 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/16/24 12:11:23 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+I 01/16/24 12:10:34 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 12:10:33 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/16/24 12:08:58 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+I 01/16/24 12:08:09 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 12:08:08 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/16/24 12:06:30 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+I 01/16/24 12:05:27 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 12:05:26 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/16/24 11:59:38 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 11:59:35 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/16/24 11:45:54 04910 ntp: All the NTP server associations reset.
+I 01/16/24 11:25:17 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/16/24 11:25:17 00641 ssh: read error Connection reset by peer, session
             aborted
-I 01/14/24 20:57:52 05101 amp-server: AMP server configuration is disabled due
-            to first configuration.
-I 01/14/24 20:57:31 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/14/24 20:57:30 03362 auth: User 'vector' logged in from 192.168.10.115 to
+I 01/16/24 11:23:57 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 11:23:56 03362 auth: User 'vector' logged in from 192.168.10.115 to
             SSH  session
-W 01/14/24 18:18:34 00236 snmp: Security access violation from 192.168.10.115
-            for the community name or user name : public (9 times in 60 seconds)
-I 01/14/24 18:06:56 04910 ntp: All the NTP server associations reset.
-I 01/14/24 18:06:56 04908 ntp: The system clock time was changed by 0 sec
-            33286349 nsec.	 The new time is Sun Jan 14 18:06:56 2024
-.
-W 01/14/24 17:59:31 00236 snmp: Security access violation from 192.168.10.115
-            for the community name or user name : public (9 times in 60 seconds)
-W 01/14/24 17:13:40 00236 snmp: Security access violation from 192.168.10.115
-            for the community name or user name : public (9 times in 60 seconds)
-W 01/14/24 17:09:26 00236 snmp: Security access violation from 192.168.10.115
-            for the community name or user name : public (8 times in 60 seconds)
-W 01/14/24 17:08:13 00236 snmp: Security access violation from 192.168.10.115
-            for the community name or user name : public (9 times in 60 seconds)
-W 01/14/24 17:03:21 00236 snmp: Security access violation from 192.168.10.115
-            for the community name or user name : public
-I 01/14/24 15:16:17 04910 ntp: All the NTP server associations reset.
-I 01/14/24 15:16:17 04908 ntp: The system clock time was changed by 0 sec
-            42675028 nsec.	 The new time is Sun Jan 14 15:16:16 2024
-.
-I 01/14/24 13:08:15 04910 ntp: All the NTP server associations reset.
-I 01/14/24 13:08:15 04908 ntp: The system clock time was changed by 0 sec
-            9697556 nsec.	 The new time is Sun Jan 14 13:08:15 2024
-.
-I 01/14/24 12:30:34 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/14/24 12:30:33 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/14/24 12:04:10 04910 ntp: All the NTP server associations reset.
-I 01/14/24 11:39:36 05219 activate: A system software update is available to
+I 01/16/24 11:21:23 05219 activate: A system software update is available to
             version WB.16.10.0024.
-I 01/14/24 11:39:36 05223 activate: Successfully established connection with the
+I 01/16/24 11:21:23 05223 activate: Successfully established connection with the
             Activate server;parsing final software update service response.
-I 01/14/24 11:39:33 05226 activate: Successfully resolved the Activate server
+I 01/16/24 11:21:20 05226 activate: Successfully resolved the Activate server
             address devices-v2.arubanetworks.com to 52.34.71.189.
-I 01/14/24 11:39:33 05225 activate: Loading security certificates and
+I 01/16/24 11:21:20 05225 activate: Loading security certificates and
             synchronizing time.
-I 01/14/24 11:32:04 04910 ntp: All the NTP server associations reset.
-I 01/14/24 11:31:01 04611 job: Job Scheduler enabled
-I 01/14/24 11:30:47 04910 ntp: All the NTP server associations reset.
-I 01/14/24 11:30:47 04909 ntp: The NTP Stratum was changed from 16 to 2.
-I 01/14/24 11:30:47 04908 ntp: The system clock time was changed by 1074108540
-            sec 68478584 nsec.	 The new time is Sun Jan 14 11:30:46 2024
+I 01/16/24 11:15:21 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/16/24 11:15:21 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/16/24 11:15:12 05101 amp-server: AMP server configuration is disabled due
+            to first configuration.
+I 01/16/24 11:14:04 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/16/24 11:14:04 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/16/24 11:13:51 04910 ntp: All the NTP server associations reset.
+I 01/16/24 11:12:48 04611 job: Job Scheduler enabled
+I 01/16/24 11:12:33 04910 ntp: All the NTP server associations reset.
+I 01/16/24 11:12:33 04909 ntp: The NTP Stratum was changed from 16 to 2.
+I 01/16/24 11:12:33 04908 ntp: The system clock time was changed by 1074280247
+            sec 48199177 nsec.	 The new time is Tue Jan 16 11:12:33 2024
 .
 I 01/01/90 00:01:33 04911 ntp: The NTP Server 129.6.15.29 is unreachable.
 I 01/01/90 00:01:11 04911 ntp: The NTP Server 192.168.10.221 is unreachable.
-I 01/01/90 00:00:53 05083 chassis: Ports 13-24: PoE Software updated from
+I 01/01/90 00:00:52 05083 chassis: Ports 13-24: PoE Software updated from
             version 04 to 38.
-I 01/01/90 00:00:50 02639 srcip: SNTP src IP addr 192.168.10.52 is selected from
+I 01/01/90 00:00:49 02639 srcip: SNTP src IP addr 192.168.10.52 is selected from
             'VLAN-10' interface
-I 01/01/90 00:00:50 02638 srcip: SNTP oper policy is 'configured ip interface'
-I 01/01/90 00:00:49 00001 vlan: IOT3 virtual LAN enabled
-I 01/01/90 00:00:49 00001 vlan: IOT2 virtual LAN enabled
-I 01/01/90 00:00:49 00001 vlan: IOT1 virtual LAN enabled
-I 01/01/90 00:00:49 00001 vlan: IOT0 virtual LAN enabled
-I 01/01/90 00:00:49 00001 vlan: Voice virtual LAN enabled
-I 01/01/90 00:00:49 00001 vlan: User virtual LAN enabled
+I 01/01/90 00:00:49 02638 srcip: SNTP oper policy is 'configured ip interface'
+I 01/01/90 00:00:48 00001 vlan: IOT3 virtual LAN enabled
+I 01/01/90 00:00:48 00001 vlan: IOT2 virtual LAN enabled
+I 01/01/90 00:00:48 00001 vlan: IOT1 virtual LAN enabled
+I 01/01/90 00:00:48 00001 vlan: IOT0 virtual LAN enabled
+I 01/01/90 00:00:48 00001 vlan: Voice virtual LAN enabled
+I 01/01/90 00:00:48 00001 vlan: User virtual LAN enabled
 I 01/01/90 00:00:47 00001 vlan: DEFAULT_VLAN virtual LAN enabled
-I 01/01/90 00:00:47 00076 ports: port 24 is now on-line
+I 01/01/90 00:00:46 00076 ports: port 24 is now on-line
 I 01/01/90 00:00:45 05083 chassis: Ports 1-12: PoE Software updated from version
             04 to 38.
 I 01/01/90 00:00:45 00076 ports: port 7 is now on-line
-I 01/01/90 00:00:43 02555 chassis: Co-processor Ready
-I 01/01/90 00:00:41 03803 chassis: System Self test completed on 1-24 
-I 01/01/90 00:00:36 03802 chassis: System Self test started on 1-24 
+I 01/01/90 00:00:42 02555 chassis: Co-processor Ready
+I 01/01/90 00:00:40 03803 chassis: System Self test completed on 1-24 
 I 01/01/90 00:00:36 03401 crypto: Function POWER UP passed selftest.
+I 01/01/90 00:00:35 03802 chassis: System Self test started on 1-24 
 I 01/01/90 00:00:35 04262 dhcp-server: All IP addresses are removed from the
             conflict-logging database
 I 01/01/90 00:00:35 04250 dhcp-server: DHCP server is enabled globally
-I 01/01/90 00:00:35 02553 chassis: Loading of Co-processor OS image complete.
-I 01/01/90 00:00:34 02552 chassis: Loading of Co-processor OS image in progress.
-I 01/01/90 00:00:34 02550 chassis: Requesting Co-processor OS image location in
+I 01/01/90 00:00:34 02553 chassis: Loading of Co-processor OS image complete.
+I 01/01/90 00:00:33 02552 chassis: Loading of Co-processor OS image in progress.
+I 01/01/90 00:00:33 02550 chassis: Requesting Co-processor OS image location in
             flash.
 I 01/01/90 00:00:33 00066 system: System Booted
 I 01/01/90 00:00:32 04274 dhcp-server: DHCP server is listening for DHCP packets
@@ -1131,7 +1106,7 @@ I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master
 I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
 I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master 
 I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
-----  Top of Log : Events Listed = 115  ----
+----  Top of Log : Events Listed = 122  ----
 !---
 show logging -r -m
  Keys:   W=Warning   I=Information
@@ -1144,22 +1119,12 @@ show logging -r -w
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
-W 01/14/24 20:58:01 00641 ssh: read error Connection reset by peer, session
+W 01/16/24 11:25:17 00641 ssh: read error Connection reset by peer, session
             aborted
-W 01/14/24 18:18:34 00236 snmp: Security access violation from 192.168.10.115
-            for the community name or user name : public (9 times in 60 seconds)
-W 01/14/24 17:59:31 00236 snmp: Security access violation from 192.168.10.115
-            for the community name or user name : public (9 times in 60 seconds)
-W 01/14/24 17:13:40 00236 snmp: Security access violation from 192.168.10.115
-            for the community name or user name : public (9 times in 60 seconds)
-W 01/14/24 17:09:26 00236 snmp: Security access violation from 192.168.10.115
-            for the community name or user name : public (8 times in 60 seconds)
-W 01/14/24 17:08:13 00236 snmp: Security access violation from 192.168.10.115
-            for the community name or user name : public (9 times in 60 seconds)
-W 01/14/24 17:03:21 00236 snmp: Security access violation from 192.168.10.115
-            for the community name or user name : public
+W 01/16/24 11:15:21 00641 ssh: read error Connection reset by peer, session
+            aborted
 M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
-----  Top of Log : Events Listed = 8  ----
+----  Top of Log : Events Listed = 3  ----
 !---
 show crypto host-public-key fingerprint
 1024 cb:a8:d6:c7:da:bd:67:53:91:8c:c0:1b:49:d1:a1:2d: host_ssh2.pub

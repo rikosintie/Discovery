@@ -1,12 +1,12 @@
 [
   {
     "local_port": "24",
-    "neighbor_id": "9c 8c d8 c9 17 ae",
-    "neighbor_address": "192.168.10.144",
-    "neighbor_platform": "ArubaOS (MODEL: 515), Version Aruba IAP",
-    "neighbor_capability": " ",
-    "neighbor_port": "eth0",
-    "neighbor_version": "ArubaOS (MODEL: 515), Version Aruba IAP"
+    "neighbor_id": "ea e6 4b 18 de 20",
+    "neighbor_address": "192.168.10.106",
+    "neighbor_platform": "Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "en0",
+    "neighbor_version": "Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ..."
   },
   {
     "local_port": "24",
@@ -19,12 +19,12 @@
   },
   {
     "local_port": "24",
-    "neighbor_id": "Garage",
-    "neighbor_address": "192.168.10.51",
-    "neighbor_platform": "NanoStation 5AC loc",
-    "neighbor_capability": "Trans Bridge",
-    "neighbor_port": "br0",
-    "neighbor_version": "WA.ar934x.v8.7.1.42832.200623.1641"
+    "neighbor_id": "9c 8c d8 c9 17 ae",
+    "neighbor_address": "192.168.10.144",
+    "neighbor_platform": "ArubaOS (MODEL: 515), Version Aruba IAP",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "ArubaOS (MODEL: 515), Version Aruba IAP"
   },
   {
     "local_port": "24",
@@ -37,11 +37,11 @@
   },
   {
     "local_port": "24",
-    "neighbor_id": "ea e6 4b 18 de 20",
-    "neighbor_address": "192.168.10.106",
-    "neighbor_platform": "Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ...",
-    "neighbor_capability": "Switch",
-    "neighbor_port": "en0",
-    "neighbor_version": "Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ..."
+    "neighbor_id": "Garage",
+    "neighbor_address": "192.168.10.51",
+    "neighbor_platform": "NanoStation 5AC loc",
+    "neighbor_capability": "Trans Bridge",
+    "neighbor_port": "br0",
+    "neighbor_version": "WA.ar934x.v8.7.1.42832.200623.1641"
   }
 ]
