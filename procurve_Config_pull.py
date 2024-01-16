@@ -119,12 +119,17 @@ start = timeit.default_timer()
 parser = argparse.ArgumentParser(
     description="-s site, -l 1 create log.txt, -p 1 prompt for password"
 )
-parser.add_argument("-s", "--site", help="Site name - ex. HQ")
+parser.add_argument(
+    "-e",
+    "--event",  # Optional (but recommended) long version
+    default="",
+    help="-e 1-9 to pull switch logs",
+)
 parser.add_argument(
     "-l",
     "--logging",  # Optional (but recommended) long version
     default="",
-    help="use -l 1 to enable logging",
+    help="use -l 1 to enable ssh logging",
 )
 parser.add_argument(
     "-p",
@@ -132,6 +137,7 @@ parser.add_argument(
     default="",
     help="use -p 1 to be prompted for password",
 )
+parser.add_argument("-s", "--site", help="Site name - ex. HQ")
 args = parser.parse_args()
 site = args.site
 
@@ -250,6 +256,34 @@ for line in fabric:
             )
             ic(output_show)
             output_show_str = output_show_str + "\n" + "!---" + "\n" + output_show
+
+        # pull logs. Logs tend to time out because they are so large
+        # you can set the timeout value up if they are timing out.
+        if args.event != "":
+            try:
+                log_type = ["w", "I", "M", "D", "E"]
+                time_out = args.event
+                for type in log_type:
+                    print(f"processing show logging -{type} for {hostname}")
+                    output_event = f"output_event_{type}"
+                    show_logging = f"show logging -r -{type}"
+                    output_event = net_connect.send_command(
+                        show_logging, strip_command=False, delay_factor=time_out
+                    )
+                    #  Write the show logging output to disk
+                    log_name = f"-log-{type}.txt"
+                    # int_report = get_current_path("CR-data", "-log.txt")
+                    int_report = get_current_path("CR-data", log_name)
+                    print(f"Writing show logging -{type} commands to {int_report}")
+                    with open(int_report, "w") as file:
+                        file.write(output_event)
+            except NetmikoTimeoutException:
+                end_time = datetime.now()
+                print(f"\nExec time: {end_time - now}\n")
+                print(
+                    f"Time out processing -{type} logs for {hostname} at {ipaddr}. The connection timed out. Try setting -e to a higher value"
+                )
+                continue
 
         # Use textFSM to create a json object with interface stats
         print(f"collecting show interface for {hostname}")
