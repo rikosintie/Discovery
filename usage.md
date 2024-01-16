@@ -10,6 +10,7 @@
   - [Update the mac.txt file](#update-the-mactxt-file)
 - [Run the discovery script](#run-the-discovery-script)
   - [What options are available](#what-options-are-available)
+  - [What do the arguments do](#what-do-the-arguments-do)
 - [Failure to connect to a switch](#failure-to-connect-to-a-switch)
 - [Building a list of switches](#building-a-list-of-switches)
   - [Review the bootstrap report](#review-the-bootstrap-report)
@@ -109,27 +110,41 @@ To activate the the virtual environment.
 You can run the script with -h to get help:
 
 ```bash
-python3 procurve_Config_pull.py -h
-usage: procurve_Config_pull.py [-h] [-s SITE] [-l LOGGING] [-p PASSWORD]
+ python3 procurve_Config_pull.py -h
+usage: procurve_Config_pull.py [-h] [-e EVENT] [-l LOGGING] [-p PASSWORD] [-s SITE]
 
 -s site, -l 1 create log.txt, -p 1 prompt for password
 
 options:
   -h, --help            show this help message and exit
-  -s SITE, --site SITE  Site name - ex. HQ
+  -e EVENT, --event EVENT
+                        -e 1-9 to pull switch logs
   -l LOGGING, --logging LOGGING
-                        use -l 1 to enable logging
+                        use -l 1 to enable ssh logging
   -p PASSWORD, --password PASSWORD
                         use -p 1 to be prompted for password
+  -s SITE, --site SITE  Site name - ex. HQ
 (Discovery)
 ```
 
-If you want to be prompted for a password add `-p 1`. If you don't use -p 1 you must set an environment variable cyberARK with the password. That is covered above in the "password" section.
-If you want to enable ssh logging add `-l 1`. You would do that if you are getting "time out" errors.
+### What do the arguments do
+
+- The only required argument is `-s site`. This references the device-inventory file.
+- If you want to pull logs from the switch add `-e 1`. Note: the number sets the timeout value in 100s of seconds. If you use -e 2 it will wait 200 seconds.
+- If you want to be prompted for a password add `-p 1`. If you don't use -p 1 you must set an environment variable cyberARK with the password. That is covered above in the "password" section.
+- If you want to enable ssh logging add `-l 1`. You would do that if you are getting "time out" errors.
 
 The minimum is to use -s for the site:
 
 `python3 procurve-Config-pull.py -s HQ`
+
+To include logs:
+
+`python3 procurve-Config-pull.py -s HQ -e 2`
+
+To be prompted for a password:
+
+`python3 procurve-Config-pull.py -s HQ -p 1`
 
 Note: you may have to use python instead of python3 depending on your OS.
 
