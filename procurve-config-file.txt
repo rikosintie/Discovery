@@ -43,10 +43,6 @@ show ip ssh
 show snmp-server
 show dhcp-server binding
 show dhcp-server pool
-show logging -r -e
-show logging -r -i
-show logging -r -m
-show logging -r -w
 show crypto host-public-key fingerprint
 show config files
 show mac-address | ex 24
