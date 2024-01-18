@@ -8,6 +8,7 @@
   - [Creating an Environment Variable](#creating-an-environment-variable)
   - [Being prompted for the password](#being-prompted-for-the-password)
   - [Update the mac.txt file](#update-the-mactxt-file)
+  - [Update the procurve-config-file.txt file](#update-the-procurve-config-filetxt-file)
 - [Run the discovery script](#run-the-discovery-script)
   - [What options are available](#what-options-are-available)
   - [What do the arguments do](#what-do-the-arguments-do)
@@ -94,6 +95,27 @@ There is a file [procurve-show-mac-interfaces.txt](https://github.com/rikosintie
 Simply open the file, copy the interfaces you need and save them into the mac.txt file before running the discovery script.
 
 ----------------------------------------------------------------
+
+### Update the procurve-config-file.txt file
+
+This file contains all of the `show commands` that will be sent to the switches. It has fifty commands in it including many that may not apply to customer:
+
+- show lacp peer
+- show lacp local
+- show lacp mad-passthrough
+- show dhcp-server binding
+- show dhcp-server pool
+
+If you don't need them for a particular customer you can just open the file and delete any that you don't need.
+
+For pulling the mac-address table, which most customers want you to do, I have an include statement using a regex. In the sample file it doesn't pull mac addresses for ports on modules A and B. These were uplinks on the switch that I tested the script on.
+
+`show show mac-address | ex "A|B"`
+
+If you are running the scrip against a 1U switch or your 5400 series uplinks are different, change the regex to meet your needs.
+
+----------------------------------------------------------------
+
 ## Run the discovery script
 
 Now that the project is set up and the inventory file is created, you can run the script. Make sure you are in the Discovery directory and run:
