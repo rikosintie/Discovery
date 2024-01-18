@@ -178,6 +178,85 @@ The files will be saved in the following directories:
 - Interface - files that need further processing
 - Running - The "show running structured" output for each switch
 
+Here is sample output from running the script:
+
+```bash
+python3 procurve_Config_pull.py -s area2 -e 1
+
+
+-------------------------------------------------
+Reading devices from: device-inventory-area2.csv
+----------------------------------------------------------
+01/17/2024, 20:03:21 Connecting to switch RHS-CL-2930-48-1
+----------------------------------------------------------
+
+RHS-CL-2930-48-1#
+
+--------------------------------------------------------
+processing procurve-config-file.txt for RHS-CL-2930-48-1
+--------------------------------------------------------
+processing show logging -w for RHS-CL-2930-48-1
+--------------------------------------------------------
+Writing show logging -w commands to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/CR-data/RHS-CL-2930-48-1-log-w.txt
+--------------------------------------------------------
+processing show logging -I for RHS-CL-2930-48-1
+--------------------------------------------------------
+Writing show logging -I commands to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/CR-data/RHS-CL-2930-48-1-log-I.txt
+--------------------------------------------------------
+processing show logging -M for RHS-CL-2930-48-1
+--------------------------------------------------------
+Writing show logging -M commands to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/CR-data/RHS-CL-2930-48-1-log-M.txt
+--------------------------------------------------------
+processing show logging -D for RHS-CL-2930-48-1
+--------------------------------------------------------
+Writing show logging -D commands to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/CR-data/RHS-CL-2930-48-1-log-D.txt
+--------------------------------------------------------
+processing show logging -E for RHS-CL-2930-48-1
+--------------------------------------------------------
+Writing show logging -E commands to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/CR-data/RHS-CL-2930-48-1-log-E.txt
+--------------------------------------------------------
+collecting show interface for RHS-CL-2930-48-1
+--------------------------------------------------------
+collecting show system for RHS-CL-2930-48-1
+--------------------------------------------------------
+collecting show cdp detail for RHS-CL-2930-48-1
+--------------------------------------------------------
+collecting show interfaces brief for RHS-CL-2930-48-1
+--------------------------------------------------------
+collecting show lldp neighbors for RHS-CL-2930-48-1
+--------------------------------------------------------
+collecting show mac address for RHS-CL-2930-48-1
+--------------------------------------------------------
+collecting show arp for RHS-CL-2930-48-1
+--------------------------------------------------------
+Collecting show running-config from RHS-CL-2930-48-1
+--------------------------------------------------------
+Writing show commands to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/CR-data/RHS-CL-2930-48-1-CR-data.txt
+-------------------------------------------------
+Writing MAC addresses to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/port-maps/data/RHS-CL-2930-48-1-mac-address.txt
+-------------------------------------------------
+Writing ARP data to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/port-maps/data/RHS-CL-2930-48-1-arp.txt
+-------------------------------------------------
+Writing show run to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/port-maps/data/RHS-CL-2930-48-1-arp.txt
+-------------------------------------------------
+Writing interfaces json data to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/Interface/RHS-CL-2930-48-1-system.txt
+-------------------------------------------------
+Writing interfaces json data to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/Interface/RHS-CL-2930-48-1-interface.txt
+-------------------------------------------------
+Writing interfaces brief data to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/Interface/RHS-CL-2930-48-1-int_br.txt
+-------------------------------------------------
+Writing cdp neighbor data to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/Interface/RHS-CL-2930-48-1-cdp.txt
+-------------------------------------------------
+Writing show lldp data to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/Interface/RHS-CL-2930-48-1-lldp.txt
+
+-------------------------------------------------------
+Successfully created config files for RHS-CL-2930-48-1
+-------------------------------------------------------
+
+Data collection is complete.
+Total running time: 0.0 Hours 1.0 Minutes 44.67 Seconds
+```
+
 ----------------------------------------------------------------
 
 ## Failure to connect to a switch
