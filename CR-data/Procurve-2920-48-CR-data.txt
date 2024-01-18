@@ -16,12 +16,12 @@
   Software revision  : WB.16.10.0023        Base MAC Addr      : 98f2b3-fe8880
   ROM Version        : WB.16.03             Serial Number      : SG78FLXH0B  
 
-  Up Time            : 3 hours              Memory   - Total   : 72,483,328  
-  CPU Util (%)       : 22                              Free    : 40,293,684  
+  Up Time            : 2 hours              Memory   - Total   : 72,483,328  
+  CPU Util (%)       : 35                              Free    : 40,353,072  
 
-  IP Mgmt  - Pkts Rx : 10,298               Packet   - Total   : 6750        
-             Pkts Tx : 7949                 Buffers    Free    : 5009        
-                                                       Lowest  : 4993        
+  IP Mgmt  - Pkts Rx : 1659                 Packet   - Total   : 6750        
+             Pkts Tx : 875                  Buffers    Free    : 5009        
+                                                       Lowest  : 4994        
                                                        Missed  : 0           
  
  !++++++++++++++ 
@@ -53,10 +53,10 @@ The running configuration matches the saved configuration.
  
  !++++++++++++++ 
   show time
-Tue Jan 16 14:46:56 2024 
+Wed Jan 17 16:28:06 2024 
  !++++++++++++++ 
   show uptime
-0000:03:35:45.39 
+0000:02:14:15.47 
  !++++++++++++++ 
   show ntp status
 
@@ -65,14 +65,14 @@ Tue Jan 16 14:46:56 2024
   NTP Status             : Enabled         NTP Mode        : Unicast         
   Synchronization Status : Synchronized    Peer Dispersion : 0.00000 sec     
   Stratum Number         : 2               Leap Direction  : 0               
-  Reference Assoc ID     : 0               Clock Offset    : 0.01107 sec     
-  Reference ID           : 129.6.15.29     Root Delay      : 0.07125 sec     
-  Precision              : 2**-18          Root Dispersion : 0.57886 sec     
-  NTP Up Time            : 0d 3h 35m       Time Resolution : 697 nsec        
-  Drift                  : 0.00000 sec/sec 
+  Reference Assoc ID     : 0               Clock Offset    : 0.02470 sec     
+  Reference ID           : 129.6.15.29     Root Delay      : 0.07189 sec     
+  Precision              : 2**-18          Root Dispersion : 0.47548 sec     
+  NTP Up Time            : 0d 2h 14m       Time Resolution : 698 nsec        
+  Drift                  : 0.00001 sec/sec 
 
-  System Time            : Tue Jan 16 14:46:56 2024                
-  Reference Time         : Tue Jan 16 12:48:00 2024                
+  System Time            : Wed Jan 17 16:28:07 2024                
+  Reference Time         : Wed Jan 17 15:51:28 2024                
  
  !++++++++++++++ 
   show ntp associations
@@ -82,8 +82,8 @@ Tue Jan 16 14:46:56 2024
 
  Remote          St   T    When   Poll  Reach    Delay    Offset   Dispersion
  --------------- ---- ---- ------ ----- -------- -------- -------- ----------
- 129.6.15.29     1    u    12938  13    377      0.000    0.000    8.88811   
- 192.168.10.221  1    u    12938  10    377      0.000    0.000    8.89138   
+ 129.6.15.29     1    u    8048   13    7        0.000    0.000    15.95606  
+ 192.168.10.221  1    u    8048   10    7        0.000    0.000    15.95488  
  
  !++++++++++++++ 
   show ntp server
@@ -210,6 +210,17 @@ vlan 850
    primary-vlan
    exit
  
+ !++++++++++++++ 
+  show config vlan | i ip address
+   ip address dhcp-bootp
+   ip address 192.168.10.52 255.255.255.0
+   ip address 10.164.24.200 255.255.255.0
+   ip address 10.14.66.17 255.255.255.248
+   ip address 10.14.65.17 255.255.255.248
+   ip address 10.14.64.17 255.255.255.248
+   ip address 10.14.63.17 255.255.255.248
+   ip address 10.10.100.1 255.255.255.0
+   ip address 10.254.34.18 255.255.255.252 
  !++++++++++++++ 
   show vlan custom id name:15 ipaddr ipmask ipconfig state voice jumbo
 
@@ -460,7 +471,7 @@ router ospf
   Area Border               : no 
   AS Border                 : yes
   External LSA Count        : 7          
-  External LSA Checksum Sum : 211964     
+  External LSA Checksum Sum : 208408     
   Originate New LSA Count   : 6          
   Receive New LSA Count     : 0          
 
@@ -484,13 +495,13 @@ router ospf
 
   Link State ID   Router ID       Age  Sequence #  Checksum  
   --------------- --------------- ---- ----------- ----------
-  1.1.1.1         1.1.1.1         1787 0x80000007  0x00000a3b
-  10.14.63.16     1.1.1.1         1787 0x80000007  0x00008a5e
-  10.14.64.16     1.1.1.1         1787 0x80000007  0x00007f68
-  10.14.65.16     1.1.1.1         1787 0x80000007  0x00007472
-  10.14.66.16     1.1.1.1         1787 0x80000007  0x0000697c
-  10.164.24.0     1.1.1.1         1787 0x80000007  0x0000f48d
-  192.168.10.0    1.1.1.1         1787 0x80000007  0x000018bd
+  1.1.1.1         1.1.1.1         620  0x80000005  0x00000e39
+  10.14.63.16     1.1.1.1         620  0x80000005  0x00008e5c
+  10.14.64.16     1.1.1.1         620  0x80000005  0x00008366
+  10.14.65.16     1.1.1.1         620  0x80000005  0x00007870
+  10.14.66.16     1.1.1.1         620  0x80000005  0x00006d7a
+  10.164.24.0     1.1.1.1         620  0x80000005  0x0000f88b
+  192.168.10.0    1.1.1.1         620  0x80000005  0x00001cbb
  
  
  !++++++++++++++ 
@@ -849,8 +860,8 @@ System ID: 98f2b3-fe8880
   Ses Type     | Source IP                                      Port 
   --- -------- + ---------------------------------------------- -----
   1   console  |
-  2   ssh      | 192.168.10.115                                 53122
-  3   ssh      | 192.168.10.115                                 60582
+  2   ssh      | 192.168.10.115                                 59198
+  3   ssh      | 192.168.10.115                                 35552
   4   inactive |
   5   inactive |
   6   inactive |
@@ -944,12 +955,33 @@ Configuration files:
   5 |             | 
  
  !++++++++++++++ 
-  show mac-address | ex 24
+  show mac-address | ex "A|B"
 
- Status and Counters - Port Address Table
 
-  MAC Address   Port    VLAN
   ------------- ------- ----
+  000c29-337100 24      10  
+  000c29-4caa4e 24      10  
+  000c29-8413e1 24      10  
+  000c29-8413eb 24      10  
+  00e0b3-34562f 24      10  
+  068b73-5b10e7 24      10  
+  085b0e-7c7930 24      10  
+  101f74-6341f8 24      10  
+  2428fd-28ae26 24      10  
+  28d0ea-932a42 24      10  
+  3817c3-c920c2 24      10  
+  3c9bd6-aa323e 24      10  
+  446755-03d472 24      10  
+  788cb5-1780c8 24      10  
+  8e93a6-f482f4 24      10  
+  9c8cd8-c917ae 24      10  
+  ba4d95-58f2f6 24      10  
+  bcbac2-0f4fa4 24      10  
+  dc56e7-496195 24      10  
+  f84d89-7a1349 24      10  
+  fcecda-c46e55 24      10  
+  fcecda-c4770b 24      10  
+  fcecda-c56e55 24      10  
  
  
  !++++++++++++++ 

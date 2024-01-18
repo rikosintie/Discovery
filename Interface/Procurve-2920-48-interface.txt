@@ -55,8 +55,8 @@
   },
   {
     "port": "7",
-    "total_bytes": "996,538",
-    "total_frames": "13,425",
+    "total_bytes": "621,256",
+    "total_frames": "8360",
     "errors_rx": "0",
     "drops_tx": "0",
     "flow_ctrl": "off",
@@ -208,8 +208,8 @@
   },
   {
     "port": "24",
-    "total_bytes": "11,869,263",
-    "total_frames": "127,753",
+    "total_bytes": "5,454,169",
+    "total_frames": "71,707",
     "errors_rx": "0",
     "drops_tx": "0",
     "flow_ctrl": "off",

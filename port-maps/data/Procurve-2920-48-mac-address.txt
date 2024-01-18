@@ -165,12 +165,12 @@ HP-2920-24G-PoEP# show mac-add 24
 
   MAC Address   VLANs       
   ------------- ------------
+  000c29-337100 10          
   000c29-4caa4e 10          
-  000c29-8413e1 10          
   000c29-8413eb 10          
   00e0b3-34562f 10          
+  068b73-5b10e7 10          
   085b0e-7c7930 10          
-  101f74-6341f8 10          
   2428fd-28ae26 10          
   28d0ea-932a42 10          
   3817c3-c920c2 10          
@@ -179,14 +179,14 @@ HP-2920-24G-PoEP# show mac-add 24
   788cb5-1780c8 10          
   8e93a6-f482f4 10          
   9c8cd8-c917ae 10          
-  ace010-ee5802 10          
   ba4d95-58f2f6 10          
   bcbac2-0f4fa4 10          
+  dc4f22-fa1708 10          
   dc56e7-496195 10          
+  f84d89-7a1349 10          
   fcecda-c46e55 10          
   fcecda-c4770b 10          
   fcecda-c56e55 10          
-  fcf152-6058fa 10          
  
 HP-2920-24G-PoEP# show mac-add 25
 Module not present for port or invalid port: 25
@@ -236,4 +236,245 @@ HP-2920-24G-PoEP# show mac-add 47
 Module not present for port or invalid port: 47
 HP-2920-24G-PoEP# show mac-add 48
 Module not present for port or invalid port: 48
+HP-2920-24G-PoEP# 
+HP-2920-24G-PoEP# show mac-add c1
+Module not present for port or invalid port: c1
+HP-2920-24G-PoEP# show mac-add c2
+Module not present for port or invalid port: c2
+HP-2920-24G-PoEP# show mac-add c3
+Module not present for port or invalid port: c3
+HP-2920-24G-PoEP# show mac-add c4
+Module not present for port or invalid port: c4
+HP-2920-24G-PoEP# show mac-add c5
+Module not present for port or invalid port: c5
+HP-2920-24G-PoEP# show mac-add c6
+Module not present for port or invalid port: c6
+HP-2920-24G-PoEP# show mac-add c7
+Module not present for port or invalid port: c7
+HP-2920-24G-PoEP# show mac-add c8
+Module not present for port or invalid port: c8
+HP-2920-24G-PoEP# show mac-add c9
+Module not present for port or invalid port: c9
+HP-2920-24G-PoEP# show mac-add c10
+Module not present for port or invalid port: c10
+HP-2920-24G-PoEP# show mac-add c11
+Module not present for port or invalid port: c11
+HP-2920-24G-PoEP# show mac-add c12
+Module not present for port or invalid port: c12
+HP-2920-24G-PoEP# show mac-add c13
+Module not present for port or invalid port: c13
+HP-2920-24G-PoEP# show mac-add c14
+Module not present for port or invalid port: c14
+HP-2920-24G-PoEP# show mac-add c15
+Module not present for port or invalid port: c15
+HP-2920-24G-PoEP# show mac-add c16
+Module not present for port or invalid port: c16
+HP-2920-24G-PoEP# show mac-add c17
+Module not present for port or invalid port: c17
+HP-2920-24G-PoEP# show mac-add c18
+Module not present for port or invalid port: c18
+HP-2920-24G-PoEP# show mac-add c19
+Module not present for port or invalid port: c19
+HP-2920-24G-PoEP# show mac-add c20
+Module not present for port or invalid port: c20
+HP-2920-24G-PoEP# show mac-add c21
+Module not present for port or invalid port: c21
+HP-2920-24G-PoEP# show mac-add c22
+Module not present for port or invalid port: c22
+HP-2920-24G-PoEP# show mac-add c23
+Module not present for port or invalid port: c23
+HP-2920-24G-PoEP# show mac-add c24
+Module not present for port or invalid port: c24
+HP-2920-24G-PoEP# show mac-add d1
+Module not present for port or invalid port: d1
+HP-2920-24G-PoEP# show mac-add d2
+Module not present for port or invalid port: d2
+HP-2920-24G-PoEP# show mac-add d3
+Module not present for port or invalid port: d3
+HP-2920-24G-PoEP# show mac-add d4
+Module not present for port or invalid port: d4
+HP-2920-24G-PoEP# show mac-add d5
+Module not present for port or invalid port: d5
+HP-2920-24G-PoEP# show mac-add d6
+Module not present for port or invalid port: d6
+HP-2920-24G-PoEP# show mac-add d7
+Module not present for port or invalid port: d7
+HP-2920-24G-PoEP# show mac-add d8
+Module not present for port or invalid port: d8
+HP-2920-24G-PoEP# show mac-add d9
+Module not present for port or invalid port: d9
+HP-2920-24G-PoEP# show mac-add d10
+Module not present for port or invalid port: d10
+HP-2920-24G-PoEP# show mac-add d11
+Module not present for port or invalid port: d11
+HP-2920-24G-PoEP# show mac-add d12
+Module not present for port or invalid port: d12
+HP-2920-24G-PoEP# show mac-add d13
+Module not present for port or invalid port: d13
+HP-2920-24G-PoEP# show mac-add d14
+Module not present for port or invalid port: d14
+HP-2920-24G-PoEP# show mac-add d15
+Module not present for port or invalid port: d15
+HP-2920-24G-PoEP# show mac-add d16
+Module not present for port or invalid port: d16
+HP-2920-24G-PoEP# show mac-add d17
+Module not present for port or invalid port: d17
+HP-2920-24G-PoEP# show mac-add d18
+Module not present for port or invalid port: d18
+HP-2920-24G-PoEP# show mac-add d19
+Module not present for port or invalid port: d19
+HP-2920-24G-PoEP# show mac-add d20
+Module not present for port or invalid port: d20
+HP-2920-24G-PoEP# show mac-add d21
+Module not present for port or invalid port: d21
+HP-2920-24G-PoEP# show mac-add d22
+Module not present for port or invalid port: d22
+HP-2920-24G-PoEP# show mac-add d23
+Module not present for port or invalid port: d23
+HP-2920-24G-PoEP# show mac-add d24
+Module not present for port or invalid port: d24
+HP-2920-24G-PoEP# show mac-add e1
+Module not present for port or invalid port: e1
+HP-2920-24G-PoEP# show mac-add e2
+Module not present for port or invalid port: e2
+HP-2920-24G-PoEP# show mac-add e3
+Module not present for port or invalid port: e3
+HP-2920-24G-PoEP# show mac-add e4
+Module not present for port or invalid port: e4
+HP-2920-24G-PoEP# show mac-add e5
+Module not present for port or invalid port: e5
+HP-2920-24G-PoEP# show mac-add e6
+Module not present for port or invalid port: e6
+HP-2920-24G-PoEP# show mac-add e7
+Module not present for port or invalid port: e7
+HP-2920-24G-PoEP# show mac-add e8
+Module not present for port or invalid port: e8
+HP-2920-24G-PoEP# show mac-add e9
+Module not present for port or invalid port: e9
+HP-2920-24G-PoEP# show mac-add e10
+Module not present for port or invalid port: e10
+HP-2920-24G-PoEP# show mac-add e11
+Module not present for port or invalid port: e11
+HP-2920-24G-PoEP# show mac-add e12
+Module not present for port or invalid port: e12
+HP-2920-24G-PoEP# show mac-add e13
+Module not present for port or invalid port: e13
+HP-2920-24G-PoEP# show mac-add e14
+Module not present for port or invalid port: e14
+HP-2920-24G-PoEP# show mac-add e15
+Module not present for port or invalid port: e15
+HP-2920-24G-PoEP# show mac-add e16
+Module not present for port or invalid port: e16
+HP-2920-24G-PoEP# show mac-add e17
+Module not present for port or invalid port: e17
+HP-2920-24G-PoEP# show mac-add e18
+Module not present for port or invalid port: e18
+HP-2920-24G-PoEP# show mac-add e19
+Module not present for port or invalid port: e19
+HP-2920-24G-PoEP# show mac-add e20
+Module not present for port or invalid port: e20
+HP-2920-24G-PoEP# show mac-add e21
+Module not present for port or invalid port: e21
+HP-2920-24G-PoEP# show mac-add e22
+Module not present for port or invalid port: e22
+HP-2920-24G-PoEP# show mac-add e23
+Module not present for port or invalid port: e23
+HP-2920-24G-PoEP# show mac-add e24
+Module not present for port or invalid port: e24
+HP-2920-24G-PoEP# show mac-add f1
+Module not present for port or invalid port: f1
+HP-2920-24G-PoEP# show mac-add f2
+Module not present for port or invalid port: f2
+HP-2920-24G-PoEP# show mac-add f3
+Module not present for port or invalid port: f3
+HP-2920-24G-PoEP# show mac-add f4
+Module not present for port or invalid port: f4
+HP-2920-24G-PoEP# show mac-add f5
+Module not present for port or invalid port: f5
+HP-2920-24G-PoEP# show mac-add f6
+Module not present for port or invalid port: f6
+HP-2920-24G-PoEP# show mac-add f7
+Module not present for port or invalid port: f7
+HP-2920-24G-PoEP# show mac-add f8
+Module not present for port or invalid port: f8
+HP-2920-24G-PoEP# show mac-add f9
+Module not present for port or invalid port: f9
+HP-2920-24G-PoEP# show mac-add f10
+Module not present for port or invalid port: f10
+HP-2920-24G-PoEP# show mac-add f11
+Module not present for port or invalid port: f11
+HP-2920-24G-PoEP# show mac-add f12
+Module not present for port or invalid port: f12
+HP-2920-24G-PoEP# show mac-add f13
+Module not present for port or invalid port: f13
+HP-2920-24G-PoEP# show mac-add f14
+Module not present for port or invalid port: f14
+HP-2920-24G-PoEP# show mac-add f15
+Module not present for port or invalid port: f15
+HP-2920-24G-PoEP# show mac-add f16
+Module not present for port or invalid port: f16
+HP-2920-24G-PoEP# show mac-add f17
+Module not present for port or invalid port: f17
+HP-2920-24G-PoEP# show mac-add f18
+Module not present for port or invalid port: f18
+HP-2920-24G-PoEP# show mac-add f19
+Module not present for port or invalid port: f19
+HP-2920-24G-PoEP# show mac-add f20
+Module not present for port or invalid port: f20
+HP-2920-24G-PoEP# show mac-add f21
+Module not present for port or invalid port: f21
+HP-2920-24G-PoEP# show mac-add f22
+Module not present for port or invalid port: f22
+HP-2920-24G-PoEP# show mac-add f23
+Module not present for port or invalid port: f23
+HP-2920-24G-PoEP# show mac-add f24
+Module not present for port or invalid port: f24
+HP-2920-24G-PoEP# show mac-add g1
+Module not present for port or invalid port: g1
+HP-2920-24G-PoEP# show mac-add g2
+Module not present for port or invalid port: g2
+HP-2920-24G-PoEP# show mac-add g3
+Module not present for port or invalid port: g3
+HP-2920-24G-PoEP# show mac-add g4
+Module not present for port or invalid port: g4
+HP-2920-24G-PoEP# show mac-add g5
+Module not present for port or invalid port: g5
+HP-2920-24G-PoEP# show mac-add g6
+Module not present for port or invalid port: g6
+HP-2920-24G-PoEP# show mac-add g7
+Module not present for port or invalid port: g7
+HP-2920-24G-PoEP# show mac-add g8
+Module not present for port or invalid port: g8
+HP-2920-24G-PoEP# show mac-add g9
+Module not present for port or invalid port: g9
+HP-2920-24G-PoEP# show mac-add g10
+Module not present for port or invalid port: g10
+HP-2920-24G-PoEP# show mac-add g11
+Module not present for port or invalid port: g11
+HP-2920-24G-PoEP# show mac-add g12
+Module not present for port or invalid port: g12
+HP-2920-24G-PoEP# show mac-add g13
+Module not present for port or invalid port: g13
+HP-2920-24G-PoEP# show mac-add g14
+Module not present for port or invalid port: g14
+HP-2920-24G-PoEP# show mac-add g15
+Module not present for port or invalid port: g15
+HP-2920-24G-PoEP# show mac-add g16
+Module not present for port or invalid port: g16
+HP-2920-24G-PoEP# show mac-add g17
+Module not present for port or invalid port: g17
+HP-2920-24G-PoEP# show mac-add g18
+Module not present for port or invalid port: g18
+HP-2920-24G-PoEP# show mac-add g19
+Module not present for port or invalid port: g19
+HP-2920-24G-PoEP# show mac-add g20
+Module not present for port or invalid port: g20
+HP-2920-24G-PoEP# show mac-add g21
+Module not present for port or invalid port: g21
+HP-2920-24G-PoEP# show mac-add g22
+Module not present for port or invalid port: g22
+HP-2920-24G-PoEP# show mac-add g23
+Module not present for port or invalid port: g23
+HP-2920-24G-PoEP# show mac-add g24
+Module not present for port or invalid port: g24
 HP-2920-24G-PoEP# 

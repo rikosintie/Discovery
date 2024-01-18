@@ -1,17 +1,3 @@
-           neighbor_sysname: IAP-515
-  remote_management_address: 192.168.10.144
-      neighbor_chassis_type: mac-address
-        neighbor_chassis_id: 9c 8c d8 c9 17 ae
-               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
-            neighbor_portid: 9c 8c d8 c9 17 ae
-                 local_port: 24
-               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
-                       PVID: 
-                 port_descr: eth0
-system_capabilities_enabled: wlan-access-point
-
-
-------------------------------
            neighbor_sysname: 1S1K-G5-5587
   remote_management_address: fe80::f422:a6ff:fe02:d7d
       neighbor_chassis_type: mac-address
@@ -26,17 +12,17 @@ system_capabilities_enabled: bridge, wlan-access-point, router
 
 
 ------------------------------
-           neighbor_sysname: NanoStation 5AC loc
-  remote_management_address: 192.168.10.51
-      neighbor_chassis_type: local
-        neighbor_chassis_id: Garage
-               system_descr: WA.ar934x.v8.7.1.42832.200623.1641
-            neighbor_portid: br0
+           neighbor_sysname: IAP-515
+  remote_management_address: 192.168.10.144
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 9c 8c d8 c9 17 ae
+               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
+            neighbor_portid: 9c 8c d8 c9 17 ae
                  local_port: 24
-               system_descr: WA.ar934x.v8.7.1.42832.200623.1641
+               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
                        PVID: 
-                 port_descr: 
-system_capabilities_enabled: 
+                 port_descr: eth0
+system_capabilities_enabled: wlan-access-point
 
 
 ------------------------------
@@ -54,17 +40,17 @@ system_capabilities_enabled:
 
 
 ------------------------------
-           neighbor_sysname: hp8600-2328.local
-  remote_management_address: fe80::1
-      neighbor_chassis_type: mac-address
-        neighbor_chassis_id: ea e6 4b 18 de 20
-               system_descr:  Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 0...
-            neighbor_portid: 50 ed 3c 22 be 32
+           neighbor_sysname: NanoStation 5AC loc
+  remote_management_address: 192.168.10.51
+      neighbor_chassis_type: local
+        neighbor_chassis_id: Garage
+               system_descr: WA.ar934x.v8.7.1.42832.200623.1641
+            neighbor_portid: br0
                  local_port: 24
-               system_descr:  Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 0...
+               system_descr: WA.ar934x.v8.7.1.42832.200623.1641
                        PVID: 
-                 port_descr: en0
-system_capabilities_enabled: bridge, wlan-access-point
+                 port_descr: 
+system_capabilities_enabled: 
 
 
 ------------------------------

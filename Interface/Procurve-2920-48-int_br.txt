@@ -72,7 +72,7 @@
     "enabled": "Yes",
     "status": "Up",
     "mode": "100FDx",
-    "mdi_mode": "MDIX",
+    "mdi_mode": "MDI",
     "flow_ctrl": "off",
     "bcast_limit": "0"
   },

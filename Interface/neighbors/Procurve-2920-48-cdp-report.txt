@@ -1,12 +1,3 @@
-destination_host: 9c 8c d8 c9 17 ae
-   management_ip: 192.168.10.144
-        platform: ArubaOS (MODEL: 515), Version Aruba IAP
-     remote_port: eth0
-      local_port: 24
-software_version: ArubaOS (MODEL: 515), Version Aruba IAP
-
-
-------------------------------
 destination_host: 54 bf 64 3b 9c 68
    management_ip: 172.17.0.1
         platform: Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM...
@@ -16,12 +7,12 @@ software_version: Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM...
 
 
 ------------------------------
-destination_host: Garage
-   management_ip: 192.168.10.51
-        platform: NanoStation 5AC loc
-     remote_port: br0
+destination_host: 9c 8c d8 c9 17 ae
+   management_ip: 192.168.10.144
+        platform: ArubaOS (MODEL: 515), Version Aruba IAP
+     remote_port: eth0
       local_port: 24
-software_version: WA.ar934x.v8.7.1.42832.200623.1641
+software_version: ArubaOS (MODEL: 515), Version Aruba IAP
 
 
 ------------------------------
@@ -34,12 +25,12 @@ software_version:
 
 
 ------------------------------
-destination_host: ea e6 4b 18 de 20
-   management_ip: 192.168.10.106
-        platform: Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ...
-     remote_port: en0
+destination_host: Garage
+   management_ip: 192.168.10.51
+        platform: NanoStation 5AC loc
+     remote_port: br0
       local_port: 24
-software_version: Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ...
+software_version: WA.ar934x.v8.7.1.42832.200623.1641
 
 
 ------------------------------
