@@ -80,8 +80,11 @@ def extract_Interface_speed(json_data: list):
         a list of interfaces with 10Mbps
     """
     # Extract the port mode information
+    # https://stackoverflow.com/questions/3296499/case-insensitive-dictionary-search/27890005#27890005
     hardware_per_switch = []
+
     for switch_data in data:
+        switch_data = {k.lower(): v for k, v in switch_data.items()}
         hardware = switch_data["mode"]
         if hardware == "10FDx" or hardware == "10HDx":
             hardware = switch_data["port"] + " - " + hardware
