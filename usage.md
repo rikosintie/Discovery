@@ -178,6 +178,41 @@ The files will be saved in the following directories:
 - Interface - files that need further processing
 - Running - The "show running structured" output for each switch
 
+Here is a sample output of the log.txt file:
+
+```bash
+DEBUG:paramiko.transport:starting thread (client mode): 0xb4b346d0
+DEBUG:paramiko.transport:Local version/idstring: SSH-2.0-paramiko_3.4.0
+DEBUG:paramiko.transport:Remote version/idstring: SSH-2.0-Mocana SSH 6.3
+INFO:paramiko.transport:Connected (version 2.0, client Mocana)
+DEBUG:paramiko.transport:=== Key exchange possibilities ===
+DEBUG:paramiko.transport:kex algos: ecdh-sha2-nistp256, ecdh-sha2-nistp384, ecdh-sha2-nistp521, diffie-hellman-group-exchange-sha256, diffie-hellman-group14-sha1
+DEBUG:paramiko.transport:server key: rsa-sha2-512, rsa-sha2-256, ssh-rsa
+DEBUG:paramiko.transport:client encrypt: aes256-ctr, rijndael-cbc@lysator.liu.se, aes192-ctr, aes128-ctr
+DEBUG:paramiko.transport:server encrypt: aes256-ctr, rijndael-cbc@lysator.liu.se, aes192-ctr, aes128-ctr
+DEBUG:paramiko.transport:client mac: hmac-sha1-96, hmac-sha1
+DEBUG:paramiko.transport:server mac: hmac-sha1-96, hmac-sha1
+DEBUG:paramiko.transport:client compress: none
+DEBUG:paramiko.transport:server compress: none
+DEBUG:paramiko.transport:client lang: <none>
+DEBUG:paramiko.transport:server lang: <none>
+DEBUG:paramiko.transport:kex follows: False
+DEBUG:paramiko.transport:=== Key exchange agreements ===
+DEBUG:paramiko.transport:Kex: ecdh-sha2-nistp256
+DEBUG:paramiko.transport:HostKey: rsa-sha2-512
+DEBUG:paramiko.transport:Cipher: aes128-ctr
+DEBUG:paramiko.transport:MAC: hmac-sha1
+DEBUG:paramiko.transport:Compression: none
+DEBUG:paramiko.transport:=== End of kex handshake ===
+DEBUG:paramiko.transport:kex engine KexNistp256 specified hash_algo <built-in function openssl_sha256>
+DEBUG:paramiko.transport:Switch to new keys ...
+DEBUG:paramiko.transport:Adding ssh-rsa host key for 10.112.254.60: b'47708eeea6cbecf20b5916d675feca3d'
+DEBUG:paramiko.transport:userauth is OK
+INFO:paramiko.transport:Auth banner: b'******************************************************************************\nThis system is the property of Rim of the World Unified School District.\n\nUNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED.\n\nYou must have explicit permission to access this device.\n\nAll activities performend on this device are logged.\nAny violations of access policy will result in disciplinary action.\n****************************************************************************** \n\n'
+INFO:paramiko.transport:Authentication (password) successful!
+```
+
+
 Here is sample output from running the script:
 
 ```bash
