@@ -4,7 +4,8 @@
 Reference
 https://pynet.twb-tech.com/blog/netmiko-read-timeout.html
 https://stackoverflow.com/questions/9539921/how-do-i-define-a-function-with-optional-arguments
-
+ntc templates are located at Discovery/lib/python3.11/site-packages/ntc_templates/templates
+https://pynet.twb-tech.com/blog/netmiko-and-textfsm.html
 
 Usage
 1. Create a new folder and copy cisco-Config-Push.py
@@ -72,7 +73,7 @@ __license__ = "Unlicense"
 #  Created by Michael Hubbard on 2023-12-20.
 
 # comment out ic.disable() and uncomment ic.enable() to use icecream
-# ic.enable()
+ic.enable()
 ic.disable()
 
 
@@ -180,7 +181,10 @@ if not os.path.isfile(dev_inv_file):
 
 remove_empty_lines(dev_inv_file)
 
-with open(dev_inv_file) as devices_file:
+# u'\ufeff' in Python string When reading from csv files occasionally I got this at the front of the IP address value.
+# https://stackoverflow.com/questions/17912307/u-ufeff-in-python-string
+
+with open(dev_inv_file, encoding="utf-8-sig") as devices_file:
     fabric = devices_file.readlines()
 
 print("-" * (len(dev_inv_file) + 23))
@@ -290,18 +294,23 @@ for line in fabric:
         output = net_connect.send_command("show interfaces", use_textfsm=True)
 
         # Use textFSM to create a json object of show system
-        print(f"collecting show interface for {hostname}")
+        print(f"collecting show system for {hostname}")
         output_system = net_connect.send_command("show system", use_textfsm=True)
 
         # Use textFSM to create a json object with cdp neighbors
-        print(f"collecting show cdp for {hostname}")
+        print(f"collecting show cdp detail for {hostname}")
         output_cdp = net_connect.send_command(
             "show cdp neighbor detail", use_textfsm=True
         )
         # Use textFSM to create a json object with interface stats
+        template_path = os.getcwd()
+        template_file = os.path.join(template_path, "sh_int_br.textfsm")
         print(f"collecting show interfaces brief for {hostname}")
         output_show_int_br = net_connect.send_command(
-            "show interfaces brief", use_textfsm=True
+            "show interfaces brief",
+            strip_command=True,
+            use_textfsm=True,
+            textfsm_template=template_file,
         )
 
         # Use textFSM to create a json object with show lldp info remote
