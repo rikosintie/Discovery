@@ -11,6 +11,7 @@ show ip dns
 show job
 show version | i ROM
 show config vlan
+show config vlan | i ip address
 show vlan custom id name:15 ipaddr ipmask ipconfig state voice jumbo
 show config interface
 show ip
@@ -45,5 +46,5 @@ show dhcp-server binding
 show dhcp-server pool
 show crypto host-public-key fingerprint
 show config files
-show mac-address | ex 24
+show mac-address | ex "A|B"
 show arp
