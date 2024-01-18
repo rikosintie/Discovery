@@ -13,6 +13,8 @@
   - [What options are available](#what-options-are-available)
   - [What do the arguments do](#what-do-the-arguments-do)
 - [Failure to connect to a switch](#failure-to-connect-to-a-switch)
+  - [Use nmap to verify switches are up](#use-nmap-to-verify-switches-are-up)
+  - [Use nmap to verify the credentials](#use-nmap-to-verify-the-credentials)
 - [Building a list of switches](#building-a-list-of-switches)
   - [Review the bootstrap report](#review-the-bootstrap-report)
   - [Opening the report in a Chromium based browser](#opening-the-report-in-a-chromium-based-browser)
@@ -212,8 +214,7 @@ INFO:paramiko.transport:Auth banner: b'*****************************************
 INFO:paramiko.transport:Authentication (password) successful!
 ```
 
-
-Here is sample output from running the script:
+Here is a sample output from running the script:
 
 ```bash
 python3 procurve_Config_pull.py -s area2 -e 1
@@ -300,6 +301,8 @@ If a switch does not respond or if the the credentials are incorrect, a message 
 
 It's really disruptive to the discovery process if switches fail. That means you have to fix the problem and then create a new inventory file with just the failed switches, then rerun it.
 
+### Use nmap to verify switches are up
+
 I recommend saving the switch IP addresses in a plain text file, one per line, and then using nmap to verify that ssh is working.
 
 For example, create a new text file named `ip.txt`. If you are using vs code and the Rainbow csv extension you can simply run a query:
@@ -339,6 +342,8 @@ In this example only 3 devices are working:
 `Nmap done at Sun Jan  7 20:05:46 2024 -- 4 IP addresses (3 hosts up) scanned`
 
 If you don't get 100% you can open `ip-dead.txt` and search for "down".
+
+### Use nmap to verify the credentials
 
 There isn't a simple way to verify that the credentials will work. If you have permission to run the nmap ssh-brute script you can verify using:
 
@@ -459,7 +464,7 @@ Host: 192.168.10.52 ()  Ports: 22/open/tcp//ssh///, 161/open|filtered/udp//snmp/
 # Nmap done at Sun Jan 14 17:13:54 2024 -- 1 IP address (1 host up) scanned in 15.09 seconds
 ```
 
-If you are on Mac/Linux/Windows WSL or have git bash installed you can use grep to pull out a list of the switches from procurve-scan.gnmap file. Use the following grep/awk command:
+If you are on Mac/Linux/Windows WSL or have git bash (or MobaXterm) installed on Windows you can use grep to pull out a list of the switches from procurve-scan.gnmap file. Use the following grep/awk command:
 
  ```bash
  grep -Eir  "22/open/tcp//ssh///, 161/open|filtered/udp//snmp//" procurve.gnmap | awk '{ print $2 }'
