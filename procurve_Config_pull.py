@@ -268,7 +268,7 @@ for line in fabric:
         # you can set the timeout value up if they are timing out.
         if args.event != "":
             try:
-                log_type = ["w", "I", "M", "D", "E"]
+                log_type = ["W", "I", "M", "D", "E"]
                 time_out = args.event
                 for type in log_type:
                     print(f"processing show logging -{type} for {hostname}")
