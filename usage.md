@@ -154,7 +154,7 @@ options:
 - The only required argument is `-s site`. This references the device-inventory file.
 - If you want to pull logs from the switch add `-e 1`. Note: the number sets the timeout value in 100s of seconds. If you use -e 2 it will wait 200 seconds.
 - If you want to be prompted for a password add `-p 1`. If you don't use -p 1 you must set an environment variable cyberARK with the password. That is covered above in the "password" section.
-- If you want to enable ssh logging add `-l 1`. You would do that if you are getting "time out" errors.
+- If you want to enable ssh logging add `-l 1`. You would do that to troubleshoot if you are getting "time out" errors.
 
 The minimum is to use -s for the site:
 
