@@ -178,7 +178,7 @@ The files will be saved in the following directories:
 - Interface - files that need further processing
 - Running - The "show running structured" output for each switch
 
-Here is a sample output of the log.txt file:
+If you are having timeout or authentication issues you can enable logging. Here is a sample output of the log.txt file that netmiko creates:
 
 ```bash
 DEBUG:paramiko.transport:starting thread (client mode): 0xb4b346d0
