@@ -1,0 +1,250 @@
+strict digraph "" {
+	graph [bb="0,0,5020.4,324"];
+	node [label="\N"];
+	"SPDXRef-DOCUMENT"	[color=indianred2,
+		element="CreationInfo(spdx_version='SPDX-2.3', spdx_id='SPDXRef-DOCUMENT', name='com.github.rikosintie/Discovery', document_namespace='https://\
+github.com/rikosintie/Discovery/dependency_graph/sbom-46cb363148706c94', creators=[Actor(actor_type=<ActorType.TOOL: 3>, name='GitHub.com-Dependency-Graph', \
+email=None)], created=datetime.datetime(2024, 1, 11, 3, 50, 36), creator_comment='Exact versions could not be resolved for some \
+packages. For more information: https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/\
+about-the-dependency-graph#dependencies-included.', data_license='CC0-1.0', external_document_refs=[], license_list_version=None, \
+document_comment=None)",
+		height=0.5,
+		pos="2573.6,306",
+		width=3.1775];
+	"SPDXRef-DOCUMENT_DESCRIBES"	[color=lightgreen,
+		comment=None,
+		height=0.5,
+		label=DESCRIBES,
+		pos="2573.6,234",
+		width=1.8957];
+	"SPDXRef-DOCUMENT" -> "SPDXRef-DOCUMENT_DESCRIBES"	[pos="e,2573.6,252.1 2573.6,287.7 2573.6,279.98 2573.6,270.71 2573.6,262.11"];
+	"SPDXRef-com.github.rikosintie-Discovery"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-com.github.rikosintie-Discovery', name='com.github.rikosintie/Discovery', download_location='git+https://\
+github.com/rikosintie/Discovery', version='', file_name=None, supplier=NOASSERTION, originator=None, files_analyzed=False, verification_\
+code=None, checksums=[], homepage=None, source_info=None, license_concluded=None, license_info_from_files=[], license_declared=LicenseSymbol('\
+Unlicense', is_exception=False), license_comment=None, copyright_text=None, summary=None, description=None, comment=None, external_\
+references=[ExternalPackageRef(category=<ExternalPackageRefCategory.PACKAGE_MANAGER: 2>, reference_type='purl', locator='pkg:github/\
+rikosintie/Discovery', comment=None)], attribution_texts=[], primary_package_purpose=None, release_date=None, built_date=None, valid_\
+until_date=None)",
+		height=0.5,
+		pos="2573.6,162",
+		width=5.6328];
+	"SPDXRef-DOCUMENT_DESCRIBES" -> "SPDXRef-com.github.rikosintie-Discovery"	[pos="e,2573.6,180.1 2573.6,215.7 2573.6,207.98 2573.6,198.71 2573.6,190.11"];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON"	[color=lightgreen,
+		comment=None,
+		height=0.5,
+		label=DEPENDS_ON,
+		pos="2573.6,90",
+		width=2.2026];
+	"SPDXRef-com.github.rikosintie-Discovery" -> "SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON"	[pos="e,2573.6,108.1 2573.6,143.7 2573.6,135.98 2573.6,126.71 2573.6,118.11"];
+	"SPDXRef-pip-asttokens"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-asttokens', name='pip:asttokens', download_location=NOASSERTION, version='~> 2.4.1', file_name=None, \
+supplier=NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, \
+license_concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, \
+description=None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_\
+date=None, valid_until_date=None)",
+		height=0.5,
+		pos="117.64,18",
+		width=3.2678];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-asttokens"	[pos="e,197.82,31.179 2494.4,88.384 2139.7,85.446 695.29,71.495 243.64,36 232.04,35.088 219.87,33.83 207.85,32.408"];
+	"SPDXRef-pip-bcrypt"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-bcrypt', name='pip:bcrypt', download_location=NOASSERTION, version='~> 4.1.2', file_name=None, supplier=\
+NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, license_\
+concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, description=\
+None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_date=None, \
+valid_until_date=None)",
+		height=0.5,
+		pos="355.64,18",
+		width=2.8525];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-bcrypt"	[pos="e,426.28,31.097 2494.6,88.34 2161.7,85.354 872.5,71.679 467.64,36 457.47,35.104 446.82,33.872 436.3,32.478"];
+	"SPDXRef-pip-cffi"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-cffi', name='pip:cffi', download_location=NOASSERTION, version='~> 1.16.0', file_name=None, supplier=\
+NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, license_\
+concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, description=\
+None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_date=None, \
+valid_until_date=None)",
+		height=0.5,
+		pos="563.64,18",
+		width=2.4192];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-cffi"	[pos="e,623.88,31.067 2494.5,88.367 2180.7,85.617 1024.2,73.126 659.64,36 651.29,35.15 642.57,33.991 633.94,32.675"];
+	"SPDXRef-pip-colorama"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-colorama', name='pip:colorama', download_location=NOASSERTION, version='~> 0.4.6', file_name=None, \
+supplier=NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, \
+license_concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, \
+description=None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_\
+date=None, valid_until_date=None)",
+		height=0.5,
+		pos="783.64,18",
+		width=3.1955];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-colorama"	[pos="e,862.88,31.118 2494.1,89.412 2254.2,90.024 1516.4,87.275 907.64,36 896.42,35.055 884.66,33.796 873.04,32.389"];
+	"SPDXRef-pip-cryptography"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-cryptography', name='pip:cryptography', download_location=NOASSERTION, version='~> 41.0.7', file_name=\
+None, supplier=NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=\
+None, license_concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=\
+None, description=None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, \
+built_date=None, valid_until_date=None)",
+		height=0.5,
+		pos="1051.6,18",
+		width=3.7552];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-cryptography"	[pos="e,1144.9,31.097 2494.7,88.146 2283.6,85.392 1688.8,74.535 1195.6,36 1182.5,34.976 1168.8,33.664 1155.2,32.222"];
+	"SPDXRef-pip-executing"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-executing', name='pip:executing', download_location=NOASSERTION, version='~> 2.0.1', file_name=None, \
+supplier=NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, \
+license_concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, \
+description=None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_\
+date=None, valid_until_date=None)",
+		height=0.5,
+		pos="1322.6,18",
+		width=3.2858];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-executing"	[pos="e,1404.8,30.962 2494.9,87.58 2311.4,83.773 1841.6,71.126 1450.6,36 1439,34.958 1426.9,33.639 1414.9,32.198"];
+	"SPDXRef-pip-future"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-future', name='pip:future', download_location=NOASSERTION, version='~> 0.18.3', file_name=None, supplier=\
+NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, license_\
+concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, description=\
+None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_date=None, \
+valid_until_date=None)",
+		height=0.5,
+		pos="1560.6,18",
+		width=2.8164];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-future"	[pos="e,1631.6,30.871 2495.3,86.857 2338.6,82.024 1975.3,68.099 1671.6,36 1661.9,34.97 1651.7,33.689 1641.6,32.296"];
+	"SPDXRef-pip-icecream"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-icecream', name='pip:icecream', download_location=NOASSERTION, version='~> 2.1.3', file_name=None, \
+supplier=NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, \
+license_concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, \
+description=None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_\
+date=None, valid_until_date=None)",
+		height=0.5,
+		pos="1794.6,18",
+		width=3.1775];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-icecream"	[pos="e,1875.6,30.759 2498.4,84.273 2376.4,76.308 2128.2,58.823 1918.6,36 1908,34.838 1896.8,33.492 1885.7,32.076"];
+	"SPDXRef-pip-netmiko"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-netmiko', name='pip:netmiko', download_location=NOASSERTION, version='~> 4.3.0', file_name=None, supplier=\
+NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, license_\
+concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, description=\
+None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_date=None, \
+valid_until_date=None)",
+		height=0.5,
+		pos="2037.6,18",
+		width=3.0692];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-netmiko"	[pos="e,2117.7,30.495 2505.5,80.617 2423.1,70.406 2280.1,52.478 2157.6,36 2147.9,34.695 2137.8,33.304 2127.7,31.9"];
+	"SPDXRef-pip-ntc-templates"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-ntc-templates', name='pip:ntc-templates', download_location=NOASSERTION, version='~> 4.1.0', file_name=\
+None, supplier=NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=\
+None, license_concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=\
+None, description=None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, \
+built_date=None, valid_until_date=None)",
+		height=0.5,
+		pos="2302.6,18",
+		width=3.7913];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-ntc-templates"	[pos="e,2361.7,34.248 2523.3,75.998 2480.6,64.961 2418.8,49.016 2371.5,36.796"];
+	"SPDXRef-pip-paramiko"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-paramiko', name='pip:paramiko', download_location=NOASSERTION, version='~> 3.4.0', file_name=None, \
+supplier=NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, \
+license_concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, \
+description=None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_\
+date=None, valid_until_date=None)",
+		height=0.5,
+		pos="2573.6,18",
+		width=3.2317];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-paramiko"	[pos="e,2573.6,36.104 2573.6,71.697 2573.6,63.983 2573.6,54.712 2573.6,46.112"];
+	"SPDXRef-pip-prettytable"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-prettytable', name='pip:prettytable', download_location=NOASSERTION, version='~> 3.9.0', file_name=\
+None, supplier=NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=\
+None, license_concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=\
+None, description=None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, \
+built_date=None, valid_until_date=None)",
+		height=0.5,
+		pos="2832.6,18",
+		width=3.4664];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-prettytable"	[pos="e,2776.6,34.14 2622.7,75.751 2663.4,64.733 2721.8,48.951 2766.7,36.825"];
+	"SPDXRef-pip-pycparser"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-pycparser', name='pip:pycparser', download_location=NOASSERTION, version='~> 2.21', file_name=None, \
+supplier=NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, \
+license_concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, \
+description=None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_\
+date=None, valid_until_date=None)",
+		height=0.5,
+		pos="3094.6,18",
+		width=3.3039];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-pycparser"	[pos="e,3009,30.508 2639.9,80.099 2730.7,67.893 2894.5,45.884 2998.8,31.88"];
+	"SPDXRef-pip-pygments"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-pygments', name='pip:pygments', download_location=NOASSERTION, version='~> 2.17.2', file_name=None, \
+supplier=NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, \
+license_concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, \
+description=None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_\
+date=None, valid_until_date=None)",
+		height=0.5,
+		pos="3349.6,18",
+		width=3.2858];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-pygments"	[pos="e,3266,30.815 2648.7,84.133 2769.7,76.003 3015.3,58.332 3222.6,36 3233.4,34.842 3244.6,33.511 3255.8,32.114"];
+	"SPDXRef-pip-pynacl"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-pynacl', name='pip:pynacl', download_location=NOASSERTION, version='~> 1.5.0', file_name=None, supplier=\
+NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, license_\
+concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, description=\
+None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_date=None, \
+valid_until_date=None)",
+		height=0.5,
+		pos="3588.6,18",
+		width=2.8525];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-pynacl"	[pos="e,3516.8,30.909 2651.7,86.835 2808.5,81.957 3172.5,67.942 3476.6,36 3486.4,34.976 3496.6,33.705 3506.7,32.323"];
+	"SPDXRef-pip-pyserial"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-pyserial', name='pip:pyserial', download_location=NOASSERTION, version='~> 3.5', file_name=None, supplier=\
+NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, license_\
+concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, description=\
+None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_date=None, \
+valid_until_date=None)",
+		height=0.5,
+		pos="3819.6,18",
+		width=3.0511];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-pyserial"	[pos="e,3743.3,31.003 2652.4,87.865 2836.3,84.655 3308.2,73.175 3700.6,36 3711.2,34.998 3722.3,33.722 3733.3,32.321"];
+	"SPDXRef-pip-pyyaml"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-pyyaml', name='pip:pyyaml', download_location=NOASSERTION, version='~> 6.0.1', file_name=None, supplier=\
+NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, license_\
+concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, description=\
+None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_date=None, \
+valid_until_date=None)",
+		height=0.5,
+		pos="4053.6,18",
+		width=2.9608];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-pyyaml"	[pos="e,3980.2,31.068 2653.1,88.908 2863.3,88.017 3451.6,81.32 3938.6,36 3948.8,35.051 3959.5,33.809 3970.1,32.429"];
+	"SPDXRef-pip-scp"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-scp', name='pip:scp', download_location=NOASSERTION, version='~> 0.14.5', file_name=None, supplier=\
+NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, license_\
+concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, description=\
+None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_date=None, \
+valid_until_date=None)",
+		height=0.5,
+		pos="4266.6,18",
+		width=2.4553];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-scp"	[pos="e,4205.5,31.056 2652.6,87.845 2931.7,83.536 3870.4,67.031 4169.6,36 4178,35.132 4186.8,33.968 4195.4,32.656"];
+	"SPDXRef-pip-six"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-six', name='pip:six', download_location=NOASSERTION, version='~> 1.16.0', file_name=None, supplier=\
+NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, license_\
+concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, description=\
+None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_date=None, \
+valid_until_date=None)",
+		height=0.5,
+		pos="4458.6,18",
+		width=2.3831];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-six"	[pos="e,4399.3,31.009 2652.8,88.21 2953.3,84.969 4024.6,71.157 4363.6,36 4372,35.137 4380.7,33.963 4389.3,32.633"];
+	"SPDXRef-pip-textfsm"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-textfsm', name='pip:textfsm', download_location=NOASSERTION, version='~> 1.1.3', file_name=None, supplier=\
+NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, license_\
+concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, description=\
+None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_date=None, \
+valid_until_date=None)",
+		height=0.5,
+		pos="4670.6,18",
+		width=3.015];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-textfsm"	[pos="e,4596.2,31.153 2652.5,88.128 2972.5,84.401 4174.7,68.486 4553.6,36 4564.2,35.094 4575.3,33.861 4586.2,32.47"];
+	"SPDXRef-pip-wcwidth"	[color=lightskyblue,
+		element="Package(spdx_id='SPDXRef-pip-wcwidth', name='pip:wcwidth', download_location=NOASSERTION, version='~> 0.2.12', file_name=None, supplier=\
+NOASSERTION, originator=None, files_analyzed=False, verification_code=None, checksums=[], homepage=None, source_info=None, license_\
+concluded=None, license_info_from_files=[], license_declared=None, license_comment=None, copyright_text=None, summary=None, description=\
+None, comment=None, external_references=[], attribution_texts=[], primary_package_purpose=None, release_date=None, built_date=None, \
+valid_until_date=None)",
+		height=0.5,
+		pos="4908.6,18",
+		width=3.1053];
+	"SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON" -> "SPDXRef-pip-wcwidth"	[pos="e,4832.3,31.178 2652.7,88.348 2996.2,85.325 4361,71.289 4788.6,36 4799.5,35.106 4810.8,33.88 4822,32.492"];
+}
