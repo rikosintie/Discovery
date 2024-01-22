@@ -1,0 +1,301 @@
+<svg width="656" height="496" viewBox="0 0 492 372" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="translate(-11.808793936517475,143.2421426137738) scale(0.1)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-328 5031.5,-328 5031.5,4 -4,4"/>
+<!-- a -->
+<g id="node1" class="node">
+<title>SPDXRef-DOCUMENT</title>
+<ellipse fill="none" stroke="#ee6363" cx="2574.5" cy="-306" rx="114.5" ry="18"/>
+<text text-anchor="middle" x="2574.5" y="-301.8" font-family="Times,serif" font-size="14.00">SPDXRef-DOCUMENT</text>
+</g>
+<!-- b -->
+
+<!-- a&#45;&gt;b --><g id="node2" class="node">
+<title>SPDXRef-DOCUMENT_DESCRIBES</title>
+<ellipse fill="none" stroke="lightgreen" cx="2574.5" cy="-234" rx="68" ry="18"/>
+<text text-anchor="middle" x="2574.5" y="-229.8" font-family="Times,serif" font-size="14.00">DESCRIBES</text>
+</g>
+<!-- SPDXRef&#45;DOCUMENT&#45;&gt;SPDXRef&#45;DOCUMENT_DESCRIBES -->
+<g id="edge1" class="edge">
+<title>SPDXRef-DOCUMENT-&gt;SPDXRef-DOCUMENT_DESCRIBES</title>
+<path fill="none" stroke="black" d="M2574.5,-287.7C2574.5,-279.98 2574.5,-270.71 2574.5,-262.11"/>
+<polygon fill="black" stroke="black" points="2578,-262.1 2574.5,-252.1 2571,-262.1 2578,-262.1"/>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery -->
+<g id="node3" class="node">
+<title>SPDXRef-com.github.rikosintie-Discovery</title>
+<ellipse fill="none" stroke="lightskyblue" cx="2574.5" cy="-162" rx="203" ry="18"/>
+<text text-anchor="middle" x="2574.5" y="-157.8" font-family="Times,serif" font-size="14.00">SPDXRef-com.github.rikosintie-Discovery</text>
+</g>
+<!-- SPDXRef&#45;DOCUMENT_DESCRIBES&#45;&gt;SPDXRef&#45;com.github.rikosintie&#45;Discovery -->
+<g id="edge2" class="edge">
+<title>SPDXRef-DOCUMENT_DESCRIBES-&gt;SPDXRef-com.github.rikosintie-Discovery</title>
+<path fill="none" stroke="black" d="M2574.5,-215.7C2574.5,-207.98 2574.5,-198.71 2574.5,-190.11"/>
+<polygon fill="black" stroke="black" points="2578,-190.1 2574.5,-180.1 2571,-190.1 2578,-190.1"/>
+<rect x="2571" y="-215.6999969482422" width="7" height="35.59999084472656" stroke="black" fill="transparent" opacity="0.5" stroke-dasharray="9.606427411376131" stroke-width="9.606427411376131"/></g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON -->
+<!-- None -->
+<g id="node4" class="node">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON</title>
+<ellipse fill="none" stroke="lightgreen" cx="2574.5" cy="-90" rx="79.5" ry="18"/>
+<text text-anchor="middle" x="2574.5" y="-85.8" font-family="Times,serif" font-size="14.00">DEPENDS_ON</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery&#45;&gt;SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON -->
+<g id="edge3" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery-&gt;SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON</title>
+<path fill="none" stroke="black" d="M2574.5,-143.7C2574.5,-135.98 2574.5,-126.71 2574.5,-118.11"/>
+<polygon fill="black" stroke="black" points="2578,-118.1 2574.5,-108.1 2571,-118.1 2578,-118.1"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;asttokens -->
+<g id="node5" class="node">
+<title>SPDXRef-pip-asttokens</title>
+<ellipse fill="none" stroke="lightskyblue" cx="117.5" cy="-18" rx="117.5" ry="18"/>
+<text text-anchor="middle" x="117.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-asttokens</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;asttokens -->
+<g id="edge4" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-asttokens</title>
+<path fill="none" stroke="black" d="M2495.23,-88.39C2140.36,-85.45 695.35,-71.51 243.5,-36 231.9,-35.09 219.73,-33.83 207.72,-32.41"/>
+<polygon fill="black" stroke="black" points="208.03,-28.92 197.68,-31.18 207.18,-35.87 208.03,-28.92"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;bcrypt -->
+<g id="node6" class="node">
+<title>SPDXRef-pip-bcrypt</title>
+<ellipse fill="none" stroke="lightskyblue" cx="355.5" cy="-18" rx="102.5" ry="18"/>
+<text text-anchor="middle" x="355.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-bcrypt</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;bcrypt -->
+<g id="edge5" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-bcrypt</title>
+<path fill="none" stroke="black" d="M2495.13,-88.34C2161.64,-85.35 872.44,-71.68 467.5,-36 457.33,-35.1 446.68,-33.87 436.16,-32.48"/>
+<polygon fill="black" stroke="black" points="436.52,-28.99 426.14,-31.1 435.57,-35.93 436.52,-28.99"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;cffi -->
+<g id="node7" class="node">
+<title>SPDXRef-pip-cffi</title>
+<ellipse fill="none" stroke="lightskyblue" cx="563.5" cy="-18" rx="87" ry="18"/>
+<text text-anchor="middle" x="563.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-cffi</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;cffi -->
+<g id="edge6" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-cffi</title>
+<path fill="none" stroke="black" d="M2495.28,-88.37C2181.39,-85.62 1024.3,-73.14 659.5,-36 651.15,-35.15 642.43,-33.99 633.8,-32.67"/>
+<polygon fill="black" stroke="black" points="634.17,-29.19 623.74,-31.07 633.06,-36.1 634.17,-29.19"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;colorama -->
+<g id="node8" class="node">
+<title>SPDXRef-pip-colorama</title>
+<ellipse fill="none" stroke="lightskyblue" cx="783.5" cy="-18" rx="115" ry="18"/>
+<text text-anchor="middle" x="783.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-colorama</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;colorama -->
+<g id="edge7" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-colorama</title>
+<path fill="none" stroke="black" d="M2494.94,-89.41C2254.86,-90.03 1516.67,-87.3 907.5,-36 896.28,-35.06 884.52,-33.8 872.9,-32.39"/>
+<polygon fill="black" stroke="black" points="873.1,-28.89 862.74,-31.12 872.23,-35.83 873.1,-28.89"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;cryptography -->
+<g id="node9" class="node">
+<title>SPDXRef-pip-cryptography</title>
+<ellipse fill="none" stroke="lightskyblue" cx="1051.5" cy="-18" rx="135" ry="18"/>
+<text text-anchor="middle" x="1051.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-cryptography</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;cryptography -->
+<g id="edge8" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-cryptography</title>
+<path fill="none" stroke="black" d="M2495.09,-88.14C2283.52,-85.39 1688.74,-74.53 1195.5,-36 1182.4,-34.98 1168.66,-33.66 1155.08,-32.22"/>
+<polygon fill="black" stroke="black" points="1155.05,-28.7 1144.73,-31.1 1154.3,-35.66 1155.05,-28.7"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;executing -->
+<g id="node10" class="node">
+<title>SPDXRef-pip-executing</title>
+<ellipse fill="none" stroke="lightskyblue" cx="1323.5" cy="-18" rx="118.5" ry="18"/>
+<text text-anchor="middle" x="1323.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-executing</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;executing -->
+<g id="edge9" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-executing</title>
+<path fill="none" stroke="black" d="M2495.64,-87.61C2312.04,-83.87 1841.82,-71.35 1450.5,-36 1439.28,-34.99 1427.52,-33.71 1415.88,-32.31"/>
+<polygon fill="black" stroke="black" points="1416.06,-28.8 1405.71,-31.05 1415.2,-35.75 1416.06,-28.8"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;future -->
+<g id="node11" class="node">
+<title>SPDXRef-pip-future</title>
+<ellipse fill="none" stroke="lightskyblue" cx="1561.5" cy="-18" rx="101.5" ry="18"/>
+<text text-anchor="middle" x="1561.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-future</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;future -->
+<g id="edge10" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-future</title>
+<path fill="none" stroke="black" d="M2496.09,-86.9C2339.15,-82.14 1975.43,-68.33 1671.5,-36 1662.09,-35 1652.25,-33.76 1642.49,-32.41"/>
+<polygon fill="black" stroke="black" points="1642.77,-28.91 1632.38,-30.96 1641.78,-35.84 1642.77,-28.91"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;icecream -->
+<g id="node12" class="node">
+<title>SPDXRef-pip-icecream</title>
+<ellipse fill="none" stroke="lightskyblue" cx="1795.5" cy="-18" rx="114.5" ry="18"/>
+<text text-anchor="middle" x="1795.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-icecream</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;icecream -->
+<g id="edge11" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-icecream</title>
+<path fill="none" stroke="black" d="M2498.61,-84.27C2376.29,-76.34 2128.06,-58.93 1918.5,-36 1908,-34.85 1897.01,-33.52 1886.11,-32.12"/>
+<polygon fill="black" stroke="black" points="1886.51,-28.64 1876.14,-30.81 1885.6,-35.58 1886.51,-28.64"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;netmiko -->
+<g id="node13" class="node">
+<title>SPDXRef-pip-netmiko</title>
+<ellipse fill="none" stroke="lightskyblue" cx="2038.5" cy="-18" rx="110.5" ry="18"/>
+<text text-anchor="middle" x="2038.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-netmiko</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;netmiko -->
+<g id="edge12" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-netmiko</title>
+<path fill="none" stroke="black" d="M2506.2,-80.65C2423.57,-70.47 2280.27,-52.57 2157.5,-36 2148.06,-34.73 2138.2,-33.37 2128.38,-31.99"/>
+<polygon fill="black" stroke="black" points="2128.56,-28.48 2118.17,-30.56 2127.59,-35.41 2128.56,-28.48"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;ntc&#45;templates -->
+<g id="node14" class="node">
+<title>SPDXRef-pip-ntc-templates</title>
+<ellipse fill="none" stroke="lightskyblue" cx="2303.5" cy="-18" rx="136.5" ry="18"/>
+<text text-anchor="middle" x="2303.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-ntc-templates</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;ntc&#45;templates -->
+<g id="edge13" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-ntc-templates</title>
+<path fill="none" stroke="black" d="M2524.16,-76C2481.43,-64.96 2419.71,-49.02 2372.4,-36.8"/>
+<polygon fill="black" stroke="black" points="2373.09,-33.36 2362.53,-34.25 2371.34,-40.14 2373.09,-33.36"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;paramiko -->
+<g id="node15" class="node">
+<title>SPDXRef-pip-paramiko</title>
+<ellipse fill="none" stroke="lightskyblue" cx="2574.5" cy="-18" rx="116.5" ry="18"/>
+<text text-anchor="middle" x="2574.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-paramiko</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;paramiko -->
+<g id="edge14" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-paramiko</title>
+<path fill="none" stroke="black" d="M2574.5,-71.7C2574.5,-63.98 2574.5,-54.71 2574.5,-46.11"/>
+<polygon fill="black" stroke="black" points="2578,-46.1 2574.5,-36.1 2571,-46.1 2578,-46.1"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;prettytable -->
+<g id="node16" class="node">
+<title>SPDXRef-pip-prettytable</title>
+<ellipse fill="none" stroke="lightskyblue" cx="2834.5" cy="-18" rx="125" ry="18"/>
+<text text-anchor="middle" x="2834.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-prettytable</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;prettytable -->
+<g id="edge15" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-prettytable</title>
+<path fill="none" stroke="black" d="M2623.71,-75.75C2664.72,-64.71 2723.5,-48.88 2768.58,-36.75"/>
+<polygon fill="black" stroke="black" points="2769.52,-40.12 2778.26,-34.14 2767.7,-33.36 2769.52,-40.12"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;pycparser -->
+<g id="node17" class="node">
+<title>SPDXRef-pip-pycparser</title>
+<ellipse fill="none" stroke="lightskyblue" cx="3096.5" cy="-18" rx="119" ry="18"/>
+<text text-anchor="middle" x="3096.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-pycparser</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;pycparser -->
+<g id="edge16" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-pycparser</title>
+<path fill="none" stroke="black" d="M2641.14,-80.06C2732.25,-67.85 2896.24,-45.86 3000.56,-31.87"/>
+<polygon fill="black" stroke="black" points="3001.33,-35.29 3010.78,-30.5 3000.4,-28.36 3001.33,-35.29"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;pygments -->
+<g id="node18" class="node">
+<title>SPDXRef-pip-pygments</title>
+<ellipse fill="none" stroke="lightskyblue" cx="3352.5" cy="-18" rx="118.5" ry="18"/>
+<text text-anchor="middle" x="3352.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-pygments</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;pygments -->
+<g id="edge17" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-pygments</title>
+<path fill="none" stroke="black" d="M2649.68,-84.11C2770.86,-75.96 3016.79,-58.25 3224.5,-36 3235.53,-34.82 3247.09,-33.46 3258.54,-32.03"/>
+<polygon fill="black" stroke="black" points="3259.09,-35.49 3268.57,-30.77 3258.21,-28.55 3259.09,-35.49"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;pynacl -->
+<g id="node19" class="node">
+<title>SPDXRef-pip-pynacl</title>
+<ellipse fill="none" stroke="lightskyblue" cx="3591.5" cy="-18" rx="102.5" ry="18"/>
+<text text-anchor="middle" x="3591.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-pynacl</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;pynacl -->
+<g id="edge18" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-pynacl</title>
+<path fill="none" stroke="black" d="M2652.87,-86.88C2810.15,-82.09 3175.35,-68.22 3480.5,-36 3490,-35 3499.92,-33.76 3509.77,-32.4"/>
+<polygon fill="black" stroke="black" points="3510.56,-35.83 3519.97,-30.96 3509.58,-28.89 3510.56,-35.83"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;pyserial -->
+<g id="node20" class="node">
+<title>SPDXRef-pip-pyserial</title>
+<ellipse fill="none" stroke="lightskyblue" cx="3822.5" cy="-18" rx="110" ry="18"/>
+<text text-anchor="middle" x="3822.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-pyserial</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;pyserial -->
+<g id="edge19" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-pyserial</title>
+<path fill="none" stroke="black" d="M2653.73,-87.87C2838.2,-84.66 3310.6,-73.2 3703.5,-36 3714.08,-35 3725.16,-33.72 3736.12,-32.32"/>
+<polygon fill="black" stroke="black" points="3736.67,-35.78 3746.13,-31 3735.76,-28.84 3736.67,-35.78"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;pyyaml -->
+<g id="node21" class="node">
+<title>SPDXRef-pip-pyyaml</title>
+<ellipse fill="none" stroke="lightskyblue" cx="4057.5" cy="-18" rx="106.5" ry="18"/>
+<text text-anchor="middle" x="4057.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-pyyaml</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;pyyaml -->
+<g id="edge20" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-pyyaml</title>
+<path fill="none" stroke="black" d="M2654.05,-88.88C2864.6,-87.92 3453.72,-81.07 3941.5,-36 3951.87,-35.04 3962.72,-33.79 3973.46,-32.4"/>
+<polygon fill="black" stroke="black" points="3974.25,-35.82 3983.69,-31.02 3973.32,-28.88 3974.25,-35.82"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;scp -->
+<g id="node22" class="node">
+<title>SPDXRef-pip-scp</title>
+<ellipse fill="none" stroke="lightskyblue" cx="4270.5" cy="-18" rx="88.5" ry="18"/>
+<text text-anchor="middle" x="4270.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-scp</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;scp -->
+<g id="edge21" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-scp</title>
+<path fill="none" stroke="black" d="M2653.65,-87.85C2933.25,-83.55 3873.74,-67.08 4173.5,-36 4181.87,-35.13 4190.61,-33.97 4199.27,-32.66"/>
+<polygon fill="black" stroke="black" points="4200.04,-36.08 4209.37,-31.06 4198.94,-29.16 4200.04,-36.08"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;six -->
+<g id="node23" class="node">
+<title>SPDXRef-pip-six</title>
+<ellipse fill="none" stroke="lightskyblue" cx="4463.5" cy="-18" rx="86" ry="18"/>
+<text text-anchor="middle" x="4463.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-six</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;six -->
+<g id="edge22" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-six</title>
+<path fill="none" stroke="black" d="M2653.79,-88.21C2955.05,-84.99 4028.74,-71.22 4368.5,-36 4376.77,-35.14 4385.39,-33.98 4393.93,-32.66"/>
+<polygon fill="black" stroke="black" points="4394.58,-36.1 4403.89,-31.05 4393.46,-29.19 4394.58,-36.1"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;textfsm -->
+<g id="node24" class="node">
+<title>SPDXRef-pip-textfsm</title>
+<ellipse fill="none" stroke="lightskyblue" cx="4676.5" cy="-18" rx="108.5" ry="18"/>
+<text text-anchor="middle" x="4676.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-textfsm</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;textfsm -->
+<g id="edge23" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-textfsm</title>
+<path fill="none" stroke="black" d="M2653.8,-88.12C2974.82,-84.34 4178.91,-68.3 4558.5,-36 4569.24,-35.09 4580.49,-33.84 4591.6,-32.44"/>
+<polygon fill="black" stroke="black" points="4592.28,-35.88 4601.74,-31.11 4591.37,-28.94 4592.28,-35.88"/>
+</g>
+<!-- SPDXRef&#45;pip&#45;wcwidth -->
+<g id="node25" class="node">
+<title>SPDXRef-pip-wcwidth</title>
+<ellipse fill="none" stroke="lightskyblue" cx="4915.5" cy="-18" rx="112" ry="18"/>
+<text text-anchor="middle" x="4915.5" y="-13.8" font-family="Times,serif" font-size="14.00">SPDXRef-pip-wcwidth</text>
+</g>
+<!-- SPDXRef&#45;com.github.rikosintie&#45;Discovery_DEPENDS_ON&#45;&gt;SPDXRef&#45;pip&#45;wcwidth -->
+<g id="edge24" class="edge">
+<title>SPDXRef-com.github.rikosintie-Discovery_DEPENDS_ON-&gt;SPDXRef-pip-wcwidth</title>
+<path fill="none" stroke="black" d="M2653.72,-88.34C2997.97,-85.28 4365.83,-71.11 4794.5,-36 4805.62,-35.09 4817.28,-33.84 4828.78,-32.42"/>
+<polygon fill="black" stroke="black" points="4829.36,-35.87 4838.84,-31.13 4828.47,-28.93 4829.36,-35.87"/>
+</g>
+</g>
+</svg>
