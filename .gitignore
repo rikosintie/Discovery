@@ -7,3 +7,4 @@ lib64
 include/
 device-inventory*
 Discovery.code-workspace
+test.py
