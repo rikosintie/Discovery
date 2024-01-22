@@ -120,13 +120,13 @@ print()
 print()
 start = timeit.default_timer()
 parser = argparse.ArgumentParser(
-    description="-s site, -l 1 create log.txt, -p 1 prompt for password"
+    description="-s site, -l 1 create log.txt, -p 1 prompt for password, -t 1-9 timeout, -e W,I,M,D,E to pull logs"
 )
 parser.add_argument(
     "-e",
     "--event",  # Optional (but recommended) long version
     default="",
-    help="-e 1-9 to pull switch logs",
+    help="-e W,I,M,D,E to pull switch logs",
 )
 parser.add_argument(
     "-l",
@@ -141,6 +141,12 @@ parser.add_argument(
     help="use -p 1 to be prompted for password",
 )
 parser.add_argument("-s", "--site", help="Site name - ex. HQ")
+parser.add_argument(
+    "-t",
+    "--timeout",  # Optional (but recommended) long version
+    default="1",
+    help="use -t 1-9 to set timeout",
+)
 args = parser.parse_args()
 site = args.site
 
@@ -240,9 +246,7 @@ for line in fabric:
             end_time = datetime.now()
             print(f"\nExec time: {end_time - now}\n")
             continue
-        # print(f"Processing {hostname}")
         #  all switches use the same config file
-        # for data collection, the first line in the file must be end
         cfg_file = "procurve" + "-config-file.txt"
         print()
         print(net_connect.find_prompt())
@@ -257,9 +261,10 @@ for line in fabric:
         # Netmiko normally allows 100 seconds for send_command to complete
         # delay_factor=2 would allow 200 seconds.
         output_show_str: str = ""
+        time_out = args.timeout
         for command in show_commands:
             output_show = net_connect.send_command(
-                command, strip_command=False, delay_factor=3
+                command, strip_command=False, delay_factor=time_out
             )
             ic(output_show)
             output_show_str = f"{output_show_str} \n !++++++++++++++ \n  {output_show}"
@@ -268,8 +273,9 @@ for line in fabric:
         # you can set the timeout value up if they are timing out.
         if args.event != "":
             try:
-                log_type = ["W", "I", "M", "D", "E"]
-                time_out = args.event
+                # log_type = ["W", "I", "M", "D", "E"]
+                log_type = args.event.split(",")
+                time_out = args.timeout
                 for type in log_type:
                     print(f"processing show logging -{type} for {hostname}")
                     output_event = f"output_event_{type}"
