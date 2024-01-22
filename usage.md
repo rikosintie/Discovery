@@ -12,6 +12,11 @@
 - [Run the discovery script](#run-the-discovery-script)
   - [What options are available](#what-options-are-available)
   - [What do the arguments do](#what-do-the-arguments-do)
+    - [Collecting switch logs](#collecting-switch-logs)
+    - [Setting the Password](#setting-the-password)
+    - [SSH Logging](#ssh-logging)
+    - [Timeout](#timeout)
+  - [Examples](#examples)
 - [Failure to connect to a switch](#failure-to-connect-to-a-switch)
   - [Use nmap to verify switches are up](#use-nmap-to-verify-switches-are-up)
   - [Use nmap to verify the credentials](#use-nmap-to-verify-the-credentials)
@@ -159,6 +164,8 @@ options:
 
 The only required argument is `-s site`. This references the device-inventory file.
 
+#### Collecting switch logs
+
 The procurve switches allow you to pull five different types of logs:
 
 - Warning (W) - This log contains warning messages
@@ -171,11 +178,19 @@ If you want to pull logs from the switch add `-e` and the type of log. You can c
 
 `-e W,I,M,D,E`
 
+#### Setting the Password
+
 If you want to be prompted for a password add `-p 1`. If you don't use -p 1 you must set an environment variable cyberARK with the password. That is covered above in the "[password](#password)" section.
+
+#### SSH Logging
 
 If you want to enable ssh logging add `-l 1`. You would do that to troubleshoot if you are getting "time out" errors.
 
-- You can modify the timeout value using  `-t`. Note: the number sets the timeout value in 100s of seconds. If you use `-t 2` it will wait 200 seconds.
+#### Timeout
+
+You can modify the timeout value using  `-t`. Note: the number sets the timeout value in 100s of seconds. If you use `-t 2` it will wait 200 seconds.
+
+### Examples
 
 The minimum is to use -s for the site:
 
