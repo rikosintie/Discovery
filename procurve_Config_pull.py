@@ -273,7 +273,6 @@ for line in fabric:
         # you can set the timeout value up if they are timing out.
         if args.event != "":
             try:
-                # log_type = ["W", "I", "M", "D", "E"]
                 log_type = args.event.split(",")
                 time_out = args.timeout
                 for type in log_type:
@@ -286,7 +285,6 @@ for line in fabric:
                     print("-" * (len(cfg_file) + len(hostname) + 16))
                     #  Write the show logging output to disk
                     log_name = f"-log-{type}.txt"
-                    # int_report = get_current_path("CR-data", "-log.txt")
                     int_report = get_current_path("CR-data", log_name)
                     print(f"Writing show logging -{type} commands to {int_report}")
                     with open(int_report, "w") as file:
