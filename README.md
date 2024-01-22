@@ -14,7 +14,7 @@
   - [show running-config](#show-running-config)
 - [Questions for Discovery and Deployment](#questions-for-discovery-and-deployment)
 - [License](#license)
-- [SBOM](#sbom)
+- [SBOM - a Software Bill of Materials](#sbom---a-software-bill-of-materials)
 
 There are additional sections to this documentation:
 
@@ -201,9 +201,18 @@ This project is licensed under the Unlicense - see the LICENSE file for details.
 
 ----------------------------------------------------------------
 
-## SBOM
+## SBOM - a Software Bill of Materials
 
-You can create the JSON format data file of an SPDX compatible SBOM file using Insights, Dependency Graph, Export SBOM from the repository home page. The filename is sbom.json for this project.
+Github has a feature for creating an SPDX compatible SBOM file. From the repository page click:
+Insights, Dependency Graph, Export SBOM.
+
+This project includes a file named sbom.json.
+
+You can use tools from the [SPDX project](https://github.com/spdx/tools-python) to validate and work with the sbom.json file. They have a python script that allows you to output a Graphviz format file. Here is the command I used to create sbom.dot.
+
+`pyspdxtools -i sbom.json --graph -o sbom``
+
+You can use this site, [Graphviz Visual Editor](http://magjac.com/graphviz-visual-editor/) to convert the sbom.dot file to an SVG image. For this project the filename is spdx.svg.
 
 ----------------------------------------------------------------
 
