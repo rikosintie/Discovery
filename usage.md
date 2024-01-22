@@ -188,7 +188,7 @@ If you want to enable ssh logging add `-l 1`. You would do that to troubleshoot 
 
 #### Timeout
 
-You can modify the timeout value using  `-t`. Note: the number sets the timeout value in 100s of seconds. If you use `-t 2` it will wait 200 seconds.
+You can modify the timeout value using  `-t`. Note: the number sets the timeout value in 100s of seconds. If you use `-t 2` it will wait up to 200 seconds for the operation to complete.
 
 ### Examples
 
