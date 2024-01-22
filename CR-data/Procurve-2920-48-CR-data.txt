@@ -16,12 +16,12 @@
   Software revision  : WB.16.10.0023        Base MAC Addr      : 98f2b3-fe8880
   ROM Version        : WB.16.03             Serial Number      : SG78FLXH0B  
 
-  Up Time            : 37 mins              Memory   - Total   : 72,483,328  
-  CPU Util (%)       : 44                              Free    : 40,328,980  
+  Up Time            : 4 hours              Memory   - Total   : 72,483,328  
+  CPU Util (%)       : 40                              Free    : 40,300,312  
 
-  IP Mgmt  - Pkts Rx : 4518                 Packet   - Total   : 6750        
-             Pkts Tx : 3086                 Buffers    Free    : 5009        
-                                                       Lowest  : 4995        
+  IP Mgmt  - Pkts Rx : 11,539               Packet   - Total   : 6750        
+             Pkts Tx : 4894                 Buffers    Free    : 5009        
+                                                       Lowest  : 4994        
                                                        Missed  : 0           
  
  !++++++++++++++ 
@@ -53,10 +53,10 @@ The running configuration matches the saved configuration.
  
  !++++++++++++++ 
   show time
-Sun Jan 21 19:02:57 2024 
+Sun Jan 21 23:04:04 2024 
  !++++++++++++++ 
   show uptime
-0000:00:37:15.22 
+0000:04:38:22.35 
  !++++++++++++++ 
   show ntp status
 
@@ -65,14 +65,14 @@ Sun Jan 21 19:02:57 2024
   NTP Status             : Enabled         NTP Mode        : Unicast         
   Synchronization Status : Synchronized    Peer Dispersion : 0.00000 sec     
   Stratum Number         : 2               Leap Direction  : 0               
-  Reference Assoc ID     : 0               Clock Offset    : 0.00041 sec     
-  Reference ID           : 129.6.15.29     Root Delay      : 0.07247 sec     
-  Precision              : 2**-18          Root Dispersion : 0.15885 sec     
-  NTP Up Time            : 0d 0h 37m       Time Resolution : 1395 nsec       
+  Reference Assoc ID     : 0               Clock Offset    : 0.03520 sec     
+  Reference ID           : 129.6.15.29     Root Delay      : 0.07283 sec     
+  Precision              : 2**-18          Root Dispersion : 1.08922 sec     
+  NTP Up Time            : 0d 4h 38m       Time Resolution : 2092 nsec       
   Drift                  : 0.00002 sec/sec 
 
-  System Time            : Sun Jan 21 19:02:57 2024                
-  Reference Time         : Sun Jan 21 18:59:12 2024                
+  System Time            : Sun Jan 21 23:04:04 2024                
+  Reference Time         : Sun Jan 21 22:11:12 2024                
  
  !++++++++++++++ 
   show ntp associations
@@ -82,8 +82,8 @@ Sun Jan 21 19:02:57 2024
 
  Remote          St   T    When   Poll  Reach    Delay    Offset   Dispersion
  --------------- ---- ---- ------ ----- -------- -------- -------- ----------
- 129.6.15.29     1    u    2228   17    1        0.000    0.000    16.00000  
- 192.168.10.221  1    u    2228   17    1        0.000    0.000    16.00000  
+ 129.6.15.29     1    u    16695  13    17       0.000    0.000    16.00000  
+ 192.168.10.221  1    u    16695  10    17       0.000    0.000    16.00000  
  
  !++++++++++++++ 
   show ntp server
@@ -471,7 +471,7 @@ router ospf
   Area Border               : no 
   AS Border                 : yes
   External LSA Count        : 7          
-  External LSA Checksum Sum : 203074     
+  External LSA Checksum Sum : 215520     
   Originate New LSA Count   : 6          
   Receive New LSA Count     : 0          
 
@@ -495,13 +495,13 @@ router ospf
 
   Link State ID   Router ID       Age  Sequence #  Checksum  
   --------------- --------------- ---- ----------- ----------
-  1.1.1.1         1.1.1.1         380  0x80000002  0x00001436
-  10.14.63.16     1.1.1.1         380  0x80000002  0x00009459
-  10.14.64.16     1.1.1.1         380  0x80000002  0x00008963
-  10.14.65.16     1.1.1.1         380  0x80000002  0x00007e6d
-  10.14.66.16     1.1.1.1         380  0x80000002  0x00007377
-  10.164.24.0     1.1.1.1         380  0x80000002  0x0000fe88
-  192.168.10.0    1.1.1.1         380  0x80000002  0x000022b8
+  1.1.1.1         1.1.1.1         1824 0x80000009  0x0000063d
+  10.14.63.16     1.1.1.1         1824 0x80000009  0x00008660
+  10.14.64.16     1.1.1.1         1824 0x80000009  0x00007b6a
+  10.14.65.16     1.1.1.1         1824 0x80000009  0x00007074
+  10.14.66.16     1.1.1.1         1824 0x80000009  0x0000657e
+  10.164.24.0     1.1.1.1         1824 0x80000009  0x0000f08f
+  192.168.10.0    1.1.1.1         1824 0x80000009  0x000014bf
  
  
  !++++++++++++++ 
@@ -861,7 +861,7 @@ System ID: 98f2b3-fe8880
   --- -------- + ---------------------------------------------- -----
   1   console  |
   2   ssh      | 192.168.10.115                                 59430
-  3   ssh      | 192.168.10.115                                 39830
+  3   ssh      | 192.168.10.115                                 40848
   4   inactive |
   5   inactive |
   6   inactive |
@@ -969,17 +969,19 @@ Configuration files:
   28d0ea-932a42 24      10  
   3c9bd6-aa323e 24      10  
   446755-03d472 24      10  
-  561428-2895f7 24      10  
+  50ed3c-22be32 24      10  
   788cb5-1780c8 24      10  
   82b881-8bcb00 24      10  
   8e93a6-f482f4 24      10  
   9c8cd8-c917ae 24      10  
   9e539c-18f1fe 24      10  
   a4307a-8975e4 24      10  
+  ace010-ee5802 24      10  
   b099d7-f9dad5 24      10  
   bcbac2-0f4fa4 24      10  
   dc4f22-fa1708 24      10  
   dc56e7-496195 24      10  
+  f84d89-7a1349 24      10  
   fcecda-c46e55 24      10  
   fcecda-c4770b 24      10  
   fcecda-c56e55 24      10  
@@ -993,6 +995,7 @@ Configuration files:
   IP Address       MAC Address       Type    Port
   ---------------  ----------------- ------- ----
   192.168.10.115   28d0ea-932a42     dynamic 24  
+  192.168.10.117   b099d7-f9dad5     dynamic 24  
   192.168.10.138   a4307a-8975e4     dynamic 24  
   192.168.10.221   000c29-4caa4e     dynamic 24  
   192.168.10.254   085b0e-7c7930     dynamic 24  

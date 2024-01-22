@@ -2,6 +2,57 @@ show logging -r -I
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
+I 01/21/24 23:04:02 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/21/24 23:04:02 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/21/24 23:00:00 04612 job: Job 'wrmem' completed
+I 01/21/24 22:12:34 04910 ntp: All the NTP server associations reset.
+I 01/21/24 22:12:34 04908 ntp: The system clock time was changed by 0 sec
+            35198113 nsec.	 The new time is Sun Jan 21 22:12:33 2024
+.
+I 01/21/24 20:04:27 04910 ntp: All the NTP server associations reset.
+I 01/21/24 20:04:27 04908 ntp: The system clock time was changed by 0 sec
+            17796149 nsec.	 The new time is Sun Jan 21 20:04:27 2024
+.
+I 01/21/24 19:03:40 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/21/24 19:03:40 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/21/24 19:02:55 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/21/24 19:02:54 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/21/24 19:00:26 04910 ntp: All the NTP server associations reset.
+I 01/21/24 19:00:12 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/21/24 19:00:10 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/21/24 18:52:30 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/21/24 18:52:30 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/21/24 18:46:48 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/21/24 18:46:47 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/21/24 18:35:54 05219 activate: A system software update is available to
+            version WB.16.10.0024.
+I 01/21/24 18:35:54 05223 activate: Successfully established connection with the
+            Activate server;parsing final software update service response.
+I 01/21/24 18:35:51 05226 activate: Successfully resolved the Activate server
+            address devices-v2.arubanetworks.com to 35.82.154.193.
+I 01/21/24 18:35:51 05225 activate: Loading security certificates and
+            synchronizing time.
+I 01/21/24 18:32:34 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/21/24 18:32:34 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/21/24 18:31:56 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/21/24 18:31:55 03362 auth: User 'vector' logged in from 192.168.10.115 to
+            SSH  session
+I 01/21/24 18:30:52 03363 auth: User 'vector' logged out of SSH  session from 
+            192.168.10.115
+W 01/21/24 18:30:52 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/21/24 18:30:33 05101 amp-server: AMP server configuration is disabled due
+            to first configuration.
 I 01/21/24 18:28:23 04910 ntp: All the NTP server associations reset.
 I 01/21/24 18:27:18 04611 job: Job Scheduler enabled
 I 01/21/24 18:27:17 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
@@ -116,4 +167,4 @@ I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master
 I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
 I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master 
 I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
-----  Top of Log : Events Listed = 91  ----
+----  Top of Log : Events Listed = 120  ----
