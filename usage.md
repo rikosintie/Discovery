@@ -200,6 +200,10 @@ To include the Warning log:
 
 `python3 procurve-Config-pull.py -s HQ -e W`
 
+To include all logs and set timeout to 2:
+
+`python3 procurve-Config-pull.py -s HQ -e W,I,M,D,E -t 2`
+
 To be prompted for a password:
 
 `python3 procurve-Config-pull.py -s HQ -p 1`
