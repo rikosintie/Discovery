@@ -7,8 +7,8 @@
 - [Password](#password)
   - [Creating an Environment Variable](#creating-an-environment-variable)
   - [Being prompted for the password](#being-prompted-for-the-password)
-  - [Update the mac.txt file](#update-the-mactxt-file)
-  - [Update the procurve-config-file.txt file](#update-the-procurve-config-filetxt-file)
+- [Update the mac.txt file](#update-the-mactxt-file)
+- [Update the procurve-config-file.txt file](#update-the-procurve-config-filetxt-file)
 - [Run the discovery script](#run-the-discovery-script)
   - [What options are available](#what-options-are-available)
   - [What do the arguments do](#what-do-the-arguments-do)
@@ -89,7 +89,7 @@ When you press enter, you will see "Input the Password:" on the command line. En
 
 ----------------------------------------------------------------
 
-### Update the mac.txt file
+## Update the mac.txt file
 
 To create the port maps the mac-address table must be saved but it has to saved by interface.
 
@@ -103,7 +103,7 @@ Simply open the file, copy the interfaces you need and save them into the mac.tx
 
 ----------------------------------------------------------------
 
-### Update the procurve-config-file.txt file
+## Update the procurve-config-file.txt file
 
 This file contains all of the `show commands` that will be sent to the switches. It has fifty commands in it including many that may not apply to customer:
 
