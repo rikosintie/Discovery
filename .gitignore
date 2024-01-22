@@ -6,3 +6,4 @@ ntc_templates/
 lib64
 include/
 device-inventory*
+Discovery.code-workspace
