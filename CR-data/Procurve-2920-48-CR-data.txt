@@ -16,12 +16,12 @@
   Software revision  : WB.16.10.0023        Base MAC Addr      : 98f2b3-fe8880
   ROM Version        : WB.16.03             Serial Number      : SG78FLXH0B  
 
-  Up Time            : 2 hours              Memory   - Total   : 72,483,328  
-  CPU Util (%)       : 35                              Free    : 40,353,072  
+  Up Time            : 37 mins              Memory   - Total   : 72,483,328  
+  CPU Util (%)       : 44                              Free    : 40,328,980  
 
-  IP Mgmt  - Pkts Rx : 1659                 Packet   - Total   : 6750        
-             Pkts Tx : 875                  Buffers    Free    : 5009        
-                                                       Lowest  : 4994        
+  IP Mgmt  - Pkts Rx : 4518                 Packet   - Total   : 6750        
+             Pkts Tx : 3086                 Buffers    Free    : 5009        
+                                                       Lowest  : 4995        
                                                        Missed  : 0           
  
  !++++++++++++++ 
@@ -53,10 +53,10 @@ The running configuration matches the saved configuration.
  
  !++++++++++++++ 
   show time
-Wed Jan 17 16:28:06 2024 
+Sun Jan 21 19:02:57 2024 
  !++++++++++++++ 
   show uptime
-0000:02:14:15.47 
+0000:00:37:15.22 
  !++++++++++++++ 
   show ntp status
 
@@ -65,14 +65,14 @@ Wed Jan 17 16:28:06 2024
   NTP Status             : Enabled         NTP Mode        : Unicast         
   Synchronization Status : Synchronized    Peer Dispersion : 0.00000 sec     
   Stratum Number         : 2               Leap Direction  : 0               
-  Reference Assoc ID     : 0               Clock Offset    : 0.02470 sec     
-  Reference ID           : 129.6.15.29     Root Delay      : 0.07189 sec     
-  Precision              : 2**-18          Root Dispersion : 0.47548 sec     
-  NTP Up Time            : 0d 2h 14m       Time Resolution : 698 nsec        
-  Drift                  : 0.00001 sec/sec 
+  Reference Assoc ID     : 0               Clock Offset    : 0.00041 sec     
+  Reference ID           : 129.6.15.29     Root Delay      : 0.07247 sec     
+  Precision              : 2**-18          Root Dispersion : 0.15885 sec     
+  NTP Up Time            : 0d 0h 37m       Time Resolution : 1395 nsec       
+  Drift                  : 0.00002 sec/sec 
 
-  System Time            : Wed Jan 17 16:28:07 2024                
-  Reference Time         : Wed Jan 17 15:51:28 2024                
+  System Time            : Sun Jan 21 19:02:57 2024                
+  Reference Time         : Sun Jan 21 18:59:12 2024                
  
  !++++++++++++++ 
   show ntp associations
@@ -82,8 +82,8 @@ Wed Jan 17 16:28:06 2024
 
  Remote          St   T    When   Poll  Reach    Delay    Offset   Dispersion
  --------------- ---- ---- ------ ----- -------- -------- -------- ----------
- 129.6.15.29     1    u    8048   13    7        0.000    0.000    15.95606  
- 192.168.10.221  1    u    8048   10    7        0.000    0.000    15.95488  
+ 129.6.15.29     1    u    2228   17    1        0.000    0.000    16.00000  
+ 192.168.10.221  1    u    2228   17    1        0.000    0.000    16.00000  
  
  !++++++++++++++ 
   show ntp server
@@ -471,7 +471,7 @@ router ospf
   Area Border               : no 
   AS Border                 : yes
   External LSA Count        : 7          
-  External LSA Checksum Sum : 208408     
+  External LSA Checksum Sum : 203074     
   Originate New LSA Count   : 6          
   Receive New LSA Count     : 0          
 
@@ -495,13 +495,13 @@ router ospf
 
   Link State ID   Router ID       Age  Sequence #  Checksum  
   --------------- --------------- ---- ----------- ----------
-  1.1.1.1         1.1.1.1         620  0x80000005  0x00000e39
-  10.14.63.16     1.1.1.1         620  0x80000005  0x00008e5c
-  10.14.64.16     1.1.1.1         620  0x80000005  0x00008366
-  10.14.65.16     1.1.1.1         620  0x80000005  0x00007870
-  10.14.66.16     1.1.1.1         620  0x80000005  0x00006d7a
-  10.164.24.0     1.1.1.1         620  0x80000005  0x0000f88b
-  192.168.10.0    1.1.1.1         620  0x80000005  0x00001cbb
+  1.1.1.1         1.1.1.1         380  0x80000002  0x00001436
+  10.14.63.16     1.1.1.1         380  0x80000002  0x00009459
+  10.14.64.16     1.1.1.1         380  0x80000002  0x00008963
+  10.14.65.16     1.1.1.1         380  0x80000002  0x00007e6d
+  10.14.66.16     1.1.1.1         380  0x80000002  0x00007377
+  10.164.24.0     1.1.1.1         380  0x80000002  0x0000fe88
+  192.168.10.0    1.1.1.1         380  0x80000002  0x000022b8
  
  
  !++++++++++++++ 
@@ -615,26 +615,15 @@ System ID: 98f2b3-fe8880
 
   Port   Device ID                     | Platform                     Capability 
   ------ ----------------------------- + ---------------------------- -----------
-  24     54 bf 64 3b 9c 68             | Ubuntu 23.10 Linux 6.5.0-... R S        
   24     9c 8c d8 c9 17 ae             | ArubaOS (MODEL: 515), Ver...            
-  24     fc ec da c4 6e 55             |                                         
+  24     54 bf 64 3b 9c 68             | Ubuntu 23.10 Linux 6.5.0-... R S        
   24     Garage                        | NanoStation 5AC loc          T          
+  24     fc ec da c4 6e 55             |                                         
   
  !++++++++++++++ 
   show cdp nei d
 
  CDP neighbors information
-
-  Port : 24    
-  Device ID : 54 bf 64 3b 9c 68                                             
-  Address Type : IP          
-  Address      : 172.17.0.1                                                  
-  Platform     : Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM...
-  Capability   : Router Switch                                              
-  Device Port  : wlp61s0                                                    
-  Version      : Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM...
-
-------------------------------------------------------------------------------
 
   Port : 24    
   Device ID : 9c 8c d8 c9 17 ae                                             
@@ -648,13 +637,13 @@ System ID: 98f2b3-fe8880
 ------------------------------------------------------------------------------
 
   Port : 24    
-  Device ID : fc ec da c4 6e 55                                             
-  Address Type : UNKNOWN     
-  Address      : Unsupported format                                          
-  Platform     :                                                            
-  Capability   :                                                            
-  Device Port  : eth0                                                       
-  Version      :                                                            
+  Device ID : 54 bf 64 3b 9c 68                                             
+  Address Type : IP          
+  Address      : 172.17.0.1                                                  
+  Platform     : Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM...
+  Capability   : Router Switch                                              
+  Device Port  : wlp61s0                                                    
+  Version      : Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM...
 
 ------------------------------------------------------------------------------
 
@@ -666,6 +655,17 @@ System ID: 98f2b3-fe8880
   Capability   : Trans Bridge                                               
   Device Port  : br0                                                        
   Version      : WA.ar934x.v8.7.1.42832.200623.1641                         
+
+------------------------------------------------------------------------------
+
+  Port : 24    
+  Device ID : fc ec da c4 6e 55                                             
+  Address Type : UNKNOWN     
+  Address      : Unsupported format                                          
+  Platform     :                                                            
+  Capability   :                                                            
+  Device Port  : eth0                                                       
+  Version      :                                                            
  
  !++++++++++++++ 
   show lldp info remote
@@ -674,10 +674,10 @@ System ID: 98f2b3-fe8880
 
   LocalPort | ChassisId          PortId             PortDescr SysName           
   --------- + ------------------ ------------------ --------- ------------------
-  24        | 54 bf 64 3b 9c 68  28 d0 ea 93 2a 42  wlp61s0   1S1K-G5-5587      
   24        | 9c 8c d8 c9 17 ae  9c 8c d8 c9 17 ae  eth0      IAP-515           
-  24        | fc ec da c4 6e 55  eth0                                           
+  24        | 54 bf 64 3b 9c 68  28 d0 ea 93 2a 42  wlp61s0   1S1K-G5-5587      
   24        | Garage             br0                          NanoStation 5AC...
+  24        | fc ec da c4 6e 55  eth0                                           
  
  
  !++++++++++++++ 
@@ -685,26 +685,6 @@ System ID: 98f2b3-fe8880
 
  LLDP Remote Device Information Detail
 
-  Local Port   : 24
-  ChassisType  : mac-address         
-  ChassisId    : 54 bf 64 3b 9c 68        
-  PortType     : mac-address                                               
-  PortId       : 28 d0 ea 93 2a 42                                         
-  SysName      : 1S1K-G5-5587                    
-  System Descr : Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEMP...
-  PortDescr    : wlp61s0                                                     
-  Pvid         :                          
-
-  System Capabilities Supported  : bridge, wlan-access-point, router
-  System Capabilities Enabled    : bridge, wlan-access-point, router
-
-  Remote Management Address
-     Type    : ipv4
-     Address : 172.17.0.1
-     Type    : ipv6
-     Address : fe80::f422:a6ff:fe02:d7d
-
-------------------------------------------------------------------------------
   Local Port   : 24
   ChassisType  : mac-address         
   ChassisId    : 9c 8c d8 c9 17 ae        
@@ -725,18 +705,22 @@ System ID: 98f2b3-fe8880
 ------------------------------------------------------------------------------
   Local Port   : 24
   ChassisType  : mac-address         
-  ChassisId    : fc ec da c4 6e 55        
-  PortType     : local                                                     
-  PortId       : eth0                                                      
-  SysName      :                                 
-  System Descr :                                                             
-  PortDescr    :                                                             
+  ChassisId    : 54 bf 64 3b 9c 68        
+  PortType     : mac-address                                               
+  PortId       : 28 d0 ea 93 2a 42                                         
+  SysName      : 1S1K-G5-5587                    
+  System Descr : Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEMP...
+  PortDescr    : wlp61s0                                                     
   Pvid         :                          
 
-  System Capabilities Supported  : 
-  System Capabilities Enabled    : 
+  System Capabilities Supported  : bridge, wlan-access-point, router
+  System Capabilities Enabled    : bridge, wlan-access-point, router
 
   Remote Management Address
+     Type    : ipv4
+     Address : 172.17.0.1
+     Type    : ipv6
+     Address : fe80::42:63ff:fe21:af2e
 
 ------------------------------------------------------------------------------
   Local Port   : 24
@@ -755,6 +739,22 @@ System ID: 98f2b3-fe8880
   Remote Management Address
      Type    : ipv4
      Address : 192.168.10.51
+
+------------------------------------------------------------------------------
+  Local Port   : 24
+  ChassisType  : mac-address         
+  ChassisId    : fc ec da c4 6e 55        
+  PortType     : local                                                     
+  PortId       : eth0                                                      
+  SysName      :                                 
+  System Descr :                                                             
+  PortDescr    :                                                             
+  Pvid         :                          
+
+  System Capabilities Supported  : 
+  System Capabilities Enabled    : 
+
+  Remote Management Address
 
  
  !++++++++++++++ 
@@ -860,8 +860,8 @@ System ID: 98f2b3-fe8880
   Ses Type     | Source IP                                      Port 
   --- -------- + ---------------------------------------------- -----
   1   console  |
-  2   ssh      | 192.168.10.115                                 59198
-  3   ssh      | 192.168.10.115                                 35552
+  2   ssh      | 192.168.10.115                                 59430
+  3   ssh      | 192.168.10.115                                 39830
   4   inactive |
   5   inactive |
   6   inactive |
@@ -959,26 +959,27 @@ Configuration files:
 
 
   ------------- ------- ----
-  000c29-337100 24      10  
   000c29-4caa4e 24      10  
-  000c29-8413e1 24      10  
   000c29-8413eb 24      10  
   00e0b3-34562f 24      10  
-  068b73-5b10e7 24      10  
+  061413-0334ea 24      10  
   085b0e-7c7930 24      10  
   101f74-6341f8 24      10  
   2428fd-28ae26 24      10  
   28d0ea-932a42 24      10  
-  3817c3-c920c2 24      10  
   3c9bd6-aa323e 24      10  
   446755-03d472 24      10  
+  561428-2895f7 24      10  
   788cb5-1780c8 24      10  
+  82b881-8bcb00 24      10  
   8e93a6-f482f4 24      10  
   9c8cd8-c917ae 24      10  
-  ba4d95-58f2f6 24      10  
+  9e539c-18f1fe 24      10  
+  a4307a-8975e4 24      10  
+  b099d7-f9dad5 24      10  
   bcbac2-0f4fa4 24      10  
+  dc4f22-fa1708 24      10  
   dc56e7-496195 24      10  
-  f84d89-7a1349 24      10  
   fcecda-c46e55 24      10  
   fcecda-c4770b 24      10  
   fcecda-c56e55 24      10  
@@ -992,6 +993,7 @@ Configuration files:
   IP Address       MAC Address       Type    Port
   ---------------  ----------------- ------- ----
   192.168.10.115   28d0ea-932a42     dynamic 24  
+  192.168.10.138   a4307a-8975e4     dynamic 24  
   192.168.10.221   000c29-4caa4e     dynamic 24  
   192.168.10.254   085b0e-7c7930     dynamic 24  
 

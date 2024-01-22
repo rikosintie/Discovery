@@ -1,0 +1,1068 @@
+
+Running configuration:
+
+; J9851A Configuration Editor; Created on release #KB.16.10.0013
+; Ver #14:6f.6f.f8.1d.fb.7f.bf.bb.ff.7c.59.fc.7b.ff.ff.fc.ff.ff.3f.ef:00
+hostname "RHS-5412-MDF"
+module A type j9993a
+module B type j9993a
+module C type j9986a
+module D type j9986a
+module E type j9993a
+module F type j9995a
+module G type j9986a
+module H type j9986a
+time daylight-time-rule continental-us-and-canada
+time timezone -480
+trunk D1-D4 trk1 lacp
+spanning-tree
+spanning-tree C1 admin-edge-port
+spanning-tree C1 bpdu-protection
+spanning-tree C2 admin-edge-port
+spanning-tree C2 bpdu-protection
+spanning-tree C3 admin-edge-port
+spanning-tree C3 bpdu-protection
+spanning-tree C4 admin-edge-port
+spanning-tree C4 bpdu-protection
+spanning-tree C5 admin-edge-port
+spanning-tree C5 bpdu-protection
+spanning-tree C6 admin-edge-port
+spanning-tree C6 bpdu-protection
+spanning-tree C7 admin-edge-port
+spanning-tree C7 bpdu-protection
+spanning-tree C8 admin-edge-port
+spanning-tree C8 bpdu-protection
+spanning-tree C9 admin-edge-port
+spanning-tree C9 bpdu-protection
+spanning-tree C10 admin-edge-port
+spanning-tree C10 bpdu-protection
+spanning-tree C11 admin-edge-port
+spanning-tree C11 bpdu-protection
+spanning-tree C12 admin-edge-port
+spanning-tree C12 bpdu-protection
+spanning-tree C13 admin-edge-port
+spanning-tree C13 bpdu-protection
+spanning-tree C14 admin-edge-port
+spanning-tree C14 bpdu-protection
+spanning-tree C15 admin-edge-port
+spanning-tree C15 bpdu-protection
+spanning-tree C16 admin-edge-port
+spanning-tree C16 bpdu-protection
+spanning-tree C17 admin-edge-port
+spanning-tree C17 bpdu-protection
+spanning-tree C18 admin-edge-port
+spanning-tree C18 bpdu-protection
+spanning-tree C19 admin-edge-port
+spanning-tree C19 bpdu-protection
+spanning-tree C20 admin-edge-port
+spanning-tree C20 bpdu-protection
+spanning-tree C21 admin-edge-port
+spanning-tree C21 bpdu-protection
+spanning-tree C22 admin-edge-port
+spanning-tree C22 bpdu-protection
+spanning-tree C23 admin-edge-port
+spanning-tree C23 bpdu-protection
+spanning-tree C24 admin-edge-port
+spanning-tree C24 bpdu-protection
+spanning-tree D6 admin-edge-port
+spanning-tree D6 bpdu-protection
+spanning-tree D7 admin-edge-port
+spanning-tree D7 bpdu-protection
+spanning-tree D8 admin-edge-port
+spanning-tree D8 bpdu-protection
+spanning-tree D9 admin-edge-port
+spanning-tree D9 bpdu-protection
+spanning-tree D10 admin-edge-port
+spanning-tree D10 bpdu-protection
+spanning-tree D11 admin-edge-port
+spanning-tree D11 bpdu-protection
+spanning-tree D12 admin-edge-port
+spanning-tree D12 bpdu-protection
+spanning-tree D13 admin-edge-port
+spanning-tree D13 bpdu-protection
+spanning-tree D14 admin-edge-port
+spanning-tree D14 bpdu-protection
+spanning-tree D15 admin-edge-port
+spanning-tree D15 bpdu-protection
+spanning-tree D16 admin-edge-port
+spanning-tree D16 bpdu-protection
+spanning-tree D18 admin-edge-port
+spanning-tree D18 bpdu-protection
+spanning-tree D19 admin-edge-port
+spanning-tree D19 bpdu-protection
+spanning-tree D20 admin-edge-port
+spanning-tree D20 bpdu-protection
+spanning-tree D21 admin-edge-port
+spanning-tree D21 bpdu-protection
+spanning-tree D22 admin-edge-port
+spanning-tree D22 bpdu-protection
+spanning-tree Trk1 priority 4
+spanning-tree priority 2 force-version rstp-operation
+ip access-list extended "Guestwireless"
+     10 remark "allow clients to get IP addresses and ping DHCP server"
+     11 permit udp 0.0.0.0 255.255.255.255 10.112.95.254 0.0.0.0 eq 67
+     13 permit udp 10.112.95.254 0.0.0.0 0.0.0.0 255.255.255.255 eq 68
+     22 permit icmp 0.0.0.0 255.255.255.255 10.112.95.254 0.0.0.0
+     30 remark "--------------------------------------------------------"
+     40 remark "Deny access to everything else on 10.112.68.0/21"
+     50 deny ip 0.0.0.0 255.255.255.255 10.112.68.0 0.0.3.255 log
+     60 remark "--------------------------------------------------------"
+     70 remark "Deny access to everything else on Internal"
+     71 deny ip 0.0.0.0 255.255.255.255 10.112.0.0 0.0.255.255 log
+     90 remark "--------------------------------------------------------"
+     100 permit tcp 0.0.0.0 255.255.255.255 0.0.0.0 255.255.255.255 eq 443
+     105 permit tcp 0.0.0.0 255.255.255.255 0.0.0.0 255.255.255.255 eq 80
+     110 permit tcp 0.0.0.0 255.255.255.255 1.1.1.1 0.0.0.0 eq 53
+     111 permit icmp 0.0.0.0 255.255.255.255 1.1.1.1 0.0.0.0
+     115 permit tcp 0.0.0.0 255.255.255.255 8.8.8.8 0.0.0.0 eq 53
+     116 permit icmp 0.0.0.0 255.255.255.255 8.8.8.8 0.0.0.0
+     120 permit tcp 0.0.0.0 255.255.255.255 9.9.9.9 0.0.0.0 eq 53
+     121 permit icmp 0.0.0.0 255.255.255.255 9.9.9.9 0.0.0.0
+     125 permit udp 0.0.0.0 255.255.255.255 1.1.1.1 0.0.0.0 eq 53
+     130 permit udp 0.0.0.0 255.255.255.255 8.8.8.8 0.0.0.0 eq 53
+     135 permit udp 0.0.0.0 255.255.255.255 9.9.9.9 0.0.0.0 eq 53
+     140 remark "Allow Secure mail services"
+     141 permit tcp 0.0.0.0 255.255.255.255 0.0.0.0 255.255.255.255 eq 465
+     145 permit tcp 0.0.0.0 255.255.255.255 0.0.0.0 255.255.255.255 eq 587
+     150 permit udp 0.0.0.0 255.255.255.255 0.0.0.0 255.255.255.255 eq 500
+     160 permit tcp 0.0.0.0 255.255.255.255 0.0.0.0 255.255.255.255 eq 995
+     161 remark "Allow IPSec"
+     165 permit udp 0.0.0.0 255.255.255.255 0.0.0.0 255.255.255.255 eq 4500
+     170 remark "-----ports for Ookla Speedtest---"
+     171 permit tcp 0.0.0.0 255.255.255.255 0.0.0.0 255.255.255.255 eq 8080
+     175 permit udp 0.0.0.0 255.255.255.255 0.0.0.0 255.255.255.255 eq 8080
+     180 permit tcp 0.0.0.0 255.255.255.255 0.0.0.0 255.255.255.255 eq 5060
+     185 permit udp 0.0.0.0 255.255.255.255 0.0.0.0 255.255.255.255 eq 5060
+   exit
+ip authorized-managers 10.112.250.0 255.255.255.0 access manager
+ip authorized-managers 10.112.251.0 255.255.255.0 access manager
+ip authorized-managers 10.112.252.0 255.255.255.0 access manager
+ip authorized-managers 10.112.253.0 255.255.255.0 access manager
+ip authorized-managers 10.112.254.0 255.255.255.0 access manager
+ip authorized-managers 10.112.255.0 255.255.255.0 access manager
+ip authorized-managers 10.112.74.0 255.255.255.224 access manager
+ip authorized-managers 10.112.23.0 255.255.255.0 access manager
+ip authorized-managers 10.10.10.0 255.255.255.0 access manager
+ip authorized-managers 10.112.249.0 255.255.255.0 access manager
+ip authorized-managers 10.112.24.0 255.255.255.0 access manager
+ip authorized-managers 10.112.60.0 255.255.255.0 access manager
+ip authorized-managers 10.112.56.0 255.255.248.0 access manager
+ip authorized-managers 10.112.67.0 255.255.255.0 access manager
+ip authorized-managers 10.112.248.0 255.255.255.0 access manager
+ip authorized-managers 10.112.1.0 255.255.255.0 access manager
+ip authorized-managers 10.112.22.0 255.255.255.0 access manager
+ip authorized-managers 10.112.64.0 255.255.248.0 access manager
+ip dns domain-name "rimsd.k12.ca.us"
+ip ssh filetransfer
+no ip ssh cipher aes128-cbc
+no ip ssh cipher 3des-cbc
+no ip ssh cipher aes192-cbc
+no ip ssh cipher aes256-cbc
+no ip ssh mac hmac-md5
+no ip ssh mac hmac-md5-96
+ip route 0.0.0.0 0.0.0.0 10.1.0.252
+ip router-id 10.2.2.2
+ip routing
+ip source-interface tacacs vlan 254
+ip source-interface radius vlan 254
+ip source-interface syslog vlan 254
+ip source-interface telnet vlan 254
+ip source-interface tftp vlan 254
+ip source-interface sntp vlan 254
+ip source-interface sflow vlan 254
+ip source-interface tunneled-node-server vlan 254
+ip source-interface radsec vlan 254
+ip source-interface central vlan 254
+router ospf
+   area backbone
+   redistribute connected
+   enable
+   exit
+timesync ntp
+no sntp
+ntp unicast
+ntp server 10.112.23.41 iburst
+ntp server 129.6.15.29 iburst
+ntp enable
+interface A1
+   name "RHS-ADB-2930-24-1"
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface A2
+   name "RHS-CDB-2930-24-1"
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface A3
+   name "RHS-EDB-2930-48-1"
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface A4
+   name "RHS-CompLab-2930-48-1"
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface A5
+   name "RHS-MDF-2530-48G"
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface A6
+   name "RHS-ADB-2530-24G"
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface A7
+   name "RHS-CDB-2530-24G"
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface A8
+   name "New DL380 Server 1"
+   dhcp-snooping trust
+   tagged vlan 30,74,88,200,202,204,250,253-254
+   untagged vlan 75
+   exit
+interface B1
+   name "RHS-HDB-2930-8-1"
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface B2
+   name "RHS-KDB-2930-8-1"
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface B3
+   name "RHS-CompLab-2930-48-3"
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface B4
+   name "RHS-CompLab-2930-48-2"
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface B5
+   name "RHS-LDB-2530-8G"
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface B6
+   name "MHS-MDF-2930-48-1"
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface B7
+   name "RHS-EDB-2930-48"
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface B8
+   name "New DL380 Server 2"
+   dhcp-snooping trust
+   tagged vlan 30,74,88,200,202,204,250,253-254
+   untagged vlan 75
+   exit
+interface C1
+   name "Unknown"
+   dhcp-snooping trust
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C2
+   name "Unknown"
+   dhcp-snooping trust
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C3
+   name "SERVER_VLAN_ESXi1"
+   dhcp-snooping trust
+   untagged vlan 75
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C4
+   name "Unknown"
+   dhcp-snooping trust
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C5
+   name "SERVER_VLAN_ESXi2"
+   dhcp-snooping trust
+   untagged vlan 75
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C6
+   name "HP_STOREONCE_ILO"
+   dhcp-snooping trust
+   untagged vlan 74
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C7
+   name "SERVER_VLAN_ESXi3"
+   dhcp-snooping trust
+   untagged vlan 75
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C8
+   name "VMOTION_ESXi4"
+   dhcp-snooping trust
+   untagged vlan 72
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C9
+   name "SERVER_VLAN_ESXi4"
+   dhcp-snooping trust
+   untagged vlan 75
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C10
+   name "BROCADE_FC_MGMT"
+   dhcp-snooping trust
+   untagged vlan 74
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C11
+   name "ESXi_1_MGMT"
+   dhcp-snooping trust
+   untagged vlan 74
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C12
+   name "TO_MSA_SAN_CONTR_A"
+   dhcp-snooping trust
+   untagged vlan 74
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C13
+   name "ESXi_2_MGMT"
+   dhcp-snooping trust
+   untagged vlan 74
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C14
+   name "TO_MSA_SAN_CONTR_B"
+   dhcp-snooping trust
+   untagged vlan 74
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C15
+   name "ESXi_3_MGMT"
+   dhcp-snooping trust
+   untagged vlan 74
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C16
+   name "ESXi_4_MGMT"
+   dhcp-snooping trust
+   untagged vlan 74
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C17
+   name "HP_KVM_MGMT"
+   dhcp-snooping trust
+   untagged vlan 74
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C18
+   name "ESXi_1_ILO"
+   dhcp-snooping trust
+   untagged vlan 74
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C19
+   name "VMOTION_ESXi1"
+   dhcp-snooping trust
+   tagged vlan 74
+   untagged vlan 72
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C20
+   name "ESXi_2_ILO"
+   dhcp-snooping trust
+   untagged vlan 74
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C21
+   name "VMOTION_ESXi2"
+   dhcp-snooping trust
+   untagged vlan 72
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C22
+   name "ESXi_3_ILO"
+   dhcp-snooping trust
+   untagged vlan 74
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C23
+   name "VMOTION_ESXi3"
+   dhcp-snooping trust
+   untagged vlan 72
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface C24
+   name "ESXi_4_ILO"
+   dhcp-snooping trust
+   untagged vlan 74
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D1
+   name "HP_STOREONCE_PORT1"
+   untagged vlan 75
+   trunk trk1 lacp
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D2
+   name "HP_STOREONCE_PORT2"
+   untagged vlan 75
+   trunk trk1 lacp
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D3
+   name "HP_STOREONCE_PORT3"
+   untagged vlan 75
+   trunk trk1 lacp
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D4
+   name "HP_STOREONCE_PORT4"
+   untagged vlan 75
+   trunk trk1 lacp
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D5
+   disable
+   no power-over-ethernet
+   tagged vlan 88,200,253
+   untagged vlan 30
+   exit
+interface D6
+   tagged vlan 88,200,253
+   untagged vlan 30
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D7
+   dhcp-snooping trust
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D8
+   name "RHSSRV2 Drac"
+   dhcp-snooping trust
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D9
+   name "RHSSRV2 10.112.64.3"
+   dhcp-snooping trust
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D10
+   name "RHSSRV 10.112.64.1"
+   dhcp-snooping trust
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D11
+   dhcp-snooping trust
+   tagged vlan 74-75,88,200,202,204,254
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D12
+   name "APC-MDF-1 Switch Rack 10.112.254.197"
+   dhcp-snooping trust
+   tagged vlan 74-75,88,200,202,204
+   untagged vlan 254
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D13
+   name "Unknown"
+   dhcp-snooping trust
+   tagged vlan 74,88,200,202,204,254
+   untagged vlan 75
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D14
+   name "APC-MDF-2 Switch Rack 10.112.254.198"
+   dhcp-snooping trust
+   tagged vlan 74-75,88,202,204
+   untagged vlan 254
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D15
+   name "ROP"
+   dhcp-snooping trust
+   tagged vlan 74-75,88,202,204,254
+   untagged vlan 200
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D16
+   power-over-ethernet critical
+   tagged vlan 88,200,253
+   untagged vlan 30
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D17
+   power-over-ethernet critical
+   untagged vlan 1
+   exit
+interface D18
+   dhcp-snooping trust
+   tagged vlan 74-75,88,200,202,204,254
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D19
+   dhcp-snooping trust
+   tagged vlan 74-75,88,200,202,204,254
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D20
+   dhcp-snooping trust
+   tagged vlan 74-75,88,200,202,204,254
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D21
+   name "Mgmt Port for a laptop"
+   dhcp-snooping trust
+   tagged vlan 74-75,88,200,202,204
+   untagged vlan 254
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D22
+   name " Verkada Camera (RHS MDF)"
+   dhcp-snooping trust
+   tagged vlan 74-75,88,200,202,204,254
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface D23
+   name "Fortigate P2 10.1.0.252"
+   untagged vlan 1001
+   exit
+interface D24
+   untagged vlan 1000
+   exit
+interface E1
+   disable
+   name "HP DL360G10 DAC"
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface E2
+   disable
+   name "HP DL360G10 DAC"
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface E3
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface E4
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface E5
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface E6
+   dhcp-snooping trust
+   tagged vlan 30,74-75,88,200,202,204,250,253-254
+   untagged vlan 1
+   exit
+interface E7
+   name "Fortigate 10.1.0.252"
+   untagged vlan 1001
+   exit
+interface E8
+   name "Spectrum 10Gb WAN"
+   untagged vlan 1000
+   exit
+interface F1
+   untagged vlan 1
+   exit
+interface F2
+   untagged vlan 1
+   exit
+interface F3
+   untagged vlan 1
+   exit
+interface F4
+   untagged vlan 1
+   exit
+interface F5
+   untagged vlan 1
+   exit
+interface F6
+   untagged vlan 1
+   exit
+interface F7
+   name "RHS Room 105"
+   untagged vlan 1
+   exit
+interface F8
+   name " Arcserve RHS"
+   untagged vlan 1
+   exit
+interface G1
+   name " Verkada Camera"
+   untagged vlan 1
+   exit
+interface G2
+   name "  Verkada Camera"
+   untagged vlan 1
+   exit
+interface G3
+   name "   Verkada Camera"
+   untagged vlan 1
+   exit
+interface G4
+   name "  Verkada Camera"
+   untagged vlan 1
+   exit
+interface G5
+   untagged vlan 1
+   exit
+interface G6
+   untagged vlan 1
+   exit
+interface G7
+   untagged vlan 1
+   exit
+interface G8
+   untagged vlan 1
+   exit
+interface G9
+   untagged vlan 1
+   exit
+interface G10
+   untagged vlan 1
+   exit
+interface G11
+   untagged vlan 1
+   exit
+interface G12
+   untagged vlan 1
+   exit
+interface G13
+   untagged vlan 1
+   exit
+interface G14
+   untagged vlan 1
+   exit
+interface G15
+   untagged vlan 1
+   exit
+interface G16
+   untagged vlan 1
+   exit
+interface G17
+   name "RHS Outdoor Library"
+   untagged vlan 1
+   exit
+interface G18
+   untagged vlan 1
+   exit
+interface G19
+   name "RHS Front Parking Lot"
+   untagged vlan 1
+   exit
+interface G20
+   name " APC UPS"
+   untagged vlan 1
+   exit
+interface G21
+   untagged vlan 1
+   exit
+interface G22
+   untagged vlan 1
+   exit
+interface G23
+   untagged vlan 1
+   exit
+interface G24
+   untagged vlan 1
+   exit
+interface H1
+   untagged vlan 30
+   exit
+interface H2
+   untagged vlan 30
+   exit
+interface H3
+   untagged vlan 1
+   exit
+interface H4
+   untagged vlan 1
+   exit
+interface H5
+   untagged vlan 1
+   exit
+interface H6
+   untagged vlan 1
+   exit
+interface H7
+   untagged vlan 1
+   exit
+interface H8
+   untagged vlan 1
+   exit
+interface H9
+   untagged vlan 1
+   exit
+interface H10
+   untagged vlan 1
+   exit
+interface H11
+   untagged vlan 1
+   exit
+interface H12
+   untagged vlan 1
+   exit
+interface H13
+   untagged vlan 1
+   exit
+interface H14
+   untagged vlan 1
+   exit
+interface H15
+   untagged vlan 1
+   exit
+interface H16
+   untagged vlan 1
+   exit
+interface H17
+   untagged vlan 1
+   exit
+interface H18
+   untagged vlan 1
+   exit
+interface H19
+   untagged vlan 1
+   exit
+interface H20
+   untagged vlan 1
+   exit
+interface H21
+   untagged vlan 1
+   exit
+interface H22
+   untagged vlan 1
+   exit
+interface H23
+   untagged vlan 1
+   exit
+interface H24
+   untagged vlan 1
+   exit
+interface Trk1
+   untagged vlan 75
+   spanning-tree priority 4
+   exit
+interface loopback 1
+   ip address 10.2.2.2
+   ip ospf 10.2.2.2 area backbone
+   exit
+vlan 1
+   name "DEFAULT_VLAN"
+   no untagged A8,B8,C3,C5-C24,D5-D6,D12-D16,D21,D23-D24,E7-E8,H1-H2,Trk1
+   untagged A1-A7,B1-B7,C1-C2,C4,D7-D11,D17-D20,D22,E1-E6,F1-F8,G1-G24,H3-H24
+   ip address 10.112.71.254 255.255.248.0
+   ip helper-address 10.112.64.1
+   ip helper-address 10.112.64.3
+   ip helper-address 10.112.23.231
+   ip helper-address 10.112.23.233
+   exit
+vlan 30
+   name "AP-575-Bridge-Teamsroom"
+   untagged D5-D6,D16,H1-H2
+   tagged A1-A8,B1-B8,E1-E6
+   ip address 10.112.30.254 255.255.255.0
+   dhcp-server
+   exit
+vlan 72
+   name "VLAN 72 vMotion Network"
+   untagged C8,C19,C21,C23
+   no ip address
+   exit
+vlan 74
+   name "VM_ESXI_CLUSTER_MGMT_Vl74"
+   untagged C6,C10-C18,C20,C22,C24
+   tagged A1-A8,B1-B8,C19,D11-D15,D18-D22,E1-E6
+   ip address 10.112.74.30 255.255.255.224
+   exit
+vlan 75
+   name "SERVER_VLAN_75"
+   untagged A8,B8,C3,C5,C7,C9,D13,Trk1
+   tagged A1-A7,B1-B7,D11-D12,D14-D15,D18-D22,E1-E6
+   ip address 10.112.23.254 255.255.255.0
+   exit
+vlan 88
+   name "VLAN 88 Wireless Guest"
+   tagged A1-A8,B1-B8,D5-D6,D11-D16,D18-D22,E1-E6
+   ip access-group "Guestwireless" in
+   ip address 10.112.95.254 255.255.248.0
+   dhcp-server
+   exit
+vlan 200
+   name "VLAN 200 RHS ROP"
+   untagged D15
+   tagged A1-A8,B1-B8,D5-D6,D11-D13,D16,D18-D22,E1-E6
+   ip address 10.112.201.254 255.255.254.0
+   ip helper-address 10.112.23.231
+   ip helper-address 10.112.23.233
+   exit
+vlan 202
+   name "Mountain HS"
+   tagged A1-A8,B1-B8,D11-D15,D18-D22,E1-E6
+   ip address 10.112.203.254 255.255.254.0
+   ip helper-address 10.112.23.231
+   ip helper-address 10.112.23.233
+   exit
+vlan 204
+   name "MOT LAN"
+   tagged A1-A8,B1-B8,D11-D15,D18-D22,E1-E6
+   ip address 10.112.204.254 255.255.255.0
+   ip helper-address 10.112.23.231
+   ip helper-address 10.112.23.233
+   exit
+vlan 250
+   name "575-Outdoor-APs"
+   tagged A1-A8,B1-B8,E1-E6
+   ip address 10.112.2.126 255.255.255.128
+   dhcp-server
+   exit
+vlan 253
+   name "Staff/Student Wireless"
+   tagged A1-A8,B1-B8,D5-D6,D16,E1-E6
+   ip address 10.112.63.254 255.255.248.0
+   ip helper-address 10.112.23.231
+   ip helper-address 10.112.23.233
+   exit
+vlan 254
+   name "Device Management"
+   untagged D12,D14,D21
+   tagged A1-A8,B1-B8,D11,D13,D15,D18-D20,D22,E1-E6
+   ip address 10.112.254.254 255.255.255.0
+   ip helper-address 10.112.64.1
+   ip helper-address 10.112.64.3
+   ip helper-address 10.112.23.231
+   ip helper-address 10.112.23.233
+   exit
+vlan 1000
+   name "Spectrum ME3400 G1"
+   untagged D24,E8
+   ip address 10.112.1.2 255.255.255.0
+   ip ospf 10.112.1.2 area backbone
+   ip ospf 10.112.1.2 md5-auth-key-chain "RoTW"
+   exit
+vlan 1001
+   name "Fortigate P2"
+   untagged D23,E7
+   ip address 10.1.0.251 255.255.255.0
+   exit
+alias "wr" "write memory"
+alias "ipb" "sh interfaces br | i Up"
+alias "poe" "show power-over-ethernet brief"
+alias "sis" "show interface status"
+alias "srs" "show run structured"
+alias "ospf" "sh ip ospf interface VLAN 1000"
+alias "user" "sh ip ssh strict"
+alias "vlan" "show vlans custom id ipaddr ipmask state"
+alias "ospfne" "sh ip ospf neighbor"
+alias "devconf" "show device-profile config"
+alias "devstat" "show device-profile status"
+alias "ospfext" "sh ip ospf external-link-state"
+alias "ospfgen" "show ip ospf general"
+dhcp-snooping
+dhcp-snooping authorized-server 10.112.2.126
+dhcp-snooping authorized-server 10.112.23.231
+dhcp-snooping authorized-server 10.112.23.233
+dhcp-snooping authorized-server 10.112.30.254
+dhcp-snooping authorized-server 10.112.64.1
+dhcp-snooping authorized-server 10.112.64.3
+dhcp-snooping authorized-server 10.112.95.254
+no dhcp-snooping option 82
+dhcp-snooping vlan 1-254 
+banner motd "
+*******************************************************************************
+This system is the property of Rim of the World Unified School District.
+            
+            UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED.
+
+     You must have explicit permission to access this device. All activities 
+                        performed on this device are logged.
+
+Any violations of access policy will result in disciplinary action.
+*******************************************************************************
+ "
+no web-management
+web-management ssl
+key-chain "RoTW"
+key-chain "RoTW" key 1 key-string "9X3kaqq!"
+aaa authentication ssh enable public-key
+oobm
+   ip address dhcp-bootp
+   ipv6 enable
+   ipv6 address dhcp full
+   exit
+allow-unsupported-transceiver
+no tftp client
+no tftp server
+no autorun
+no dhcp config-file-update
+no dhcp image-file-update
+job "backup" at 02:59 "copy config config1 config backup"
+job "wr-mem" at 16:30 config-save "wr"
+device-identity name "AP22X"
+   lldp sys-desc "(MODEL: 22"
+   exit
+device-identity name "AP31X"
+   lldp sys-desc "(MODEL: 31"
+   exit
+device-identity name "AP51X"
+   lldp sys-desc "(MODEL: 51"
+   exit
+device-identity name "AP53X"
+   lldp sys-desc "(MODEL: 53"
+   exit
+device-identity name "AP575"
+   lldp sys-desc "(MODEL: 575)"
+   exit
+device-profile name "RHS-AP-profile"
+   untagged-vlan 254
+   tagged-vlan 88,204,253
+   exit
+device-profile name "RHS-AP-575-profile"
+   untagged-vlan 250
+   tagged-vlan 88,204,253
+   exit
+device-profile device-type "AP22X"
+   associate "RHS-AP-profile"
+   enable
+   exit
+device-profile device-type "AP31X"
+   associate "RHS-AP-profile"
+   enable
+   exit
+device-profile device-type "AP51X"
+   associate "RHS-AP-profile"
+   enable
+   exit
+device-profile device-type "AP53X"
+   associate "RHS-AP-profile"
+   enable
+   exit
+device-profile device-type "AP575"
+   associate "RHS-AP-575-profile"
+   enable
+   exit
+dhcp-server pool "Outdoor-AP"
+   authoritative
+   default-router "10.112.2.126"
+   dns-server "10.112.23.231,10.112.23.233"
+   domain-name "rowusd.org"
+   lease 08:00:00
+   network 10.112.2.0 255.255.255.128
+   range 10.112.2.21 10.112.2.31
+   exit
+dhcp-server pool "Guest-Wi-Fi"
+   authoritative
+   default-router "10.112.95.254"
+   dns-server "1.1.1.1,8.8.8.8,9.9.9.9"
+   domain-name "rowusd.org"
+   lease 00:04:00
+   network 10.112.88.0 255.255.248.0
+   range 10.112.88.21 10.112.95.250
+   exit
+dhcp-server pool "AP-575-Bridge-Teamsroom"
+   authoritative
+   default-router "10.112.30.254"
+   dns-server "8.8.8.8,9.9.9.9,1.1.1.1"
+   domain-name "rowusd.org"
+   lease infinite
+   network 10.112.30.0 255.255.255.0
+   range 10.112.30.1 10.112.30.10
+   exit
+dhcp-server conflict-logging
+dhcp-server enable
+no allow-v2-modules
+copp traffic-class station-arp limit default
+copp traffic-class station-icmp limit 64
+copp traffic-class icmp-redirect limit 128
+copp traffic-class broadcast limit default
+password manager

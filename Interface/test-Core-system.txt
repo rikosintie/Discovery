@@ -1,0 +1,25 @@
+[
+  {
+    "name": "RHS-5412-MDF",
+    "contact": "",
+    "location": "",
+    "mac_age": "300",
+    "timezone": "-480",
+    "daylight_rule": "Continental-US-and-Canada",
+    "software_version": "KB.16.10.0013",
+    "rom_version": "KB.16.01.0009",
+    "allow_mods": "",
+    "mac_address": "883a30-768a00",
+    "serial": "SG04G4B0CW",
+    "uptime": "250 days",
+    "cpu_util": "19",
+    "mem_tot": "686,002,176",
+    "mem_free": "485,005,632",
+    "packets_rx": "379,667,695",
+    "packets_tx": "508,231,066",
+    "packets_tot": "6750",
+    "buffers_free": "4318",
+    "buffers_lowest": "2991",
+    "buffers_missed": "0"
+  }
+]

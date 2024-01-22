@@ -1,0 +1,490 @@
+           neighbor_sysname: RHS-ADB-2930-24-1
+  remote_management_address: fe80::124f:58ff:feca:7740
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 104f58-ca7740
+               system_descr: Aruba JL255A 2930F-24G-PoE+-4SFP+ Switch, revision WC.16....
+            neighbor_portid: 25
+                 local_port: A1
+               system_descr: Aruba JL255A 2930F-24G-PoE+-4SFP+ Switch, revision WC.16....
+                       PVID: 1
+                 port_descr: 25
+system_capabilities_enabled: bridge
+
+
+------------------------------
+           neighbor_sysname: RHS-CDB-2930-24 Top
+  remote_management_address: fe80::124f:58ff:feca:1560
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 104f58-ca1560
+               system_descr: Aruba JL255A 2930F-24G-PoE+-4SFP+ Switch, revision WC.16....
+            neighbor_portid: 25
+                 local_port: A2
+               system_descr: Aruba JL255A 2930F-24G-PoE+-4SFP+ Switch, revision WC.16....
+                       PVID: 1
+                 port_descr: 25
+system_capabilities_enabled: bridge
+
+
+------------------------------
+           neighbor_sysname: RHS-EDB-2530-24G
+  remote_management_address: 10.112.71.249
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 941882-b34a80
+               system_descr: HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, R...
+            neighbor_portid: 25
+                 local_port: A3
+               system_descr: HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, R...
+                       PVID: 1
+                 port_descr: 25
+system_capabilities_enabled: bridge
+
+
+------------------------------
+           neighbor_sysname: RHS-CL-2930-48-1
+  remote_management_address: 10.112.254.60
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 64e881-0c1d00
+               system_descr: Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16....
+            neighbor_portid: 49
+                 local_port: A4
+               system_descr: Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16....
+                       PVID: 1
+                 port_descr: 49
+system_capabilities_enabled: bridge
+
+
+------------------------------
+           neighbor_sysname: RHS-MDF-2530-48G
+  remote_management_address: 10.112.254.253
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 00fd45-06fc00
+               system_descr: HP J9772A 2530-48G-PoEP Switch, revision YA.16.08.0018, R...
+            neighbor_portid: 49
+                 local_port: A5
+               system_descr: HP J9772A 2530-48G-PoEP Switch, revision YA.16.08.0018, R...
+                       PVID: 1
+                 port_descr: 49
+system_capabilities_enabled: bridge
+
+
+------------------------------
+           neighbor_sysname: RHS-ADB-2530-24G
+  remote_management_address: 10.112.71.250
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 941882-b361c0
+               system_descr: HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, R...
+            neighbor_portid: 25
+                 local_port: A6
+               system_descr: HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, R...
+                       PVID: 1
+                 port_descr: 25
+system_capabilities_enabled: bridge
+
+
+------------------------------
+           neighbor_sysname: RHS-CDB-2530-24G Bottom
+  remote_management_address: 10.112.71.248
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 941882-b3d3e0
+               system_descr: HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, R...
+            neighbor_portid: 25
+                 local_port: A7
+               system_descr: HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, R...
+                       PVID: 1
+                 port_descr: 25
+system_capabilities_enabled: bridge
+
+
+------------------------------
+           neighbor_sysname: 
+  remote_management_address: b4
+      neighbor_chassis_type: local
+        neighbor_chassis_id: 36383738-3331-4D32-323...
+               system_descr: HPE ProLiant DL385 Gen10
+            neighbor_portid: d4 f5 ef 1a 00 98
+                 local_port: A8
+               system_descr: HPE ProLiant DL385 Gen10
+                       PVID: 
+                 port_descr: PCI-E Slot 1, Port 2
+system_capabilities_enabled: 
+
+
+------------------------------
+           neighbor_sysname: RHS-HDB-2530-8G Bottom
+  remote_management_address: 10.112.71.251
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 941882-b88d10
+               system_descr: HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, RO...
+            neighbor_portid: 9
+                 local_port: B1
+               system_descr: HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, RO...
+                       PVID: 1
+                 port_descr: 9
+system_capabilities_enabled: bridge
+
+
+------------------------------
+           neighbor_sysname: RHS-KDB-2530-8G
+  remote_management_address: 10.112.71.252
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 941882-b86d50
+               system_descr: HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, RO...
+            neighbor_portid: 9
+                 local_port: B2
+               system_descr: HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, RO...
+                       PVID: 1
+                 port_descr: 9
+system_capabilities_enabled: bridge
+
+
+------------------------------
+           neighbor_sysname: RHS-CL-2930-48-3
+  remote_management_address: 10.112.71.250
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 64e881-0c4ac0
+               system_descr: Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16....
+            neighbor_portid: 49
+                 local_port: B3
+               system_descr: Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16....
+                       PVID: 1
+                 port_descr: 49
+system_capabilities_enabled: bridge
+
+
+------------------------------
+           neighbor_sysname: RHS-CL-2930-48-2
+  remote_management_address: 10.112.254.61
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 64e881-0cff40
+               system_descr: Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16....
+            neighbor_portid: 49
+                 local_port: B4
+               system_descr: Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16....
+                       PVID: 1
+                 port_descr: 49
+system_capabilities_enabled: bridge
+
+
+------------------------------
+           neighbor_sysname: RHS-LDB-2530-8G
+  remote_management_address: 10.112.71.253
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 941882-b86dd0
+               system_descr: HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, RO...
+            neighbor_portid: 9
+                 local_port: B5
+               system_descr: HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, RO...
+                       PVID: 1
+                 port_descr: 9
+system_capabilities_enabled: bridge
+
+
+------------------------------
+           neighbor_sysname: MHS-Rm3-3810-24G
+  remote_management_address: fe80::fa60:f0ff:fe62:7900
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: f860f0-627900
+               system_descr: Aruba JL073A 3810M-24G-PoE+-1-slot Switch, revision KB.16...
+            neighbor_portid: 26
+                 local_port: B6
+               system_descr: Aruba JL073A 3810M-24G-PoE+-1-slot Switch, revision KB.16...
+                       PVID: 1
+                 port_descr: A1
+system_capabilities_enabled: bridge
+
+
+------------------------------
+           neighbor_sysname: RHS-EDB-2930-48-1
+  remote_management_address: 10.112.254.50
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 64e881-0ccfc0
+               system_descr: Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16....
+            neighbor_portid: 49
+                 local_port: B7
+               system_descr: Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16....
+                       PVID: 1
+                 port_descr: 49
+system_capabilities_enabled: bridge
+
+
+------------------------------
+           neighbor_sysname: 
+  remote_management_address: b4
+      neighbor_chassis_type: local
+        neighbor_chassis_id: 36383738-3331-4D32-323...
+               system_descr: HPE ProLiant DL385 Gen10
+            neighbor_portid: d4 f5 ef 1a 3d 30
+                 local_port: B8
+               system_descr: HPE ProLiant DL385 Gen10
+                       PVID: 
+                 port_descr: PCI-E Slot 1, Port 1
+system_capabilities_enabled: 
+
+
+------------------------------
+           neighbor_sysname: RHS Room 101
+  remote_management_address: 10.112.254.143
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 1c28af-cba876
+               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
+            neighbor_portid: 1c 28 af cb a8 76
+                 local_port: F1
+               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: wlan-access-point
+
+
+------------------------------
+           neighbor_sysname: RHS Room 106
+  remote_management_address: 10.112.254.144
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 1c28af-cba9f6
+               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
+            neighbor_portid: 1c 28 af cb a9 f6
+                 local_port: F2
+               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: wlan-access-point
+
+
+------------------------------
+           neighbor_sysname: RHS Room 110
+  remote_management_address: 10.112.254.145
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 1c28af-cbab40
+               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
+            neighbor_portid: 1c 28 af cb ab 40
+                 local_port: F3
+               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: wlan-access-point
+
+
+------------------------------
+           neighbor_sysname: RHS Room 120
+  remote_management_address: 10.112.254.146
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 1c28af-cbb234
+               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
+            neighbor_portid: 1c 28 af cb b2 34
+                 local_port: F4
+               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: wlan-access-point
+
+
+------------------------------
+           neighbor_sysname: RHS Room 126
+  remote_management_address: 10.112.254.147
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 1c28af-cbbc14
+               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
+            neighbor_portid: 1c 28 af cb bc 14
+                 local_port: F5
+               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: wlan-access-point
+
+
+------------------------------
+           neighbor_sysname: RHS Room 105
+  remote_management_address: 10.112.254.183
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: 749e75-c5ed86
+               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
+            neighbor_portid: 74 9e 75 c5 ed 86
+                 local_port: F7
+               system_descr: ArubaOS (MODEL: 515), Version Aruba IAP
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: wlan-access-point
+
+
+------------------------------
+           neighbor_sysname: 
+  remote_management_address: 
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: b49691-c6f67f
+               system_descr: 
+            neighbor_portid: b4 96 91 c6 f6 7f
+                 local_port: F8
+               system_descr: 
+                       PVID: 
+                 port_descr: 
+system_capabilities_enabled: 
+
+
+------------------------------
+           neighbor_sysname: ecfd9721-408f-4bfa-bf55-7e9e1...
+  remote_management_address: 10.112.67.4
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: e0a700-0867e1
+               system_descr: Verkada Security Camera
+            neighbor_portid: e0 a7 00 08 67 e1
+                 local_port: G1
+               system_descr: Verkada Security Camera
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: station-only
+
+
+------------------------------
+           neighbor_sysname: 4fc5d1e5-9d7b-4f4e-b006-498a8...
+  remote_management_address: 10.112.67.6
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: e0a700-0867e6
+               system_descr: Verkada Security Camera
+            neighbor_portid: e0 a7 00 08 67 e6
+                 local_port: G2
+               system_descr: Verkada Security Camera
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: station-only
+
+
+------------------------------
+           neighbor_sysname: 85c84e30-dd4f-4ecf-a6c8-982d0...
+  remote_management_address: 10.112.67.252
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: e0a700-034366
+               system_descr: Verkada Security Camera
+            neighbor_portid: e0 a7 00 03 43 66
+                 local_port: G3
+               system_descr: Verkada Security Camera
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: station-only
+
+
+------------------------------
+           neighbor_sysname: 22ffea0e-1d7a-420a-b516-69f75...
+  remote_management_address: 10.112.67.250
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: e0a700-03436d
+               system_descr: Verkada Security Camera
+            neighbor_portid: e0 a7 00 03 43 6d
+                 local_port: G4
+               system_descr: Verkada Security Camera
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: station-only
+
+
+------------------------------
+           neighbor_sysname: 2c9788ea-b2b4-4420-adb0-ae9cf...
+  remote_management_address: 10.112.67.22
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: e0a700-1a4c4c
+               system_descr: Verkada Security Camera
+            neighbor_portid: e0 a7 00 1a 4c 4c
+                 local_port: G5
+               system_descr: Verkada Security Camera
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: station-only
+
+
+------------------------------
+           neighbor_sysname: c542033d-3805-4902-a845-bdba3...
+  remote_management_address: 10.112.68.113
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: e0a700-19cd6f
+               system_descr: Verkada Security Camera
+            neighbor_portid: e0 a7 00 19 cd 6f
+                 local_port: G6
+               system_descr: Verkada Security Camera
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: station-only
+
+
+------------------------------
+           neighbor_sysname: 9c137398-b186-49f3-8a0e-5504f...
+  remote_management_address: 10.112.67.231
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: e0a700-2237f3
+               system_descr: Verkada Security Camera
+            neighbor_portid: e0 a7 00 22 37 f3
+                 local_port: G7
+               system_descr: Verkada Security Camera
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: station-only
+
+
+------------------------------
+           neighbor_sysname: 928252bd-0a7b-4519-b05f-67d80...
+  remote_management_address: 10.112.67.232
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: e0a700-2236b5
+               system_descr: Verkada Security Camera
+            neighbor_portid: e0 a7 00 22 36 b5
+                 local_port: G8
+               system_descr: Verkada Security Camera
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: station-only
+
+
+------------------------------
+           neighbor_sysname: 93ddc918-61c7-4cd6-a12c-3a631...
+  remote_management_address: 10.112.68.44
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: e0a700-235e7b
+               system_descr: Verkada Security Camera
+            neighbor_portid: e0 a7 00 23 5e 7b
+                 local_port: G15
+               system_descr: Verkada Security Camera
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: station-only
+
+
+------------------------------
+           neighbor_sysname: 7d902cbc-be12-4793-bf0e-7d370...
+  remote_management_address: 10.112.68.114
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: e0a700-22370f
+               system_descr: Verkada Security Camera
+            neighbor_portid: e0 a7 00 22 37 0f
+                 local_port: G16
+               system_descr: Verkada Security Camera
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: station-only
+
+
+------------------------------
+           neighbor_sysname: RHS Outdoor Library
+  remote_management_address: 10.112.2.27
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: dcb7ac-c62152
+               system_descr: ArubaOS (MODEL: 575), Version Aruba IAP
+            neighbor_portid: dc b7 ac c6 21 52
+                 local_port: G17
+               system_descr: ArubaOS (MODEL: 575), Version Aruba IAP
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: wlan-access-point
+
+
+------------------------------
+           neighbor_sysname: RHS Front Parking Lot
+  remote_management_address: 10.112.2.26
+      neighbor_chassis_type: mac-address
+        neighbor_chassis_id: dcb7ac-c6209c
+               system_descr: ArubaOS (MODEL: 575), Version Aruba IAP
+            neighbor_portid: dc b7 ac c6 20 9c
+                 local_port: G19
+               system_descr: ArubaOS (MODEL: 575), Version Aruba IAP
+                       PVID: 
+                 port_descr: eth0
+system_capabilities_enabled: wlan-access-point
+
+
+------------------------------

@@ -1,0 +1,16 @@
+        Hostname: RHS-5412-MDF
+   snmp location: 
+    snmp contact: 
+ MAC address age: 300
+        timezone: -480
+   daylight_rule: Continental-US-and-Canada
+software_version: KB.16.10.0013
+     rom_version: KB.16.01.0009
+     mac address: 883a30-768a00
+   serial number: SG04G4B0CW
+   system_uptime: 250 days
+ cpu_utilization: 19
+        mem_free: 485,005,632
+
+
+------------------------------

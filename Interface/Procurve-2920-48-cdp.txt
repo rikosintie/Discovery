@@ -1,15 +1,6 @@
 [
   {
     "local_port": "24",
-    "neighbor_id": "54 bf 64 3b 9c 68",
-    "neighbor_address": "172.17.0.1",
-    "neighbor_platform": "Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM...",
-    "neighbor_capability": "Router Switch",
-    "neighbor_port": "wlp61s0",
-    "neighbor_version": "Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM..."
-  },
-  {
-    "local_port": "24",
     "neighbor_id": "9c 8c d8 c9 17 ae",
     "neighbor_address": "192.168.10.144",
     "neighbor_platform": "ArubaOS (MODEL: 515), Version Aruba IAP",
@@ -19,12 +10,12 @@
   },
   {
     "local_port": "24",
-    "neighbor_id": "fc ec da c4 6e 55",
-    "neighbor_address": "Unsupported format",
-    "neighbor_platform": " ",
-    "neighbor_capability": " ",
-    "neighbor_port": "eth0",
-    "neighbor_version": " "
+    "neighbor_id": "54 bf 64 3b 9c 68",
+    "neighbor_address": "172.17.0.1",
+    "neighbor_platform": "Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM...",
+    "neighbor_capability": "Router Switch",
+    "neighbor_port": "wlp61s0",
+    "neighbor_version": "Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM..."
   },
   {
     "local_port": "24",
@@ -34,5 +25,14 @@
     "neighbor_capability": "Trans Bridge",
     "neighbor_port": "br0",
     "neighbor_version": "WA.ar934x.v8.7.1.42832.200623.1641"
+  },
+  {
+    "local_port": "24",
+    "neighbor_id": "fc ec da c4 6e 55",
+    "neighbor_address": "Unsupported format",
+    "neighbor_platform": " ",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": " "
   }
 ]

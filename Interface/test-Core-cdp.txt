@@ -1,0 +1,317 @@
+[
+  {
+    "local_port": "A1",
+    "neighbor_id": "10 4f 58 ca 77 40",
+    "neighbor_address": "10.112.71.250",
+    "neighbor_platform": "Aruba JL255A 2930F-24G-PoE+-4SFP+ Switch, revision WC.16...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "25",
+    "neighbor_version": "Aruba JL255A 2930F-24G-PoE+-4SFP+ Switch, revision WC.16..."
+  },
+  {
+    "local_port": "A2",
+    "neighbor_id": "10 4f 58 ca 15 60",
+    "neighbor_address": "10.112.71.250",
+    "neighbor_platform": "Aruba JL255A 2930F-24G-PoE+-4SFP+ Switch, revision WC.16...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "25",
+    "neighbor_version": "Aruba JL255A 2930F-24G-PoE+-4SFP+ Switch, revision WC.16..."
+  },
+  {
+    "local_port": "A3",
+    "neighbor_id": "94 18 82 b3 4a 80",
+    "neighbor_address": "10.112.71.249",
+    "neighbor_platform": "HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "25",
+    "neighbor_version": "HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ..."
+  },
+  {
+    "local_port": "A4",
+    "neighbor_id": "64 e8 81 0c 1d 00",
+    "neighbor_address": "10.112.254.60",
+    "neighbor_platform": "Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "49",
+    "neighbor_version": "Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16..."
+  },
+  {
+    "local_port": "A5",
+    "neighbor_id": "00 fd 45 06 fc 00",
+    "neighbor_address": "10.112.254.253",
+    "neighbor_platform": "HP J9772A 2530-48G-PoEP Switch, revision YA.16.08.0018, ...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "49",
+    "neighbor_version": "HP J9772A 2530-48G-PoEP Switch, revision YA.16.08.0018, ..."
+  },
+  {
+    "local_port": "A6",
+    "neighbor_id": "94 18 82 b3 61 c0",
+    "neighbor_address": "10.112.71.250",
+    "neighbor_platform": "HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "25",
+    "neighbor_version": "HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ..."
+  },
+  {
+    "local_port": "A7",
+    "neighbor_id": "94 18 82 b3 d3 e0",
+    "neighbor_address": "10.112.71.248",
+    "neighbor_platform": "HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "25",
+    "neighbor_version": "HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ..."
+  },
+  {
+    "local_port": "A8",
+    "neighbor_id": "36383738-3331-4D32-3231-303230425152",
+    "neighbor_address": "10.112.254.165",
+    "neighbor_platform": "HPE ProLiant DL385 Gen10",
+    "neighbor_capability": " ",
+    "neighbor_port": "PCI-E Slot 1, Port 2",
+    "neighbor_version": "HPE ProLiant DL385 Gen10"
+  },
+  {
+    "local_port": "B1",
+    "neighbor_id": "94 18 82 b8 8d 10",
+    "neighbor_address": "10.112.71.251",
+    "neighbor_platform": "HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "9",
+    "neighbor_version": "HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R..."
+  },
+  {
+    "local_port": "B2",
+    "neighbor_id": "94 18 82 b8 6d 50",
+    "neighbor_address": "10.112.71.252",
+    "neighbor_platform": "HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "9",
+    "neighbor_version": "HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R..."
+  },
+  {
+    "local_port": "B3",
+    "neighbor_id": "64 e8 81 0c 4a c0",
+    "neighbor_address": "10.112.71.250",
+    "neighbor_platform": "Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "49",
+    "neighbor_version": "Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16..."
+  },
+  {
+    "local_port": "B4",
+    "neighbor_id": "64 e8 81 0c ff 40",
+    "neighbor_address": "10.112.254.61",
+    "neighbor_platform": "Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "49",
+    "neighbor_version": "Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16..."
+  },
+  {
+    "local_port": "B5",
+    "neighbor_id": "94 18 82 b8 6d d0",
+    "neighbor_address": "10.112.71.253",
+    "neighbor_platform": "HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "9",
+    "neighbor_version": "HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R..."
+  },
+  {
+    "local_port": "B6",
+    "neighbor_id": "f8 60 f0 62 79 00",
+    "neighbor_address": "10.112.69.24",
+    "neighbor_platform": "Aruba JL073A 3810M-24G-PoE+-1-slot Switch, revision KB.1...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "A1",
+    "neighbor_version": "Aruba JL073A 3810M-24G-PoE+-1-slot Switch, revision KB.1..."
+  },
+  {
+    "local_port": "B7",
+    "neighbor_id": "64 e8 81 0c cf c0",
+    "neighbor_address": "10.112.254.50",
+    "neighbor_platform": "Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16...",
+    "neighbor_capability": "Switch",
+    "neighbor_port": "49",
+    "neighbor_version": "Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16..."
+  },
+  {
+    "local_port": "B8",
+    "neighbor_id": "36383738-3331-4D32-3231-303230425151",
+    "neighbor_address": "0.0.0.0",
+    "neighbor_platform": "HPE ProLiant DL385 Gen10",
+    "neighbor_capability": " ",
+    "neighbor_port": "PCI-E Slot 1, Port 1",
+    "neighbor_version": "HPE ProLiant DL385 Gen10"
+  },
+  {
+    "local_port": "F1",
+    "neighbor_id": "1c 28 af cb a8 76",
+    "neighbor_address": "10.112.254.143",
+    "neighbor_platform": "ArubaOS (MODEL: 515), Version Aruba IAP",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "ArubaOS (MODEL: 515), Version Aruba IAP"
+  },
+  {
+    "local_port": "F2",
+    "neighbor_id": "1c 28 af cb a9 f6",
+    "neighbor_address": "10.112.254.144",
+    "neighbor_platform": "ArubaOS (MODEL: 515), Version Aruba IAP",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "ArubaOS (MODEL: 515), Version Aruba IAP"
+  },
+  {
+    "local_port": "F3",
+    "neighbor_id": "1c 28 af cb ab 40",
+    "neighbor_address": "10.112.254.145",
+    "neighbor_platform": "ArubaOS (MODEL: 515), Version Aruba IAP",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "ArubaOS (MODEL: 515), Version Aruba IAP"
+  },
+  {
+    "local_port": "F4",
+    "neighbor_id": "1c 28 af cb b2 34",
+    "neighbor_address": "10.112.254.146",
+    "neighbor_platform": "ArubaOS (MODEL: 515), Version Aruba IAP",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "ArubaOS (MODEL: 515), Version Aruba IAP"
+  },
+  {
+    "local_port": "F5",
+    "neighbor_id": "1c 28 af cb bc 14",
+    "neighbor_address": "10.112.254.147",
+    "neighbor_platform": "ArubaOS (MODEL: 515), Version Aruba IAP",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "ArubaOS (MODEL: 515), Version Aruba IAP"
+  },
+  {
+    "local_port": "F7",
+    "neighbor_id": "74 9e 75 c5 ed 86",
+    "neighbor_address": "10.112.254.183",
+    "neighbor_platform": "ArubaOS (MODEL: 515), Version Aruba IAP",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "ArubaOS (MODEL: 515), Version Aruba IAP"
+  },
+  {
+    "local_port": "F8",
+    "neighbor_id": "b4 96 91 c6 f6 7f",
+    "neighbor_address": "Unsupported format",
+    "neighbor_platform": " ",
+    "neighbor_capability": " ",
+    "neighbor_port": "b4 96 91 c6 f6 7f",
+    "neighbor_version": " "
+  },
+  {
+    "local_port": "G1",
+    "neighbor_id": "e0 a7 00 08 67 e1",
+    "neighbor_address": "10.112.67.4",
+    "neighbor_platform": "Verkada Security Camera",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "Verkada Security Camera"
+  },
+  {
+    "local_port": "G2",
+    "neighbor_id": "e0 a7 00 08 67 e6",
+    "neighbor_address": "10.112.67.6",
+    "neighbor_platform": "Verkada Security Camera",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "Verkada Security Camera"
+  },
+  {
+    "local_port": "G3",
+    "neighbor_id": "e0 a7 00 03 43 66",
+    "neighbor_address": "10.112.67.252",
+    "neighbor_platform": "Verkada Security Camera",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "Verkada Security Camera"
+  },
+  {
+    "local_port": "G4",
+    "neighbor_id": "e0 a7 00 03 43 6d",
+    "neighbor_address": "10.112.67.250",
+    "neighbor_platform": "Verkada Security Camera",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "Verkada Security Camera"
+  },
+  {
+    "local_port": "G5",
+    "neighbor_id": "e0 a7 00 1a 4c 4c",
+    "neighbor_address": "10.112.67.22",
+    "neighbor_platform": "Verkada Security Camera",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "Verkada Security Camera"
+  },
+  {
+    "local_port": "G6",
+    "neighbor_id": "e0 a7 00 19 cd 6f",
+    "neighbor_address": "10.112.68.113",
+    "neighbor_platform": "Verkada Security Camera",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "Verkada Security Camera"
+  },
+  {
+    "local_port": "G7",
+    "neighbor_id": "e0 a7 00 22 37 f3",
+    "neighbor_address": "10.112.67.231",
+    "neighbor_platform": "Verkada Security Camera",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "Verkada Security Camera"
+  },
+  {
+    "local_port": "G8",
+    "neighbor_id": "e0 a7 00 22 36 b5",
+    "neighbor_address": "10.112.67.232",
+    "neighbor_platform": "Verkada Security Camera",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "Verkada Security Camera"
+  },
+  {
+    "local_port": "G15",
+    "neighbor_id": "e0 a7 00 23 5e 7b",
+    "neighbor_address": "10.112.68.44",
+    "neighbor_platform": "Verkada Security Camera",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "Verkada Security Camera"
+  },
+  {
+    "local_port": "G16",
+    "neighbor_id": "e0 a7 00 22 37 0f",
+    "neighbor_address": "10.112.68.114",
+    "neighbor_platform": "Verkada Security Camera",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "Verkada Security Camera"
+  },
+  {
+    "local_port": "G17",
+    "neighbor_id": "dc b7 ac c6 21 52",
+    "neighbor_address": "10.112.2.27",
+    "neighbor_platform": "ArubaOS (MODEL: 575), Version Aruba IAP",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "ArubaOS (MODEL: 575), Version Aruba IAP"
+  },
+  {
+    "local_port": "G19",
+    "neighbor_id": "dc b7 ac c6 20 9c",
+    "neighbor_address": "10.112.2.26",
+    "neighbor_platform": "ArubaOS (MODEL: 575), Version Aruba IAP",
+    "neighbor_capability": " ",
+    "neighbor_port": "eth0",
+    "neighbor_version": "ArubaOS (MODEL: 575), Version Aruba IAP"
+  }
+]

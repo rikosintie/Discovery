@@ -1,0 +1,859 @@
+ configure terminal
+RHS-5412-MDF(config)#  end
+RHS-5412-MDF# show mac-add 1
+Module not present for port or invalid port: 1
+RHS-5412-MDF# show mac-add 2
+Module not present for port or invalid port: 2
+RHS-5412-MDF# show mac-add 3
+Module not present for port or invalid port: 3
+RHS-5412-MDF# show mac-add 4
+Module not present for port or invalid port: 4
+RHS-5412-MDF# show mac-add 5
+Module not present for port or invalid port: 5
+RHS-5412-MDF# show mac-add 6
+Module not present for port or invalid port: 6
+RHS-5412-MDF# show mac-add 7
+Module not present for port or invalid port: 7
+RHS-5412-MDF# show mac-add 8
+Module not present for port or invalid port: 8
+RHS-5412-MDF# show mac-add 9
+Module not present for port or invalid port: 9
+RHS-5412-MDF# show mac-add 10
+Module not present for port or invalid port: 10
+RHS-5412-MDF# show mac-add 11
+Module not present for port or invalid port: 11
+RHS-5412-MDF# show mac-add 12
+Module not present for port or invalid port: 12
+RHS-5412-MDF# show mac-add 13
+Module not present for port or invalid port: 13
+RHS-5412-MDF# show mac-add 14
+Module not present for port or invalid port: 14
+RHS-5412-MDF# show mac-add 15
+Module not present for port or invalid port: 15
+RHS-5412-MDF# show mac-add 16
+Module not present for port or invalid port: 16
+RHS-5412-MDF# show mac-add 17
+Module not present for port or invalid port: 17
+RHS-5412-MDF# show mac-add 18
+Module not present for port or invalid port: 18
+RHS-5412-MDF# show mac-add 19
+Module not present for port or invalid port: 19
+RHS-5412-MDF# show mac-add 20
+Module not present for port or invalid port: 20
+RHS-5412-MDF# show mac-add 21
+Module not present for port or invalid port: 21
+RHS-5412-MDF# show mac-add 22
+Module not present for port or invalid port: 22
+RHS-5412-MDF# show mac-add 23
+Module not present for port or invalid port: 23
+RHS-5412-MDF# show mac-add 24
+Module not present for port or invalid port: 24
+RHS-5412-MDF# show mac-add 25
+Module not present for port or invalid port: 25
+RHS-5412-MDF# show mac-add 26
+Module not present for port or invalid port: 26
+RHS-5412-MDF# show mac-add 27
+Module not present for port or invalid port: 27
+RHS-5412-MDF# show mac-add 28
+Module not present for port or invalid port: 28
+RHS-5412-MDF# show mac-add 29
+Module not present for port or invalid port: 29
+RHS-5412-MDF# show mac-add 30
+Module not present for port or invalid port: 30
+RHS-5412-MDF# show mac-add 31
+Module not present for port or invalid port: 31
+RHS-5412-MDF# show mac-add 32
+Module not present for port or invalid port: 32
+RHS-5412-MDF# show mac-add 33
+Module not present for port or invalid port: 33
+RHS-5412-MDF# show mac-add 34
+Module not present for port or invalid port: 34
+RHS-5412-MDF# show mac-add 35
+Module not present for port or invalid port: 35
+RHS-5412-MDF# show mac-add 36
+Module not present for port or invalid port: 36
+RHS-5412-MDF# show mac-add 37
+Module not present for port or invalid port: 37
+RHS-5412-MDF# show mac-add 38
+Module not present for port or invalid port: 38
+RHS-5412-MDF# show mac-add 39
+Module not present for port or invalid port: 39
+RHS-5412-MDF# show mac-add 40
+Module not present for port or invalid port: 40
+RHS-5412-MDF# show mac-add 41
+Module not present for port or invalid port: 41
+RHS-5412-MDF# show mac-add 42
+Module not present for port or invalid port: 42
+RHS-5412-MDF# show mac-add 43
+Module not present for port or invalid port: 43
+RHS-5412-MDF# show mac-add 44
+Module not present for port or invalid port: 44
+RHS-5412-MDF# show mac-add 45
+Module not present for port or invalid port: 45
+RHS-5412-MDF# show mac-add 46
+Module not present for port or invalid port: 46
+RHS-5412-MDF# show mac-add 47
+Module not present for port or invalid port: 47
+RHS-5412-MDF# show mac-add 48
+Module not present for port or invalid port: 48
+RHS-5412-MDF# 
+RHS-5412-MDF# show mac-add c1
+
+ Status and Counters - Port Address Table - C1
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  7c0507-0f6ee4     1           
+ 
+RHS-5412-MDF# show mac-add c2
+
+ Status and Counters - Port Address Table - C2
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  7c0507-3b45ea     1           
+ 
+RHS-5412-MDF# show mac-add c3
+
+ Status and Counters - Port Address Table - C3
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add c4
+
+ Status and Counters - Port Address Table - C4
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  00c0b7-f4b43a     1           
+ 
+RHS-5412-MDF# show mac-add c5
+
+ Status and Counters - Port Address Table - C5
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  000c29-d97dd1     75          
+  005056-a3076b     75          
+  005056-a36389     75          
+  005056-a36c8b     75          
+  005056-a36ee5     75          
+ 
+RHS-5412-MDF# show mac-add c6
+
+ Status and Counters - Port Address Table - C6
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  1402ec-030c22     74          
+ 
+RHS-5412-MDF# show mac-add c7
+
+ Status and Counters - Port Address Table - C7
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  005056-a30718     75          
+  005056-a31298     75          
+  005056-a333f0     75          
+  005056-a33405     75          
+  005056-a34a60     75          
+ 
+RHS-5412-MDF# show mac-add c8
+
+ Status and Counters - Port Address Table - C8
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  005056-6ab9f2     72          
+ 
+RHS-5412-MDF# show mac-add c9
+
+ Status and Counters - Port Address Table - C9
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  005056-a3005e     75          
+  005056-a3363c     75          
+  005056-a35059     75          
+  005056-a36061     75          
+ 
+RHS-5412-MDF# show mac-add c10
+
+ Status and Counters - Port Address Table - C10
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  c4f57c-544d3d     74          
+ 
+RHS-5412-MDF# show mac-add c11
+
+ Status and Counters - Port Address Table - C11
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add c12
+
+ Status and Counters - Port Address Table - C12
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  00c0ff-27d686     74          
+ 
+RHS-5412-MDF# show mac-add c13
+
+ Status and Counters - Port Address Table - C13
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  000c29-ef2f46     74          
+  1c98ec-140730     74          
+ 
+RHS-5412-MDF# show mac-add c14
+
+ Status and Counters - Port Address Table - C14
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  00c0ff-27ca34     74          
+ 
+RHS-5412-MDF# show mac-add c15
+
+ Status and Counters - Port Address Table - C15
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  1c98ec-14a698     74          
+ 
+RHS-5412-MDF# show mac-add c16
+
+ Status and Counters - Port Address Table - C16
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  1c98ec-14a69c     74          
+ 
+RHS-5412-MDF# show mac-add c17
+
+ Status and Counters - Port Address Table - C17
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add c18
+
+ Status and Counters - Port Address Table - C18
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add c19
+
+ Status and Counters - Port Address Table - C19
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add c20
+
+ Status and Counters - Port Address Table - C20
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  1c98ec-26514e     74          
+ 
+RHS-5412-MDF# show mac-add c21
+
+ Status and Counters - Port Address Table - C21
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  005056-6ae951     72          
+ 
+RHS-5412-MDF# show mac-add c22
+
+ Status and Counters - Port Address Table - C22
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  1c98ec-1fb3ee     74          
+ 
+RHS-5412-MDF# show mac-add c23
+
+ Status and Counters - Port Address Table - C23
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  005056-6ac65f     72          
+ 
+RHS-5412-MDF# show mac-add c24
+
+ Status and Counters - Port Address Table - C24
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  1c98ec-1fb3f0     74          
+ 
+RHS-5412-MDF# show mac-add d1
+
+ Status and Counters - Port Address Table - D1
+
+Cannot display MAC addresses. (Port is a member of a trunk.)
+
+RHS-5412-MDF# show mac-add d2
+
+ Status and Counters - Port Address Table - D2
+
+Cannot display MAC addresses. (Port is a member of a trunk.)
+
+RHS-5412-MDF# show mac-add d3
+
+ Status and Counters - Port Address Table - D3
+
+Cannot display MAC addresses. (Port is a member of a trunk.)
+
+RHS-5412-MDF# show mac-add d4
+
+ Status and Counters - Port Address Table - D4
+
+Cannot display MAC addresses. (Port is a member of a trunk.)
+
+RHS-5412-MDF# show mac-add d5
+
+ Status and Counters - Port Address Table - D5
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d6
+
+ Status and Counters - Port Address Table - D6
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d7
+
+ Status and Counters - Port Address Table - D7
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d8
+
+ Status and Counters - Port Address Table - D8
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d9
+
+ Status and Counters - Port Address Table - D9
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d10
+
+ Status and Counters - Port Address Table - D10
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d11
+
+ Status and Counters - Port Address Table - D11
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d12
+
+ Status and Counters - Port Address Table - D12
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d13
+
+ Status and Counters - Port Address Table - D13
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d14
+
+ Status and Counters - Port Address Table - D14
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d15
+
+ Status and Counters - Port Address Table - D15
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d16
+
+ Status and Counters - Port Address Table - D16
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d17
+
+ Status and Counters - Port Address Table - D17
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d18
+
+ Status and Counters - Port Address Table - D18
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  282986-40a42a     1           
+ 
+RHS-5412-MDF# show mac-add d19
+
+ Status and Counters - Port Address Table - D19
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d20
+
+ Status and Counters - Port Address Table - D20
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d21
+
+ Status and Counters - Port Address Table - D21
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d22
+
+ Status and Counters - Port Address Table - D22
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d23
+
+ Status and Counters - Port Address Table - D23
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add d24
+
+ Status and Counters - Port Address Table - D24
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add e1
+
+ Status and Counters - Port Address Table - E1
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add e2
+
+ Status and Counters - Port Address Table - E2
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add e3
+
+ Status and Counters - Port Address Table - E3
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add e4
+
+ Status and Counters - Port Address Table - E4
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add e5
+
+ Status and Counters - Port Address Table - E5
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add e6
+
+ Status and Counters - Port Address Table - E6
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add e7
+
+ Status and Counters - Port Address Table - E7
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  04d590-0e77ab     1001        
+ 
+RHS-5412-MDF# show mac-add e8
+
+ Status and Counters - Port Address Table - E8
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  104f58-682100     1000        
+  883a30-76ce00     1000        
+  883a30-e56100     1000        
+  883a30-f40700     1000        
+  b8d4e7-4c4900     1000        
+ 
+RHS-5412-MDF# show mac-add e9
+Module not present for port or invalid port: e9
+RHS-5412-MDF# show mac-add e10
+Module not present for port or invalid port: e10
+RHS-5412-MDF# show mac-add e11
+Module not present for port or invalid port: e11
+RHS-5412-MDF# show mac-add e12
+Module not present for port or invalid port: e12
+RHS-5412-MDF# show mac-add e13
+Module not present for port or invalid port: e13
+RHS-5412-MDF# show mac-add e14
+Module not present for port or invalid port: e14
+RHS-5412-MDF# show mac-add e15
+Module not present for port or invalid port: e15
+RHS-5412-MDF# show mac-add e16
+Module not present for port or invalid port: e16
+RHS-5412-MDF# show mac-add e17
+Module not present for port or invalid port: e17
+RHS-5412-MDF# show mac-add e18
+Module not present for port or invalid port: e18
+RHS-5412-MDF# show mac-add e19
+Module not present for port or invalid port: e19
+RHS-5412-MDF# show mac-add e20
+Module not present for port or invalid port: e20
+RHS-5412-MDF# show mac-add e21
+Module not present for port or invalid port: e21
+RHS-5412-MDF# show mac-add e22
+Module not present for port or invalid port: e22
+RHS-5412-MDF# show mac-add e23
+Module not present for port or invalid port: e23
+RHS-5412-MDF# show mac-add e24
+Module not present for port or invalid port: e24
+RHS-5412-MDF# show mac-add f1
+
+ Status and Counters - Port Address Table - F1
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  1c28af-cba876     254         
+ 
+RHS-5412-MDF# show mac-add f2
+
+ Status and Counters - Port Address Table - F2
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  10cf0f-e002a8     253         
+  1c28af-cba9f6     254         
+  a851ab-021cae     253         
+  c0b883-579fdb     253         
+ 
+RHS-5412-MDF# show mac-add f3
+
+ Status and Counters - Port Address Table - F3
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  1c28af-cbab40     254         
+ 
+RHS-5412-MDF# show mac-add f4
+
+ Status and Counters - Port Address Table - F4
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  1c28af-cbb234     254         
+  c435d9-99281d     253         
+ 
+RHS-5412-MDF# show mac-add f5
+
+ Status and Counters - Port Address Table - F5
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  1c28af-cbbc14     254         
+ 
+RHS-5412-MDF# show mac-add f6
+
+ Status and Counters - Port Address Table - F6
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add f7
+
+ Status and Counters - Port Address Table - F7
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  000275-f8bac7     253         
+  749e75-c5ed86     254         
+ 
+RHS-5412-MDF# show mac-add f8
+
+ Status and Counters - Port Address Table - F8
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  b49691-c6f67e     1           
+  b49691-c6f67f     1           
+ 
+RHS-5412-MDF# show mac-add f9
+Module not present for port or invalid port: f9
+RHS-5412-MDF# show mac-add f10
+Module not present for port or invalid port: f10
+RHS-5412-MDF# show mac-add f11
+Module not present for port or invalid port: f11
+RHS-5412-MDF# show mac-add f12
+Module not present for port or invalid port: f12
+RHS-5412-MDF# show mac-add f13
+Module not present for port or invalid port: f13
+RHS-5412-MDF# show mac-add f14
+Module not present for port or invalid port: f14
+RHS-5412-MDF# show mac-add f15
+Module not present for port or invalid port: f15
+RHS-5412-MDF# show mac-add f16
+Module not present for port or invalid port: f16
+RHS-5412-MDF# show mac-add f17
+Module not present for port or invalid port: f17
+RHS-5412-MDF# show mac-add f18
+Module not present for port or invalid port: f18
+RHS-5412-MDF# show mac-add f19
+Module not present for port or invalid port: f19
+RHS-5412-MDF# show mac-add f20
+Module not present for port or invalid port: f20
+RHS-5412-MDF# show mac-add f21
+Module not present for port or invalid port: f21
+RHS-5412-MDF# show mac-add f22
+Module not present for port or invalid port: f22
+RHS-5412-MDF# show mac-add f23
+Module not present for port or invalid port: f23
+RHS-5412-MDF# show mac-add f24
+Module not present for port or invalid port: f24
+RHS-5412-MDF# show mac-add g1
+
+ Status and Counters - Port Address Table - G1
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  e0a700-0867e1     1           
+ 
+RHS-5412-MDF# show mac-add g2
+
+ Status and Counters - Port Address Table - G2
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  e0a700-0867e6     1           
+ 
+RHS-5412-MDF# show mac-add g3
+
+ Status and Counters - Port Address Table - G3
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  e0a700-034366     1           
+ 
+RHS-5412-MDF# show mac-add g4
+
+ Status and Counters - Port Address Table - G4
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  e0a700-03436d     1           
+ 
+RHS-5412-MDF# show mac-add g5
+
+ Status and Counters - Port Address Table - G5
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  e0a700-1a4c4c     1           
+ 
+RHS-5412-MDF# show mac-add g6
+
+ Status and Counters - Port Address Table - G6
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  e0a700-19cd6f     1           
+ 
+RHS-5412-MDF# show mac-add g7
+
+ Status and Counters - Port Address Table - G7
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  e0a700-2237f3     1           
+ 
+RHS-5412-MDF# show mac-add g8
+
+ Status and Counters - Port Address Table - G8
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  e0a700-2236b5     1           
+ 
+RHS-5412-MDF# show mac-add g9
+
+ Status and Counters - Port Address Table - G9
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  e0a700-1259be     1           
+ 
+RHS-5412-MDF# show mac-add g10
+
+ Status and Counters - Port Address Table - G10
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  e0a700-1259de     1           
+ 
+RHS-5412-MDF# show mac-add g11
+
+ Status and Counters - Port Address Table - G11
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  e0a700-1259af     1           
+ 
+RHS-5412-MDF# show mac-add g12
+
+ Status and Counters - Port Address Table - G12
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  e0a700-1259b0     1           
+ 
+RHS-5412-MDF# show mac-add g13
+
+ Status and Counters - Port Address Table - G13
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  b8ca3a-f65a31     1           
+ 
+RHS-5412-MDF# show mac-add g14
+
+ Status and Counters - Port Address Table - G14
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  b82a72-d1f49d     1           
+ 
+RHS-5412-MDF# show mac-add g15
+
+ Status and Counters - Port Address Table - G15
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  e0a700-235e7b     1           
+ 
+RHS-5412-MDF# show mac-add g16
+
+ Status and Counters - Port Address Table - G16
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  e0a700-22370f     1           
+ 
+RHS-5412-MDF# show mac-add g17
+
+ Status and Counters - Port Address Table - G17
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  dcb7ac-c62152     250         
+ 
+RHS-5412-MDF# show mac-add g18
+
+ Status and Counters - Port Address Table - G18
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add g19
+
+ Status and Counters - Port Address Table - G19
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  168686-3d07e1     253         
+  3a692b-0229b6     253         
+  462d59-fb543d     88          
+  52f325-058c7b     253         
+  6ab248-e1e00e     88          
+  8a5920-42a507     88          
+  a851ab-a2d446     253         
+  dcb7ac-c6209c     88,250,253  
+  fe6a0a-195ab0     88          
+  fe7dde-40d46b     88          
+  fe9fbb-ebef2f     253         
+ 
+RHS-5412-MDF# show mac-add g20
+
+ Status and Counters - Port Address Table - G20
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  282986-665af9     1           
+ 
+RHS-5412-MDF# show mac-add g21
+
+ Status and Counters - Port Address Table - G21
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  282986-40c1eb     1           
+ 
+RHS-5412-MDF# show mac-add g22
+
+ Status and Counters - Port Address Table - G22
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-5412-MDF# show mac-add g23
+
+ Status and Counters - Port Address Table - G23
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  282986-8883cf     1           
+ 
+RHS-5412-MDF# show mac-add g24
+
+ Status and Counters - Port Address Table - G24
+
+  MAC Address       VLANs       
+  ----------------- ------------
+  782bcb-18fb5a     1           
+ 
+RHS-5412-MDF# 

@@ -1,0 +1,12 @@
+ configure terminal
+RHS-CL-2930-48-1(config)#  end
+RHS-CL-2930-48-1# show arp
+
+ IP ARP table
+
+  IP Address       MAC Address       Type    Port
+  ---------------  ----------------- ------- ----
+  10.112.254.254   883a30-768a00     dynamic 49  
+
+
+RHS-CL-2930-48-1# 

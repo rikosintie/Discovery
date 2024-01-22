@@ -1,0 +1,631 @@
+
+Running configuration:
+
+; JL256A Configuration Editor; Created on release #WC.16.10.0012
+; Ver #14:67.6f.f8.1d.9b.3f.bf.bb.ef.7c.59.fc.6b.fb.9f.fc.ff.ff.37.ef:44
+hostname "RHS-CL-2930-48-1"
+module 1 type jl256a
+time daylight-time-rule continental-us-and-canada
+time timezone -480
+spanning-tree
+spanning-tree 1 admin-edge-port
+spanning-tree 1 bpdu-protection
+spanning-tree 2 admin-edge-port
+spanning-tree 2 bpdu-protection
+spanning-tree 3 admin-edge-port
+spanning-tree 3 bpdu-protection
+spanning-tree 4 admin-edge-port
+spanning-tree 4 bpdu-protection
+spanning-tree 5 admin-edge-port
+spanning-tree 5 bpdu-protection
+spanning-tree 6 admin-edge-port
+spanning-tree 6 bpdu-protection
+spanning-tree 7 admin-edge-port
+spanning-tree 7 bpdu-protection
+spanning-tree 8 admin-edge-port
+spanning-tree 8 bpdu-protection
+spanning-tree 9 admin-edge-port
+spanning-tree 9 bpdu-protection
+spanning-tree 10 admin-edge-port
+spanning-tree 10 bpdu-protection
+spanning-tree 11 admin-edge-port
+spanning-tree 11 bpdu-protection
+spanning-tree 12 admin-edge-port
+spanning-tree 12 bpdu-protection
+spanning-tree 13 admin-edge-port
+spanning-tree 13 bpdu-protection
+spanning-tree 14 admin-edge-port
+spanning-tree 14 bpdu-protection
+spanning-tree 15 admin-edge-port
+spanning-tree 15 bpdu-protection
+spanning-tree 16 admin-edge-port
+spanning-tree 16 bpdu-protection
+spanning-tree 17 admin-edge-port
+spanning-tree 17 bpdu-protection
+spanning-tree 18 admin-edge-port
+spanning-tree 18 bpdu-protection
+spanning-tree 19 admin-edge-port
+spanning-tree 19 bpdu-protection
+spanning-tree 20 admin-edge-port
+spanning-tree 20 bpdu-protection
+spanning-tree 21 admin-edge-port
+spanning-tree 21 bpdu-protection
+spanning-tree 22 admin-edge-port
+spanning-tree 22 bpdu-protection
+spanning-tree 23 admin-edge-port
+spanning-tree 23 bpdu-protection
+spanning-tree 24 admin-edge-port
+spanning-tree 24 bpdu-protection
+spanning-tree 25 admin-edge-port
+spanning-tree 25 bpdu-protection
+spanning-tree 26 admin-edge-port
+spanning-tree 26 bpdu-protection
+spanning-tree 27 admin-edge-port
+spanning-tree 27 bpdu-protection
+spanning-tree 28 admin-edge-port
+spanning-tree 28 bpdu-protection
+spanning-tree 29 admin-edge-port
+spanning-tree 29 bpdu-protection
+spanning-tree 30 admin-edge-port
+spanning-tree 30 bpdu-protection
+spanning-tree 31 admin-edge-port
+spanning-tree 31 bpdu-protection
+spanning-tree 32 admin-edge-port
+spanning-tree 32 bpdu-protection
+spanning-tree 33 admin-edge-port
+spanning-tree 33 bpdu-protection
+spanning-tree 34 admin-edge-port
+spanning-tree 34 bpdu-protection
+spanning-tree 35 admin-edge-port
+spanning-tree 35 bpdu-protection
+spanning-tree 36 admin-edge-port
+spanning-tree 36 bpdu-protection
+spanning-tree 37 admin-edge-port
+spanning-tree 37 bpdu-protection
+spanning-tree 38 admin-edge-port
+spanning-tree 38 bpdu-protection
+spanning-tree 39 admin-edge-port
+spanning-tree 39 bpdu-protection
+spanning-tree 40 admin-edge-port
+spanning-tree 40 bpdu-protection
+spanning-tree 41 admin-edge-port
+spanning-tree 41 bpdu-protection
+spanning-tree 42 admin-edge-port
+spanning-tree 42 bpdu-protection
+spanning-tree 43 admin-edge-port
+spanning-tree 43 bpdu-protection
+spanning-tree 44 admin-edge-port
+spanning-tree 44 bpdu-protection
+spanning-tree 45 admin-edge-port
+spanning-tree 45 bpdu-protection
+spanning-tree 46 admin-edge-port
+spanning-tree 46 bpdu-protection
+spanning-tree 47 admin-edge-port
+spanning-tree 47 bpdu-protection
+spanning-tree 48 admin-edge-port
+spanning-tree 48 bpdu-protection
+spanning-tree force-version rstp-operation
+ip authorized-managers 10.112.24.0 255.255.255.0 access manager
+ip authorized-managers 10.10.10.0 255.255.255.0 access manager
+ip authorized-managers 10.112.250.0 255.255.255.0 access manager
+ip authorized-managers 10.112.251.0 255.255.255.0 access manager
+ip authorized-managers 10.112.252.0 255.255.255.0 access manager
+ip authorized-managers 10.112.253.0 255.255.255.0 access manager
+ip authorized-managers 10.112.254.0 255.255.255.0 access manager
+ip authorized-managers 10.112.255.0 255.255.255.0 access manager
+ip authorized-managers 10.112.74.0 255.255.255.224 access manager
+ip authorized-managers 10.112.23.0 255.255.255.0 access manager
+ip authorized-managers 10.112.56.0 255.255.248.0 access manager
+ip authorized-managers 10.112.249.0 255.255.255.0 access manager
+ip authorized-managers 10.112.22.0 255.255.255.0 access manager
+ip authorized-managers 10.112.60.0 255.255.255.0 access manager
+ip authorized-managers 10.112.64.0 255.255.248.0 access manager
+ip default-gateway 10.112.254.254
+ip dns server-address priority 1 10.112.79.5
+ip dns server-address priority 2 10.112.23.40
+no ip ssh cipher aes128-cbc
+no ip ssh cipher 3des-cbc
+no ip ssh cipher aes192-cbc
+no ip ssh cipher aes256-cbc
+no ip ssh mac hmac-md5
+no ip ssh mac hmac-md5-96
+timesync sntp
+sntp unicast
+sntp server priority 1 10.112.23.40
+snmp-server community "public" unrestricted
+snmp-server community "sbcss" operator unrestricted
+snmp-server community "rimsd" operator unrestricted
+snmp-server mib hpSwitchAuthMIB excluded
+snmp-server contact "Mark_Malone@rimsd.k12.ca.us" location "Computer Lab"
+lldp config 49 ipAddrEnable 10.112.254.60
+interface 1
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 2
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 3
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 4
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 5
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 6
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 7
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 8
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 9
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 10
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 11
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 12
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 13
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 14
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 15
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 16
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 17
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 18
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 19
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 20
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 21
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 22
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 23
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 24
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 25
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 26
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 27
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 28
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 29
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 30
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 31
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 32
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 33
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 34
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 35
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 36
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 37
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 38
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 39
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 40
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 41
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 42
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 43
+   name "ROP Wireless"
+   untagged vlan 200
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 44
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 45
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 46
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 47
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 48
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 49
+   name "Uplink to 5412 Port A4"
+   dhcp-snooping trust
+   tagged vlan 56-57,60,63,88,92,96,200,204,208,250,254
+   untagged vlan 1
+   lldp config ipAddrEnable 10.112.254.60
+   exit
+interface 50
+   dhcp-snooping trust
+   tagged vlan 56-57,60,63,88,92,96,200,204,208,250,254
+   untagged vlan 1
+   exit
+interface 51
+   dhcp-snooping trust
+   tagged vlan 56-57,60,63,88,92,96,200,204,208,250,254
+   untagged vlan 1
+   exit
+interface 52
+   dhcp-snooping trust
+   tagged vlan 56-57,60,63,88,92,96,200,204,208,250,254
+   untagged vlan 1
+   exit
+vlan 1
+   name "LAN"
+   no untagged 43
+   untagged 1-42,44-52
+   no ip address
+   ip igmp
+   ip igmp forward 1-52
+   exit
+vlan 56
+   name "100 Wing WiFi"
+   tagged 49-52
+   no ip address
+   ip igmp
+   exit
+vlan 57
+   name "200 Wing WiFi MGMT"
+   tagged 49-52
+   no ip address
+   ip igmp
+   exit
+vlan 60
+   name "200 Wing WiFi"
+   tagged 49-52
+   no ip address
+   ip igmp
+   exit
+vlan 63
+   name "100 Wing MGMT"
+   tagged 49-52
+   no ip address
+   ip igmp
+   exit
+vlan 88
+   name "Wireless Guest vlan88"
+   tagged 49-52
+   no ip address
+   ip igmp
+   exit
+vlan 92
+   name "Wireless Guest vlan92"
+   tagged 49-52
+   no ip address
+   ip igmp
+   exit
+vlan 96
+   name "Wireless Guest vlan96"
+   tagged 49-52
+   no ip address
+   ip igmp
+   exit
+vlan 200
+   name "ROP Wireless"
+   untagged 43
+   tagged 49-52
+   no ip address
+   ip igmp
+   exit
+vlan 204
+   name "Wireless Guest vlan204 MOT"
+   tagged 49-52
+   no ip address
+   ip igmp
+   exit
+vlan 208
+   name "Wireless Guest vlan 208"
+   tagged 49-52
+   no ip address
+   ip igmp
+   exit
+vlan 250
+   name "Outdoor-APs"
+   tagged 49-52
+   no ip address
+   exit
+vlan 254
+   name "Management"
+   tagged 49-52
+   ip address 10.112.254.60 255.255.255.0
+   ip igmp
+   exit
+alias "wr" "wr mem"
+alias "devconf" "show device-profile config"
+alias "devstat" "show device-profile status"
+alias "write memory" "wr"
+dhcp-snooping
+dhcp-snooping authorized-server 10.112.2.126
+dhcp-snooping authorized-server 10.112.23.231
+dhcp-snooping authorized-server 10.112.23.233
+dhcp-snooping authorized-server 10.112.95.254
+dhcp-snooping vlan 1-254 
+banner motd "
+******************************************************************************
+This system is the property of Rim of the World Unified School District.
+
+UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED.
+
+You must have explicit permission to access this device.
+
+All activities performend on this device are logged.
+Any violations of access policy will result in disciplinary action.
+****************************************************************************** 
+"
+no telnet-server
+web-management ssl
+aaa authentication ssh enable public-key
+allow-unsupported-transceiver
+no tftp server
+no autorun
+no dhcp config-file-update
+no dhcp image-file-update
+no dhcp tr69-acs-url
+job "backup" at 02:59 "copy config config1 config backup"
+job "wr-mem" at 03:00 config-save "wr mem"
+tls application cloud lowest-version tls1.2 disable-cipher aes256-sha256
+tls application cloud lowest-version tls1.2 disable-cipher aes256-sha
+tls application cloud lowest-version tls1.2 disable-cipher aes128-sha256
+tls application cloud lowest-version tls1.2 disable-cipher aes128-sha
+tls application cloud lowest-version tls1.2 disable-cipher des3-cbc-sha
+tls application cloud lowest-version tls1.2 disable-cipher ecdh-ecdsa-des-cbc3-sha
+tls application cloud lowest-version tls1.2 disable-cipher ecdh-rsa-des-cbc3-sha
+tls application cloud lowest-version tls1.2 disable-cipher ecdhe-rsa-aes128-sha256
+tls application cloud lowest-version tls1.2 disable-cipher ecdhe-rsa-aes256-sha384
+tls application cloud lowest-version tls1.2 disable-cipher ecdhe-rsa-aes256-sha
+tls application cloud lowest-version tls1.2 disable-cipher ecdhe-ecdsa-des-cbc3-sha
+tls application cloud lowest-version tls1.2 disable-cipher ecdhe-rsa-des-cbc3-sha
+tls application web-ssl lowest-version tls1.2 disable-cipher aes256-sha256
+tls application web-ssl lowest-version tls1.2 disable-cipher aes256-sha
+tls application web-ssl lowest-version tls1.2 disable-cipher aes128-sha256
+tls application web-ssl lowest-version tls1.2 disable-cipher aes128-sha
+tls application web-ssl lowest-version tls1.2 disable-cipher des3-cbc-sha
+tls application web-ssl lowest-version tls1.2 disable-cipher ecdh-ecdsa-des-cbc3-sha
+tls application web-ssl lowest-version tls1.2 disable-cipher ecdh-rsa-des-cbc3-sha
+tls application web-ssl lowest-version tls1.2 disable-cipher ecdhe-rsa-aes128-sha256
+tls application web-ssl lowest-version tls1.2 disable-cipher ecdhe-rsa-aes128-sha
+tls application web-ssl lowest-version tls1.2 disable-cipher ecdhe-rsa-aes256-sha384
+tls application web-ssl lowest-version tls1.2 disable-cipher ecdhe-rsa-aes256-sha
+tls application web-ssl lowest-version tls1.2 disable-cipher ecdhe-ecdsa-des-cbc3-sha
+tls application web-ssl lowest-version tls1.2 disable-cipher ecdhe-rsa-des-cbc3-sha
+tls application openflow lowest-version tls1.2 disable-cipher aes256-sha256
+tls application openflow lowest-version tls1.2 disable-cipher aes256-sha
+tls application openflow lowest-version tls1.2 disable-cipher aes128-sha256
+tls application openflow lowest-version tls1.2 disable-cipher aes128-sha
+tls application openflow lowest-version tls1.2 disable-cipher des3-cbc-sha
+tls application openflow lowest-version tls1.2 disable-cipher ecdh-ecdsa-des-cbc3-sha
+tls application openflow lowest-version tls1.2 disable-cipher ecdh-rsa-des-cbc3-sha
+tls application openflow lowest-version tls1.2 disable-cipher ecdhe-rsa-aes128-sha256
+tls application openflow lowest-version tls1.2 disable-cipher ecdhe-rsa-aes256-sha384
+tls application openflow lowest-version tls1.2 disable-cipher ecdhe-rsa-aes256-sha
+tls application openflow lowest-version tls1.2 disable-cipher ecdhe-ecdsa-des-cbc3-sha
+tls application openflow lowest-version tls1.2 disable-cipher ecdhe-rsa-des-cbc3-sha
+tls application syslog lowest-version tls1.2 disable-cipher aes256-sha256
+tls application syslog lowest-version tls1.2 disable-cipher aes256-sha
+tls application syslog lowest-version tls1.2 disable-cipher aes128-sha256
+tls application syslog lowest-version tls1.2 disable-cipher aes128-sha
+tls application syslog lowest-version tls1.2 disable-cipher des3-cbc-sha
+tls application syslog lowest-version tls1.2 disable-cipher ecdh-ecdsa-des-cbc3-sha
+tls application syslog lowest-version tls1.2 disable-cipher ecdh-rsa-des-cbc3-sha
+tls application syslog lowest-version tls1.2 disable-cipher ecdhe-rsa-aes128-sha256
+tls application syslog lowest-version tls1.2 disable-cipher ecdhe-rsa-aes256-sha384
+tls application syslog lowest-version tls1.2 disable-cipher ecdhe-rsa-aes256-sha
+tls application syslog lowest-version tls1.2 disable-cipher ecdhe-ecdsa-des-cbc3-sha
+tls application syslog lowest-version tls1.2 disable-cipher ecdhe-rsa-des-cbc3-sha
+tls application tr69 lowest-version tls1.2 disable-cipher aes256-sha256
+tls application tr69 lowest-version tls1.2 disable-cipher aes256-sha
+tls application tr69 lowest-version tls1.2 disable-cipher aes128-sha256
+tls application tr69 lowest-version tls1.2 disable-cipher aes128-sha
+tls application tr69 lowest-version tls1.2 disable-cipher des3-cbc-sha
+tls application tr69 lowest-version tls1.2 disable-cipher ecdh-ecdsa-des-cbc3-sha
+tls application tr69 lowest-version tls1.2 disable-cipher ecdh-rsa-des-cbc3-sha
+tls application tr69 lowest-version tls1.2 disable-cipher ecdhe-rsa-aes128-sha256
+tls application tr69 lowest-version tls1.2 disable-cipher ecdhe-rsa-aes256-sha384
+tls application tr69 lowest-version tls1.2 disable-cipher ecdhe-rsa-aes256-sha
+tls application tr69 lowest-version tls1.2 disable-cipher ecdhe-ecdsa-des-cbc3-sha
+tls application tr69 lowest-version tls1.2 disable-cipher ecdhe-rsa-des-cbc3-sha
+tls application radsec lowest-version tls1.2 disable-cipher aes256-sha256
+tls application radsec lowest-version tls1.2 disable-cipher aes256-sha
+tls application radsec lowest-version tls1.2 disable-cipher aes128-sha256
+tls application radsec lowest-version tls1.2 disable-cipher aes128-sha
+tls application radsec lowest-version tls1.2 disable-cipher des3-cbc-sha
+tls application radsec lowest-version tls1.2 disable-cipher ecdh-ecdsa-des-cbc3-sha
+tls application radsec lowest-version tls1.2 disable-cipher ecdh-rsa-des-cbc3-sha
+tls application radsec lowest-version tls1.2 disable-cipher ecdhe-rsa-aes128-sha256
+tls application radsec lowest-version tls1.2 disable-cipher ecdhe-rsa-aes256-sha384
+tls application radsec lowest-version tls1.2 disable-cipher ecdhe-rsa-aes256-sha
+tls application radsec lowest-version tls1.2 disable-cipher ecdhe-ecdsa-des-cbc3-sha
+tls application radsec lowest-version tls1.2 disable-cipher ecdhe-rsa-des-cbc3-sha
+device-identity name "AP575"
+   lldp sys-desc "(MODEL: 575)"
+   exit
+device-identity name "AP22X"
+   lldp sys-desc "(MODEL: 22"
+   exit
+device-identity name "AP31X"
+   lldp sys-desc "(MODEL: 31"
+   exit
+device-identity name "AP51X"
+   lldp sys-desc "(MODEL: 51"
+   exit
+device-profile name "RHS-ap-profile"
+   untagged-vlan 254
+   tagged-vlan 88,92,96,200,204,208
+   exit
+device-profile name "RHS-AP-profile"
+   untagged-vlan 254
+   tagged-vlan 88,200,253
+   exit
+device-profile name "RHS-AP-575-profile"
+   untagged-vlan 250
+   tagged-vlan 88,200,253
+   exit
+device-profile device-type "AP575"
+   associate "RHS-AP-575-profile"
+   enable
+   exit
+device-profile device-type "AP22X"
+   associate "RHS-AP-profile"
+   enable
+   exit
+device-profile device-type "AP31X"
+   associate "RHS-AP-profile"
+   enable
+   exit
+device-profile device-type "AP51X"
+   associate "RHS-AP-profile"
+   enable
+   exit
+password manager
+password operator

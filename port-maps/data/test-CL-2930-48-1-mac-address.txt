@@ -1,0 +1,580 @@
+ configure terminal
+RHS-CL-2930-48-1(config)#  end
+RHS-CL-2930-48-1# show mac-add 1
+
+ Status and Counters - Port Address Table - 1
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 2
+
+ Status and Counters - Port Address Table - 2
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 3
+
+ Status and Counters - Port Address Table - 3
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 4
+
+ Status and Counters - Port Address Table - 4
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 5
+
+ Status and Counters - Port Address Table - 5
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 6
+
+ Status and Counters - Port Address Table - 6
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 7
+
+ Status and Counters - Port Address Table - 7
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 8
+
+ Status and Counters - Port Address Table - 8
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 9
+
+ Status and Counters - Port Address Table - 9
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 10
+
+ Status and Counters - Port Address Table - 10
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 11
+
+ Status and Counters - Port Address Table - 11
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 12
+
+ Status and Counters - Port Address Table - 12
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 13
+
+ Status and Counters - Port Address Table - 13
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 14
+
+ Status and Counters - Port Address Table - 14
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 15
+
+ Status and Counters - Port Address Table - 15
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 16
+
+ Status and Counters - Port Address Table - 16
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 17
+
+ Status and Counters - Port Address Table - 17
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 18
+
+ Status and Counters - Port Address Table - 18
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 19
+
+ Status and Counters - Port Address Table - 19
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 20
+
+ Status and Counters - Port Address Table - 20
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 21
+
+ Status and Counters - Port Address Table - 21
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 22
+
+ Status and Counters - Port Address Table - 22
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 23
+
+ Status and Counters - Port Address Table - 23
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 24
+
+ Status and Counters - Port Address Table - 24
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 25
+
+ Status and Counters - Port Address Table - 25
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 26
+
+ Status and Counters - Port Address Table - 26
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 27
+
+ Status and Counters - Port Address Table - 27
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 28
+
+ Status and Counters - Port Address Table - 28
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 29
+
+ Status and Counters - Port Address Table - 29
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 30
+
+ Status and Counters - Port Address Table - 30
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 31
+
+ Status and Counters - Port Address Table - 31
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 32
+
+ Status and Counters - Port Address Table - 32
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 33
+
+ Status and Counters - Port Address Table - 33
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 34
+
+ Status and Counters - Port Address Table - 34
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 35
+
+ Status and Counters - Port Address Table - 35
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 36
+
+ Status and Counters - Port Address Table - 36
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 37
+
+ Status and Counters - Port Address Table - 37
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 38
+
+ Status and Counters - Port Address Table - 38
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 39
+
+ Status and Counters - Port Address Table - 39
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 40
+
+ Status and Counters - Port Address Table - 40
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 41
+
+ Status and Counters - Port Address Table - 41
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 42
+
+ Status and Counters - Port Address Table - 42
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 43
+
+ Status and Counters - Port Address Table - 43
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 44
+
+ Status and Counters - Port Address Table - 44
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 45
+
+ Status and Counters - Port Address Table - 45
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 46
+
+ Status and Counters - Port Address Table - 46
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 47
+
+ Status and Counters - Port Address Table - 47
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# show mac-add 48
+
+ Status and Counters - Port Address Table - 48
+
+  MAC Address       VLANs       
+  ----------------- ------------
+ 
+RHS-CL-2930-48-1# 
+RHS-CL-2930-48-1# show mac-add c1
+Module not present for port or invalid port: c1
+RHS-CL-2930-48-1# show mac-add c2
+Module not present for port or invalid port: c2
+RHS-CL-2930-48-1# show mac-add c3
+Module not present for port or invalid port: c3
+RHS-CL-2930-48-1# show mac-add c4
+Module not present for port or invalid port: c4
+RHS-CL-2930-48-1# show mac-add c5
+Module not present for port or invalid port: c5
+RHS-CL-2930-48-1# show mac-add c6
+Module not present for port or invalid port: c6
+RHS-CL-2930-48-1# show mac-add c7
+Module not present for port or invalid port: c7
+RHS-CL-2930-48-1# show mac-add c8
+Module not present for port or invalid port: c8
+RHS-CL-2930-48-1# show mac-add c9
+Module not present for port or invalid port: c9
+RHS-CL-2930-48-1# show mac-add c10
+Module not present for port or invalid port: c10
+RHS-CL-2930-48-1# show mac-add c11
+Module not present for port or invalid port: c11
+RHS-CL-2930-48-1# show mac-add c12
+Module not present for port or invalid port: c12
+RHS-CL-2930-48-1# show mac-add c13
+Module not present for port or invalid port: c13
+RHS-CL-2930-48-1# show mac-add c14
+Module not present for port or invalid port: c14
+RHS-CL-2930-48-1# show mac-add c15
+Module not present for port or invalid port: c15
+RHS-CL-2930-48-1# show mac-add c16
+Module not present for port or invalid port: c16
+RHS-CL-2930-48-1# show mac-add c17
+Module not present for port or invalid port: c17
+RHS-CL-2930-48-1# show mac-add c18
+Module not present for port or invalid port: c18
+RHS-CL-2930-48-1# show mac-add c19
+Module not present for port or invalid port: c19
+RHS-CL-2930-48-1# show mac-add c20
+Module not present for port or invalid port: c20
+RHS-CL-2930-48-1# show mac-add c21
+Module not present for port or invalid port: c21
+RHS-CL-2930-48-1# show mac-add c22
+Module not present for port or invalid port: c22
+RHS-CL-2930-48-1# show mac-add c23
+Module not present for port or invalid port: c23
+RHS-CL-2930-48-1# show mac-add c24
+Module not present for port or invalid port: c24
+RHS-CL-2930-48-1# show mac-add d1
+Module not present for port or invalid port: d1
+RHS-CL-2930-48-1# show mac-add d2
+Module not present for port or invalid port: d2
+RHS-CL-2930-48-1# show mac-add d3
+Module not present for port or invalid port: d3
+RHS-CL-2930-48-1# show mac-add d4
+Module not present for port or invalid port: d4
+RHS-CL-2930-48-1# show mac-add d5
+Module not present for port or invalid port: d5
+RHS-CL-2930-48-1# show mac-add d6
+Module not present for port or invalid port: d6
+RHS-CL-2930-48-1# show mac-add d7
+Module not present for port or invalid port: d7
+RHS-CL-2930-48-1# show mac-add d8
+Module not present for port or invalid port: d8
+RHS-CL-2930-48-1# show mac-add d9
+Module not present for port or invalid port: d9
+RHS-CL-2930-48-1# show mac-add d10
+Module not present for port or invalid port: d10
+RHS-CL-2930-48-1# show mac-add d11
+Module not present for port or invalid port: d11
+RHS-CL-2930-48-1# show mac-add d12
+Module not present for port or invalid port: d12
+RHS-CL-2930-48-1# show mac-add d13
+Module not present for port or invalid port: d13
+RHS-CL-2930-48-1# show mac-add d14
+Module not present for port or invalid port: d14
+RHS-CL-2930-48-1# show mac-add d15
+Module not present for port or invalid port: d15
+RHS-CL-2930-48-1# show mac-add d16
+Module not present for port or invalid port: d16
+RHS-CL-2930-48-1# show mac-add d17
+Module not present for port or invalid port: d17
+RHS-CL-2930-48-1# show mac-add d18
+Module not present for port or invalid port: d18
+RHS-CL-2930-48-1# show mac-add d19
+Module not present for port or invalid port: d19
+RHS-CL-2930-48-1# show mac-add d20
+Module not present for port or invalid port: d20
+RHS-CL-2930-48-1# show mac-add d21
+Module not present for port or invalid port: d21
+RHS-CL-2930-48-1# show mac-add d22
+Module not present for port or invalid port: d22
+RHS-CL-2930-48-1# show mac-add d23
+Module not present for port or invalid port: d23
+RHS-CL-2930-48-1# show mac-add d24
+Module not present for port or invalid port: d24
+RHS-CL-2930-48-1# show mac-add e1
+Module not present for port or invalid port: e1
+RHS-CL-2930-48-1# show mac-add e2
+Module not present for port or invalid port: e2
+RHS-CL-2930-48-1# show mac-add e3
+Module not present for port or invalid port: e3
+RHS-CL-2930-48-1# show mac-add e4
+Module not present for port or invalid port: e4
+RHS-CL-2930-48-1# show mac-add e5
+Module not present for port or invalid port: e5
+RHS-CL-2930-48-1# show mac-add e6
+Module not present for port or invalid port: e6
+RHS-CL-2930-48-1# show mac-add e7
+Module not present for port or invalid port: e7
+RHS-CL-2930-48-1# show mac-add e8
+Module not present for port or invalid port: e8
+RHS-CL-2930-48-1# show mac-add e9
+Module not present for port or invalid port: e9
+RHS-CL-2930-48-1# show mac-add e10
+Module not present for port or invalid port: e10
+RHS-CL-2930-48-1# show mac-add e11
+Module not present for port or invalid port: e11
+RHS-CL-2930-48-1# show mac-add e12
+Module not present for port or invalid port: e12
+RHS-CL-2930-48-1# show mac-add e13
+Module not present for port or invalid port: e13
+RHS-CL-2930-48-1# show mac-add e14
+Module not present for port or invalid port: e14
+RHS-CL-2930-48-1# show mac-add e15
+Module not present for port or invalid port: e15
+RHS-CL-2930-48-1# show mac-add e16
+Module not present for port or invalid port: e16
+RHS-CL-2930-48-1# show mac-add e17
+Module not present for port or invalid port: e17
+RHS-CL-2930-48-1# show mac-add e18
+Module not present for port or invalid port: e18
+RHS-CL-2930-48-1# show mac-add e19
+Module not present for port or invalid port: e19
+RHS-CL-2930-48-1# show mac-add e20
+Module not present for port or invalid port: e20
+RHS-CL-2930-48-1# show mac-add e21
+Module not present for port or invalid port: e21
+RHS-CL-2930-48-1# show mac-add e22
+Module not present for port or invalid port: e22
+RHS-CL-2930-48-1# show mac-add e23
+Module not present for port or invalid port: e23
+RHS-CL-2930-48-1# show mac-add e24
+Module not present for port or invalid port: e24
+RHS-CL-2930-48-1# show mac-add f1
+Module not present for port or invalid port: f1
+RHS-CL-2930-48-1# show mac-add f2
+Module not present for port or invalid port: f2
+RHS-CL-2930-48-1# show mac-add f3
+Module not present for port or invalid port: f3
+RHS-CL-2930-48-1# show mac-add f4
+Module not present for port or invalid port: f4
+RHS-CL-2930-48-1# show mac-add f5
+Module not present for port or invalid port: f5
+RHS-CL-2930-48-1# show mac-add f6
+Module not present for port or invalid port: f6
+RHS-CL-2930-48-1# show mac-add f7
+Module not present for port or invalid port: f7
+RHS-CL-2930-48-1# show mac-add f8
+Module not present for port or invalid port: f8
+RHS-CL-2930-48-1# show mac-add f9
+Module not present for port or invalid port: f9
+RHS-CL-2930-48-1# show mac-add f10
+Module not present for port or invalid port: f10
+RHS-CL-2930-48-1# show mac-add f11
+Module not present for port or invalid port: f11
+RHS-CL-2930-48-1# show mac-add f12
+Module not present for port or invalid port: f12
+RHS-CL-2930-48-1# show mac-add f13
+Module not present for port or invalid port: f13
+RHS-CL-2930-48-1# show mac-add f14
+Module not present for port or invalid port: f14
+RHS-CL-2930-48-1# show mac-add f15
+Module not present for port or invalid port: f15
+RHS-CL-2930-48-1# show mac-add f16
+Module not present for port or invalid port: f16
+RHS-CL-2930-48-1# show mac-add f17
+Module not present for port or invalid port: f17
+RHS-CL-2930-48-1# show mac-add f18
+Module not present for port or invalid port: f18
+RHS-CL-2930-48-1# show mac-add f19
+Module not present for port or invalid port: f19
+RHS-CL-2930-48-1# show mac-add f20
+Module not present for port or invalid port: f20
+RHS-CL-2930-48-1# show mac-add f21
+Module not present for port or invalid port: f21
+RHS-CL-2930-48-1# show mac-add f22
+Module not present for port or invalid port: f22
+RHS-CL-2930-48-1# show mac-add f23
+Module not present for port or invalid port: f23
+RHS-CL-2930-48-1# show mac-add f24
+Module not present for port or invalid port: f24
+RHS-CL-2930-48-1# show mac-add g1
+Module not present for port or invalid port: g1
+RHS-CL-2930-48-1# show mac-add g2
+Module not present for port or invalid port: g2
+RHS-CL-2930-48-1# show mac-add g3
+Module not present for port or invalid port: g3
+RHS-CL-2930-48-1# show mac-add g4
+Module not present for port or invalid port: g4
+RHS-CL-2930-48-1# show mac-add g5
+Module not present for port or invalid port: g5
+RHS-CL-2930-48-1# show mac-add g6
+Module not present for port or invalid port: g6
+RHS-CL-2930-48-1# show mac-add g7
+Module not present for port or invalid port: g7
+RHS-CL-2930-48-1# show mac-add g8
+Module not present for port or invalid port: g8
+RHS-CL-2930-48-1# show mac-add g9
+Module not present for port or invalid port: g9
+RHS-CL-2930-48-1# show mac-add g10
+Module not present for port or invalid port: g10
+RHS-CL-2930-48-1# show mac-add g11
+Module not present for port or invalid port: g11
+RHS-CL-2930-48-1# show mac-add g12
+Module not present for port or invalid port: g12
+RHS-CL-2930-48-1# show mac-add g13
+Module not present for port or invalid port: g13
+RHS-CL-2930-48-1# show mac-add g14
+Module not present for port or invalid port: g14
+RHS-CL-2930-48-1# show mac-add g15
+Module not present for port or invalid port: g15
+RHS-CL-2930-48-1# show mac-add g16
+Module not present for port or invalid port: g16
+RHS-CL-2930-48-1# show mac-add g17
+Module not present for port or invalid port: g17
+RHS-CL-2930-48-1# show mac-add g18
+Module not present for port or invalid port: g18
+RHS-CL-2930-48-1# show mac-add g19
+Module not present for port or invalid port: g19
+RHS-CL-2930-48-1# show mac-add g20
+Module not present for port or invalid port: g20
+RHS-CL-2930-48-1# show mac-add g21
+Module not present for port or invalid port: g21
+RHS-CL-2930-48-1# show mac-add g22
+Module not present for port or invalid port: g22
+RHS-CL-2930-48-1# show mac-add g23
+Module not present for port or invalid port: g23
+RHS-CL-2930-48-1# show mac-add g24
+Module not present for port or invalid port: g24
+RHS-CL-2930-48-1# 

@@ -1,0 +1,16 @@
+[
+  {
+    "local_port": "49",
+    "neighbor_chassis_type": "mac-address",
+    "neighbor_chassis_id": "883a30-768a00",
+    "port_type": "local",
+    "neighbor_portid": "4",
+    "neighbor_sysname": "RHS-5412-MDF",
+    "system_descr": "HP J9851A Switch 5412Rzl2, revision KB.16.10.0013, ROM KB...",
+    "port_descr": "A4",
+    "pvid": "1",
+    "system_capabilities_supported": "bridge, router",
+    "system_capabilities_enabled": "bridge, router",
+    "remote_management_address": "10.112.71.254"
+  }
+]

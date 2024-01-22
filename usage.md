@@ -123,7 +123,7 @@ If you are running the scrip against a 1U switch or your 5400 series uplinks are
 Now that the project is set up and the inventory file is created, you can run the script. Make sure you are in the Discovery directory and run:
 
 ```bash
-~/04_Tools/Discovery on  main
+~/Discovery on  main
 $ source bin/activate
 ```
 

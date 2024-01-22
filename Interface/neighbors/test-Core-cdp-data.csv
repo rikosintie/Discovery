@@ -1,0 +1,36 @@
+local_port,neighbor_id,neighbor_address,neighbor_platform,neighbor_capability,neighbor_port,neighbor_version
+A1,10 4f 58 ca 77 40,10.112.71.250,"Aruba JL255A 2930F-24G-PoE+-4SFP+ Switch, revision WC.16...",Switch,25,"Aruba JL255A 2930F-24G-PoE+-4SFP+ Switch, revision WC.16..."
+A2,10 4f 58 ca 15 60,10.112.71.250,"Aruba JL255A 2930F-24G-PoE+-4SFP+ Switch, revision WC.16...",Switch,25,"Aruba JL255A 2930F-24G-PoE+-4SFP+ Switch, revision WC.16..."
+A3,94 18 82 b3 4a 80,10.112.71.249,"HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ...",Switch,25,"HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ..."
+A4,64 e8 81 0c 1d 00,10.112.254.60,"Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16...",Switch,49,"Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16..."
+A5,00 fd 45 06 fc 00,10.112.254.253,"HP J9772A 2530-48G-PoEP Switch, revision YA.16.08.0018, ...",Switch,49,"HP J9772A 2530-48G-PoEP Switch, revision YA.16.08.0018, ..."
+A6,94 18 82 b3 61 c0,10.112.71.250,"HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ...",Switch,25,"HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ..."
+A7,94 18 82 b3 d3 e0,10.112.71.248,"HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ...",Switch,25,"HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ..."
+A8,36383738-3331-4D32-3231-303230425152,10.112.254.165,HPE ProLiant DL385 Gen10, ,"PCI-E Slot 1, Port 2",HPE ProLiant DL385 Gen10
+B1,94 18 82 b8 8d 10,10.112.71.251,"HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R...",Switch,9,"HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R..."
+B2,94 18 82 b8 6d 50,10.112.71.252,"HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R...",Switch,9,"HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R..."
+B3,64 e8 81 0c 4a c0,10.112.71.250,"Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16...",Switch,49,"Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16..."
+B4,64 e8 81 0c ff 40,10.112.254.61,"Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16...",Switch,49,"Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16..."
+B5,94 18 82 b8 6d d0,10.112.71.253,"HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R...",Switch,9,"HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R..."
+B6,f8 60 f0 62 79 00,10.112.69.24,"Aruba JL073A 3810M-24G-PoE+-1-slot Switch, revision KB.1...",Switch,A1,"Aruba JL073A 3810M-24G-PoE+-1-slot Switch, revision KB.1..."
+B7,64 e8 81 0c cf c0,10.112.254.50,"Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16...",Switch,49,"Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16..."
+B8,36383738-3331-4D32-3231-303230425151,0.0.0.0,HPE ProLiant DL385 Gen10, ,"PCI-E Slot 1, Port 1",HPE ProLiant DL385 Gen10
+F1,1c 28 af cb a8 76,10.112.254.143,"ArubaOS (MODEL: 515), Version Aruba IAP", ,eth0,"ArubaOS (MODEL: 515), Version Aruba IAP"
+F2,1c 28 af cb a9 f6,10.112.254.144,"ArubaOS (MODEL: 515), Version Aruba IAP", ,eth0,"ArubaOS (MODEL: 515), Version Aruba IAP"
+F3,1c 28 af cb ab 40,10.112.254.145,"ArubaOS (MODEL: 515), Version Aruba IAP", ,eth0,"ArubaOS (MODEL: 515), Version Aruba IAP"
+F4,1c 28 af cb b2 34,10.112.254.146,"ArubaOS (MODEL: 515), Version Aruba IAP", ,eth0,"ArubaOS (MODEL: 515), Version Aruba IAP"
+F5,1c 28 af cb bc 14,10.112.254.147,"ArubaOS (MODEL: 515), Version Aruba IAP", ,eth0,"ArubaOS (MODEL: 515), Version Aruba IAP"
+F7,74 9e 75 c5 ed 86,10.112.254.183,"ArubaOS (MODEL: 515), Version Aruba IAP", ,eth0,"ArubaOS (MODEL: 515), Version Aruba IAP"
+F8,b4 96 91 c6 f6 7f,Unsupported format, , ,b4 96 91 c6 f6 7f, 
+G1,e0 a7 00 08 67 e1,10.112.67.4,Verkada Security Camera, ,eth0,Verkada Security Camera
+G2,e0 a7 00 08 67 e6,10.112.67.6,Verkada Security Camera, ,eth0,Verkada Security Camera
+G3,e0 a7 00 03 43 66,10.112.67.252,Verkada Security Camera, ,eth0,Verkada Security Camera
+G4,e0 a7 00 03 43 6d,10.112.67.250,Verkada Security Camera, ,eth0,Verkada Security Camera
+G5,e0 a7 00 1a 4c 4c,10.112.67.22,Verkada Security Camera, ,eth0,Verkada Security Camera
+G6,e0 a7 00 19 cd 6f,10.112.68.113,Verkada Security Camera, ,eth0,Verkada Security Camera
+G7,e0 a7 00 22 37 f3,10.112.67.231,Verkada Security Camera, ,eth0,Verkada Security Camera
+G8,e0 a7 00 22 36 b5,10.112.67.232,Verkada Security Camera, ,eth0,Verkada Security Camera
+G15,e0 a7 00 23 5e 7b,10.112.68.44,Verkada Security Camera, ,eth0,Verkada Security Camera
+G16,e0 a7 00 22 37 0f,10.112.68.114,Verkada Security Camera, ,eth0,Verkada Security Camera
+G17,dc b7 ac c6 21 52,10.112.2.27,"ArubaOS (MODEL: 575), Version Aruba IAP", ,eth0,"ArubaOS (MODEL: 575), Version Aruba IAP"
+G19,dc b7 ac c6 20 9c,10.112.2.26,"ArubaOS (MODEL: 575), Version Aruba IAP", ,eth0,"ArubaOS (MODEL: 575), Version Aruba IAP"

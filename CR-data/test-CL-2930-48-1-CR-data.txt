@@ -1,0 +1,1308 @@
+ 
+ !++++++++++++++ 
+  show system
+
+ Status and Counters - General System Information
+
+  System Name        : RHS-CL-2930-48-1                                
+  System Contact     : Mark_Malone@rimsd.k12.ca.us
+  System Location    : Computer Lab
+
+  MAC Age Time (sec) : 300    
+
+  Time Zone          : -480 
+  Daylight Time Rule : Continental-US-and-Canada 
+
+  Software revision  : WC.16.10.0012        Base MAC Addr      : 64e881-0c1d00    
+  ROM Version        : WC.16.01.0008        Serial Number      : TW09HKX2SQ  
+
+  Up Time            : 5 hours              Memory   - Total   : 338,489,856 
+  CPU Util (%)       : 7                               Free    : 219,022,364 
+
+  IP Mgmt  - Pkts Rx : 38,471               Packet   - Total   : 6600        
+             Pkts Tx : 12,073               Buffers    Free    : 4347        
+                                                       Lowest  : 4327        
+                                                       Missed  : 0           
+ 
+ !++++++++++++++ 
+  show config status
+
+The running configuration has been modified and not yet saved.
+ 
+ !++++++++++++++ 
+  show oobm
+Invalid input: oobm 
+ !++++++++++++++ 
+  show oobm ip
+Invalid input: oobm 
+ !++++++++++++++ 
+  show time
+Wed Jan 17 20:03:30 2024 
+ !++++++++++++++ 
+  show uptime
+0000:05:13:54.34 
+ !++++++++++++++ 
+  show ntp status
+
+ NTP Status Information
+
+  NTP Status             : Disabled        NTP Mode        : Broadcast       
+  Synchronization Status : None Configured Peer Dispersion : 0.00000 sec     
+  Stratum Number         : 16              Leap Direction  : 0               
+  Reference Assoc ID     : 0               Clock Offset    : 0.00000 sec     
+  Reference ID           : 0.0.0.0         Root Delay      : 0.00000 sec     
+  Precision              : 2**-18          Root Dispersion : 0.00000 sec     
+  NTP Up Time            : 0d 0h 0m        Time Resolution : 819 nsec        
+  Drift                  : 0.00000 sec/sec 
+
+  System Time            : Wed Jan 17 20:03:31 2024                
+  Reference Time         : Mon Jan  1 00:00:00 1990                
+ 
+ !++++++++++++++ 
+  show ntp associations
+
+                            NTP Associations Entries
+
+
+ Remote          St   T    When   Poll  Reach    Delay    Offset   Dispersion
+ --------------- ---- ---- ------ ----- -------- -------- -------- ----------
+ 
+ !++++++++++++++ 
+  show ntp server
+
+                             NTP Server Information
+
+ No NTP server configuration details found!  
+ !++++++++++++++ 
+  show ip dns
+
+  DNS Mode              :   Manual
+
+  DNS Domain Names Configured:
+  ---------------------------
+
+  No.      DNS Domain Name
+  ---      ---------------
+
+
+  DNS Servers Configured:
+  ----------------------
+
+  Priority      DNS Server Addresses
+  --------      --------------------
+    1.          10.112.79.5
+    2.          10.112.23.40
+
+
+ 
+ !++++++++++++++ 
+  show job
+
+ Job Scheduler Status and Configuration
+
+  Scheduler Status : Running
+
+                     Event or             Repeat Save 
+  Name               Time                 Count  Cfg  Command
+  ------------------ -------------------- ------ ---- -------------------------
+  backup             02:59                --     No   copy config config1 config backup
+  wr-mem             03:00                --     Yes  wr mem
+ 
+ !++++++++++++++ 
+  show version | i ROM
+Boot ROM Version:    WC.16.01.0008
+Active Boot ROM:     Primary 
+ !++++++++++++++ 
+  show config vlan
+
+Startup configuration: 23
+
+vlan 1
+   name "LAN"
+   no untagged 43
+   untagged 1-42,44-52
+   no ip address
+   ip igmp
+   ip igmp forward 1-52
+   dhcp-snooping
+   exit
+vlan 56
+   name "100 Wing WiFi"
+   tagged 49-52
+   no ip address
+   ip igmp
+   dhcp-snooping
+   exit
+vlan 57
+   name "200 Wing WiFi MGMT"
+   tagged 49-52
+   no ip address
+   ip igmp
+   dhcp-snooping
+   exit
+vlan 60
+   name "200 Wing WiFi"
+   tagged 49-52
+   no ip address
+   ip igmp
+   dhcp-snooping
+   exit
+vlan 63
+   name "100 Wing MGMT"
+   tagged 49-52
+   no ip address
+   ip igmp
+   dhcp-snooping
+   exit
+vlan 88
+   name "Wireless Guest vlan88"
+   tagged 49-52
+   no ip address
+   ip igmp
+   dhcp-snooping
+   exit
+vlan 92
+   name "Wireless Guest vlan92"
+   tagged 49-52
+   no ip address
+   ip igmp
+   dhcp-snooping
+   exit
+vlan 96
+   name "Wireless Guest vlan96"
+   tagged 49-52
+   no ip address
+   ip igmp
+   dhcp-snooping
+   exit
+vlan 200
+   name "ROP Wireless"
+   tagged 49-52
+   untagged 43
+   no ip address
+   ip igmp
+   dhcp-snooping
+   exit
+vlan 204
+   name "Wireless Guest vlan204 MOT"
+   tagged 49-52
+   no ip address
+   ip igmp
+   dhcp-snooping
+   exit
+vlan 208
+   name "Wireless Guest vlan 208"
+   tagged 49-52
+   no ip address
+   ip igmp
+   dhcp-snooping
+   exit
+vlan 250
+   name "Outdoor-APs"
+   tagged 49-52
+   no ip address
+   dhcp-snooping
+   exit
+vlan 254
+   name "Management"
+   tagged 49-52
+   ip address 10.112.254.60 255.255.255.0
+   ip igmp
+   dhcp-snooping
+   exit
+ 
+ !++++++++++++++ 
+  show config vlan | i ip address
+   no ip address
+   no ip address
+   no ip address
+   no ip address
+   no ip address
+   no ip address
+   no ip address
+   no ip address
+   no ip address
+   no ip address
+   no ip address
+   no ip address
+   ip address 10.112.254.60 255.255.255.0 
+ !++++++++++++++ 
+  show vlan custom id name:15 ipaddr ipmask ipconfig state voice jumbo
+
+Status and Counters - VLAN Information - Custom view
+
+ VLANID VLAN name       IP Addr         IP Mask         IPConfig   State Voice Jumbo
+ ------ --------------- --------------- --------------- ---------- ----- ----- -----
+ 1      LAN                                             Disabled   Up    No    No   
+ 56     100 Wing WiFi                                   Disabled   Up    No    No   
+ 57     200 Wing WiFi M                                 Disabled   Up    No    No   
+ 60     200 Wing WiFi                                   Disabled   Up    No    No   
+ 63     100 Wing MGMT                                   Disabled   Up    No    No   
+ 88     Wireless Guest                                  Disabled   Up    No    No   
+ 92     Wireless Guest                                  Disabled   Up    No    No   
+ 96     Wireless Guest                                  Disabled   Up    No    No   
+ 200    ROP Wireless                                    Disabled   Up    No    No   
+ 204    Wireless Guest                                  Disabled   Up    No    No   
+ 208    Wireless Guest                                  Disabled   Up    No    No   
+ 250    Outdoor-APs                                     Disabled   Up    No    No   
+ 254    Management      10.112.254.60   255.255.255.0   Manual     Up    No    No   
+ 
+ !++++++++++++++ 
+  show config interface
+
+Startup configuration: 23
+
+interface 1
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 2
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 3
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 4
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 5
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 6
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 7
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 8
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 9
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 10
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 11
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 12
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 13
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 14
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 15
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 16
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 17
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 18
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 19
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 20
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 21
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 22
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 23
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 24
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 25
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 26
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 27
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 28
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 29
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 30
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 31
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 32
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 33
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 34
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 35
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 36
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 37
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 38
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 39
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 40
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 41
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 42
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 43
+   name "ROP Wireless"
+   untagged vlan 200
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 44
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 45
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 46
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 47
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 48
+   untagged vlan 1
+   spanning-tree admin-edge-port
+   spanning-tree bpdu-protection
+   exit
+interface 49
+   name "Uplink to 5412 Port A4"
+   dhcp-snooping trust
+   tagged vlan 56-57,60,63,88,92,96,200,204,208,250,254
+   untagged vlan 1
+   exit
+interface 50
+   dhcp-snooping trust
+   tagged vlan 56-57,60,63,88,92,96,200,204,208,250,254
+   untagged vlan 1
+   exit
+interface 51
+   dhcp-snooping trust
+   tagged vlan 56-57,60,63,88,92,96,200,204,208,250,254
+   untagged vlan 1
+   exit
+interface 52
+   dhcp-snooping trust
+   tagged vlan 56-57,60,63,88,92,96,200,204,208,250,254
+   untagged vlan 1
+   exit
+ 
+ !++++++++++++++ 
+  show ip
+
+ Internet (IP) Service
+
+  IP Routing : Disabled
+
+  Default Gateway : 10.112.254.254 
+  Default TTL     : 64   
+  Arp Age         : 20  
+  Domain Suffix   :                               
+  DNS server      : 10.112.79.5                             
+
+                       |                                            Proxy ARP 
+  VLAN                 | IP Config  IP Address      Subnet Mask     Std  Local
+  -------------------- + ---------- --------------- --------------- ----------
+  LAN                  | Disabled 
+  100 Wing WiFi        | Disabled 
+  200 Wing WiFi MGMT   | Disabled 
+  200 Wing WiFi        | Disabled 
+  100 Wing MGMT        | Disabled 
+  Wireless Guest vl... | Disabled 
+  Wireless Guest vl... | Disabled 
+  Wireless Guest vl... | Disabled 
+  ROP Wireless         | Disabled 
+  Wireless Guest vl... | Disabled 
+  Wireless Guest vl... | Disabled 
+  Outdoor-APs          | Disabled 
+  Management           | Manual     10.112.254.60   255.255.255.0    No    No
+ 
+ 
+ !++++++++++++++ 
+  show ip source-interface
+
+ Source-IP Configuration Information
+
+  Protocol | Admin Selection Policy  IP Interface   IP Address     
+  -------- + ----------------------- -------------- ---------------
+  Tacacs   | Outgoing Interface      N/A            N/A            
+  Radius   | Outgoing Interface      N/A            N/A            
+  Syslog   | Outgoing Interface      N/A            N/A            
+  Telnet   | Outgoing Interface      N/A            N/A            
+  Tftp     | Outgoing Interface      N/A            N/A            
+  Sntp     | Outgoing Interface      N/A            N/A            
+  Sflow    | Outgoing Interface      N/A            N/A            
+  Tunne... | Outgoing Interface      N/A            N/A            
+  RADSEC   | Outgoing Interface      N/A            N/A            
+  central  | Outgoing Interface      N/A            N/A             
+ !++++++++++++++ 
+  show ip route 0.0.0.0
+
+                                                                                                                                                                                                                                                  IP Route Entries to 0.0.0.0
+
+  Destination        Gateway         VLAN Type      Sub-Type   Metric     Dist.
+  ------------------ --------------- ---- --------- ---------- ---------- -----
+  0.0.0.0/0          10.112.254.254  254  static               250        1    
+ 
+ 
+ !++++++++++++++ 
+  show config router ospf
+Router OSPF configuration is not available. 
+ !++++++++++++++ 
+  show ip route ospf
+
+                                                                                                                                                                                                                                                       IP Route Entries
+
+ 
+ !++++++++++++++ 
+  show ip ospf interface
+
+ OSPF Configuration Information
+
+  OSPF protocol  : disabled
+  Router ID      :                 
+ !++++++++++++++ 
+  show ip ospf neighbor
+
+ OSPF Configuration Information
+
+  OSPF protocol  : disabled
+  Router ID      :                 
+ !++++++++++++++ 
+  show ip ospf general
+
+ OSPF Configuration Information
+
+  OSPF protocol  : disabled
+  Router ID      :                 
+ !++++++++++++++ 
+  show ip ospf external-link-state
+
+ OSPF Configuration Information
+
+  OSPF protocol  : disabled
+  Router ID      :                 
+ !++++++++++++++ 
+  show interface status
+  Port     Name       Status  Config-mode   Speed    Type       Tagged Untagged
+  -------- ---------- ------- ------------- -------- ---------- ------ --------
+  1                   Down    Auto          1000FDx  100/1000T  No     1       
+  2                   Down    Auto          1000FDx  100/1000T  No     1       
+  3                   Down    Auto          1000FDx  100/1000T  No     1       
+  4                   Down    Auto          1000FDx  100/1000T  No     1       
+  5                   Down    Auto          1000FDx  100/1000T  No     1       
+  6                   Down    Auto          1000FDx  100/1000T  No     1       
+  7                   Down    Auto          1000FDx  100/1000T  No     1       
+  8                   Down    Auto          1000FDx  100/1000T  No     1       
+  9                   Down    Auto          1000FDx  100/1000T  No     1       
+  10                  Down    Auto          1000FDx  100/1000T  No     1       
+  11                  Down    Auto          1000FDx  100/1000T  No     1       
+  12                  Down    Auto          1000FDx  100/1000T  No     1       
+  13                  Down    Auto          1000FDx  100/1000T  No     1       
+  14                  Down    Auto          1000FDx  100/1000T  No     1       
+  15                  Down    Auto          1000FDx  100/1000T  No     1       
+  16                  Down    Auto          1000FDx  100/1000T  No     1       
+  17                  Down    Auto          1000FDx  100/1000T  No     1       
+  18                  Down    Auto          1000FDx  100/1000T  No     1       
+  19                  Down    Auto          1000FDx  100/1000T  No     1       
+  20                  Down    Auto          1000FDx  100/1000T  No     1       
+  21                  Down    Auto          1000FDx  100/1000T  No     1       
+  22                  Down    Auto          1000FDx  100/1000T  No     1       
+  23                  Down    Auto          1000FDx  100/1000T  No     1       
+  24                  Down    Auto          1000FDx  100/1000T  No     1       
+  25                  Up      Auto          1000FDx  100/1000T  No     1       
+  26                  Down    Auto          1000FDx  100/1000T  No     1       
+  27                  Down    Auto          1000FDx  100/1000T  No     1       
+  28                  Down    Auto          1000FDx  100/1000T  No     1       
+  29                  Down    Auto          1000FDx  100/1000T  No     1       
+  30                  Down    Auto          1000FDx  100/1000T  No     1       
+  31                  Down    Auto          1000FDx  100/1000T  No     1       
+  32                  Down    Auto          1000FDx  100/1000T  No     1       
+  33                  Down    Auto          1000FDx  100/1000T  No     1       
+  34                  Down    Auto          1000FDx  100/1000T  No     1       
+  35                  Down    Auto          1000FDx  100/1000T  No     1       
+  36                  Down    Auto          1000FDx  100/1000T  No     1       
+  37                  Down    Auto          1000FDx  100/1000T  No     1       
+  38                  Down    Auto          1000FDx  100/1000T  No     1       
+  39                  Up      Auto          1000FDx  100/1000T  No     1       
+  40                  Down    Auto          1000FDx  100/1000T  No     1       
+  41                  Down    Auto          1000FDx  100/1000T  No     1       
+  42                  Down    Auto          1000FDx  100/1000T  No     1       
+  43       ROP Wir... Down    Auto          1000FDx  100/1000T  No     200     
+  44                  Down    Auto          1000FDx  100/1000T  No     1       
+  45                  Down    Auto          1000FDx  100/1000T  No     1       
+  46                  Down    Auto          1000FDx  100/1000T  No     1       
+  47                  Down    Auto          1000FDx  100/1000T  No     1       
+  48                  Down    Auto          1000FDx  100/1000T  No     1       
+  49       Uplink ... Up      Auto          1000FDx  1000SX     multi  1       
+  50                  Down                                      multi  1       
+  51                  Down                                      multi  1       
+  52                  Down                                      multi  1        
+ !++++++++++++++ 
+  show int status | i Up
+  25                  Up      Auto          1000FDx  100/1000T  No     1       
+  39                  Up      Auto          1000FDx  100/1000T  No     1       
+  49       Uplink ... Up      Auto          1000FDx  1000SX     multi  1        
+ !++++++++++++++ 
+  show interfaces transceiver detail
+
+Transceiver in 49
+   Interface Index    : 49  
+   Type               : 1000SX          
+   Model              : J4858D  
+   Connector Type     : LC                              
+   Wavelength         : 850nm                           
+   Transfer Distance  : 550m (50um), 300m (62.5um),                     
+   Diagnostic Support : DOM   
+   Serial Number      : CN0BKC5DG4      
+
+ Status
+   Temperature : 28.875C         
+   Voltage     : 3.3137V         
+   Tx Bias     : 3.778mA         
+   Tx Power    : 0.3197mW, -4.953dBm     
+   Rx Power    : 0.2908mW, -5.364dBm     
+* third-party transceiver 
+ !++++++++++++++ 
+  show trunks
+
+ Load Balancing Method:  L3-based (default)
+
+  Port   | Name                             Type       | Group Type    
+  ------ + -------------------------------- ---------- + ----- --------
+ 
+ 
+ !++++++++++++++ 
+  show lacp peer
+
+LACP Peer Information.
+
+No LACP port information found.
+ 
+ !++++++++++++++ 
+  show lacp local
+
+LACP Local Information.
+
+No LACP port information found.
+ 
+ !++++++++++++++ 
+  show lacp mad-passthrough
+
+  Trunk-Group  LACP-MAD-PASSTHROUGH
+  ------------ --------------------- 
+ !++++++++++++++ 
+  show cdp neighbors
+
+ CDP neighbors information
+
+  Port   Device ID                     | Platform                     Capability 
+  ------ ----------------------------- + ---------------------------- -----------
+  49     88 3a 30 76 8a 00             | HP J9851A Switch 5412Rzl2... R S        
+  
+ !++++++++++++++ 
+  show cdp nei d
+
+ CDP neighbors information
+
+  Port : 49    
+  Device ID : 88 3a 30 76 8a 00                                             
+  Address Type : IP          
+  Address      : 10.112.71.254                                               
+  Platform     : HP J9851A Switch 5412Rzl2, revision KB.16.10.0013, ROM K...
+  Capability   : Router Switch                                              
+  Device Port  : A4                                                         
+  Version      : HP J9851A Switch 5412Rzl2, revision KB.16.10.0013, ROM K...
+ 
+ !++++++++++++++ 
+  show lldp info remote
+
+ LLDP Remote Devices Information
+
+  LocalPort | ChassisId          PortId             PortDescr SysName           
+  --------- + ------------------ ------------------ --------- ------------------
+  49        | 883a30-768a00      4                  A4        RHS-5412-MDF      
+ 
+ 
+ !++++++++++++++ 
+  show lldp info remote d
+
+ LLDP Remote Device Information Detail
+
+  Local Port   : 49
+  ChassisType  : mac-address         
+  ChassisId    : 883a30-768a00            
+  PortType     : local                                                     
+  PortId       : 4                                                         
+  SysName      : RHS-5412-MDF                    
+  System Descr : HP J9851A Switch 5412Rzl2, revision KB.16.10.0013, ROM KB...
+  PortDescr    : A4                                                          
+  Pvid         : 1                        
+
+  System Capabilities Supported  : bridge, router
+  System Capabilities Enabled    : bridge, router
+
+  Remote Management Address
+     Type    : ipv4
+     Address : 10.112.71.254
+
+  Poe Plus Information Detail 
+
+    Poe Device Type         : Type2 PSE
+    Power Source            : Unknown
+    Power Priority          : Unknown
+    PD Requested Power Value   : 0.0 Watts
+    PSE Allocated Power Value  : 0.0 Watts
+
+ 
+ !++++++++++++++ 
+  show spanning-tree
+
+ Multiple Spanning Tree (MST) Information
+
+  STP Enabled   : Yes
+  Force Version : RSTP-operation
+  IST Mapped VLANs : 1-4094
+  Switch MAC Address : 64e881-0c1d00    
+  Switch Priority    : 32768
+  Max Age  : 20
+  Max Hops : 20   
+  Forward Delay : 15
+
+  Topology Change Count  : 1           
+  Time Since Last Change : 5 hours     
+
+  CST Root MAC Address : 883a30-768a00    
+  CST Root Priority    : 8192        
+  CST Root Path Cost   : 20000       
+  CST Root Port        : 49                 
+
+  IST Regional Root MAC Address : 64e881-0c1d00    
+  IST Regional Root Priority    : 32768       
+  IST Regional Root Path Cost   : 0           
+  IST Remaining Hops            : 20          
+
+  Root Guard Ports     : 
+  Loop Guard Ports     : 
+  TCN Guard Ports      : 
+  BPDU Protected Ports : 1-48                                    
+  BPDU Filtered Ports  :                                         
+  PVST Protected Ports :                                         
+  PVST Filtered Ports  :                                         
+
+  Root Inconsistent Ports  :             
+  Loop Inconsistent Ports  :             
+
+                   |           Prio              | Designated        Hello         
+  Port  Type       | Cost      rity State        | Bridge            Time PtP Edge
+  ----- ---------- + --------- ---- ------------ + ----------------- ---- --- ----
+  1     100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  2     100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  3     100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  4     100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  5     100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  6     100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  7     100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  8     100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  9     100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  10    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  11    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  12    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  13    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  14    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  15    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  16    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  17    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  18    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  19    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  20    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  21    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  22    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  23    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  24    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  25    100/1000T  | 20000     128  Forwarding   | 64e881-0c1d00     2    Yes Yes 
+  26    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  27    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  28    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  29    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  30    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  31    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  32    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  33    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  34    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  35    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  36    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  37    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  38    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  39    100/1000T  | 20000     128  Forwarding   | 64e881-0c1d00     2    Yes Yes 
+  40    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  41    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  42    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  43    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  44    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  45    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  46    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  47    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  48    100/1000T  | Auto      128  Disabled     |                   2    Yes Yes 
+  49    1000SX     | 20000     128  Forwarding   | 883a30-768a00     2    Yes No  
+  50               | Auto      128  Disabled     |                   2    Yes No  
+  51               | Auto      128  Disabled     |                   2    Yes No  
+  52               | Auto      128  Disabled     |                   2    Yes No  
+  
+ !++++++++++++++ 
+  show spanning-tree inconsistent-ports
+ Instance ID Blocked Port Reason                   
+ ----------- ------------ ------------------------- 
+ !++++++++++++++ 
+  show spanning-tree bpdu-protection
+
+ Status and Counters - STP Port(s) BPDU Protection Information
+
+ BPDU Protection Timeout (sec) : 0                     
+ BPDU Protected Ports : 1-48                                                                            
+ 
+ !++++++++++++++ 
+  show power-over-ethernet brief | i Del 
+ !++++++++++++++ 
+  show power
+
+ Status and Counters - System Power Status
+
+
+ Chassis power-over-ethernet:
+
+  Total Available Power  :  370 W  
+  Total Power Drawn      :    0 W +/- 6W       
+  Total Power Reserved   :    0 W              
+  Total Remaining Power  :  370 W              
+
+ Internal Power
+
+        Main Power                         
+  PS    (Watts)       Status               
+  ----- ------------- ---------------------
+  1     370           POE+ Connected       
+ 
+ 
+ Refer to command's help option for field definitions
+ 
+ !++++++++++++++ 
+  show modules
+
+ Status and Counters - Module Information
+
+  Chassis: 2930F-48G-PoE+-4SFP+  JL256A         Serial Number:   TW09HKX2SQ
+
+ 
+ !++++++++++++++ 
+  show ip ssh
+
+  SSH Enabled     : Yes                 Secure Copy Enabled : No 
+  TCP Port Number : 22                  Timeout (sec)       : 120  
+  Rekey Enabled   : No                  Rekey Time (min)    : 60   
+                                        Rekey Volume (KB)   : 1048576   
+  Host Key Type   : RSA                 Host Key/Curve Size : 2048
+
+  Ciphers : aes256-ctr,rijndael-cbc@lysator.liu.se,aes192-ctr,aes128-ctr
+  MACs    : hmac-sha1-96,hmac-sha1
+  KEXs    : ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,
+            diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1
+
+  Ses Type     | Source IP                                      Port 
+  --- -------- + ---------------------------------------------- -----
+  1   console  |
+  2   ssh      | 10.10.10.10                                    57040
+  3   ssh      | 10.10.10.10                                    39470
+  4   inactive |
+  5   inactive |
+  6   inactive |
+  7   inactive |
+  
+ !++++++++++++++ 
+  show snmp-server
+
+ SNMP Communities
+
+  Community Name                   MIB View Write Access
+  -------------------------------- -------- ------------
+  public                           Manager  Unrestricted
+  sbcss                            Operator Unrestricted
+  rimsd                            Operator Unrestricted
+ 
+ Trap Receivers
+
+  Link-Change Traps Enabled on Ports [All] : All
+
+  Traps Category                          Current Status 
+  _____________________________________   __________________ 
+  SNMP Authentication                   : Extended 
+  Password change                       : Enabled 
+  Login failures                        : Enabled 
+  Port-Security                         : Enabled 
+  Authorization Server Contact          : Enabled 
+  DHCP-Snooping                         : Enabled 
+  DHCPv6-Snooping Out of Resource       : Enabled 
+  DHCPv6-Snooping Errant Replies        : Enabled 
+  Dynamic ARP Protection                : Enabled 
+  Dynamic IP Lockdown                   : Enabled 
+  Dynamic IPv6 Lockdown Out of Resource : Enabled 
+  Dynamic IPv6 Lockdown Violations      : Enabled 
+  Startup Config change                 : Disabled
+  Running Config Change                 : Disabled
+  MAC address table changes             : Disabled
+  MAC Address Count                     : Disabled
+  DHCP-Server                           : Enabled 
+  NTP-Client                            : Disabled
+  MACsec Failures                       : Enabled 
+  ND Snooping Out of Resources Traps    : Enabled 
+  VSF                                   : Disabled
+
+  Address                Community              Events   Type   Retry   Timeout
+  ---------------------- ---------------------- -------- ------ ------- -------
+ 
+
+ Excluded MIBs
+
+  hpSwitchAuthenticationMIB
+
+
+ Snmp Response Pdu Source-IP Information
+
+  Selection Policy   : rfc1517             
+
+ Trap Pdu Source-IP Information
+
+  Selection Policy   : rfc1517             
+
+ 
+ !++++++++++++++ 
+  show dhcp-server binding
+DHCP server is not enabled. 
+ !++++++++++++++ 
+  show dhcp-server pool
+DHCP server is not enabled. 
+ !++++++++++++++ 
+  show crypto host-public-key fingerprint
+2048 47:70:8e:ee:a6:cb:ec:f2:0b:59:16:d6:75:fe:ca:3d: host_ssh2.pub 
+ !++++++++++++++ 
+  show config files
+
+Configuration files:
+
+ id | act pri sec | name
+ ---+-------------+------------------------------------------------
+  1 |  *   *   *  | config1
+  2 |             | backup
+  3 |             | 
+  4 |             | 
+  5 |             | 
+ 
+ !++++++++++++++ 
+  show mac-address | ex "A|B"
+
+
+  ----------------- ------------------------------- ----
+  000275-fa2677     49                              1   
+  000275-fa2813     49                              1   
+  00184c-001832     49                              1   
+  00184c-00188c     49                              1   
+  00be43-99c7d9     49                              1   
+  00be43-99d165     49                              1   
+  00c0b7-f4b43a     49                              1   
+  00e097-1cafed     49                              1   
+  00fd45-06fc00     49                              1   
+  104f58-ca1560     49                              1   
+  104f58-ca7740     49                              1   
+  10e7c6-64a13c     49                              1   
+  1458d0-3a1ff1     49                              1   
+  1c7d22-4a132a     49                              1   
+  349f7b-a9cd68     49                              1   
+  38f9d3-16a44d     49                              1   
+  6c02e0-6df744     49                              1   
+  6c2b59-ffa844     49                              1   
+  6c2b59-ffbaa2     49                              1   
+  782bcb-18fb5a     49                              1   
+  787b8a-c2ce5c     49                              1   
+  787b8a-c2ce78     49                              1   
+  7c0507-0f6ee4     49                              1   
+  7c0507-3b45ea     49                              1   
+  883a30-768a00     49                              1   
+  883a30-769afc     49                              1   
+  941882-b34a80     49                              1   
+  941882-b361c0     49                              1   
+  941882-b86d50     49                              1   
+  941882-b86dd0     49                              1   
+  941882-b87de0     49                              1   
+  941882-b88d10     49                              1   
+  941882-b88d30     49                              1   
+  9c934e-a0cf6f     49                              1   
+  9c934e-a13e8d     49                              1   
+  b49691-c6f67e     49                              1   
+  b82a72-d1f49d     49                              1   
+  b82ca0-6c7138     49                              1   
+  b8ca3a-f65a31     49                              1   
+  c40415-b405a3     49                              1   
+  dccd2f-3b8cea     49                              1   
+  e0a700-034225     49                              1   
+  e0a700-034366     49                              1   
+  e0a700-034367     49                              1   
+  e0a700-03436c     49                              1   
+  e0a700-03436d     49                              1   
+  e0a700-036c56     49                              1   
+  e0a700-0867e1     49                              1   
+  e0a700-0867e6     49                              1   
+  e0a700-122743     49                              1   
+  e0a700-12583a     49                              1   
+  e0a700-125861     49                              1   
+  e0a700-125863     49                              1   
+  e0a700-1258a0     49                              1   
+  e0a700-1258a3     49                              1   
+  e0a700-1258a4     49                              1   
+  e0a700-1259ac     49                              1   
+  e0a700-1259bb     49                              1   
+  e0a700-1259c0     49                              1   
+  e0a700-125a2a     49                              1   
+  e0a700-125a2d     49                              1   
+  e0a700-1637c1     49                              1   
+  e0a700-19443b     49                              1   
+  e0a700-198c93     49                              1   
+  e0a700-19933f     49                              1   
+  e0a700-199a41     49                              1   
+  e0a700-19be09     49                              1   
+  e0a700-19c099     49                              1   
+  e0a700-19cd6f     49                              1   
+  e0a700-19d121     49                              1   
+  e0a700-1a4c4c     49                              1   
+  e0a700-2236b5     49                              1   
+  e0a700-2236e7     49                              1   
+  e0a700-2236fc     49                              1   
+  e0a700-22370f     49                              1   
+  e0a700-22376d     49                              1   
+  e0a700-2237ee     49                              1   
+  e0a700-2237f3     49                              1   
+  e0a700-223810     49                              1   
+  e0a700-22381b     49                              1   
+  e0a700-22381c     49                              1   
+  e0a700-22af5e     49                              1   
+  e0a700-2341bb     49                              1   
+  e0a700-2341e2     49                              1   
+  e0a700-235e7b     49                              1   
+  f860f0-627900     49                              1   
+  0e628e-9a8594     49                              88  
+  1c28af-cba5ec     49                              88  
+  1c28af-cbb154     49                              88  
+  226396-660475     49                              88  
+  446d7f-347962     49                              88  
+  5c60ba-e51db9     49                              88  
+  60a5e2-698fb1     49                              88  
+  60a5e2-bad6e1     49                              88  
+  7acfbd-b51748     49                              88  
+  883a30-768a00     49                              88  
+  a8be27-d0b8e4     49                              88  
+  c0b883-571386     49                              88  
+  d6471c-0dbd68     49                              88  
+  d8f3bc-879519     49                              88  
+  d8f3bc-8a596d     49                              88  
+  def9ac-98d399     49                              88  
+  ea3c8c-a428ab     49                              88  
+  000275-f94745     49                              200 
+  005b94-8abc6b     49                              200 
+  008077-060cac     49                              200 
+  282986-665aee     49                              200 
+  38c986-405e1c     49                              200 
+  38c986-405e2a     49                              200 
+  38c986-48bca0     49                              200 
+  3c7d0a-1a1a60     49                              200 
+  3ca6f6-74c1ff     49                              200 
+  3ca6f6-7c9728     49                              200 
+  3ccd36-5b9109     49                              200 
+  3ccd36-5b9807     49                              200 
+  3ccd36-5b9848     49                              200 
+  3ccd36-5b98f8     49                              200 
+  3ccd36-5c0d90     49                              200 
+  3ccd36-5c1030     49                              200 
+  3ccd36-5c1032     49                              200 
+  3ccd36-5c11f2     49                              200 
+  3ccd36-5c1243     49                              200 
+  3ccd36-5f2592     49                              200 
+  503237-9f5ede     49                              200 
+  5820b1-520b53     49                              200 
+  787b8a-d989d3     49                              200 
+  787b8a-da5b9b     49                              200 
+  787b8a-db387c     49                              200 
+  7c5758-2f9197     49                              200 
+  804a14-6ab923     49                              200 
+  883a30-768a00     49                              200 
+  90dd5d-b0202f     49                              200 
+  941882-b3d3e0     49                              200 
+  9c583c-c36839     49                              200 
+  9c583c-c39b3a     49                              200 
+  9c583c-c5e3b4     49                              200 
+  9c583c-c6b712     49                              200 
+  9c934e-a8f5c8     49                              200 
+  a0423f-60e7e1     49                              200 
+  a0d3c1-ecd0da     49                              200 
+  a851ab-8ca2ed     49                              200 
+  a860b6-0b5f96     49                              200 
+  a860b6-0f8544     49                              200 
+  a860b6-0f87cc     49                              200 
+  a860b6-0f87de     49                              200 
+  a860b6-0f8862     49                              200 
+  a860b6-0f88b7     49                              200 
+  a860b6-0f893b     49                              200 
+  a860b6-10a2fa     49                              200 
+  a860b6-10a36f     49                              200 
+  a860b6-10ace9     49                              200 
+  a860b6-1175f0     49                              200 
+  bc0ff3-9812f3     49                              200 
+  c82a14-338fe9     49                              200 
+  cc88c7-cfe970     49                              200 
+  e0a700-223806     49                              200 
+  e0a700-223816     49                              200 
+  e0a700-2341d5     49                              200 
+  e84dec-048ef3     49                              200 
+  f01898-e86b12     49                              200 
+  f01898-e994b4     49                              200 
+  f01898-ea872a     49                              200 
+  f2f183-a2cae8     49                              200 
+  f8ffc2-1e1f01     49                              200 
+  00be43-99d178     49                              204 
+  00be43-99d1ee     49                              204 
+  00be43-99d242     49                              204 
+  00be43-99d264     49                              204 
+  509a4c-a6c038     49                              204 
+  6026ef-c0a264     49                              204 
+  64d69a-9033cd     49                              204 
+  64d69a-9175ad     49                              204 
+  64d69a-919bdc     49                              204 
+  883a30-768a00     49                              204 
+  941882-b87df9     49                              204 
+  9c934e-a0ce89     49                              204 
+  9c934e-a0e40b     49                              204 
+  b42200-65a09c     49                              204 
+  b4fbe4-1345d8     49                              204 
+  b4fbe4-134959     49                              204 
+  cc88c7-cf59a2     49                              204 
+  d058a5-9b4798     49                              204 
+  d058a5-a158f0     49                              204 
+  da256f-af6384     49                              204 
+  e0a700-036c54     49                              204 
+  fa6bff-e540ca     49                              204 
+  cc88c7-cfe970     49                              250 
+  dcb7ac-c6209c     49                              250 
+  dcb7ac-c62152     49                              250 
+  dcb7ac-c622e8     49                              250 
+  dcb7ac-c62306     49                              250 
+  dcb7ac-c623da     49                              250 
+  104f58-ca7740     49                              254 
+  1c28af-cba5ec     49                              254 
+  1c28af-cba6b8     49                              254 
+  1c28af-cba876     49                              254 
+  1c28af-cba9de     49                              254 
+  1c28af-cba9ea     49                              254 
+  1c28af-cba9f6     49                              254 
+  1c28af-cbab40     49                              254 
+  1c28af-cbab94     49                              254 
+  1c28af-cbac4e     49                              254 
+  1c28af-cbade0     49                              254 
+  1c28af-cbae60     49                              254 
+  1c28af-cbb154     49                              254 
+  1c28af-cbb234     49                              254 
+  1c28af-cbb4ca     49                              254 
+  1c28af-cbbc14     49                              254 
+  1c28af-cbbc46     49                              254 
+  1c28af-cbbc52     49                              254 
+  1c28af-cbbf6a     49                              254 
+  282986-665b01     49                              254 
+  38bd7a-8bfc60     49                              254 
+  703a0e-c9c5ea     49                              254 
+  703a0e-c9c5ec     49                              254 
+  703a0e-c9c5ee     49                              254 
+  703a0e-c9c5fa     49                              254 
+  703a0e-c9c608     49                              254 
+  703a0e-c9c62e     49                              254 
+  703a0e-c9c634     49                              254 
+  703a0e-c9c63a     49                              254 
+  703a0e-c9c66e     49                              254 
+  703a0e-c9c728     49                              254 
+  703a0e-c9c74e     49                              254 
+  703a0e-c9c776     49                              254 
+  70a741-4837e7     49                              254 
+  70a741-483b0a     49                              254 
+  749e75-c5e2b8     49                              254 
+  749e75-c5eb16     49                              254 
+  749e75-c5ed86     49                              254 
+  749e75-c5f562     49                              254 
+  749e75-c5fe2e     49                              254 
+  883a30-768a00     49                              254 
+  8c7909-c6265a     49                              254 
+  8c7909-c62c5a     49                              254 
+  8c7909-c62eb2     49                              254 
+  941882-b85dc0     49                              254 
+  941882-b86d90     49                              254 
+  941882-b87df0     49                              254 
+  941882-b87df9     49                              254 
+  b45d50-ceeb86     49                              254 
+  b45d50-ceeb9a     49                              254 
+  b45d50-ceeb9c     49                              254 
+  b45d50-ceeb9e     49                              254 
+  b45d50-ceeba4     49                              254 
+  b45d50-ceebac     49                              254 
+  b45d50-ceebb0     49                              254 
+  b45d50-ceebb2     49                              254 
+  b45d50-ceebb6     49                              254 
+  b45d50-ceebba     49                              254 
+  b45d50-ceebc2     49                              254 
+  b45d50-ceebc8     49                              254 
+  b45d50-ceebcc     49                              254 
+  b45d50-ceebce     49                              254 
+  b45d50-ceebda     49                              254 
+  b45d50-ceebe8     49                              254 
+  b45d50-ceebf8     49                              254 
+  b45d50-ceec38     49                              254 
+  b45d50-ceec84     49                              254 
+  b45d50-ceecb0     49                              254 
+  b45d50-ceecc0     49                              254 
+  b45d50-ceecfc     49                              254 
+  b45d50-ceede8     49                              254 
+  b47af1-a6357e     49                              254 
+  b47af1-a6373a     49                              254 
+ 
+ 
+ !++++++++++++++ 
+  show arp
+
+ IP ARP table
+
+  IP Address       MAC Address       Type    Port
+  ---------------  ----------------- ------- ----
+  10.112.254.254   883a30-768a00     dynamic 49  
+

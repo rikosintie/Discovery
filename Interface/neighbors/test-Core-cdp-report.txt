@@ -1,0 +1,315 @@
+destination_host: 10 4f 58 ca 77 40
+   management_ip: 10.112.71.250
+        platform: Aruba JL255A 2930F-24G-PoE+-4SFP+ Switch, revision WC.16...
+     remote_port: 25
+      local_port: A1
+software_version: Aruba JL255A 2930F-24G-PoE+-4SFP+ Switch, revision WC.16...
+
+
+------------------------------
+destination_host: 10 4f 58 ca 15 60
+   management_ip: 10.112.71.250
+        platform: Aruba JL255A 2930F-24G-PoE+-4SFP+ Switch, revision WC.16...
+     remote_port: 25
+      local_port: A2
+software_version: Aruba JL255A 2930F-24G-PoE+-4SFP+ Switch, revision WC.16...
+
+
+------------------------------
+destination_host: 94 18 82 b3 4a 80
+   management_ip: 10.112.71.249
+        platform: HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ...
+     remote_port: 25
+      local_port: A3
+software_version: HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ...
+
+
+------------------------------
+destination_host: 64 e8 81 0c 1d 00
+   management_ip: 10.112.254.60
+        platform: Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16...
+     remote_port: 49
+      local_port: A4
+software_version: Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16...
+
+
+------------------------------
+destination_host: 00 fd 45 06 fc 00
+   management_ip: 10.112.254.253
+        platform: HP J9772A 2530-48G-PoEP Switch, revision YA.16.08.0018, ...
+     remote_port: 49
+      local_port: A5
+software_version: HP J9772A 2530-48G-PoEP Switch, revision YA.16.08.0018, ...
+
+
+------------------------------
+destination_host: 94 18 82 b3 61 c0
+   management_ip: 10.112.71.250
+        platform: HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ...
+     remote_port: 25
+      local_port: A6
+software_version: HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ...
+
+
+------------------------------
+destination_host: 94 18 82 b3 d3 e0
+   management_ip: 10.112.71.248
+        platform: HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ...
+     remote_port: 25
+      local_port: A7
+software_version: HP J9773A 2530-24G-PoEP Switch, revision YA.16.08.0018, ...
+
+
+------------------------------
+destination_host: 36383738-3331-4D32-3231-303230425152
+   management_ip: 10.112.254.165
+        platform: HPE ProLiant DL385 Gen10
+     remote_port: PCI-E Slot 1, Port 2
+      local_port: A8
+software_version: HPE ProLiant DL385 Gen10
+
+
+------------------------------
+destination_host: 94 18 82 b8 8d 10
+   management_ip: 10.112.71.251
+        platform: HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R...
+     remote_port: 9
+      local_port: B1
+software_version: HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R...
+
+
+------------------------------
+destination_host: 94 18 82 b8 6d 50
+   management_ip: 10.112.71.252
+        platform: HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R...
+     remote_port: 9
+      local_port: B2
+software_version: HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R...
+
+
+------------------------------
+destination_host: 64 e8 81 0c 4a c0
+   management_ip: 10.112.71.250
+        platform: Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16...
+     remote_port: 49
+      local_port: B3
+software_version: Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16...
+
+
+------------------------------
+destination_host: 64 e8 81 0c ff 40
+   management_ip: 10.112.254.61
+        platform: Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16...
+     remote_port: 49
+      local_port: B4
+software_version: Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16...
+
+
+------------------------------
+destination_host: 94 18 82 b8 6d d0
+   management_ip: 10.112.71.253
+        platform: HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R...
+     remote_port: 9
+      local_port: B5
+software_version: HP J9774A 2530-8G-PoEP Switch, revision YA.16.08.0018, R...
+
+
+------------------------------
+destination_host: f8 60 f0 62 79 00
+   management_ip: 10.112.69.24
+        platform: Aruba JL073A 3810M-24G-PoE+-1-slot Switch, revision KB.1...
+     remote_port: A1
+      local_port: B6
+software_version: Aruba JL073A 3810M-24G-PoE+-1-slot Switch, revision KB.1...
+
+
+------------------------------
+destination_host: 64 e8 81 0c cf c0
+   management_ip: 10.112.254.50
+        platform: Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16...
+     remote_port: 49
+      local_port: B7
+software_version: Aruba JL256A 2930F-48G-PoE+-4SFP+ Switch, revision WC.16...
+
+
+------------------------------
+destination_host: 36383738-3331-4D32-3231-303230425151
+   management_ip: 0.0.0.0
+        platform: HPE ProLiant DL385 Gen10
+     remote_port: PCI-E Slot 1, Port 1
+      local_port: B8
+software_version: HPE ProLiant DL385 Gen10
+
+
+------------------------------
+destination_host: 1c 28 af cb a8 76
+   management_ip: 10.112.254.143
+        platform: ArubaOS (MODEL: 515), Version Aruba IAP
+     remote_port: eth0
+      local_port: F1
+software_version: ArubaOS (MODEL: 515), Version Aruba IAP
+
+
+------------------------------
+destination_host: 1c 28 af cb a9 f6
+   management_ip: 10.112.254.144
+        platform: ArubaOS (MODEL: 515), Version Aruba IAP
+     remote_port: eth0
+      local_port: F2
+software_version: ArubaOS (MODEL: 515), Version Aruba IAP
+
+
+------------------------------
+destination_host: 1c 28 af cb ab 40
+   management_ip: 10.112.254.145
+        platform: ArubaOS (MODEL: 515), Version Aruba IAP
+     remote_port: eth0
+      local_port: F3
+software_version: ArubaOS (MODEL: 515), Version Aruba IAP
+
+
+------------------------------
+destination_host: 1c 28 af cb b2 34
+   management_ip: 10.112.254.146
+        platform: ArubaOS (MODEL: 515), Version Aruba IAP
+     remote_port: eth0
+      local_port: F4
+software_version: ArubaOS (MODEL: 515), Version Aruba IAP
+
+
+------------------------------
+destination_host: 1c 28 af cb bc 14
+   management_ip: 10.112.254.147
+        platform: ArubaOS (MODEL: 515), Version Aruba IAP
+     remote_port: eth0
+      local_port: F5
+software_version: ArubaOS (MODEL: 515), Version Aruba IAP
+
+
+------------------------------
+destination_host: 74 9e 75 c5 ed 86
+   management_ip: 10.112.254.183
+        platform: ArubaOS (MODEL: 515), Version Aruba IAP
+     remote_port: eth0
+      local_port: F7
+software_version: ArubaOS (MODEL: 515), Version Aruba IAP
+
+
+------------------------------
+destination_host: b4 96 91 c6 f6 7f
+   management_ip: Unsupported format
+        platform:  
+     remote_port: b4 96 91 c6 f6 7f
+      local_port: F8
+software_version:  
+
+
+------------------------------
+destination_host: e0 a7 00 08 67 e1
+   management_ip: 10.112.67.4
+        platform: Verkada Security Camera
+     remote_port: eth0
+      local_port: G1
+software_version: Verkada Security Camera
+
+
+------------------------------
+destination_host: e0 a7 00 08 67 e6
+   management_ip: 10.112.67.6
+        platform: Verkada Security Camera
+     remote_port: eth0
+      local_port: G2
+software_version: Verkada Security Camera
+
+
+------------------------------
+destination_host: e0 a7 00 03 43 66
+   management_ip: 10.112.67.252
+        platform: Verkada Security Camera
+     remote_port: eth0
+      local_port: G3
+software_version: Verkada Security Camera
+
+
+------------------------------
+destination_host: e0 a7 00 03 43 6d
+   management_ip: 10.112.67.250
+        platform: Verkada Security Camera
+     remote_port: eth0
+      local_port: G4
+software_version: Verkada Security Camera
+
+
+------------------------------
+destination_host: e0 a7 00 1a 4c 4c
+   management_ip: 10.112.67.22
+        platform: Verkada Security Camera
+     remote_port: eth0
+      local_port: G5
+software_version: Verkada Security Camera
+
+
+------------------------------
+destination_host: e0 a7 00 19 cd 6f
+   management_ip: 10.112.68.113
+        platform: Verkada Security Camera
+     remote_port: eth0
+      local_port: G6
+software_version: Verkada Security Camera
+
+
+------------------------------
+destination_host: e0 a7 00 22 37 f3
+   management_ip: 10.112.67.231
+        platform: Verkada Security Camera
+     remote_port: eth0
+      local_port: G7
+software_version: Verkada Security Camera
+
+
+------------------------------
+destination_host: e0 a7 00 22 36 b5
+   management_ip: 10.112.67.232
+        platform: Verkada Security Camera
+     remote_port: eth0
+      local_port: G8
+software_version: Verkada Security Camera
+
+
+------------------------------
+destination_host: e0 a7 00 23 5e 7b
+   management_ip: 10.112.68.44
+        platform: Verkada Security Camera
+     remote_port: eth0
+      local_port: G15
+software_version: Verkada Security Camera
+
+
+------------------------------
+destination_host: e0 a7 00 22 37 0f
+   management_ip: 10.112.68.114
+        platform: Verkada Security Camera
+     remote_port: eth0
+      local_port: G16
+software_version: Verkada Security Camera
+
+
+------------------------------
+destination_host: dc b7 ac c6 21 52
+   management_ip: 10.112.2.27
+        platform: ArubaOS (MODEL: 575), Version Aruba IAP
+     remote_port: eth0
+      local_port: G17
+software_version: ArubaOS (MODEL: 575), Version Aruba IAP
+
+
+------------------------------
+destination_host: dc b7 ac c6 20 9c
+   management_ip: 10.112.2.26
+        platform: ArubaOS (MODEL: 575), Version Aruba IAP
+     remote_port: eth0
+      local_port: G19
+software_version: ArubaOS (MODEL: 575), Version Aruba IAP
+
+
+------------------------------

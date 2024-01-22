@@ -1,0 +1,476 @@
+show logging -r -I
+ Keys:   W=Warning   I=Information
+         M=Major     D=Debug E=Error
+----  Reverse event Log listing: Events Since Boot  ----
+I 01/17/24 20:03:24 00179 mgr: SME SSH from 10.10.10.10 - MANAGER Mode
+I 01/17/24 20:03:23 03362 auth: User 'admin' logged in from 10.10.10.10 to SSH 
+            session
+I 01/17/24 20:00:03 03363 auth: User 'admin' logged out of SSH  session from 
+            10.10.10.10
+W 01/17/24 20:00:03 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/17/24 19:57:25 00179 mgr: SME SSH from 10.10.10.10 - MANAGER Mode
+I 01/17/24 19:57:24 03362 auth: User 'admin' logged in from 10.10.10.10 to SSH 
+            session
+I 01/17/24 19:55:08 03363 auth: User 'admin' logged out of SSH  session from 
+            10.10.10.10
+W 01/17/24 19:55:08 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/17/24 19:52:51 00179 mgr: SME SSH from 10.10.10.10 - MANAGER Mode
+I 01/17/24 19:52:51 03362 auth: User 'admin' logged in from 10.10.10.10 to SSH 
+            session
+I 01/17/24 19:51:32 03363 auth: User 'admin' logged out of SSH  session from 
+            10.10.10.10
+W 01/17/24 19:51:32 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/17/24 19:50:20 00179 mgr: SME SSH from 10.10.10.10 - MANAGER Mode
+I 01/17/24 19:50:19 03362 auth: User 'admin' logged in from 10.10.10.10 to SSH 
+            session
+I 01/17/24 19:49:21 03363 auth: User 'admin' logged out of SSH  session from 
+            10.10.10.10
+W 01/17/24 19:49:21 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/17/24 19:48:14 00179 mgr: SME SSH from 10.10.10.10 - MANAGER Mode
+I 01/17/24 19:48:13 03362 auth: User 'admin' logged in from 10.10.10.10 to SSH 
+            session
+I 01/17/24 19:46:39 03363 auth: User 'admin' logged out of SSH  session from 
+            10.10.10.10
+W 01/17/24 19:46:39 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/17/24 19:45:27 00179 mgr: SME SSH from 10.10.10.10 - MANAGER Mode
+I 01/17/24 19:45:26 03362 auth: User 'admin' logged in from 10.10.10.10 to SSH 
+            session
+I 01/17/24 19:42:09 03363 auth: User 'admin' logged out of SSH  session from 
+            10.10.10.10
+W 01/17/24 19:42:09 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/17/24 19:41:02 00179 mgr: SME SSH from 10.10.10.10 - MANAGER Mode
+I 01/17/24 19:41:01 03362 auth: User 'admin' logged in from 10.10.10.10 to SSH 
+            session
+I 01/17/24 19:39:35 03363 auth: User 'admin' logged out of SSH  session from 
+            10.10.10.10
+W 01/17/24 19:39:35 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/17/24 19:38:27 00179 mgr: SME SSH from 10.10.10.10 - MANAGER Mode
+I 01/17/24 19:38:26 03362 auth: User 'admin' logged in from 10.10.10.10 to SSH 
+            session
+I 01/17/24 19:36:25 03363 auth: User 'admin' logged out of SSH  session from 
+            10.10.10.10
+W 01/17/24 19:36:25 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/17/24 19:35:13 00179 mgr: SME SSH from 10.10.10.10 - MANAGER Mode
+I 01/17/24 19:35:13 03362 auth: User 'admin' logged in from 10.10.10.10 to SSH 
+            session
+I 01/17/24 19:28:33 03363 auth: User 'admin' logged out of SSH  session from 
+            10.10.10.10
+W 01/17/24 19:28:33 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/17/24 19:27:26 00179 mgr: SME SSH from 10.10.10.10 - MANAGER Mode
+I 01/17/24 19:27:25 03362 auth: User 'admin' logged in from 10.10.10.10 to SSH 
+            session
+I 01/17/24 19:24:35 03363 auth: User 'admin' logged out of SSH  session from 
+            10.10.10.10
+W 01/17/24 19:24:35 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/17/24 19:23:25 00179 mgr: SME SSH from 10.10.10.10 - MANAGER Mode
+I 01/17/24 19:23:25 03362 auth: User 'admin' logged in from 10.10.10.10 to SSH 
+            session
+I 01/17/24 19:19:03 03363 auth: User 'admin' logged out of SSH  session from 
+            10.10.10.10
+W 01/17/24 19:19:03 00641 ssh: read error Connection reset by peer, session
+            aborted
+I 01/17/24 19:17:52 00179 mgr: SME SSH from 10.10.10.10 - MANAGER Mode
+I 01/17/24 19:17:51 03362 auth: User 'admin' logged in from 10.10.10.10 to SSH 
+            session
+I 01/17/24 19:12:50 05101 amp-server: AMP server configuration is disabled due
+            to first configuration.
+I 01/17/24 19:11:09 03004 system: Configuration hash calculation finished.
+I 01/17/24 19:11:09 03003 system: Configuration hash calculation started.
+I 01/17/24 19:10:59 00179 mgr: SME SSH from 10.10.10.10 - MANAGER Mode
+I 01/17/24 19:10:54 03344 ssh: User admin : SSH session established with
+            public-key authentication
+I 01/17/24 19:10:43 03344 ssh: User admin : SSH session established with
+            public-key authentication
+I 01/17/24 14:59:43 05219 activate: A system software update is available to
+            version WC.16.11.0015.
+I 01/17/24 14:59:43 05223 activate: Successfully established connection with the
+            Activate server;parsing final software update service response.
+I 01/17/24 14:59:41 05226 activate: Successfully resolved the Activate server
+            address devices-v2.arubanetworks.com to 35.85.163.200.
+I 01/17/24 14:59:41 05225 activate: Loading security certificates and
+            synchronizing time.
+I 01/17/24 14:51:22 02415 igmp: VID 254: Other Querier detected
+I 01/17/24 14:50:07 00413 SNTP: Updated time by 33388 seconds from server at
+            10.112.23.40.  Previous time was Wed Jan 17 05:33:38 2024.  Current
+            time is Wed Jan 17 14:50:06 2024.
+I 01/17/24 05:33:28 00076 ports: port 39 is now on-line
+I 01/17/24 05:33:28 00435 ports: port 39 is Blocked by STP
+I 01/17/24 05:33:28 00076 ports: port 25 is now on-line
+I 01/17/24 05:33:28 00435 ports: port 25 is Blocked by STP
+I 01/17/24 05:33:28 00001 vlan: Management virtual LAN enabled
+I 01/17/24 05:33:28 00001 vlan: Outdoor-APs virtual LAN enabled
+I 01/17/24 05:33:28 00001 vlan: Wireless Guest vlan 208 virtual LAN enabled
+I 01/17/24 05:33:28 00001 vlan: Wireless Guest vlan204 MOT virtual LAN enabled
+I 01/17/24 05:33:28 00001 vlan: ROP Wireless virtual LAN enabled
+I 01/17/24 05:33:28 00001 vlan: Wireless Guest vlan96 virtual LAN enabled
+I 01/17/24 05:33:28 00001 vlan: Wireless Guest vlan92 virtual LAN enabled
+I 01/17/24 05:33:28 00001 vlan: Wireless Guest vlan88 virtual LAN enabled
+I 01/17/24 05:33:28 00001 vlan: 100 Wing MGMT virtual LAN enabled
+I 01/17/24 05:33:28 00001 vlan: 200 Wing WiFi virtual LAN enabled
+I 01/17/24 05:33:28 00001 vlan: 200 Wing WiFi MGMT virtual LAN enabled
+I 01/17/24 05:33:28 00001 vlan: 100 Wing WiFi virtual LAN enabled
+I 01/17/24 05:33:28 00001 vlan: LAN virtual LAN enabled
+I 01/17/24 05:33:28 00076 ports: port 49 is now on-line
+I 01/17/24 05:33:28 00839 stp: CST Root changed from 32768: (this device) to
+            8192: 883a30-768a00
+I 01/17/24 05:33:26 00435 ports: port 49 is Blocked by STP
+I 01/17/24 05:33:25 02555 chassis: Co-processor Ready
+I 01/17/24 05:33:22 03803 chassis: System Self test completed on 1-52 
+I 01/17/24 05:33:16 03802 chassis: System Self test started on 1-52 
+I 01/17/24 05:33:15 03401 crypto: Function POWER UP passed selftest.
+I 01/17/24 05:33:14 02553 chassis: Loading of Co-processor OS image complete.
+I 01/17/24 05:33:13 02552 chassis: Loading of Co-processor OS image in progress.
+I 01/17/24 05:33:13 02550 chassis: Requesting Co-processor OS image location in
+            flash.
+I 01/17/24 05:33:13 00066 system: System Booted
+I 01/17/24 05:33:13 04260 dhcp-server: Conflict-logging is disabled
+I 01/17/24 05:33:13 04257 dhcp-server: Ping-check configured with retry count =
+            2, timeout = 1
+I 01/17/24 05:33:13 02012 mtm: A non-multicast client: Non-Mcast client Op, is
+            registered with client ID:  1
+I 01/17/24 05:33:13 00410 SNTP: Client is enabled.
+I 01/17/24 05:33:13 02633 SNTP: Client authentication is disabled.
+I 01/17/24 05:33:13 00688 lldp: LLDP - enabled
+I 01/17/24 05:33:13 00417 cdp: CDP enabled
+I 01/17/24 05:33:13 04695 auth: Command authorization method set to none.
+I 01/17/24 05:33:13 04695 auth: Command authorization method set to none.
+I 01/17/24 05:33:13 00433 ssh: Ssh server enabled
+I 01/17/24 05:33:13 05710 auth: RADIUS dead-time infinite is disabled.
+I 01/17/24 05:33:13 05720 auth: RADIUS tracking request packet count is set to
+            3.
+I 01/17/24 05:33:13 05719 auth: RADIUS tracking dead servers only is disabled.
+I 01/17/24 05:33:13 05710 auth: RADIUS dead-time infinite is disabled.
+I 01/17/24 05:33:13 05709 auth: RADIUS tracking interval is set to 300 seconds.
+I 01/17/24 05:33:13 02423 igmp: VID 254: I/F configured with addr 10.112.254.60
+I 01/17/24 05:33:13 00303 igmp: IGMP is enabled on VID 254
+I 01/17/24 05:33:13 00304 igmp: IP address is not configured on vlan 208, so it
+            cannot assume the IGMP Querier role
+I 01/17/24 05:33:13 00303 igmp: IGMP is enabled on VID 208
+I 01/17/24 05:33:13 00304 igmp: IP address is not configured on vlan 204, so it
+            cannot assume the IGMP Querier role
+I 01/17/24 05:33:13 00303 igmp: IGMP is enabled on VID 204
+I 01/17/24 05:33:13 00304 igmp: IP address is not configured on vlan 200, so it
+            cannot assume the IGMP Querier role
+I 01/17/24 05:33:13 00303 igmp: IGMP is enabled on VID 200
+I 01/17/24 05:33:13 00304 igmp: IP address is not configured on vlan 96, so it
+            cannot assume the IGMP Querier role
+I 01/17/24 05:33:13 00303 igmp: IGMP is enabled on VID 96
+I 01/17/24 05:33:13 00304 igmp: IP address is not configured on vlan 92, so it
+            cannot assume the IGMP Querier role
+I 01/17/24 05:33:13 00303 igmp: IGMP is enabled on VID 92
+I 01/17/24 05:33:13 00304 igmp: IP address is not configured on vlan 88, so it
+            cannot assume the IGMP Querier role
+I 01/17/24 05:33:13 00303 igmp: IGMP is enabled on VID 88
+I 01/17/24 05:33:13 00304 igmp: IP address is not configured on vlan 63, so it
+            cannot assume the IGMP Querier role
+I 01/17/24 05:33:13 00303 igmp: IGMP is enabled on VID 63
+I 01/17/24 05:33:13 00304 igmp: IP address is not configured on vlan 60, so it
+            cannot assume the IGMP Querier role
+I 01/17/24 05:33:13 00303 igmp: IGMP is enabled on VID 60
+I 01/17/24 05:33:13 00304 igmp: IP address is not configured on vlan 57, so it
+            cannot assume the IGMP Querier role
+I 01/17/24 05:33:13 00303 igmp: IGMP is enabled on VID 57
+I 01/17/24 05:33:13 00304 igmp: IP address is not configured on vlan 56, so it
+            cannot assume the IGMP Querier role
+I 01/17/24 05:33:13 00303 igmp: IGMP is enabled on VID 56
+I 01/17/24 05:33:13 00304 igmp: IP address is not configured on vlan 1, so it
+            cannot assume the IGMP Querier role
+I 01/17/24 05:33:13 00303 igmp: IGMP is enabled on VID 1
+I 01/17/24 05:33:13 00056 stp: Spanning Tree Protocol enabled
+I 01/17/24 05:33:13 00463 ssl: SSL HTTP server enabled on TCP port 443
+I 01/17/24 05:33:11 02638 srcip: CENTRAL oper policy for IPv6 is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02637 srcip: CENTRAL admin policy for IPv6 is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02638 srcip: RADSEC oper policy for IPv6 is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02637 srcip: RADSEC admin policy for IPv6 is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02638 srcip: TUNNELED-NODE-SERVE oper policy for IPv6 is
+            'outgoing interface'
+I 01/17/24 05:33:11 02637 srcip: TUNNELED-NODE-SERVE admin policy for IPv6 is
+            'outgoing interface'
+I 01/17/24 05:33:11 02638 srcip: SFLOW oper policy for IPv6 is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02637 srcip: SFLOW admin policy for IPv6 is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02638 srcip: SNTP oper policy for IPv6 is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02637 srcip: SNTP admin policy for IPv6 is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02638 srcip: TFTP oper policy for IPv6 is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02637 srcip: TFTP admin policy for IPv6 is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02638 srcip: TELNET oper policy for IPv6 is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02637 srcip: TELNET admin policy for IPv6 is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02638 srcip: SYSLOG oper policy for IPv6 is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02637 srcip: SYSLOG admin policy for IPv6 is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02638 srcip: RADIUS oper policy for IPv6 is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02637 srcip: RADIUS admin policy for IPv6 is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02638 srcip: CENTRAL oper policy is 'outgoing interface'
+I 01/17/24 05:33:11 02637 srcip: CENTRAL admin policy is 'outgoing interface'
+I 01/17/24 05:33:11 02638 srcip: RADSEC oper policy is 'outgoing interface'
+I 01/17/24 05:33:11 02637 srcip: RADSEC admin policy is 'outgoing interface'
+I 01/17/24 05:33:11 02638 srcip: TUNNELED-NODE-SERVE oper policy is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02637 srcip: TUNNELED-NODE-SERVE admin policy is 'outgoing
+            interface'
+I 01/17/24 05:33:11 02638 srcip: SFLOW oper policy is 'outgoing interface'
+I 01/17/24 05:33:11 02637 srcip: SFLOW admin policy is 'outgoing interface'
+I 01/17/24 05:33:11 02638 srcip: SNTP oper policy is 'outgoing interface'
+I 01/17/24 05:33:11 02637 srcip: SNTP admin policy is 'outgoing interface'
+I 01/17/24 05:33:11 02638 srcip: TFTP oper policy is 'outgoing interface'
+I 01/17/24 05:33:11 02637 srcip: TFTP admin policy is 'outgoing interface'
+I 01/17/24 05:33:11 02638 srcip: TELNET oper policy is 'outgoing interface'
+I 01/17/24 05:33:11 02637 srcip: TELNET admin policy is 'outgoing interface'
+I 01/17/24 05:33:11 02638 srcip: SYSLOG oper policy is 'outgoing interface'
+I 01/17/24 05:33:11 02637 srcip: SYSLOG admin policy is 'outgoing interface'
+I 01/17/24 05:33:11 02638 srcip: RADIUS oper policy is 'outgoing interface'
+I 01/17/24 05:33:11 02637 srcip: RADIUS admin policy is 'outgoing interface'
+I 01/17/24 05:33:11 02638 srcip: TACACS oper policy is 'outgoing interface'
+I 01/17/24 05:33:11 02637 srcip: TACACS admin policy is 'outgoing interface'
+I 01/17/24 05:33:11 00690 udpf: DHCP relay agent feature enabled
+I 01/17/24 05:33:11 02604 dhcpv6r: Inclusion of client link-layer address in
+            DHCPv6 relay message is disabled.
+I 01/17/24 05:33:11 05177 ip: Setting IP address 10.112.254.254 as default
+            gateway.
+I 01/17/24 05:33:10 03705 ports: Allow-Unsupported-Transceiver feature enabled.
+M 01/17/24 05:33:10 02798 chassis: Internal power supply 1 main PoE power OK.
+            Total fault count: 0
+M 01/17/24 05:33:10 02797 chassis: Internal power supply 1 is OK. Total fault
+            count: 0.
+I 01/17/24 05:33:10 05629 tls: The 'weak' cipher suite 'ecdhe-rsa-des-cbc3-sha'
+            is disabled for application 'radsec' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-ecdsa-des-cbc3-sha' is disabled for application 'radsec' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'ecdhe-rsa-aes256-sha'
+            is disabled for application 'radsec' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-rsa-aes256-sha384' is disabled for application 'radsec' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-rsa-aes128-sha256' is disabled for application 'radsec' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'ecdh-rsa-des-cbc3-sha'
+            is disabled for application 'radsec' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdh-ecdsa-des-cbc3-sha' is disabled for application 'radsec' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'RFC 4346 mandatory' cipher suite
+            'des3-cbc-sha' is disabled for application 'radsec' with lowest TLS
+            version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'RFC 5246 mandatory' cipher suite
+            'aes128-sha' is disabled for application 'radsec' with lowest TLS
+            version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes128-sha256' is
+            disabled for application 'radsec' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes256-sha' is
+            disabled for application 'radsec' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes256-sha256' is
+            disabled for application 'radsec' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'weak' cipher suite 'ecdhe-rsa-des-cbc3-sha'
+            is disabled for application 'cloud' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-ecdsa-des-cbc3-sha' is disabled for application 'cloud' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'ecdhe-rsa-aes256-sha'
+            is disabled for application 'cloud' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-rsa-aes256-sha384' is disabled for application 'cloud' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-rsa-aes128-sha256' is disabled for application 'cloud' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'ecdh-rsa-des-cbc3-sha'
+            is disabled for application 'cloud' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdh-ecdsa-des-cbc3-sha' is disabled for application 'cloud' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'RFC 4346 mandatory' cipher suite
+            'des3-cbc-sha' is disabled for application 'cloud' with lowest TLS
+            version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'RFC 5246 mandatory' cipher suite
+            'aes128-sha' is disabled for application 'cloud' with lowest TLS
+            version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes128-sha256' is
+            disabled for application 'cloud' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes256-sha' is
+            disabled for application 'cloud' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes256-sha256' is
+            disabled for application 'cloud' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'weak' cipher suite 'ecdhe-rsa-des-cbc3-sha'
+            is disabled for application 'tr69' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-ecdsa-des-cbc3-sha' is disabled for application 'tr69' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'ecdhe-rsa-aes256-sha'
+            is disabled for application 'tr69' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-rsa-aes256-sha384' is disabled for application 'tr69' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-rsa-aes128-sha256' is disabled for application 'tr69' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'ecdh-rsa-des-cbc3-sha'
+            is disabled for application 'tr69' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdh-ecdsa-des-cbc3-sha' is disabled for application 'tr69' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'RFC 4346 mandatory' cipher suite
+            'des3-cbc-sha' is disabled for application 'tr69' with lowest TLS
+            version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'RFC 5246 mandatory' cipher suite
+            'aes128-sha' is disabled for application 'tr69' with lowest TLS
+            version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes128-sha256' is
+            disabled for application 'tr69' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes256-sha' is
+            disabled for application 'tr69' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes256-sha256' is
+            disabled for application 'tr69' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'weak' cipher suite 'ecdhe-rsa-des-cbc3-sha'
+            is disabled for application 'syslog' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-ecdsa-des-cbc3-sha' is disabled for application 'syslog' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'ecdhe-rsa-aes256-sha'
+            is disabled for application 'syslog' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-rsa-aes256-sha384' is disabled for application 'syslog' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-rsa-aes128-sha256' is disabled for application 'syslog' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'ecdh-rsa-des-cbc3-sha'
+            is disabled for application 'syslog' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdh-ecdsa-des-cbc3-sha' is disabled for application 'syslog' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'RFC 4346 mandatory' cipher suite
+            'des3-cbc-sha' is disabled for application 'syslog' with lowest TLS
+            version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'RFC 5246 mandatory' cipher suite
+            'aes128-sha' is disabled for application 'syslog' with lowest TLS
+            version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes128-sha256' is
+            disabled for application 'syslog' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes256-sha' is
+            disabled for application 'syslog' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes256-sha256' is
+            disabled for application 'syslog' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'weak' cipher suite 'ecdhe-rsa-des-cbc3-sha'
+            is disabled for application 'openflow' with lowest TLS version
+            tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-ecdsa-des-cbc3-sha' is disabled for application 'openflow'
+            with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'ecdhe-rsa-aes256-sha'
+            is disabled for application 'openflow' with lowest TLS version
+            tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-rsa-aes256-sha384' is disabled for application 'openflow'
+            with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-rsa-aes128-sha256' is disabled for application 'openflow'
+            with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'ecdh-rsa-des-cbc3-sha'
+            is disabled for application 'openflow' with lowest TLS version
+            tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdh-ecdsa-des-cbc3-sha' is disabled for application 'openflow'
+            with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'RFC 4346 mandatory' cipher suite
+            'des3-cbc-sha' is disabled for application 'openflow' with lowest
+            TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'RFC 5246 mandatory' cipher suite
+            'aes128-sha' is disabled for application 'openflow' with lowest TLS
+            version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes128-sha256' is
+            disabled for application 'openflow' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes256-sha' is
+            disabled for application 'openflow' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes256-sha256' is
+            disabled for application 'openflow' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'weak' cipher suite 'ecdhe-rsa-des-cbc3-sha'
+            is disabled for application 'web-ssl' with lowest TLS version
+            tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-ecdsa-des-cbc3-sha' is disabled for application 'web-ssl'
+            with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'ecdhe-rsa-aes256-sha'
+            is disabled for application 'web-ssl' with lowest TLS version
+            tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-rsa-aes256-sha384' is disabled for application 'web-ssl' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'ecdhe-rsa-aes128-sha'
+            is disabled for application 'web-ssl' with lowest TLS version
+            tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdhe-rsa-aes128-sha256' is disabled for application 'web-ssl' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'ecdh-rsa-des-cbc3-sha'
+            is disabled for application 'web-ssl' with lowest TLS version
+            tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite
+            'ecdh-ecdsa-des-cbc3-sha' is disabled for application 'web-ssl' with
+            lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'RFC 4346 mandatory' cipher suite
+            'des3-cbc-sha' is disabled for application 'web-ssl' with lowest TLS
+            version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'RFC 5246 mandatory' cipher suite
+            'aes128-sha' is disabled for application 'web-ssl' with lowest TLS
+            version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes128-sha256' is
+            disabled for application 'web-ssl' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes256-sha' is
+            disabled for application 'web-ssl' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 05629 tls: The 'strong' cipher suite 'aes256-sha256' is
+            disabled for application 'web-ssl' with lowest TLS version tls1.2.
+I 01/17/24 05:33:10 04703 tls: The lowest TLS version tls1.2 is set for
+            application radsec.
+I 01/17/24 05:33:10 04716 tls: The 'cloud' application overrides user
+            configuration and uses 'tls1.2' as lowest TLS version.
+I 01/17/24 05:33:10 04703 tls: The lowest TLS version tls1.2 is set for
+            application tr69.
+I 01/17/24 05:33:10 04703 tls: The lowest TLS version tls1.2 is set for
+            application syslog.
+I 01/17/24 05:33:10 04703 tls: The lowest TLS version tls1.2 is set for
+            application openflow.
+I 01/17/24 05:33:10 04703 tls: The lowest TLS version tls1.2 is set for
+            application web-ssl.
+M 01/17/24 05:33:10 02796 chassis: Internal power supply 1 inserted. Total fault
+            count: 0.
+I 01/17/24 05:33:10 02759 chassis: Savepower LED timer is OFF.
+I 01/17/24 05:33:10 02712 console: USB console cable disconnected
+I 01/17/24 05:33:10 02712 console: USB console cable disconnected
+M 01/17/24 05:33:10 03001 system: System reboot due to Power Failure
+I 01/17/24 05:33:10 00062 system: System went down without saving crash
+            information
+I 01/17/24 05:33:10 00061 system: -----------------------------------------
+I 01/01/90 00:00:16 05578 profile-manager: With this SW release the poe-value
+            field is not allowed to be set when poe-alloc-by is not value.
+            Changing to default value of 17w.
+I 01/01/90 00:00:14 03803 chassis: System Self test completed on  Master 
+I 01/01/90 00:00:14 03802 chassis: System Self test started on  Master 
+I 01/01/90 00:00:14 03803 chassis: System Self test completed on  Master 
+I 01/01/90 00:00:14 03802 chassis: System Self test started on  Master 
+----  Top of Log : Events Listed = 262  ----
