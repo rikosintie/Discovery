@@ -123,7 +123,7 @@ If you are running the scrip against a 1U switch or your 5400 series uplinks are
 Now that the project is set up and the inventory file is created, you can run the script. Make sure you are in the Discovery directory and run:
 
 ```bash
-~/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery on  main
+~/04_Tools/Discovery on  main
 $ source bin/activate
 ```
 
@@ -134,37 +134,56 @@ To activate the the virtual environment.
 You can run the script with -h to get help:
 
 ```bash
- python3 procurve_Config_pull.py -h
-usage: procurve_Config_pull.py [-h] [-e EVENT] [-l LOGGING] [-p PASSWORD] [-s SITE]
+python3 procurve_Config_pull.py -h
 
--s site, -l 1 create log.txt, -p 1 prompt for password
+
+usage: procurve_Config_pull.py [-h] [-e EVENT] [-l LOGGING] [-p PASSWORD] [-s SITE] [-t TIMEOUT]
+
+-s site, -l 1 create log.txt, -p 1 prompt for password, -t 1-9 timeout, -e W,I,M,D,E to pull logs
 
 options:
   -h, --help            show this help message and exit
   -e EVENT, --event EVENT
-                        -e 1-9 to pull switch logs
+                        -e W,I,M,D,E to pull switch logs
   -l LOGGING, --logging LOGGING
                         use -l 1 to enable ssh logging
   -p PASSWORD, --password PASSWORD
                         use -p 1 to be prompted for password
   -s SITE, --site SITE  Site name - ex. HQ
+  -t TIMEOUT, --timeout TIMEOUT
+                        use -t 1-9 to set timeout
 (Discovery)
 ```
 
 ### What do the arguments do
 
-- The only required argument is `-s site`. This references the device-inventory file.
-- If you want to pull logs from the switch add `-e 1`. Note: the number sets the timeout value in 100s of seconds. If you use -e 2 it will wait 200 seconds.
-- If you want to be prompted for a password add `-p 1`. If you don't use -p 1 you must set an environment variable cyberARK with the password. That is covered above in the "password" section.
-- If you want to enable ssh logging add `-l 1`. You would do that to troubleshoot if you are getting "time out" errors.
+The only required argument is `-s site`. This references the device-inventory file.
+
+The procurve switches allow you to pull five different types of logs:
+
+- Warning (W) - This log contains warning messages
+- Informational (I) - This log can grow very large and may need a large timeout value. If you have a lot of switches to discovery and they have large informational logs you may want to skip them.
+- Major (M) - This log contains major messages
+- Debug (D) - This log contains debug messages
+- Error (E) - This log contains error messages
+
+If you want to pull logs from the switch add `-e` and the type of log. You can collect 1 or all 5. Separate the values with a comma. For example:
+
+`-e W,I,M,D,E`
+
+If you want to be prompted for a password add `-p 1`. If you don't use -p 1 you must set an environment variable cyberARK with the password. That is covered above in the "[password](#password)" section.
+
+If you want to enable ssh logging add `-l 1`. You would do that to troubleshoot if you are getting "time out" errors.
+
+- You can modify the timeout value using  `-t`. Note: the number sets the timeout value in 100s of seconds. If you use `-t 2` it will wait 200 seconds.
 
 The minimum is to use -s for the site:
 
 `python3 procurve-Config-pull.py -s HQ`
 
-To include logs:
+To include the Warning log:
 
-`python3 procurve-Config-pull.py -s HQ -e 2`
+`python3 procurve-Config-pull.py -s HQ -e W`
 
 To be prompted for a password:
 
@@ -180,7 +199,7 @@ The files will be saved in the following directories:
 - Interface - files that need further processing
 - Running - The "show running structured" output for each switch
 
-If you are having timeout or authentication issues you can enable logging. Here is a sample output of the log.txt file that netmiko creates:
+If you are having timeout or authentication issues, enable logging. Here is a sample output of the log.txt file that netmiko creates:
 
 ```bash
 DEBUG:paramiko.transport:starting thread (client mode): 0xb4b346d0
@@ -217,76 +236,67 @@ INFO:paramiko.transport:Authentication (password) successful!
 Here is a sample output from running the script:
 
 ```bash
-python3 procurve_Config_pull.py -s area2 -e 1
+procurve_Config_pull.py -s area1 -e W
 
 
 -------------------------------------------------
-Reading devices from: device-inventory-area2.csv
+Reading devices from: device-inventory-area1.csv
 ----------------------------------------------------------
-01/17/2024, 20:03:21 Connecting to switch RHS-CL-2930-48-1
+01/21/2024, 19:02:50 Connecting to switch Procurve-2920-24
 ----------------------------------------------------------
 
-RHS-CL-2930-48-1#
+Exec time: 0:00:01.279461
+
+Could not connect to Procurve-2920-24 at 192.168.10.50. The Credentials failed.  Remove it from the device inventory file
+----------------------------------------------------------
+01/21/2024, 19:02:51 Connecting to switch Procurve-2920-48
+----------------------------------------------------------
+
+HP-2920-24G-PoEP#
 
 --------------------------------------------------------
-processing procurve-config-file.txt for RHS-CL-2930-48-1
+processing procurve-config-file.txt for Procurve-2920-48
 --------------------------------------------------------
-processing show logging -w for RHS-CL-2930-48-1
+processing show logging -W for Procurve-2920-48
 --------------------------------------------------------
-Writing show logging -w commands to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/CR-data/RHS-CL-2930-48-1-log-w.txt
+Writing show logging -W commands to /home/mhubbard/04_Tools/Discovery/CR-data/Procurve-2920-48-log-W.txt
 --------------------------------------------------------
-processing show logging -I for RHS-CL-2930-48-1
+collecting show interface for Procurve-2920-48
 --------------------------------------------------------
-Writing show logging -I commands to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/CR-data/RHS-CL-2930-48-1-log-I.txt
+collecting show system for Procurve-2920-48
 --------------------------------------------------------
-processing show logging -M for RHS-CL-2930-48-1
+collecting show cdp detail for Procurve-2920-48
 --------------------------------------------------------
-Writing show logging -M commands to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/CR-data/RHS-CL-2930-48-1-log-M.txt
+collecting show interfaces brief for Procurve-2920-48
 --------------------------------------------------------
-processing show logging -D for RHS-CL-2930-48-1
+collecting show lldp neighbors for Procurve-2920-48
 --------------------------------------------------------
-Writing show logging -D commands to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/CR-data/RHS-CL-2930-48-1-log-D.txt
+collecting show mac address for Procurve-2920-48
 --------------------------------------------------------
-processing show logging -E for RHS-CL-2930-48-1
+collecting show arp for Procurve-2920-48
 --------------------------------------------------------
-Writing show logging -E commands to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/CR-data/RHS-CL-2930-48-1-log-E.txt
+Collecting show running-config from Procurve-2920-48
 --------------------------------------------------------
-collecting show interface for RHS-CL-2930-48-1
---------------------------------------------------------
-collecting show system for RHS-CL-2930-48-1
---------------------------------------------------------
-collecting show cdp detail for RHS-CL-2930-48-1
---------------------------------------------------------
-collecting show interfaces brief for RHS-CL-2930-48-1
---------------------------------------------------------
-collecting show lldp neighbors for RHS-CL-2930-48-1
---------------------------------------------------------
-collecting show mac address for RHS-CL-2930-48-1
---------------------------------------------------------
-collecting show arp for RHS-CL-2930-48-1
---------------------------------------------------------
-Collecting show running-config from RHS-CL-2930-48-1
---------------------------------------------------------
-Writing show commands to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/CR-data/RHS-CL-2930-48-1-CR-data.txt
+Writing show commands to /home/mhubbard/04_Tools/Discovery/CR-data/Procurve-2920-48-CR-data.txt
 -------------------------------------------------
-Writing MAC addresses to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/port-maps/data/RHS-CL-2930-48-1-mac-address.txt
+Writing MAC addresses to /home/mhubbard/04_Tools/Discovery/port-maps/data/Procurve-2920-48-mac-address.txt
 -------------------------------------------------
-Writing ARP data to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/port-maps/data/RHS-CL-2930-48-1-arp.txt
+Writing ARP data to /home/mhubbard/04_Tools/Discovery/port-maps/data/Procurve-2920-48-arp.txt
 -------------------------------------------------
-Writing show run to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/port-maps/data/RHS-CL-2930-48-1-arp.txt
+Writing show run to /home/mhubbard/04_Tools/Discovery/port-maps/data/Procurve-2920-48-arp.txt
 -------------------------------------------------
-Writing interfaces json data to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/Interface/RHS-CL-2930-48-1-system.txt
+Writing interfaces json data to /home/mhubbard/04_Tools/Discovery/Interface/Procurve-2920-48-system.txt
 -------------------------------------------------
-Writing interfaces json data to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/Interface/RHS-CL-2930-48-1-interface.txt
+Writing interfaces json data to /home/mhubbard/04_Tools/Discovery/Interface/Procurve-2920-48-interface.txt
 -------------------------------------------------
-Writing interfaces brief data to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/Interface/RHS-CL-2930-48-1-int_br.txt
+Writing interfaces brief data to /home/mhubbard/04_Tools/Discovery/Interface/Procurve-2920-48-int_br.txt
 -------------------------------------------------
-Writing cdp neighbor data to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/Interface/RHS-CL-2930-48-1-cdp.txt
+Writing cdp neighbor data to /home/mhubbard/04_Tools/Discovery/Interface/Procurve-2920-48-cdp.txt
 -------------------------------------------------
-Writing show lldp data to /home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/Interface/RHS-CL-2930-48-1-lldp.txt
+Writing show lldp data to /home/mhubbard/04_Tools/Discovery/Interface/Procurve-2920-48-lldp.txt
 
 -------------------------------------------------------
-Successfully created config files for RHS-CL-2930-48-1
+Successfully created config files for Procurve-2920-48
 -------------------------------------------------------
 
 Data collection is complete.
@@ -500,7 +510,7 @@ The URL restriction occurs because the xsl file comes from an https server (gith
 procurve-scan.xml:3  Unsafe attempt to load URL
 https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl
 from frame with URL
-file:///home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/procurve-scan.xml.
+file:///home/mhubbard/04_Tools/Discovery/procurve-scan.xml.
 'file:' URLs are treated as unique security origins.
 ```
 
