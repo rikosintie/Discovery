@@ -105,7 +105,7 @@ Simply open the file, copy the interfaces you need and save them into the mac.tx
 
 ## Update the procurve-config-file.txt file
 
-This file contains all of the `show commands` that will be sent to the switches. It has fifty commands in it including many that may not apply to customer:
+This file contains all of the `show commands` that will be sent to the switches. It has fifty commands in it including many that may not apply to the customer:
 
 - show lacp peer
 - show lacp local
@@ -113,13 +113,39 @@ This file contains all of the `show commands` that will be sent to the switches.
 - show dhcp-server binding
 - show dhcp-server pool
 
-If you don't need them for a particular customer you can just open the file and delete any that you don't need.
+If you don't need them for a particular customer you can just open the file and delete any that you don't need or add any that you do need. The goal is to have all the data needed to satisfy the Change Request requirements.
 
-For pulling the mac-address table, which most customers want you to do, I have an include statement using a regex. In the sample file it doesn't pull mac addresses for ports on modules A and B. These were uplinks on the switch that I tested the script on.
+For pulling the mac-address table, which most customers want you to do, I have an exclude statement using a regex. In the sample file it doesn't pull mac addresses for ports on modules A and B. These were uplinks on the switch that I tested the script on.
 
 `show show mac-address | ex "A|B"`
 
-If you are running the scrip against a 1U switch or your 5400 series uplinks are different, change the regex to meet your needs.
+In the example, the `|` symbol means logical OR. This works because the switch displays the mac address in lower case.
+
+```bash
+ show mac-address | ex "A|B"
+
+  ----------------- ------------------------------- ----
+  00c0b7-f4b43a     C4                              1
+  282986-40a427     H24                             1
+```
+
+On a non modular switch you can't use:
+
+```bash
+sh mac-address | exclude 24|25
+
+ Status and Counters - Port Address Table
+
+  MAC Address   Port    VLAN
+  ------------- ------- ----
+  00e04c-360348 5       10
+```
+
+Because port 11 has 25 in the mac address
+
+`b00cd1-372591 11      10 `
+
+And was excluded from the output.
 
 ----------------------------------------------------------------
 
