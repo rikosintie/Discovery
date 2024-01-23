@@ -11,15 +11,15 @@
     "allow_mods": "",
     "mac_address": "98f2b3-fe8880",
     "serial": "SG78FLXH0B",
-    "uptime": "4 hours",
-    "cpu_util": "57",
+    "uptime": "71 mins",
+    "cpu_util": "37",
     "mem_tot": "72,483,328",
-    "mem_free": "40,299,064",
-    "packets_rx": "12,028",
-    "packets_tx": "5330",
+    "mem_free": "40,216,320",
+    "packets_rx": "7630",
+    "packets_tx": "3074",
     "packets_tot": "6750",
     "buffers_free": "5009",
-    "buffers_lowest": "4994",
+    "buffers_lowest": "4990",
     "buffers_missed": "0"
   }
 ]

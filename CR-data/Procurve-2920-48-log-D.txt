@@ -2,66 +2,117 @@ show logging -r -D
  Keys:   W=Warning   I=Information
          M=Major     D=Debug E=Error
 ----  Reverse event Log listing: Events Since Boot  ----
-I 01/21/24 23:04:02 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/21/24 23:04:02 03362 auth: User 'vector' logged in from 192.168.10.115 to
+I 01/22/24 23:02:02 00076 ports: port 16 is now on-line
+I 01/22/24 23:01:58 00077 ports: port 16 is now off-line
+I 01/22/24 23:01:50 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/22/24 23:01:49 03362 auth: User 'vector' logged in from 192.168.10.115 to
             SSH  session
-I 01/21/24 23:00:00 04612 job: Job 'wrmem' completed
-I 01/21/24 22:12:34 04910 ntp: All the NTP server associations reset.
-I 01/21/24 22:12:34 04908 ntp: The system clock time was changed by 0 sec
-            35198113 nsec.	 The new time is Sun Jan 21 22:12:33 2024
-.
-I 01/21/24 20:04:27 04910 ntp: All the NTP server associations reset.
-I 01/21/24 20:04:27 04908 ntp: The system clock time was changed by 0 sec
-            17796149 nsec.	 The new time is Sun Jan 21 20:04:27 2024
-.
-I 01/21/24 19:03:40 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-W 01/21/24 19:03:40 00641 ssh: read error Connection reset by peer, session
-            aborted
-I 01/21/24 19:02:55 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/21/24 19:02:54 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/21/24 19:00:26 04910 ntp: All the NTP server associations reset.
-I 01/21/24 19:00:12 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/21/24 19:00:10 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/21/24 18:52:30 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-W 01/21/24 18:52:30 00641 ssh: read error Connection reset by peer, session
-            aborted
-I 01/21/24 18:46:48 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/21/24 18:46:47 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/21/24 18:35:54 05219 activate: A system software update is available to
+I 01/22/24 23:00:01 04612 job: Job 'wrmem' completed
+I 01/22/24 23:00:01 03125 mgr: Startup configuration changed by unknown.  New
+            seq. number 46
+I 01/22/24 22:59:30 00076 ports: port 16 is now on-line
+I 01/22/24 22:59:27 00077 ports: port 16 is now off-line
+I 01/22/24 22:59:03 00076 ports: port 16 is now on-line
+I 01/22/24 22:59:00 00077 ports: port 16 is now off-line
+I 01/22/24 22:56:36 00076 ports: port 16 is now on-line
+I 01/22/24 22:56:33 00077 ports: port 16 is now off-line
+I 01/22/24 22:56:10 00076 ports: port 16 is now on-line
+I 01/22/24 22:56:07 00077 ports: port 16 is now off-line
+I 01/22/24 22:53:39 00076 ports: port 16 is now on-line
+I 01/22/24 22:53:36 00077 ports: port 16 is now off-line
+I 01/22/24 22:53:13 00076 ports: port 16 is now on-line
+I 01/22/24 22:53:10 00077 ports: port 16 is now off-line
+I 01/22/24 22:50:42 00076 ports: port 16 is now on-line
+I 01/22/24 22:50:39 00077 ports: port 16 is now off-line
+I 01/22/24 22:50:16 00076 ports: port 16 is now on-line
+I 01/22/24 22:50:13 00077 ports: port 16 is now off-line
+I 01/22/24 22:47:46 00076 ports: port 16 is now on-line
+I 01/22/24 22:47:43 00077 ports: port 16 is now off-line
+I 01/22/24 22:47:20 00076 ports: port 16 is now on-line
+I 01/22/24 22:47:16 00077 ports: port 16 is now off-line
+I 01/22/24 22:44:51 00076 ports: port 16 is now on-line
+I 01/22/24 22:44:49 00077 ports: port 16 is now off-line
+I 01/22/24 22:44:25 00076 ports: port 16 is now on-line
+I 01/22/24 22:44:22 00077 ports: port 16 is now off-line
+I 01/22/24 22:41:53 00076 ports: port 16 is now on-line
+I 01/22/24 22:41:50 00077 ports: port 16 is now off-line
+I 01/22/24 22:41:27 00076 ports: port 16 is now on-line
+I 01/22/24 22:41:24 00077 ports: port 16 is now off-line
+I 01/22/24 22:38:59 00076 ports: port 16 is now on-line
+I 01/22/24 22:38:28 00561 ports: port 16 Applying Power to PD.
+I 01/22/24 22:38:28 00560 ports: port 16 PD Detected.
+I 01/22/24 22:38:25 00076 ports: port 11 is now on-line
+I 01/22/24 22:38:20 00077 ports: port 11 is now off-line
+I 01/22/24 22:38:18 00077 ports: port 16 is now off-line
+I 01/22/24 22:38:18 00565 ports: port 16 PD Removed.
+I 01/22/24 22:35:59 00076 ports: port 16 is now on-line
+I 01/22/24 22:35:57 00077 ports: port 16 is now off-line
+I 01/22/24 22:35:33 00076 ports: port 16 is now on-line
+I 01/22/24 22:35:30 00077 ports: port 16 is now off-line
+I 01/22/24 22:30:49 00076 ports: port 16 is now on-line
+I 01/22/24 22:30:47 00077 ports: port 16 is now off-line
+I 01/22/24 22:30:24 00076 ports: port 16 is now on-line
+I 01/22/24 22:30:20 00077 ports: port 16 is now off-line
+I 01/22/24 22:25:42 00076 ports: port 16 is now on-line
+I 01/22/24 22:25:39 00077 ports: port 16 is now off-line
+I 01/22/24 22:25:16 00076 ports: port 16 is now on-line
+I 01/22/24 22:25:12 00077 ports: port 16 is now off-line
+I 01/22/24 22:25:07 04910 ntp: All the NTP server associations reset.
+I 01/22/24 22:20:33 00076 ports: port 16 is now on-line
+I 01/22/24 22:20:30 00077 ports: port 16 is now off-line
+I 01/22/24 22:20:07 00076 ports: port 16 is now on-line
+I 01/22/24 22:20:03 00077 ports: port 16 is now off-line
+I 01/22/24 22:15:22 00076 ports: port 16 is now on-line
+I 01/22/24 22:15:19 00077 ports: port 16 is now off-line
+I 01/22/24 22:14:56 00076 ports: port 16 is now on-line
+I 01/22/24 22:14:52 00077 ports: port 16 is now off-line
+I 01/22/24 22:13:40 00076 ports: port 5 is now on-line
+I 01/22/24 22:13:37 00077 ports: port 5 is now off-line
+I 01/22/24 22:13:00 00076 ports: port 11 is now on-line
+I 01/22/24 22:10:11 00076 ports: port 16 is now on-line
+I 01/22/24 22:10:08 00077 ports: port 16 is now off-line
+I 01/22/24 22:09:45 00076 ports: port 16 is now on-line
+I 01/22/24 22:09:41 00077 ports: port 16 is now off-line
+I 01/22/24 22:05:00 00076 ports: port 16 is now on-line
+I 01/22/24 22:04:57 00077 ports: port 16 is now off-line
+I 01/22/24 22:04:34 00076 ports: port 16 is now on-line
+I 01/22/24 22:04:31 00077 ports: port 16 is now off-line
+I 01/22/24 22:00:30 05219 activate: A system software update is available to
             version WB.16.10.0024.
-I 01/21/24 18:35:54 05223 activate: Successfully established connection with the
+I 01/22/24 22:00:30 05223 activate: Successfully established connection with the
             Activate server;parsing final software update service response.
-I 01/21/24 18:35:51 05226 activate: Successfully resolved the Activate server
-            address devices-v2.arubanetworks.com to 35.82.154.193.
-I 01/21/24 18:35:51 05225 activate: Loading security certificates and
+I 01/22/24 22:00:27 05226 activate: Successfully resolved the Activate server
+            address devices-v2.arubanetworks.com to 35.85.163.200.
+I 01/22/24 22:00:27 05225 activate: Loading security certificates and
             synchronizing time.
-I 01/21/24 18:32:34 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-W 01/21/24 18:32:34 00641 ssh: read error Connection reset by peer, session
-            aborted
-I 01/21/24 18:31:56 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/21/24 18:31:55 03362 auth: User 'vector' logged in from 192.168.10.115 to
-            SSH  session
-I 01/21/24 18:30:52 03363 auth: User 'vector' logged out of SSH  session from 
-            192.168.10.115
-W 01/21/24 18:30:52 00641 ssh: read error Connection reset by peer, session
-            aborted
-I 01/21/24 18:30:33 05101 amp-server: AMP server configuration is disabled due
+I 01/22/24 21:59:50 00076 ports: port 16 is now on-line
+I 01/22/24 21:59:47 00077 ports: port 16 is now off-line
+I 01/22/24 21:59:36 03125 mgr: Startup configuration changed by CLI.  New seq.
+            number 45
+I 01/22/24 21:59:34 00076 ports: port 5 is now on-line
+I 01/22/24 21:59:33 00561 ports: port 5 Applying Power to PD.
+I 01/22/24 21:59:33 00560 ports: port 5 PD Detected.
+I 01/22/24 21:59:25 00565 ports: port 5 PD Removed.
+I 01/22/24 21:59:24 00077 ports: port 5 is now off-line
+I 01/22/24 21:59:24 00076 ports: port 16 is now on-line
+I 01/22/24 21:59:21 00077 ports: port 16 is now off-line
+I 01/22/24 21:59:06 05101 amp-server: AMP server configuration is disabled due
             to first configuration.
-I 01/21/24 18:28:23 04910 ntp: All the NTP server associations reset.
-I 01/21/24 18:27:18 04611 job: Job Scheduler enabled
-I 01/21/24 18:27:17 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
-I 01/21/24 18:27:17 03362 auth: User 'vector' logged in from 192.168.10.115 to
+I 01/22/24 21:54:39 00076 ports: port 16 is now on-line
+I 01/22/24 21:54:37 00076 ports: port 5 is now on-line
+I 01/22/24 21:54:36 00561 ports: port 5 Applying Power to PD.
+I 01/22/24 21:54:36 00560 ports: port 5 PD Detected.
+I 01/22/24 21:54:05 00561 ports: port 16 Applying Power to PD.
+I 01/22/24 21:54:05 00560 ports: port 16 PD Detected.
+I 01/22/24 21:52:57 04910 ntp: All the NTP server associations reset.
+I 01/22/24 21:52:05 00179 mgr: SME SSH from 192.168.10.115 - MANAGER Mode
+I 01/22/24 21:52:03 03362 auth: User 'vector' logged in from 192.168.10.115 to
             SSH  session
-I 01/21/24 18:27:05 04910 ntp: All the NTP server associations reset.
-I 01/21/24 18:27:05 04909 ntp: The NTP Stratum was changed from 16 to 2.
-I 01/21/24 18:27:05 04908 ntp: The system clock time was changed by 1074738317
-            sec 520519495 nsec.	 The new time is Sun Jan 21 18:27:04 2024
+I 01/22/24 21:51:55 04611 job: Job Scheduler enabled
+I 01/22/24 21:51:41 04910 ntp: All the NTP server associations reset.
+I 01/22/24 21:51:41 04909 ntp: The NTP Stratum was changed from 16 to 2.
+I 01/22/24 21:51:41 04908 ntp: The system clock time was changed by 1074836994
+            sec 950888634 nsec.	 The new time is Mon Jan 22 21:51:41 2024
 .
 I 01/01/90 00:01:33 04911 ntp: The NTP Server 129.6.15.29 is unreachable.
 I 01/01/90 00:01:11 04911 ntp: The NTP Server 192.168.10.221 is unreachable.
@@ -76,7 +127,7 @@ I 01/01/90 00:00:49 00001 vlan: IOT1 virtual LAN enabled
 I 01/01/90 00:00:49 00001 vlan: IOT0 virtual LAN enabled
 I 01/01/90 00:00:49 00001 vlan: Voice virtual LAN enabled
 I 01/01/90 00:00:49 00001 vlan: User virtual LAN enabled
-I 01/01/90 00:00:48 00001 vlan: DEFAULT_VLAN virtual LAN enabled
+I 01/01/90 00:00:47 00001 vlan: DEFAULT_VLAN virtual LAN enabled
 I 01/01/90 00:00:46 00076 ports: port 24 is now on-line
 I 01/01/90 00:00:45 05083 chassis: Ports 1-12: PoE Software updated from version
             04 to 38.
@@ -169,4 +220,4 @@ I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master
 I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
 I 01/01/90 00:00:24 03803 chassis: System Self test completed on  Master 
 I 01/01/90 00:00:24 03802 chassis: System Self test started on  Master 
-----  Top of Log : Events Listed = 122  ----
+----  Top of Log : Events Listed = 187  ----

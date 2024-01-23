@@ -16,12 +16,12 @@
   Software revision  : WB.16.10.0023        Base MAC Addr      : 98f2b3-fe8880
   ROM Version        : WB.16.03             Serial Number      : SG78FLXH0B  
 
-  Up Time            : 4 hours              Memory   - Total   : 72,483,328  
-  CPU Util (%)       : 40                              Free    : 40,300,312  
+  Up Time            : 71 mins              Memory   - Total   : 72,483,328  
+  CPU Util (%)       : 35                              Free    : 40,429,520  
 
-  IP Mgmt  - Pkts Rx : 11,539               Packet   - Total   : 6750        
-             Pkts Tx : 4894                 Buffers    Free    : 5009        
-                                                       Lowest  : 4994        
+  IP Mgmt  - Pkts Rx : 7122                 Packet   - Total   : 6750        
+             Pkts Tx : 2620                 Buffers    Free    : 5009        
+                                                       Lowest  : 4990        
                                                        Missed  : 0           
  
  !++++++++++++++ 
@@ -53,10 +53,10 @@ The running configuration matches the saved configuration.
  
  !++++++++++++++ 
   show time
-Sun Jan 21 23:04:04 2024 
+Mon Jan 22 23:01:52 2024 
  !++++++++++++++ 
   show uptime
-0000:04:38:22.35 
+0000:01:11:34.08 
  !++++++++++++++ 
   show ntp status
 
@@ -65,14 +65,14 @@ Sun Jan 21 23:04:04 2024
   NTP Status             : Enabled         NTP Mode        : Unicast         
   Synchronization Status : Synchronized    Peer Dispersion : 0.00000 sec     
   Stratum Number         : 2               Leap Direction  : 0               
-  Reference Assoc ID     : 0               Clock Offset    : 0.03520 sec     
-  Reference ID           : 129.6.15.29     Root Delay      : 0.07283 sec     
-  Precision              : 2**-18          Root Dispersion : 1.08922 sec     
-  NTP Up Time            : 0d 4h 38m       Time Resolution : 2092 nsec       
-  Drift                  : 0.00002 sec/sec 
+  Reference Assoc ID     : 0               Clock Offset    : 0.00282 sec     
+  Reference ID           : 129.6.15.29     Root Delay      : 0.07109 sec     
+  Precision              : 2**-18          Root Dispersion : 0.17575 sec     
+  NTP Up Time            : 0d 1h 11m       Time Resolution : 697 nsec        
+  Drift                  : 0.00003 sec/sec 
 
-  System Time            : Sun Jan 21 23:04:04 2024                
-  Reference Time         : Sun Jan 21 22:11:12 2024                
+  System Time            : Mon Jan 22 23:01:52 2024                
+  Reference Time         : Mon Jan 22 22:24:00 2024                
  
  !++++++++++++++ 
   show ntp associations
@@ -82,8 +82,8 @@ Sun Jan 21 23:04:04 2024
 
  Remote          St   T    When   Poll  Reach    Delay    Offset   Dispersion
  --------------- ---- ---- ------ ----- -------- -------- -------- ----------
- 129.6.15.29     1    u    16695  13    17       0.000    0.000    16.00000  
- 192.168.10.221  1    u    16695  10    17       0.000    0.000    16.00000  
+ 129.6.15.29     1    u    4287   13    37       0.000    0.000    15.18147  
+ 192.168.10.221  1    u    4287   9     37       0.000    0.000    15.17990  
  
  !++++++++++++++ 
   show ntp server
@@ -135,17 +135,17 @@ Active Boot ROM:     Primary
  !++++++++++++++ 
   show config vlan
 
-Startup configuration: 44
+Startup configuration: 46
 
 vlan 1
    name "DEFAULT_VLAN"
-   no untagged 1,3,17,24,Trk1
-   untagged 2,4-16,18-20,23
+   no untagged 1,3,5,11,16-17,24,Trk1
+   untagged 2,4,6-10,12-15,18-20,23
    ip address dhcp-bootp
    exit
 vlan 10
    name "User"
-   untagged 17,24
+   untagged 5,11,16-17,24
    ip helper-address 10.10.83.20
    ip helper-address 10.10.100.50
    ip address 192.168.10.52 255.255.255.0
@@ -241,7 +241,7 @@ Status and Counters - VLAN Information - Custom view
  !++++++++++++++ 
   show config interface
 
-Startup configuration: 44
+Startup configuration: 46
 
 interface 1
    untagged vlan 850
@@ -259,7 +259,7 @@ interface 4
    spanning-tree loop-guard bpdu-protection
    exit
 interface 5
-   untagged vlan 1
+   untagged vlan 10
    spanning-tree loop-guard bpdu-protection
    exit
 interface 6
@@ -283,7 +283,7 @@ interface 10
    spanning-tree loop-guard bpdu-protection
    exit
 interface 11
-   untagged vlan 1
+   untagged vlan 10
    spanning-tree loop-guard bpdu-protection
    exit
 interface 12
@@ -303,7 +303,7 @@ interface 15
    spanning-tree loop-guard bpdu-protection
    exit
 interface 16
-   untagged vlan 1
+   untagged vlan 10
    spanning-tree loop-guard bpdu-protection
    exit
 interface 17
@@ -419,7 +419,7 @@ interface loopback 0
  !++++++++++++++ 
   show config router ospf
 
-Startup configuration: 44
+Startup configuration: 46
 
 router ospf
    area backbone
@@ -471,7 +471,7 @@ router ospf
   Area Border               : no 
   AS Border                 : yes
   External LSA Count        : 7          
-  External LSA Checksum Sum : 215520     
+  External LSA Checksum Sum : 204852     
   Originate New LSA Count   : 6          
   Receive New LSA Count     : 0          
 
@@ -495,13 +495,13 @@ router ospf
 
   Link State ID   Router ID       Age  Sequence #  Checksum  
   --------------- --------------- ---- ----------- ----------
-  1.1.1.1         1.1.1.1         1824 0x80000009  0x0000063d
-  10.14.63.16     1.1.1.1         1824 0x80000009  0x00008660
-  10.14.64.16     1.1.1.1         1824 0x80000009  0x00007b6a
-  10.14.65.16     1.1.1.1         1824 0x80000009  0x00007074
-  10.14.66.16     1.1.1.1         1824 0x80000009  0x0000657e
-  10.164.24.0     1.1.1.1         1824 0x80000009  0x0000f08f
-  192.168.10.0    1.1.1.1         1824 0x80000009  0x000014bf
+  1.1.1.1         1.1.1.1         576  0x80000003  0x00001237
+  10.14.63.16     1.1.1.1         576  0x80000003  0x0000925a
+  10.14.64.16     1.1.1.1         576  0x80000003  0x00008764
+  10.14.65.16     1.1.1.1         576  0x80000003  0x00007c6e
+  10.14.66.16     1.1.1.1         576  0x80000003  0x00007178
+  10.164.24.0     1.1.1.1         576  0x80000003  0x0000fc89
+  192.168.10.0    1.1.1.1         576  0x80000003  0x000020b9
  
  
  !++++++++++++++ 
@@ -512,18 +512,18 @@ router ospf
   2                   Down    Auto          1000FDx  100/1000T  No     1       
   3                   Down    Auto          1000FDx  100/1000T  No     100     
   4                   Down    Auto          1000FDx  100/1000T  No     1       
-  5                   Down    Auto          1000FDx  100/1000T  No     1       
+  5                   Up      Auto          100FDx   100/1000T  No     10      
   6                   Down    Auto          1000FDx  100/1000T  No     1       
   7                   Up      Auto          100FDx   100/1000T  No     1       
   8                   Down    Auto          1000FDx  100/1000T  No     1       
   9                   Down    Auto          1000FDx  100/1000T  No     1       
   10                  Down    Auto          1000FDx  100/1000T  No     1       
-  11                  Down    Auto          1000FDx  100/1000T  No     1       
+  11                  Up      Auto          1000FDx  100/1000T  No     10      
   12                  Down    Auto          1000FDx  100/1000T  No     1       
   13                  Down    Auto          1000FDx  100/1000T  No     1       
   14                  Down    Auto          1000FDx  100/1000T  No     1       
   15                  Down    Auto          1000FDx  100/1000T  No     1       
-  16                  Down    Auto          1000FDx  100/1000T  No     1       
+  16                  Down    Auto          1000FDx  100/1000T  No     10      
   17                  Down    Auto          1000FDx  100/1000T  No     10      
   18                  Down    Auto          1000FDx  100/1000T  No     1       
   19                  Down    Auto          1000FDx  100/1000T  No     1       
@@ -534,7 +534,9 @@ router ospf
   24                  Up      Auto          1000FDx  100/1000T  multi  10       
  !++++++++++++++ 
   show int status | i Up
+  5                   Up      Auto          100FDx   100/1000T  No     10      
   7                   Up      Auto          100FDx   100/1000T  No     1       
+  11                  Up      Auto          1000FDx  100/1000T  No     10      
   24                  Up      Auto          1000FDx  100/1000T  multi  10       
  !++++++++++++++ 
   show interfaces transceiver detail
@@ -615,8 +617,12 @@ System ID: 98f2b3-fe8880
 
   Port   Device ID                     | Platform                     Capability 
   ------ ----------------------------- + ---------------------------- -----------
-  24     9c 8c d8 c9 17 ae             | ArubaOS (MODEL: 515), Ver...            
+  5      e4 5f 01 85 86 a5             | Raspbian GNU/Linux 10 (bu... R          
+  11     b0 0c d1 37 25 91             |                                         
+  16     bc 9f e4 c3 42 ca             | ArubaOS (MODEL: 515), Ver...            
   24     54 bf 64 3b 9c 68             | Ubuntu 23.10 Linux 6.5.0-... R S        
+  24     9c 8c d8 c9 17 ae             | ArubaOS (MODEL: 515), Ver...            
+  24     ea e6 4b 18 de 20             |  Darwin 21.6.0 Darwin Ker... S          
   24     Garage                        | NanoStation 5AC loc          T          
   24     fc ec da c4 6e 55             |                                         
   
@@ -624,6 +630,50 @@ System ID: 98f2b3-fe8880
   show cdp nei d
 
  CDP neighbors information
+
+  Port : 5     
+  Device ID : e4 5f 01 85 86 a5                                             
+  Address Type : IP          
+  Address      : 192.168.10.111                                              
+  Platform     : Raspbian GNU/Linux 10 (buster) Linux 5.10.103-v7+ #1529 ...
+  Capability   : Router                                                     
+  Device Port  : eth0                                                       
+  Version      : Raspbian GNU/Linux 10 (buster) Linux 5.10.103-v7+ #1529 ...
+
+------------------------------------------------------------------------------
+
+  Port : 11    
+  Device ID : b0 0c d1 37 25 91                                             
+  Address Type : UNKNOWN     
+  Address      : Unsupported format                                          
+  Platform     :                                                            
+  Capability   :                                                            
+  Device Port  : b0 0c d1 37 25 91                                          
+  Version      :                                                            
+
+------------------------------------------------------------------------------
+
+  Port : 16    
+  Device ID : bc 9f e4 c3 42 ca                                             
+  Address Type : UNKNOWN     
+  Address      : Unsupported format                                          
+  Platform     : ArubaOS (MODEL: 515), Version Aruba AP                     
+  Capability   :                                                            
+  Device Port  : eth0                                                       
+  Version      : ArubaOS (MODEL: 515), Version Aruba AP                     
+
+------------------------------------------------------------------------------
+
+  Port : 24    
+  Device ID : 54 bf 64 3b 9c 68                                             
+  Address Type : IP          
+  Address      : 172.17.0.1                                                  
+  Platform     : Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM...
+  Capability   : Router Switch                                              
+  Device Port  : wlp61s0                                                    
+  Version      : Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM...
+
+------------------------------------------------------------------------------
 
   Port : 24    
   Device ID : 9c 8c d8 c9 17 ae                                             
@@ -637,13 +687,13 @@ System ID: 98f2b3-fe8880
 ------------------------------------------------------------------------------
 
   Port : 24    
-  Device ID : 54 bf 64 3b 9c 68                                             
+  Device ID : ea e6 4b 18 de 20                                             
   Address Type : IP          
-  Address      : 172.17.0.1                                                  
-  Platform     : Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM...
-  Capability   : Router Switch                                              
-  Device Port  : wlp61s0                                                    
-  Version      : Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEM...
+  Address      : 192.168.10.106                                              
+  Platform     :  Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ...
+  Capability   : Switch                                                     
+  Device Port  : en0                                                        
+  Version      :  Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 ...
 
 ------------------------------------------------------------------------------
 
@@ -674,8 +724,11 @@ System ID: 98f2b3-fe8880
 
   LocalPort | ChassisId          PortId             PortDescr SysName           
   --------- + ------------------ ------------------ --------- ------------------
-  24        | 9c 8c d8 c9 17 ae  9c 8c d8 c9 17 ae  eth0      IAP-515           
+  5         | e4 5f 01 85 86 a5  00 e0 4c 36 03 48  eth0      piconsole-v2      
+  11        | b0 0c d1 37 25 91  b0 0c d1 37 25 91                              
   24        | 54 bf 64 3b 9c 68  28 d0 ea 93 2a 42  wlp61s0   1S1K-G5-5587      
+  24        | 9c 8c d8 c9 17 ae  9c 8c d8 c9 17 ae  eth0      IAP-515           
+  24        | ea e6 4b 18 de 20  50 ed 3c 22 be 32  en0       hp8600-2328.local 
   24        | Garage             br0                          NanoStation 5AC...
   24        | fc ec da c4 6e 55  eth0                                           
  
@@ -685,22 +738,43 @@ System ID: 98f2b3-fe8880
 
  LLDP Remote Device Information Detail
 
-  Local Port   : 24
+  Local Port   : 5
   ChassisType  : mac-address         
-  ChassisId    : 9c 8c d8 c9 17 ae        
+  ChassisId    : e4 5f 01 85 86 a5        
   PortType     : mac-address                                               
-  PortId       : 9c 8c d8 c9 17 ae                                         
-  SysName      : IAP-515                         
-  System Descr : ArubaOS (MODEL: 515), Version Aruba IAP                     
+  PortId       : 00 e0 4c 36 03 48                                         
+  SysName      : piconsole-v2                    
+  System Descr : Raspbian GNU/Linux 10 (buster) Linux 5.10.103-v7+ #1529 S...
   PortDescr    : eth0                                                        
   Pvid         :                          
 
-  System Capabilities Supported  : bridge, wlan-access-point
-  System Capabilities Enabled    : wlan-access-point
+  System Capabilities Supported  : bridge, wlan-access-point, router
+  System Capabilities Enabled    : wlan-access-point, router
 
   Remote Management Address
      Type    : ipv4
-     Address : 192.168.10.144
+     Address : 192.168.10.111
+     Type    : ipv6
+     Address : fe80::b8c9:3112:4c04:c307
+
+------------------------------------------------------------------------------
+  Local Port   : 11
+  ChassisType  : mac-address         
+  ChassisId    : b0 0c d1 37 25 91        
+  PortType     : mac-address                                               
+  PortId       : b0 0c d1 37 25 91                                         
+  SysName      :                                 
+  System Descr :                                                             
+  PortDescr    :                                                             
+  Pvid         :                          
+
+  System Capabilities Supported  : 
+  System Capabilities Enabled    : 
+
+  Remote Management Address
+
+  MED Information Detail 
+    EndpointClass          :Class1
 
 ------------------------------------------------------------------------------
   Local Port   : 24
@@ -721,6 +795,44 @@ System ID: 98f2b3-fe8880
      Address : 172.17.0.1
      Type    : ipv6
      Address : fe80::42:63ff:fe21:af2e
+
+------------------------------------------------------------------------------
+  Local Port   : 24
+  ChassisType  : mac-address         
+  ChassisId    : 9c 8c d8 c9 17 ae        
+  PortType     : mac-address                                               
+  PortId       : 9c 8c d8 c9 17 ae                                         
+  SysName      : IAP-515                         
+  System Descr : ArubaOS (MODEL: 515), Version Aruba IAP                     
+  PortDescr    : eth0                                                        
+  Pvid         :                          
+
+  System Capabilities Supported  : bridge, wlan-access-point
+  System Capabilities Enabled    : wlan-access-point
+
+  Remote Management Address
+     Type    : ipv4
+     Address : 192.168.10.144
+
+------------------------------------------------------------------------------
+  Local Port   : 24
+  ChassisType  : mac-address         
+  ChassisId    : ea e6 4b 18 de 20        
+  PortType     : mac-address                                               
+  PortId       : 50 ed 3c 22 be 32                                         
+  SysName      : hp8600-2328.local               
+  System Descr :  Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 0...
+  PortDescr    : en0                                                         
+  Pvid         :                          
+
+  System Capabilities Supported  : bridge, wlan-access-point, router
+  System Capabilities Enabled    : bridge, wlan-access-point
+
+  Remote Management Address
+     Type    : ipv4
+     Address : 192.168.10.106
+     Type    : ipv6
+     Address : fe80::1
 
 ------------------------------------------------------------------------------
   Local Port   : 24
@@ -802,7 +914,9 @@ System ID: 98f2b3-fe8880
  BPDU Protected Ports : 2-20                                                                            
  
  !++++++++++++++ 
-  show power-over-ethernet brief | i Del 
+  show power-over-ethernet brief | i Del
+ 5      Yes  low      off     usage usage  2.4 W   2.3 W   Delivering   3   1  
+ 16     Yes  low      off     usage usage  6.4 W   6.1 W   Delivering   4   2   
  !++++++++++++++ 
   show power
 
@@ -816,9 +930,9 @@ System ID: 98f2b3-fe8880
   Total Available Power  :  370 W  
   Total Failover Pwr Avl :    0 W
   Total Redundancy Power :    0 W
-  Total Power Drawn      :    0 W +/- 6W       
-  Total Power Reserved   :    0 W              
-  Total Remaining Power  :  370 W              
+  Total Power Drawn      :   10 W +/- 6W       
+  Total Power Reserved   :   10 W              
+  Total Remaining Power  :  360 W              
 
  Internal Power
 
@@ -860,8 +974,8 @@ System ID: 98f2b3-fe8880
   Ses Type     | Source IP                                      Port 
   --- -------- + ---------------------------------------------- -----
   1   console  |
-  2   ssh      | 192.168.10.115                                 59430
-  3   ssh      | 192.168.10.115                                 40848
+  2   ssh      | 192.168.10.115                                 60878
+  3   ssh      | 192.168.10.115                                 37926
   4   inactive |
   5   inactive |
   6   inactive |
@@ -960,9 +1074,10 @@ Configuration files:
 
   ------------- ------- ----
   000c29-4caa4e 24      10  
+  000c29-8413e1 24      10  
   000c29-8413eb 24      10  
+  00e04c-360348 5       10  
   00e0b3-34562f 24      10  
-  061413-0334ea 24      10  
   085b0e-7c7930 24      10  
   101f74-6341f8 24      10  
   2428fd-28ae26 24      10  
@@ -971,17 +1086,13 @@ Configuration files:
   446755-03d472 24      10  
   50ed3c-22be32 24      10  
   788cb5-1780c8 24      10  
-  82b881-8bcb00 24      10  
   8e93a6-f482f4 24      10  
   9c8cd8-c917ae 24      10  
   9e539c-18f1fe 24      10  
-  a4307a-8975e4 24      10  
-  ace010-ee5802 24      10  
+  b00cd1-372591 11      10  
   b099d7-f9dad5 24      10  
   bcbac2-0f4fa4 24      10  
-  dc4f22-fa1708 24      10  
   dc56e7-496195 24      10  
-  f84d89-7a1349 24      10  
   fcecda-c46e55 24      10  
   fcecda-c4770b 24      10  
   fcecda-c56e55 24      10  
@@ -995,8 +1106,6 @@ Configuration files:
   IP Address       MAC Address       Type    Port
   ---------------  ----------------- ------- ----
   192.168.10.115   28d0ea-932a42     dynamic 24  
-  192.168.10.117   b099d7-f9dad5     dynamic 24  
-  192.168.10.138   a4307a-8975e4     dynamic 24  
   192.168.10.221   000c29-4caa4e     dynamic 24  
   192.168.10.254   085b0e-7c7930     dynamic 24  
 

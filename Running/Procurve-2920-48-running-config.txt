@@ -75,7 +75,7 @@ interface 4
    spanning-tree loop-guard bpdu-protection
    exit
 interface 5
-   untagged vlan 1
+   untagged vlan 10
    spanning-tree loop-guard bpdu-protection
    exit
 interface 6
@@ -99,7 +99,7 @@ interface 10
    spanning-tree loop-guard bpdu-protection
    exit
 interface 11
-   untagged vlan 1
+   untagged vlan 10
    spanning-tree loop-guard bpdu-protection
    exit
 interface 12
@@ -119,7 +119,7 @@ interface 15
    spanning-tree loop-guard bpdu-protection
    exit
 interface 16
-   untagged vlan 1
+   untagged vlan 10
    spanning-tree loop-guard bpdu-protection
    exit
 interface 17
@@ -172,13 +172,13 @@ interface loopback 0
    exit
 vlan 1
    name "DEFAULT_VLAN"
-   no untagged 1,3,17,24,Trk1
-   untagged 2,4-16,18-20,23
+   no untagged 1,3,5,11,16-17,24,Trk1
+   untagged 2,4,6-10,12-15,18-20,23
    ip address dhcp-bootp
    exit
 vlan 10
    name "User"
-   untagged 17,24
+   untagged 5,11,16-17,24
    ip address 192.168.10.52 255.255.255.0
    ip helper-address 10.10.83.20
    ip helper-address 10.10.100.50

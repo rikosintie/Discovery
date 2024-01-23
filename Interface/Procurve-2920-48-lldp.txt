@@ -1,5 +1,47 @@
 [
   {
+    "local_port": "5",
+    "neighbor_chassis_type": "mac-address",
+    "neighbor_chassis_id": "e4 5f 01 85 86 a5",
+    "port_type": "mac-address",
+    "neighbor_portid": "00 e0 4c 36 03 48",
+    "neighbor_sysname": "piconsole-v2",
+    "system_descr": "Raspbian GNU/Linux 10 (buster) Linux 5.10.103-v7+ #1529 S...",
+    "port_descr": "eth0",
+    "pvid": "",
+    "system_capabilities_supported": "bridge, wlan-access-point, router",
+    "system_capabilities_enabled": "wlan-access-point, router",
+    "remote_management_address": "fe80::b8c9:3112:4c04:c307"
+  },
+  {
+    "local_port": "11",
+    "neighbor_chassis_type": "mac-address",
+    "neighbor_chassis_id": "b0 0c d1 37 25 91",
+    "port_type": "mac-address",
+    "neighbor_portid": "b0 0c d1 37 25 91",
+    "neighbor_sysname": "",
+    "system_descr": "",
+    "port_descr": "",
+    "pvid": "",
+    "system_capabilities_supported": "",
+    "system_capabilities_enabled": "",
+    "remote_management_address": ""
+  },
+  {
+    "local_port": "24",
+    "neighbor_chassis_type": "mac-address",
+    "neighbor_chassis_id": "54 bf 64 3b 9c 68",
+    "port_type": "mac-address",
+    "neighbor_portid": "28 d0 ea 93 2a 42",
+    "neighbor_sysname": "1S1K-G5-5587",
+    "system_descr": "Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEMP...",
+    "port_descr": "wlp61s0",
+    "pvid": "",
+    "system_capabilities_supported": "bridge, wlan-access-point, router",
+    "system_capabilities_enabled": "bridge, wlan-access-point, router",
+    "remote_management_address": "fe80::42:63ff:fe21:af2e"
+  },
+  {
     "local_port": "24",
     "neighbor_chassis_type": "mac-address",
     "neighbor_chassis_id": "9c 8c d8 c9 17 ae",
@@ -16,16 +58,16 @@
   {
     "local_port": "24",
     "neighbor_chassis_type": "mac-address",
-    "neighbor_chassis_id": "54 bf 64 3b 9c 68",
+    "neighbor_chassis_id": "ea e6 4b 18 de 20",
     "port_type": "mac-address",
-    "neighbor_portid": "28 d0 ea 93 2a 42",
-    "neighbor_sysname": "1S1K-G5-5587",
-    "system_descr": "Ubuntu 23.10 Linux 6.5.0-14-generic #14-Ubuntu SMP PREEMP...",
-    "port_descr": "wlp61s0",
+    "neighbor_portid": "50 ed 3c 22 be 32",
+    "neighbor_sysname": "hp8600-2328.local",
+    "system_descr": " Darwin 21.6.0 Darwin Kernel Version 21.6.0: Thu Nov  9 0...",
+    "port_descr": "en0",
     "pvid": "",
     "system_capabilities_supported": "bridge, wlan-access-point, router",
-    "system_capabilities_enabled": "bridge, wlan-access-point, router",
-    "remote_management_address": "fe80::42:63ff:fe21:af2e"
+    "system_capabilities_enabled": "bridge, wlan-access-point",
+    "remote_management_address": "fe80::1"
   },
   {
     "local_port": "24",
