@@ -341,7 +341,7 @@ for line in fabric:
 
         #  Send commands from arp.txt for human readable output
         print(f"collecting show arp for {hostname}")
-        output_text_arp = net_connect.send_config_from_file("arp.txt", read_timeout=200)
+        output_text_arp = net_connect.send_command("show arp", read_timeout=200)
         print("-" * (len(cfg_file) + len(hostname) + 16))
 
         # Send show running
