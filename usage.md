@@ -143,9 +143,34 @@ sh mac-address | exclude 24|25
 
 Because port 11 has 25 in the mac address
 
-`b00cd1-372591 11      10 `
+`b00cd1-372591 11      10`
 
 And was excluded from the output.
+
+Here is a regex that will match any mac-address and then port 24 so that you can exclude port 24:
+
+```bash
+sh mac-address | ex "[a-fA-F-0-9]{13} 24"
+
+ Status and Counters - Port Address Table
+
+  MAC Address   Port    VLAN
+  ------------- ------- ----
+  bc9fe4-c342ca 12      1
+  00e04c-360348 5       10
+```
+
+You can use the regex "|" OR symbol also:
+
+```bash
+sh mac-address | ex "[a-fA-F-0-9]{13} 5|24"
+
+ Status and Counters - Port Address Table
+
+  MAC Address   Port    VLAN
+  ------------- ------- ----
+  bc9fe4-c342ca 12      1
+```
 
 ----------------------------------------------------------------
 
