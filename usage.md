@@ -147,10 +147,10 @@ Because port 11 has 25 in the mac address
 
 And was excluded from the output.
 
-Here is a regex that will match any mac-address and then port 24 so that you can exclude port 24:
+Here is a regex that will match any mac-address and then port 24 so that you can exclude port 24. Note that there has to be 5 spaces between the } and the port number:
 
 ```bash
-sh mac-address | ex "[a-fA-F-0-9]{13} 24"
+sh mac-address | ex "[a-fA-F-0-9]{13}     24"
 
  Status and Counters - Port Address Table
 
@@ -163,7 +163,7 @@ sh mac-address | ex "[a-fA-F-0-9]{13} 24"
 You can use the regex "|" OR symbol also:
 
 ```bash
-sh mac-address | ex "[a-fA-F-0-9]{13} 5|24"
+sh mac-address | ex "[a-fA-F-0-9]{13}     5|24"
 
  Status and Counters - Port Address Table
 
