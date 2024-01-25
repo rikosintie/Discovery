@@ -18,18 +18,18 @@ See README.md.
 
 """
 from __future__ import print_function
-from collections import namedtuple
+
 import argparse
+import io
 import re
 import sys
-import io
+from collections import namedtuple
 
 try:
-    from urllib2 import urlopen
-    from urllib2 import URLError
+    from urllib2 import URLError, urlopen
 except ImportError:
-    from urllib.request import urlopen
     from urllib.error import URLError
+    from urllib.request import urlopen
 
 try:
     from StringIO import StringIO
@@ -37,7 +37,8 @@ except ImportError:
     from io import StringIO
 
 # Vendor tuple
-Vendor = namedtuple('Vendor', ['manuf', 'comment'])
+Vendor = namedtuple("Vendor", ["manuf", "comment"])
+
 
 class MacParser(object):
     """Class that contains a parser for Wireshark's OUI database.
@@ -57,9 +58,12 @@ class MacParser(object):
         IOError: If manuf file could not be found.
 
     """
-    MANUF_URL = "https://code.wireshark.org/review/gitweb?p=wireshark.git;a=blob_plain;f=manuf"
 
-    def  __init__(self, manuf_name="manuf", update=False):
+    MANUF_URL = (
+        "https://code.wireshark.org/review/gitweb?p=wireshark.git;a=blob_plain;f=manuf"
+    )
+
+    def __init__(self, manuf_name="manuf", update=False):
         self._manuf_name = manuf_name
         if update:
             self.update()
@@ -248,16 +252,25 @@ class MacParser(object):
     def _bits_left(mac_str):
         return 48 - 4 * len(mac_str)
 
+
 def main():
     """Simple command line wrapping for MacParser."""
-    argparser = argparse.ArgumentParser(description="Parser utility for Wireshark's OUI database.")
-    argparser.add_argument('-m', "--manuf",
-                           help="manuf file path. Defaults to manuf in same directory",
-                           action="store")
-    argparser.add_argument("-u", "--update",
-                           help="update manuf file from the internet",
-                           action="store_true")
-    argparser.add_argument("mac_address", nargs='?', help="MAC address to check")
+    argparser = argparse.ArgumentParser(
+        description="Parser utility for Wireshark's OUI database."
+    )
+    argparser.add_argument(
+        "-m",
+        "--manuf",
+        help="manuf file path. Defaults to manuf in same directory",
+        action="store",
+    )
+    argparser.add_argument(
+        "-u",
+        "--update",
+        help="update manuf file from the internet",
+        action="store_true",
+    )
+    argparser.add_argument("mac_address", nargs="?", help="MAC address to check")
 
     args = argparser.parse_args()
     if args.manuf:
@@ -269,6 +282,7 @@ def main():
         print(parser.get_all(args.mac_address))
 
     sys.exit(0)
+
 
 if __name__ == "__main__":
     main()
