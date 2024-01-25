@@ -172,6 +172,8 @@ sh mac-address | ex "[a-fA-F-0-9]{13}     5|24"
   bc9fe4-c342ca 12      1
 ```
 
+I use this [site](https://regexr.com/) to test/develop regex expressions.
+
 ----------------------------------------------------------------
 
 ## Run the discovery script
