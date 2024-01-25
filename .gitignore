@@ -8,3 +8,4 @@ include/
 device-inventory*
 Discovery.code-workspace
 test.py
+*.pyc
