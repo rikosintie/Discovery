@@ -129,7 +129,7 @@ In the example, the `|` symbol means logical OR. This works because the switch d
   282986-40a427     H24                             1
 ```
 
-On a non modular switch you can't use:
+On a non-modular switch you can't use:
 
 ```bash
 sh mac-address | exclude 24|25
