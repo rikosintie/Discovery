@@ -81,8 +81,8 @@ import manuf
 
 # from disc_functs import get_current_path
 
-ic.enable()
-# ic.disable()
+# ic.enable()
+ic.disable()
 
 __author__ = "Michael Hubbard"
 __author_email__ = "michael.hubbard999@gmail.com"
