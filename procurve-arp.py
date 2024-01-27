@@ -270,15 +270,7 @@ for line in fabric:
         k = long2ip(k)
         print(k, v)
         Mac_IP[v] = k
-        if "1cc1.de43.aeb7" in Mac_IP:
-            print("The IP for MACA %s is  %s" % (v, k))
 
-    # print("Number of IP, MAC and VLAN: %s " % d)
-
-    # s = [(k, data2[k]) for k in sorted(data2)]
-    # for k, v in s:
-    #     k = long2ip(k)
-    #     print(k, v)
     print()
     # look up manufacture from MAC
     p = manuf.MacParser()
