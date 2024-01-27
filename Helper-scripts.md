@@ -2,6 +2,7 @@
 
 # The Helper Scripts<!-- omit from toc -->
 
+- [What files are created](#what-files-are-created)
 - [Creating Port maps](#creating-port-maps)
   - [Running the port map scripts](#running-the-port-map-scripts)
     - [Running the procurve-arp.py script](#running-the-procurve-arppy-script)
@@ -19,6 +20,8 @@
   - [The 10Mbps interfaces report](#the-10mbps-interfaces-report)
   - [The ports in use report](#the-ports-in-use-report)
 - [Convert MAC addresses](#convert-mac-addresses)
+
+## What files are created
 
 After the `procurve-Config-pull.py` script finishes, you can use the ***hostname-CR-data.txt*** files to get started planning. The script also creates JSON files for:
 
