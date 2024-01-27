@@ -4,6 +4,7 @@
 
 - [Creating Port maps](#creating-port-maps)
   - [Running the port map scripts](#running-the-port-map-scripts)
+    - [Running the procurve-arp.py script](#running-the-procurve-arppy-script)
     - [Running the procurve-macaddr.py script](#running-the-procurve-macaddrpy-script)
 - [CDP Neighbor Reports](#cdp-neighbor-reports)
   - [The cdp scripts](#the-cdp-scripts)
@@ -106,6 +107,8 @@ Having this information makes identifying special devices such as HVAC controlle
 There are two general categories of switch deployments. The first is a distributed layer 3 deployment where every closet has a layer 3 router. In that case, the procurve-Config-pull has created an arp.txt file and mac-address.txt file for every switch and the script reads the same inventory file and matches the hostname-arp.txt file with the hostname-mac-address.txt file.
 
 The second is a Core/IDF deployment where there is a layer 3 switch in an MDF and the closets are connected at layer 2. In this case, we have to use an argument in the procurve-macaddr.py script to tell it which hostname-arp.txt file to use for each hostname-mac-address.txt file.
+
+#### Running the procurve-arp.py script
 
 Example of a distributed layer 3 deployment:
 
