@@ -160,9 +160,9 @@ with open(dev_inv_file) as devices_file:
     fabric = devices_file.readlines()
 # loc = get_current_path()
 loc = os.getcwd()
-print("-" * (len(dev_inv_file) + 23))
+print("-" * (len(loc + dev_inv_file) + 23))
 print(f"Reading devices from: {loc}\{dev_inv_file}")
-print("-" * (len(dev_inv_file) + 23))
+print("-" * (len(loc + dev_inv_file) + 23))
 uptime = []
 for line in fabric:
     line = line.strip("\n")
@@ -173,13 +173,11 @@ for line in fabric:
     # password = line.split(",")[4]
 
     arp_file = get_current_path("port-maps", "-arp.txt", "data")
-    # loc = loc + "\\data\\"
-    # arp_file = loc + hostname + "-arp.txt"
     ic(arp_file)
-    # end import
-
     print()
-    # create a blank list to accept each line in the file
+    print("-" * (len(loc + arp_file) + 23))
+    print(f"Reading devices from: {loc}\{arp_file}")
+    print("-" * (len(loc + arp_file) + 23))
     data1 = []
     try:
         f = open(arp_file, "r")
@@ -252,17 +250,18 @@ for line in fabric:
         data2[IP] = IP_Addr
         counter = counter + 1
         # Sort IPs
-        print(IP)
         # IPs = sorted(IPs, key=lambda ip: struct.unpack("!L", inet_aton(ip))[0])
         IPs = sorted(
             IPs, key=lambda ip: struct.unpack("!L", inet_aton(ip.lstrip(" ")))[0]
         )
-        print("Number of IP Addresses: %s " % d)
-        for IP in IPs:
-            print(IP)
+    print("Number of IP Addresses: %s " % d)
+    print("-" * (24 + len(str(d))))
+    for IP in IPs:
+        print(IP)
 
     print()
     print("Number of IP and MAC Addresses: %s " % d)
+    print("-" * (32 + len(str(d))))
     # Create an empty dictionary to hold mac-ip pairs. Will be used with macaddr.py to output ip with interface
     Mac_IP = {}
     s = [(k, data[k]) for k in sorted(data)]
@@ -273,25 +272,20 @@ for line in fabric:
         Mac_IP[v] = k
         if "1cc1.de43.aeb7" in Mac_IP:
             print("The IP for MACA %s is  %s" % (v, k))
-    #    print(Mac_IP)
 
+    # print("Number of IP, MAC and VLAN: %s " % d)
+
+    # s = [(k, data2[k]) for k in sorted(data2)]
+    # for k, v in s:
+    #     k = long2ip(k)
+    #     print(k, v)
     print()
-    print("Number of IP, MAC and VLAN: %s " % d)
-
-    s = [(k, data2[k]) for k in sorted(data2)]
-    for k, v in s:
-        k = long2ip(k)
-        print(k, v)
-    #
-    #
     # look up manufacture from MAC
-    print()
-    #
     p = manuf.MacParser()
 
     # Print IP, MAC, Manufacture
     print("Number of IP, MAC and Manufacture: %s " % d)
-    print()
+    print("-" * (35 + len(str(d))))
     s = [(k, data[k]) for k in sorted(data)]
     for k, v in s:
         #   Convert IP back to dotted quad notation.
