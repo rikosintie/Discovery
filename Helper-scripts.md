@@ -2,6 +2,7 @@
 
 # The Helper Scripts<!-- omit from toc -->
 
+- [Creating Port maps](#creating-port-maps)
 - [CDP Neighbor Reports](#cdp-neighbor-reports)
   - [The cdp scripts](#the-cdp-scripts)
   - [The cdp neighbor text report](#the-cdp-neighbor-text-report)
@@ -18,6 +19,7 @@
 
 After the `procurve-Config-pull.py` script finishes, you can use the ***hostname-CR-data.txt*** files to get started planning. But the script also creates JSON files for:
 
+- Port Maps
 - cdp neighbors
 - lldp neighbors
 - system data
@@ -26,6 +28,14 @@ After the `procurve-Config-pull.py` script finishes, you can use the ***hostname
 In addition, there is a script to convert mac addresses between different formats
 
 - Convert MAC address formats
+
+In the port-maps folder
+
+- data
+  - hostname-mac-address.txt - Output of show mac-address per port
+  - hostname-arp.txt - Output of show arp command
+- final
+  - hostname-ports.txt - Output of scripts for port mapping
 
 In the "Interface" folder
 
@@ -36,6 +46,57 @@ In the "Interface" folder
 - hostname-int-br.txt - JSON format of "show interface int br" command
 
 This section will discuss the scripts that convert the JSON into reports.
+
+----------------------------------------------------------------
+
+## Creating Port maps
+
+There are two scripts in the discovery folder:
+
+- procurve-arp.py - converts the IP to Arp mappings into "key": "value" pairs
+
+Here is an example:
+
+```bash
+{
+    "04d590-0e77ab": "10.1.0.252",
+    "883a30-76ce00": "10.154.1.3",
+    "104f58-682100": "10.154.1.4",
+    "b8d4e7-4c4900": "10.154.1.5",
+}
+```
+
+It save the data to hostname-Mac2IP.json in the data folder.
+
+- procurve-macaddr.py - Matches the Mac address in the hostname-Mac2IP.json file to the mac address in the hostname-mac-address.txt file.
+
+The port maps return:
+
+- Vlan ID
+- IP Address
+- MAC Address
+- Interface
+- Vendor ID
+
+Here is an example of the port map:
+
+```bash
+Number of Entries: 83
+
+Device Name: Test-Core
+Vlan   IP Address       MAC Address       Interface   Vendor
+--------------------------------------------------------------------------------
+   1   10.154.66.1      7c0507-1f6ee4         C1      Pegatron
+----------------------------------------------------------------------
+   1   10.154.66.2      7c0507-1b45ea         C2      Pegatron
+----------------------------------------------------------------------
+   1   10.154.68.25     00c0b7-e4b43a         C4      American
+----------------------------------------------------------------------
+  75   10.154.23.241    000c29-e97dd1         C5      VMware
+----------------------------------------------------------------------
+```
+
+Having this information makes identifying special devices such as HVAC controllers, Door access controllers, Cameras, etc. easier.
 
 ----------------------------------------------------------------
 
