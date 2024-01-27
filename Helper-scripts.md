@@ -3,6 +3,8 @@
 # The Helper Scripts<!-- omit from toc -->
 
 - [Creating Port maps](#creating-port-maps)
+  - [Running the port map scripts](#running-the-port-map-scripts)
+    - [Running the procurve-macaddr.py script](#running-the-procurve-macaddrpy-script)
 - [CDP Neighbor Reports](#cdp-neighbor-reports)
   - [The cdp scripts](#the-cdp-scripts)
   - [The cdp neighbor text report](#the-cdp-neighbor-text-report)
@@ -17,7 +19,7 @@
   - [The ports in use report](#the-ports-in-use-report)
 - [Convert MAC addresses](#convert-mac-addresses)
 
-After the `procurve-Config-pull.py` script finishes, you can use the ***hostname-CR-data.txt*** files to get started planning. But the script also creates JSON files for:
+After the `procurve-Config-pull.py` script finishes, you can use the ***hostname-CR-data.txt*** files to get started planning. The script also creates JSON files for:
 
 - Port Maps
 - cdp neighbors
@@ -25,17 +27,14 @@ After the `procurve-Config-pull.py` script finishes, you can use the ***hostname
 - system data
 - interface statistics
 
-In addition, there is a script to convert mac addresses between different formats
+In the data folder, below the port-maps folder, two text files are created:
 
-- Convert MAC address formats
+- hostname-mac-address.txt - Output of show mac-address per port
+- hostname-arp.txt - Output of show arp command
 
-In the port-maps folder
+In the final folder
 
-- data
-  - hostname-mac-address.txt - Output of show mac-address per port
-  - hostname-arp.txt - Output of show arp command
-- final
-  - hostname-ports.txt - Output of scripts for port mapping
+- hostname-ports.txt - The final output of two scripts for creating port maps
 
 In the "Interface" folder
 
@@ -47,13 +46,17 @@ In the "Interface" folder
 
 This section will discuss the scripts that convert the JSON into reports.
 
+In addition, there is a script to convert mac addresses between different formats
+
+- Convert MAC address formats
+
 ----------------------------------------------------------------
 
 ## Creating Port maps
 
 There are two scripts in the discovery folder:
 
-- procurve-arp.py - converts the IP to Arp mappings into "key": "value" pairs
+- procurve-arp.py - converts the IP and Arp records into "key": "value" pairs
 
 Here is an example:
 
@@ -66,7 +69,7 @@ Here is an example:
 }
 ```
 
-It save the data to hostname-Mac2IP.json in the data folder.
+The Mac Address is used for the key, the IP Address for the value. It saves the data to hostname-Mac2IP.json in the data folder.
 
 - procurve-macaddr.py - Matches the Mac address in the hostname-Mac2IP.json file to the mac address in the hostname-mac-address.txt file.
 
@@ -96,7 +99,55 @@ Vlan   IP Address       MAC Address       Interface   Vendor
 ----------------------------------------------------------------------
 ```
 
-Having this information makes identifying special devices such as HVAC controllers, Door access controllers, Cameras, etc. easier.
+Having this information makes identifying special devices such as HVAC controllers, Door access controllers, Cameras, etc. easier. It also allows you to verify that all devices are patched back into the correct port on the switch.
+
+### Running the port map scripts
+
+There are two general categories of switch deployments. The first is a distributed layer 3 deployment where every closet has a layer 3 router. In that case, the procurve-Config-pull has created an arp.txt file and mac-address.txt file for every switch and the script reads the same inventory file and matches the hostname-arp.txt file with the hostname-mac-address.txt file.
+
+The second is a Core/IDF deployment where there is a layer 3 switch in an MDF and the closets are connected at layer 2. In this case, we have to use an argument in the procurve-macaddr.py script to tell it which hostname-arp.txt file to use for each hostname-mac-address.txt file.
+
+Example of a distributed layer 3 deployment:
+
+`python3 procurve-arp.py -s area1`
+
+The script will create the hostname-Mac2IP.json and will print some information to the screen. The first information is the file being processed and the number of IPs and the IPs sorted. Here is an example:
+
+```bash
+----------------------------------------------------------------------------------------
+Reading devices from: /home/mhubbard/04_Tools/Discovery/port-maps/data/test-Core-arp.txt
+----------------------------------------------------------------------------------------
+Number of IP Addresses: 566
+---------------------------
+10.1.0.252
+10.112.1.3
+```
+
+The next output is IP and MAC Addresses. Here is an example:
+
+```bash
+Number of IP and MAC Addresses: 566
+-----------------------------------
+10.1.0.252 04d590-0e77ab
+10.112.1.3 883a30-76ce00
+```
+
+And finally, the IP, MAC and Manufacture. Here is an example:
+
+```bash
+Number of IP, MAC and Manufacture: 566
+--------------------------------------
+10.1.0.252 04d590-0e77ab Fortinet
+10.112.1.3 883a30-76ce00 ArubaaHe
+```
+
+If you have a need for this information great, if not just ignore it.
+
+#### Running the procurve-macaddr.py script
+
+This script reads the hostname-Mac2IP.json and hostname-mac-address.txt files and creates the port maps. The port maps are saved in the final folder under port-maps.
+
+`python3 procurve-macaddr.py -s area1`
 
 ----------------------------------------------------------------
 
