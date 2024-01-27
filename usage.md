@@ -163,7 +163,7 @@ sh mac-address | ex "[a-fA-F-0-9]{13}     24"
 You can use the regex "|" OR symbol also:
 
 ```bash
-sh mac-address | ex "[a-fA-F-0-9]{13}     5|24"
+show mac-address | ex "[a-f-0-9]{13}     24|49"
 
  Status and Counters - Port Address Table
 
