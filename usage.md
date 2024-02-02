@@ -598,11 +598,16 @@ Chromium based browsers provide a flag to allow local file access. This is a qui
 Navigate to the Chrome folder. On a debian based system this is `/opt/google/chrome`. Then start chrome using the following command:
 
 ```bash
-/opt/google/chrome
+cd /opt/google/chrome
 $ ./chrome --allow-file-access-from-files
 ```
 
-Now you can open procurve.html in chrome and view the report.
+Now you can open procurve.html in chrome and view the report. If you use this feature often, you can create an alias in the `~/.zshrc` file
+
+```bash
+# start chrome and allow local file read
+alias chrome-local='cd /opt/google/chrome;./chrome --allow-file-access-from-files'
+```
 
 **On Windows**
 
