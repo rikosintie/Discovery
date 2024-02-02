@@ -123,6 +123,12 @@ parser = argparse.ArgumentParser(
     description="-s site, -l 1 create log.txt, -p 1 prompt for password, -t 1-9 timeout, -e W,I,M,D,E to pull logs"
 )
 parser.add_argument(
+    "-c",
+    "--conf",  # Optional (but recommended) long version
+    default="",
+    help="config-file to use",
+)
+parser.add_argument(
     "-e",
     "--event",  # Optional (but recommended) long version
     default="",
@@ -250,8 +256,10 @@ for line in fabric:
         print(f"\nExec time: {end_time - now}\n")
         continue
     #  all switches use the same config file
-    cfg_file = "procurve" + "-config-file.txt"
-    # cfg_file = "cisco" + "-config-file.txt"
+    if args.conf == "":
+        cfg_file = "procurve" + "-config-file.txt"
+    else:
+        cfg_file = f"{args.conf}-config-file.txt"
     print()
     print(net_connect.find_prompt())
     print()
