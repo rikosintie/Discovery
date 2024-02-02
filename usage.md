@@ -12,6 +12,7 @@
 - [Run the discovery script](#run-the-discovery-script)
   - [What options are available](#what-options-are-available)
   - [What do the arguments do](#what-do-the-arguments-do)
+  - [change the config-file](#change-the-config-file)
     - [Collecting switch logs](#collecting-switch-logs)
     - [Setting the Password](#setting-the-password)
     - [SSH Logging](#ssh-logging)
@@ -198,12 +199,13 @@ You can run the script with -h to get help:
 python3 procurve_Config_pull.py -h
 
 
-usage: procurve_Config_pull.py [-h] [-e EVENT] [-l LOGGING] [-p PASSWORD] [-s SITE] [-t TIMEOUT]
+usage: procurve_Config_pull.py [-h] [-c CONF] [-e EVENT] [-l LOGGING] [-p PASSWORD] [-s SITE] [-t TIMEOUT]
 
 -s site, -l 1 create log.txt, -p 1 prompt for password, -t 1-9 timeout, -e W,I,M,D,E to pull logs
 
 options:
   -h, --help            show this help message and exit
+  -c CONF, --conf CONF  config-file to use
   -e EVENT, --event EVENT
                         -e W,I,M,D,E to pull switch logs
   -l LOGGING, --logging LOGGING
@@ -219,6 +221,14 @@ options:
 ### What do the arguments do
 
 The only required argument is `-s site`. This references the device-inventory file.
+
+### change the config-file
+
+The default file of commands to send is named procurve-config-file.txt. You can add `-c` and a word to use an alternate file. For example:
+
+`-c core`
+
+would use `core-config-file.txt` as the file sent to switch.`
 
 #### Collecting switch logs
 
