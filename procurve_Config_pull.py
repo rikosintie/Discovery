@@ -77,7 +77,7 @@ ic.enable()
 ic.disable()
 
 
-def get_current_path(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
+def create_filename(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
     """
     returns a valid path regardless of the OS
 
@@ -197,7 +197,7 @@ with open(dev_inv_file, encoding="utf-8-sig") as devices_file:
 
 print("-" * (len(dev_inv_file) + 23))
 print(f"Reading devices from: {dev_inv_file}")
-# print("-" * (len(dev_inv_file) + 23))
+
 uptime = []
 for line in fabric:
     line = line.strip("\n")
@@ -207,235 +207,235 @@ for line in fabric:
     username = line.split(",")[3]
 
     if vendor.lower() == "hp_procurve":
-        now = datetime.now()
-        start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-        # print("-----------------------------------------------------")
-        print("-" * (len(hostname) + 42))
-        print((str(start_time) + " Connecting to switch {}".format(hostname)))
-        print("-" * (len(hostname) + 42))
-        try:
-            device = {
-                "device_type": vendor,
-                "ip": ipaddr,
-                "username": username,
-                "password": password,
-                "conn_timeout": 600,
-            }
-            net_connect = ConnectHandler(**device)
+        sh_run = "show running structured"
+    else:
+        sh_run = "show running"
+    now = datetime.now()
+    start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+    # print("-----------------------------------------------------")
+    print("-" * (len(hostname) + 42))
+    print((str(start_time) + " Connecting to switch {}".format(hostname)))
+    print("-" * (len(hostname) + 42))
+    try:
+        device = {
+            "device_type": vendor,
+            "ip": ipaddr,
+            "username": username,
+            "password": password,
+            "conn_timeout": 60,
+        }
+        net_connect = ConnectHandler(**device)
 
+    except NetmikoTimeoutException:
+        end_time = datetime.now()
+        print(f"\nExec time: {end_time - now}\n")
+        print(
+            f"Could not connect to {hostname} at {ipaddr}. The connection timed out. Remove it from the device inventory file"
+        )
+        continue
+    except AuthenticationException:
+        end_time = datetime.now()
+        print(f"\nExec time: {end_time - now}\n")
+        print(
+            f"Could not connect to {hostname} at {ipaddr}. The Credentials failed.  Remove it from the device inventory file"
+        )
+        continue
+    except (EOFError, SSHException):
+        # catch unexpected exceptions
+        print(
+            f"Could not connect to {hostname} at {ipaddr}, remove it"
+            " from the device inventory file"
+        )
+        end_time = datetime.now()
+        print(f"\nExec time: {end_time - now}\n")
+        continue
+    #  all switches use the same config file
+    cfg_file = "procurve" + "-config-file.txt"
+    # cfg_file = "cisco" + "-config-file.txt"
+    print()
+    print(net_connect.find_prompt())
+    print()
+    print("-" * (len(cfg_file) + len(hostname) + 16))
+    print(f"processing {cfg_file} for {hostname}")
+    print("-" * (len(cfg_file) + len(hostname) + 16))
+    remove_empty_lines(cfg_file)
+    with open(cfg_file) as config_file:
+        show_commands = config_file.readlines()
+
+    # Netmiko normally allows 100 seconds for send_command to complete
+    # delay_factor=2 would allow 200 seconds.
+    output_show_str: str = ""
+    time_out = args.timeout
+    for command in show_commands:
+        output_show = net_connect.send_command(
+            command, strip_command=False, delay_factor=time_out
+        )
+        ic(output_show)
+        output_show_str = f"{output_show_str} \n !++++++++++++++ \n  {output_show}"
+
+    # pull logs. Logs tend to time out because they are so large
+    # you can set the timeout value up if they are timing out.
+    if args.event != "":
+        try:
+            log_type = args.event.split(",")
+            time_out = args.timeout
+            for type in log_type:
+                print(f"processing show logging -{type} for {hostname}")
+                output_event = f"output_event_{type}"
+                show_logging = f"show logging -r -{type}"
+                output_event = net_connect.send_command(
+                    show_logging, strip_command=False, delay_factor=time_out
+                )
+                print("-" * (len(cfg_file) + len(hostname) + 16))
+                #  Write the show logging output to disk
+                log_name = f"-log-{type}.txt"
+                int_report = create_filename("CR-data", log_name)
+                print(f"Writing show logging -{type} commands to {int_report}")
+                with open(int_report, "w") as file:
+                    file.write(output_event)
+                print("-" * (len(cfg_file) + len(hostname) + 16))
         except NetmikoTimeoutException:
             end_time = datetime.now()
             print(f"\nExec time: {end_time - now}\n")
             print(
-                f"Could not connect to {hostname} at {ipaddr}. The connection timed out. Remove it from the device inventory file"
+                f"Time out processing -{type} logs for {hostname} at {ipaddr}. The connection timed out. Try setting -e to a higher value"
             )
             continue
-        except AuthenticationException:
-            end_time = datetime.now()
-            print(f"\nExec time: {end_time - now}\n")
-            print(
-                f"Could not connect to {hostname} at {ipaddr}. The Credentials failed.  Remove it from the device inventory file"
-            )
-            continue
-        except (EOFError, SSHException):
-            # catch unexpected exceptions
-            print(
-                f"Could not connect to {hostname} at {ipaddr}, remove it"
-                " from the device inventory file"
-            )
-            end_time = datetime.now()
-            print(f"\nExec time: {end_time - now}\n")
-            continue
-        #  all switches use the same config file
-        cfg_file = "procurve" + "-config-file.txt"
-        print()
-        print(net_connect.find_prompt())
-        print()
-        print("-" * (len(cfg_file) + len(hostname) + 16))
-        print(f"processing {cfg_file} for {hostname}")
-        print("-" * (len(cfg_file) + len(hostname) + 16))
-        remove_empty_lines(cfg_file)
-        with open(cfg_file) as config_file:
-            show_commands = config_file.readlines()
 
-        # Netmiko normally allows 100 seconds for send_command to complete
-        # delay_factor=2 would allow 200 seconds.
-        output_show_str: str = ""
-        time_out = args.timeout
-        for command in show_commands:
-            output_show = net_connect.send_command(
-                command, strip_command=False, delay_factor=time_out
-            )
-            ic(output_show)
-            output_show_str = f"{output_show_str} \n !++++++++++++++ \n  {output_show}"
+    # Use textFSM to create a json object with interface stats
+    print(f"collecting show interface for {hostname}")
+    output = net_connect.send_command("show interfaces", use_textfsm=True)
+    print("-" * (len(cfg_file) + len(hostname) + 16))
 
-        # pull logs. Logs tend to time out because they are so large
-        # you can set the timeout value up if they are timing out.
-        if args.event != "":
-            try:
-                log_type = args.event.split(",")
-                time_out = args.timeout
-                for type in log_type:
-                    print(f"processing show logging -{type} for {hostname}")
-                    output_event = f"output_event_{type}"
-                    show_logging = f"show logging -r -{type}"
-                    output_event = net_connect.send_command(
-                        show_logging, strip_command=False, delay_factor=time_out
-                    )
-                    print("-" * (len(cfg_file) + len(hostname) + 16))
-                    #  Write the show logging output to disk
-                    log_name = f"-log-{type}.txt"
-                    int_report = get_current_path("CR-data", log_name)
-                    print(f"Writing show logging -{type} commands to {int_report}")
-                    with open(int_report, "w") as file:
-                        file.write(output_event)
-                    print("-" * (len(cfg_file) + len(hostname) + 16))
-            except NetmikoTimeoutException:
-                end_time = datetime.now()
-                print(f"\nExec time: {end_time - now}\n")
-                print(
-                    f"Time out processing -{type} logs for {hostname} at {ipaddr}. The connection timed out. Try setting -e to a higher value"
-                )
-                continue
+    # Use textFSM to create a json object of show system
+    print(f"collecting show system for {hostname}")
+    output_system = net_connect.send_command("show system", use_textfsm=True)
+    print("-" * (len(cfg_file) + len(hostname) + 16))
 
-        # Use textFSM to create a json object with interface stats
-        print(f"collecting show interface for {hostname}")
-        output = net_connect.send_command("show interfaces", use_textfsm=True)
-        print("-" * (len(cfg_file) + len(hostname) + 16))
+    # Use textFSM to create a json object with cdp neighbors
+    print(f"collecting show cdp detail for {hostname}")
+    output_cdp = net_connect.send_command("show cdp neighbor detail", use_textfsm=True)
+    print("-" * (len(cfg_file) + len(hostname) + 16))
 
-        # Use textFSM to create a json object of show system
-        print(f"collecting show system for {hostname}")
-        output_system = net_connect.send_command("show system", use_textfsm=True)
-        print("-" * (len(cfg_file) + len(hostname) + 16))
+    # Use textFSM to create a json object with interface stats
+    template_path = os.getcwd()
+    template_file = os.path.join(template_path, "sh_int_br.textfsm")
+    print(f"collecting show interfaces brief for {hostname}")
+    output_show_int_br = net_connect.send_command(
+        "show interfaces brief",
+        strip_command=True,
+        use_textfsm=True,
+        textfsm_template=template_file,
+    )
+    print("-" * (len(cfg_file) + len(hostname) + 16))
 
-        # Use textFSM to create a json object with cdp neighbors
-        print(f"collecting show cdp detail for {hostname}")
-        output_cdp = net_connect.send_command(
-            "show cdp neighbor detail", use_textfsm=True
-        )
-        print("-" * (len(cfg_file) + len(hostname) + 16))
+    # Use textFSM to create a json object with show lldp info remote
+    print(f"collecting show lldp neighbors for {hostname}")
+    output_show_lldp = net_connect.send_command(
+        "show lldp info remote detail", use_textfsm=True
+    )
+    print("-" * (len(cfg_file) + len(hostname) + 16))
 
-        # Use textFSM to create a json object with interface stats
-        template_path = os.getcwd()
-        template_file = os.path.join(template_path, "sh_int_br.textfsm")
-        print(f"collecting show interfaces brief for {hostname}")
-        output_show_int_br = net_connect.send_command(
-            "show interfaces brief",
-            strip_command=True,
-            use_textfsm=True,
-            textfsm_template=template_file,
-        )
-        print("-" * (len(cfg_file) + len(hostname) + 16))
+    #  Send commands from mac.txt for human readable output
+    print(f"collecting show mac address for {hostname}")
+    output_text_mac = net_connect.send_config_from_file("mac.txt", read_timeout=200)
+    print("-" * (len(cfg_file) + len(hostname) + 16))
 
-        # Use textFSM to create a json object with show lldp info remote
-        print(f"collecting show lldp neighbors for {hostname}")
-        output_show_lldp = net_connect.send_command(
-            "show lldp info remote detail", use_textfsm=True
-        )
-        print("-" * (len(cfg_file) + len(hostname) + 16))
+    #  Send commands from z.txt for human readable output
+    print(f"collecting show arp for {hostname}")
+    output_text_arp = net_connect.send_command("show arp", read_timeout=200)
+    print("-" * (len(cfg_file) + len(hostname) + 16))
 
-        #  Send commands from mac.txt for human readable output
-        print(f"collecting show mac address for {hostname}")
-        output_text_mac = net_connect.send_config_from_file("mac.txt", read_timeout=200)
-        print("-" * (len(cfg_file) + len(hostname) + 16))
+    # Send show running
+    print(f"Collecting show running-config from {hostname}")
+    # print(net_connect.find_prompt())
+    output_text_run = net_connect.send_command(sh_run, read_timeout=360)
+    print("-" * (len(cfg_file) + len(hostname) + 16))
 
-        #  Send commands from arp.txt for human readable output
-        print(f"collecting show arp for {hostname}")
-        output_text_arp = net_connect.send_command("show arp", read_timeout=200)
-        print("-" * (len(cfg_file) + len(hostname) + 16))
+    # Disconnect from the switch and start writing data to disk
+    net_connect.disconnect()
 
-        # Send show running
-        print(f"Collecting show running-config from {hostname}")
-        # print(net_connect.find_prompt())
-        output_text_run = net_connect.send_command(
-            "show running structured", read_timeout=360
-        )
-        print("-" * (len(cfg_file) + len(hostname) + 16))
+    #  Write the show commands output to disk
+    int_report = create_filename("CR-data", "-CR-data.txt")
+    print(f"Writing show commands to {int_report}")
+    with open(int_report, "w") as file:
+        file.write(output_show_str)
+    print("-" * (len(dev_inv_file) + 23))
 
-        # Disconnect from the switch and start writing data to disk
-        net_connect.disconnect()
+    # Write the mac-address output to disk
+    int_report = create_filename("port-maps", "-mac-address.txt", "data")
+    print(f"Writing MAC addresses to {int_report}")
+    with open(int_report, "w") as file:
+        file.write(output_text_mac)
+    print("-" * (len(dev_inv_file) + 23))
 
-        #  Write the show commands output to disk
-        int_report = get_current_path("CR-data", "-CR-data.txt")
-        print(f"Writing show commands to {int_report}")
-        with open(int_report, "w") as file:
-            file.write(output_show_str)
-        print("-" * (len(dev_inv_file) + 23))
+    # Write the arp table plain text output to disk
+    int_report = create_filename("port-maps", "-arp.txt", "data")
+    print(f"Writing ARP data to {int_report}")
+    with open(int_report, "w") as file:
+        file.write(output_text_arp)
+    print("-" * (len(dev_inv_file) + 23))
 
-        # Write the mac-address output to disk
-        int_report = get_current_path("port-maps", "-mac-address.txt", "data")
-        print(f"Writing MAC addresses to {int_report}")
-        with open(int_report, "w") as file:
-            file.write(output_text_mac)
-        print("-" * (len(dev_inv_file) + 23))
+    #  Write the running config to disk
+    print(f"Writing show run to {int_report}")
+    int_report = create_filename("Running", "-running-config.txt")
+    with open(int_report, "w") as file:
+        file.write(output_text_run)
+    print("-" * (len(dev_inv_file) + 23))
 
-        # Write the arp table plain text output to disk
-        int_report = get_current_path("port-maps", "-arp.txt", "data")
-        print(f"Writing ARP data to {int_report}")
-        with open(int_report, "w") as file:
-            file.write(output_text_arp)
-        print("-" * (len(dev_inv_file) + 23))
+    #  Write the JSON system data to a file
+    int_report = create_filename("Interface", "-system.txt")
+    print(f"Writing interfaces json data to {int_report}")
+    with open(int_report, "w") as file:
+        output_system = json.dumps(output_system, indent=2)
+        file.write(output_system)
+    print("-" * (len(dev_inv_file) + 23))
 
-        #  Write the running config to disk
-        print(f"Writing show run to {int_report}")
-        int_report = get_current_path("Running", "-running-config.txt")
-        with open(int_report, "w") as file:
-            file.write(output_text_run)
-        print("-" * (len(dev_inv_file) + 23))
+    #  Write the JSON interface data to a file
+    int_report = create_filename("Interface", "-interface.txt")
+    print(f"Writing interfaces json data to {int_report}")
+    with open(int_report, "w") as file:
+        output = json.dumps(output, indent=2)
+        file.write(output)
+    print("-" * (len(dev_inv_file) + 23))
 
-        #  Write the JSON system data to a file
-        int_report = get_current_path("Interface", "-system.txt")
-        print(f"Writing interfaces json data to {int_report}")
-        with open(int_report, "w") as file:
-            output_system = json.dumps(output_system, indent=2)
-            file.write(output_system)
-        print("-" * (len(dev_inv_file) + 23))
+    # Write the JSON interface brief data to a file
+    int_report = create_filename("Interface", "-int_br.txt")
+    print(f"Writing interfaces brief data to {int_report}")
+    with open(int_report, "w") as file:
+        output_show_int_br = json.dumps(output_show_int_br, indent=2)
+        file.write(output_show_int_br)
+    print("-" * (len(dev_inv_file) + 23))
 
-        #  Write the JSON interface data to a file
-        int_report = get_current_path("Interface", "-interface.txt")
-        print(f"Writing interfaces json data to {int_report}")
-        with open(int_report, "w") as file:
-            output = json.dumps(output, indent=2)
-            file.write(output)
-        print("-" * (len(dev_inv_file) + 23))
+    # Write the JSON cdp neighbor data to a file
+    int_report = create_filename("Interface", "-cdp.txt")
+    print(f"Writing cdp neighbor data to {int_report}")
+    with open(int_report, "w") as file:
+        output_cdp = json.dumps(output_cdp, indent=2)
+        file.write(output_cdp)
+    print("-" * (len(dev_inv_file) + 23))
 
-        # Write the JSON interface brief data to a file
-        int_report = get_current_path("Interface", "-int_br.txt")
-        print(f"Writing interfaces brief data to {int_report}")
-        with open(int_report, "w") as file:
-            output_show_int_br = json.dumps(output_show_int_br, indent=2)
-            file.write(output_show_int_br)
-        print("-" * (len(dev_inv_file) + 23))
+    # Write the show lldp JSON data to a file
+    int_report = create_filename("Interface", "-lldp.txt")
+    print(f"Writing show lldp data to {int_report}")
+    with open(int_report, "w") as file:
+        output_show_lldp = json.dumps(output_show_lldp, indent=2)
+        file.write(output_show_lldp)
+    print()
 
-        # Write the JSON cdp neighbor data to a file
-        int_report = get_current_path("Interface", "-cdp.txt")
-        print(f"Writing cdp neighbor data to {int_report}")
-        with open(int_report, "w") as file:
-            output_cdp = json.dumps(output_cdp, indent=2)
-            file.write(output_cdp)
-        print("-" * (len(dev_inv_file) + 23))
+    ports = []
+    count = 0
+    #  Create a regex to match any port with [0-8]/0/[0-9]{1,2}
+    #  This will match all ports with a 0 as the module number
+    regexpattern = re.compile(r"G*[0-8]/0/[0-9]{1,2}")
 
-        # Write the show lldp JSON data to a file
-        int_report = get_current_path("Interface", "-lldp.txt")
-        print(f"Writing show lldp data to {int_report}")
-        with open(int_report, "w") as file:
-            output_show_lldp = json.dumps(output_show_lldp, indent=2)
-            file.write(output_show_lldp)
-        print()
-
-        ports = []
-        count = 0
-        #  Create a regex to match any port with [0-8]/0/[0-9]{1,2}
-        #  This will match all ports with a 0 as the module number
-        regexpattern = re.compile(r"G*[0-8]/0/[0-9]{1,2}")
-
-        # count number of interfaces - cisco only
-        # interfaces = json.loads(output)
-        # for interface in interfaces:
-        #     a = re.findall(regexpattern, interface["interface"])
-        #     if interface["input_packets"] != "0" and len(a):
-        #         # if len(a):
-        #         count += 1
+    # count number of interfaces - cisco only
+    # interfaces = json.loads(output)
+    # for interface in interfaces:
+    #     a = re.findall(regexpattern, interface["interface"])
+    #     if interface["input_packets"] != "0" and len(a):
+    #         # if len(a):
+    #         count += 1
     # Cisco only
     # switch_uptime = json.loads(output_ver)
     # # Write the uptime data to a file
