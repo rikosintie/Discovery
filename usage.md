@@ -23,7 +23,10 @@
 - [Building a list of switches](#building-a-list-of-switches)
   - [Review the bootstrap report](#review-the-bootstrap-report)
   - [Opening the report in a Chromium based browser](#opening-the-report-in-a-chromium-based-browser)
-  - [An alternative way to view the report in a Chromium browser](#an-alternative-way-to-view-the-report-in-a-chromium-browser)
+  - [Alternative ways to view the report in a Chromium browser](#alternative-ways-to-view-the-report-in-a-chromium-browser)
+    - [Use Chrome or edge browser with the allow --allow-file-access-from-files flag](#use-chrome-or-edge-browser-with-the-allow---allow-file-access-from-files-flag)
+    - [Use Firefox](#use-firefox)
+    - [Use a local http server](#use-a-local-http-server)
     - [References](#references)
 
 ----------------------------------------------------------------
@@ -574,7 +577,7 @@ If you want to open the report in a Chromium browser you will need to do the fol
 - click `Transform XML`
 - Save the new text as procurve-scan.html. You lose a little bit of the report but it's still usable.
 
-### An alternative way to view the report in a Chromium browser
+### Alternative ways to view the report in a Chromium browser
 
 The URL restriction occurs because the xsl file comes from an https server (github) and the file is on disk. If you use "settings, Developer tools, console", you will see this message:
 
@@ -585,6 +588,44 @@ from frame with URL
 file:///home/mhubbard/04_Tools/Discovery/procurve-scan.xml.
 'file:' URLs are treated as unique security origins.
 ```
+
+#### Use Chrome or edge browser with the allow --allow-file-access-from-files flag
+
+Chromium based browsers provide a flag to allow local file access. This is a quick way to view the report. But keep in mind that there is a security risk if you don't close the browser after reviewing the report because it will open files without a warning.
+
+**On Linux**
+
+Navigate to the Chrome folder. On a debian based system this is `/opt/google/chrome`. Then start chrome using the following command:
+
+```bash
+/opt/google/chrome
+$ ./chrome --allow-file-access-from-files
+```
+
+Now you can open procurve.html in chrome and view the report.
+
+**On Windows**
+
+You can copy the chrome shortcut on the desktop and add the flag to the "Target" section:
+
+`"C:\Program Files\Google\Chrome\Application\chrome.exe" --allow-file-access-from-files`
+
+Use the new shortcut to open procurve.html in chrome and view the report. Again, close the browser after you are finished with the report to eliminate the security risk.
+
+#### Use Firefox
+
+To use firefox:
+
+```bash
+Type "about:config" in the Firefox address bar
+Search for "security.fileuri.strict_origin_policy"
+Change the setting to "false"
+```
+
+Now you can open procurve.html in Firefox and view the report. Don't forget to set security.fileuri.strict_origin_policy back to false when you are done.
+
+
+#### Use a local http server
 
 You can use the xsl file that comes from cloning the repository. The drawback to this is that if you want to share the report, you have to include the xsl file.
 
