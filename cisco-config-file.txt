@@ -24,11 +24,13 @@ show spanning-tree blockedports
 show spanning-tree summary
 show spanning-tree bridge detail
 show lacp neighbor
+show lacp sys-id
 show interfaces trunk
 show ip ssh
 show snmp location
 show snmp contact
 show inventory
+sh proc cpu sorted 5sec
 show power inline g1/0/1 det | i Powered
 show power inline g1/0/2 det | i powered
 show power inline g1/0/3 det | i powered
