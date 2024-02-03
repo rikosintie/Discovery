@@ -14,6 +14,8 @@
   - [What do the arguments do](#what-do-the-arguments-do)
   - [change the config-file](#change-the-config-file)
     - [Collecting switch logs](#collecting-switch-logs)
+    - [Procurve logs](#procurve-logs)
+    - [Cisco Logs](#cisco-logs)
     - [Setting the Password](#setting-the-password)
     - [SSH Logging](#ssh-logging)
     - [Timeout](#timeout)
@@ -230,7 +232,28 @@ The default file of commands to send is named procurve-config-file.txt. You can 
 
 would use `core-config-file.txt` as the file sent to switch.`
 
+Note: On older switches reading a lot of data can cause the CPU to go to 90+%! This will cause issues if OSPF or EIGRP is running and may cause the script to fail with a timeout. If this happens, remove some commands from the config-file and try again.
+
 #### Collecting switch logs
+
+Reviewing switch logs before a cut over can help you understand the health of the network. For example, you may find OSPF neighbors bouncing or an STP issue. Obviously you if the network is large you can't review every switch in detail. But looking at key switches such as cores and distribution is worth a few minutes.
+
+Using grep you can parse hundreds of logs in a matter of seconds. For example:
+
+```bash
+grep -Eir "Blocked by LACP"
+test-CL-2930-48-1-log-1.txt:I 02/02/24 17:20:55 00435 ports: port 22 is Blocked by LACP
+```
+
+Or check STP:
+
+```bash
+Procurve-2920-24-CR-data.txt:I 01/10/24 19:01:57 03816 stp: VLAN 850 - Root changed from 32768: (this device)
+```
+
+I can't go into everything you should look for but with some practice you will look like a genius!
+
+#### Procurve logs
 
 The procurve switches allow you to pull five different types of logs:
 
@@ -243,6 +266,12 @@ The procurve switches allow you to pull five different types of logs:
 If you want to pull logs from the switch add `-e` and the type of log. You can collect 1 or all 5. Separate the values with a comma. For example:
 
 `-e W,I,M,D,E`
+
+If you use `-e W` the script will send `show logging -r -W`
+
+#### Cisco Logs
+
+Cisco doesn't support all the options that the procurve does. If you want to collect logs on a cisco use `-e 1`. This will send `show logging` to the switch.
 
 #### Setting the Password
 
