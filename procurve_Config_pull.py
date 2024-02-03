@@ -74,7 +74,7 @@ __license__ = "Unlicense"
 
 # comment out ic.disable() and uncomment ic.enable() to use icecream
 ic.enable()
-ic.disable()
+# ic.disable()
 
 
 def create_filename(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
@@ -285,12 +285,19 @@ for line in fabric:
     # you can set the timeout value up if they are timing out.
     if args.event != "":
         try:
+            log_list = ["W", "I", "M", "D", "E", "1"]
             log_type = args.event.split(",")
             time_out = args.timeout
             for type in log_type:
                 print(f"processing show logging -{type} for {hostname}")
                 output_event = f"output_event_{type}"
-                show_logging = f"show logging -r -{type}"
+                if type not in log_list:
+                    print(f"logging argument {type} for {hostname} is not supported")
+                    continue
+                if type == "1":
+                    show_logging = "show logging"
+                else:
+                    show_logging = f"show logging -r -{type}"
                 output_event = net_connect.send_command(
                     show_logging, strip_command=False, delay_factor=time_out
                 )
