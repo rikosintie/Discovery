@@ -8,41 +8,36 @@ ntc templates are located at Discovery/lib/python3.11/site-packages/ntc_template
 https://pynet.twb-tech.com/blog/netmiko-and-textfsm.html
 
 Usage
-1. Create a new folder and copy cisco-Config-Push.py
-into it.
-
+1. Clone the repo at https://github.com/rikosintie/Discovery/. The readme file
+in hte repo detailed installation instructions.
 2. Create a file named device-inventory-<site>.
 Example
 device-inventory-test
-
 Place the information for each switch in the file. Format is
-<IP Address>,cisco_ios,<hostname>,<username>
+<IP Address>,hp_procurve,<hostname>,<username>
 Example
-192.168.10.52,cisco_ios,gl-IDF1,mhubbard
-NOTE: the password is saved in user environment variable.
-
-3. Create a file named test-config-file.txt and place the
-configuration commands for the switches in it.
-
+192.168.10.52,hp_procurve,gl-IDF1,mhubbard
+NOTE: the password is saved in user environment variable or entered when the script
+is executed.
+3. Create a file named procurve-config-file.txt and place the
+configuration commands for the switches in it. Note that there is a default
+procurve-config-file.txt included. You can customize it to suit your needs.
 4. Execute
 python3 cisco-Config-Pull.py -s test
-
 
 The script will read the device-inventory-<sitename> file and
 execute the contents of the <hostname>-config-file.txt for each switch.
 
-For each switch in the inventory file the config commands that were
-executed will be saved to 01_<hostname>-config-output.txt.
+For each switch in the inventory file the commands that were
+sent to the switch are saved to the CR-data folder as <hostname>-CR-data.txt.
 
-Use this file as an audit trail for the configuration commands.
-
-The script will also create file with a show running configuration
-01_<hostname>-running-config.txt
+The script will also create file with a show running configuration in the Running
+folder called <hostname>-running-config.txt
 
 ---Error Handling ---
 The connect handler is wrapped in a try/except block.
-If a time out occurs when connecting to a switch it is trapped
-but the  script halts.
+If a time out occurs when connecting to a switch it is trapped, a message is
+displayed and the script moves to the next switch.
 """
 
 # !!!!! Discovery Script - Does not change the running config !!!!!
