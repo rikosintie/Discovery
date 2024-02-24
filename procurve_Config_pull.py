@@ -211,6 +211,10 @@ for line in fabric:
         sh_run = "show running structured"
     else:
         sh_run = "show running"
+    if vendor.lower() == "hp_procurve":
+        show_lldp = "show lldp info remote detail"
+    else:
+        show_lldp = "show lldp neighbor detail"
     now = datetime.now()
     start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
     # print("-----------------------------------------------------")
@@ -341,9 +345,7 @@ for line in fabric:
 
     # Use textFSM to create a json object with show lldp info remote
     print(f"collecting show lldp neighbors for {hostname}")
-    output_show_lldp = net_connect.send_command(
-        "show lldp info remote detail", use_textfsm=True
-    )
+    output_show_lldp = net_connect.send_command(show_lldp, use_textfsm=True)
     print("-" * (len(cfg_file) + len(hostname) + 16))
 
     #  Send commands from mac.txt for human readable output
@@ -351,7 +353,7 @@ for line in fabric:
     output_text_mac = net_connect.send_config_from_file("mac.txt", read_timeout=200)
     print("-" * (len(cfg_file) + len(hostname) + 16))
 
-    #  Send commands from z.txt for human readable output
+    #  Send commands from arp.txt for human readable output
     print(f"collecting show arp for {hostname}")
     output_text_arp = net_connect.send_command("show arp", read_timeout=200)
     print("-" * (len(cfg_file) + len(hostname) + 16))
