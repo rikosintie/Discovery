@@ -1,170 +1,49 @@
 end
-show mac-add 1
-show mac-add 2
-show mac-add 3
-show mac-add 4
-show mac-add 5
-show mac-add 6
-show mac-add 7
-show mac-add 8
-show mac-add 9
-show mac-add 10
-show mac-add 11
-show mac-add 12
-show mac-add 13
-show mac-add 14
-show mac-add 15
-show mac-add 16
-show mac-add 17
-show mac-add 18
-show mac-add 19
-show mac-add 20
-show mac-add 21
-show mac-add 22
-show mac-add 23
-show mac-add 24
-show mac-add 25
-show mac-add 26
-show mac-add 27
-show mac-add 28
-show mac-add 29
-show mac-add 30
-show mac-add 31
-show mac-add 32
-show mac-add 33
-show mac-add 34
-show mac-add 35
-show mac-add 36
-show mac-add 37
-show mac-add 38
-show mac-add 39
-show mac-add 40
-show mac-add 41
-show mac-add 42
-show mac-add 43
-show mac-add 44
-show mac-add 45
-show mac-add 46
-show mac-add 47
-show mac-add 48
-
-show mac-add c1
-show mac-add c2
-show mac-add c3
-show mac-add c4
-show mac-add c5
-show mac-add c6
-show mac-add c7
-show mac-add c8
-show mac-add c9
-show mac-add c10
-show mac-add c11
-show mac-add c12
-show mac-add c13
-show mac-add c14
-show mac-add c15
-show mac-add c16
-show mac-add c17
-show mac-add c18
-show mac-add c19
-show mac-add c20
-show mac-add c21
-show mac-add c22
-show mac-add c23
-show mac-add c24
-show mac-add d1
-show mac-add d2
-show mac-add d3
-show mac-add d4
-show mac-add d5
-show mac-add d6
-show mac-add d7
-show mac-add d8
-show mac-add d9
-show mac-add d10
-show mac-add d11
-show mac-add d12
-show mac-add d13
-show mac-add d14
-show mac-add d15
-show mac-add d16
-show mac-add d17
-show mac-add d18
-show mac-add d19
-show mac-add d20
-show mac-add d21
-show mac-add d22
-show mac-add d23
-show mac-add d24
-show mac-add e1
-show mac-add e2
-show mac-add e3
-show mac-add e4
-show mac-add e5
-show mac-add e6
-show mac-add e7
-show mac-add e8
-show mac-add e9
-show mac-add e10
-show mac-add e11
-show mac-add e12
-show mac-add e13
-show mac-add e14
-show mac-add e15
-show mac-add e16
-show mac-add e17
-show mac-add e18
-show mac-add e19
-show mac-add e20
-show mac-add e21
-show mac-add e22
-show mac-add e23
-show mac-add e24
-show mac-add f1
-show mac-add f2
-show mac-add f3
-show mac-add f4
-show mac-add f5
-show mac-add f6
-show mac-add f7
-show mac-add f8
-show mac-add f9
-show mac-add f10
-show mac-add f11
-show mac-add f12
-show mac-add f13
-show mac-add f14
-show mac-add f15
-show mac-add f16
-show mac-add f17
-show mac-add f18
-show mac-add f19
-show mac-add f20
-show mac-add f21
-show mac-add f22
-show mac-add f23
-show mac-add f24
-show mac-add g1
-show mac-add g2
-show mac-add g3
-show mac-add g4
-show mac-add g5
-show mac-add g6
-show mac-add g7
-show mac-add g8
-show mac-add g9
-show mac-add g10
-show mac-add g11
-show mac-add g12
-show mac-add g13
-show mac-add g14
-show mac-add g15
-show mac-add g16
-show mac-add g17
-show mac-add g18
-show mac-add g19
-show mac-add g20
-show mac-add g21
-show mac-add g22
-show mac-add g23
-show mac-add g24
+show mac add int g1/0/1 | i Gi
+show mac add int g1/0/2 | i Gi
+show mac add int g1/0/3 | i Gi
+show mac add int g1/0/4 | i Gi
+show mac add int g1/0/5 | i Gi
+show mac add int g1/0/6 | i Gi
+show mac add int g1/0/7 | i Gi
+show mac add int g1/0/8 | i Gi
+show mac add int g1/0/9 | i Gi
+show mac add int g1/0/10 | i Gi
+show mac add int g1/0/11 | i Gi
+show mac add int g1/0/12 | i Gi
+show mac add int g1/0/13 | i Gi
+show mac add int g1/0/14 | i Gi
+show mac add int g1/0/15 | i Gi
+show mac add int g1/0/16 | i Gi
+show mac add int g1/0/17 | i Gi
+show mac add int g1/0/18 | i Gi
+show mac add int g1/0/19 | i Gi
+show mac add int g1/0/20 | i Gi
+show mac add int g1/0/21 | i Gi
+show mac add int g1/0/22 | i Gi
+show mac add int g1/0/23 | i Gi
+show mac add int g1/0/24 | i Gi
+show mac add int g1/0/25 | i Gi
+show mac add int g1/0/26 | i Gi
+show mac add int g1/0/27 | i Gi
+show mac add int g1/0/28 | i Gi
+show mac add int g1/0/29 | i Gi
+show mac add int g1/0/30 | i Gi
+show mac add int g1/0/31 | i Gi
+show mac add int g1/0/32 | i Gi
+show mac add int g1/0/33 | i Gi
+show mac add int g1/0/34 | i Gi
+show mac add int g1/0/35 | i Gi
+show mac add int g1/0/36 | i Gi
+show mac add int g1/0/37 | i Gi
+show mac add int g1/0/38 | i Gi
+show mac add int g1/0/39 | i Gi
+show mac add int g1/0/40 | i Gi
+show mac add int g1/0/41 | i Gi
+show mac add int g1/0/42 | i Gi
+show mac add int g1/0/43 | i Gi
+show mac add int g1/0/44 | i Gi
+show mac add int g1/0/45 | i Gi
+show mac add int g1/0/46 | i Gi
+show mac add int g1/0/47 | i Gi
+show mac add int g1/0/48 | i Gi
