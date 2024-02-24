@@ -1,4 +1,4 @@
-def get_current_path(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
+def create_filename(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
     """
     returns a valid path regardless of the OS
 
@@ -74,3 +74,23 @@ def format_mac(mac: str) -> str:
     list1 = [colon, hpe, cisco, ms, mac]
     MAC_Types = "\n".join(list1)
     return MAC_Types
+
+
+def compareList(l1, l2):
+    l1.sort()
+    l2.sort()
+    if l1 == l2:
+        return "Equal"
+    else:
+        return "Non equal"
+
+
+l1 = [1, 2, 3]
+l2 = [2, 1, 3]
+print("First comparison", compareList(l1, l2))
+l3 = [1, 2, 3]
+l4 = [1, 2, 4]
+print("Second comparison", compareList(l3, l4))
+# Output
+# First comparison Equal
+# Second comparison Non equal
