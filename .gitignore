@@ -1,11 +1,32 @@
-bin/
+# ------------------------
+#   ENVIRONMENT SETTINGS
+# ------------------------
+.env
+
+# ------------------------
+#       OS SPECIFIC
+# ------------------------
+.DS_Store
+Thumbs.db
+
+# ------------------------
+#         EDITORS
+# ------------------------
+.idea/
 .vscode/
+Discovery.code-workspace
+*.swp
+*.swo
+
+# ------------------------
+#      MISCELLANEOUS
+# ------------------------
+bin/
 .venv/
 lib/
 ntc_templates/
 lib64
 include/
 device-inventory*
-Discovery.code-workspace
 test.py
 *.pyc
