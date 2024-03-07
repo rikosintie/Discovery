@@ -68,8 +68,8 @@ __license__ = "Unlicense"
 #  Created by Michael Hubbard on 2023-12-20.
 
 # comment out ic.disable() and uncomment ic.enable() to use icecream
-ic.enable()
-# ic.disable()
+# ic.enable()
+ic.disable()
 
 
 def create_filename(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
@@ -109,6 +109,24 @@ def remove_empty_lines(filename: str) -> str:
     with open(filename, "w") as filehandle:
         lines = filter(lambda x: x.strip(), lines)
         filehandle.writelines(lines)
+
+
+def which_vendor(vendor):
+    vendor = vendor.lower()
+    match vendor:
+        case "hp_procurve":
+            sh_run = "show running structured"
+            show_lldp = "show lldp info remote detail"
+            show_arp = "show arp"
+        case "cisco_ios":
+            sh_run = "show running"
+            show_lldp = "show lldp neighbor detail"
+            show_arp = "show ip arp"
+        case _:
+            print(
+                f"{vendor} doesn't match hpe or cisco ios. Check the device inventory file"
+            )
+    return sh_run, show_lldp, show_arp
 
 
 print()
@@ -207,14 +225,8 @@ for line in fabric:
     hostname = line.split(",")[2]
     username = line.split(",")[3]
 
-    if vendor.lower() == "hp_procurve":
-        sh_run = "show running structured"
-    else:
-        sh_run = "show running"
-    if vendor.lower() == "hp_procurve":
-        show_lldp = "show lldp info remote detail"
-    else:
-        show_lldp = "show lldp neighbor detail"
+    sh_run, show_lldp, show_arp = which_vendor(vendor)
+
     now = datetime.now()
     start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
     # print("-----------------------------------------------------")
@@ -353,9 +365,9 @@ for line in fabric:
     output_text_mac = net_connect.send_config_from_file("mac.txt", read_timeout=200)
     print("-" * (len(cfg_file) + len(hostname) + 16))
 
-    #  Send commands from arp.txt for human readable output
+    # collect arp
     print(f"collecting show arp for {hostname}")
-    output_text_arp = net_connect.send_command("show arp", read_timeout=200)
+    output_text_arp = net_connect.send_command(show_arp, read_timeout=200)
     print("-" * (len(cfg_file) + len(hostname) + 16))
 
     # Send show running
