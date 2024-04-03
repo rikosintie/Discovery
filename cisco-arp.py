@@ -67,6 +67,7 @@ Output
 10.53.250.15 d8d4.3c2e.4b31
 
 """
+
 import argparse
 import json
 import os
@@ -149,10 +150,10 @@ print("-" * (len(dev_inv_file) + 23))
 uptime = []
 for line in fabric:
     line = line.strip("\n")
-    ipaddr = line.split(",")[0]
-    vendor = line.split(",")[1]
+    # ipaddr = line.split(",")[0]
+    # vendor = line.split(",")[1]
     hostname = line.split(",")[2]
-    username = line.split(",")[3]
+    # username = line.split(",")[3]
     # password = line.split(",")[4]
 
     # - - - - - - - - Old Code - - - -
