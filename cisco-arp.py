@@ -1,4 +1,5 @@
 """
+# !!!!! Helper Script - Does not change the running config !!!!!
 References:
 https://stackoverflow.com/questions/6545023/how-to-sort-ip-addresses-stored-in-dictionary-in-python/6545090#6545090
 https://stackoverflow.com/questions/20944483/python-3-sort-a-dict-by-its-values
@@ -65,7 +66,7 @@ Output
 10.53.250.11 d8d4.3c2e.4b2f
 10.53.250.12 d8d4.3c2e.4b32
 10.53.250.15 d8d4.3c2e.4b31
-
+# !!!!! Helper Script - Does not change the running config !!!!!
 """
 
 import argparse
@@ -80,18 +81,41 @@ from icecream import ic
 
 import manuf
 
-# ic.enable()
-ic.disable()
-
 __author__ = "Michael Hubbard"
-__author_email__ = "mhubbard@vectorusa.com"
+__author_email__ = "michael.hubbard999@gmail.com"
 __copyright__ = ""
 __license__ = "Unlicense"
+# -*- coding: utf-8 -*-
+#  cisco_Config_Pull.py
+#  Procurve Change Request data collection
+#  Created by Michael Hubbard on 2023-12-20.
+
+# comment out ic.disable() and uncomment ic.enable() to use icecream
+# ic.enable()
+ic.disable()
 
 
 def get_current_path():
     current_path = os.getcwd()
     return current_path
+
+
+def create_filename(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
+    """
+    returns a valid path regardless of the OS
+
+    Args:
+        sub_dir1 (str): name of the sub directory off the cwd required
+        extension (str, optional): string appended after hostname - ex. -interface.txt
+        sub_dir2 (str, optional): if a nested sub_dir is used Defaults to "".
+
+    Returns:
+        str: full pathname of the file to be written
+    """
+    current_path = os.getcwd()
+    extension = hostname + extension
+    int_report = os.path.join(current_path, sub_dir1, sub_dir2, extension)
+    return int_report
 
 
 def ip2long(ip):
@@ -132,7 +156,8 @@ if site is None:
 else:
     dev_inv_file = "device-inventory-" + site + ".csv"
 
-loc = get_current_path() + "/"
+# loc = get_current_path() + "/"
+loc = get_current_path()
 # dev_inv_file = loc + dev_inv_file
 # check if site's device inventory file exists
 if not os.path.isfile(dev_inv_file):
@@ -144,9 +169,10 @@ remove_empty_lines(dev_inv_file)
 with open(dev_inv_file) as devices_file:
     fabric = devices_file.readlines()
 
-print("-" * (len(dev_inv_file) + 23))
+# print("-" * (len(dev_inv_file) + 23))
+print("-" * (len(loc) + len(dev_inv_file) + 23))
 print(f"Reading devices from: {loc}\{dev_inv_file}")
-print("-" * (len(dev_inv_file) + 23))
+print("-" * (len(loc) + len(dev_inv_file) + 23))
 uptime = []
 for line in fabric:
     line = line.strip("\n")
@@ -163,9 +189,7 @@ for line in fabric:
     # ic(arp_file)
     # # end import
     # - - - - - - - - Old Code - - - -
-    loc = os.getcwd() + "/data/"
-    # loc = loc + '/data/'
-    arp_file = loc + "JC-core-arp.txt"
+    arp_file = create_filename("port-maps", "-arp.txt", "data")
 
     print()
     # create a blank list to accept each line in the file
@@ -201,8 +225,9 @@ for line in fabric:
             save_device = device_name + "-arp.txt"
             device_file = open(save_device, "w")
         else:
-            device_name = "switch"
-            save_device = device_name + "-arp.txt"
+            save_device = create_filename("port-maps", "-arp.txt")
+            # device_name = "switch"
+            # save_device = device_name + "-arp.txt"
             device_file = open(save_device, "w")
         for line in data1:
             device_file.write(line)
@@ -296,6 +321,8 @@ for line in fabric:
 
         print(k, v, manufacture)
     # Write the dictionary out as Mac2IP.json so that it can be used in macaddr.py
-    mydatafile = hostname + "-Mac2IP.json"
+
+    # mydatafile = hostname + "-Mac2IP.json"
+    mydatafile = create_filename("port-maps", "-Mac2IP.json")
     with open(mydatafile, "w") as f:
         json.dump(Mac_IP, f, indent=4)
