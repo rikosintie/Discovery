@@ -1,5 +1,9 @@
 [Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
 
+<p align="left" width="15%">
+<img width="15%" src="https://github.com/rikosintie/Discovery/blob/main/images/pterodactyl.jpeg" alt="Pterodactyl">
+</p>
+
 # Getting Started<!-- omit from toc -->
 
 - [1. Clone the Repository](#1-clone-the-repository)
