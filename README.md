@@ -19,6 +19,7 @@
 - [Questions for Discovery and Deployment](#questions-for-discovery-and-deployment)
 - [License](#license)
 - [SBOM - a Software Bill of Materials](#sbom---a-software-bill-of-materials)
+- [Security Policy](#security-policy)
 
 There are additional sections to this documentation:
 
@@ -219,6 +220,8 @@ You can use tools from the [SPDX project](https://github.com/spdx/tools-python) 
 You can use this site, [Graphviz Visual Editor](http://magjac.com/graphviz-visual-editor/) to convert the sbom.dot file to an SVG image. For this project the filename is spdx.svg.
 
 ----------------------------------------------------------------
+
+## [Security Policy](https://github.com/rikosintie/Discovery/blob/main/security.md)
 
 [Home - ](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
 [Getting Started - ](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)<!-- omit from toc -->
