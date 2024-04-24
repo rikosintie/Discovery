@@ -1,7 +1,7 @@
 [Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
 
-<p align="left" width="30%">
-<img width="30%" src="https://github.com/rikosintie/Discovery/blob/main/images/pterodactyl.jpeg" alt="Pterodactyl">
+<p align="left" width="15%">
+<img width="15%" src="https://github.com/rikosintie/Discovery/blob/main/images/pterodactyl.jpeg" alt="Pterodactyl">
 </p>
 
 # Usage<!-- omit from toc -->
