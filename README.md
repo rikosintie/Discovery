@@ -6,7 +6,7 @@
 
 # Pterodactyl Network  Discovery Project<!-- omit from toc -->
 <p align="center" width="30%">
-<img width="30%" src="[https](https://github.com/rikosintie/Discovery/blob/main/images/pterodactyl.jpeg)" alt="Pterodactyl">
+<img width="30%" src="(https://github.com/rikosintie/Discovery/blob/main/images/pterodactyl.jpeg)" alt="Pterodactyl">
 </p>
 - [Purpose](#purpose)
   - [Who is this project for](#who-is-this-project-for)
