@@ -1,5 +1,5 @@
 [![Commit Activity](https://img.shields.io/github/commit-activity/m/rikosintie/Discovery)](https%3A%2F%2Fgithub.com%2Frikosintie%2FDiscovery)
-[![Website](https://img.shields.io/badge/Works_with-Procurve-blue)](https://github.com/rikosintie/CookBook)
+[![Website](https://img.shields.io/badge/Works_with-Procurve/IOS-blue)](https://github.com/rikosintie/CookBook)
 [![Website](https://img.shields.io/badge/Blog-Visit-blue)](https://mwhubbard.blogspot.com)
 [![License](https://img.shields.io/github/license/rikosintie/Discovery?color=0096FF)](https://github.com/rikosintie/Discovery)
 [![X](https://img.shields.io/twitter/follow/rikosintie?style=social&logo=x)](https://twitter.com/rikosintie)
