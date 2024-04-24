@@ -221,7 +221,11 @@ You can use this site, [Graphviz Visual Editor](http://magjac.com/graphviz-visua
 
 ----------------------------------------------------------------
 
-## [Security Policy](https://github.com/rikosintie/Discovery/blob/main/security.md)
+## Security Policy
+
+Click here to open the [Security Policy](https://github.com/rikosintie/Discovery/blob/main/security.md)
+
+----------------------------------------------------------------
 
 [Home - ](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
 [Getting Started - ](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)<!-- omit from toc -->
