@@ -5,7 +5,7 @@
 [![X](https://img.shields.io/twitter/follow/rikosintie?style=social&logo=x)](https://twitter.com/rikosintie)
 
 # Pterodactyl Network  Discovery Project<!-- omit from toc -->
-<p align="center" width="30%">
+<p align="left" width="30%">
 <img width="30%" src="https://github.com/rikosintie/Discovery/blob/main/images/pterodactyl.jpeg" alt="Pterodactyl">
 </p>
 - [Purpose](#purpose)
