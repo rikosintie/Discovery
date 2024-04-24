@@ -4,8 +4,10 @@
 [![License](https://img.shields.io/github/license/rikosintie/Discovery?color=0096FF)](https://github.com/rikosintie/Discovery)
 [![X](https://img.shields.io/twitter/follow/rikosintie?style=social&logo=x)](https://twitter.com/rikosintie)
 
-# HPE Procurve Discovery Project<!-- omit from toc -->
-
+# Pterodactyl Network  Discovery Project<!-- omit from toc -->
+<p align="center" width="30%">
+<img width="30%" src="[https](https://github.com/rikosintie/Discovery/blob/main/images/pterodactyl.jpeg)" alt="Pterodactyl">
+</p>
 - [Purpose](#purpose)
   - [Who is this project for](#who-is-this-project-for)
 - [The Process](#the-process)
