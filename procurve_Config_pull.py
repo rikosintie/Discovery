@@ -72,7 +72,7 @@ __license__ = "Unlicense"
 ic.disable()
 
 
-def create_filename(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
+def create_filename(sub_dir1: str, extension: str = "", sub_dir2: str = "") -> str:
     """
     returns a valid path regardless of the OS
 
@@ -122,6 +122,10 @@ def which_vendor(vendor):
             sh_run = "show running"
             show_lldp = "show lldp neighbor detail"
             show_arp = "show ip arp"
+        case "cisco_xe":
+            sh_run = "show running"
+            show_lldp = "show lldp neighbor detail"
+            show_arp = "show ip arp"
         case _:
             print(
                 f"{vendor} doesn't match hpe or cisco ios. Check the device inventory file"
@@ -133,7 +137,7 @@ print()
 print()
 start = timeit.default_timer()
 parser = argparse.ArgumentParser(
-    description="-s site, -l 1 create log.txt, -p 1 prompt for password, -t 1-9 timeout, -e W,I,M,D,E to pull logs"
+    description="-s site, -c config-file to use -l 1 create log.txt, -p 1 prompt for password, -t 1-9 timeout, -e W,I,M,D,E to pull logs"
 )
 parser.add_argument(
     "-c",
