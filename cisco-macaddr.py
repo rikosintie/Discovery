@@ -33,7 +33,7 @@ Vlan     MAC Address      Interface
 
 Uses the Parser library for Wireshark's OUI database from
 https://github.com/coolbho3k/manuf to convert the MAC to a manufacture.
-The database needs to be updated occaisionally using:
+The database needs to be updated occasionally using:
 
 python3 manuf.py -u
 
@@ -87,6 +87,7 @@ it would use the last IP address.
 Clear the IP address in case the next interface has a MAC but no IP address
     IP_Data = ''
 """
+
 import argparse
 import hashlib
 import json
@@ -153,15 +154,46 @@ def remove_empty_lines(filename):
         filehandle.writelines(lines)
 
 
+def create_filename(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
+    """
+    returns a valid path regardless of the OS
+
+    Args:
+        sub_dir1 (str): name of the sub directory off the cwd required
+        extension (str, optional): string appended after hostname - ex. -interface.txt
+        sub_dir2 (str, optional): if a nested sub_dir is used Defaults to "".
+
+    Returns:
+        str: full pathname of the file to be written
+    """
+    current_path = os.getcwd()
+    extension = hostname + extension
+    int_report = os.path.join(current_path, sub_dir1, sub_dir2, extension)
+    return int_report
+
+
 def get_current_path():
     current_path = os.getcwd()
     return current_path
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-s", "--site", help="Site name - ex. HQ")
+parser = argparse.ArgumentParser(
+    description="-s site, -c core hostname in a Core/IDF deployment"
+)
+parser.add_argument(
+    "-s",
+    "--site",
+    help="Site name - ex. HQ",
+)
+parser.add_argument(
+    "-c",
+    "--coreswitch",  # Optional (but recommended) long version
+    default="",
+    help="Coreswitch hostname",
+)
 args = parser.parse_args()
 site = args.site
+core = args.coreswitch
 
 if site is None:
     print("-s site name is a required argument")
@@ -186,17 +218,10 @@ print("-" * (len(dev_inv_file) + 23))
 uptime = []
 for line in fabric:
     line = line.strip("\n")
-    # ipaddr = line.split(",")[0]
     vendor = line.split(",")[1]
     hostname = line.split(",")[2]
-    # username = line.split(",")[3]
-    # password = line.split(",")[4]
-
-    loc = get_current_path()
-    loc = loc + "/data/"
-    mac_file = loc + hostname + "-mac-address.txt"
+    mac_file = create_filename("port-maps", "-mac-address.txt", "data")
     ic(mac_file)
-    # end import
 
     print()
     # create a blank list to accept each line in the file
@@ -221,7 +246,14 @@ for line in fabric:
     # create an empty list to hold MAC addresses for hashing
     hash_list = []
     # open the json created by arp.py if it exists
-    my_json_file = "JC-core-Mac2IP.json"
+    if core:
+        temp = hostname
+        hostname = core
+        my_json_file = create_filename("port-maps", "-Mac2IP.json")
+        hostname = temp
+    else:
+        my_json_file = create_filename("port-maps", "-Mac2IP.json")
+    # "JC-core-Mac2IP.json"
     # my_json_file = hostname + "-Mac2IP.json"
 
     try:
@@ -334,11 +366,12 @@ for line in fabric:
     d = int(len(IPs) / 2)
 
     # output_file = hostname + '-ports.txt'  # Specify the filename for the output file
-    loc = get_current_path()
-    loc = loc + "/Final/"
-    output_file = (
-        loc + hostname + "-ports.txt"
-    )  # Specify the filename for the output file
+    # loc = get_current_path()
+    # loc = loc + "/Final/"
+    # output_file = (
+    #     loc + hostname + "-ports.txt"
+    # )  # Specify the filename for the output file
+    output_file = create_filename("port-maps", "-ports.txt", "Final")
     ic(output_file)
 
     with open(output_file, "w") as f:
