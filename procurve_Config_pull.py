@@ -337,26 +337,57 @@ for line in fabric:
     output = net_connect.send_command("show interfaces", use_textfsm=True)
     print("-" * (len(cfg_file) + len(hostname) + 16))
 
-    # Use textFSM to create a json object of show system
-    print(f"collecting show system for {hostname}")
-    output_system = net_connect.send_command("show system", use_textfsm=True)
-    print("-" * (len(cfg_file) + len(hostname) + 16))
-
     # Use textFSM to create a json object with cdp neighbors
     print(f"collecting show cdp detail for {hostname}")
     output_cdp = net_connect.send_command("show cdp neighbor detail", use_textfsm=True)
     print("-" * (len(cfg_file) + len(hostname) + 16))
 
+    # # Use textFSM to create a json object with interface stats
+    # template_path = os.getcwd()
+    # template_file = os.path.join(template_path, "sh_int_br.textfsm")
+    # print(f"collecting show interfaces brief for {hostname}")
+    # output_show_int_br = net_connect.send_command(
+    #     "show interfaces brief",
+    #     strip_command=True,
+    #     use_textfsm=True,
+    #     textfsm_template=template_file,
+    # )
     # Use textFSM to create a json object with interface stats
-    template_path = os.getcwd()
-    template_file = os.path.join(template_path, "sh_int_br.textfsm")
-    print(f"collecting show interfaces brief for {hostname}")
-    output_show_int_br = net_connect.send_command(
-        "show interfaces brief",
-        strip_command=True,
-        use_textfsm=True,
-        textfsm_template=template_file,
-    )
+    vendor = vendor.lower()
+    match vendor:
+        case "hp_procurve":
+            template_path = os.getcwd()
+            template_file = os.path.join(template_path, "sh_int_br.textfsm")
+            print(f"collecting show interfaces brief for {hostname}")
+            output_show_int_br = net_connect.send_command(
+                "show interfaces brief",
+                strip_command=True,
+                use_textfsm=True,
+                textfsm_template=template_file,
+            )
+            # Use textFSM to create a json object of show system
+            print(f"collecting show system for {hostname}")
+            output_system = net_connect.send_command("show system", use_textfsm=True)
+            print("-" * (len(cfg_file) + len(hostname) + 16))
+            #  Write the JSON system data to a file
+            int_report = create_filename("Interface", "-system.txt")
+            print(f"Writing interfaces json data to {int_report}")
+            with open(int_report, "w") as file:
+                output_system = json.dumps(output_system, indent=2)
+                file.write(output_system)
+            print("-" * (len(dev_inv_file) + 23))
+        case "cisco_ios":
+            output_show_int_br = net_connect.send_command(
+                "show interfaces status",
+                strip_command=True,
+                use_textfsm=True,
+            )
+        case "cisco_xe":
+            output_show_int_br = net_connect.send_command(
+                "show interfaces status",
+                strip_command=True,
+                use_textfsm=True,
+            )
     print("-" * (len(cfg_file) + len(hostname) + 16))
 
     # Use textFSM to create a json object with show lldp info remote
@@ -409,14 +440,6 @@ for line in fabric:
     int_report = create_filename("Running", "-running-config.txt")
     with open(int_report, "w") as file:
         file.write(output_text_run)
-    print("-" * (len(dev_inv_file) + 23))
-
-    #  Write the JSON system data to a file
-    int_report = create_filename("Interface", "-system.txt")
-    print(f"Writing interfaces json data to {int_report}")
-    with open(int_report, "w") as file:
-        output_system = json.dumps(output_system, indent=2)
-        file.write(output_system)
     print("-" * (len(dev_inv_file) + 23))
 
     #  Write the JSON interface data to a file
