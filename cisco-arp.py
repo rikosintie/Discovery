@@ -96,7 +96,7 @@ ic.disable()
 
 
 def get_current_path():
-    current_path = os.getcwd()
+    current_path: str = os.getcwd()
     return current_path
 
 
@@ -145,10 +145,23 @@ def remove_empty_lines(filename):
         filehandle.writelines(lines)
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-s", "--site", help="Site name - ex. HQ")
+parser = argparse.ArgumentParser(
+    description="-s site, -c core hostname in a Core/IDF deployment"
+)
+parser.add_argument(
+    "-s",
+    "--site",
+    help="Site name - ex. HQ",
+)
+parser.add_argument(
+    "-c",
+    "--coreswitch",  # Optional (but recommended) long version
+    default="",
+    help="Coreswitch hostname",
+)
 args = parser.parse_args()
 site = args.site
+core = args.coreswitch
 
 if site is None:
     print("-s site name is a required argument")
@@ -156,7 +169,6 @@ if site is None:
 else:
     dev_inv_file = "device-inventory-" + site + ".csv"
 
-# loc = get_current_path() + "/"
 loc = get_current_path()
 # dev_inv_file = loc + dev_inv_file
 # check if site's device inventory file exists
@@ -176,12 +188,9 @@ print("-" * (len(loc) + len(dev_inv_file) + 23))
 uptime = []
 for line in fabric:
     line = line.strip("\n")
-    # ipaddr = line.split(",")[0]
-    # vendor = line.split(",")[1]
     hostname = line.split(",")[2]
-    # username = line.split(",")[3]
-    # password = line.split(",")[4]
-
+    if core:
+        hostname = core
     # - - - - - - - - Old Code - - - -
     # loc = get_current_path()
     # loc = loc + "\\data\\"
@@ -190,7 +199,7 @@ for line in fabric:
     # # end import
     # - - - - - - - - Old Code - - - -
     arp_file = create_filename("port-maps", "-arp.txt", "data")
-
+    # unindent the rest
     print()
     # create a blank list to accept each line in the file
     data1 = []
@@ -326,3 +335,6 @@ for line in fabric:
     mydatafile = create_filename("port-maps", "-Mac2IP.json")
     with open(mydatafile, "w") as f:
         json.dump(Mac_IP, f, indent=4)
+    # If this is a core/idf deployment stop here
+    if core:
+        break
