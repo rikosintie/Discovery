@@ -1,7 +1,11 @@
 term length 0
+show clock
+show ntp associations
+show ntp status
+show kron schedule
 show version | i uptime
+show version | i System serial number|Base ethernet MAC Address|ID
 show archive config differences
-sh ver | i 3[6-7]
 show ver | i WS
 show ip arp
 show vlan brief
