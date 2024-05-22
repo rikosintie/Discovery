@@ -4,26 +4,27 @@
 <img width="15%" src="https://github.com/rikosintie/Discovery/blob/main/images/pterodactyl.jpeg" alt="Pterodactyl">
 </p>
 
-# The Helper Scripts<!-- omit from toc -->
+# The Helper Scripts<!-- omit from toc -->w
 
-- [What files are created](#what-files-are-created)
-- [Creating Port maps](#creating-port-maps)
-  - [Running the port map scripts](#running-the-port-map-scripts)
-    - [Running the procurve-arp.py script](#running-the-procurve-arppy-script)
-    - [Running the procurve-macaddr.py script](#running-the-procurve-macaddrpy-script)
-- [CDP Neighbor Reports](#cdp-neighbor-reports)
-  - [The cdp scripts](#the-cdp-scripts)
-  - [The cdp neighbor text report](#the-cdp-neighbor-text-report)
-- [LLDP neighbor Report](#lldp-neighbor-report)
-  - [Installing LLDP on Ubuntu](#installing-lldp-on-ubuntu)
-  - [Installing LLDP on macOS](#installing-lldp-on-macos)
-  - [Enabling LLDP on the switch](#enabling-lldp-on-the-switch)
-  - [Running the script](#running-the-script)
-- [The System Report](#the-system-report)
-- [The Interface scripts](#the-interface-scripts)
-  - [The 10Mbps interfaces report](#the-10mbps-interfaces-report)
-  - [The ports in use report](#the-ports-in-use-report)
-- [Convert MAC addresses](#convert-mac-addresses)
+- [The Helper Scriptsw](#the-helper-scriptsw)
+  - [What files are created](#what-files-are-created)
+  - [Creating Port maps](#creating-port-maps)
+    - [Running the port map scripts](#running-the-port-map-scripts)
+      - [Running the procurve-arp.py script](#running-the-procurve-arppy-script)
+      - [Running the procurve-macaddr.py script](#running-the-procurve-macaddrpy-script)
+  - [CDP Neighbor Reports](#cdp-neighbor-reports)
+    - [The cdp scripts](#the-cdp-scripts)
+    - [The cdp neighbor text report](#the-cdp-neighbor-text-report)
+  - [LLDP neighbor Report](#lldp-neighbor-report)
+    - [Installing LLDP on Ubuntu](#installing-lldp-on-ubuntu)
+    - [Installing LLDP on macOS](#installing-lldp-on-macos)
+    - [Enabling LLDP on the switch](#enabling-lldp-on-the-switch)
+    - [Running the script](#running-the-script)
+  - [The System Report](#the-system-report)
+  - [The Interface scripts](#the-interface-scripts)
+    - [The 10Mbps interfaces report](#the-10mbps-interfaces-report)
+    - [The ports in use report](#the-ports-in-use-report)
+  - [Convert MAC addresses](#convert-mac-addresses)
 
 ## What files are created
 
@@ -158,6 +159,12 @@ If you have a need for this information great, if not just ignore it.
 This script reads the hostname-Mac2IP.json and hostname-mac-address.txt files and creates the port maps. The port maps are saved in the final folder under port-maps.
 
 `python3 procurve-macaddr.py -s area1`
+
+## Core/IDF deployment
+
+In this case only the core switch has the arp records. The argument "-c coreswitch" is used to tell the switch to use the core-arp.txt file for all switches.
+
+`python3 procurve-macaddr.py -s area1 -c coreswitch`
 
 ----------------------------------------------------------------
 
