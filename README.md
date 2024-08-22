@@ -124,7 +124,11 @@ This is not a exhaustive list, feel free to add to it.
 - Is an escort required when we are on site?
 - How is access (Keys, codes, alarm codes, etc) granted?
 - If after hours cut overs are required, who is the after hours contact?
-- Are we allowed to connect our laptops to the network?
+- Will VPN be provided?
+- When on site:
+    - Are we allowed to connect our laptops to the network?
+    - If not, will a jumpbox be provided?
+    - If using a jumpbox can we install tools like python or nmap?
 - Can we use tools like nmap and Wireshark to discover devices?
   - Here are some [nmap scripts](https://github.com/rikosintie/nmap-python) that I wrote for discovery.
 - Is a change request document required?
