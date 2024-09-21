@@ -138,7 +138,7 @@ print()
 print()
 start = timeit.default_timer()
 parser = argparse.ArgumentParser(
-    description="-s site, -c config-file to use -l 1 create log.txt, -p 1 prompt for password, -t 1-9 timeout, -e W,I,M,D,E to pull logs"
+    description="-s site, -c config-file to use, -l 1 create ssh_log.txt, -p 1 prompt for password, -t 1-9 timeout, -e W,I,M,D,E (-e 1 for Cisco) to pull logs"
 )
 parser.add_argument(
     "-c",
@@ -177,7 +177,7 @@ site = args.site
 # if -l 1 is passed, turn on logging
 if args.logging != "":
     #  log all reads and writes on the SSH channel
-    logging.basicConfig(filename="log.txt", level=logging.DEBUG)
+    logging.basicConfig(filename="ssh_log.txt", level=logging.DEBUG)
     logger = logging.getLogger("netmiko")
 
 # Check for the password, exit if it doesn't exist
