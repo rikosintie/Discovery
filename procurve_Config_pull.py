@@ -10,7 +10,7 @@ https://pynet.twb-tech.com/blog/netmiko-and-textfsm.html
 
 Usage
 1. Clone the repo at https://github.com/rikosintie/Discovery/. The readme file
-in hte repo detailed installation instructions.
+in the repo detailed installation instructions.
 2. Create a file named device-inventory-<site>.
 Example
 device-inventory-test
@@ -150,7 +150,7 @@ parser.add_argument(
     "-e",
     "--event",  # Optional (but recommended) long version
     default="",
-    help="-e W,I,M,D,E to pull switch logs",
+    help="-e W,I,M,D,E to pull switch logs, -e 1 for Cisco",
 )
 parser.add_argument(
     "-l",
