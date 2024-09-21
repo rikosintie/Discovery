@@ -2,6 +2,7 @@
 !!!!! Discovery Script - Does not change the running config !!!!!
 
 Reference
+https://github.com/rikosintie/Discovery
 https://pynet.twb-tech.com/blog/netmiko-read-timeout.html
 https://stackoverflow.com/questions/9539921/how-do-i-define-a-function-with-optional-arguments
 ntc templates are located at Discovery/lib/python3.11/site-packages/ntc_templates/templates
