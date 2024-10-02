@@ -119,6 +119,10 @@ def which_vendor(vendor):
             sh_run = "show running structured"
             show_lldp = "show lldp info remote detail"
             show_arp = "show arp"
+        case "aruba_osswitch":
+            sh_run = "show running"
+            show_lldp = "show lldp neighbor-info detail"
+            show_arp = "show arp"
         case "cisco_ios":
             sh_run = "show running"
             show_lldp = "show lldp neighbor detail"
