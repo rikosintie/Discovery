@@ -11,6 +11,7 @@ import pandas as pd
 def get_filenames(directory_path):
     # Get a list of all filenames in the directory
     filenames = os.listdir(directory_path)
+    filenames = sorted(filenames)
     return filenames
 
 
