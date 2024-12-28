@@ -30,3 +30,17 @@ include/
 device-inventory*
 test.py
 *.pyc
+# ------------------------
+#   offline text files
+# ------------------------
+filenames.csv
+filenames.xlsx
+.~lock.filenames.xlsx#
+CR-data/CR-data.csv
+CR-data/CR-data.xlsx
+Interface/Interface.csv
+Interface/Interface.xlsx
+port-maps/Final/port-maps.csv
+port-maps/Final/port-maps.xlsx
+Running/Running.csv
+Running/Running.xlsx
