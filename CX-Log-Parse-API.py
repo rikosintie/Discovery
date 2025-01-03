@@ -3,18 +3,21 @@ import csv
 import json
 import os
 import re
+import sys
 from datetime import datetime
 
 import requests
+import urllib3
 
 """
 usage
 python CX-Log-Parse-API.py -f logfile.txt -o output.csv
-python CX-Log-Parse-API.py -i 192.168.10.233 -u vector -p H3lpd3sk -o 01_lab.csv
+python CX-Log-Parse-API.py -i 192.168.10.233 -u admin -p H3lpd3sk -o 01_lab.csv
+                           -i 192.168.10.233 -u vector -p H3lpd3sk -o 01_lab.csv
 To view the reference documentation for the REST v10.xx API, access the following URL using a browser:
 https://192.168.10.233/api/v10.10/
 """
-
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # Regex pattern for log parsing, with flexible handling for interface field (which can be '-')
 log_pattern = re.compile(
     r"(?P<date>\d{4}-\d{2}-\d{2})T(?P<time>\d{2}:\d{2}:\d{2}\.\d+)(?P<timezone>[+-]\d{2}:\d{2}) (?P<hostname>\S+) (?P<process>\S+)\[(?P<pid>\d+)\]: (?P<event_type>\S+)\|(?P<event_id>\d+)\|(?P<log_level>\S+)\|(?P<module>\S+)\|(?P<interface>(?:\S+|-)?)\|(?P<message>.+)"
@@ -67,12 +70,15 @@ def parse_logs(log_lines, csv_filename):
 
 
 # Function to retrieve logs from the Aruba CX switch via REST API
-def fetch_logs_from_switch(ip, username, password):
+def fetch_logs_from_switch(ip, username, password, url):
     creds: dict[str] = {"username": username, "password": password}
     session = requests.Session()
     try:
         login = session.post(
-            f"https://{ip}/rest/v10.10/login", data=creds, verify=False
+            # f"https://{ip}/rest/v10.10/login?since=yesterday", data=creds, verify=False
+            f"https://{ip}/rest/v10.10/login",
+            data=creds,
+            verify=False,
         )
         print(f"This is the login code: {login.status_code}")
         firmware: list[str] = session.get(
@@ -81,10 +87,12 @@ def fetch_logs_from_switch(ip, username, password):
         print(firmware.json())
     except Exception as e:
         print(f"Error logging into switch: {e}")
+        sys.exit()
 
-    # This URL contains API documentation
+    # This URL contains API documentation from the switch
     # https://{ip address}/api/v10.10/#/Logs/get_logs_event
-    url = f"https://{ip}/rest/v10.10/logs/event"
+    # url = f"https://{ip}/rest/v10.10/logs/event?since=today"
+    # url = f"https://{ip}/rest/v10.10/logs/event?since={since}" + args.since
 
     try:
         response = session.get(url, verify=False)
@@ -111,13 +119,40 @@ def main():
         "-o", "--output", help="CSV output filename", default="log_output.csv"
     )
     parser.add_argument(
-        "-u", "--username", help="Username for Aruba CX API", default="admin"
+        "-n", "--username", help="Username for Aruba CX API", default="admin"
     )
     parser.add_argument(
         "-p", "--password", help="Password for Aruba CX API", default="admin"
     )
+    # - - - - - -
+    parser.add_argument("-l", "--priority", help="Log Level to filter on", default="7")
 
+    parser.add_argument(
+        "-s", "--since", help="Return logs since", default="2025-01-02 17:00:29"
+    )
+
+    parser.add_argument("-u", "--until", help="Return logs until", default="")
+
+    parser.add_argument("--limit", help="number of logs 1-1000", default="")
+
+    parser.add_argument("-e", "--event_id_num", help="event id", default="")
+
+    parser.add_argument(
+        "-c", "--EVENT_CATEGORY", help="Log_Info, Log_Warn, etc.", default=""
+    )
+    # - - - - - -
     args = parser.parse_args()
+    priority: str = args.priority
+    since: str = args.since
+    until: str = args.until
+    limit: str = args.limit
+    event_id_num: str = args.event_id_num  # optional parameter for event ID filtering
+    event_cat: str = args.EVENT_CATEGORY
+    ip: str = args.ip
+    url: str = f"https://{ip}/rest/v10.10/logs/event?priority={priority}&since={since}&until={until}&limit={limit}&ID={event_id_num}&EVENT_CATEGORY={event_cat}"
+    # url: str = f"https://{ip}/rest/v10.10/logs/event"
+    # print(f"since: {since}, limit: {limit}")
+    print(f"URL: {url}")
 
     if args.file and os.path.isfile(args.file):
         # Read logs from file
@@ -128,7 +163,7 @@ def main():
 
     elif args.ip:
         # Fetch logs from Aruba CX switch
-        log_lines = fetch_logs_from_switch(args.ip, args.username, args.password)
+        log_lines = fetch_logs_from_switch(args.ip, args.username, args.password, url)
         if log_lines:
             # Convert log lines to JSON
             response_dict = json.loads("\n".join(log_lines))
