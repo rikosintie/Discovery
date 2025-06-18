@@ -91,24 +91,26 @@ def create_filename(sub_dir1: str, extension: str = "", sub_dir2: str = "") -> s
     return int_report
 
 
-def remove_empty_lines(filename: str) -> str:
+def remove_empty_lines(filename: str) -> None:
     """
-    Removes empty lines from the file
+    Removes empty lines from the file.
 
     Args:
-        filename (str): file in the cwd to be opened
+        filename (str): File in the current working directory to be opened.
 
     Returns:
-        Nothing - updated file is written to disk
+        None - the updated file is written to disk.
     """
     if not os.path.isfile(filename):
-        print("{} does not exist ".format(filename))
+        print(f"{filename} does not exist.")
         return
+
     with open(filename) as filehandle:
         lines = filehandle.readlines()
 
     with open(filename, "w") as filehandle:
-        lines = filter(lambda x: x.strip(), lines)
+        # lines = filter(lambda x: x.strip(), lines)
+        lines = list(filter(lambda x: x.strip(), lines))
         filehandle.writelines(lines)
 
 
@@ -513,5 +515,5 @@ total_time = stop - start
 mins, secs = divmod(total_time, 60)
 hours, mins = divmod(mins, 60)
 print(
-    f"\nData collection is complete.\nTotal running time: {hours} Hours {mins} Minutes {round(secs,2)} Seconds\n"
+    f"\nData collection is complete.\nTotal running time: {hours} Hours {mins} Minutes {round(secs, 2)} Seconds\n"
 )
