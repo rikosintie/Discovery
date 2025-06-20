@@ -51,6 +51,7 @@ import re
 import sys
 import timeit
 from datetime import datetime
+from typing import Optional
 
 from icecream import ic
 from netmiko import ConnectHandler
@@ -109,7 +110,6 @@ def remove_empty_lines(filename: str) -> None:
         lines = filehandle.readlines()
 
     with open(filename, "w") as filehandle:
-        # lines = filter(lambda x: x.strip(), lines)
         lines = list(filter(lambda x: x.strip(), lines))
         filehandle.writelines(lines)
 
@@ -187,7 +187,7 @@ if args.logging != "":
     logger = logging.getLogger("netmiko")
 
 # Check for the password, exit if it doesn't exist
-password = ""
+password: Optional[str] = ""
 if args.password != "":
     password = getpass.getpass(prompt="Input the Password:")
 elif os.environ.get("cyberARK"):
@@ -280,8 +280,10 @@ for line in fabric:
     #  all switches use the same config file
     if args.conf == "":
         cfg_file = "procurve" + "-config-file.txt"
+        mac_file = "procurve" + "-mac-address.txt"
     else:
         cfg_file = f"{args.conf}-config-file.txt"
+        mac_file = f"{args.conf}-mac-address.txt"
     print()
     print(net_connect.find_prompt())
     print()
@@ -404,7 +406,8 @@ for line in fabric:
 
     #  Send commands from mac.txt for human readable output
     print(f"collecting show mac address for {hostname}")
-    output_text_mac = net_connect.send_config_from_file("mac.txt", read_timeout=200)
+    # output_text_mac = net_connect.send_config_from_file("mac.txt", read_timeout=200)
+    output_text_mac = net_connect.send_config_from_file(mac_file, read_timeout=200)
     print("-" * (len(cfg_file) + len(hostname) + 16))
 
     # collect arp
