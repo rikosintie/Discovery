@@ -1,6 +1,0 @@
-show logging -r -M
- Keys:   W=Warning   I=Information
-         M=Major     D=Debug E=Error
-----  Reverse event Log listing: Events Since Boot  ----
-M 01/01/90 00:00:26 03001 system: System reboot due to Power Failure
-----  Top of Log : Events Listed = 1  ----
