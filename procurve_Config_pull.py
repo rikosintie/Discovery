@@ -51,7 +51,7 @@ import re
 import sys
 import timeit
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Tuple
 
 from icecream import ic
 from netmiko import ConnectHandler
@@ -228,7 +228,7 @@ with open(dev_inv_file, encoding="utf-8-sig") as devices_file:
 print("-" * (len(dev_inv_file) + 23))
 print(f"Reading devices from: {dev_inv_file}")
 
-uptime = []
+uptime: list[str] = []
 for line in fabric:
     line = line.strip("\n")
     ipaddr = line.split(",")[0]
@@ -303,7 +303,7 @@ for line in fabric:
             command, strip_command=False, delay_factor=time_out
         )
         ic(output_show)
-        output_show_str = f"{output_show_str} \n !++++++++++++++ \n  {output_show}"
+        output_show_str = f"{output_show_str} \n\n !++++++++++++++ \n\n  {output_show}"
 
     # pull logs. Logs tend to time out because they are so large
     # you can set the timeout value up if they are timing out.
