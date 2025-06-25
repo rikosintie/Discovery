@@ -114,32 +114,143 @@ def remove_empty_lines(filename: str) -> None:
         filehandle.writelines(lines)
 
 
-def which_vendor(vendor):
+# function to return vendor specific commands and flags
+def which_vendor(vendor: str) -> Tuple[str, str, str, str, bool]:
+    """
+    Returns vendor-specific command strings, JSON interface key, and prefix behavior.
+
+    Args:
+        vendor (str): Vendor ID string.
+
+    Returns:
+        Tuple[str, str, str, str, bool]: Commands and flags:
+            - show_run
+            - show_lldp
+            - show_arp
+            - interface_key
+            - force_prefix: whether to prepend GigabitEthernet to interfaces like "1/1/1"
+    """
     vendor = vendor.lower()
     match vendor:
         case "hp_procurve":
-            sh_run = "show running structured"
-            show_lldp = "show lldp info remote detail"
-            show_arp = "show arp"
-        case "aruba_osswitch":
-            sh_run = "show running"
-            show_lldp = "show lldp neighbor-info detail"
-            show_arp = "show arp"
-        case "cisco_ios":
-            sh_run = "show running"
-            show_lldp = "show lldp neighbor detail"
-            show_arp = "show ip arp"
-        case "cisco_xe":
-            sh_run = "show running"
-            show_lldp = "show lldp neighbor detail"
-            show_arp = "show ip arp"
-        case _:
-            print(
-                f"{vendor} doesn't match hpe or cisco ios. Check the device inventory file"
+            return (
+                "show running structured",
+                "show lldp info remote detail",
+                "show arp",
+                "port",
+                True,
             )
-    return sh_run, show_lldp, show_arp
+        case "aruba_osswitch":
+            return (
+                "show running",
+                "show lldp neighbor-info detail",
+                "show arp",
+                "interface",
+                True,
+            )
+        case "aruba_cx":
+            return (
+                "show running-config",
+                "show lldp neighbors detail",
+                "show arp",
+                "interface",
+                False,
+            )
+        case "cisco_ios" | "cisco_xe":
+            return (
+                "show running",
+                "show lldp neighbor detail",
+                "show ip arp",
+                "interface",
+                True,
+            )
+        case "cisco_nxos":
+            return (
+                "show running-config",
+                "show lldp neighbors detail",
+                "show ip arp",
+                "interface",
+                False,
+            )
+        case _:
+            raise ValueError(f"Unsupported vendor: {vendor}")
+
+    return sh_run, show_lldp, show_arp, interface_key
 
 
+# function to create a "show mac address table file by reading the interface
+# JSON file.
+def generate_mac_query_file_from_json(
+    json_file_path: str,
+    output_file_path: str,
+    interface_key: str = "interface",
+    force_prefix: bool = True,
+) -> None:
+    """
+    Reads a JSON file containing interface data and generates a configuration
+    file with 'show mac address-table interface ... | i XX' commands for each
+    valid interface.
+
+    Args:
+        json_file_path (str): Path to the JSON file containing interface data.
+        output_file_path (str): Path to the output text file where commands will be written.
+        interface_key (str): The key in the JSON dict that holds interface names.
+        force_prefix (bool): If True, prepends 'GigabitEthernet' to bare interfaces like '1/0/1'.
+
+    Raises:
+        FileNotFoundError: If the specified JSON file does not exist.
+        ValueError: If no valid interface names are found in the JSON file.
+    """
+
+    if not os.path.isfile(json_file_path):
+        raise FileNotFoundError(f"JSON file not found: {json_file_path}")
+
+    with open(json_file_path, "r") as file:
+        try:
+            interface_data = json.load(file)
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Invalid JSON: {e}")
+
+    commands: list[str] = []
+
+    for entry in interface_data:
+        intf_name = entry.get(interface_key)
+        # Skip VLAN interfaces (they can't be used in 'show mac address-table interface' queries)
+        if intf_name.lower().startswith("vlan"):
+            continue
+        if intf_name.lower().startswith("lo"):
+            continue
+        if intf_name.lower().startswith("tu"):
+            continue
+        if not intf_name:
+            continue
+
+        # Conditionally normalize interface names
+        if force_prefix and re.match(r"^\d+/\d+/\d+$", intf_name):
+            intf_name = f"GigabitEthernet{intf_name}"
+
+        # Extract interface type abbreviation for grep
+        match = re.match(r"([A-Za-z]+)", intf_name)
+        if match:
+            abbrev = match.group(1)[:2]
+        else:
+            abbrev = intf_name.split("/")[0]
+
+        # cmd = f"show mac address-table interface {intf_name} | i {abbrev}"
+        # cmd = f"{maddr} {intf_name} | i {abbrev}"
+        cmd = f"{maddr} {intf_name}"
+        commands.append(cmd)
+
+    if not commands:
+        raise ValueError("No valid interfaces found in the JSON file.")
+
+    with open(output_file_path, "w") as f:
+        f.write("\n".join(commands))
+
+    print(f"Wrote {len(commands)} interface commands to {output_file_path}")
+
+
+# ---------------
 print()
 print()
 start = timeit.default_timer()
@@ -235,9 +346,11 @@ for line in fabric:
     vendor = line.split(",")[1]
     hostname = line.split(",")[2]
     username = line.split(",")[3]
+    maddr = line.split(",")[4]
 
-    sh_run, show_lldp, show_arp = which_vendor(vendor)
-
+    # sh_run, show_lldp, show_arp = which_vendor(vendor)
+    sh_run, show_lldp, show_arp, interface_key, force_prefix = which_vendor(vendor)
+    ic(sh_run, show_lldp, show_arp, interface_key, force_prefix)
     now = datetime.now()
     start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
     # print("-----------------------------------------------------")
@@ -277,13 +390,11 @@ for line in fabric:
         end_time = datetime.now()
         print(f"\nExec time: {end_time - now}\n")
         continue
-    #  all switches use the same config file
-    if args.conf == "":
-        cfg_file = "procurve" + "-config-file.txt"
-        mac_file = "procurve" + "-mac-address.txt"
-    else:
-        cfg_file = f"{args.conf}-config-file.txt"
-        mac_file = f"{args.conf}-mac-address.txt"
+    # The same config file is used for each vendor
+    # example hp_procurve-config-file.txt is used for all HP Procurve switches
+    # example cisco_ios-config-file.txt is used for all Cisco IOS switches
+    # example cisco_xe-config-file.txt is used for all Cisco IOS XE switches
+    cfg_file = f"{vendor}-config-file.txt"
     print()
     print(net_connect.find_prompt())
     print()
@@ -293,7 +404,7 @@ for line in fabric:
     remove_empty_lines(cfg_file)
     with open(cfg_file) as config_file:
         show_commands = config_file.readlines()
-
+    ic(show_commands)
     # Netmiko normally allows 100 seconds for send_command to complete
     # delay_factor=2 would allow 200 seconds.
     output_show_str: str = ""
@@ -302,7 +413,7 @@ for line in fabric:
         output_show = net_connect.send_command(
             command, strip_command=False, delay_factor=time_out
         )
-        ic(output_show)
+        # ic(output_show)
         output_show_str = f"{output_show_str} \n\n !++++++++++++++ \n\n  {output_show}"
 
     # pull logs. Logs tend to time out because they are so large
@@ -345,7 +456,7 @@ for line in fabric:
     print(f"collecting show interface for {hostname}")
     output = net_connect.send_command("show interfaces", use_textfsm=True)
     print("-" * (len(cfg_file) + len(hostname) + 16))
-
+    ic(output)
     # Use textFSM to create a json object with cdp neighbors
     print(f"collecting show cdp detail for {hostname}")
     output_cdp = net_connect.send_command("show cdp neighbor detail", use_textfsm=True)
@@ -404,12 +515,6 @@ for line in fabric:
     output_show_lldp = net_connect.send_command(show_lldp, use_textfsm=True)
     print("-" * (len(cfg_file) + len(hostname) + 16))
 
-    #  Send commands from mac.txt for human readable output
-    print(f"collecting show mac address for {hostname}")
-    # output_text_mac = net_connect.send_config_from_file("mac.txt", read_timeout=200)
-    output_text_mac = net_connect.send_config_from_file(mac_file, read_timeout=200)
-    print("-" * (len(cfg_file) + len(hostname) + 16))
-
     # collect arp
     print(f"collecting show arp for {hostname}")
     output_text_arp = net_connect.send_command(show_arp, read_timeout=200)
@@ -421,21 +526,58 @@ for line in fabric:
     output_text_run = net_connect.send_command(sh_run, read_timeout=360)
     print("-" * (len(cfg_file) + len(hostname) + 16))
 
+    #  Write the JSON interface data to a file
+    int_report = create_filename("Interface", "-interface.json")
+    print(f"Writing interfaces json data to {int_report}")
+    with open(int_report, "w") as file:
+        output = json.dumps(output, indent=2)
+        file.write(output)
+    print("-" * (len(dev_inv_file) + 23))
+
+    # create a mac-address query file from the JSON interface data
+    json_interface = create_filename("Interface", "-interface.json")
+    output_mac_address = create_filename("port-maps", "-send-mac-addr.txt", "data")
+    generate_mac_query_file_from_json(
+        json_file_path=json_interface,
+        output_file_path=output_mac_address,
+        interface_key=interface_key,
+        force_prefix=force_prefix,
+    )
+
+    print(f"processing {output_mac_address} for {hostname}")
+    print("-" * (len(output_mac_address) + len(hostname) + 16))
+    remove_empty_lines(output_mac_address)
+    with open(output_mac_address) as mac_add_file:
+        show_commands = mac_add_file.readlines()
+    ic(show_commands)
+    # Netmiko normally allows 100 seconds for send_command to complete
+    # delay_factor=2 would allow 200 seconds.
+    output_mac_str = ""
+    time_out = args.timeout
+    for command in show_commands:
+        output_show = net_connect.send_command(
+            command, strip_command=False, delay_factor=time_out
+        )
+        # ic(output_show)
+        output_mac_str = f"{output_mac_str} {output_show} \n"
+        ic(output_mac_str)
+        # output_mac_str = f"{output_show}"
+
+    #  Write the show mac address commands output to disk
+    int_report = create_filename("port-maps", "-mac-address.txt", "data")
+    print(f"Writing show commands to {int_report}")
+    with open(int_report, "w") as file:
+        file.write(output_mac_str)
+    print("-" * (len(dev_inv_file) + 23))
+
     # Disconnect from the switch and start writing data to disk
     net_connect.disconnect()
 
-    #  Write the show commands output to disk
+    #  Write the CR Data show commands output to disk
     int_report = create_filename("CR-data", "-CR-data.txt")
     print(f"Writing show commands to {int_report}")
     with open(int_report, "w") as file:
         file.write(output_show_str)
-    print("-" * (len(dev_inv_file) + 23))
-
-    # Write the mac-address output to disk
-    int_report = create_filename("port-maps", "-mac-address.txt", "data")
-    print(f"Writing MAC addresses to {int_report}")
-    with open(int_report, "w") as file:
-        file.write(output_text_mac)
     print("-" * (len(dev_inv_file) + 23))
 
     # Write the arp table plain text output to disk
@@ -453,12 +595,12 @@ for line in fabric:
     print("-" * (len(dev_inv_file) + 23))
 
     #  Write the JSON interface data to a file
-    int_report = create_filename("Interface", "-interface.txt")
-    print(f"Writing interfaces json data to {int_report}")
-    with open(int_report, "w") as file:
-        output = json.dumps(output, indent=2)
-        file.write(output)
-    print("-" * (len(dev_inv_file) + 23))
+    # int_report = create_filename("Interface", "-interface.json")
+    # print(f"Writing interfaces json data to {int_report}")
+    # with open(int_report, "w") as file:
+    #     output = json.dumps(output, indent=2)
+    #     file.write(output)
+    # print("-" * (len(dev_inv_file) + 23))
 
     # Write the JSON interface brief data to a file
     int_report = create_filename("Interface", "-int_br.txt")
@@ -484,7 +626,7 @@ for line in fabric:
         file.write(output_show_lldp)
     print()
 
-    ports = []
+    # ports = []
     count = 0
     #  Create a regex to match any port with [0-8]/0/[0-9]{1,2}
     #  This will match all ports with a 0 as the module number
