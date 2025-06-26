@@ -84,6 +84,7 @@ it would use the last IP address.
 Clear the IP address in case the next interface has a MAC but no IP address
     IP_Data = ''
 """
+
 import argparse
 import hashlib
 import json
@@ -95,8 +96,8 @@ from icecream import ic
 
 import manuf
 
-# ic.enable()
-ic.disable()
+ic.enable()
+# ic.disable()
 
 __author__ = "Michael Hubbard"
 __author_email__ = "michael.hubbard999@gmail.com"
@@ -270,6 +271,8 @@ for line in fabric:
         # Remove newline at end
         IP = IP.strip("\n")
 
+        #       added 6/24/25
+        Interface_Num: str = ""
         if IP.find("Port Address Table") != -1:
             #   Remove the Status and Counters text.
             IP = IP.replace("Status and Counters - ", "")
