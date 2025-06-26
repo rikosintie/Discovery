@@ -238,6 +238,7 @@ def generate_mac_query_file_from_json(
 
         # cmd = f"show mac address-table interface {intf_name} | i {abbrev}"
         # cmd = f"{maddr} {intf_name} | i {abbrev}"
+
         cmd = f"{maddr} {intf_name}"
         commands.append(cmd)
 
@@ -338,6 +339,8 @@ with open(dev_inv_file, encoding="utf-8-sig") as devices_file:
 
 print("-" * (len(dev_inv_file) + 23))
 print(f"Reading devices from: {dev_inv_file}")
+print("-" * (len(dev_inv_file) + 23))
+print()
 
 uptime: list[str] = []
 for line in fabric:
@@ -347,8 +350,15 @@ for line in fabric:
     hostname = line.split(",")[2]
     username = line.split(",")[3]
     maddr = line.split(",")[4]
+    if maddr == "":
+        maddr = "show mac address-table interface"
+        print("-" * (len(dev_inv_file) + 59))
+        print(
+            f"The 'show mac address-table interface' value is missing in {dev_inv_file}"
+        )
+        print(f"Using 'show mac address-table interface' as default for {hostname}")
+        print("-" * (len(dev_inv_file) + 59))
 
-    # sh_run, show_lldp, show_arp = which_vendor(vendor)
     sh_run, show_lldp, show_arp, interface_key, force_prefix = which_vendor(vendor)
     ic(sh_run, show_lldp, show_arp, interface_key, force_prefix)
     now = datetime.now()
@@ -495,7 +505,7 @@ for line in fabric:
             with open(int_report, "w") as file:
                 output_system = json.dumps(output_system, indent=2)
                 file.write(output_system)
-            print("-" * (len(dev_inv_file) + 23))
+            print("-" * (len(dev_inv_file) + 31))
         case "cisco_ios":
             output_show_int_br = net_connect.send_command(
                 "show interfaces status",
@@ -508,7 +518,7 @@ for line in fabric:
                 strip_command=True,
                 use_textfsm=True,
             )
-    print("-" * (len(cfg_file) + len(hostname) + 16))
+    # print("-" * (len(cfg_file) + len(hostname) + 16))
 
     # Use textFSM to create a json object with show lldp info remote
     print(f"collecting show lldp neighbors for {hostname}")
