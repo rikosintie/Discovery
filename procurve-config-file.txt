@@ -1,0 +1,50 @@
+show system
+show config status
+show oobm
+show oobm ip
+show time
+show uptime
+show ntp status
+show ntp associations
+show ntp server
+show ip dns
+show job
+show version | i ROM
+show config vlan
+show config vlan | i ip address
+show vlan custom id name:15 ipaddr ipmask ipconfig state voice jumbo
+show config interface
+show ip
+show ip source-interface
+show ip route 0.0.0.0
+show config router ospf
+show ip route ospf
+show ip ospf interface
+show ip ospf neighbor
+show ip ospf general
+show ip ospf external-link-state
+show interface status
+show int status | i Up
+show interfaces transceiver detail
+show trunks
+show lacp peer
+show lacp local
+show lacp mad-passthrough
+show cdp neighbors
+show cdp nei d
+show lldp info remote
+show lldp info remote d
+show spanning-tree
+show spanning-tree inconsistent-ports
+show spanning-tree bpdu-protection
+show power-over-ethernet brief | i Del
+show power
+show modules
+show ip ssh
+show snmp-server
+show dhcp-server binding
+show dhcp-server pool
+show crypto host-public-key fingerprint
+show config files
+show mac-address | ex "A|B"
+show arp
