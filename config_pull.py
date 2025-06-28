@@ -57,6 +57,8 @@ from icecream import ic
 from netmiko import ConnectHandler
 from netmiko.exceptions import AuthenticationException, NetmikoTimeoutException
 from paramiko.ssh_exception import SSHException
+from rich import print
+from rich.panel import Panel
 
 # !!!!! Discovery Script - Does not change the running config !!!!!
 
@@ -352,12 +354,41 @@ for line in fabric:
     maddr = line.split(",")[4]
     if maddr == "":
         maddr = "show mac address-table interface"
-        print("-" * (len(dev_inv_file) + 59))
+
+        # Show the input prompt using rich formatting
         print(
-            f"The 'show mac address-table interface' value is missing in {dev_inv_file}"
+            Panel.fit(
+                f"[yellow]show mac address entry is missing in [cyan]device-inventory-{site}.csv[/cyan] for [bold]{hostname}[/bold].[/yellow]\n\n"
+                f"[green]Enter 1[/green] to use [bold]'show mac-address'[/bold]\n"
+                f"[green]Enter 2[/green] to use [bold]'show mac address-table interface'[/bold]",
+                title="⚠ Missing Value",
+                border_style="red",
+            )
         )
-        print(f"Using 'show mac address-table interface' as default for {hostname}")
-        print("-" * (len(dev_inv_file) + 59))
+
+        # Prompt the user for input (plain input, no styling inside input() itself)
+        choice = input("Enter 1 or 2: ")
+
+        # Apply their selection
+        if choice == "1":
+            # Procurve uses 'show mac-address'
+            maddr = "show mac-address"
+        elif choice == "2":
+            # Newer Cisco and other vendors use 'show mac address-table interface'
+            maddr = "show mac address-table interface"
+        else:
+            maddr = "show mac address-table interface"  # fallback
+            print(
+                "[red]Invalid choice. Defaulting to 'show mac address-table interface'[/red]"
+            )
+
+        # Show confirmation
+        print(
+            Panel(
+                f"[bold]Using:[/bold] [green]{maddr}[/green] for [yellow]{hostname}[/yellow]",
+                border_style="green",
+            )
+        )
 
     sh_run, show_lldp, show_arp, interface_key, force_prefix = which_vendor(vendor)
     ic(sh_run, show_lldp, show_arp, interface_key, force_prefix)
