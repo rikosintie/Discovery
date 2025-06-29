@@ -250,7 +250,7 @@ def generate_mac_query_file_from_json(
     with open(output_file_path, "w") as f:
         f.write("\n".join(commands))
 
-    print(f"Wrote {len(commands)} '{maddr}' commands to\n {output_file_path}")
+    print(f"Writing {len(commands)} '{maddr}' commands to\n {output_file_path}")
 
 
 # ---------------
@@ -352,7 +352,9 @@ print(f"[bold][blue]{border}[/blue][/bold]")
 print()
 
 uptime: list[str] = []
+device_count = 0
 for line in fabric:
+    device_count += 1
     line = line.strip("\n")
     ipaddr = line.split(",")[0]
     vendor = line.split(",")[1]
@@ -452,7 +454,9 @@ for line in fabric:
     print()
     border = "-" * (len(cfg_file) + len(hostname) + 18)
     print(f"[bold][blue]{border}[/blue][/bold]")
-    print(f"processing [blue]'{cfg_file}'[/blue] for [cyan]{hostname}[/cyan]")
+    print(
+        f"Processing [bright_blue]'{cfg_file}'[/bright_blue] for [cyan]{hostname}[/cyan]"
+    )
     border = "-" * (len(cfg_file) + len(hostname) + 18)
     print(f"[bold][blue]{border}[/blue][/bold]")
     remove_empty_lines(cfg_file)
@@ -510,14 +514,18 @@ for line in fabric:
             continue
 
     # Use textFSM to create a json object with interface stats
-    print(f"collecting [blue]'show interface'[/blue] for [cyan]{hostname}[/cyan]")
+    print(
+        f"collecting [bright_blue]'show interface'[/bright_blue] for [cyan]{hostname}[/cyan]"
+    )
 
     output = net_connect.send_command("show interfaces", use_textfsm=True)
     border = "-" * (len(hostname) + 32)
-    print(f"[bold][blue]{border}[/blue][/bold]")
+    print(f"[bold][bright_blue]{border}[/bright_blue][/bold]")
     ic(output)
     # Use textFSM to create a json object with cdp neighbors
-    print(f"collecting [blue]'show cdp detail'[/blue] for [cyan]{hostname}[/cyan]")
+    print(
+        f"collecting [bright_blue]'show cdp detail'[/bright_blue] for [cyan]{hostname}[/cyan]"
+    )
     output_cdp = net_connect.send_command("show cdp neighbor detail", use_textfsm=True)
     border = "-" * (len(hostname) + 33)
     print(f"[bold][blue]{border}[/blue][/bold]")
@@ -538,7 +546,9 @@ for line in fabric:
         case "hp_procurve":
             template_path = os.getcwd()
             template_file = os.path.join(template_path, "sh_int_br.textfsm")
-            print(f"collecting show interfaces brief for [cyan]{hostname}[/cyan]")
+            print(
+                f"collecting [bright_blue]'show interfaces brief'[/bright_blue] for [cyan]{hostname}[/cyan]"
+            )
             output_show_int_br = net_connect.send_command(
                 "show interfaces brief",
                 strip_command=True,
@@ -549,7 +559,9 @@ for line in fabric:
             border = "-" * +(len(hostname) + 37)
             print(f"[bold][blue]{border}[/blue][/bold]")
             # Use textFSM to create a json object of show system
-            print(f"collecting [blue]'show system'[/blue] for [cyan]{hostname}[/cyan]")
+            print(
+                f"collecting [bright_blue]'show system'[/bright_blue] for [cyan]{hostname}[/cyan]"
+            )
             output_system = net_connect.send_command("show system", use_textfsm=True)
             border = "-" * +(len(hostname) + 29)
             print(f"[bold][blue]{border}[/blue][/bold]")
@@ -576,19 +588,25 @@ for line in fabric:
     # print("-" * (len(cfg_file) + len(hostname) + 16))
 
     # Use textFSM to create a json object with show lldp info remote
-    print(f"collecting [blue]'show lldp neighbors'[/blue] for [cyan]{hostname}[/cyan]")
+    print(
+        f"collecting [bright_blue]'show lldp neighbors'[/bright_blue] for [cyan]{hostname}[/cyan]"
+    )
     output_show_lldp = net_connect.send_command(show_lldp, use_textfsm=True)
     border = "-" * (len(hostname) + 37)
     print(f"[bold][blue]{border}[/blue][/bold]")
 
     # collect arp
-    print(f"collecting [blue]'show arp'[/blue] for [cyan]{hostname}[/cyan]")
+    print(
+        f"collecting [bright_blue]'show arp'[/bright_blue] for [cyan]{hostname}[/cyan]"
+    )
     output_text_arp = net_connect.send_command(show_arp, read_timeout=200)
     border = "-" * (len(hostname) + 26)
     print(f"[bold][blue]{border}[/blue][/bold]")
 
     # Send show running
-    print(f"Collecting [blue]'show running-config'[/blue] from [cyan]{hostname}[/cyan]")
+    print(
+        f"Collecting [bright_blue]'show running-config'[/bright_blue] from [cyan]{hostname}[/cyan]"
+    )
     # print(net_connect.find_prompt())
     output_text_run = net_connect.send_command(sh_run, read_timeout=360)
     border = "-" * (len(hostname) + 38)
@@ -596,7 +614,7 @@ for line in fabric:
 
     #  Write the JSON interface data to a file
     int_report = create_filename("Interface", "-interface.json")
-    print(f"Writing [blue]'interfaces json data'[/blue] to\n {int_report}")
+    print(f"Writing [cyan]'interfaces json data'[/cyan] to\n {int_report}")
     with open(int_report, "w") as file:
         output = json.dumps(output, indent=2)
         file.write(output)
@@ -656,7 +674,7 @@ for line in fabric:
 
     # Write the arp table plain text output to disk
     int_report = create_filename("port-maps", "-arp.txt", "data")
-    print(f"Writing 'show arp' data to\n {int_report}")
+    print(f"Writing [bright_blue]'show arp'[/bright_blue] data to\n {int_report}")
     with open(int_report, "w") as file:
         file.write(output_text_arp)
     border = "-" * (len(int_report) + 1)
@@ -732,8 +750,15 @@ for line in fabric:
     #     for item in details:
     #         file.write("%s\n" % item)
 
-    message = f"[bold green]Successfully created config files for [yellow]{hostname}[/yellow][/bold green]"
-    print(Panel(message, title="✅ Done", border_style="cyan"))
+    message = f"[bright_green]Successfully created config files for[/bright_green] [bright_red]{hostname}[/bright_red]"
+    print(
+        Panel.fit(
+            message,
+            title="✅ Done",
+            border_style="cyan",
+            subtitle=f"Devices completed: {device_count}",
+        )
+    )
 
 stop = timeit.default_timer()
 total_time = stop - start
