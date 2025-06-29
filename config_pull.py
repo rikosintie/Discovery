@@ -250,7 +250,7 @@ def generate_mac_query_file_from_json(
     with open(output_file_path, "w") as f:
         f.write("\n".join(commands))
 
-    print(f"Wrote {len(commands)} interface commands to {output_file_path}")
+    print(f"Wrote {len(commands)} '{maddr}' commands to\n {output_file_path}")
 
 
 # ---------------
@@ -308,7 +308,8 @@ elif os.environ.get("cyberARK"):
     password = os.environ.get("cyberARK")
 else:
     print("\n" * 3)
-    print("-" * 87)
+    border = "-" * 87
+    print(f"[bold][blue]{border}[/blue][/bold]")
     print("No password has been found. Use")
     print()
     print("    python procurve-Config-pull.py -s site -p 1")
@@ -316,7 +317,8 @@ else:
     print(
         "on the terminal to be prompted for a password or set the environment variable cyberARK"
     )
-    print("-" * 87)
+    border = "-" * 87
+    print(f"[bold][blue]{border}[/blue][/bold]")
     print()
     sys.exit()
 
@@ -339,9 +341,14 @@ remove_empty_lines(dev_inv_file)
 with open(dev_inv_file, encoding="utf-8-sig") as devices_file:
     fabric = devices_file.readlines()
 
-print("-" * (len(dev_inv_file) + 23))
-print(f"Reading devices from: {dev_inv_file}")
-print("-" * (len(dev_inv_file) + 23))
+border = "-" * (len(dev_inv_file) + 23)
+print(f"[bold][blue]{border}[/blue][/bold]")
+# print(f"Reading devices from: {dev_inv_file}")
+border = f"Reading devices from: [cyan]{dev_inv_file}[/cyan]"
+
+print(border)
+border = "-" * (len(dev_inv_file) + 23)
+print(f"[bold][blue]{border}[/blue][/bold]")
 print()
 
 uptime: list[str] = []
@@ -353,8 +360,6 @@ for line in fabric:
     username = line.split(",")[3]
     maddr = line.split(",")[4]
     if maddr == "":
-        maddr = "show mac address-table interface"
-
         # Show the input prompt using rich formatting
         print(
             Panel.fit(
@@ -395,9 +400,13 @@ for line in fabric:
     now = datetime.now()
     start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
     # print("-----------------------------------------------------")
-    print("-" * (len(hostname) + 42))
-    print((str(start_time) + " Connecting to switch {}".format(hostname)))
-    print("-" * (len(hostname) + 42))
+    border = "-" * (len(hostname) + 42)
+    print(f"[bold][blue]{border}[/blue][/bold]")
+    border = f"[bold][red]{start_time}[/red][/bold] Connecting to switch [cyan]{hostname}[/cyan]"
+    print(f"{border}")
+    # print((str(start_time) + " Connecting to switch {}".format(hostname)))
+    border = "-" * (len(hostname) + 42)
+    print(f"[bold][blue]{border}[/blue][/bold]")
     try:
         device = {
             "device_type": vendor,
@@ -437,11 +446,15 @@ for line in fabric:
     # example cisco_xe-config-file.txt is used for all Cisco IOS XE switches
     cfg_file = f"{vendor}-config-file.txt"
     print()
-    print(net_connect.find_prompt())
+    # print(net_connect.find_prompt())
+    border = net_connect.find_prompt()
+    print(f"Connected to: [cyan]{border}[/cyan]")
     print()
-    print("-" * (len(cfg_file) + len(hostname) + 16))
-    print(f"processing {cfg_file} for {hostname}")
-    print("-" * (len(cfg_file) + len(hostname) + 16))
+    border = "-" * (len(cfg_file) + len(hostname) + 18)
+    print(f"[bold][blue]{border}[/blue][/bold]")
+    print(f"processing [blue]'{cfg_file}'[/blue] for [cyan]{hostname}[/cyan]")
+    border = "-" * (len(cfg_file) + len(hostname) + 18)
+    print(f"[bold][blue]{border}[/blue][/bold]")
     remove_empty_lines(cfg_file)
     with open(cfg_file) as config_file:
         show_commands = config_file.readlines()
@@ -465,7 +478,7 @@ for line in fabric:
             log_type = args.event.split(",")
             time_out = args.timeout
             for type in log_type:
-                print(f"processing show logging -{type} for {hostname}")
+                print(f"Processing show logging -{type} for {hostname}")
                 output_event = f"output_event_{type}"
                 if type not in log_list:
                     print(f"logging argument {type} for {hostname} is not supported")
@@ -477,14 +490,17 @@ for line in fabric:
                 output_event = net_connect.send_command(
                     show_logging, strip_command=False, delay_factor=time_out
                 )
-                print("-" * (len(cfg_file) + len(hostname) + 16))
+                border = "-" * (len(cfg_file) + len(hostname) + 16)
+                print(f"[bold][blue]{border}[/blue][/bold]")
+
                 #  Write the show logging output to disk
                 log_name = f"-log-{type}.txt"
                 int_report = create_filename("CR-data", log_name)
                 print(f"Writing show logging -{type} commands to {int_report}")
                 with open(int_report, "w") as file:
                     file.write(output_event)
-                print("-" * (len(cfg_file) + len(hostname) + 16))
+                border = "-" * (len(type) + len(int_report) + 36)
+                print(f"[bold][blue]{border}[/blue][/bold]")
         except NetmikoTimeoutException:
             end_time = datetime.now()
             print(f"\nExec time: {end_time - now}\n")
@@ -494,14 +510,17 @@ for line in fabric:
             continue
 
     # Use textFSM to create a json object with interface stats
-    print(f"collecting show interface for {hostname}")
+    print(f"collecting [blue]'show interface'[/blue] for [cyan]{hostname}[/cyan]")
+
     output = net_connect.send_command("show interfaces", use_textfsm=True)
-    print("-" * (len(cfg_file) + len(hostname) + 16))
+    border = "-" * (len(hostname) + 32)
+    print(f"[bold][blue]{border}[/blue][/bold]")
     ic(output)
     # Use textFSM to create a json object with cdp neighbors
-    print(f"collecting show cdp detail for {hostname}")
+    print(f"collecting [blue]'show cdp detail'[/blue] for [cyan]{hostname}[/cyan]")
     output_cdp = net_connect.send_command("show cdp neighbor detail", use_textfsm=True)
-    print("-" * (len(cfg_file) + len(hostname) + 16))
+    border = "-" * (len(hostname) + 33)
+    print(f"[bold][blue]{border}[/blue][/bold]")
 
     # # Use textFSM to create a json object with interface stats
     # template_path = os.getcwd()
@@ -519,24 +538,29 @@ for line in fabric:
         case "hp_procurve":
             template_path = os.getcwd()
             template_file = os.path.join(template_path, "sh_int_br.textfsm")
-            print(f"collecting show interfaces brief for {hostname}")
+            print(f"collecting show interfaces brief for [cyan]{hostname}[/cyan]")
             output_show_int_br = net_connect.send_command(
                 "show interfaces brief",
                 strip_command=True,
                 use_textfsm=True,
                 textfsm_template=template_file,
             )
+            # border = "-" * (len(cfg_file) + len(hostname) + 16)
+            border = "-" * +(len(hostname) + 37)
+            print(f"[bold][blue]{border}[/blue][/bold]")
             # Use textFSM to create a json object of show system
-            print(f"collecting show system for {hostname}")
+            print(f"collecting [blue]'show system'[/blue] for [cyan]{hostname}[/cyan]")
             output_system = net_connect.send_command("show system", use_textfsm=True)
-            print("-" * (len(cfg_file) + len(hostname) + 16))
+            border = "-" * +(len(hostname) + 29)
+            print(f"[bold][blue]{border}[/blue][/bold]")
             #  Write the JSON system data to a file
             int_report = create_filename("Interface", "-system.txt")
-            print(f"Writing interfaces json data to {int_report}")
+            print(f"Writing system json data to\n {int_report}")
             with open(int_report, "w") as file:
                 output_system = json.dumps(output_system, indent=2)
                 file.write(output_system)
-            print("-" * (len(dev_inv_file) + 31))
+            border = "-" * (len(int_report) + 1)
+            print(f"[bold][blue]{border}[/blue][/bold]")
         case "cisco_ios":
             output_show_int_br = net_connect.send_command(
                 "show interfaces status",
@@ -552,28 +576,32 @@ for line in fabric:
     # print("-" * (len(cfg_file) + len(hostname) + 16))
 
     # Use textFSM to create a json object with show lldp info remote
-    print(f"collecting show lldp neighbors for {hostname}")
+    print(f"collecting [blue]'show lldp neighbors'[/blue] for [cyan]{hostname}[/cyan]")
     output_show_lldp = net_connect.send_command(show_lldp, use_textfsm=True)
-    print("-" * (len(cfg_file) + len(hostname) + 16))
+    border = "-" * (len(hostname) + 37)
+    print(f"[bold][blue]{border}[/blue][/bold]")
 
     # collect arp
-    print(f"collecting show arp for {hostname}")
+    print(f"collecting [blue]'show arp'[/blue] for [cyan]{hostname}[/cyan]")
     output_text_arp = net_connect.send_command(show_arp, read_timeout=200)
-    print("-" * (len(cfg_file) + len(hostname) + 16))
+    border = "-" * (len(hostname) + 26)
+    print(f"[bold][blue]{border}[/blue][/bold]")
 
     # Send show running
-    print(f"Collecting show running-config from {hostname}")
+    print(f"Collecting [blue]'show running-config'[/blue] from [cyan]{hostname}[/cyan]")
     # print(net_connect.find_prompt())
     output_text_run = net_connect.send_command(sh_run, read_timeout=360)
-    print("-" * (len(cfg_file) + len(hostname) + 16))
+    border = "-" * (len(hostname) + 38)
+    print(f"[bold][blue]{border}[/blue][/bold]")
 
     #  Write the JSON interface data to a file
     int_report = create_filename("Interface", "-interface.json")
-    print(f"Writing interfaces json data to {int_report}")
+    print(f"Writing [blue]'interfaces json data'[/blue] to\n {int_report}")
     with open(int_report, "w") as file:
         output = json.dumps(output, indent=2)
         file.write(output)
-    print("-" * (len(dev_inv_file) + 23))
+    border = "-" * (len(int_report) + 1)
+    print(f"[bold][blue]{border}[/blue][/bold]")
 
     # create a mac-address query file from the JSON interface data
     json_interface = create_filename("Interface", "-interface.json")
@@ -585,8 +613,10 @@ for line in fabric:
         force_prefix=force_prefix,
     )
 
-    print(f"processing {output_mac_address} for {hostname}")
-    print("-" * (len(output_mac_address) + len(hostname) + 16))
+    # print(f"\n {output_mac_address} for\n {hostname}")
+    border = "-" * (len(output_mac_address) + 1)
+    print(f"[bold][blue]{border}[/blue][/bold]")
+
     remove_empty_lines(output_mac_address)
     with open(output_mac_address) as mac_add_file:
         show_commands = mac_add_file.readlines()
@@ -606,34 +636,39 @@ for line in fabric:
 
     #  Write the show mac address commands output to disk
     int_report = create_filename("port-maps", "-mac-address.txt", "data")
-    print(f"Writing show commands to {int_report}")
+    print(f"Writing '{maddr}' commands to\n {int_report}")
     with open(int_report, "w") as file:
         file.write(output_mac_str)
-    print("-" * (len(dev_inv_file) + 23))
+    # border = "-" * (len(dev_inv_file) + 25)
+    border = "-" * (len(int_report) + 1)
+    print(f"[bold][blue]{border}[/blue][/bold]")
 
     # Disconnect from the switch and start writing data to disk
     net_connect.disconnect()
 
     #  Write the CR Data show commands output to disk
     int_report = create_filename("CR-data", "-CR-data.txt")
-    print(f"Writing show commands to {int_report}")
+    print(f"Writing 'show commands' to\n {int_report}")
     with open(int_report, "w") as file:
         file.write(output_show_str)
-    print("-" * (len(dev_inv_file) + 23))
+    border = "-" * (len(int_report) + 1)
+    print(f"[bold][blue]{border}[/blue][/bold]")
 
     # Write the arp table plain text output to disk
     int_report = create_filename("port-maps", "-arp.txt", "data")
-    print(f"Writing ARP data to {int_report}")
+    print(f"Writing 'show arp' data to\n {int_report}")
     with open(int_report, "w") as file:
         file.write(output_text_arp)
-    print("-" * (len(dev_inv_file) + 23))
+    border = "-" * (len(int_report) + 1)
+    print(f"[bold][blue]{border}[/blue][/bold]")
 
     #  Write the running config to disk
-    print(f"Writing show run to {int_report}")
     int_report = create_filename("Running", "-running-config.txt")
+    print(f"Writing 'show running' output to\n {int_report}")
     with open(int_report, "w") as file:
         file.write(output_text_run)
-    print("-" * (len(dev_inv_file) + 23))
+    border = "-" * (len(int_report) + 1)
+    print(f"[bold][blue]{border}[/blue][/bold]")
 
     #  Write the JSON interface data to a file
     # int_report = create_filename("Interface", "-interface.json")
@@ -645,26 +680,30 @@ for line in fabric:
 
     # Write the JSON interface brief data to a file
     int_report = create_filename("Interface", "-int_br.txt")
-    print(f"Writing interfaces brief data to {int_report}")
+    print(f"Writing 'show interfaces brief' data to\n {int_report}")
     with open(int_report, "w") as file:
         output_show_int_br = json.dumps(output_show_int_br, indent=2)
         file.write(output_show_int_br)
-    print("-" * (len(dev_inv_file) + 23))
-
+    # print("-" * (len(dev_inv_file) + 23))
+    border = "-" * (len(int_report) + 1)
+    print(f"[bold][blue]{border}[/blue][/bold]")
     # Write the JSON cdp neighbor data to a file
     int_report = create_filename("Interface", "-cdp.txt")
-    print(f"Writing cdp neighbor data to {int_report}")
+    print(f"Writing 'show cdp neighbor' data to\n {int_report}")
     with open(int_report, "w") as file:
         output_cdp = json.dumps(output_cdp, indent=2)
         file.write(output_cdp)
-    print("-" * (len(dev_inv_file) + 23))
+    border = "-" * (len(int_report) + 1)
+    print(f"[bold][blue]{border}[/blue][/bold]")
 
     # Write the show lldp JSON data to a file
     int_report = create_filename("Interface", "-lldp.txt")
-    print(f"Writing show lldp data to {int_report}")
+    print(f"Writing 'show lldp' data to\n {int_report}")
     with open(int_report, "w") as file:
         output_show_lldp = json.dumps(output_show_lldp, indent=2)
         file.write(output_show_lldp)
+    border = "-" * (len(int_report) + 1)
+    print(f"[bold][blue]{border}[/blue][/bold]")
     print()
 
     # ports = []
@@ -692,9 +731,10 @@ for line in fabric:
     # with open(int_report, "w") as file:
     #     for item in details:
     #         file.write("%s\n" % item)
-    print("-" * (len(hostname) + 39))
-    print(f"Successfully created config files for {hostname}")
-    print("-" * (len(hostname) + 39))
+
+    message = f"[bold green]Successfully created config files for [yellow]{hostname}[/yellow][/bold green]"
+    print(Panel(message, title="✅ Done", border_style="cyan"))
+
 stop = timeit.default_timer()
 total_time = stop - start
 # output running time in a nice format.
