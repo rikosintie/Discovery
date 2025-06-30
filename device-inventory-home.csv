@@ -1,0 +1,4 @@
+192.168.10.52,hp_procurve,Procurve-2920-24,mhubbard,show mac-addr
+192.168.10.253,cisco_xe,Lab_3850,mhubbard,show mac address-table interface
+192.168.10.54,cisco_xe,4500,mhubbard,show mac address-table interface
+192.168.10.15,cisco_ios,2960s,mhubbard,show mac address-table interface
