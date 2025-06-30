@@ -23,6 +23,10 @@ cd Discovery
 
 If you don't have git installed, you can download the zip file from the [repository](https://github.com/rikosintie/Discovery). Click on the green "Code" button and select "Download ZIP". Then unzip the file.
 
+I recommend installing Git. I make updates to the project and if you have git installed you can simply run `git pull` to pull down the latest version.
+
+If you plan to modify the python scripts then this won't work because your versions will be different than the repo and git will not allow you to overwrite.
+
 <p align="center" width="60%">
 <img width="40%" src="https://github.com/rikosintie/Discovery/blob/main/images/GitHub-Code.png" alt="Github ZIP file">
 </p>
@@ -30,6 +34,15 @@ If you don't have git installed, you can download the zip file from the [reposit
 NOTE: Once you have the repository cloned it is linked to the repository on github.com. You should issue a `git pull` once in a while to pull down any changes that have been made to the repository.
 
 ## 2. Create a Virtual Environment
+
+If you are on a new install of Ubuntu and haven't done any python coding you will need to run the following commands first:
+
+```python
+sudo apt install python3.12-venv
+sudo  apt install pip
+```
+
+These are the virtual environment library and pip is the official package installer for Python.
 
 `python -m venv venv --upgrade-deps --prompt="Discovery"`
 
@@ -40,6 +53,10 @@ The `--upgrade-deps` argument tells python to upgrade pip to the latest version 
 ## 3. Activate the Virtual Environment
 
 On Windows
+
+A note on windows. I developed the script on a Windows 11 22h1 laptop. On June 29, 2025 I cloned the repo to a Windows 11 24h2 laptop to demo for a friend and nothing worked! For some reason, Windows 11 24h2 installs Python 13.1 which is bleeding edge and several of the libraries I use haven't been updated to work with 13.1.
+
+ChatGPT recommended installing WSL and running the script in Linux. Since I was only using Windows because I was on a long term assignment and the customer provided a Windows laptop and jump server, I do not plan to figure out how to make it work native on Windows.
 
 `.\venv\Scripts\activate`
 
