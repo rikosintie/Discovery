@@ -16,6 +16,7 @@
   - [show commands](#show-commands)
   - [What are the JSON files used for](#what-are-the-json-files-used-for)
   - [show running-config](#show-running-config)
+- ["Standard" Commands?](#standard-commands)
 - [Questions for Discovery and Deployment](#questions-for-discovery-and-deployment)
 - [License](#license)
 - [SBOM - a Software Bill of Materials](#sbom---a-software-bill-of-materials)
@@ -106,6 +107,34 @@ Once the data has been collected, there are helper scripts that use the JSON str
 ### show running-config
 
 The Procurve firmware allows you to include the "structured" keyword after the "show running" command. This groups the output in an easier to read format. A [show run structured](https://github.com/rikosintie/Discovery/blob/main/Running/Procurve-2920-24-running-config.txt) file is created in the "Running" directory.
+
+----------------------------------------------------------------
+
+## "Standard" Commands?
+
+This script started out to pull configs from Cisco 3750x switches. I was on a long term contract at a customer with about 500 Cisco 3750x switches and was moving to Aruba 6300CX.
+
+The script was a life saver pulling all the Change request data automatically. I then used a great library called cisco_config_parse to read the Cisco running-configuration and convert it to Aruba CX format.
+
+When that contract ended I needed to do a refresh at at customer that had HPE Procurve switches. I thought "how hard could it be to add Procurve?" Well, it turned out to be an adventure. And then I wanted to pull some Cisco SG small business switch configs, then some Cisco XE. Wow, every vendor has a different way of naming commands. Here is a table that I started so that I could expand the script to cover almost any customer. You can see the problem of added a new vendor to the mix. And any new vendor has to be supported by Netmiko and Google TextFSM. It's really a nightmare.
+
+Then to create a port-map of IP, Vlan, Manufacturer I have to pull the mac-address table and parse it. But that is another challenge because:
+
+- hp_procurve - aabbcc-ddeeff
+- cisco ios - aabb.ccdd.eeff
+- aruba_cx - aa:bb:cc:dd:ee:ff
+- Windows aa-bb-cc-dd-ee-ff
+
+I finally wrote a python script to convert mac addresses from any format to all formats. It's named `convert-mac.py` and it gets installed when you clone the Discovery repo.
+
+Currently I only have Procurve, cisco_ios and cisco_xe fully implemented.
+
+| Task                     | Cisco IOS                                | Cisco NX-OS                              | Cisco SG/SGX (Small Biz)              | HP ProCurve                          | Juniper                              | Brocade                              | Dell N1500                            | Aruba CX                              |
+|--------------------------|-------------------------------------------|-------------------------------------------|----------------------------------------|---------------------------------------|----------------------------------------|----------------------------------------|----------------------------------------|----------------------------------------|
+| Show MAC address         | `show mac address-table` / `show mac-address` | `show mac address-table`                  | `show mac-address-table`               | `show mac-address`                    | `show ethernet-switching table`       | `show mac-address`                     | `show mac address-table`               | `show mac-address-table`               |
+| Show uptime              | `show version` (parse output)             | `show system uptime`                      | `show system` or GUI only               | `show system information`             | `show system uptime`                  | `show system uptime`                   | `show system`                          | `show system`                          |
+| Show model/serial        | `show inventory` / `show version`         | `show version` or `show sprom`            | `show system`                           | `show system information`             | `show chassis hardware`               | `show chassis`                         | `show system` or `show version`        | `show system`                          |
+| Show LLDP neighbors      | `show lldp neighbors detail`              | `show lldp neighbors`                     | Not supported or limited via GUI        | `show lldp info remote detail`        | `show lldp neighbors detail`          | `show lldp neighbors`                  | `show lldp neighbors`                  | `show lldp neighbors detail`           |
 
 ----------------------------------------------------------------
 
