@@ -11,12 +11,13 @@
 - [Password](#password)
   - [Creating an Environment Variable](#creating-an-environment-variable)
   - [Being prompted for the password](#being-prompted-for-the-password)
-- [Update the mac.txt file](#update-the-mactxt-file)
-- [Update the procurve-config-file.txt file](#update-the-procurve-config-filetxt-file)
+- [Update the config-file.txt file](#update-the-config-filetxt-file)
+  - [Pulling the mac address table](#pulling-the-mac-address-table)
+  - [Cisco IOS mac address table exclude](#cisco-ios-mac-address-table-exclude)
+  - [Cisco XE mac address table exclude](#cisco-xe-mac-address-table-exclude)
 - [Run the discovery script](#run-the-discovery-script)
   - [What options are available](#what-options-are-available)
   - [What do the arguments do](#what-do-the-arguments-do)
-  - [change the config-file](#change-the-config-file)
     - [Collecting switch logs](#collecting-switch-logs)
     - [Procurve logs](#procurve-logs)
     - [Cisco Logs](#cisco-logs)
@@ -53,22 +54,51 @@ There are a few steps needed before starting the discovery process:
 
 You must create a csv file that contains the following:
 
-`ip_address,hp_procurve,hostname,username`
+```test
+switch ip
+netmiko vendor id
+switch hostname
+username
+format that the device needs to output mac addresses per interface
+```
 
-For example,
+The supported Netmiko vendor ids are:
 
-`198.51.100.52,hp_procurve,Procurve-2920-24,mhubbard`
+```text
+hp_procurve
+cisco_ios
+cisco_xe
+cisco_nx
+aruba_cx
+```
+
+The format for each line in the `device-inventory` file is:
+
+`ip_address,vendor_id,hostname,user,command to display mac addresses per intf`
+
+Here is an example of a `device-inventory` file:
+
+```text
+192.168.10.52,hp_procurve,Procurve-2920-24,mhubbard,show mac-addre
+192.168.10.253,cisco_xe,3850,mhubbard,show mac addr int
+192.168.10.54,cisco_xe,4500,mhubbard,show mac addr int
+192.168.10.15,cisco_ios,2960s,mhubbard,show mac addr int
+```
+
+In this example, there are hp_procurve, cisco_xe and cisco_ios devices. You can have as many devices in the file as you need. I have had as many 200 in one file.
 
 Create one line for every switch that you want to process.
 
 You can use either a spreadsheet program or a text editor to create the inventory file but it must have a ".csv" file extension. If you use vscode, there is a plugin called Rainbow csv that allows you to work with csv files in vscode. It also allows you to use SQL syntax to query the file. Very nice if the file gets to be long.
+
+![screenshot](img/rainbow_csv.png)
 
 Save the file as `device-inventory-<site name>.csv` in the root of the project folder.
 
 For example,
 `device-inventory-HQ.csv`
 
-There is a sample file named device-inventory-area1.csv in the project
+There is a sample file named device-inventory-area1.csv in the project. The site name is just a tag to allow you to have as many device-inventory files as you need.
 
 ## Password
 
@@ -85,7 +115,7 @@ On Windows you use control panel to create a "user environment variable". You ca
 
 On macOS/Linux
 
-From the terminal that you will run the script in `export cyberARK=Password`. You have to do the export in the terminal that the script will be run in. If you are using vscode and debugging in vscode, that means the vscode terminal.
+From the terminal that you will run the script in `export cyberARK=<Password>`, for example `export cyberARK=Sup3rs3cr3t`. You have to do the export in the terminal that the script will be run in. If you are using vscode and debugging in vscode, that means the vscode terminal.
 
 ### Being prompted for the password
 
@@ -93,29 +123,15 @@ This is easier than setting up environment variable. You simply add `-p 1` to th
 
 For example, to run the script for a site named HQ:
 
-`python3 procurve-Config-pull.py -s HQ -p 1`
+`python3 config-pull.py -s HQ -p 1`
 
 When you press enter, you will see "Input the Password:" on the command line. Enter the password and press [enter]
 
 ----------------------------------------------------------------
 
-## Update the mac.txt file
+## Update the config-file.txt file
 
-To create the port maps the mac-address table must be saved but it has to saved by interface.
-
-Since the procurve switches can be stacked and the 5400 series has modules, the port numbers change depending on the model and stacking.
-
-The mac.txt file that is in the project is built for a single 48 port switch. If you are pulling the data from a stack or 5400 series, you have to modify the port numbers in the mac.txt file.
-
-There is a file [procurve-show-mac-interfaces.txt](https://github.com/rikosintie/Discovery/blob/main/procurve-show-mac-interfaces.txt) in the project that has `show mac-address` commands for the 5400 series, individual 2930 switches and stacked switches up to 8.
-
-Simply open the file, copy the interfaces you need and save them into the mac.txt file before running the discovery script.
-
-----------------------------------------------------------------
-
-## Update the procurve-config-file.txt file
-
-This file contains all of the `show commands` that will be sent to the switches. It has fifty commands in it including many that may not apply to the customer:
+This file contains all of the `show commands` that will be sent to the switches. The project includes sample files for Procurve, Cisco IOS, and Cisco XE switches. The sample files have over 50 commands in them, including many that may not apply to the customer:
 
 - show lacp peer
 - show lacp local
@@ -125,7 +141,10 @@ This file contains all of the `show commands` that will be sent to the switches.
 
 If you don't need them for a particular customer you can just open the file and delete any that you don't need or add any that you do need. The goal is to have all the data needed to satisfy the Change Request requirements.
 
-For pulling the mac-address table, which most customers want you to do, I have an exclude statement using a regex. In the sample file it doesn't pull mac addresses for ports on modules A and B. These were uplinks on the switch that I tested the script on.
+**Note:** On older switches reading a lot of data can cause the CPU to go to 90+%! This will cause issues if OSPF or EIGRP is running and may cause the script to fail with a timeout. If this happens, remove some commands from the config-file and try again.
+
+### Pulling the mac address table
+For pulling the mac-address table, which most customers want you to do, I have an exclude statement using a regex. In the Procurve sample file it doesn't pull mac addresses for ports on modules A and B. These were uplinks on the switch that I tested the script on.
 
 `show show mac-address | ex "A|B"`
 
@@ -184,6 +203,25 @@ show mac-address | ex "[a-f-0-9]{13}     24|49"
 
 I use this [site](https://regexr.com/) to test/develop regex expressions.
 
+### Cisco IOS mac address table exclude
+
+The Cisco IOS has this regex
+`show mac address-table | ex STATIC|Po|1/0/49`
+
+This excludes ports with:
+
+- STATIC
+- Port Channels
+- interface 1/0/49
+
+The goal is to not include mac address from uplinks and system MACs. You will need to know what ports to exclude ahead of time. You can just dump the whole table. The only time I have seen this cause a problem is on a Cisco 6509 core that had six 48 port blades and several IDFs connect to the fiber card. There are a lot of mac in that table.
+
+### Cisco XE mac address table exclude
+
+`show mac address-table | ex Po|ffff.ffff.ffff|static`
+
+Again, the goal is to exclude uplinks.
+
 ----------------------------------------------------------------
 
 ## Run the discovery script
@@ -205,13 +243,12 @@ You can run the script with -h to get help:
 python3 procurve_Config_pull.py -h
 
 
-usage: procurve_Config_pull.py [-h] [-c CONF] [-e EVENT] [-l LOGGING] [-p PASSWORD] [-s SITE] [-t TIMEOUT]
+usage: procurve_Config_pull.py [-h] [-e EVENT] [-l LOGGING] [-p PASSWORD] [-s SITE] [-t TIMEOUT]
 
 -s site, -l 1 create log.txt, -p 1 prompt for password, -t 1-9 timeout, -e W,I,M,D,E to pull logs
 
 options:
   -h, --help            show this help message and exit
-  -c CONF, --conf CONF  config-file to use
   -e EVENT, --event EVENT
                         -e W,I,M,D,E to pull switch logs
   -l LOGGING, --logging LOGGING
@@ -227,16 +264,6 @@ options:
 ### What do the arguments do
 
 The only required argument is `-s site`. This references the device-inventory file.
-
-### change the config-file
-
-The default file of commands to send is named procurve-config-file.txt. You can add `-c` and a word to use an alternate file. For example:
-
-`-c core`
-
-would use `core-config-file.txt` as the file sent to switch.`
-
-Note: On older switches reading a lot of data can cause the CPU to go to 90+%! This will cause issues if OSPF or EIGRP is running and may cause the script to fail with a timeout. If this happens, remove some commands from the config-file and try again.
 
 #### Collecting switch logs
 
@@ -283,31 +310,31 @@ If you want to be prompted for a password add `-p 1`. If you don't use -p 1 you 
 
 #### SSH Logging
 
-If you want to enable ssh logging add `-l 1`. You would do that to troubleshoot if you are getting "time out" errors.
+If you want to enable ssh logging add `-l 1`. You would do that to troubleshoot if you are getting "time out" errors when the script tries to connect to a switch.
 
 #### Timeout
 
-You can modify the timeout value using  `-t`. Note: the number sets the timeout value in 100s of seconds. If you use `-t 2` it will wait up to 200 seconds for the operation to complete.
+You can modify the timeout value using  `-t`. **Note:** the number sets the timeout value in 100s of seconds. If you use `-t 2` it will wait up to 200 seconds for the operation to complete.
 
 ### Examples
 
 The minimum is to use -s for the site:
 
-`python3 procurve-Config-pull.py -s HQ`
+`python3 config-pull.py -s HQ`
 
 To include the Warning log:
 
-`python3 procurve-Config-pull.py -s HQ -e W`
+`python3 config-pull.py -s HQ -e W`
 
 To include all logs and set timeout to 2:
 
-`python3 procurve-Config-pull.py -s HQ -e W,I,M,D,E -t 2`
+`python3 config-pull.py -s HQ -e W,I,M,D,E -t 2`
 
 To be prompted for a password:
 
-`python3 procurve-Config-pull.py -s HQ -p 1`
+`python3 config-pull.py -s HQ -p 1`
 
-Note: you may have to use python instead of python3 depending on your OS.
+**Note:** you may have to use python instead of python3 depending on your OS.
 
 I recommend running the script on one switch the first time instead of a long list of switches. That will let you see the content of the show commands and make changes if needed before spending time running it on a long list of switches.
 
@@ -315,6 +342,7 @@ The files will be saved in the following directories:
 
 - CR-data - files that are ready for viewing
 - Interface - files that need further processing
+- port-maps - files for creating port maps
 - Running - The "show running structured" output for each switch
 
 If you are having timeout or authentication issues, enable logging. Here is a sample output of the log.txt file that netmiko creates:
@@ -347,7 +375,7 @@ DEBUG:paramiko.transport:kex engine KexNistp256 specified hash_algo <built-in fu
 DEBUG:paramiko.transport:Switch to new keys ...
 DEBUG:paramiko.transport:Adding ssh-rsa host key for 10.112.254.60: b'47708eeea6cbecf20b5916d675feca3d'
 DEBUG:paramiko.transport:userauth is OK
-INFO:paramiko.transport:Auth banner: b'******************************************************************************\nThis system is the property of Rim of the World Unified School District.\n\nUNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED.\n\nYou must have explicit permission to access this device.\n\nAll activities performend on this device are logged.\nAny violations of access policy will result in disciplinary action.\n****************************************************************************** \n\n'
+INFO:paramiko.transport:Auth banner: b'******************************************************************************\nThis system is the property of Michael Hubbard.\n\nUNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED.\n\nYou must have explicit permission to access this device.\n\nAll activities performed on this device are logged.\nAny violations of access policy will result in disciplinary action.\n****************************************************************************** \n\n'
 INFO:paramiko.transport:Authentication (password) successful!
 ```
 
@@ -427,13 +455,13 @@ Total running time: 0.0 Hours 1.0 Minutes 44.67 Seconds
 
 If a switch does not respond or if the the credentials are incorrect, a message will be printed to the console and the script will continue processing the next switch.
 
-It's really disruptive to the discovery process if switches fail. That means you have to fix the problem and then create a new inventory file with just the failed switches, then rerun it.
+It's really disruptive to the discovery process if switches fail. That means you have to fix the problem and then create a new inventory file with just the failed switches, then rerun it. I was doing a discovery at a customer with over 240 switches. They had so many configuration issues and username/password was one of them. I ended up with around 40 switches that I couldn't log into.
 
 ### Use nmap to verify switches are up
 
 I recommend saving the switch IP addresses in a plain text file, one per line, and then using nmap to verify that ssh is working.
 
-For example, create a new text file named `ip.txt`. If you are using vs code and the Rainbow csv extension you can simply run a query:
+For example, create a new text file named `ip.txt`. If you are using vs code and the Rainbow csv extension you can simply run a query on the device-inventory file:
 
 `select a1`
 
@@ -521,7 +549,7 @@ Run this nmap command to find devices with ssh **and** snmp open. Most devices t
 
 `sudo nmap -sU -sS -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl  <target ips>`
 
-Note: the stylesheet is from [honze-net-nmap-bootstrap-xsl](https://github.com/honze-net/nmap-bootstrap-xsl). This is a repository for creating nmap reports. Well worth a look.
+**Note:** the stylesheet is from [honze-net-nmap-bootstrap-xsl](https://github.com/honze-net/nmap-bootstrap-xsl). This is a repository for creating nmap reports. Well worth a look.
 
 The `-oA procurve-scan` argument will create the following files:
 
