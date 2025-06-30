@@ -8,10 +8,11 @@
 
 - [Before you can run the script](#before-you-can-run-the-script)
 - [Create the device inventory file](#create-the-device-inventory-file)
+  - [CSVLENS](#csvlens)
 - [Password](#password)
   - [Creating an Environment Variable](#creating-an-environment-variable)
   - [Being prompted for the password](#being-prompted-for-the-password)
-- [Update the config-file.txt file](#update-the-config-filetxt-file)
+- [Update the \<vendor\_id\>-config-file.txt file](#update-the-vendor_id-config-filetxt-file)
   - [Pulling the mac address table](#pulling-the-mac-address-table)
   - [Cisco IOS mac address table exclude](#cisco-ios-mac-address-table-exclude)
   - [Cisco XE mac address table exclude](#cisco-xe-mac-address-table-exclude)
@@ -56,13 +57,13 @@ You must create a csv file that contains the following:
 
 ```test
 switch ip
-netmiko vendor id
+netmiko vendor_id
 switch hostname
 username
 format that the device needs to output mac addresses per interface
 ```
 
-The supported Netmiko vendor ids are:
+The supported Netmiko vendor_ids are:
 
 ```text
 hp_procurve
@@ -100,6 +101,39 @@ For example,
 
 There is a sample file named device-inventory-area1.csv in the project. The site name is just a tag to allow you to have as many device-inventory files as you need.
 
+### CSVLENS
+
+There is also a great terminal tool called csvlens. It's an open source project on [GitHub](https://github.com/YS-L/csvlens). It's cross platform and runs on Mac/Linux/Windows.
+
+On Mac/Linux, Homebrew is easiest way to install
+
+`brew install csvlens` and your are done.
+
+If you don't use homebrew you can go to the [releases page](https://github.com/YS-L/csvlens/releases), download the tarball and install using:
+
+```bash
+tar xvf csvlens-x86_64-unknown-linux-gnu.tar.xz
+cd csvlens-x86_64-unknown-linux-gnu
+sudo mv csvlens /usr/bin
+```
+
+The mv command `moves` csvlens to `/usr/bin' so that you can call it from anywhere.
+
+The problem with installing csvlens this way is that you don't get automatic updates. This is a very active project and updates usually add nice features. You will have to manually download the tar file and repeat the process.
+
+Version 0.13.0 release notes:
+
+    Add --color-columns to display each column in a different color (#39)
+    Add --prompt to show a custom prompt message in the status bar (#135)
+    Expose freeze columns option in library usage (#124 by @jqnatividad)
+    Improve visibility of line numbers and borders
+    Add aarch64 release targets (#55)
+
+The --color-columns is a nice addition. To view the device-inventory-home.csv file with colored columns use `csvlens --no-headers --color-columns device-inventory-home.csv`
+
+On Windows
+`winget install --id YS-L.csvlens`
+
 ## Password
 
 This is always an area of concern. The script supports two methods:
@@ -129,9 +163,9 @@ When you press enter, you will see "Input the Password:" on the command line. En
 
 ----------------------------------------------------------------
 
-## Update the config-file.txt file
+## Update the <vendor_id>-config-file.txt file
 
-This file contains all of the `show commands` that will be sent to the switches. The project includes sample files for Procurve, Cisco IOS, and Cisco XE switches. The sample files have over 50 commands in them, including many that may not apply to the customer:
+This file contains all of the `show commands` that will be sent to the switches. The project includes sample files for hp_procurve, cisco_ios, and cisco_xe switches. The sample files have over 50 commands in them, including many that may not apply to the customer:
 
 - show lacp peer
 - show lacp local
@@ -141,10 +175,27 @@ This file contains all of the `show commands` that will be sent to the switches.
 
 If you don't need them for a particular customer you can just open the file and delete any that you don't need or add any that you do need. The goal is to have all the data needed to satisfy the Change Request requirements.
 
+The script looks for `<vendor-id>-config-file.txt. You have to use that exact format. Since the script supports the following vendor_ids:
+
+- hp_procurve
+- cisco_ios
+- cisco_xe
+- cisco_nx
+- aruba_cx
+
+The config files will be named:
+
+- hp_procurve-config-file.txt
+- cisco_ios-config-file.txt
+- cisco_xe-config-file.txt
+- cisco_nx-config-file.txt
+- aruba_cx-config-file.txt
+
 **Note:** On older switches reading a lot of data can cause the CPU to go to 90+%! This will cause issues if OSPF or EIGRP is running and may cause the script to fail with a timeout. If this happens, remove some commands from the config-file and try again.
 
 ### Pulling the mac address table
-For pulling the mac-address table, which most customers want you to do, I have an exclude statement using a regex. In the Procurve sample file it doesn't pull mac addresses for ports on modules A and B. These were uplinks on the switch that I tested the script on.
+
+For pulling the mac-address table, which most customers want you to do before a cutover, I have an exclude statement using a regex in hpe-procurve-config-file.txt. In the Procurve sample file it doesn't pull mac addresses for ports on modules A and B. These were uplinks on the switch that I tested the script on.
 
 `show show mac-address | ex "A|B"`
 
