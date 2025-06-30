@@ -175,7 +175,7 @@ This file contains all of the `show commands` that will be sent to the switches.
 
 If you don't need them for a particular customer you can just open the file and delete any that you don't need or add any that you do need. The goal is to have all the data needed to satisfy the Change Request requirements.
 
-The script looks for `<vendor-id>-config-file.txt. You have to use that exact format. Since the script supports the following vendor_ids:
+The script looks for `<vendor-id>-config-file.txt`. You have to use that exact format. Since the script supports the following vendor_ids:
 
 - hp_procurve
 - cisco_ios
