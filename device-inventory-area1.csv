@@ -1,3 +1,3 @@
-192.168.10.53,cisco_ios,3750x,vector
-192.168.10.52,hp_procurve,test-CL-2930-48-1,vector
-192.168.10.111,hp_procurve,Procurve-2920-24,vector
+192.168.10.53,cisco_ios,3750x,mhubbard,show mac address-table interface
+192.168.10.52,hp_procurve,test-CL-2930-48-1,mhubbard,show mac-addr
+192.168.10.111,hp_procurve,Procurve-2920-24,mhubbard,show mac-addr
