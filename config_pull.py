@@ -423,14 +423,14 @@ for line in fabric:
         end_time = datetime.now()
         print(f"\nExec time: {end_time - now}\n")
         print(
-            f"Could not connect to {hostname} at {ipaddr}. The connection timed out. Remove it from the device inventory file"
+            f"Could not connect to {hostname} at {ipaddr}. \nThe connection timed out. \nRemove [cyan]{hostname}[/cyan] from the device inventory file"
         )
         continue
     except AuthenticationException:
         end_time = datetime.now()
         print(f"\nExec time: {end_time - now}\n")
         print(
-            f"Could not connect to {hostname} at {ipaddr}. The Credentials failed.  Remove it from the device inventory file"
+            f"Could not connect to {hostname} at {ipaddr}. \n[red]The Credentials failed.[/red] \nRemove [cyan]{hostname}[/cyan] from the device inventory file"
         )
         continue
     except (EOFError, SSHException):
@@ -759,7 +759,7 @@ for line in fabric:
             subtitle=f"Devices completed: {device_count}",
         )
     )
-
+print()
 stop = timeit.default_timer()
 total_time = stop - start
 # output running time in a nice format.
