@@ -39,7 +39,7 @@ If you are on a new install of Ubuntu and haven't done any python coding you wil
 
 ```python
 sudo apt install python3.12-venv
-sudo  apt install pip
+sudo apt install pip
 ```
 
 These are the virtual environment library and pip is the official package installer for Python.
