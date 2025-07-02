@@ -422,13 +422,33 @@ for line in fabric:
     except NetmikoTimeoutException:
         end_time = datetime.now()
         print(f"\nExec time: {end_time - now}\n")
+        message = f"Could not connect to {hostname} at {ipaddr}. \n[red]The connection timed out.[/red] \nRemove [cyan]{hostname}[/cyan] from the device inventory file"
         print(
-            f"Could not connect to {hostname} at {ipaddr}. \nThe connection timed out. \nRemove [cyan]{hostname}[/cyan] from the device inventory file"
+            Panel.fit(
+                message,
+                title="✅ Timeout",
+                border_style="cyan",
+                subtitle=f"Timeout connecting to {hostname}",
+            )
         )
+        print()
+        # print(
+        #     f"Could not connect to {hostname} at {ipaddr}. \nThe connection timed out. \nRemove [cyan]{hostname}[/cyan] from the device inventory file"
+        # )
         continue
     except AuthenticationException:
         end_time = datetime.now()
         print(f"\nExec time: {end_time - now}\n")
+        message = f"Could not connect to {hostname} at {ipaddr}. \n[red]The Credentials failed.[/red] \nRemove [cyan]{hostname}[/cyan] from the device inventory file"
+        print(
+            Panel.fit(
+                message,
+                title="✅ Done",
+                border_style="cyan",
+                subtitle=f"Missing credentials {hostname}",
+            )
+        )
+
         print(
             f"Could not connect to {hostname} at {ipaddr}. \n[red]The Credentials failed.[/red] \nRemove [cyan]{hostname}[/cyan] from the device inventory file"
         )
