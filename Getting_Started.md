@@ -56,7 +56,9 @@ On Windows
 
 A note on windows. I developed the script on a Windows 11 22h1 laptop. On June 29, 2025 I cloned the repo to a Windows 11 24h2 laptop to demo for a friend and nothing worked! For some reason, Windows 11 24h2 installs Python 13.1 which is bleeding edge and several of the libraries I use haven't been updated to work with 13.1.
 
-ChatGPT recommended installing WSL and running the script in Linux. Since I was only using Windows because I was on a long term assignment and the customer provided a Windows laptop and jump server, I do not plan to figure out how to make it work native on Windows.
+ChatGPT recommended installing WSL2, Ubuntu 24.04 and running the script in Linux. I did that and everything worked correctly. The WSL terminal NATs to your laptop so you will be using a 172.16.122.x address but everything worked.
+
+Since I was only using Windows because I was on a long term assignment, using the customer provided a Windows laptop and jump server, I do not plan to figure out how to make it work native on Windows.
 
 `.\venv\Scripts\activate`
 
