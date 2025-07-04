@@ -283,26 +283,23 @@ def print_panel(
 
 
 def emoji_for(label: str) -> str:
-    """
-    Return a Unicode emoji code for a given panel context.
-    """
     label = label.lower()
     mapping = {
-        "success": "\u2705",  # \u2705
-        "error": "\u274c",  # \u274c
-        "warning": "\u26a0\ufe0f",  # \u26a0\ufe0f
-        "info": "\u2139\ufe0f",  # \u2139\ufe0f
-        "timeout": "\u23f1\ufe0f",  # \u23f1\ufe0f
-        "connecting": "\u1f50C",  # \U0001f50c
-        "saving": "\u1f4bE",  # \U0001f4be
-        "search": "\u1f50D",  # \U0001f50d
-        "network": "\u1f310",  # \U0001f310
-        "firewall": "\u1f525",  # \U0001f525
-        "dns": "\u1f3f7\ufe0f",  # \U0001f3f7\ufe0f
-        "boot": "\u1f680",  # \U0001f680
-        "shutdown": "\u23fb",  # \u23fb
-        "build": "\u1f6e0\ufe0f",  # \U0001f6e0\ufe0f
-        "processing": "\u1f501",  # \U0001f504
+        "saving": "\U0001f4be",  # 💾
+        "success": "\u2705",  # ✅
+        "error": "\u274c",  # ❌
+        "warning": "\u26a0\ufe0f",  # ⚠️
+        "info": "\u2139\ufe0f",  # ℹ️
+        "timeout": "\u23f1\ufe0f",  # ⏱️
+        "connecting": "\U0001f50c",  # 🔌
+        "search": "\U0001f50d",  # 🔍
+        "network": "\U0001f310",  # 🌐
+        "firewall": "\U0001f525",  # 🔥
+        "dns": "\U0001f3f7\ufe0f",  # 🏷️
+        "boot": "\U0001f680",  # 🚀
+        "shutdown": "\u23fb",  # ⏻
+        "build": "\U0001f6e0\ufe0f",  # 🛠️
+        "processing": "\U0001f501",  # 🔄
     }
     return mapping.get(label, "")
 
@@ -641,7 +638,19 @@ for line in fabric:
             print(f"[bold][blue]{border}[/blue][/bold]")
             #  Write the JSON system data to a file
             int_report = create_filename("Interface", "-system.txt")
-            print(f"Writing system json data to\n {int_report}")
+
+            message = f"Writing the system json data for [blue]{hostname}[/blue] to \n[cyan]{int_report}[/cyan].\n"
+
+            print_panel(
+                message,
+                title="System Data",
+                subtitle=f"System data for {hostname} completed",
+                border_style="cyan",
+                title_emoji=emoji_for("saving"),
+                expand=False,
+            )
+
+            # write the JSON system data to a file
             with open(int_report, "w") as file:
                 output_system = json.dumps(output_system, indent=2)
                 file.write(output_system)
