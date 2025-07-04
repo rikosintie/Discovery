@@ -358,19 +358,27 @@ if args.password != "":
 elif os.environ.get("cyberARK"):
     password = os.environ.get("cyberARK")
 else:
-    print("\n" * 3)
-    border = "-" * 87
-    print(f"[bold][blue]{border}[/blue][/bold]")
-    print("No password has been found. Use")
-    print()
-    print("    python procurve-Config-pull.py -s site -p 1")
-    print()
-    print(
-        "on the terminal to be prompted for a password or set the environment variable cyberARK"
+    print("\n" * 2)
+    message = (
+        "\n"
+        "No password was found. Use:\n\n"
+        "[red]python config_pull.py -s site -p 1[/red]\n\n"
+        "on the terminal to be prompted for a password,\n"
+        "or set the environment variable: \n\n"
+        "export [blue]cyberARK=your_password[/blue]\n\n"
+        "on the terminal"
+        "\n"
     )
-    border = "-" * 87
-    print(f"[bold][blue]{border}[/blue][/bold]")
-    print()
+
+    print_panel(
+        message,
+        title="Password Missing",
+        subtitle="A password is required to run this script",
+        border_style="red",
+        title_emoji=emoji_for("error"),
+        expand=False,
+    )
+    print("\n" * 2)
     sys.exit()
 
 if site is None:
