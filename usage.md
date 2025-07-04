@@ -37,6 +37,8 @@
     - [Use Firefox](#use-firefox)
     - [Use a local http server](#use-a-local-http-server)
     - [References](#references)
+- [Emoji codes used in the panel function](#emoji-codes-used-in-the-panel-function)
+- [Emoji Codes for Status Panels](#emoji-codes-for-status-panels)
 
 ----------------------------------------------------------------
 
@@ -781,6 +783,31 @@ Learning to use the python http server is a good skill. For example, if you have
 - [Transform XML+XSLT to plain html so that it loads without blocking](https://gist.github.com/ericlaw1979/deb716d8436890420c41c8a593bfd509)
 - [Enabling Internet Explorer Mode in Microsoft Edge](https://csuf-erp.screenstepslive.com/m/70023/l/1650548-enabling-internet-explorer-mode-in-microsoft-edge)
 - [nmap-bootstrap-xsl](https://github.com/honze-net/nmap-bootstrap-xsl)
+
+## Emoji codes used in the panel function
+
+If you want to expand on the script or change the emojis:
+
+## Emoji Codes for Status Panels
+
+| Purpose              | Emoji | Unicode Code             | Description                    |
+|----------------------|--------|---------------------------|--------------------------------|
+| Success              | ✅     | `\u2705`                  | Checkmark                     |
+| Error / Failure      | ❌     | `\u274C`                  | Cross mark                    |
+| Warning              | ⚠️     | `\u26A0\uFE0F`            | Warning sign                  |
+| Info / Notice        | ℹ️     | `\u2139\uFE0F`            | Info symbol                   |
+| Timeout / Wait       | ⏱️     | `\u23F1\uFE0F`            | Stopwatch                     |
+| Processing / Running | 🔄     | `\u1F501`                 | Clockwise arrows              |
+| Connecting           | 🔌     | `\u1F50C`                 | Plug                          |
+| Save / Write         | 💾     | `\u1F4BE`                 | Floppy disk                   |
+| Search / Discovery   | 🔍     | `\u1F50D`                 | Magnifying glass              |
+| Network              | 🌐     | `\u1F310`                 | Globe                         |
+| Firewall / Security  | 🔥     | `\u1F525`                 | Flame                         |
+| DNS / Naming         | 🏷️     | `\u1F3F7\uFE0F`           | Label                         |
+| System Boot / Start  | 🚀     | `\u1F680`                 | Rocket                        |
+| Power Off / Shutdown | ⏻      | `\u23FB`                  | Power symbol                  |
+| Build / Compile      | 🛠️     | `\u1F6E0\uFE0F`           | Wrench and hammer             |
+
 
 ----------------------------------------------------------------
 
