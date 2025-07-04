@@ -96,7 +96,8 @@ def create_filename(sub_dir1: str, extension: str = "", sub_dir2: str = "") -> s
 
 def remove_empty_lines(filename: str) -> None:
     """
-    Removes empty lines from the file.
+    Removes empty lines from the file. The fabric loop will fail if there
+    empty lines in the csv file.
 
     Args:
         filename (str): File in the current working directory to be opened.
@@ -251,6 +252,59 @@ def generate_mac_query_file_from_json(
         f.write("\n".join(commands))
 
     print(f"Writing {len(commands)} '{maddr}' commands to\n {output_file_path}")
+
+
+def print_panel(
+    message: str,
+    title: str = "",
+    subtitle: str = "",
+    border_style: str = "cyan",
+    expand: bool = False,
+    title_emoji: str = "",
+) -> None:
+    """
+    Print a rich-styled panel message.
+
+    Args:
+        message (str): The message body (Rich markup supported).
+        title (str): Optional title displayed at the top of the panel.
+        subtitle (str): Optional subtitle displayed at the bottom.
+        border_style (str): Color/style of the panel border (default: "cyan").
+        expand (bool): Whether to expand to full width of terminal.
+        title_emoji (str): Emoji prefix for title (e.g., "\u26a0\ufe0f", "\u2705").
+    """
+    if title_emoji:
+        title = f"{title_emoji} {title}"
+    print(
+        Panel.fit(message, title=title, subtitle=subtitle, border_style=border_style)
+        if not expand
+        else Panel(message, title=title, subtitle=subtitle, border_style=border_style)
+    )
+
+
+def emoji_for(label: str) -> str:
+    """
+    Return a Unicode emoji code for a given panel context.
+    """
+    label = label.lower()
+    mapping = {
+        "success": "\u2705",  # \u2705
+        "error": "\u274c",  # \u274c
+        "warning": "\u26a0\ufe0f",  # \u26a0\ufe0f
+        "info": "\u2139\ufe0f",  # \u2139\ufe0f
+        "timeout": "\u23f1\ufe0f",  # \u23f1\ufe0f
+        "connecting": "\u1f50C",  # \U0001f50c
+        "saving": "\u1f4bE",  # \U0001f4be
+        "search": "\u1f50D",  # \U0001f50d
+        "network": "\u1f310",  # \U0001f310
+        "firewall": "\u1f525",  # \U0001f525
+        "dns": "\u1f3f7\ufe0f",  # \U0001f3f7\ufe0f
+        "boot": "\u1f680",  # \U0001f680
+        "shutdown": "\u23fb",  # \u23fb
+        "build": "\u1f6e0\ufe0f",  # \U0001f6e0\ufe0f
+        "processing": "\u1f501",  # \U0001f504
+    }
+    return mapping.get(label, "")
 
 
 # ---------------
