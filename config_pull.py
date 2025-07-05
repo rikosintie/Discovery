@@ -304,10 +304,34 @@ def emoji_for(label: str) -> str:
     return mapping.get(label, "")
 
 
+def print_times() -> None:
+    """Prints the current time and date."""
+
+    stop = timeit.default_timer()
+    running_time: float = stop - timeit_start
+    # output running time in a nice format.
+    mins, secs = divmod(running_time, 60)
+    hours, mins = divmod(mins, 60)
+    print(
+        f"\n[cyan]{hostname}[/cyan] execution Time: {hours} Hours {mins} Minutes {round(secs, 2)} Seconds"
+    )
+    stop = timeit.default_timer()
+    total_time = stop - start
+    # output script total running time in a nice format.
+    mins, secs = divmod(total_time, 60)
+    hours, mins = divmod(mins, 60)
+    print(
+        f"[blue]Total running time:[/blue] {hours} Hours {mins} Minutes {round(secs, 2)} Seconds\n"
+    )
+
+
 # ---------------
 print()
 print()
 start = timeit.default_timer()
+now = datetime.now()
+print(f"Script started at: {now.strftime('%m/%d/%Y, %H:%M:%S')}")
+print()
 parser = argparse.ArgumentParser(
     description="-s site, -c config-file to use, -l 1 create ssh_log.txt, -p 1 prompt for password, -t 1-9 timeout, -e W,I,M,D,E (-e 1 for Cisco) to pull logs"
 )
@@ -399,6 +423,7 @@ remove_empty_lines(dev_inv_file)
 
 with open(dev_inv_file, encoding="utf-8-sig") as devices_file:
     fabric = devices_file.readlines()
+    num_devices = len(fabric)
 
 border = "-" * (len(dev_inv_file) + 23)
 print(f"[bold][blue]{border}[/blue][/bold]")
@@ -411,7 +436,9 @@ print(f"[bold][blue]{border}[/blue][/bold]")
 print()
 
 uptime: list[str] = []
-device_count = 0
+device_count: int = 0
+time_out_count: int = 0
+auth_fail_count: int = 0
 for line in fabric:
     device_count += 1
     line = line.strip("\n")
@@ -458,7 +485,8 @@ for line in fabric:
 
     sh_run, show_lldp, show_arp, interface_key, force_prefix = which_vendor(vendor)
     ic(sh_run, show_lldp, show_arp, interface_key, force_prefix)
-    now = datetime.now()
+    now: datetime = datetime.now()
+    timeit_start: float = timeit.default_timer()
     start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
     # print("-----------------------------------------------------")
     border = "-" * (len(hostname) + 42)
@@ -479,8 +507,9 @@ for line in fabric:
         net_connect = ConnectHandler(**device)
 
     except NetmikoTimeoutException:
-        end_time = datetime.now()
-        print(f"\nExec time: {end_time - now}\n")
+        end_time: datetime = datetime.now()
+        device_count -= 1
+        time_out_count += 1
         message = f"Could not connect to {hostname} at {ipaddr}. \n[red]The connection timed out.[/red] \nRemove [cyan]{hostname}[/cyan] from the device inventory file"
         print(
             Panel.fit(
@@ -490,14 +519,13 @@ for line in fabric:
                 subtitle=f"Timeout connecting to {hostname}",
             )
         )
+        print_times()
         print()
-        # print(
-        #     f"Could not connect to {hostname} at {ipaddr}. \nThe connection timed out. \nRemove [cyan]{hostname}[/cyan] from the device inventory file"
-        # )
         continue
     except AuthenticationException:
-        end_time = datetime.now()
-        print(f"\nExec time: {end_time - now}\n")
+        auth_fail_count += 1
+        device_count -= 1
+
         message = f"Could not connect to {hostname} at {ipaddr}. \n[red]The Credentials failed.[/red] \nRemove [cyan]{hostname}[/cyan] from the device inventory file"
         print(
             Panel.fit(
@@ -507,10 +535,10 @@ for line in fabric:
                 subtitle=f"Missing credentials {hostname}",
             )
         )
-
-        print(
-            f"Could not connect to {hostname} at {ipaddr}. \n[red]The Credentials failed.[/red] \nRemove [cyan]{hostname}[/cyan] from the device inventory file"
-        )
+        print()
+        print_times()
+        print()
+        print()
         continue
     except (EOFError, SSHException):
         # catch unexpected exceptions
@@ -518,16 +546,14 @@ for line in fabric:
             f"Could not connect to {hostname} at {ipaddr}, remove it"
             " from the device inventory file"
         )
-        end_time = datetime.now()
-        print(f"\nExec time: {end_time - now}\n")
+        print_times()
         continue
-    # The same config file is used for each vendor
-    # example hp_procurve-config-file.txt is used for all HP Procurve switches
-    # example cisco_ios-config-file.txt is used for all Cisco IOS switches
-    # example cisco_xe-config-file.txt is used for all Cisco IOS XE switches
+
+    # hp_procurve-config-file.txt is used for all HP Procurve switches
+    # cisco_ios-config-file.txt is used for all Cisco IOS switches
+    # cisco_xe-config-file.txt is used for all Cisco IOS XE switches
     cfg_file = f"{vendor}-config-file.txt"
     print()
-    # print(net_connect.find_prompt())
     border = net_connect.find_prompt()
     print(f"Connected to: [cyan]{border}[/cyan]")
     print()
@@ -847,9 +873,11 @@ for line in fabric:
             message,
             title="✅ Done",
             border_style="cyan",
-            subtitle=f"Devices completed: {device_count}",
+            # subtitle=f"Devices completed: {device_count}",
+            subtitle=f"{device_count} device completed of {num_devices} total",
         )
     )
+    print_times()
 print()
 stop = timeit.default_timer()
 total_time = stop - start
@@ -857,5 +885,9 @@ total_time = stop - start
 mins, secs = divmod(total_time, 60)
 hours, mins = divmod(mins, 60)
 print(
-    f"\nData collection is complete.\nTotal running time: {hours} Hours {mins} Minutes {round(secs, 2)} Seconds\n"
+    f"A total of {device_count} [cyan]device(s)[/cyan] out of {num_devices} were processed.\n"
+    f"A total of [red]{time_out_count} device(s) timed out.[/red]\n"
+    f"A total of [red]{auth_fail_count} device(s) had authentication failures.[/red]\n"
+    f"\nData collection is complete.\n"
+    f"Total running time: {hours} Hours {mins} Minutes {round(secs, 2)} Seconds\n"
 )
