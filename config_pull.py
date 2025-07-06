@@ -58,6 +58,7 @@ import json
 import logging
 import os
 import re
+import socket
 import sys
 import timeit
 from datetime import datetime
@@ -367,6 +368,29 @@ def strip_rich_markup(message: str) -> str:
     return re.sub(r"\[/?[^\]]+\]", "", message)
 
 
+def detect_ssh_version(ip: str, port: int = 22, timeout: int = 5) -> str | None:
+    """
+    Attempt to retrieve the SSH version banner from a device.
+
+    Args:
+        ip (str): IP address of the target device
+        port (int): SSH port (default 22)
+        timeout (int): Timeout in seconds
+
+    Returns:
+        str | None: The SSH version banner (e.g. "SSH-2.0-OpenSSH_9.9") or None if failed
+    """
+    try:
+        with socket.create_connection((ip, port), timeout=timeout) as sock:
+            sock.settimeout(timeout)
+            banner = sock.recv(1024).decode("utf-8", errors="ignore").strip()
+            if banner.startswith("SSH-"):
+                return banner
+    except (socket.timeout, ConnectionRefusedError, OSError):
+        return None
+    return None
+
+
 # ---------------
 print()
 print()
@@ -549,6 +573,50 @@ for line in fabric:
             "password": password,
             "conn_timeout": 60,
         }
+        # 🔍 Check SSH version before attempting connection
+        banner = detect_ssh_version(ipaddr)
+        if banner:
+            if banner.startswith("SSH-1."):
+                # Legacy SSHv1 — not supported
+                message = (
+                    f"[red]Unsupported SSH version[/red]: {banner}\n"
+                    f"This device only supports SSHv1 and cannot be accessed by this tool.\n"
+                    f"Use console or PuTTY if needed."
+                )
+                print(
+                    Panel.fit(
+                        message,
+                        title="🔐 SSHv1 Detected",
+                        border_style="red",
+                        subtitle=f"Skipping {hostname}",
+                    )
+                )
+                log_message(strip_rich_markup(message))
+                device_count -= 1
+                continue
+            elif banner.startswith("SSH-1.99"):
+                # SSH-1.99 is a hybrid banner — usually safe for SSHv2
+                pass  # Let ConnectHandler try
+            # else: SSH-2.0 — fully supported
+        else:
+            # No banner received — might not be an SSH server at all
+            message = (
+                f"[yellow]No SSH banner received[/yellow] from {ipaddr}\n"
+                f"Unable to determine SSH compatibility.\nSkipping to avoid hang."
+            )
+            print(
+                Panel.fit(
+                    message,
+                    title="⚠️ No SSH Response",
+                    border_style="yellow",
+                    subtitle=f"Skipping {hostname}",
+                )
+            )
+            log_message(strip_rich_markup(message))
+            device_count -= 1
+            continue
+
+        # ✅ Now try connecting
         net_connect = ConnectHandler(**device)
 
     except NetmikoTimeoutException as e:
