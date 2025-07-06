@@ -11,6 +11,7 @@ https://pynet.twb-tech.com/blog/netmiko-and-textfsm.html
 Usage
 1. Clone the repo at https://github.com/rikosintie/Discovery/. The readme file
 in the repo detailed installation instructions.
+
 2. Create a file named device-inventory-<site>.
 Example
 device-inventory-test
@@ -20,9 +21,18 @@ Example
 192.168.10.52,hp_procurve,gl-IDF1,mhubbard
 NOTE: the password is saved in user environment variable or entered when the script
 is executed.
-3. Create a file named procurve-config-file.txt and place the
-configuration commands for the switches in it. Note that there is a default
-procurve-config-file.txt included. You can customize it to suit your needs.
+
+3. Create a file named <vendor_id>-config-file.txt in teh root of the Discovery
+folder. Place the configuration commands for the switches in it. Note that
+there are default files included. You can customize it to suit your needs.
+Valid config file names are:
+    hp_procurve-config-file.txt is used for all HP Procurve switches
+    cisco_ios-config-file.txt is used for all Cisco IOS switches
+    cisco_xe-config-file.txt is used for all Cisco IOS XE switches
+    cisco_nxos-config-file.txt is used for all Cisco NXOS switches
+    aruba_osswitch-config-file.txt is used for all Aruba OS switches
+    aruba_cx-config-file.txt is used for all Aruba CX switches
+
 4. Execute
 python3 cisco-Config-Pull.py -s test
 
@@ -528,6 +538,9 @@ for line in fabric:
     print(f"{border}")
     border = "-" * (len(hostname) + 42)
     print(f"[bold][blue]{border}[/blue][/bold]")
+    # this exposes the paramiko logging module so that the timeout exception
+    # can catch ssh v1, v1.5 mismatch errors.
+    logging.getLogger("paramiko").setLevel(logging.CRITICAL)
     try:
         device = {
             "device_type": vendor,
@@ -538,27 +551,38 @@ for line in fabric:
         }
         net_connect = ConnectHandler(**device)
 
-    except NetmikoTimeoutException:
+    except NetmikoTimeoutException as e:
         end_time: datetime = datetime.now()
         device_count -= 1
         time_out_count += 1
+
+        # Improved message with underlying exception
         message = (
-            f"Could not connect to {hostname} at {ipaddr}. \n[red]The connection timed out.[/red] \n"
-            f"Remove [cyan]{hostname}[/cyan] from the device inventory file"
+            f"Could not connect to {hostname} at {ipaddr}.\n"
+            f"[red]The connection timed out.[/red]"
         )
+        if "Protocol major versions differ" in str(e):
+            message += (
+                f"\n[bold yellow]Warning:[/bold yellow] SSH version mismatch detected on {hostname}."
+                f"\nDevice may only support SSHv1 (deprecated on modern Linux)"
+            )
+        else:
+            message += f"\n[dim]{str(e)}[/dim]"
+
         print(
             Panel.fit(
                 message,
-                title="✅ Timeout",
+                title="⏱️ Timeout",
                 border_style="cyan",
                 subtitle=f"Timeout connecting to {hostname}",
             )
         )
         log_message(strip_rich_markup(message))
+        remove_empty_lines(LOGFILE)
         print()
         print_times()
-        print()
         continue
+
     except AuthenticationException:
         auth_fail_count += 1
         device_count -= 1
@@ -573,6 +597,7 @@ for line in fabric:
             )
         )
         log_message(strip_rich_markup(message))
+        remove_empty_lines(LOGFILE)
         print()
         print_times()
         print()
@@ -587,13 +612,19 @@ for line in fabric:
             " from the device inventory file"
         )
         log_message(strip_rich_markup(message))
+        remove_empty_lines(LOGFILE)
         print()
         print_times()
         continue
-
-    # hp_procurve-config-file.txt is used for all HP Procurve switches
-    # cisco_ios-config-file.txt is used for all Cisco IOS switches
-    # cisco_xe-config-file.txt is used for all Cisco IOS XE switches
+    """
+    Valid config file names are:
+        hp_procurve-config-file.txt is used for all HP Procurve switches
+        cisco_ios-config-file.txt is used for all Cisco IOS switches
+        cisco_xe-config-file.txt is used for all Cisco IOS XE switches
+        cisco_nxos-config-file.txt is used for all Cisco NXOS switches
+        aruba_osswitch-config-file.txt is used for all Aruba OS switches
+        aruba_cx-config-file.txt is used for all Aruba CX switches
+    """
     cfg_file = f"{vendor}-config-file.txt"
     print()
     border = net_connect.find_prompt()
