@@ -305,24 +305,37 @@ def emoji_for(label: str) -> str:
 
 
 def print_times() -> None:
-    """Prints the current time and date."""
+    """
+    Print combined execution timing information for the current host and total runtime.
 
-    stop = timeit.default_timer()
-    running_time: float = stop - timeit_start
-    # output running time in a nice format.
-    mins, secs = divmod(running_time, 60)
+    Calculates:
+      - The elapsed time for the current host using `timeit.default_timer() - timeit_start`
+      - The total script runtime using `timeit.default_timer() - start`
+
+    Outputs both durations in a single styled rich Panel.
+    Requires `hostname`, `timeit_start`, and `start` to be defined in the calling scope.
+    """
+    stop_time = timeit.default_timer()
+    host_runtime = stop_time - timeit_start
+    total_runtime = stop_time - start
+
+    # Format host time
+    mins, secs = divmod(host_runtime, 60)
     hours, mins = divmod(mins, 60)
-    print(
-        f"\n[cyan]{hostname}[/cyan] execution Time: {hours} Hours {mins} Minutes {round(secs, 2)} Seconds"
-    )
-    stop = timeit.default_timer()
-    total_time = stop - start
-    # output script total running time in a nice format.
-    mins, secs = divmod(total_time, 60)
+    host_time_str = f"[bold]{int(hours)}h {int(mins)}m {round(secs, 2)}s[/bold]"
+
+    # Format total time
+    mins, secs = divmod(total_runtime, 60)
     hours, mins = divmod(mins, 60)
-    print(
-        f"[blue]Total running time:[/blue] {hours} Hours {mins} Minutes {round(secs, 2)} Seconds\n"
+    total_time_str = f"[bold]{int(hours)}h {int(mins)}m {round(secs, 2)}s[/bold]"
+
+    # Combined message
+    message = (
+        f"[cyan]{hostname}[/cyan] execution time: {host_time_str}\n"
+        f"[blue]Total script runtime:[/blue] {total_time_str}"
     )
+
+    print(Panel.fit(message, border_style="green", title="Execution Timing Summary"))
 
 
 # ---------------
@@ -439,6 +452,7 @@ uptime: list[str] = []
 device_count: int = 0
 time_out_count: int = 0
 auth_fail_count: int = 0
+connection_fail_count: int = 0
 for line in fabric:
     device_count += 1
     line = line.strip("\n")
@@ -485,15 +499,13 @@ for line in fabric:
 
     sh_run, show_lldp, show_arp, interface_key, force_prefix = which_vendor(vendor)
     ic(sh_run, show_lldp, show_arp, interface_key, force_prefix)
-    now: datetime = datetime.now()
     timeit_start: float = timeit.default_timer()
     start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
     # print("-----------------------------------------------------")
     border = "-" * (len(hostname) + 42)
     print(f"[bold][blue]{border}[/blue][/bold]")
-    border = f"[bold][red]{start_time}[/red][/bold] Connecting to switch [cyan]{hostname}[/cyan]"
+    border = f"[bold][blue]{start_time}[/blue][/bold] Connecting to switch [cyan]{hostname}[/cyan]"
     print(f"{border}")
-    # print((str(start_time) + " Connecting to switch {}".format(hostname)))
     border = "-" * (len(hostname) + 42)
     print(f"[bold][blue]{border}[/blue][/bold]")
     try:
@@ -510,7 +522,10 @@ for line in fabric:
         end_time: datetime = datetime.now()
         device_count -= 1
         time_out_count += 1
-        message = f"Could not connect to {hostname} at {ipaddr}. \n[red]The connection timed out.[/red] \nRemove [cyan]{hostname}[/cyan] from the device inventory file"
+        message = (
+            f"Could not connect to {hostname} at {ipaddr}. \n[red]The connection timed out.[/red] \n"
+            f"Remove [cyan]{hostname}[/cyan] from the device inventory file"
+        )
         print(
             Panel.fit(
                 message,
@@ -519,6 +534,7 @@ for line in fabric:
                 subtitle=f"Timeout connecting to {hostname}",
             )
         )
+        print()
         print_times()
         print()
         continue
@@ -542,10 +558,13 @@ for line in fabric:
         continue
     except (EOFError, SSHException):
         # catch unexpected exceptions
+        connection_fail_count += 1
+        device_count -= 1
         print(
             f"Could not connect to {hostname} at {ipaddr}, remove it"
             " from the device inventory file"
         )
+        print()
         print_times()
         continue
 
@@ -635,16 +654,6 @@ for line in fabric:
     border = "-" * (len(hostname) + 33)
     print(f"[bold][blue]{border}[/blue][/bold]")
 
-    # # Use textFSM to create a json object with interface stats
-    # template_path = os.getcwd()
-    # template_file = os.path.join(template_path, "sh_int_br.textfsm")
-    # print(f"collecting show interfaces brief for {hostname}")
-    # output_show_int_br = net_connect.send_command(
-    #     "show interfaces brief",
-    #     strip_command=True,
-    #     use_textfsm=True,
-    #     textfsm_template=template_file,
-    # )
     # Use textFSM to create a json object with interface stats
     vendor = vendor.lower()
     match vendor:
@@ -702,7 +711,6 @@ for line in fabric:
                 strip_command=True,
                 use_textfsm=True,
             )
-    # print("-" * (len(cfg_file) + len(hostname) + 16))
 
     # Use textFSM to create a json object with show lldp info remote
     print(
@@ -748,7 +756,6 @@ for line in fabric:
         force_prefix=force_prefix,
     )
 
-    # print(f"\n {output_mac_address} for\n {hostname}")
     border = "-" * (len(output_mac_address) + 1)
     print(f"[bold][blue]{border}[/blue][/bold]")
 
@@ -805,14 +812,6 @@ for line in fabric:
     border = "-" * (len(int_report) + 1)
     print(f"[bold][blue]{border}[/blue][/bold]")
 
-    #  Write the JSON interface data to a file
-    # int_report = create_filename("Interface", "-interface.json")
-    # print(f"Writing interfaces json data to {int_report}")
-    # with open(int_report, "w") as file:
-    #     output = json.dumps(output, indent=2)
-    #     file.write(output)
-    # print("-" * (len(dev_inv_file) + 23))
-
     # Write the JSON interface brief data to a file
     int_report = create_filename("Interface", "-int_br.txt")
     print(f"Writing 'show interfaces brief' data to\n {int_report}")
@@ -841,33 +840,7 @@ for line in fabric:
     print(f"[bold][blue]{border}[/blue][/bold]")
     print()
 
-    # ports = []
-    count = 0
-    #  Create a regex to match any port with [0-8]/0/[0-9]{1,2}
-    #  This will match all ports with a 0 as the module number
-    regexpattern = re.compile(r"G*[0-8]/0/[0-9]{1,2}")
-
-    # count number of interfaces - cisco only
-    # interfaces = json.loads(output)
-    # for interface in interfaces:
-    #     a = re.findall(regexpattern, interface["interface"])
-    #     if interface["input_packets"] != "0" and len(a):
-    #         # if len(a):
-    #         count += 1
-    # Cisco only
-    # switch_uptime = json.loads(output_ver)
-    # # Write the uptime data to a file
-    # int_report = get_current_path("CR-data", "-uptime.txt")
-    # print(f"Writing uptime to {int_report}")
-    # up = "Switch Uptime: " + switch_uptime[0]["uptime"]
-    # restart = "Restart Reason: " + switch_uptime[0]["reload_reason"]
-    # count = "Gigabit Ports without traffic: " + str(count)
-    # details = [up, restart, count]
-    # with open(int_report, "w") as file:
-    #     for item in details:
-    #         file.write("%s\n" % item)
-
-    message = f"[bright_green]Successfully created config files for[/bright_green] [bright_red]{hostname}[/bright_red]"
+    message = f"[bright_green]Successfully created config files for[/bright_green] [cyan]{hostname}[/cyan]"
     print(
         Panel.fit(
             message,
@@ -877,6 +850,7 @@ for line in fabric:
             subtitle=f"{device_count} device completed of {num_devices} total",
         )
     )
+    print()
     print_times()
 print()
 stop = timeit.default_timer()
@@ -884,10 +858,43 @@ total_time = stop - start
 # output running time in a nice format.
 mins, secs = divmod(total_time, 60)
 hours, mins = divmod(mins, 60)
+# format timeouts, authentication failures, and connection fails
+toc: str = ""
+afc: str = ""
+cfc: str = ""
+
+if time_out_count == 1:
+    toc = f"A total of [red]{time_out_count}[/red] device timed out.\n"
+elif time_out_count == 0:
+    toc = f"A total of [green]{time_out_count}[/green] device timed out.\n"
+else:
+    toc = f"A total of [red]{time_out_count}[/red] devices timed out.\n"
+
+if auth_fail_count == 1:
+    afc = (
+        f"A total of [red]{auth_fail_count}[/red] device had authentication failures.\n"
+    )
+elif auth_fail_count == 0:
+    afc = f"A total of [green]{auth_fail_count}[/green] devices had authentication failures.\n"
+else:
+    afc = f"A total of [red]{auth_fail_count}[/red] devices had authentication failures.\n"
+
+if connection_fail_count == 1:
+    cfc = f"A total of [red]{connection_fail_count}[/red] device had connection failures.\n"
+elif connection_fail_count == 0:
+    cfc = f"A total of [green]{connection_fail_count}[/green] devices had connection failures.\n"
+else:
+    cfc = f"A total of [red]{connection_fail_count}[/red] device(s) had connection failures.\n"
+
+
+# ------
 print(
     f"A total of {device_count} [cyan]device(s)[/cyan] out of {num_devices} were processed.\n"
-    f"A total of [red]{time_out_count} device(s) timed out.[/red]\n"
-    f"A total of [red]{auth_fail_count} device(s) had authentication failures.[/red]\n"
+    # f"A total of [red]{time_out_count} device(s) timed out.[/red]\n"
+    # f"A total of [red]{auth_fail_count} device(s) had authentication failures.[/red]\n"
+    f"{toc}"
+    f"{afc}"
+    f"{cfc}"
     f"\nData collection is complete.\n"
     f"Total running time: {hours} Hours {mins} Minutes {round(secs, 2)} Seconds\n"
 )
