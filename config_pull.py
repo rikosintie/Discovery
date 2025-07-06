@@ -1060,17 +1060,9 @@ total_time = stop - start
 mins, secs = divmod(total_time, 60)
 hours, mins = divmod(mins, 60)
 # format timeouts, authentication failures, and connection fails
-toc: str = ""
 afc: str = ""
 cfc: str = ""
 svc: str = ""
-
-if time_out_count == 1:
-    toc = f"A total of [red]{time_out_count}[/red] device timed out.\n"
-elif time_out_count == 0:
-    toc = f"A total of [green]{time_out_count}[/green] device timed out.\n"
-else:
-    toc = f"A total of [red]{time_out_count}[/red] devices timed out.\n"
 
 if auth_fail_count == 1:
     afc = (
