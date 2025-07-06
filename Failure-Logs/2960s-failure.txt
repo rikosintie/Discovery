@@ -1,0 +1,3 @@
+[2025-07-05 22:42:07] Could not connect to 2960s at 192.168.10.15. 
+The Credentials failed. 
+Remove 2960s from the device inventory file
