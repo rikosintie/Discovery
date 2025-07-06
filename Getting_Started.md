@@ -54,13 +54,34 @@ The `--upgrade-deps` argument tells python to upgrade pip to the latest version 
 
 On Windows
 
-A note on windows. I developed the script on a Windows 11 22h1 laptop. On June 29, 2025 I cloned the repo to a Windows 11 24h2 laptop to demo for a friend and nothing worked! For some reason, Windows 11 24h2 installs Python 13.1 which is bleeding edge and several of the libraries I use haven't been updated to work with 13.1.
+`.\venv\Scripts\activate`
+
+!!! Note Windows 11 24h2 issues
+ I developed the script on a Windows 11 22h1 laptop. On June 29, 2025 I cloned the repo to a Windows 11 24h2 laptop to demo for a friend and nothing worked! For some reason, Windows 11 24h2 installs Python 13.1 which is bleeding edge and several of the libraries I use haven't been updated to work with 13.1.
 
 ChatGPT recommended installing WSL2, Ubuntu 24.04 and running the script in Linux. I did that and everything worked correctly. The WSL terminal NATs to your laptop so you will be using a 172.16.122.x address but everything worked.
 
-Since I was only using Windows because I was on a long term assignment, using the customer provided a Windows laptop and jump server, I do not plan to figure out how to make it work native on Windows.
+!!! Info Navigating in WSL
+If you have only used Windows, navigating the WSL terminal paths will be a learning experience. ChatGPT wrote this function that makes it easier to navigate:
 
-`.\venv\Scripts\activate`
+From the WSL Ubuntu terminal, open the BASH configuration file using - `nano ~/bashrc`, go to the bottom of the file and paste in the two lines below.
+
+```bash
+# Function to convert windows paths to Linux format
+ wincd () { cd $(wslpath $1); }
+```
+
+Type `ctrl+x` to exit nano, select y to `Save modified buffer?`
+
+Type `exec bash` to reload the shell.
+
+Then use it like:
+
+`wincd 'c:\Users\mhubbard\Documents\Discovery'
+
+The command will take you to the WSL `/mnt/c/Users/mhubbard/Documents/Discovery` directory.
+
+I prefer to zsh as my shell with Oh My Zsh. If you continue to use WSL I recommend that you look at my guide to setting up the [Ubuntu terminal](https://rikosintie.github.io/Ubuntu4NetworkEngineers/terminal/). The guide is chalked full of Ubuntu goodness.
 
 On macOS/Linux
 
