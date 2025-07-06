@@ -62,6 +62,7 @@ import re
 import socket
 import sys
 import timeit
+from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, Tuple, TypedDict
@@ -71,7 +72,9 @@ from netmiko import ConnectHandler
 from netmiko.exceptions import AuthenticationException, NetmikoTimeoutException
 from paramiko.ssh_exception import SSHException
 from rich import print
+from rich.console import Console
 from rich.panel import Panel
+from rich.table import Table
 
 # !!!!! Discovery Script - Does not change the running config !!!!!
 
@@ -95,7 +98,7 @@ class SkippedDevice(TypedDict):
     reason: str
 
 
-# skipped_devices: list[SkippedDevice] = []
+console = Console()
 
 
 def create_filename(sub_dir1: str, extension: str = "", sub_dir2: str = "") -> str:
@@ -402,7 +405,8 @@ def detect_ssh_version(ip: str, port: int = 22, timeout: int = 5) -> str | None:
     return None
 
 
-def write_skipped_devices_csv(filename: str = "skipped_devices.csv") -> None:
+# def write_skipped_devices_csv(filename: str = "skipped_devices.csv") -> None:
+def write_skipped_devices_csv(filename: str) -> None:
     if not skipped_devices:
         return
     with open(filename, "w", newline="") as f:
@@ -410,6 +414,40 @@ def write_skipped_devices_csv(filename: str = "skipped_devices.csv") -> None:
         writer.writerow(["Hostname", "IP Address", "Reason"])
         for entry in skipped_devices:
             writer.writerow([entry["hostname"], entry["ip"], entry["reason"]])
+
+
+def print_skipped_devices_table(skipped: list[dict]) -> None:
+    """
+    Prints a rich table of skipped devices grouped by reason and sorted by IP address.
+    Args:
+    skipped (list[dict]): List of skipped device entries, each with 'hostname', 'ip', and 'reason'.
+    """
+
+    if not skipped:
+        return
+
+    grouped: dict[str, list[dict]] = defaultdict(list)
+    for entry in skipped:
+        grouped[entry["reason"]].append(entry)
+
+    for reason, entries in grouped.items():
+        table = Table(
+            title=f"Skipped Devices — {reason}",
+            title_style="bold red",
+            header_style="bold magenta",
+        )
+
+        table.add_column("Hostname", style="cyan", no_wrap=True)
+        table.add_column("IP Address", style="green")
+
+        # Sort by IP address
+        entries.sort(key=lambda d: tuple(int(part) for part in d["ip"].split(".")))
+
+        for entry in entries:
+            table.add_row(entry["hostname"], entry["ip"])
+
+        console.print(table)
+        console.print()  # Add spacing between tables
 
 
 # ---------------
@@ -676,8 +714,8 @@ for line in fabric:
         print(
             Panel.fit(
                 message,
-                title="⏱️ Timeout",
-                border_style="cyan",
+                title="⚠️ Timeout",
+                border_style="yellow",
                 subtitle=f"Timeout connecting to {hostname}",
             )
         )
@@ -697,8 +735,8 @@ for line in fabric:
         print(
             Panel.fit(
                 message,
-                title="✅ Done",
-                border_style="cyan",
+                title="⚠️ Credentials",
+                border_style="yellow",
                 subtitle=f"Missing credentials {hostname}",
             )
         )
@@ -1065,8 +1103,14 @@ print(
     f"{cfc}"
     f"{svc}"
     f"\nData collection is complete.\n"
-    f"Total running time: {hours} Hours {mins} Minutes {round(secs, 2)} Seconds\n\n"
+    f"Total running time: {hours} Hours {mins} Minutes {round(secs, 2)} Seconds\n"
 )
 
-write_skipped_devices_csv()
-print("[cyan]Skipped devices saved to skipped_devices.csv[/cyan]")
+current_path = os.getcwd()
+sub_dir1: str = "Failure-Logs"
+skipped_filename: str = "skipped_devices.csv"
+skipped_devices_file: str = os.path.join(current_path, sub_dir1, skipped_filename)
+write_skipped_devices_csv(skipped_devices_file)
+print(f"[cyan]Skipped devices saved to {skipped_devices_file}[/cyan]")
+print()
+print_skipped_devices_table(skipped_devices)
