@@ -338,6 +338,25 @@ def print_times() -> None:
     print(Panel.fit(message, border_style="green", title="Execution Timing Summary"))
 
 
+def log_message(message: str, context: str = "") -> None:
+    """
+    Append a plain-text message with timestamp to the logfile.
+    """
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_entry = f"[{now}] {context + ': ' if context else ''}{message}\n"
+    with open(LOGFILE, "a") as f:
+        f.write(log_entry)
+
+
+def strip_rich_markup(message: str) -> str:
+    """
+    Remove rich markup tags like [red], [bold] from log output.
+    """
+    import re
+
+    return re.sub(r"\[/?[^\]]+\]", "", message)
+
+
 # ---------------
 print()
 print()
@@ -501,6 +520,7 @@ for line in fabric:
     ic(sh_run, show_lldp, show_arp, interface_key, force_prefix)
     timeit_start: float = timeit.default_timer()
     start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+    LOGFILE = create_filename("Failure-Logs", "-failure.txt")
     # print("-----------------------------------------------------")
     border = "-" * (len(hostname) + 42)
     print(f"[bold][blue]{border}[/blue][/bold]")
@@ -534,6 +554,7 @@ for line in fabric:
                 subtitle=f"Timeout connecting to {hostname}",
             )
         )
+        log_message(strip_rich_markup(message))
         print()
         print_times()
         print()
@@ -551,6 +572,7 @@ for line in fabric:
                 subtitle=f"Missing credentials {hostname}",
             )
         )
+        log_message(strip_rich_markup(message))
         print()
         print_times()
         print()
@@ -564,6 +586,7 @@ for line in fabric:
             f"Could not connect to {hostname} at {ipaddr}, remove it"
             " from the device inventory file"
         )
+        log_message(strip_rich_markup(message))
         print()
         print_times()
         continue
