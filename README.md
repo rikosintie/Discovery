@@ -10,7 +10,8 @@
 
 # Pterodactyl Network  Discovery Project<!-- omit from toc -->
 
-- [Purpose](#purpose)
+- [Discovery Project Purpose](#discovery-project-purpose)
+  - [ASCIINEMA video](#asciinema-video)
   - [Who is this project for](#who-is-this-project-for)
 - [The Process](#the-process)
   - [show commands](#show-commands)
@@ -28,13 +29,35 @@ There are additional sections to this documentation:
 - [Usage](https://github.com/rikosintie/Discovery/blob/main/usage.md)
 - [The Helper Scripts](https://github.com/rikosintie/Discovery/blob/main/Helper-scripts.md)
 
-## Purpose
+## Discovery Project Purpose
 
 This project was created to make the discovery process for a network refresh easy, consistent and comprehensive. The discovery data can be used to create a change request, and cut over plan for the customer. The data is also valuable when troubleshooting any issues after a switch is replaced.
 
-A plain text file [procurve-config-file.txt](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt) is used to store the `show commands` that are sent to the switches. You are free to customize the [procurve-config-file.txt](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt) file to add or remove show commands as needed for your discovery.
+The project currently supports the following devices:
 
-The script saves the data to various directories for easy access.
+- HPE Procurve
+- Cisco IOS
+- Cisco XE
+- Cisco Nexus
+- Aruba CS
+
+A plain text file is used to store the `show commands` that are sent to the switches. An example file for an HPE Procurve switch can be found [here](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt). You are free to customize the file to add or remove show commands as needed for your discovery. The script saves the data to various directories for easy access.
+
+### ASCIINEMA video
+
+Here is an [asciinema video]( https://asciinema.org/a/726423
+) that shows the script running. In the video there are switches that have:
+
+- ssh V1 which isn't supported
+- a switch that didn't accept the credentials given
+- a switch that didn't respond
+
+The script notes these issues, saves the `hostname, ip address, reason` to a file. It then moves onto the next device.
+
+If you use the terminal daily, I highly recommend checking out [ascinema](https://asciinema.org/a/726423). It's an open source tool that lets you:
+
+"Record and share your terminal sessions, the simple way.
+Forget screen recording apps and blurry video. Experience a lightweight, text-based approach to terminal recording."
 
 ### Who is this project for
 
