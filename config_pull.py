@@ -53,6 +53,7 @@ displayed and the script moves to the next switch.
 
 # !!!!! Discovery Script - Does not change the running config !!!!!
 import argparse
+import csv
 import getpass
 import json
 import logging
@@ -62,7 +63,8 @@ import socket
 import sys
 import timeit
 from datetime import datetime
-from typing import Optional, Tuple
+from pathlib import Path
+from typing import Optional, Tuple, TypedDict
 
 from icecream import ic
 from netmiko import ConnectHandler
@@ -85,6 +87,15 @@ __license__ = "Unlicense"
 # comment out ic.disable() and uncomment ic.enable() to use icecream
 # ic.enable()
 ic.disable()
+
+
+class SkippedDevice(TypedDict):
+    hostname: str
+    ip: str
+    reason: str
+
+
+# skipped_devices: list[SkippedDevice] = []
 
 
 def create_filename(sub_dir1: str, extension: str = "", sub_dir2: str = "") -> str:
@@ -391,6 +402,16 @@ def detect_ssh_version(ip: str, port: int = 22, timeout: int = 5) -> str | None:
     return None
 
 
+def write_skipped_devices_csv(filename: str = "skipped_devices.csv") -> None:
+    if not skipped_devices:
+        return
+    with open(filename, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Hostname", "IP Address", "Reason"])
+        for entry in skipped_devices:
+            writer.writerow([entry["hostname"], entry["ip"], entry["reason"]])
+
+
 # ---------------
 print()
 print()
@@ -501,11 +522,15 @@ border = "-" * (len(dev_inv_file) + 23)
 print(f"[bold][blue]{border}[/blue][/bold]")
 print()
 
-uptime: list[str] = []
+# uptime: list[str] = []
+skipped_devices: list[dict] = []
 device_count: int = 0
 time_out_count: int = 0
 auth_fail_count: int = 0
 connection_fail_count: int = 0
+sshv1_skip_count = 0
+# skipped_devices: list[tuple[str, str, str]] = []  # hostname, ip, reason
+
 for line in fabric:
     device_count += 1
     line = line.strip("\n")
@@ -578,6 +603,11 @@ for line in fabric:
         if banner:
             if banner.startswith("SSH-1."):
                 # Legacy SSHv1 — not supported
+                sshv1_skip_count += 1
+                skipped_devices.append(
+                    {"hostname": hostname, "ip": ipaddr, "reason": "SSHv1 only"}
+                )
+
                 message = (
                     f"[red]Unsupported SSH version[/red]: {banner}\n"
                     f"This device only supports SSHv1 and cannot be accessed by this tool.\n"
@@ -614,6 +644,10 @@ for line in fabric:
             )
             log_message(strip_rich_markup(message))
             device_count -= 1
+            connection_fail_count += 1
+            skipped_devices.append(
+                {"hostname": hostname, "ip": ipaddr, "reason": "No SSH banner received"}
+            )
             continue
 
         # ✅ Now try connecting
@@ -623,7 +657,9 @@ for line in fabric:
         end_time: datetime = datetime.now()
         device_count -= 1
         time_out_count += 1
-
+        skipped_devices.append(
+            {"hostname": hostname, "ip": ipaddr, "reason": "Timeout connecting"}
+        )
         # Improved message with underlying exception
         message = (
             f"Could not connect to {hostname} at {ipaddr}.\n"
@@ -654,7 +690,9 @@ for line in fabric:
     except AuthenticationException:
         auth_fail_count += 1
         device_count -= 1
-
+        skipped_devices.append(
+            {"hostname": hostname, "ip": ipaddr, "reason": "Authentication failed"}
+        )
         message = f"Could not connect to {hostname} at {ipaddr}. \n[red]The Credentials failed.[/red] \nRemove [cyan]{hostname}[/cyan] from the device inventory file"
         print(
             Panel.fit(
@@ -675,6 +713,9 @@ for line in fabric:
         # catch unexpected exceptions
         connection_fail_count += 1
         device_count -= 1
+        skipped_devices.append(
+            {"hostname": hostname, "ip": ipaddr, "reason": "SSHv1 only"}
+        )
         print(
             f"Could not connect to {hostname} at {ipaddr}, remove it"
             " from the device inventory file"
@@ -984,6 +1025,7 @@ hours, mins = divmod(mins, 60)
 toc: str = ""
 afc: str = ""
 cfc: str = ""
+svc: str = ""
 
 if time_out_count == 1:
     toc = f"A total of [red]{time_out_count}[/red] device timed out.\n"
@@ -1002,21 +1044,29 @@ else:
     afc = f"A total of [red]{auth_fail_count}[/red] devices had authentication failures.\n"
 
 if connection_fail_count == 1:
-    cfc = f"A total of [red]{connection_fail_count}[/red] device had connection failures.\n"
+    cfc = f"A total of [red]{connection_fail_count}[/red] device  didn't send an SSH banner.\n"
 elif connection_fail_count == 0:
-    cfc = f"A total of [green]{connection_fail_count}[/green] devices had connection failures.\n"
+    cfc = f"A total of [green]{connection_fail_count}[/green] devices didn't send an SSH banner.\n"
 else:
-    cfc = f"A total of [red]{connection_fail_count}[/red] device(s) had connection failures.\n"
+    cfc = f"A total of [red]{connection_fail_count}[/red] devices didn't send an SSH banner.\n"
 
+if sshv1_skip_count == 1:
+    svc = f"A total of [red]{sshv1_skip_count}[/red] device was skipped due to unsupported SSHv1.\n"
+elif sshv1_skip_count > 1:
+    svc = f"A total of [red]{sshv1_skip_count}[/red] devices were skipped due to unsupported SSHv1.\n"
+else:
+    svc = ""
 
 # ------
 print(
-    f"A total of {device_count} [cyan]device(s)[/cyan] out of {num_devices} were processed.\n"
-    # f"A total of [red]{time_out_count} device(s) timed out.[/red]\n"
-    # f"A total of [red]{auth_fail_count} device(s) had authentication failures.[/red]\n"
-    f"{toc}"
+    f"A total of {device_count} [cyan]device(s)[/cyan] out of {num_devices} in {dev_inv_file} were processed.\n"
+    #    f"{toc}"
     f"{afc}"
     f"{cfc}"
+    f"{svc}"
     f"\nData collection is complete.\n"
-    f"Total running time: {hours} Hours {mins} Minutes {round(secs, 2)} Seconds\n"
+    f"Total running time: {hours} Hours {mins} Minutes {round(secs, 2)} Seconds\n\n"
 )
+
+write_skipped_devices_csv()
+print("[cyan]Skipped devices saved to skipped_devices.csv[/cyan]")
