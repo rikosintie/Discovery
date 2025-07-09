@@ -59,7 +59,9 @@ On Windows
 !!! Note Windows 11 24h2 issues
  I developed the script on a Windows 11 22h1 laptop. On June 29, 2025 I cloned the repo to a Windows 11 24h2 laptop to demo for a friend and nothing worked! For some reason, Windows 11 24h2 installs Python 13.1 which is bleeding edge and several of the libraries I use haven't been updated to work with 13.1.
 
-ChatGPT recommended installing WSL2, Ubuntu 24.04 and running the script in Linux. I did that and everything worked correctly. The WSL terminal NATs to your laptop so you will be using a 172.16.122.x address but everything worked.
+I installed Python 3.10 from the Windows store then used `python3.10 -m venv venv --upgrade-deps --prompt="Discovery"` to successfully install the script with Python 3.10.
+
+ChatGPT recommended installing WSL2, Ubuntu 24.04 and running the script in Linux. I did that and everything worked correctly. The WSL terminal NATs to your laptop so you will be using a 172.16.122.x address but everything worked. Linux is so much better than Windows for development work in my opinion that I would go the WLS route.
 
 !!! Info Navigating in WSL
 If you have only used Windows, navigating the WSL terminal paths will be a learning experience. ChatGPT wrote this function that makes it easier to navigate:
