@@ -40,6 +40,7 @@ The project currently supports the following devices:
 - Cisco XE
 - Cisco Nexus
 - Aruba CX
+
 A plain text file is used to store the `show commands` that are sent to the switches. An example file for an HPE Procurve switch can be found [here](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt). You are free to customize the file to add or remove show commands as needed for your discovery. The script saves the data to various directories for easy access.
 
 ### ASCIINEMA video
