@@ -39,8 +39,7 @@ The project currently supports the following devices:
 - Cisco IOS
 - Cisco XE
 - Cisco Nexus
-- Aruba CS
-
+- Aruba CX
 A plain text file is used to store the `show commands` that are sent to the switches. An example file for an HPE Procurve switch can be found [here](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt). You are free to customize the file to add or remove show commands as needed for your discovery. The script saves the data to various directories for easy access.
 
 ### ASCIINEMA video
@@ -61,7 +60,7 @@ Forget screen recording apps and blurry video. Experience a lightweight, text-ba
 
 ### Who is this project for
 
-Anyone that needs to pull data from HPE Procurve switches. You do not need to write any python code. Text files are used to configure the information used by the script.
+Anyone that needs to pull data from HPE Procurve, Cisco IOS or Aruba CX switches. You do not need to write any python code. Text files are used to configure the information used by the script.
 
 ----------------------------------------------------------------
 
@@ -72,15 +71,23 @@ There are two types of scripts in the project:
 - Discovery - These are switches that use netmiko to connect to a switch and pull down data.
 - Helper - These are scripts that take JSON data that was collected with the discovery script and convert it into human readable format.
 
-The python discovery script [procurve-Config-pull.py](https://github.com/rikosintie/Discovery/blob/main/procurve_Config_pull.py) uses the [netmiko](https://github.com/ktbyers/netmiko) library and the Google [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run ***show commands*** and create JSON files.
+The python discovery script [config-pull.py](https://github.com/rikosintie/Discovery/blob/main/procurve_Config_pull.py) uses the [netmiko](https://github.com/ktbyers/netmiko) library and the Google [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run ***show commands*** and create JSON files.
 
 ### show commands
 
-The show commands are saved to a file named [procurve-config-file.txt](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt). This file can be edited to send any show commands you need.
+The show commands are saved to a file named {vendor-id}-config-file.txt, where vendor-id is:
+
+- hp_procurve
+- cisco_ios
+- cisco_xe
+- cisco_nx
+- aruba_cx
+
+.  This file can be edited to send any show commands you need.
 
 The format is:
 
-`show command` with each command on a separate line. Here is a snippet of the file:
+`show 'command'` with each command on a separate line. Here is a snippet of the file:
 
 ```bash
 show system
@@ -137,7 +144,7 @@ The Procurve firmware allows you to include the "structured" keyword after the "
 
 This script started out to pull configs from Cisco 3750x switches. I was on a long term contract at a customer with about 500 Cisco 3750x switches and was moving to Aruba 6300CX.
 
-The script was a life saver pulling all the Change request data automatically. I then used a great library called cisco_config_parse to read the Cisco running-configuration and convert it to Aruba CX format.
+The script was a life saver pulling all the Change Request data automatically. I then used a great library called `cisco_config_parse` to read the Cisco running-configuration and convert it to Aruba CX format.
 
 When that contract ended I needed to do a refresh at at customer that had HPE Procurve switches. I thought "how hard could it be to add Procurve?" Well, it turned out to be an adventure. And then I wanted to pull some Cisco SG small business switch configs, then some Cisco XE. Wow, every vendor has a different way of naming commands. Here is a table that I started so that I could expand the script to cover almost any customer. You can see the problem of added a new vendor to the mix. And any new vendor has to be supported by Netmiko and Google TextFSM. It's really a nightmare.
 
