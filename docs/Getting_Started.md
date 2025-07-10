@@ -1,18 +1,16 @@
 [Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
 
-<p align="left" width="15%">
-<img width="15%" src="https://github.com/rikosintie/Discovery/blob/main/images/pterodactyl.jpeg" alt="Pterodactyl">
-</p>
+# Getting Started
 
-# Getting Started<!-- omit from toc -->
+The scripts run on Mac/Linux/Windows! You do not need any prior python programming experience to use them. The instructions below will walk you through step by step how to install the Python Virtual Environment, the required libraries and activating the python virtual environment.
 
-- [1. Clone the Repository](#1-clone-the-repository)
-- [2. Create a Virtual Environment](#2-create-a-virtual-environment)
-- [3. Activate the Virtual Environment](#3-activate-the-virtual-environment)
-- [4. Install Dependencies](#4-install-dependencies)
-- [5. Deactivate the Virtual Environment](#5-deactivate-the-virtual-environment)
+- Clone the repository from GitHub
+- Create a Python Virtual Environment
+- Activate the Python Virtual Environment
+- Install dependencies
+- Deactivate the Python Virtual Environment
 
-Follow these steps to set up and run the project:
+Let's get started!
 
 ## 1. Clone the Repository
 
@@ -35,7 +33,7 @@ NOTE: Once you have the repository cloned it is linked to the repository on gith
 
 ## 2. Create a Virtual Environment
 
-If you are on a new install of Ubuntu and haven't done any python coding you will need to setup your environment first. We need to know what version of python you have installed.
+If you are on a new install of Ubuntu and haven't done any python coding you will need to setup your environment first. First, we need to know what version of python you have installed. From a terminal, run the following:
 
 ```bash
 which python3
@@ -44,14 +42,16 @@ ls -l /usr/bin/python3
 lrwxrwxrwx - root  7 Aug  2024  /usr/bin/python3 -> python3.12
 ```
 
-So, Python 3.12 is what my new Ubuntu VM has installed. Run the following, replace 3.12 with your Python version.
+So, Python 3.12 is what my new Ubuntu 24.04 VM has installed. Run the following, replace 3.12 with your Python version.
 
 ```bash
 sudo apt install python3.12-venv
 sudo apt install pip
 ```
 
-These are the virtual environment library and pip is the official package installer for Python.
+This will install the Python virtual environment library and pip, the  official package installer for Python.
+
+### Create the Python Virtual Enviroment
 
 `python -m venv venv --upgrade-deps --prompt="Discovery"`
 
@@ -59,10 +59,14 @@ This will create the standard "venv" directory but when activated will display "
 
 The `--upgrade-deps` argument tells python to upgrade pip to the latest version when creating the virtual environment. You need internet access for pip to be upgraded. If you don't have internet access, remove the `--upgrade-deps` argument.
 
-!!! Note Windows 11 24h2 issues
+----------------------------------------------------------------
+
+??? Note Windows 11 24h2 issues
  I developed the script on a Windows 11 22h1 laptop. On June 29, 2025 I cloned the repo to a Windows 11 24h2 laptop to demo for a friend and nothing worked! For some reason, Windows 11 24h2 installs Python 13.1 which is bleeding edge and several of the libraries I use haven't been updated to work with 13.1.
 
-I installed Python 3.10 from the Windows store using:
+----------------------------------------------------------------
+
+TO resolve the issue, I installed Python 3.10 from the Windows store using:
 
 ```text
 start menu, microsoft store, python 3.10
