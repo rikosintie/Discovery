@@ -8,28 +8,7 @@
 <img width="30%" src="https://github.com/rikosintie/Discovery/blob/main/images/pterodactyl.jpeg" alt="Pterodactyl">
 </p>
 
-# Pterodactyl Network  Discovery Project<!-- omit from toc -->
-
-- [Discovery Project Purpose](#discovery-project-purpose)
-  - [ASCIINEMA video](#asciinema-video)
-  - [Who is this project for](#who-is-this-project-for)
-- [The Process](#the-process)
-  - [show commands](#show-commands)
-  - [What are the JSON files used for](#what-are-the-json-files-used-for)
-  - [show running-config](#show-running-config)
-- ["Standard" Commands?](#standard-commands)
-- [Questions for Discovery and Deployment](#questions-for-discovery-and-deployment)
-- [License](#license)
-- [SBOM - a Software Bill of Materials](#sbom---a-software-bill-of-materials)
-- [Security Policy](#security-policy)
-
-There are additional sections to this documentation:
-
-- [Getting Started](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)<!-- omit from toc -->
-- [Usage](https://github.com/rikosintie/Discovery/blob/main/usage.md)
-- [The Helper Scripts](https://github.com/rikosintie/Discovery/blob/main/Helper-scripts.md)
-
-## Discovery Project Purpose
+# Network Discovery Project
 
 This project was created to make the discovery process for a network refresh easy, consistent and comprehensive. The discovery data can be used to create a change request, and cut over plan for the customer. The data is also valuable when troubleshooting any issues after a switch is replaced.
 
@@ -290,8 +269,3 @@ You can use this site, [Graphviz Visual Editor](http://magjac.com/graphviz-visua
 Click here to open the [Security Policy](https://github.com/rikosintie/Discovery/blob/main/security.md)
 
 ----------------------------------------------------------------
-
-[Home - ](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
-[Getting Started - ](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)<!-- omit from toc -->
-[Usage - ](https://github.com/rikosintie/Discovery/blob/main/usage.md)<!-- omit from toc -->
-[The Helper Scripts](https://github.com/rikosintie/Discovery/blob/main/Helper-scripts.md)<!-- omit from toc -->
