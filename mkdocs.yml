@@ -9,16 +9,21 @@ nav:
 
 theme:
   name: material
+  font:
+    text: Merriweather Sans
+    code: Red Hat Mono
   features:
-    - navigation.tabs
-    - navigation.sections
-    - toc.integrate
-    - navigation.top
-    - search.suggest
-    - search.highlight
     - content.tabs.link
     - content.code.copy
     - content.code.annotate # (1)!
+    - navigation.tabs
+    - navigation.sections
+    - navigation.footer
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - toc.integrate
+
   language: en
   favicon: img/favicon.ico
   palette:
@@ -62,13 +67,23 @@ extra:
       link: https://www.linkedin.com/in/mwhubbard/
 
 markdown_extensions:
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
   - admonition
   - pymdownx.details
   - pymdownx.arithmatex:
@@ -76,10 +91,7 @@ markdown_extensions:
   - footnotes
   - tables
   - pymdownx.mark
-  - attr_list
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
 
 copyright: |
   &copy; 2024 <a href="https://github.com/rikosintie" target="_blank" rel="noopener">Michael Hubbard</a>
