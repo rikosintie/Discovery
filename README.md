@@ -33,7 +33,7 @@ There are additional sections to this documentation:
 
 This project was created to make the discovery process for a network refresh easy, consistent and comprehensive. The discovery data can be used to create a change request, and cut over plan for the customer. The data is also valuable when troubleshooting any issues after a switch is replaced.
 
-The project currently supports the following devices:
+The project currently supports the following device types:
 
 - HPE Procurve
 - Cisco IOS
