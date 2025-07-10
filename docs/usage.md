@@ -1,45 +1,6 @@
-[Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
+# Usage
 
-<p align="left" width="15%">
-<img width="15%" src="https://github.com/rikosintie/Discovery/blob/main/images/pterodactyl.jpeg" alt="Pterodactyl">
-</p>
-
-# Usage<!-- omit from toc -->
-
-- [Before you can run the script](#before-you-can-run-the-script)
-- [Create the device inventory file](#create-the-device-inventory-file)
-  - [CSVLENS](#csvlens)
-    - [Bat](#bat)
-- [Password](#password)
-  - [Creating an Environment Variable](#creating-an-environment-variable)
-  - [Being prompted for the password](#being-prompted-for-the-password)
-- [Update the \<vendor\_id\>-config-file.txt file](#update-the-vendor_id-config-filetxt-file)
-  - [Pulling the mac address table](#pulling-the-mac-address-table)
-  - [Cisco IOS mac address table exclude](#cisco-ios-mac-address-table-exclude)
-  - [Cisco XE mac address table exclude](#cisco-xe-mac-address-table-exclude)
-- [Run the discovery script](#run-the-discovery-script)
-  - [What options are available](#what-options-are-available)
-  - [What do the arguments do](#what-do-the-arguments-do)
-    - [Collecting switch logs](#collecting-switch-logs)
-    - [Procurve logs](#procurve-logs)
-    - [Cisco Logs](#cisco-logs)
-    - [Setting the Password](#setting-the-password)
-    - [SSH Logging](#ssh-logging)
-    - [Timeout](#timeout)
-  - [Examples](#examples)
-- [Failure to connect to a switch](#failure-to-connect-to-a-switch)
-  - [Use nmap to verify switches are up](#use-nmap-to-verify-switches-are-up)
-  - [Use nmap to verify the credentials](#use-nmap-to-verify-the-credentials)
-- [Building a list of switches](#building-a-list-of-switches)
-  - [Review the bootstrap report](#review-the-bootstrap-report)
-  - [Opening the report in a Chromium based browser](#opening-the-report-in-a-chromium-based-browser)
-  - [Alternative ways to view the report in a Chromium browser](#alternative-ways-to-view-the-report-in-a-chromium-browser)
-    - [Use Chrome or edge browser with the allow --allow-file-access-from-files flag](#use-chrome-or-edge-browser-with-the-allow---allow-file-access-from-files-flag)
-    - [Use Firefox](#use-firefox)
-    - [Use a local http server](#use-a-local-http-server)
-    - [References](#references)
-- [Emoji codes used in the panel function](#emoji-codes-used-in-the-panel-function)
-- [Emoji Codes for Status Panels](#emoji-codes-for-status-panels)
+The scripts run on Mac/Linux/Windows! You do not have to have any python programming experience to use them. The instructions below will walk you step by step to install the Python Virtual Environment, required libraries and activating the python virtual environment.
 
 ----------------------------------------------------------------
 
@@ -93,9 +54,13 @@ In this example, there are hp_procurve, cisco_xe and cisco_ios devices. You can 
 
 Create one line for every switch that you want to process.
 
-You can use either a spreadsheet program or a text editor to create the inventory file but it must have a ".csv" file extension. If you use vscode, there is a plugin called Rainbow csv that allows you to work with csv files in vscode. It also allows you to use SQL syntax to query the file. Very nice if the file gets to be long.
+You can use either a spreadsheet program or a text editor to create the inventory file but it must have a ".csv" file extension. If you use vscode, there is a plugin called `Rainbow csv` that allows you to work with csv files in vscode. It also allows you to use SQL syntax to query the file. Very nice if the file gets to be long. Rainbow csv also has an `align` feature that makes it easier to read the columns. Here is a screenshot of a device file opened in vs code with Rainbow csv:
 
-![screenshot](img/rainbow_csv.png)
+----------------------------------------------------------------
+
+![screenshot](img/Rainbow_csv.png)
+
+----------------------------------------------------------------
 
 Save the file as `device-inventory-<site name>.csv` in the root of the project folder.
 
@@ -132,16 +97,22 @@ Version 0.13.0 release notes:
     Improve visibility of line numbers and borders
     Add aarch64 release targets (#55)
 
-The --color-columns is a nice addition. To view the device-inventory-home.csv file with colored columns use `csvlens --no-headers --color-columns device-inventory-home.csv`. You can create an alias in your .bashrc or .zshrc file
+The --color-columns is a nice addition. To view the device-inventory-home.csv file with colored columns use `csvlens --no-headers --color-columns device-inventory-home.csv`. You can create an alias in your ~/.bashrc or ~/.zshrc file:
 
 ```bash
 # csvlens with colored columns
 alias csvlens='()csvlens --no-headers --color-columns $1'
 ```
 
-The use `csvlens device-inventory-home.csv` to get colors and no header.
+The use `csvlens device-inventory-home.csv` to get colors and no header.f
 
-On Windows
+----------------------------------------------------------------
+
+![screenshot](img/csvlens-color.png)
+
+----------------------------------------------------------------
+
+#### Install CSVLENS on Windows
 `winget install --id YS-L.csvlens`
 
 It's a little more of a challenge to on Windows to create the alias. You will need to use PowerShell as you terminal and update the profile text file. First, open a powershell terminal. I recommed installing the Windows Terminal so that you can have cmd.exe, PowerShell, and WSL terminals in one place. Then enter `notepad $PROFILE` to open the PowerShell profile. Paste this into the bottom of the text file:
