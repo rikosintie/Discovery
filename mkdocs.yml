@@ -10,9 +10,6 @@ nav:
 
 theme:
   name: material
-  font:
-    text: Merriweather Sans
-    code: Red Hat Mono
   features:
     - content.tabs.link
     - content.code.copy
