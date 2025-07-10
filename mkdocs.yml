@@ -1,13 +1,11 @@
-site_name: Ubuntu for Network Engineers
+site_name: Discovery
 site_author: Michael Hubbard (rikosintie)
 nav:
   - home: README.md
-  - Intro: Introduction.md
-  - Usage: Ch01-Using-Ubuntu.md
-  - SSH: SSH.md
-  - Tools: CH02-Install-Tools.md
-  - KVM: KVM-Bridge.md
-  - Add to AD: Join-Ubuntu-24.04-desktop-to-AD.md
+  - Getting Started: Getting_Started.md
+  - Usage: usage.md
+  - Helper Scripts: Helper-scripts.md
+  - Security Policy: CH02-Install-Tools.md
 
 theme:
   name: material
@@ -19,7 +17,6 @@ theme:
     - search.suggest
     - search.highlight
     - content.tabs.link
-    - content.code.annotation
     - content.code.copy
     - content.code.annotate # (1)!
   language: en
