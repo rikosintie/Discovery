@@ -21,7 +21,8 @@ The Pterodactyl community has adopted this security disclosures and response pol
 Email the **Pterodactyl security group at mhubbard -@- programmingunlimited.com**
 
 Emails should contain:
-* description of the problem
-* precise and detailed steps (include screenshots) that created the problem
-* the affected version(s)
-* any possible mitigations, if known
+
+- description of the problem
+- precise and detailed steps (include screenshots) that created the problem
+- the affected version(s)
+- any possible mitigations, if known
