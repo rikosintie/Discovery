@@ -23,9 +23,9 @@ cd Discovery
 
 If you don't have git installed, you can download the zip file from the [repository](https://github.com/rikosintie/Discovery). Click on the green "Code" button and select "Download ZIP". Then unzip the file.
 
-I recommend installing Git. I make updates to the project and if you have git installed you can simply run `git pull` to pull down the latest version.
+I recommend installing Git. I make updates to the project and if you have git installed you can simply run `git pull` to pull down the latest version. Also, there are thousands of projects on GitHub.com and GitLab.com. Once you get comfortable with git you will have access to a lot of tools! You can install git from [here](https://git-scm.com/downloads)
 
-If you plan to modify the python scripts then this won't work because your versions will be different than the repo and git will not allow you to overwrite.
+If you plan to modify the python scripts then this won't work because your versions will be different than the repo and git will not allow you to overwrite. In that case, open a Pull Request on the repo and I'll see if I can accept your changes!
 
 <p align="center" width="60%">
 <img width="40%" src="https://github.com/rikosintie/Discovery/blob/main/images/GitHub-Code.png" alt="Github ZIP file">
@@ -35,9 +35,18 @@ NOTE: Once you have the repository cloned it is linked to the repository on gith
 
 ## 2. Create a Virtual Environment
 
-If you are on a new install of Ubuntu and haven't done any python coding you will need to run the following commands first:
+If you are on a new install of Ubuntu and haven't done any python coding you will need to setup your environment first. We need to know what version of python you have installed.
 
-```python
+```bash
+which python3
+/usr/bin/python3
+ls -l /usr/bin/python3
+lrwxrwxrwx - root  7 Aug  2024  /usr/bin/python3 -> python3.12
+```
+
+So, Python 3.12 is what my new Ubuntu VM has installed. Run the following, replace 3.12 with your Python version.
+
+```bash
 sudo apt install python3.12-venv
 sudo apt install pip
 ```
@@ -50,16 +59,27 @@ This will create the standard "venv" directory but when activated will display "
 
 The `--upgrade-deps` argument tells python to upgrade pip to the latest version when creating the virtual environment. You need internet access for pip to be upgraded. If you don't have internet access, remove the `--upgrade-deps` argument.
 
+!!! Note Windows 11 24h2 issues
+ I developed the script on a Windows 11 22h1 laptop. On June 29, 2025 I cloned the repo to a Windows 11 24h2 laptop to demo for a friend and nothing worked! For some reason, Windows 11 24h2 installs Python 13.1 which is bleeding edge and several of the libraries I use haven't been updated to work with 13.1.
+
+I installed Python 3.10 from the Windows store using:
+
+```text
+start menu, microsoft store, python 3.10
+Get
+```
+
+Then I used `python3.10 -m venv venv --upgrade-deps --prompt="Discovery"` to successfully install the script with Python 3.10.
+
+Verify that python is in the venv
+`where python`
+C:\Users\mhubbard.PU\Documents\04_tools\Discovery\venv\Scripts\python.exe
+
 ## 3. Activate the Virtual Environment
 
 On Windows
 
 `.\venv\Scripts\activate`
-
-!!! Note Windows 11 24h2 issues
- I developed the script on a Windows 11 22h1 laptop. On June 29, 2025 I cloned the repo to a Windows 11 24h2 laptop to demo for a friend and nothing worked! For some reason, Windows 11 24h2 installs Python 13.1 which is bleeding edge and several of the libraries I use haven't been updated to work with 13.1.
-
-I installed Python 3.10 from the Windows store then used `python3.10 -m venv venv --upgrade-deps --prompt="Discovery"` to successfully install the script with Python 3.10.
 
 ChatGPT recommended installing WSL2, Ubuntu 24.04 and running the script in Linux. I did that and everything worked correctly. The WSL terminal NATs to your laptop so you will be using a 172.16.122.x address but everything worked. Linux is so much better than Windows for development work in my opinion that I would go the WLS route.
 
