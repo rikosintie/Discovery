@@ -9,6 +9,7 @@
 - [Before you can run the script](#before-you-can-run-the-script)
 - [Create the device inventory file](#create-the-device-inventory-file)
   - [CSVLENS](#csvlens)
+    - [Bat](#bat)
 - [Password](#password)
   - [Creating an Environment Variable](#creating-an-environment-variable)
   - [Being prompted for the password](#being-prompted-for-the-password)
@@ -131,10 +132,51 @@ Version 0.13.0 release notes:
     Improve visibility of line numbers and borders
     Add aarch64 release targets (#55)
 
-The --color-columns is a nice addition. To view the device-inventory-home.csv file with colored columns use `csvlens --no-headers --color-columns device-inventory-home.csv`
+The --color-columns is a nice addition. To view the device-inventory-home.csv file with colored columns use `csvlens --no-headers --color-columns device-inventory-home.csv`. You can create an alias in your .bashrc or .zshrc file
+
+```bash
+# csvlens with colored columns
+alias csvlens='()csvlens --no-headers --color-columns $1'
+```
+
+The use `csvlens device-inventory-home.csv` to get colors and no header.
 
 On Windows
 `winget install --id YS-L.csvlens`
+
+It's a little more of a challenge to on Windows to create the alias. You will need to use PowerShell as you terminal and update the profile text file. First, open a powershell terminal. I recommed installing the Windows Terminal so that you can have cmd.exe, PowerShell, and WSL terminals in one place. Then enter `notepad $PROFILE` to open the PowerShell profile. Paste this into the bottom of the text file:
+
+```powershell
+# Simplified function to run csvlens with specified arguments using @args
+function Invoke-CsvLensWithArgs {
+    csvlens.exe --color-columns --no-headers @args
+}
+
+# Alias for the 'Invoke-CsvLensWithArgs' function (explicitly set to Global scope)
+Set-Alias -Name cl -Value Invoke-CsvLensWithArgs -Scope Global
+```
+
+Save and close the file. Then back in the PowerShell terminal enter:
+
+```powershell
+echo $PROFILE
+type $PROFILE
+. $PROFILE
+```
+
+This will:
+
+- display the path to the file
+- print the contents out
+- reload the profile so that the alias works
+
+#### Bat
+
+As long as we are installing cool utilities on Windows we should install `bat`. Bat is like `cat` on Linux but works on Windows also.
+
+`winget install sharkdp.bat`
+
+After that you can do `bat device-inventory-home.csv" and get a nice formatted, colored output. The advantage to `bat` over `csvlens` is that it works with any text file.
 
 ## Password
 
