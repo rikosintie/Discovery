@@ -21,13 +21,11 @@ cd Discovery
 
 If you don't have git installed, you can download the zip file from the [repository](https://github.com/rikosintie/Discovery). Click on the green "Code" button and select "Download ZIP". Then unzip the file.
 
-I recommend installing Git. I make updates to the project and if you have git installed you can simply run `git pull` to pull down the latest version. Also, there are thousands of projects on GitHub.com and GitLab.com. Once you get comfortable with git you will have access to a lot of tools! You can install git from [here](https://git-scm.com/downloads)
+I recommend installing Git. I make updates to the project and if you have git installed you can simply run `git pull` to pull down the latest version. Also, there are thousands of projects on GitHub.com and GitLab.com. Once you get comfortable with `git` you will have access to a lot of tools! You can install git from [here](https://git-scm.com/downloads)
 
 If you plan to modify the python scripts then this won't work because your versions will be different than the repo and git will not allow you to overwrite. In that case, open a Pull Request on the repo and I'll see if I can accept your changes!
 
-<p align="center" width="60%">
-<img width="40%" src="https://github.com/rikosintie/Discovery/blob/main/images/GitHub-Code.png" alt="Github ZIP file">
-</p>
+![screenshot](img/GitHub-Code.png)
 
 NOTE: Once you have the repository cloned it is linked to the repository on github.com. You should issue a `git pull` once in a while to pull down any changes that have been made to the repository.
 
@@ -66,7 +64,7 @@ The `--upgrade-deps` argument tells python to upgrade pip to the latest version 
 
 ----------------------------------------------------------------
 
-TO resolve the issue, I installed Python 3.10 from the Windows store using:
+To resolve the issue, I installed Python 3.10 from the Windows store using:
 
 ```text
 start menu, microsoft store, python 3.10
@@ -75,20 +73,26 @@ Get
 
 Then I used `python3.10 -m venv venv --upgrade-deps --prompt="Discovery"` to successfully install the script with Python 3.10.
 
-Verify that python is in the venv
-`where python`
-C:\Users\mhubbard.PU\Documents\04_tools\Discovery\venv\Scripts\python.exe
-
 ## 3. Activate the Virtual Environment
 
-On Windows
+### On Windows
 
 `.\venv\Scripts\activate`
 
-ChatGPT recommended installing WSL2, Ubuntu 24.04 and running the script in Linux. I did that and everything worked correctly. The WSL terminal NATs to your laptop so you will be using a 172.16.122.x address but everything worked. Linux is so much better than Windows for development work in my opinion that I would go the WLS route.
+Verify that python is in the venv:
 
-!!! Info Navigating in WSL
-If you have only used Windows, navigating the WSL terminal paths will be a learning experience. ChatGPT wrote this function that makes it easier to navigate:
+```text
+where python
+C:\Users\mhubbard.PU\Documents\04_tools\Discovery\venv\Scripts\python.exe
+```
+
+### On WSL
+
+ChatGPT recommended installing WSL2, Ubuntu 24.04 and running the script in Linux. I did that and everything worked correctly by following the `Linux` steps. The WSL terminal NATs to your laptop so you will be using a 172.16.122.x address but everything worked. Linux is so much better than Windows for development work in my opinion that I would go the WLS route.
+
+#### Navigating in WSL
+
+If you haven't used Linux before, navigating the WSL terminal paths will be a learning experience. ChatGPT wrote this function that makes it easier to navigate:
 
 From the WSL Ubuntu terminal, open the BASH configuration file using - `nano ~/bashrc`, go to the bottom of the file and paste in the two lines below.
 
@@ -109,15 +113,18 @@ The command will take you to the WSL `/mnt/c/Users/mhubbard/Documents/Discovery`
 
 I prefer to zsh as my shell with Oh My Zsh. If you continue to use WSL I recommend that you look at my guide to setting up the [Ubuntu terminal](https://rikosintie.github.io/Ubuntu4NetworkEngineers/terminal/). The guide is chalked full of Ubuntu goodness.
 
-On macOS/Linux
+#### On macOS/Linux
 
 `source venv/bin/activate`
 
-Here is what my terminal looks like after activating:
+#### Verify that Python is installed in the venv
 
-<p align="center" width="100%">
-<img width="100%" src="https://github.com/rikosintie/Discovery/blob/main/images/venv.png" alt="venv">
-</p>
+```bash
+which python3
+/home/mhubbard/04_tools/Discovery/venv/bin/python3
+```
+
+You should see a path pointing to the Discovery folder, then venv/bin/python3.
 
 ## 4. Install Dependencies
 
