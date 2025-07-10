@@ -61,8 +61,8 @@ The `--upgrade-deps` argument tells python to upgrade pip to the latest version 
 
 ----------------------------------------------------------------
 
-??? Note Windows 11 24h2 issues
- I developed the script on a Windows 11 22h1 laptop. On June 29, 2025 I cloned the repo to a Windows 11 24h2 laptop to demo for a friend and nothing worked! For some reason, Windows 11 24h2 installs Python 13.1 which is bleeding edge and several of the libraries I use haven't been updated to work with 13.1.
+??? Note "Windows 11 24h2 issues"
+    I developed the script on a Windows 11 22h1 laptop. On June 29, 2025 I cloned the repo to a Windows 11 24h2 laptop to demo for a friend and nothing worked! For some reason, Windows 11 24h2 installs Python 13.1 which is bleeding edge and several of the libraries I use haven't been updated to work with 13.1.
 
 ----------------------------------------------------------------
 
