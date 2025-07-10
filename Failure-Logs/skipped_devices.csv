@@ -1,0 +1,5 @@
+Hostname,IP Address,Reason
+Procurve-2524,192.168.10.96,SSHv1 only
+2960s,192.168.10.15,Authentication failed
+4500,192.168.10.55,No SSH banner received
+4500,192.168.10.56,No SSH banner received
