@@ -12,7 +12,7 @@ nav:
 
 theme:
   font:
-    text: Merriweather Sans
+    text: Roboto
     code: Red Hat Mono
   name: material
   features:
