@@ -19,7 +19,7 @@ git clone https://github.com/rikosintie/Discovery.git
 cd Discovery
 ```
 
-If you don't have git installed, you can download the zip file from the [repository](https://github.com/rikosintie/Discovery). Click on the green "Code" button and select "Download ZIP". Then unzip the file.
+If you don't have git installed, you can download the zip file from the [repository](https://github.com/rikosintie/Discovery). Click on the green "Code" button and select "Download ZIP". Then unzip the file and cd into the `Discovery` directory.
 
 ----------------------------------------------------------------
 
@@ -63,7 +63,7 @@ The `--upgrade-deps` argument tells python to upgrade pip to the latest version 
 
 ----------------------------------------------------------------
 
-??? Note "Windows 11 24h2 issues"
+!!! Note "Windows 11 24h2 issues"
     I developed the script on a Windows 11 22h1 laptop. On June 29, 2025 I cloned the repo to a Windows 11 24h2 laptop to demo for a friend and nothing worked! For some reason, Windows 11 24h2 installs Python 13.1 which is bleeding edge and several of the libraries I use haven't been updated to work with 13.1.
 
 ----------------------------------------------------------------
@@ -124,6 +124,7 @@ I prefer to zsh as my shell with Oh My Zsh. If you continue to use WSL I recomme
 #### Verify that Python is installed in the venv
 
 ```bash
+~/04_tools/Discovery
 which python3
 /home/mhubbard/04_tools/Discovery/venv/bin/python3
 ```
@@ -197,7 +198,3 @@ When you are finished, deactivate the environment
 You will need to activate the virtual environment each time you want to run the scripts.
 
 ----------------------------------------------------------------
-
-[Home - ](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
-[Usage - ](https://github.com/rikosintie/Discovery/blob/main/usage.md)<!-- omit from toc -->
-[The Helper Scripts](https://github.com/rikosintie/Discovery/blob/main/Helper-scripts.md)<!-- omit from toc -->
