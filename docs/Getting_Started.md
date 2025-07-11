@@ -21,11 +21,15 @@ cd Discovery
 
 If you don't have git installed, you can download the zip file from the [repository](https://github.com/rikosintie/Discovery). Click on the green "Code" button and select "Download ZIP". Then unzip the file.
 
+----------------------------------------------------------------
+
+![screenshot](img/GitHub-Code.png)
+
+----------------------------------------------------------------
+
 I recommend installing Git. I make updates to the project and if you have git installed you can simply run `git pull` to pull down the latest version. Also, there are thousands of projects on GitHub.com and GitLab.com. Once you get comfortable with `git` you will have access to a lot of tools! You can install git from [here](https://git-scm.com/downloads)
 
 If you plan to modify the python scripts then this won't work because your versions will be different than the repo and git will not allow you to overwrite. In that case, open a Pull Request on the repo and I'll see if I can accept your changes!
-
-![screenshot](img/GitHub-Code.png)
 
 NOTE: Once you have the repository cloned it is linked to the repository on github.com. You should issue a `git pull` once in a while to pull down any changes that have been made to the repository.
 
