@@ -12,7 +12,7 @@ The project currently supports the following devices:
 
 A plain text file is used to store the `show commands` that are sent to the switches. An example file for an HPE Procurve switch can be found [here](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt). You are free to customize the file to add or remove show commands as needed for your discovery. The script saves the data to various directories for easy access.
 
-### Who is this project for
+## Who is this project for
 
 Anyone that needs to pull data from HPE Procurve, Cisco IOS or Aruba CX switches. You do not need to write any python code. Text files are used to configure the information used by the script.
 
