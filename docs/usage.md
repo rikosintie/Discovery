@@ -1,12 +1,6 @@
 # Usage
 
-The scripts run on Mac/Linux/Windows! You do not need any prior python programming experience to use them. The instructions below will walk you through step by step how to install the Python Virtual Environment, the required libraries and activating the python virtual environment.
-
-----------------------------------------------------------------
-
-## Before you can run the script
-
-There are a few steps needed before starting the discovery process:
+There are a few steps that need to be completed before starting the discovery process:
 
 - Create a device inventory file
 - Make changes to the procurve-config-file.txt file (if needed)
@@ -50,11 +44,19 @@ Here is an example of a `device-inventory` file:
 192.168.10.15,cisco_ios,2960s,mhubbard,show mac addr int
 ```
 
-In this example, there are hp_procurve, cisco_xe and cisco_ios devices. You can have as many devices in the file as you need. I have had as many 200 in one file.
+In this example, there are hp_procurve, cisco_xe and cisco_ios devices. You can have as many devices in the file as you need. I have had as many 50 in one file.
 
-Create one line for every switch that you want to process.
+**Create one line for every switch that you want to process.**
 
-You can use either a spreadsheet program or a text editor to create the inventory file but it must have a ".csv" file extension. If you use vscode, there is a plugin called `Rainbow csv` that allows you to work with csv files in vscode. It also allows you to use SQL syntax to query the file. Very nice if the file gets to be long. Rainbow csv also has an `align` feature that makes it easier to read the columns. Here is a screenshot of a device file opened in vs code with Rainbow csv:
+You can use either a spreadsheet program or a text editor to create the inventory file but it must have a ".csv" file extension. If you use vscode, there is a plugin called [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) that allows you to work with csv files in vscode. It also allows you to use SQL syntax to query the file. Very nice if the file gets to be long. Below is a screenshot to the Rainbow CSV `RBQL Console`. RBQL is short for Rainbow Query Language.
+
+----------------------------------------------------------------
+
+![screenshot](img/Rainbow-parameters.png)
+
+----------------------------------------------------------------
+
+Rainbow CSV also has an `align` feature that makes it easier to read the columns. Here is a screenshot of a device file opened in vs code with Rainbow csv:
 
 ----------------------------------------------------------------
 
@@ -67,13 +69,15 @@ Save the file as `device-inventory-<site name>.csv` in the root of the project f
 For example,
 `device-inventory-HQ.csv`
 
-There is a sample file named device-inventory-area1.csv in the project. The site name is just a tag to allow you to have as many device-inventory files as you need.
+There is a sample file named device-inventory-area1.csv in the project. The site name is just a tag so that you can have as many device-inventory files as you need. At a large customer this might be the MDF and then a series of IDFs.
 
 ### CSVLENS
 
-There is also a great terminal tool called csvlens. It's an open source project on [GitHub](https://github.com/YS-L/csvlens). It's cross platform and runs on Mac/Linux/Windows.
+There is also a great terminal tool called `csvlens`. It's an open source project on [GitHub csvlens](https://github.com/YS-L/csvlens). It's cross platform and runs on Mac/Linux/Windows.
 
-On Mac/Linux, Homebrew is easiest way to install
+#### Install on Mac/Linux
+
+Homebrew is easiest way to install
 
 `brew install csvlens` and your are done.
 
@@ -91,20 +95,26 @@ The problem with installing csvlens this way is that you don't get automatic upd
 
 Version 0.13.0 release notes:
 
+```text
     Add --color-columns to display each column in a different color (#39)
     Add --prompt to show a custom prompt message in the status bar (#135)
     Expose freeze columns option in library usage (#124 by @jqnatividad)
     Improve visibility of line numbers and borders
     Add aarch64 release targets (#55)
+```
 
-The --color-columns is a nice addition. To view the device-inventory-home.csv file with colored columns use `csvlens --no-headers --color-columns device-inventory-home.csv`. You can create an alias in your ~/.bashrc or ~/.zshrc file:
+The --color-columns is a nice addition. To view the device-inventory-home.csv file with colored columns use `csvlens --no-headers --color-columns device-inventory-home.csv`.
+
+#### Create an alias for csvlens
+
+You can create an alias in your ~/.bashrc or ~/.zshrc file:
 
 ```bash
 # csvlens with colored columns
 alias csvlens='()csvlens --no-headers --color-columns $1'
 ```
 
-The use `csvlens device-inventory-home.csv` to get colors and no header.f
+Then use `csvlens device-inventory-home.csv` to get colors and no header.
 
 ----------------------------------------------------------------
 
@@ -113,9 +123,10 @@ The use `csvlens device-inventory-home.csv` to get colors and no header.f
 ----------------------------------------------------------------
 
 #### Install CSVLENS on Windows
+
 `winget install --id YS-L.csvlens`
 
-It's a little more of a challenge to on Windows to create the alias. You will need to use PowerShell as you terminal and update the profile text file. First, open a powershell terminal. I recommed installing the Windows Terminal so that you can have cmd.exe, PowerShell, and WSL terminals in one place. Then enter `notepad $PROFILE` to open the PowerShell profile. Paste this into the bottom of the text file:
+It's a little more of a challenge to on Windows to create the alias. You will need to use PowerShell as your terminal and update the profile text file. First, open a powershell terminal. I recommend installing the Windows Terminal so that you can have cmd.exe, PowerShell, and WSL terminals in one place. Then enter `notepad $PROFILE` to open the PowerShell profile. Paste this into the bottom of the text file:
 
 ```powershell
 # Simplified function to run csvlens with specified arguments using @args
@@ -141,17 +152,19 @@ This will:
 - print the contents out
 - reload the profile so that the alias works
 
-#### Bat
+#### Install Bat on Windows
 
 As long as we are installing cool utilities on Windows we should install `bat`. Bat is like `cat` on Linux but works on Windows also.
 
 `winget install sharkdp.bat`
 
-After that you can do `bat device-inventory-home.csv" and get a nice formatted, colored output. The advantage to `bat` over `csvlens` is that it works with any text file.
+After that you can do `bat device-inventory-home.csv` and get a nice formatted, colored output. The advantage to `bat` over `csvlens` is that it works with any text file.
+
+----------------------------------------------------------------
 
 ## Password
 
-This is always an area of concern. The script supports two methods:
+Handling credentials is always an area of concern. The script supports two methods:
 
 - Create an environment variable "cyberARK" and save the password to the variable.
 - include `-p 1` on the command line to be prompted for the password
@@ -160,9 +173,9 @@ Neither method is perfect but using either the environment variable or being pro
 
 ### Creating an Environment Variable
 
-On Windows you use control panel to create a "user environment variable". You can follow the instructions [Here](https://www.tenforums.com/tutorials/121664-set-new-user-system-environment-variables-windows.html). I think that you have to log out and log in again to make the environment variable active.
+On Windows you use control panel to create a "user environment variable". You can follow these instructions [user environment variables](https://www.tenforums.com/tutorials/121664-set-new-user-system-environment-variables-windows.html). You have to log out and log in again to make the environment variable active.
 
-On macOS/Linux
+Set environment variable on macOS/Linux
 
 From the terminal that you will run the script in `export cyberARK=<Password>`, for example `export cyberARK=Sup3rs3cr3t`. You have to do the export in the terminal that the script will be run in. If you are using vscode and debugging in vscode, that means the vscode terminal.
 
@@ -190,7 +203,7 @@ This file contains all of the `show commands` that will be sent to the switches.
 
 If you don't need them for a particular customer you can just open the file and delete any that you don't need or add any that you do need. The goal is to have all the data needed to satisfy the Change Request requirements.
 
-The script looks for `<vendor-id>-config-file.txt`. You have to use that exact format. Since the script supports the following vendor_ids:
+The script looks for `<vendor-id>-config-file.txt`. You have to use that exact format. Since the script supports the following Netmiko vendor_ids:
 
 - hp_procurve
 - cisco_ios
@@ -206,11 +219,12 @@ The config files will be named:
 - cisco_nx-config-file.txt
 - aruba_cx-config-file.txt
 
-**Note:** On older switches reading a lot of data can cause the CPU to go to 90+%! This will cause issues if OSPF or EIGRP is running and may cause the script to fail with a timeout. If this happens, remove some commands from the config-file and try again.
+!!! warning
+    On older switches, reading a lot of data can cause the CPU to go to 90% or higher! This will cause issues if OSPF or EIGRP is running and may cause the script to fail with a timeout. If this happens, remove some commands from the config-file and try again.
 
 ### Pulling the mac address table
 
-For pulling the mac-address table, which most customers want you to do before a cutover, I have an exclude statement using a regex in hpe-procurve-config-file.txt. In the Procurve sample file it doesn't pull mac addresses for ports on modules A and B. These were uplinks on the switch that I tested the script on.
+For pulling the mac-address table, which most customers want you to do before a cutover, I build an exclude statement using a regex to skip uplink ports. Here is an example for HPE Procurve that doesn't pull mac addresses for ports on modules A and B. These were uplinks on one of the switches that I developed the script on.
 
 `show show mac-address | ex "A|B"`
 
@@ -224,6 +238,8 @@ In the example, the `|` symbol means logical OR. This works because the switch d
   282986-40a427     H24                             1
 ```
 
+Notice that port C4 has a lowercase a and b in the address and port H24 has a lowercase a. Since the regex is case sensitive this works.
+
 On a non-modular switch you can't use:
 
 ```bash
@@ -236,16 +252,16 @@ sh mac-address | exclude 24|25
   00e04c-360348 5       10
 ```
 
-Because port 11 has 25 in the mac address
+Because port 11 has `25` in the mac address
 
 `b00cd1-372591 11      10`
 
 And was excluded from the output.
 
-Here is a regex that will match any mac-address and then port 24 so that you can exclude port 24. Note that there has to be 5 spaces between the } and the port number:
+Here is a regex that will match only port 24 so that you can exclude port 24.
 
 ```bash
-sh mac-address | ex "[a-fA-F-0-9]{13}     24"
+show mac-address | exclude " [0]*24[ ]+"
 
  Status and Counters - Port Address Table
 
@@ -255,10 +271,10 @@ sh mac-address | ex "[a-fA-F-0-9]{13}     24"
   00e04c-360348 5       10
 ```
 
-You can use the regex "|" OR symbol also:
+You can also use the regex "|" OR symbol:
 
 ```bash
-show mac-address | ex "[a-f-0-9]{13}     24|49"
+show mac-address | exclude " [0]*5|24[ ]+"
 
  Status and Counters - Port Address Table
 
@@ -266,6 +282,11 @@ show mac-address | ex "[a-f-0-9]{13}     24|49"
   ------------- ------- ----
   bc9fe4-c342ca 12      1
 ```
+
+Notice that if you wanted to exclude port 1, 2, 3, or 4,  you would add a space after the number. Otherwise the regex would match 11, 21, 31, 41.
+
+**Or just forget the regex!**
+The goal is to not include mac-addresses from uplinks and system MACs. But you would need to know what ports to exclude ahead of time. You can just dump the whole table. The only time I have seen this cause a problem was on a Cisco 6509 core that had six 48 port blades and several IDFs connected to the fiber card. There are a lot of mac in that table. The script worked but it took a while!
 
 I use this [site](https://regexr.com/) to test/develop regex expressions.
 
@@ -280,7 +301,8 @@ This excludes ports with:
 - Port Channels
 - interface 1/0/49
 
-The goal is to not include mac address from uplinks and system MACs. You will need to know what ports to exclude ahead of time. You can just dump the whole table. The only time I have seen this cause a problem is on a Cisco 6509 core that had six 48 port blades and several IDFs connect to the fiber card. There are a lot of mac in that table.
+**Or just forget the regex!**
+The goal is to not include mac-addresses from uplinks and system MACs. But you would need to know what ports to exclude ahead of time. You can just dump the whole table. The only time I have seen this cause a problem was on a Cisco 6509 core that had six 48 port blades and several IDFs connected to the fiber card. There are a lot of mac in that table. The script worked but it took a while!
 
 ### Cisco XE mac address table exclude
 
@@ -295,8 +317,13 @@ Again, the goal is to exclude uplinks.
 Now that the project is set up and the inventory file is created, you can run the script. Make sure you are in the Discovery directory and run:
 
 ```bash
-~/Discovery on  main
-$ source bin/activate
+source bin/activate
+```
+
+or
+
+```bash
+.\venv\Scripts\activate
 ```
 
 To activate the the virtual environment.
@@ -348,7 +375,7 @@ Or check STP:
 Procurve-2920-24-CR-data.txt:I 01/10/24 19:01:57 03816 stp: VLAN 850 - Root changed from 32768: (this device)
 ```
 
-I can't go into everything you should look for but with some practice you will look like a genius!
+I can't go into everything you should look for, but with some practice you will look like a genius!
 
 #### Procurve logs
 
@@ -372,11 +399,11 @@ Cisco doesn't support all the options that the procurve does. If you want to col
 
 #### Setting the Password
 
-If you want to be prompted for a password add `-p 1`. If you don't use -p 1 you must set an environment variable cyberARK with the password. That is covered above in the "[password](#password)" section.
+If you want to be prompted for a password add `-p 1`. If you don't use -p 1 you must set an environment variable `cyberARK` with the password. That is covered above in the "[password](#password)" section.
 
 #### SSH Logging
 
-If you want to enable ssh logging add `-l 1`. You would do that to troubleshoot if you are getting "time out" errors when the script tries to connect to a switch.
+If you want to enable ssh logging add `-l 1`. You would do that to troubleshoot if you are getting "time out" errors when the script tries to connect to a switch. It does not log anything from the switch.
 
 #### Timeout
 
@@ -400,7 +427,8 @@ To be prompted for a password:
 
 `python3 config-pull.py -s HQ -p 1`
 
-**Note:** you may have to use python instead of python3 depending on your OS.
+!!! Note
+    you may have to use python instead of python3 depending on your OS.
 
 I recommend running the script on one switch the first time instead of a long list of switches. That will let you see the content of the show commands and make changes if needed before spending time running it on a long list of switches.
 
@@ -408,6 +436,7 @@ The files will be saved in the following directories:
 
 - CR-data - files that are ready for viewing
 - Interface - files that need further processing
+- Failure-Logs
 - port-maps - files for creating port maps
 - Running - The "show running structured" output for each switch
 
@@ -535,16 +564,21 @@ That will return all the IP addresses.
 
 At the bottom of vs code, click `query`.
 
-<p align="center" width="100%">
-<img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/Rainbow-query.png" alt="Rainbow SQL query">
+----------------------------------------------------------------
+
+![screenshot](img/Rainbow-query.png)
+
+----------------------------------------------------------------
 
 When the query page opens, enter `select a1` and click `run`.
 
-<p align="center" width="100%">
-<img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/Rainbow-parameters.png" alt="Select Query">
-</p>
+--------------------------------------------------------------
 
-The query will return a list of IP addresses, 1 per line.
+![screenshot](img/Rainbow-parameters.png)
+
+--------------------------------------------------------------
+
+The query will return a list of IP addresses, 1 per line. Select all lines and paste them into ip.txt.
 
 ```bash
 192.168.10.50
@@ -553,7 +587,7 @@ The query will return a list of IP addresses, 1 per line.
 192.168.10.230
 ```
 
-And run nmap with these arguments:
+Run nmap with these arguments:
 
 `nmap -v -p 22 -iL ip.txt --reason -oN ip-dead.txt`
 
@@ -615,7 +649,8 @@ Run this nmap command to find devices with ssh **and** snmp open. Most devices t
 
 `sudo nmap -sU -sS -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl  <target ips>`
 
-**Note:** the stylesheet is from [honze-net-nmap-bootstrap-xsl](https://github.com/honze-net/nmap-bootstrap-xsl). This is a repository for creating nmap reports. Well worth a look.
+!!! Note
+    The stylesheet is from [honze-net-nmap-bootstrap-xsl](https://github.com/honze-net/nmap-bootstrap-xsl). This is a repository for creating nmap reports. Well worth a look.
 
 The `-oA procurve-scan` argument will create the following files:
 
@@ -675,7 +710,7 @@ Host script results:
 Nmap done: 1 IP address (1 host up) scanned in 15.03 seconds
 ```
 
-The "SSH Banner: SSH-2.0-Mocana SSH 6.3" is the ssh server that is running on the procurve switch. Over the years HPE has used different ssh servers but this banner will help identify procurve switches.
+The "SSH Banner: SSH-2.0-Mocana SSH 6.3" is the ssh server that is running on the procurve switch. Over the years HPE has used different ssh servers but this banner will help identify Procurve switches.
 
 Let's look at the contents of the procurve-scan.gnmap file:
 
@@ -699,9 +734,7 @@ The `grep` found just the "ssh, snmp" string and `awk` printed the data in colum
 
 The "stylesheet" argument creates an xsl file to format the XML file that the script creates. You will be able to right-click on the xml file and open it in Firefox to see a nicely formatted report. This isn't required, it's just nice extra and you can give it the customer as documentation. Here is a simple example from my home lab:
 
-<p align="center" width="100%">
-<img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/nmap-bootstarp-stylesheet.png" alt="nmap-report">
-</p>
+![screenshot](img/nmap-bootstrap-stylesheet.png)
 
 ### Opening the report in a Chromium based browser
 
@@ -739,7 +772,7 @@ cd /opt/google/chrome
 $ ./chrome --allow-file-access-from-files
 ```
 
-Now you can open procurve.html in chrome and view the report. If you use this feature often, you can create an alias in the `~/.zshrc` file
+Now you can open procurve.html in Chrome and view the report. If you use this feature often, you can create an alias in the `~/.zshrc` file
 
 ```bash
 # start chrome and allow local file read
@@ -748,7 +781,7 @@ alias chrome-local='cd /opt/google/chrome;./chrome --allow-file-access-from-file
 
 **On Windows**
 
-You can copy the chrome shortcut on the desktop and add the flag to the "Target" section:
+You can copy this Chrome shortcut to the desktop and add the flag to the "Target" section:
 
 `"C:\Program Files\Google\Chrome\Application\chrome.exe" --allow-file-access-from-files`
 
@@ -766,10 +799,9 @@ Change the setting to "false"
 
 Now you can open procurve.html in Firefox and view the report. Don't forget to set security.fileuri.strict_origin_policy back to false when you are done.
 
-
 #### Use a local http server
 
-You can use the xsl file that comes from cloning the repository. The drawback to this is that if you want to share the report, you have to include the xsl file.
+You can use the xsl file, nmap-bootstrap.xsl, that comes from cloning the repository. The drawback to this is that if you want to share the report, you have to include the xsl file.
 
 Change the nmap command to:
 
@@ -821,9 +853,4 @@ If you want to expand on the script or change the emojis:
 | Power Off / Shutdown | ⏻      | `\u23FB`                  | Power symbol                  |
 | Build / Compile      | 🛠️     | `\u1F6E0\uFE0F`           | Wrench and hammer             |
 
-
 ----------------------------------------------------------------
-
-[Home - ](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
-[Getting Started - ](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)
-[The Helper Scripts](https://github.com/rikosintie/Discovery/blob/main/Helper-scripts.md)<!-- omit from toc -->
