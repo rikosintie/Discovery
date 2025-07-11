@@ -1,7 +1,8 @@
 site_name: Discovery
 site_author: Michael Hubbard (rikosintie)
 nav:
-  - home: intro.md
+  - Home: README.md
+  - intro: intro.md
   - Getting Started: Getting_Started.md
   - Usage: usage.md
   - Helper Scripts: Helper-scripts.md
@@ -14,7 +15,9 @@ theme:
     - content.code.copy
     - content.code.annotate # (1)!
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
+    - navigation.expand
     - navigation.footer
     - navigation.top
     - search.suggest
