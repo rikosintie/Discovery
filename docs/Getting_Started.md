@@ -1,4 +1,8 @@
-[Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
+---
+title: Discovery - Getting Started
+description: Installing the Discovery files for Mac/Linux/Windows
+icon: material/mdiKeyVariant
+---
 
 # Getting Started
 
@@ -35,7 +39,7 @@ NOTE: Once you have the repository cloned it is linked to the repository on gith
 
 ## 2. Create a Virtual Environment
 
-If you are on a new install of Ubuntu and haven't done any python coding you will need to setup your environment first. First, we need to know what version of python you have installed. From a terminal, run the following:
+If you are on a new install of Ubuntu and haven't done any python coding you will need to setup your environment. First, we need to know what version of python you have installed. From a terminal, run the following:
 
 ```bash
 which python3
@@ -53,7 +57,7 @@ sudo apt install pip
 
 This will install the Python virtual environment library and pip, the  official package installer for Python.
 
-### Create the Python Virtual Enviroment
+### Create the Python Virtual Environment
 
 `python -m venv venv --upgrade-deps --prompt="Discovery"`
 
@@ -92,7 +96,7 @@ C:\Users\mhubbard.PU\Documents\04_tools\Discovery\venv\Scripts\python.exe
 
 ### On WSL
 
-ChatGPT recommended installing WSL2, Ubuntu 24.04 and running the script in Linux. I did that and everything worked correctly by following the `Linux` steps. The WSL terminal NATs to your laptop so you will be using a 172.16.122.x address but everything worked. Linux is so much better than Windows for development work in my opinion that I would go the WLS route.
+When the Windows install initially failed, I asked ChatGPT what to do and it recommended installing WSL2, Ubuntu 24.04 and running the script in Linux. I did that and everything worked correctly by following the `Linux` steps below. The WSL terminal NATs to your laptop so you will be using a 172.16.122.x address but everything worked. For NetDevOps, Linux is more popular than Windows, I would go the WLS route.
 
 #### Navigating in WSL
 
@@ -117,7 +121,7 @@ The command will take you to the WSL `/mnt/c/Users/mhubbard/Documents/Discovery`
 
 I prefer to zsh as my shell with Oh My Zsh. If you continue to use WSL I recommend that you look at my guide to setting up the [Ubuntu terminal](https://rikosintie.github.io/Ubuntu4NetworkEngineers/terminal/). The guide is chalked full of Ubuntu goodness.
 
-#### On macOS/Linux
+### On macOS/Linux
 
 `source venv/bin/activate`
 
