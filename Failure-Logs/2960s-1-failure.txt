@@ -1,3 +1,0 @@
-[2025-07-05 22:42:14] Could not connect to 2960s-1 at 192.168.10.16. 
-The connection timed out. 
-Remove 2960s-1 from the device inventory file
