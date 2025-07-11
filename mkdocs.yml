@@ -1,5 +1,7 @@
 site_name: Discovery
-site_author: Michael Hubbard (rikosintie)
+site_author: Michael Hubbard (@rikosintie)
+site_description: A site dedicated to the Network Discovery project.
+site_url: https://discovery.rikosintie.com
 nav:
   - Home: README.md
   - Intro: intro.md
@@ -9,6 +11,9 @@ nav:
   - Security Policy: SECURITY.md
 
 theme:
+  font:
+    text: Merriweather Sans
+    code: Red Hat Mono
   name: material
   features:
     - content.tabs.link
