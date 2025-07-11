@@ -6,7 +6,7 @@
 
 # Welcome to the Network Discovery Repository
 
-The full documentation including installation instructions can be found on my [GitHub Pages Repository](https://rikosintie.github.io/Discovery/)
+The full documentation including installation instructions can be found on my [GitHub Pages Repository](https://rikosintie.github.io/Discovery/intro)
 
 ## ASCIINEMA video
 
