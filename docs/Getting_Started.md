@@ -1,7 +1,7 @@
 ---
 title: Discovery - Getting Started
 description: Installing the Discovery files for Mac/Linux/Windows
-icon: material/mdiKeyVariant
+icon: material/KeyVariant
 ---
 
 # Getting Started
