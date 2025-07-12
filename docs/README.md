@@ -6,6 +6,10 @@
 
 # Welcome to the Network Discovery Repository
 
+Let's dig for some network gold!
+
+![screenshot](img/minerfortyniner.jpeg)
+
 The full documentation including installation instructions can be found on my [GitHub Pages Repository](https://rikosintie.github.io/Discovery/intro)
 
 ## ASCIINEMA video
