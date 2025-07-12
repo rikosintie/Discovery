@@ -30,7 +30,7 @@ theme:
     - toc.integrate
 
   language: en
-  favicon: img/favicon-32x32.png
+  favicon: img/favicon-miner-32x32.png
   palette:
     - scheme: default
       toggle:
