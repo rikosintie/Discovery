@@ -1,4 +1,9 @@
-# Usage
+---
+title: Discovery - Usage
+description: Using the Discovery scripts on Mac/Linux/Windows
+---
+
+# Using the Script
 
 There are a few steps that need to be completed before starting the discovery process:
 
@@ -126,7 +131,7 @@ Then use `csvlens device-inventory-home.csv` to get colors and no header.
 
 `winget install --id YS-L.csvlens`
 
-It's a little more of a challenge to on Windows to create the alias. You will need to use PowerShell as your terminal and update the profile text file. First, open a powershell terminal. I recommend installing the Windows Terminal so that you can have cmd.exe, PowerShell, and WSL terminals in one place. Then enter `notepad $PROFILE` to open the PowerShell profile. Paste this into the bottom of the text file:
+It's a little more of a challenge to on Windows to create the alias. You will need to use PowerShell as your terminal and update the profile text file. First, open a powershell terminal. I recommend installing the Windows Terminal so that you can have cmd.exe, PowerShell, and WSL terminals in one place. Then enter `notepad $PROFILE` to open the PowerShell profile for editing. Paste this into the bottom of the text file:
 
 ```powershell
 # Simplified function to run csvlens with specified arguments using @args
@@ -148,9 +153,14 @@ type $PROFILE
 
 This will:
 
-- display the path to the file
-- print the contents out
+- display the path to the `$PROFILE` file
+- print the contents of the `$PROFILE` file
 - reload the profile so that the alias works
+
+One big advantage to using Windows terminal with PowerShell is that it stores the history of your commands in a file. So you can close the terminal but not lose your history. PowerShell also comes with builtin aliases for several Linux commands like:
+
+- ls
+- cat
 
 #### Install Bat on Windows
 
