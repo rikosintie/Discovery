@@ -1,34 +1,17 @@
-# The Helper Scripts<!-- omit from toc -->
+# The Helper Scripts
 
-- [What files are created](#what-files-are-created)
-- [Creating Port maps](#creating-port-maps)
-  - [Running the port map scripts](#running-the-port-map-scripts)
-    - [Running the procurve-arp.py script](#running-the-procurve-arppy-script)
-    - [Running the procurve-macaddr.py script](#running-the-procurve-macaddrpy-script)
-- [Core/IDF deployment](#coreidf-deployment)
-- [CDP Neighbor Reports](#cdp-neighbor-reports)
-  - [The cdp scripts](#the-cdp-scripts)
-  - [The cdp neighbor text report](#the-cdp-neighbor-text-report)
-- [LLDP neighbor Report](#lldp-neighbor-report)
-  - [Installing LLDP on Ubuntu](#installing-lldp-on-ubuntu)
-  - [Installing LLDP on macOS](#installing-lldp-on-macos)
-  - [Enabling LLDP on the switch](#enabling-lldp-on-the-switch)
-  - [Running the script](#running-the-script)
-- [The System Report](#the-system-report)
-- [The Interface scripts](#the-interface-scripts)
-  - [The 10Mbps interfaces report](#the-10mbps-interfaces-report)
-  - [The ports in use report](#the-ports-in-use-report)
-- [Convert MAC addresses](#convert-mac-addresses)
+The helper scripts are a collection of python scripts that read data that the config_pull.py created and turn that raw data into useful reports.
 
 ## What files are created
 
-After the `procurve-Config-pull.py` script finishes, you can use the ***hostname-CR-data.txt*** files to get started planning. The script also creates JSON files for:
+After the `config_pull.py` script finishes, you can use the ***hostname-CR-data.txt*** files to get started planning. The script also creates JSON files for:
 
 - Port Maps
 - cdp neighbors
 - lldp neighbors
 - system data
 - interface statistics
+- interface mac addresses
 
 In the data folder, below the port-maps folder, two text files are created:
 
@@ -51,7 +34,7 @@ This section will discuss the scripts that convert the JSON into reports.
 
 In addition, there is a script to convert mac addresses between different formats
 
-- Convert MAC address formats
+- `convert-mac.py`
 
 ----------------------------------------------------------------
 
@@ -72,7 +55,7 @@ Here is an example:
 }
 ```
 
-The Mac Address is used for the key, the IP Address for the value. It saves the data to hostname-Mac2IP.json in the data folder.
+The Mac Address is used for the key since MACs are unique, the IP Address is used for the value. It saves the data to hostname-Mac2IP.json in the data folder.
 
 - procurve-macaddr.py - Matches the Mac address in the hostname-Mac2IP.json file to the mac address in the hostname-mac-address.txt file.
 
