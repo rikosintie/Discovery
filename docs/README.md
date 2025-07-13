@@ -8,7 +8,7 @@
 
 Let's dig for some network gold!
 
-![screenshot](img/minerfortyniner.jpeg)
+![screenshot](img/network-engineer-gold3-200.jpeg)
 
 The full documentation including installation instructions can be found on my [GitHub Pages Repository](https://rikosintie.github.io/Discovery/intro)
 
