@@ -1,9 +1,3 @@
-[Home](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
-
-<p align="left" width="15%">
-<img width="15%" src="https://github.com/rikosintie/Discovery/blob/main/images/pterodactyl.jpeg" alt="Pterodactyl">
-</p>
-
 # The Helper Scripts<!-- omit from toc -->
 
 - [What files are created](#what-files-are-created)
@@ -516,7 +510,3 @@ python3 convert-mac.py --mac 64:e8:81:43:cc:4e
 ```
 
 ----------------------------------------------------------------
-
-[Home - ](https://github.com/rikosintie/Discovery/)<!-- omit from toc -->
-[Getting Started - ](https://github.com/rikosintie/Discovery/blob/main/Getting_Started.md)<!-- omit from toc -->
-[Usage](https://github.com/rikosintie/Discovery/blob/main/usage.md)<!-- omit from toc -->
