@@ -1,6 +1,8 @@
 ---
 title: Discovery - Getting Started
-description: Installing the Discovery files for Mac/Linux/Windows
+summary: Installing the Discovery files for Mac/Linux/Windows
+authors:
+    - Michael Hubbard
 icon: :material-key-variant:
 ---
 
@@ -15,6 +17,8 @@ The scripts run on Mac/Linux/Windows! You do not need any prior python programmi
 - Deactivate the Python Virtual Environment
 
 Let's get started!
+
+----------------------------------------------------------------
 
 ## 1. Clone the Repository
 
@@ -35,11 +39,12 @@ I recommend installing Git. I make updates to the project and if you have git in
 
 If you plan to modify the python scripts then this won't work because your versions will be different than the repo and git will not allow you to overwrite. In that case, open a Pull Request on the repo and I'll see if I can accept your changes!
 
-NOTE: Once you have the repository cloned it is linked to the repository on github.com. You should issue a `git pull` once in a while to pull down any changes that have been made to the repository.
+!!! Info
+    Once you have the repository cloned it is linked to the repository on github.com. You should issue a `git pull` from the terminal once in a while to pull down any changes that have been made to the repository.
 
-## 2. Create a Virtual Environment
+## 2. Using a Python Virtual Environment
 
-If you are on a new install of Ubuntu and haven't done any python coding you will need to setup your environment. First, we need to know what version of python you have installed. From a terminal, run the following:
+I recommend running the scripts in a Python Virtual environment, especially if you on Mac/Linux. If you are on a brand new install of Ubuntu and haven't done any python coding you will need to setup your environment before creating the virtual environment. We need to know what version of python you have installed. From a terminal, run the following:
 
 ```bash
 which python3
@@ -56,6 +61,10 @@ sudo apt install pip
 ```
 
 This will install the Python virtual environment library and pip, the  official package installer for Python.
+
+I think Windows installs both of those packages when you install python from the Microsoft store.
+
+----------------------------------------------------------------
 
 ### Create the Python Virtual Environment
 
@@ -80,6 +89,8 @@ Get
 ```
 
 Then I used `python3.10 -m venv venv --upgrade-deps --prompt="Discovery"` to successfully install the script with Python 3.10.
+
+----------------------------------------------------------------
 
 ## 3. Activate the Virtual Environment
 
