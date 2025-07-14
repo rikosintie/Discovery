@@ -1,11 +1,3 @@
----
-title: Discovery - Getting Started
-summary: Installing the Discovery files for Mac/Linux/Windows
-authors:
-    - Michael Hubbard
-icon: :material-key-variant:
----
-
 # Getting Started
 
 The scripts run on Mac/Linux/Windows! You do not need any prior python programming experience to use them. The instructions below will walk you through step by step how to install the Python Virtual Environment, the required libraries and activating the python virtual environment.
@@ -21,6 +13,10 @@ Let's get started!
 ----------------------------------------------------------------
 
 ## 1. Clone the Repository
+
+All of the installation steps are done in the Mac/Linux terminal or cmd.exe/PowerShell on Windows. In my recent testing, I learned a lot about PowerShell on Windows 11.
+
+I created a page on what my setup looks like. I highly recommend installing the Windows Terminal and setting up PowerShell if you are a Windows user. Here is a link to the page - [Using PowerShell with the Network Discovery scripts](Using_PowerShell.md)
 
 ```bash
 git clone https://github.com/rikosintie/Discovery.git
