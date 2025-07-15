@@ -7,10 +7,12 @@ Here are the steps I took to get Windows terminal installed and the latest versi
 The first step is installing the Windows Terminal. While not strictly required, you could use the cmd.exe shell, I find the Windows Terminal a much better solution. It allows:
 
 Multiple applications in one application
-    - PowerShell
-    - WSL
-    - Git Bash
-    - CMD.exe
+
+- PowerShell
+- WSL
+- Git Bash
+- CMD.exe
+- Azure Cloud Shell
 
 Here is a screenshot of my terminal:
 
@@ -19,13 +21,11 @@ Here is a screenshot of my terminal:
 
 ----------------------------------------------------------------
 
-You can see that I have organized it so that Ubuntu 24.04 is at the top, then PowerShell 7, then Git Bash, then Command Prompt. The PowerShell without a number is the builtin version 5.1.
-
-Since I use WSL and PowerShell 7.5 the most, this makes sense for me. After we install PowerShell 7.5, I'll show you how to modify the order.
+You can see that I have organized it so that Ubuntu 24.04 is at the top, then PowerShell 7, then Git Bash, then Command Prompt. The PowerShell without a number is the builtin version 5.1. Since I use WSL and PowerShell 7.5 the most, this makes sense for me. After we install PowerShell 7.5, I'll show you how to modify the order.
 
 ### Install the latest version of PowerShell core
 
-Windows 11 ships with PowerShell 5.1 installed. I don't understand all the reasons behind it, but PowerShell 7.5 is the latest version and it installs BESIDE PowerShell 5.1. That is really confusing and both versions store there `$PROFILE` in separate locations!
+Windows 11 ships with PowerShell 5.1 installed. I don't understand all the reasons behind it, but PowerShell 7.5 is the latest version and it installs *BESIDE* PowerShell 5.1. That is really confusing and both versions store there `$PROFILE` in separate locations!
 
 Open cmd.exe and paste the following code:
 
@@ -39,9 +39,9 @@ In that case, run the following code to verify that PowerShell is up to date:
 
 #### Check the Powershell version
 
-Once you are in the PowerShell terminal you can check the version with `$PSVersionTable`. Here is what the output looked like on my fresh install:
+Search PowerShell in Window search bar and open it. Once you are in the PowerShell terminal you can check the version with `$PSVersionTable`. Here is what the output looked like on my fresh install:
 
-```PowerShell
+```text
 (Discovery) PS C:\Users\mhubbard.PU\Documents\04_tools\Discovery> $PSVersionTable
 
 Name                           Value
@@ -68,7 +68,7 @@ For some reason installing PowerShell 7 with winget didn't create the profile. W
 ```text
 ```
 
-You see the path to the file by running:
+You can see the path to the file by running:
 
 ```PowerShell
  echo $profile
@@ -77,7 +77,7 @@ C:\Users\mhubbard.PU\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
 
 We want to modify the profile. Open it using `notepad $PROFILE`. Then paste in the following:
 
-```powershell linenums="1" hl_lines="1-5 7 10 14"
+```powershell linenums="1" hl_lines="1-5 7 12 15"
 Import-Module PSReadLine
 Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -HistorySearchCursorMovesToEnd # Optional: moves cursor to end of matched command
@@ -93,7 +93,7 @@ Set-Alias -Name cl -Value Invoke-CsvLensWithArgs
 # --- End custom aliases for Discovery tool ---
 
  Invoke-Expression (& { (zoxide init powershell | Out-String) })
- ```
+```
 
 The first line imports the `PSReadLine` module. This tells PowerShell to read the history file. I did a bunch of Gemini searching and PowerShell still isn't displaying history from the previous session. In other words, when I close PowerShell I lose the history.
 
