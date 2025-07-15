@@ -159,8 +159,19 @@ This will:
 
 One big advantage to using Windows terminal with PowerShell is that it stores the history of your commands in a file. So you can close the terminal but not lose your history. PowerShell also comes with builtin aliases for several Linux commands like:
 
-- ls
-- cat
+- cat - The Linux `cat` command to concatenate or display text files.
+- clear - Clear the screen.
+- cp - Linux copy command to copy files.
+- echo - Echo text to the screen (stdout in Linux terms)
+- ls - Linux `List Files` command
+- mkdir - Linux Make Directory command
+- mv - Linux move files command
+- popd - Linux command to pop to the top level directory off the stack
+- pushd - Linux command to push the current directory to the top of the stack
+- pwd - Linux `Print Working Directory` command. Outputs the directory you are in.
+- rm - Linux `Remove Files` command
+
+If you are creating bash scripts `popd` adn `pushd` are useful. Having these aliases built in is great if you work on Mac, Linux and Windows since Mac/Linux share the same commands.
 
 #### Install Bat on Windows
 
