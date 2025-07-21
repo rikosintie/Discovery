@@ -13,7 +13,7 @@ nav:
 
 theme:
   name: material
-  logo: img/favicon-alien-32x32.png
+  logo: img/favicon-16x16.png
   font:
     text: Roboto
     code: Red Hat Mono
