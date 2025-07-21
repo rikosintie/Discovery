@@ -11,10 +11,11 @@ nav:
   - Security Policy: SECURITY.md
 
 theme:
+  name: material
+  logo: img/favicon-alien-32x32.png
   font:
     text: Roboto
     code: Red Hat Mono
-  name: material
   features:
     - content.tabs.link
     - content.code.copy
