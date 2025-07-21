@@ -8,6 +8,7 @@ nav:
   - Getting Started: Getting_Started.md
   - Usage: usage.md
   - Helper Scripts: Helper-scripts.md
+  - PowerShell: Using_PowerShell.md
   - Security Policy: SECURITY.md
 
 theme:
