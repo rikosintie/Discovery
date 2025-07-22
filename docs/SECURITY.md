@@ -24,7 +24,7 @@ The Network Discovery project community has adopted this security disclosures an
 
 ### Please use the below process to report a vulnerability to the project
 
-Email the **Networkd Discovery Security Team at michael.hubbard999 -@- gmail.com**
+Email the **Network Discovery Security Team** at `michael.hubbard999 -@- gmail.com`
 
 The email should contain:
 
