@@ -6,14 +6,14 @@
 
 ----------------------------------------------------------------
 
-The Network Discovery project community (Hubbard) has adopted this security disclosures and response policy to ensure we responsibly handle critical issues.
+The Network Discovery project community has adopted this security disclosures and response policy to ensure we responsibly handle critical issues.
 
 ## Reporting a Vulnerability
 
-### When you should?
+### When should you report an issue?
 
 - You think you discovered a potential security vulnerability in one of the scripts.
-- You are unsure how a vulnerability affects project.
+- You are unsure how a vulnerability affects the project.
 - You think you discovered a vulnerability in another project that a script depends on. For projects with their own vulnerability reporting and disclosure process, please report it directly there.
 
 ### When you should not?
@@ -24,7 +24,7 @@ The Network Discovery project community (Hubbard) has adopted this security disc
 
 ### Please use the below process to report a vulnerability to the project
 
-Email the **Networkd Discovery security group at michael.hubbard999 -@- gmail.com**
+Email the **Networkd Discovery Security Team at michael.hubbard999 -@- gmail.com**
 
 The email should contain:
 
