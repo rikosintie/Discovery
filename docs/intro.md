@@ -1,5 +1,11 @@
 # Network Discovery Project
 
+----------------------------------------------------------------
+
+![screenshot](img/intro4.resized.jpeg)
+
+----------------------------------------------------------------
+
 This project was created to make the discovery process for a network refresh easy, consistent and comprehensive. The discovery data can be used to create a change request, and cut over plan for the customer. The data is also valuable when troubleshooting any issues after a switch is replaced.
 
 The project currently supports the following devices:
@@ -14,7 +20,7 @@ A plain text file is used to store the `show commands` that are sent to the swit
 
 ## Who is this project for
 
-Anyone that needs to pull data from HPE Procurve, Cisco IOS or Aruba CX switches. You do not need to write any python code. Text files are used to configure the information used by the script.
+Anyone that needs to pull data from HPE Procurve, Cisco IOS or Aruba CX switches. You do not need to write any python code. Text files are used to collect the information used by the script. You do not need to be a Python programmer to use this project.
 
 ----------------------------------------------------------------
 
@@ -22,10 +28,10 @@ Anyone that needs to pull data from HPE Procurve, Cisco IOS or Aruba CX switches
 
 There are two types of scripts in the project:
 
-- Discovery - These are switches that use netmiko to connect to a switch and pull down data.
-- Helper - These are scripts that take JSON data that was collected with the discovery script and convert it into human readable format.
+- Discovery - These are switches that use netmiko to connect to a switch and pull down data. No configuration commands are sent so the script is safe to use in production.
+- Helper - These are scripts that take JSON data that was collected with the discovery script and convert it into human readable format. They are run offline and do not make any changes to the switches.
 
-The python discovery script [config-pull.py](https://github.com/rikosintie/Discovery/blob/main/procurve_Config_pull.py) uses the [netmiko](https://github.com/ktbyers/netmiko) library and the Google [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run ***show commands*** and create JSON files.
+The python discovery script [config-pull.py](https://github.com/rikosintie/Discovery/blob/main/procurve_Config_pull.py) uses the industry standard  [netmiko](https://github.com/ktbyers/netmiko) Python library and the Google [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run ***show commands*** and create JSON files. These two libraries hide the complexity of connecting to and interacting with network devices.
 
 ### show commands
 
