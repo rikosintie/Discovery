@@ -1,5 +1,11 @@
 # Using PowerShell
 
+----------------------------------------------------------------
+
+![screenshot](img/PowerShell2.resized.jpeg)
+
+----------------------------------------------------------------
+
 Here are the steps I took to get Windows terminal installed and the latest version of PowerShell configured with history and some other Linux like features.
 
 ## Getting Started
