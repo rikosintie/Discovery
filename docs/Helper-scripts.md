@@ -1,5 +1,11 @@
 # The Helper Scripts
 
+----------------------------------------------------------------
+
+![screenshot](img/Tux-Helper-scripts.resized.jpeg)
+
+----------------------------------------------------------------
+
 The helper scripts are a collection of python scripts that read data that the config_pull.py created and turn that raw data into useful reports.
 
 ## What files are created
