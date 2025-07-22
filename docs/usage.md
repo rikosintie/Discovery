@@ -1,9 +1,10 @@
----
-title: Discovery - Usage
-description: Using the Discovery scripts on Mac/Linux/Windows
----
-
 # Using the Script
+
+----------------------------------------------------------------
+
+![screenshot](img/female-ne-tux-usage.resized.jpeg)
+
+----------------------------------------------------------------
 
 There are a few steps that need to be completed before starting the discovery process:
 
