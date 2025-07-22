@@ -1,5 +1,11 @@
 # Security Policy
 
+----------------------------------------------------------------
+
+![screenshot](img/security6.resized.jpeg)
+
+----------------------------------------------------------------
+
 The Network Discovery community (Hubbard) has adopted this security disclosures and response policy to ensure we responsibly handle critical issues.
 
 ## Reporting a Vulnerability
