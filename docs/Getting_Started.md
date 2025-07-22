@@ -1,5 +1,11 @@
 # Getting Started
 
+----------------------------------------------------------------
+
+![screenshot](img/Female-NE-Getting-Started-2.resized.jpeg)
+
+----------------------------------------------------------------
+
 The scripts run on Mac/Linux/Windows! You do not need any prior python programming experience to use them. The instructions below will walk you through step by step how to install the Python Virtual Environment, the required libraries and activating the python virtual environment.
 
 - Clone the repository from GitHub
