@@ -10,7 +10,7 @@ Let's dig for some network gold!
 
 ----------------------------------------------------------------
 
-![screenshot](img/network-engineer-gold3-200.jpeg)
+![screenshot](img/network-engineer-gold3.resized.jpeg)
 
 ----------------------------------------------------------------
 
