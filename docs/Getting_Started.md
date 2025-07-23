@@ -6,7 +6,9 @@
 
 ----------------------------------------------------------------
 
-The scripts run on Mac/Linux/Windows! You do not need any prior python programming experience to use them. The instructions below will walk you through step by step how to install the Python Virtual Environment, the required libraries and activating the python virtual environment.
+The scripts run on Mac/Linux/Windows! It took some effort to get all the paths and other details working across all three platforms but it was worth the effort in the end!
+
+You do not need any prior python programming experience to use them. The instructions below will walk you through step by step how to install the Python Virtual Environment, the required libraries and activating the python virtual environment.
 
 - Clone the repository from GitHub
 - Create a Python Virtual Environment
@@ -39,7 +41,7 @@ If you don't want to install git, you can download a zip file from the [Network 
 
 ----------------------------------------------------------------
 
-I recommend installing Git. I make updates to the project and if you have git installed you can simply run `git pull` to pull down the latest version. Also, there are thousands of projects on GitHub.com and GitLab.com. Once you get comfortable with `git` you will have access to a lot of tools! You can install git from [here](https://git-scm.com/downloads)
+I recommend installing Git. I make updates to the project and if you have git installed you can simply run `git pull` to pull down the latest version. Also, there are thousands of projects on GitHub.com and GitLab.com. Once you get comfortable with `git` you will have access to a lot of tools! You can install git from [The official Git page](https://git-scm.com/downloads).
 
 If you plan to modify the python scripts then this won't work because your versions will be different than the repo and git will not allow you to overwrite. In that case, open a Pull Request on the repo and I'll see if I can accept your changes!
 
@@ -48,7 +50,10 @@ If you plan to modify the python scripts then this won't work because your versi
 
 ## 2. Using a Python Virtual Environment
 
-I recommend running the scripts in a Python Virtual environment, especially if you on Mac/Linux. If you are on a brand new install of Ubuntu and haven't done any python coding you will need to setup your environment before creating the virtual environment. We need to know what version of python you have installed. From a terminal, run the following:
+I recommend running the scripts in a Python Virtual environment, especially if you on Mac/Linux.
+
+### On Ubuntu
+If you are on a brand new install of Ubuntu and haven't done any python coding you will need to setup your environment before creating the virtual environment. We need to know what version of python you have installed. From a terminal, run the following:
 
 ```bash
 which python3
@@ -66,7 +71,13 @@ sudo apt install pip
 
 This will install the Python virtual environment library and pip, the  official package installer for Python.
 
-I think Windows installs both of those packages when you install python from the Microsoft store.
+### macOS
+
+I installed the `xcode command line tools`, because it includes Python, a `c` compiler and many other tools. Open a terminal and run `xcode-select --install`. You can list the tools using `ls /Library/Developer/CommandLineTools/usr/bin/`
+
+### On Windows
+
+I think Windows installs both of those packages when you install Python from the Microsoft store because I didn't have to install them on Windows. You can use `where python` to see what version of python is install on Windows.
 
 ----------------------------------------------------------------
 
@@ -98,7 +109,7 @@ Then I used `python3.10 -m venv venv --upgrade-deps --prompt="Discovery"` to suc
 
 ## 3. Activate the Virtual Environment
 
-### On Windows
+### On Windows 11
 
 `.\venv\Scripts\activate`
 
