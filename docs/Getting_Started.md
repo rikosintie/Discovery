@@ -8,7 +8,7 @@
 
 The scripts run on Mac/Linux/Windows! It took some effort to get all the paths and other details working across all three platforms but it was worth the effort in the end!
 
-You do not need any prior python programming experience to use them. The instructions below will walk you through step by step how to install the Python Virtual Environment, the required libraries and activating the python virtual environment. If you have never used Python on your machine there are some additional steps required to use the scripts. They are describe below.
+You do not need any prior python programming experience to use them. The instructions below will walk you through step by step how to install the Python Virtual Environment, the required libraries and activating the python virtual environment. If you have never used Python on your machine, there are some additional steps required to use the scripts. They are described below.
 
 - Clone the repository from GitHub
 - Create a Python Virtual Environment
