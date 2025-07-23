@@ -192,7 +192,7 @@ Collecting bcrypt~=4.1.2 (from -r requirements.txt (line 2))
 
 Now if we run `pip list` we will see that the dependencies have been installed:
 
-```bash
+```text
 $ pip list
 Package       Version
 ------------- -------
