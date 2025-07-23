@@ -24,14 +24,16 @@ Let's get started!
 
 All of the installation steps are done in the Mac/Linux terminal or cmd.exe/PowerShell on Windows. In my recent testing on Windows 11 24H2, I learned a lot about PowerShell on Windows 11. I created a page on what my setup looks like. I highly recommend installing the Windows Terminal and setting up PowerShell if you are a Windows user. Here is a link to the page - [Using PowerShell with the Network Discovery scripts](Using_PowerShell.md)
 
-Open the terminal, PowerShel
+Open the terminal or PowerShell
 
 ```bash
 git clone https://github.com/rikosintie/Discovery.git
 cd Discovery
 ```
 
-If you are on Windows, use `winget install --id Git.Git -e --source winget` to install Git or install the `git` package from [The Official Git Page](https://git-scm.com/downloads/win).
+If you are on Windows and don't have git installed, use `winget install --id Git.Git -e --source winget` to install Git or install the `git` package from [The Official Git Page](https://git-scm.com/downloads/win).
+
+If you ar on macOS and don't have git installed, you can install the xcode command line tools. Instructions are located [below](Getting_Started.md/#macos)
 
 If you don't want to install git, you can download a zip file from the [Network Discovery repository](https://github.com/rikosintie/Discovery). Click on the green "Code" button and select "Download ZIP". Then unzip the file and cd into the `Discovery` directory.
 
@@ -53,6 +55,7 @@ If you plan to modify the python scripts then this won't work because your versi
 I recommend running the scripts in a Python Virtual environment, especially if you on Mac/Linux.
 
 ### On Ubuntu
+
 If you are on a brand new install of Ubuntu and haven't done any python coding you will need to setup your environment before creating the virtual environment. We need to know what version of python you have installed. From a terminal, run the following:
 
 ```bash
