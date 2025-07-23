@@ -29,6 +29,7 @@ lib64
 include/
 test.py
 *.pyc
+venv/pyvenv.cfg
 # ------------------------
 #   offline text files
 # ------------------------
