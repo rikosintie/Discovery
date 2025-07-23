@@ -98,7 +98,7 @@ Once the data has been collected, there are helper scripts that use the JSON str
 
 There is also a helper script that reads the arp table of the layer 3 switch and creates a dictionary of mac address to IP address. Then reads the `show mac address-table interface` data and creates a port map. Here is a sample of what it looks like:
 
-```text
+```bash
 Number of Entries: 249
 
 Device Name: JC-IDF-1
