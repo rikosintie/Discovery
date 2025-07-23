@@ -1,4 +1,4 @@
-# Network Discovery Project
+# The Network Discovery Project
 
 ----------------------------------------------------------------
 
@@ -16,7 +16,7 @@ The project currently supports the following devices:
 - Cisco Nexus
 - Aruba CX
 
-A plain text file is used to store the `show commands` that are sent to the switches. An example file for an HPE Procurve switch can be found [here](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt). You are free to customize the file to add or remove show commands as needed for your discovery. The script saves the data to various directories for easy access.
+A plain text file is used to store the `show commands` that are sent to the switches. An example file for an HPE Procurve switch can be found [here](https://github.com/rikosintie/Discovery/blob/main/procurve-config-file.txt). You are free to customize the file by adding or removing show commands as needed for your discovery.  The script saves the data to various directories for easy access.
 
 ## Who is this project for
 
@@ -28,10 +28,10 @@ Anyone that needs to pull data from HPE Procurve, Cisco IOS or Aruba CX switches
 
 There are two types of scripts in the project:
 
-- Discovery - These are switches that use netmiko to connect to a switch and pull down data. No configuration commands are sent so the script is safe to use in production.
-- Helper - These are scripts that take JSON data that was collected with the discovery script and convert it into human readable format. They are run offline and do not make any changes to the switches.
+- Discovery - These are scripts that use netmiko to connect to a switch and pull down data. No configuration commands are sent so the script is safe to use in production.
+- Helper - These are scripts that take the data that was collected with the discovery script and convert usable reports. They are run offline and do not make any changes to the switches.
 
-The python discovery script [config-pull.py](https://github.com/rikosintie/Discovery/blob/main/procurve_Config_pull.py) uses the industry standard  [netmiko](https://github.com/ktbyers/netmiko) Python library and the Google [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run ***show commands*** and create JSON files. These two libraries hide the complexity of connecting to and interacting with network devices.
+The python discovery script [config-pull.py](https://github.com/rikosintie/Discovery/blob/main/config_pull.py) uses the industry standard  [netmiko](https://github.com/ktbyers/netmiko) Python library and the Network to Code [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run ***show commands*** and create JSON files. These two libraries hide the complexity of connecting to and interacting with network devices.
 
 ### show commands
 
@@ -96,7 +96,7 @@ Once the data has been collected, there are helper scripts that use the JSON str
 
 ### show running-config
 
-The Procurve firmware allows you to include the "structured" keyword after the "show running" command. This groups the output in an easier to read format. A [show run structured](https://github.com/rikosintie/Discovery/blob/main/Running/Procurve-2920-24-running-config.txt) file is created in the "Running" directory.
+A `show running-configuration` is saved to the "Running" directory for each switch. The Procurve firmware allows you to include the "structured" keyword after the "show running-configuration" command. This groups the output in an easier to read format. For Procurve switches, a [show run structured](https://github.com/rikosintie/Discovery/blob/main/Running/Procurve-2920-24-running-config.txt) file is created in the "Running" directory.
 
 ----------------------------------------------------------------
 
@@ -106,7 +106,7 @@ This script started out to pull configs from Cisco 3750x switches. I was on a lo
 
 The script was a life saver pulling all the Change Request data automatically. I then used a great library called `cisco_config_parse` to read the Cisco running-configuration and convert it to Aruba CX format.
 
-When that contract ended I needed to do a refresh at at customer that had HPE Procurve switches. I thought "how hard could it be to add Procurve?" Well, it turned out to be an adventure. And then I wanted to pull some Cisco SG small business switch configs, then some Cisco XE. Wow, every vendor has a different way of naming commands. Here is a table that I started so that I could expand the script to cover almost any customer. You can see the problem of added a new vendor to the mix. And any new vendor has to be supported by Netmiko and Google TextFSM. It's really a nightmare.
+When that contract ended I needed to do a refresh at at customer that had HPE Procurve switches. I thought "how hard could it be to add Procurve?" Well, it turned out to be an adventure. And then I wanted to pull some Cisco SG small business switch configs, then some Cisco XE. Wow, every vendor has a different way of naming commands. Here is a table that I started so that I could expand the script to cover almost any customer. You can see the problem of adding a new vendor to the mix. And any new vendor has to be supported by Netmiko and Google TextFSM. It's really a nightmare.
 
 Then to create a port-map of IP, Vlan, Manufacturer I have to pull the mac-address table and parse it. But that is another challenge because:
 
@@ -130,7 +130,7 @@ Currently I only have Procurve, cisco_ios and cisco_xe fully implemented.
 
 ## Questions for Discovery and Deployment
 
-The script will pull any information that you put into the procurve-config file but it can't answer all the questions! Here are some questions I ask during the kickoff meeting with the customer. Some of these questions are open ended and are meant to get the customer engaged in a conversation about the refresh.
+The script will pull any information that you put into the `<vendor-id>-config-file.txt` file but it can't answer all the questions! Here are some questions I ask during the kickoff meeting with the customer. Some of these questions are open ended and are meant to get the customer engaged in a conversation about the refresh.
 
 This is not a exhaustive list, feel free to add to it.
 
@@ -145,9 +145,9 @@ This is not a exhaustive list, feel free to add to it.
 - If after hours cut overs are required, who is the after hours contact?
 - Will VPN be provided?
 - When on site:
-    - Are we allowed to connect our laptops to the network?
-    - If not, will a jumpbox be provided?
-    - If using a jumpbox can we install tools like python or nmap?
+  - Are we allowed to connect our laptops to the network?
+  - If not, will a jumpbox be provided?
+  - If using a jumpbox can we install tools like python or nmap?
 - Can we use tools like nmap and Wireshark to discover devices?
   - Here are some [nmap scripts](https://github.com/rikosintie/nmap-python) that I wrote for discovery.
 - Is a change request document required?
@@ -169,7 +169,7 @@ This is not a exhaustive list, feel free to add to it.
   - If ClearPass will be used, DHCP allows devices to be profiled.
 - Do you have a standard for host names?
   - A refresh is a good time to make a host name changes if needed.
-- Do you have a management vlan?s
+- Do you have a management vlan?
   - If so, what are the management vlan IP addresses?
 - default gateway or gateway of last resort IP address?
 - Authentication Server IP address
