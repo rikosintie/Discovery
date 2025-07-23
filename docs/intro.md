@@ -82,7 +82,7 @@ Status and Counters - VLAN Information - Custom view
  850    OSPF-Peering    10.254.34.18    255.255.255.252 Manual     Up    No    No
 ```
 
-I like output of this command. You can see vlan id, vlan name, IP Address, IP Mask, Config method, state, voice and jumbo all in one table. This would make a nice alias on the switch.
+I like the output of this command. You can see vlan id, vlan name, IP Address, IP Mask, Config method, state, voice and jumbo all in one table. This would make a nice alias on the switch.
 
 `alias "vlan" "show vlan custom id name:15 ipaddr ipmask ipconfig state voice jumbo"`
 
@@ -93,6 +93,27 @@ Once the data has been collected, there are helper scripts that use the JSON str
 - CDP neighbor tables
 - LLDP neighbor tables
 - OSPF neighbor tables
+
+### Port Maps
+
+There is also a helper script that reads the arp table of the layer 3 switch and creates a dictionary of mac address to IP address. Then reads the `show mac address-table interface` data and creates a port map. Here is a sample of what it looks like:
+
+```text
+Number of Entries: 249
+
+Device Name: JC-IDF-1
+Vlan   IP Address       MAC Address                  Interface             Vendor
+--------------------------------------------------------------------------------
+ 100   10.100.126.35    1418.7736.5c5d    dynamic    TenGigabitEthernet1/1 Dell
+--------------------------------------------------------------------------------
+ 100   10.100.126.57    14b3.1f0b.61da    dynamic    TenGigabitEthernet1/1 Dell
+--------------------------------------------------------------------------------
+ 100   10.100.126.237   38ed.18ec.ccc1    dynamic    TenGigabitEthernet1/1 Cisco
+--------------------------------------------------------------------------------
+ 100   10.100.126.136   4487.fc94.9d02    dynamic    TenGigabitEthernet1/1 Elitegro
+ ```
+
+The port maps help with planning before a cutover and troubleshooting after a cutover.
 
 ### show running-config
 
