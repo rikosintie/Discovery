@@ -8,7 +8,7 @@
 
 The scripts run on Mac/Linux/Windows! It took some effort to get all the paths and other details working across all three platforms but it was worth the effort in the end!
 
-You do not need any prior python programming experience to use them. The instructions below will walk you through step by step how to install the Python Virtual Environment, the required libraries and activating the python virtual environment.
+You do not need any prior python programming experience to use them. The instructions below will walk you through step by step how to install the Python Virtual Environment, the required libraries and activating the python virtual environment. If you have never used Python on your machine there are some additional steps required to use the scripts. They are describe below.
 
 - Clone the repository from GitHub
 - Create a Python Virtual Environment
@@ -33,7 +33,7 @@ cd Discovery
 
 If you are on Windows and don't have git installed, use `winget install --id Git.Git -e --source winget` to install Git or install the `git` package from [The Official Git Page](https://git-scm.com/downloads/win).
 
-If you ar on macOS and don't have git installed, you can install the xcode command line tools. Instructions are located [below](Getting_Started.md/#macos)
+If you are on macOS and don't have git installed, you can install the xcode command line tools. Instructions are located [below](Getting_Started.md/#macos)
 
 If you don't want to install git, you can download a zip file from the [Network Discovery repository](https://github.com/rikosintie/Discovery). Click on the green "Code" button and select "Download ZIP". Then unzip the file and cd into the `Discovery` directory.
 
