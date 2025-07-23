@@ -111,7 +111,8 @@ Vlan   IP Address       MAC Address                  Interface             Vendo
  100   10.100.126.237   38ed.18ec.ccc1    dynamic    TenGigabitEthernet1/1 Cisco
 --------------------------------------------------------------------------------
  100   10.100.126.136   4487.fc94.9d02    dynamic    TenGigabitEthernet1/1 Elitegro
- ```
+
+```
 
 The port maps help with planning before a cutover and troubleshooting after a cutover.
 
