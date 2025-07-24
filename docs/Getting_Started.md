@@ -20,17 +20,18 @@ Let's get started!
 
 ## 0. Install Python if you need it
 
-Python is a popular programming language for Network Development Operations (NetDevOps). It's well worth the time install Python and learn the basics of running scripts.
+Python is a popular programming language for Network Development Operations (NetDevOps). It's well worth the time to install Python and learn the basics of running scripts.
 
 **Windows 10 and Windows 11**
 
 If you haven't done any  Python development on your Windows machine it doesn't have Python or Git installed. Python is the language the scripts are written in and Git is the industry standard version control system for NetDevOps. Follow the instructions below to install both packages.
 
 !!! note
-    From the [docs.python.org site](https://docs.python.org/3.11/using/windows.html)
+    From [docs.python.org](https://docs.python.org/3.11/using/windows.html)
     Unlike most Unix systems and services, Windows does not include a system supported installation of Python. To make Python available, the CPython team has compiled Windows installers with every release for many years. These installers are primarily intended to add a per-user installation of Python, with the core interpreter and library being used by a single user.
 
-Installing Python simple though.
+Installing Python simple though
+
 - click the start menu
 - Type `microsoft store` and press `enter`
 - search for `python 3.11`
@@ -74,9 +75,11 @@ WinGet, also known as the Windows Package Manager, is pre-installed on Windows 1
 
 Or you can install the `git` package from [The Official Git Page](https://git-scm.com/downloads/win). It seems better to use the Microsoft Store but I'm not a Windows expert.
 
+----------------------------------------------------------------
+
 **macOS**
 
-Apple provides a package called `xcode-select` full of developer tools like Python, git, a gcc (Gnu C Compiler), etc. To install `xcode-select`
+Apple provides a package called `xcode-select` full of developer tools like `Python`, `git`, and `gcc` (Gnu C Compiler), etc. To install `xcode-select`
 
 - Open a terminal
 - Type `xcode-select --install`, press `enter`
@@ -91,14 +94,14 @@ You now have `Python`, `git`, `venv` and many other dev tools.
 
 All of the installation steps are done in the Mac/Linux terminal or cmd.exe/PowerShell on Windows. In my recent testing on Windows 11 24H2, I learned a lot about PowerShell on Windows 11. I created a page on what my setup looks like. I highly recommend installing the Windows Terminal and setting up PowerShell if you are a Windows user. Here is a link to the page - [Using PowerShell with the Network Discovery scripts](Using_PowerShell.md)
 
-Open the terminal or PowerShell
+Open the Mac/Linux terminal or cmd/PowerShell and paste the following:
 
 ```bash
 git clone https://github.com/rikosintie/Discovery.git
 cd Discovery
 ```
 
-If you are on macOS and don't have git installed, you can install the xcode command line tools. Instructions are located [below](Getting_Started.md/#macos)
+**If you don't want to install Git**
 
 If you don't want to install git, you can download a zip file from the [Network Discovery repository](https://github.com/rikosintie/Discovery). Click on the green "Code" button and select "Download ZIP". Then unzip the file and cd into the `Discovery` directory.
 
@@ -114,6 +117,8 @@ If you plan to modify the python scripts then this won't work because your versi
 
 !!! Info
     Once you have the repository cloned it is linked to the repository on github.com. You should issue a `git pull` from the terminal once in a while to pull down any changes that have been made to the repository.
+
+----------------------------------------------------------------
 
 ## 2. Using a Python Virtual Environment
 
@@ -229,6 +234,8 @@ which python3
 
 You should see a path pointing to the Discovery folder, then venv/bin/python3.
 
+----------------------------------------------------------------
+
 ## 4. Install Dependencies
 
 You can use `pip list` to list the packages currently installed. If you run it now you will see:
@@ -286,6 +293,8 @@ textfsm       1.1.3
 wcwidth       0.2.12
 
 ```
+
+----------------------------------------------------------------
 
 ## 5. Deactivate the Virtual Environment
 
