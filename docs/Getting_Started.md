@@ -6,9 +6,7 @@
 
 ----------------------------------------------------------------
 
-The scripts run on Mac/Linux/Windows! It took some effort to get all the paths and other details working across all three platforms but it was worth the effort in the end!
-
-You do not need any prior python programming experience to use them. The instructions below will walk you through step by step how to install the Python Virtual Environment, the required libraries and activating the python virtual environment. If you have never used Python on your machine, there are some additional steps required to use the scripts. They are described below.
+The scripts run on Mac/Linux/Windows! It took some effort to get all the paths and other details working across all three platforms but it was worth the effort in the end! You do not need any prior python programming experience to use them. The instructions below will walk you through step by step how to install the Python Virtual Environment, the required libraries and activating the python virtual environment.
 
 - Clone the repository from GitHub
 - Create a Python Virtual Environment
@@ -17,6 +15,75 @@ You do not need any prior python programming experience to use them. The instruc
 - Deactivate the Python Virtual Environment
 
 Let's get started!
+
+----------------------------------------------------------------
+
+## 0. Install Python if you need it
+
+Python is a popular programming language for Network Development Operations (NetDevOps). It's well worth the time install Python and learn the basics of running scripts.
+
+**Windows 10 and Windows 11**
+
+If you haven't done any  Python development on your Windows machine it doesn't have Python or Git installed. Python is the language the scripts are written in and Git is the industry standard version control system for NetDevOps. Follow the instructions below to install both packages.
+
+!!! note
+    From the [docs.python.org site](https://docs.python.org/3.11/using/windows.html)
+    Unlike most Unix systems and services, Windows does not include a system supported installation of Python. To make Python available, the CPython team has compiled Windows installers with every release for many years. These installers are primarily intended to add a per-user installation of Python, with the core interpreter and library being used by a single user.
+
+Installing Python simple though.
+- click the start menu
+- Type `microsoft store` and press `enter`
+- search for `python 3.11`
+- click on `Get`
+
+----------------------------------------------------------------
+
+![screenshot](img/Python311-WindowsStore.png)
+
+----------------------------------------------------------------
+
+One advantage of installing Python on Windows is the installer installs Python, pip and the Python Virtual environment `venv`. You can use `where python` from cmd.exe to verify that Python is installed.
+
+```text
+C:\Users\mhubbard>where python
+C:\Users\mhubbard\AppData\Local\Microsoft\WindowsApps\python.exe
+```
+
+Test the installation:
+
+```text
+C:\Users\mhubbard>python
+Python 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> quit()
+```
+
+**Install Git**
+
+If you are on Windows and don't have git installed, use
+
+`winget install --id Git.Git -e --source winget`
+
+to install Git.
+
+WinGet, also known as the Windows Package Manager, is pre-installed on Windows 11 versions 21H2 and later. If don't have `winget` installed, you can install it using these steps:
+
+- Type `microsoft store` in the Windows search, press `enter`
+- Search for `App Installer`
+- Click on `Get`
+
+Or you can install the `git` package from [The Official Git Page](https://git-scm.com/downloads/win). It seems better to use the Microsoft Store but I'm not a Windows expert.
+
+**macOS**
+
+Apple provides a package called `xcode-select` full of developer tools like Python, git, a gcc (Gnu C Compiler), etc. To install `xcode-select`
+
+- Open a terminal
+- Type `xcode-select --install`, press `enter`
+
+- You can list the tools using `ls /Library/Developer/CommandLineTools/usr/bin/`
+
+You now have `Python`, `git`, `venv` and many other dev tools.
 
 ----------------------------------------------------------------
 
@@ -30,8 +97,6 @@ Open the terminal or PowerShell
 git clone https://github.com/rikosintie/Discovery.git
 cd Discovery
 ```
-
-If you are on Windows and don't have git installed, use `winget install --id Git.Git -e --source winget` to install Git or install the `git` package from [The Official Git Page](https://git-scm.com/downloads/win).
 
 If you are on macOS and don't have git installed, you can install the xcode command line tools. Instructions are located [below](Getting_Started.md/#macos)
 
@@ -76,7 +141,7 @@ This will install the Python virtual environment library and pip, the  officia
 
 ### macOS
 
-I installed the `xcode command line tools`, because it includes Python, a `c` compiler and many other tools. Open a terminal and run `xcode-select --install`. You can list the tools using `ls /Library/Developer/CommandLineTools/usr/bin/`
+
 
 ### On Windows
 
