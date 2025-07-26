@@ -22,7 +22,7 @@ Let's get started!
 
 Python is a popular programming language for Network Development Operations (NetDevOps). It's well worth the time to install Python and learn the basics of running scripts.
 
-**Windows 10 and Windows 11**
+### Windows 10 and Windows 11
 
 If you haven't done any  Python development on your Windows machine it doesn't have Python or Git installed. Python is the language the scripts are written in and Git is the industry standard version control system for NetDevOps. Follow the instructions below to install both packages.
 
@@ -34,12 +34,13 @@ Installing Python simple though
 
 - click the start menu
 - Type `microsoft store` and press `enter`
-- search for `python 3.11`
+- search for `python 3.12`
+- Click on the `Free` button
 - click on `Get`
 
 ----------------------------------------------------------------
 
-![screenshot](img/Python311-WindowsStore.png)
+![screenshot](img/Python312-WIndows%20Store.resized.png)
 
 ----------------------------------------------------------------
 
@@ -50,20 +51,34 @@ C:\Users\mhubbard>where python
 C:\Users\mhubbard\AppData\Local\Microsoft\WindowsApps\python.exe
 ```
 
-Test the installation:
+#### Test the installation on Windows
 
 ```text
-C:\Users\mhubbard>python
+python
+```
+
+You should see something like this:
+
+```bash
 Python 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)] on win32
 Type "help", "copyright", "credits" or "license" for more information.
+```
+
+Type
+
+```bash
 >>> quit()
 ```
 
-**Install Git**
+To quit Python.
+
+#### Install Git
 
 If you are on Windows and don't have git installed, use
 
-`winget install --id Git.Git -e --source winget`
+```text
+winget install --id Git.Git -e --source winget
+```
 
 to install Git.
 
@@ -77,16 +92,40 @@ Or you can install the `git` package from [The Official Git Page](https://git-sc
 
 ----------------------------------------------------------------
 
-**macOS**
+### macOS
 
 Apple provides a package called `xcode-select` full of developer tools like `Python`, `git`, and `gcc` (Gnu C Compiler), etc. To install `xcode-select`
 
 - Open a terminal
 - Type `xcode-select --install`, press `enter`
 
-- You can list the tools using `ls /Library/Developer/CommandLineTools/usr/bin/`
+You can list the tools using
+
+```bash
+ls /Library/Developer/CommandLineTools/usr/bin/`
+```
 
 You now have `Python`, `git`, `venv` and many other dev tools.
+
+### Ubuntu 24.04 or higher
+
+If you are on a brand new install of Ubuntu and haven't done any python coding you will need to install the Python `venv` your environment before creating the virtual environment. We need to know what version of python you have installed. From a terminal, run the following:
+
+```bash
+which python3
+/usr/bin/python3
+ls -l /usr/bin/python3
+lrwxrwxrwx - root  7 Aug  2024  /usr/bin/python3 -> python3.12
+```
+
+So, Python 3.12 is what my new Ubuntu 24.04 VM has installed. Run the following, replace 3.12 with your Python version.
+
+```bash
+sudo apt install python3.12-venv
+sudo apt install pip
+```
+
+This will install the Python virtual environment library and pip, the  official package installer for Python.
 
 ----------------------------------------------------------------
 
@@ -122,35 +161,9 @@ If you plan to modify the python scripts then this won't work because your versi
 
 ## 2. Using a Python Virtual Environment
 
-I recommend running the scripts in a Python Virtual environment, especially if you on Mac/Linux.
+I recommend running the scripts in a Python Virtual environment, especially if you on Mac/Linux. Both Operating systems use Python to manage system resources. macOS will ususally stop you from installing into the system Python folder but Ubuntu may not. It is possible to break your system if you upgrade system level packages.
 
-### On Ubuntu
-
-If you are on a brand new install of Ubuntu and haven't done any python coding you will need to setup your environment before creating the virtual environment. We need to know what version of python you have installed. From a terminal, run the following:
-
-```bash
-which python3
-/usr/bin/python3
-ls -l /usr/bin/python3
-lrwxrwxrwx - root  7 Aug  2024  /usr/bin/python3 -> python3.12
-```
-
-So, Python 3.12 is what my new Ubuntu 24.04 VM has installed. Run the following, replace 3.12 with your Python version.
-
-```bash
-sudo apt install python3.12-venv
-sudo apt install pip
-```
-
-This will install the Python virtual environment library and pip, the  official package installer for Python.
-
-### macOS
-
-
-
-### On Windows
-
-I think Windows installs both of those packages when you install Python from the Microsoft store because I didn't have to install them on Windows. You can use `where python` to see what version of python is install on Windows.
+Using a virtual environment eliminates that risk.
 
 ----------------------------------------------------------------
 
@@ -169,14 +182,14 @@ The `--upgrade-deps` argument tells python to upgrade pip to the latest version 
 
 ----------------------------------------------------------------
 
-To resolve the issue, I installed Python 3.10 from the Windows store using:
+To resolve the issue, I installed Python 3.12 from the Windows store using:
 
 ```text
 start menu, microsoft store, python 3.10
 Get
 ```
 
-Then I used `python3.10 -m venv venv --upgrade-deps --prompt="Discovery"` to successfully install the script with Python 3.10.
+Then I used `python3.12 -m venv venv --upgrade-deps --prompt="Discovery"` to successfully install the script with Python 3.12.
 
 ----------------------------------------------------------------
 
@@ -186,7 +199,7 @@ Then I used `python3.10 -m venv venv --upgrade-deps --prompt="Discovery"` to suc
 
 `.\venv\Scripts\activate`
 
-Verify that python is in the venv:
+Verify that python is in the venv folder:
 
 ```text
 where python
@@ -195,7 +208,7 @@ C:\Users\mhubbard.PU\Documents\04_tools\Discovery\venv\Scripts\python.exe
 
 ### On WSL
 
-When the Windows install initially failed, I asked ChatGPT what to do and it recommended installing WSL2, Ubuntu 24.04 and running the script in Linux. I did that and everything worked correctly by following the `Linux` steps below. The WSL terminal NATs to your laptop so you will be using a 172.16.122.x address but everything worked. For NetDevOps, Linux is more popular than Windows, I would go the WLS route.
+When the Windows install initially failed, I asked ChatGPT what to do and it recommended installing WSL2, Ubuntu 24.04 and running the script in Linux. I did that and everything worked correctly by following the `Linux` steps below. The WSL terminal NATs to your laptop so you will be using a 172.16.122.x address but everything worked. For NetDevOps, Linux is more popular than Windows, WSL gives you Linux on Windows!
 
 #### Navigating in WSL
 
@@ -216,9 +229,9 @@ Then use it like:
 
 `wincd 'c:\Users\mhubbard\Documents\Discovery'
 
-The command will take you to the WSL `/mnt/c/Users/mhubbard/Documents/Discovery` directory.
+The command will take you to the WSL `/mnt/c/Users/mhubbard/Documents/Discovery` folder.
 
-I prefer to zsh as my shell with Oh My Zsh. If you continue to use WSL I recommend that you look at my guide to setting up the [Ubuntu terminal](https://rikosintie.github.io/Ubuntu4NetworkEngineers/terminal/). The guide is chalked full of Ubuntu goodness.
+I prefer to zsh as my shell with the [Oh My Zsh package](https://ohmyz.sh/) installed. If you continue to use WSL I recommend that you look at my guide to setting up the [Ubuntu terminal](https://rikosintie.github.io/Ubuntu4NetworkEngineers/terminal/). The guide is chalked full of Ubuntu goodness.
 
 ### On macOS/Linux
 
@@ -226,13 +239,13 @@ I prefer to zsh as my shell with Oh My Zsh. If you continue to use WSL I recomme
 
 #### Verify that Python is installed in the venv
 
+From the folder that you installed the Project in, run
+
 ```bash
-~/04_tools/Discovery
 which python3
-/home/mhubbard/04_tools/Discovery/venv/bin/python3
 ```
 
-You should see a path pointing to the Discovery folder, then venv/bin/python3.
+You should see a path pointing to the Discovery folder, then venv/bin/python3. On my machine that is `/home/mhubbard/04_tools/Discovery/venv/bin/python3`
 
 ----------------------------------------------------------------
 
