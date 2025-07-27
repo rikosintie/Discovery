@@ -30,7 +30,7 @@ If you haven't done any  Python development on your Windows machine it doesn't h
     From [docs.python.org](https://docs.python.org/3.11/using/windows.html)
     Unlike most Unix systems and services, Windows does not include a system supported installation of Python. To make Python available, the CPython team has compiled Windows installers with every release for many years. These installers are primarily intended to add a per-user installation of Python, with the core interpreter and library being used by a single user.
 
-Installing Python on WIndows is simple.
+Installing Python on Windows is simple.
 
 - click the start menu
 - Type `microsoft store` and press `enter`
@@ -51,7 +51,7 @@ where python
 C:\Users\mhubbard\AppData\Local\Microsoft\WindowsApps\python.exe
 ```
 
-You can also the GUI tool `Add or Remove Programs` to verify Python is installed:
+You can also use the GUI tool `Add or Remove Programs` to verify Python is installed:
 
 ----------------------------------------------------------------
 
@@ -86,11 +86,11 @@ If you are on Windows and don't have git installed, use
 winget install --id Git.Git -e --source winget
 ```
 
-to install Git.
+from cmd or PowerShell to install Git.
 
-WinGet, also known as the Windows Package Manager, is pre-installed on Windows 11 versions 21H2 and later. If don't have `winget` installed, you can install it using these steps:
+WinGet, also known as the Windows Package Manager, is pre-installed on Windows 11 versions 21H2 and later. If you don't have `winget` installed, you can install it using these steps:
 
-- Type `microsoft store` in the Windows search, press `enter`
+- Type `microsoft store` in the Windows search bar, press `enter`
 - Search for `App Installer`
 - Click on `Get`
 
@@ -115,7 +115,7 @@ You now have `Python`, `git`, `venv` and many other dev tools.
 
 ### Ubuntu 24.04 or higher
 
-If you are on a brand new install of Ubuntu and haven't done any python coding you will need to install the Python `venv` library before creating the virtual environment. We need to know what version of python you have installed. From a terminal, run the following:
+If you are on a brand new install of Ubuntu and haven't done any python coding you will need to install the Python `venv` and `pip` libraries before creating the virtual environment. We need to know what version of python you have installed. From a terminal, run the following:
 
 ```bash hl_lines='1 3'
 which python3
@@ -124,13 +124,13 @@ ls -l /usr/bin/python3
 lrwxrwxrwx - root  7 Aug  2024  /usr/bin/python3 -> python3.12
 ```
 
-So, Python 3.12 is what my new Ubuntu 24.04 VM has installed. Run the following, replace 3.12 with your Python version.
+Python 3.12 is what my new Ubuntu 24.04 VM has installed. Run the following, replace `3.12` with your Python version.
 
 ```bash
 sudo apt install python3.12-venv  && sudo apt install python3-pip
 ```
 
-This will install the Python virtual environment library and pip, the  official package installer for Python. THe `&&` means run the second command only if the first succeeds.
+This will install the Python virtual environment library and pip, the  official package installer for Python. The `&&` means run the second command only if the first succeeds.
 
 ----------------------------------------------------------------
 
@@ -190,7 +190,7 @@ The `--upgrade-deps` argument tells python to upgrade pip to the latest version 
 To resolve the issue, I installed Python 3.12 from the Windows store using:
 
 ```text
-start menu, microsoft store, python 3.10
+start menu, microsoft store, python 3.12
 Get
 ```
 
@@ -236,7 +236,7 @@ Then use it like:
 
 The command will take you to the WSL `/mnt/c/Users/mhubbard/Documents/Discovery` folder.
 
-I prefer to zsh as my shell with the [Oh My Zsh package](https://ohmyz.sh/) installed. If you continue to use WSL I recommend that you look at my guide to setting up the [Ubuntu terminal](https://rikosintie.github.io/Ubuntu4NetworkEngineers/terminal/). The guide is chalked full of Ubuntu goodness.
+I prefer to use zsh as my shell on Mac/Linux with the [Oh My Zsh package](https://ohmyz.sh/) installed. If you continue to use WSL I recommend that you look at my guide to setting up the [Ubuntu terminal](https://rikosintie.github.io/Ubuntu4NetworkEngineers/terminal/). The guide is chalked full of Ubuntu goodness.
 
 ### On macOS/Linux
 
