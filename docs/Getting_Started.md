@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------
 
-The scripts run on Mac/Linux/Windows! It took some effort to get all the paths and other details working across all three platforms but it was worth the effort in the end! You do not need any prior python programming experience to use them. The instructions below will walk you through step by step how to install the Python Virtual Environment, the required libraries and activating the python virtual environment.
+The scripts run on Mac/Linux/Windows! It took some effort to get all the paths and other details working across all three platforms but it was worth the effort in the end! You do not need any prior python programming experience to use them. The instructions below will walk you through step by step how to install Python, the Python Virtual Environment, the required libraries and activating the python virtual environment.
 
 - Clone the repository from GitHub
 - Create a Python Virtual Environment
@@ -20,7 +20,7 @@ Let's get started!
 
 ## 0. Install Python if you need it
 
-Python is a popular programming language for Network Development Operations (NetDevOps). It's well worth the time to install Python and learn the basics of running scripts.
+Python is a popular programming language for Network Development Operations (NetDevOps). It's well worth the time to install Python and learn the basics of running Python scripts.
 
 ### Windows 10 and Windows 11
 
@@ -30,7 +30,7 @@ If you haven't done any  Python development on your Windows machine it doesn't h
     From [docs.python.org](https://docs.python.org/3.11/using/windows.html)
     Unlike most Unix systems and services, Windows does not include a system supported installation of Python. To make Python available, the CPython team has compiled Windows installers with every release for many years. These installers are primarily intended to add a per-user installation of Python, with the core interpreter and library being used by a single user.
 
-Installing Python simple though
+Installing Python on WIndows is simple.
 
 - click the start menu
 - Type `microsoft store` and press `enter`
@@ -47,9 +47,17 @@ Installing Python simple though
 One advantage of installing Python on Windows is the installer installs Python, pip and the Python Virtual environment `venv`. You can use `where python` from cmd.exe to verify that Python is installed.
 
 ```text
-C:\Users\mhubbard>where python
+where python
 C:\Users\mhubbard\AppData\Local\Microsoft\WindowsApps\python.exe
 ```
+
+You can also the GUI tool `Add or Remove Programs` to verify Python is installed:
+
+----------------------------------------------------------------
+
+![screenshot](img/Python312-AddRemove.png)
+
+----------------------------------------------------------------
 
 #### Test the installation on Windows
 
@@ -60,17 +68,15 @@ python
 You should see something like this:
 
 ```bash
-Python 3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)] on win32
+Python 3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)] on win32
 Type "help", "copyright", "credits" or "license" for more information.
 ```
 
-Type
+To quit Python, type:
 
 ```bash
->>> quit()
+quit()
 ```
-
-To quit Python.
 
 #### Install Git
 
@@ -109,9 +115,9 @@ You now have `Python`, `git`, `venv` and many other dev tools.
 
 ### Ubuntu 24.04 or higher
 
-If you are on a brand new install of Ubuntu and haven't done any python coding you will need to install the Python `venv` your environment before creating the virtual environment. We need to know what version of python you have installed. From a terminal, run the following:
+If you are on a brand new install of Ubuntu and haven't done any python coding you will need to install the Python `venv` library before creating the virtual environment. We need to know what version of python you have installed. From a terminal, run the following:
 
-```bash
+```bash hl_lines='1 3'
 which python3
 /usr/bin/python3
 ls -l /usr/bin/python3
@@ -121,11 +127,10 @@ lrwxrwxrwx - root  7 Aug  2024  /usr/bin/python3 -> python3.12
 So, Python 3.12 is what my new Ubuntu 24.04 VM has installed. Run the following, replace 3.12 with your Python version.
 
 ```bash
-sudo apt install python3.12-venv
-sudo apt install pip
+sudo apt install python3.12-venv  && sudo apt install python3-pip
 ```
 
-This will install the Python virtual environment library and pip, the  official package installer for Python.
+This will install the Python virtual environment library and pip, the  official package installer for Python. THe `&&` means run the second command only if the first succeeds.
 
 ----------------------------------------------------------------
 
@@ -161,7 +166,7 @@ If you plan to modify the python scripts then this won't work because your versi
 
 ## 2. Using a Python Virtual Environment
 
-I recommend running the scripts in a Python Virtual environment, especially if you on Mac/Linux. Both Operating systems use Python to manage system resources. macOS will ususally stop you from installing into the system Python folder but Ubuntu may not. It is possible to break your system if you upgrade system level packages.
+I recommend running the scripts in a Python Virtual environment, especially if you on Mac/Linux. Both Operating systems use Python to manage system resources. macOS will usually stop you from installing into the system Python folder but Ubuntu may not. It is possible to break your system if you upgrade system level packages.
 
 Using a virtual environment eliminates that risk.
 
