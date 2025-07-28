@@ -382,22 +382,23 @@ The only required argument is `-s site`. This references the device-inventory fi
 
 #### Collecting switch logs
 
-Reviewing switch logs before a cut over can help you understand the health of the network. For example, you may find OSPF neighbors bouncing or an STP issue. Obviously you if the network is large you can't review every switch in detail. But looking at key switches such as cores and distribution is worth a few minutes.
+Reviewing switch logs before a cut over can help you understand the health of the network. For example, you may find OSPF neighbors bouncing or an STP issue. Obviously if the network is large you can't review every switch in detail. But looking at key switches such as cores and distribution is worth a few minutes.
 
-Using grep you can parse hundreds of logs in a matter of seconds. For example:
+Using `grep` you can parse hundreds of logs in a matter of seconds. The log files are saved to the CR-data folder. If you cd to the CR-data folder you can run this `grep` command to find lacp issues from any switch:
 
-```bash
-grep -Eir "Blocked by LACP"
+```bash hl_lines='1'
+grep -Eir 'Blocked by LACP'
 test-CL-2930-48-1-log-1.txt:I 02/02/24 17:20:55 00435 ports: port 22 is Blocked by LACP
 ```
 
 Or check STP:
 
-```bash
+```bash hl_lines='1'
+grep -Eir 'stp:'
 Procurve-2920-24-CR-data.txt:I 01/10/24 19:01:57 03816 stp: VLAN 850 - Root changed from 32768: (this device)
 ```
 
-I can't go into everything you should look for, but with some practice you will look like a genius!
+I can't go into everything you should look for, but with some practice you will look like a genius finding intermittent issues on the customer's network!
 
 #### Procurve logs
 
@@ -415,9 +416,22 @@ If you want to pull logs from the switch add `-e` and the type of log. You can c
 
 If you use `-e W` the script will send `show logging -r -W`
 
+The reason I added the ability to collect individual logs is that I had time out issues sending `show logging -r` because the Procurve switches have a lot of storage for logs. This happened at a customer with large a stack of 2930s and an intermittent connectivity issue.
+
+But, it turned out to be useful because informational logs are a lot of noise. Being able to narrow down and look at just Warning or Major logs is nice.
+
 #### Cisco Logs
 
 Cisco doesn't support all the options that the procurve does. If you want to collect logs on a cisco use `-e 1`. This will send `show logging` to the switch.
+
+I haven't run into the timeout issue on Cisco switches. I think this is because by default Cisco logging is set to only 4096 and most engineers don't change it.
+
+Using `grep` you can parse hundreds of logs in a matter of seconds. The log files are saved to the CR-data folder. If you cd to the CR-data folder you can run this `grep` command to find stacking messages from any switch:
+
+```bash hl_lines='1'
+grep -Eir 'stack_mgr:'
+Lab_3850-log-1.txt:*Jul 13 19:33:52.175: %STACKMGR-4-SWITCH_ADDED: Switch 2 R0/0: stack_mgr: Switch 2 has been added to the stack.
+```
 
 #### Setting the Password
 
