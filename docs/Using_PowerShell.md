@@ -23,7 +23,7 @@ Multiple applications in one application
 Here is a screenshot of my terminal:
 
 ----------------------------------------------------------------
-![screenshot](img/terminal.png)
+![screenshot](img/terminal1.png)
 
 ----------------------------------------------------------------
 
@@ -159,10 +159,9 @@ The winget command does the install, the zoxide init powershell adds the line we
 This is optional but if you use Windows Terminal often it's worth customizing the order that your shells are displayed in.
 
 - Open Windows Terminal
-- Click the :ChevronDownIcon: in the top menu
+- Click the :Octicons-ChevronDownIcon: in the top menu
 - Click `settings`
-- Click `Open JSON FIle` at the very bottom, left of the terminal.
-
+- Click `Open JSON File` at the very bottom, left of the terminal.
 
 ----------------------------------------------------------------
 
@@ -185,7 +184,7 @@ Scroll down until you see
             },
 ```
 
-Your exact JSON will be different than mine so I you might see something different. The important thing is finding `":list":` in the JSON file. Copy everything from `":list":` to the last `}` before the `]` symbol and save it to notepad++ or your favorite editor. Save a copy as a backup in case you make a mistake editing `settings.json`.
+Your exact JSON will be different than mine so you will see something different. The important thing is finding `":list":` in the JSON file. Copy everything from `"list":` to the last `}` before the `]` symbol and save it to notepad++ or your favorite editor. Save a copy as a backup in case you make a mistake editing `settings.json`.
 
 #### Move the shells
 
@@ -259,4 +258,4 @@ Here is what my final JSON looks like:
                 "source": "Windows.Terminal.VisualStudio"
             }
         ]
-        ```
+```
