@@ -118,7 +118,7 @@ C:\Users\mhubbard.PU\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
       CurrentUserAllHosts    : C:\Users\mhubbard.PU\OneDrive\Documents\PowerShell\profile.ps1
       CurrentUserCurrentHost : C:\Users\mhubbard.PU\OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
       Length                 : 83
-```
+    ```
 
 We want to modify the profile. Open it using `notepad $PROFILE`. Then paste in the following:
 
