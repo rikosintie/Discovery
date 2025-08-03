@@ -433,25 +433,82 @@ grep -Eir 'stack_mgr:'
 Lab_3850-log-1.txt:*Jul 13 19:33:52.175: %STACKMGR-4-SWITCH_ADDED: Switch 2 R0/0: stack_mgr: Switch 2 has been added to the stack.
 ```
 
+**Find `connected` ports**
+
+Customers often ask how many active ports are on a switch. This grep statement will return the port from the `show interface status | i connected` command:
+
+`grep "connected" JC-MDF-4-CR-data.txt | awk '{print $1}' | sort | uniq | sort -t '/' -k1,1 -k2,2n -k3,3n`
+
+Output
+
+```text
+Gi1/0/1
+Gi1/0/2
+Gi1/0/3
+Gi1/0/5
+Gi1/0/9
+Gi1/0/10
+Gi1/0/12
+Gi1/0/16
+Gi1/0/17
+Gi1/0/21
+Gi1/0/25
+```
+
+📋 Explanation of the Command
+
+- grep "connected" JC-MDF-4-CR-data.txt: This filters lines containing "connected" from the file.
+- awk '{print $1}': This extracts the first column (the interface names).
+- sort: This sorts the interface names, ensuring that duplicates are adjacent.
+- uniq -c: This counts the occurrences of each unique interface name.
+- sort -t '/' -k1,1 -k2,2n -k3,3n: This sorts the counted output correctly based on the interface name structure.
+
+If you want to return the entire line from the `show interface status | i connected` command use this grep:
+
+`grep "connected" JC-MDF-4-CR-data.txt | sort | uniq | sort -t '/' -k1,1 -k2,2n -k3,3n`
+
+Output
+
+```text
+Gi1/0/1   < Uplink to SonicW connected    777        a-full a-1000 10/100/1000BaseTX
+Gi1/0/2   < Uplink to SonicW connected    20         a-full a-1000 10/100/1000BaseTX
+Gi1/0/3   < Uplink to SonicW connected    100        a-full a-1000 10/100/1000BaseTX
+Gi1/0/5   < Uplink to SonicW connected    778        a-full a-1000 10/100/1000BaseTX
+Gi1/0/9   < Voice Server >   connected    90         a-full a-1000 10/100/1000BaseTX
+Gi1/0/10  < Voice Server >   connected    90         a-full a-1000 10/100/1000BaseTX
+Gi1/0/12  < Safelok SRV 10.1 connected    100        a-full a-1000 10/100/1000BaseTX
+Gi1/0/16  < BacTalk Port >   connected    778        a-half  a-100 10/100/1000BaseTX
+Gi1/0/17  < Voice Network >  connected    90         a-full a-1000 10/100/1000BaseTX
+Gi1/0/21  < HIS >            connected    780        a-full a-1000 10/100/1000BaseTX
+Gi1/0/25  < Uplink to 4500x  connected    trunk      a-full a-1000 1000BaseLX SFP
+Gi1/0/25  < Uplink to 4500x  connected    trunk      a-full a-1000 1000BaseLX SFP
+```
+
+----------------------------------------------------------------
+
 #### Setting the Password
 
 If you want to be prompted for a password add `-p 1`. If you don't use -p 1 you must set an environment variable `cyberARK` with the password. That is covered above in the "[password](#password)" section.
+
+----------------------------------------------------------------
 
 #### SSH Logging
 
 If you want to enable ssh logging add `-l 1`. You would do that to troubleshoot if you are getting "time out" errors when the script tries to connect to a switch. It does not log anything from the switch.
 
+----------------------------------------------------------------
+
 #### Timeout
 
 You can modify the timeout value using  `-t`. **Note:** the number sets the timeout value in 100s of seconds. If you use `-t 2` it will wait up to 200 seconds for the operation to complete.
 
-### Examples
+### Argument Examples
 
 The minimum is to use -s for the site:
 
 `python3 config-pull.py -s HQ`
 
-To include the Warning log:
+To include the Warning log from HPE Procurve switches:
 
 `python3 config-pull.py -s HQ -e W`
 
@@ -466,7 +523,7 @@ To be prompted for a password:
 !!! Note
     you may have to use python instead of python3 depending on your OS.
 
-I recommend running the script on one switch the first time instead of a long list of switches. That will let you see the content of the show commands and make changes if needed before spending time running it on a long list of switches.
+I recommend running the script on one network switch the first time instead of a long list of switches. That will let you see the content of the show commands and make changes if needed before spending time running it on a long list of switches.
 
 The files will be saved in the following directories:
 
@@ -513,7 +570,7 @@ INFO:paramiko.transport:Authentication (password) successful!
 Here is a sample output from running the script:
 
 ```bash
-procurve_Config_pull.py -s area1 -e W
+config_pull.py -s area1 -e W
 
 
 -------------------------------------------------
@@ -584,15 +641,17 @@ Total running time: 0.0 Hours 1.0 Minutes 44.67 Seconds
 
 ## Failure to connect to a switch
 
-If a switch does not respond or if the the credentials are incorrect, a message will be printed to the console and the script will continue processing the next switch.
+If a switch does not respond, the credentials are incorrect, or the SSH version is 1, a message will be printed to the console, a log file with the hostname and a reason code is written to hte `Failure-log` folder and the script will continue processing the next switch.
 
-It's really disruptive to the discovery process if switches fail. That means you have to fix the problem and then create a new inventory file with just the failed switches, then rerun it. I was doing a discovery at a customer with over 240 switches. They had so many configuration issues and username/password was one of them. I ended up with around 40 switches that I couldn't log into.
+It's really disruptive to the discovery process if the script cannot connect to multiple switches. That means you have to fix the problem, create a new inventory file with just the failed switches, then rerun the script on the subset. I was doing a discovery at a customer with over 240 switches. They had a lot of configuration issues and username/password variations. I ended up with around 40 switches that I couldn't log into.
 
 ### Use nmap to verify switches are up
 
 I recommend saving the switch IP addresses in a plain text file, one per line, and then using nmap to verify that ssh is working.
 
-For example, create a new text file named `ip.txt`. If you are using vs code and the Rainbow csv extension you can simply run a query on the device-inventory file:
+#### THe process
+
+Create a new text file named `ip.txt`. If you are using vs code and the Rainbow csv extension you can simply run a query on the device-inventory file:
 
 `select a1`
 
@@ -608,11 +667,11 @@ At the bottom of vs code, click `query`.
 
 When the query page opens, enter `select a1` and click `run`.
 
---------------------------------------------------------------
+----------------------------------------------------------------
 
 ![screenshot](img/Rainbow-parameters.png)
 
---------------------------------------------------------------
+----------------------------------------------------------------
 
 The query will return a list of IP addresses, 1 per line. Select all lines and paste them into ip.txt.
 
@@ -623,7 +682,7 @@ The query will return a list of IP addresses, 1 per line. Select all lines and p
 192.168.10.230
 ```
 
-Run nmap with these arguments:
+**Run nmap with these arguments:**
 
 `nmap -v -p 22 -iL ip.txt --reason -oN ip-dead.txt`
 
@@ -633,7 +692,7 @@ In this example only 3 devices are working:
 
 `Nmap done at Sun Jan  7 20:05:46 2024 -- 4 IP addresses (3 hosts up) scanned`
 
-If you don't get 100% you can open `ip-dead.txt` and search for "down".
+If you don't get 100%, open `ip-dead.txt` and search for "down".
 
 ### Use nmap to verify the credentials
 
@@ -653,7 +712,7 @@ PORT   STATE SERVICE
 22/tcp open  ssh
 | ssh-brute:
 |   Accounts:
-|     vector:H3lpd3sk - Valid credentials
+|     sw_admin:Sup3rS3cr3t - Valid credentials
 |_  Statistics: Performed 2 guesses in 2 seconds, average tps: 1.0
 
 Nmap scan report for 192.168.10.111
@@ -683,12 +742,19 @@ Not all customers will have a clean list of switch IP addresses and host names. 
 
 Run this nmap command to find devices with ssh **and** snmp open. Most devices that have ssh and snmp open are switches. You may have to do some additional filtering.
 
-`sudo nmap -sU -sS -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl  <target ips>`
+`sudo nmap -sU -sS -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl <target ips>`
 
 !!! Note
     The stylesheet is from [honze-net-nmap-bootstrap-xsl](https://github.com/honze-net/nmap-bootstrap-xsl). This is a repository for creating nmap reports. Well worth a look.
 
-The `-oA procurve-scan` argument will create the following files:
+!!! warning Failed to open normal output file procurve-scan.nmap for writing: Permission denied (13)
+    If you installed `nmap` using a snap on Ubuntu you will not be able to write a file as root to a folder you own.
+
+If you receive the `Permission denied (13)` message, add `/tmp/` to the filename:
+
+`sudo nmap -sU -sS -T4 -sC -p U:161,T:22 -oA /tmp/procurve-scan -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl <target ips>`
+
+The `-oA switch-scan` argument will create the following files:
 
 - procurve-scan.xml - a standard XML file with the xsl link embedded
 - procurve-scan.nmap - an nmap format file
