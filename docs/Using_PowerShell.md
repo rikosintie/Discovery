@@ -20,7 +20,7 @@ Multiple applications in one application
 - CMD.exe
 - Azure Cloud Shell
 
-Here is a screenshot of my terminal:
+Here is a screenshot of my Windows Terminal:
 
 ----------------------------------------------------------------
 ![screenshot](img/terminal1.png)
@@ -55,7 +55,7 @@ Installing the Windows Terminal is simple.
 
 ### Install the latest version of PowerShell core
 
-Windows 11 ships with PowerShell 5.1 installed. I don't understand all the reasons behind it, but PowerShell 7.5 is the latest version and it installs *BESIDE* PowerShell 5.1. That is really confusing and both versions store there `$PROFILE` in separate locations!
+Windows 11 ships with PowerShell 5.1 installed. I don't understand all the reasons behind it, but PowerShell 7.5 is the latest version and it installs *BESIDE* PowerShell 5.1. That is really confusing and both versions store their `$PROFILE` in separate locations!
 
 Open cmd.exe and paste the following code:
 
@@ -89,7 +89,7 @@ WSManStackVersion              3.0
 
 ### Add a persistent history and command search
 
-This is a must have feature and gives PowerShell some [zsh](https://github.com/ohmyzsh) like capabilities. First we will open the PowerShell configuration file.
+This is a must have feature and gives PowerShell some [zsh](https://github.com/ohmyzsh) like capabilities.
 
 #### Create the PowerShell 7 profile
 
@@ -135,7 +135,7 @@ The next 4 lines setup a history search capability. That is so useful, if you ha
 The `function Invoke-CsvLensWithArgs` creates an alias for csvlens that automatically adds the `--color-columns` and `--no-headers` needed to view the device inventory files.
 
 !!! note
-    On Mac/Linux, use `csvlens --color-columns --no-headers @args` instead of `csvlens.exe --color-columns --no-headers @args`
+    If you installed PowerShell On Mac/Linux, use `csvlens --color-columns --no-headers @args` instead of `csvlens.exe --color-columns --no-headers @args`
 
 The line `Set-Alias -Name cl -Value Invoke-CsvLensWithArgs`, builds the alias. In this case, typing `cl` invokes the alias.
 
@@ -169,7 +169,8 @@ This is optional but if you use Windows Terminal often it's worth customizing th
 
 ----------------------------------------------------------------
 
-On my Windows laptop, Windows Terminal always opens with the bottom of the terminal below the bottom of the screen. I couldn't see the Open JSON file option until dragging the window up.
+!!! Note
+    On my Windows laptop, Windows Terminal always opens with the bottom of the terminal below the bottom of the screen. I couldn't see the Open JSON file option until dragging the window up. Holding `shift` while clicking the `X` to close hasn't resolved the issue.
 
 Scroll down until you see
 
@@ -188,13 +189,13 @@ Your exact JSON will be different than mine so you will see something different.
 
 #### Move the shells
 
-Now you can cut each shell and move it to the order you want. Notice that I renamed `Windows PowerShell` to `Windows PowShell 7` so that it's obvious which version to select.  When you are satisfied, save and close the `settings.json` file.
+Now you can cut each shell and move it to the order you want. I renamed `Windows PowerShell` to `Windows PowerShell 7` so that it's obvious which version to select.  When you are satisfied, save and close the `settings.json` file.
 
 Notice the `"hidden": true,` and `"hidden": false,` lines. I don't know why some shells have two entries with one hidden and one not.
 
 Here is what my final JSON looks like:
 
-```json linenums='1' hl_lines='6 11 17 23 29 35 41 47 53'
+```json linenums='1' hl_lines='6 11 17 23 29 35 41 47 53 59'
         "list":
         [
             {
