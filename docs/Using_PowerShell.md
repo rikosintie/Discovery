@@ -93,7 +93,7 @@ This is a must have feature and gives PowerShell some [zsh](https://github.com/o
 
 #### Create the PowerShell 7 profile
 
-For some reason installing PowerShell 7 with winget didn't create the profile. We will use this PowerShell code to do it:
+For some reason installing PowerShell 7 with winget didn't create the profile. We will use this PowerShell code to do it. Click on the `copy` icon on the right to copy the code and paste it into the PowerShell terminal:
 
 ```bash
 if (!(Test-Path -Path $PROFILE)) {
@@ -106,6 +106,18 @@ You can see the path to the file by running:
 ```PowerShell hl_lines='1'
  echo $profile
 C:\Users\mhubbard.PU\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+```
+
+!!! tip
+    You can view all profiles that PowerShell 7 sees using
+
+    ```bash
+     $PROFILE | Select-Object *
+      AllUsersAllHosts       : C:\Program Files\PowerShell\7\profile.ps1
+      AllUsersCurrentHost    : C:\Program Files\PowerShell\7\Microsoft.PowerShell_profile.ps1
+      CurrentUserAllHosts    : C:\Users\mhubbard.PU\OneDrive\Documents\PowerShell\profile.ps1
+      CurrentUserCurrentHost : C:\Users\mhubbard.PU\OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+      Length                 : 83
 ```
 
 We want to modify the profile. Open it using `notepad $PROFILE`. Then paste in the following:
