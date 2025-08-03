@@ -159,7 +159,7 @@ The winget command does the install, the zoxide init powershell adds the line we
 This is optional but if you use Windows Terminal often it's worth customizing the order that your shells are displayed in.
 
 - Open Windows Terminal
-- Click the ::downarrow:: in the top menu
+- Click the :ChevronDownIcon: in the top menu
 - Click `settings`
 - Click `Open JSON FIle` at the very bottom, left of the terminal.
 
