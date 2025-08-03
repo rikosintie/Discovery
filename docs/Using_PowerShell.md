@@ -159,7 +159,7 @@ The winget command does the install, the zoxide init powershell adds the line we
 This is optional but if you use Windows Terminal often it's worth customizing the order that your shells are displayed in.
 
 - Open Windows Terminal
-- Click the :Octicons-ChevronDownIcon: in the top menu
+- Click the :Octicons-ChevronDown: in the top menu
 - Click `settings`
 - Click `Open JSON File` at the very bottom, left of the terminal.
 
@@ -194,7 +194,7 @@ Notice the `"hidden": true,` and `"hidden": false,` lines. I don't know why some
 
 Here is what my final JSON looks like:
 
-```json linenums='1' hl_lines='6 11 17 23 29 35'
+```json linenums='1' hl_lines='6 11 17 23 29 35 41 47 53'
         "list":
         [
             {
