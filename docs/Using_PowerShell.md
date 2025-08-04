@@ -182,6 +182,9 @@ You can display history using:
 and search history using:
 `cat (Get-PSReadlineOption).HistorySavePath | Select-String <Something>`
 
+If you have been using a loaner laptop, you can delete the entire history file using:
+`Remove-Item (Get-PSReadlineOption).HistorySavePath`
+
 To make history persist across sessions open the $profile and paste this into the bottom of the file.
 
 ```bash linenums='1' hl_lines='2 20 49 54'
@@ -256,6 +259,12 @@ $ExecutionContext.InvokeCommand.PostCommandLookupAction = {
 ```
 
 Close PowerShell and reopen it. type `full-history` to see history from all sessions. The :material-arrow-up: and  :material-arrow-down: keys will navigate through the history.
+
+The code also adds line numbers link in Mac/Linux history.
+
+----------------------------------------------------------------
+
+![screenshot](img/history.png)
 
 ----------------------------------------------------------------
 
