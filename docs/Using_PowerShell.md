@@ -20,7 +20,7 @@ Multiple applications in one application
 - CMD.exe
 - Azure Cloud Shell
 
-Here is a screenshot of my Windows Terminal:
+Here is a screenshot of my Windows Terminal menu:
 
 ----------------------------------------------------------------
 ![screenshot](img/terminal1.png)
@@ -41,9 +41,9 @@ This article: [Windows Terminal vs. Command Prompt vs. PowerShell: Which Should 
 
 Installing the Windows Terminal is simple.
 
-- click the start menu
+- Click the start menu
 - Type `microsoft store` and press `enter`
-- search for `Windows Terminal`
+- Search for `Windows Terminal`
 - Click on the `Free` button
 - click on `Get`
 
@@ -69,7 +69,7 @@ In that case, run the following code to verify that PowerShell is up to date:
 
 #### Check the Powershell version
 
-Search `PowerShell` in Windows search bar and open it. Once you are in the PowerShell terminal you can check the version with `$PSVersionTable`. Here is what the output looked like on my fresh install:
+Search `terminal` in Windows search bar and open it. Click the :material-chevron-down: in the top menu and select PowerShell. Once you are in the PowerShell terminal you can check the version with `$PSVersionTable`. Here is what the output looked like on my fresh install:
 
 ```text
 (Discovery) PS C:\Users\mhubbard.PU\Documents\04_tools\Discovery> $PSVersionTable
@@ -138,9 +138,14 @@ Set-Alias -Name cl -Value Invoke-CsvLensWithArgs
 # --- End custom aliases for Discovery tool ---
 
  Invoke-Expression (& { (zoxide init powershell | Out-String) })
+
+# Load persistent PSReadLine history into session memory
+if (Test-Path (Get-PSReadlineOption).HistorySavePath) {
+    Get-Content (Get-PSReadlineOption).HistorySavePath | ForEach-Object { Add-History $_ }
+}
 ```
 
-The first line imports the `PSReadLine` module. This tells PowerShell to read the history file. I did a bunch of Gemini searching and PowerShell still isn't displaying history from the previous session. In other words, when I close PowerShell I lose the history.
+The first line imports the `PSReadLine` module. This tells PowerShell to read the history file.
 
 The next 4 lines setup a history search capability. That is so useful, if you have typed a command previously, you just type the first few letters and tap the up arrow. It will cycle through all commands that match.
 
@@ -154,6 +159,101 @@ The line `Set-Alias -Name cl -Value Invoke-CsvLensWithArgs`, builds the alias. I
 Finally, the line `Invoke-Expression (& { (zoxide init powershell | Out-String) })` adds `zoxide` to the profile. Zoxide is a tool that builds a database of the directories you go to then allows you to `jump` to them with just a few keystrokes.
 
 For example, once you have installed the scripts to the `Discovery` folder and navigated to them at least once you can just type `z dis` and it will jump you to the directory.
+
+#### Load the history file
+
+PowerShell's persistent history is primarily managed by the PSReadLine module. This module tracks the commands you enter and saves them to a history file.
+
+You can enter `(Get-PSReadlineOption).HistorySavePath` to find the location of the history file.
+
+**Windows**
+For me, the file is located at `C:\Users\mhubbard.PU\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt`.
+
+**Linux**
+For me, the file is located at `/home/mhubbard/.local/share/powershell/PSReadLine/ConsoleHost_history.txt`.
+
+When I closed PowerShell I lost the history. I did a bunch of `Gemini` searching and found you have to add some code to the `$profile` to make PowerShell display history from the previous session.
+
+You can display history using:
+`cat (Get-PSReadlineOption).HistorySavePath`
+
+and search history using:
+`cat (Get-PSReadlineOption).HistorySavePath | Select-String <Something>`
+
+To make history persist across sessions open the $profile and paste this into the bottom of the file.
+
+```bash linenums='1' hl_lines='1'
+# Load previous persistent history into current session's Get-History list
+function full-history {
+    $historyPath = (Get-PSReadlineOption).HistorySavePath
+    if (Test-Path $historyPath) {
+        $lines = Get-Content $historyPath | Where-Object { $_.Trim() -ne "" }
+        $index = 1
+        $lines | ForEach-Object {
+            [PSCustomObject]@{
+                Line    = $index
+                Command = $_
+            }
+            $index++
+        } | Format-Table -AutoSize
+    }
+    else {
+        Write-Host "No history file found."
+    }
+}
+
+function Invoke-HistoryNumber {
+    param(
+        [Parameter(Position=0, Mandatory=$true)]
+        [int]$LineNumber
+    )
+
+    $historyPath = (Get-PSReadlineOption).HistorySavePath
+    if (-not (Test-Path $historyPath)) {
+        Write-Host "History file not found."
+        return
+    }
+
+    $lines = Get-Content $historyPath | Where-Object { $_.Trim() -ne "" }
+
+    if ($LineNumber -lt 1 -or $LineNumber -gt $lines.Count) {
+        Write-Host "Invalid line number: $LineNumber"
+        return
+    }
+
+    $command = $lines[$LineNumber - 1]
+    Write-Host "`n> $command`n"
+
+    try {
+        Invoke-Expression $command
+    }
+    catch {
+        Write-Warning "Command failed: $_"
+    }
+}
+Set-Alias ! Invoke-HistoryNumber
+
+# Load previous session commands into PSReadLine session history
+# ~/.config/powershell/Microsoft.PowerShell_profile.ps1 or $PROFILE
+
+$ExecutionContext.InvokeCommand.PostCommandLookupAction = {
+    # Only run this once
+    if (-not $script:HistoryLoaded) {
+        $script:HistoryLoaded = $true
+
+        $historyPath = (Get-PSReadlineOption).HistorySavePath
+        if (Test-Path $historyPath) {
+            Get-Content $historyPath |
+                Where-Object { -not [string]::IsNullOrWhiteSpace($_) } |
+                ForEach-Object {
+                    [Microsoft.PowerShell.PSConsoleReadLine]::AddToHistory($_)
+                }
+        }
+    }
+}
+```
+
+Close PowerShell and reopen it. type `full-history` to see history from all sessions. The :material-arrow-up: and  :material-arrow-down: keys will navigate through the history.
 
 ----------------------------------------------------------------
 
