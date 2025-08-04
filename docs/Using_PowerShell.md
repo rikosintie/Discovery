@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------
 
-Here are the steps I took to get Windows terminal installed and the latest version of PowerShell configured with history and some other Linux like features.
+Here are the steps I took to get Windows terminal installed, the latest version of PowerShell configured with history and some other Linux like features. Also the `procs` tool for viewing processes in a Unix like format.
 
 ## Getting Started
 
@@ -155,16 +155,80 @@ Finally, the line `Invoke-Expression (& { (zoxide init powershell | Out-String) 
 
 For example, once you have installed the scripts to the `Discovery` folder and navigated to them at least once you can just type `z dis` and it will jump you to the directory.
 
+----------------------------------------------------------------
+
 ### Install Zoxide
 
 Zoxide works on Mac/Linux/Windows! The project is hosted on GitHub at [zoxide](https://github.com/ajeetdsouza/zoxide). To install on Windows:
 
-```text
+```bash
 winget install ajeetdsouza.zoxide
 zoxide init powershell
 ```
 
 The winget command does the install, the zoxide init powershell adds the line we saw above to the PowerShell profile. I cannot recommend `zoxide` enough.
+
+----------------------------------------------------------------
+
+### Install procs
+
+[Procs](https://github.com/dalance/procs) is a modern replacement for venerable Linux/Unix `ps` command written in `rust`. It's cross platform and available for Mac/Linux and Windows.
+
+**Features**
+
+- Colored and human-readable output
+    - Automatic theme detection based on terminal background
+- Multi-column keyword search
+- Some additional information which are not supported by ps
+    - TCP/UDP port
+    - Read/Write throughput
+    - Docker container name
+    - More memory information
+- Pager support
+- Watch mode (like top)
+- Tree view
+
+While not required, it's a nice tool and if you work on more than one OS it is nice to have common tools. Here is a screenshot of `procs` with no arguments:
+
+----------------------------------------------------------------
+
+![screenshot](img/procs.png)
+
+----------------------------------------------------------------
+
+**Search by non-numeric keyword**
+
+If you include a nonnumeric keyword, only processes matching the keyword will be shown. For example, to find processes starting with `wind`:
+
+`procs wind`
+
+----------------------------------------------------------------
+
+![secreenshot](img/procs-wind.png)
+
+----------------------------------------------------------------
+
+**Display dependencies in a tree view**
+
+`procs --tree`
+
+----------------------------------------------------------------
+
+![screenshot](img/procs-tree.png)
+
+----------------------------------------------------------------
+
+There are many more options for sorting, adding columns, viewing Docker containers, etc. Please visit the [Procs](https://github.com/dalance/procs) GitHub repo for full details.
+
+#### Installation
+
+From a `cmd.exe` shell, run:
+
+`winget install procs`
+
+You will need to close the terminal and reopen to use `procs`
+
+----------------------------------------------------------------
 
 ### Change the order in Terminal
 
