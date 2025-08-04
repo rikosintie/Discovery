@@ -167,9 +167,11 @@ PowerShell's persistent history is primarily managed by the PSReadLine module. T
 You can enter `(Get-PSReadlineOption).HistorySavePath` to find the location of the history file.
 
 **Windows**
+
 For me, the file is located at `C:\Users\mhubbard.PU\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt`.
 
 **Linux**
+
 For me, the file is located at `/home/mhubbard/.local/share/powershell/PSReadLine/ConsoleHost_history.txt`.
 
 When I closed PowerShell I lost the history. I did a bunch of `Gemini` searching and found you have to add some code to the `$profile` to make PowerShell display history from the previous session.
@@ -182,7 +184,7 @@ and search history using:
 
 To make history persist across sessions open the $profile and paste this into the bottom of the file.
 
-```bash linenums='1' hl_lines='1'
+```bash linenums='1' hl_lines='2 20 49 54'
 # Load previous persistent history into current session's Get-History list
 function full-history {
     $historyPath = (Get-PSReadlineOption).HistorySavePath
