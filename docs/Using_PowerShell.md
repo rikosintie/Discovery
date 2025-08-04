@@ -185,6 +185,14 @@ and search history using:
 If you have been using a loaner laptop, you can delete the entire history file using:
 `Remove-Item (Get-PSReadlineOption).HistorySavePath`
 
+Change how PowerShell command history is saved:
+
+```bash
+Set-PSReadlineOption -HistorySaveStyle SaveIncrementally # default
+Set-PSReadlineOption -HistorySaveStyle SaveAtExit
+Set-PSReadlineOption -HistorySaveStyle SaveNothing
+```
+
 To make history persist across sessions open the $profile and paste this into the bottom of the file.
 
 ```bash linenums='1' hl_lines='2 20 49 54'
