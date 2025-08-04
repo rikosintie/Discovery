@@ -289,7 +289,7 @@ The winget command does the install, the zoxide init powershell adds the line we
 
 ----------------------------------------------------------------
 
-### Install procs
+### Process monitor procs
 
 [Procs](https://github.com/dalance/procs) is a modern replacement for venerable Linux/Unix `ps` command written in `rust`. It's cross platform and available for Mac/Linux and Windows.
 
@@ -339,7 +339,7 @@ If you include a nonnumeric keyword, only processes matching the keyword will be
 
 There are many more options for sorting, adding columns, viewing Docker containers, etc. Please visit the [Procs](https://github.com/dalance/procs) GitHub repo for full details.
 
-#### Installation
+#### Install procs
 
 From a `cmd.exe` shell, run:
 
