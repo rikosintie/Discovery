@@ -1,4 +1,4 @@
-# Using PowerShell
+# PowerShell Win/Mac/Linux
 
 ----------------------------------------------------------------
 
@@ -215,10 +215,29 @@ function full-history {
     }
 }
 
-function Invoke-HistoryNumber {
-    param(
-        [Parameter(Position=0, Mandatory=$true)]
-        [int]$LineNumber
+# Show numbered history list like Bash
+function Show-HistoryList {
+    $historyPath = (Get-PSReadlineOption).HistorySavePath
+    if (-not (Test-Path $historyPath)) {
+        Write-Host "No history file found"
+        return
+    }
+
+    $lines = Get-Content $historyPath | Where-Object { $_.Trim() -ne "" }
+
+    $i = 1
+    foreach ($line in $lines) {
+        "{0,4}: {1}" -f $i, $line
+        $i++
+    }
+}
+Set-Alias h Show-HistoryList  # Use `h` to show numbered history
+
+# Run a command by its history line number
+function Run-HistoryCommand {
+    param (
+        [Parameter(Mandatory)]
+        [int]$Number
     )
 
     $historyPath = (Get-PSReadlineOption).HistorySavePath
@@ -229,24 +248,20 @@ function Invoke-HistoryNumber {
 
     $lines = Get-Content $historyPath | Where-Object { $_.Trim() -ne "" }
 
-    if ($LineNumber -lt 1 -or $LineNumber -gt $lines.Count) {
-        Write-Host "Invalid line number: $LineNumber"
+    if ($Number -lt 1 -or $Number -gt $lines.Count) {
+        Write-Host "Invalid history number: $Number"
         return
     }
 
-    $command = $lines[$LineNumber - 1]
+    $command = $lines[$Number - 1]
+
     Write-Host "`n> $command`n"
-
-    try {
-        Invoke-Expression $command
-    }
-    catch {
-        Write-Warning "Command failed: $_"
-    }
+    Invoke-Expression $command
 }
-Set-Alias ! Invoke-HistoryNumber
+Set-Alias rh Run-HistoryCommand  # Use `rh <n>` to run previous command
 
-# Load previous session commands into PSReadLine session history
+
+# ✅ Load previous session commands into PSReadLine session history
 # ~/.config/powershell/Microsoft.PowerShell_profile.ps1 or $PROFILE
 
 $ExecutionContext.InvokeCommand.PostCommandLookupAction = {
@@ -266,9 +281,31 @@ $ExecutionContext.InvokeCommand.PostCommandLookupAction = {
 }
 ```
 
-Close PowerShell and reopen it. type `full-history` to see history from all sessions. The :material-arrow-up: and  :material-arrow-down: keys will navigate through the history.
+Close PowerShell and reopen it. type `h` to see history from all sessions. The :material-arrow-up: and  :material-arrow-down: keys will navigate through the history.
 
-The code also adds line numbers link in Mac/Linux history.
+There is also an alias `rh history number` that will run the command given by the history number.
+
+The code also adds line numbers like in the Mac/Linux history.
+
+**example**
+
+```bash linenums='1' hl_lines='1'
+h
+   1: exit
+   2: echo $profile
+   3: nano $PROFILE
+  4: cl
+```
+
+Now rerun the `echo $profile` alias
+
+```bash linenums='1' hl_lines='1'
+rh 2
+> echo $profile
+/home/mhubbard/.config/powershell/Microsoft.PowerShell_profile.ps1
+```
+
+I ran this on Ubuntu, but it works on Windows and Mac the same way!
 
 ----------------------------------------------------------------
 
