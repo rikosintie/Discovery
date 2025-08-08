@@ -195,7 +195,7 @@ Set-PSReadlineOption -HistorySaveStyle SaveNothing
 
 To make history persist across sessions open the $profile and paste this into the bottom of the file.
 
-```bash linenums='1' hl_lines='2 20 49 54'
+```bash linenums='1' hl_lines='2 20 36 39 63'
 # Load previous persistent history into current session's Get-History list
 function full-history {
     $historyPath = (Get-PSReadlineOption).HistorySavePath
