@@ -172,7 +172,7 @@ One big advantage to using Windows terminal with PowerShell is that it stores th
 - pwd - Linux `Print Working Directory` command. Outputs the directory you are in.
 - rm - Linux `Remove Files` command
 
-If you are creating bash scripts `popd` adn `pushd` are useful. Having these aliases built in is great if you work on Mac, Linux and Windows since Mac/Linux share the same commands.
+If you are creating bash scripts `popd` and `pushd` are useful. Having these aliases built in is great if you work on Mac, Linux and Windows since Mac/Linux share the same commands.
 
 #### Install Bat on Windows
 
