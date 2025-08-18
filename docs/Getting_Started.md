@@ -266,6 +266,8 @@ You should see a path pointing to the Discovery folder, then venv/bin/python3. O
     lrwxrwxrwx - root  9 Apr 01:07  /bin/python3 -> python3.13
 ```
 
+Ubuntu 25.04 is not the LTS, 24.04 is. I installed 25.04 because I wanted to try out Gnome 48. The non LTS releases will have newer Kernels, and newer packages.
+
 ----------------------------------------------------------------
 
 ## 4. Install Dependencies
