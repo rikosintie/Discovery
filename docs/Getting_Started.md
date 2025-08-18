@@ -183,7 +183,7 @@ The `--upgrade-deps` argument tells python to upgrade pip to the latest version 
 ----------------------------------------------------------------
 
 !!! Note "Windows 11 24h2 issues"
-    I developed the script on a Windows 11 22h1 laptop. On June 29, 2025 I cloned the repo to a Windows 11 24h2 laptop to demo for a friend and nothing worked! For some reason, Windows 11 24h2 installs Python 13.1 which is bleeding edge and several of the libraries I use haven't been updated to work with 13.1.
+    I developed the script on a Windows 11 22h1 laptop. On June 29, 2025 I cloned the repo to a Windows 11 24h2 laptop to demo for a friend and nothing worked! For some reason, Windows 11 24h2 installs Python 13.1 which is brand new (July 2025 when this was written) and several of the libraries I use haven't been updated to work with 13.1.
 
 ----------------------------------------------------------------
 
@@ -251,6 +251,20 @@ which python3
 ```
 
 You should see a path pointing to the Discovery folder, then venv/bin/python3. On my machine that is `/home/mhubbard/04_tools/Discovery/venv/bin/python3`
+
+!!! note
+    You can use `which -a python3` to see all python binaries. On my new Ubuntu 25.04 build I see that Python 3.13 is installed:
+
+```bash hl_lines='1 5 7'
+    which -a python3
+    /home/mhubbard/Insync/GD/04_Tools/dheater/venv/bin/python3
+    /usr/bin/python3
+    /bin/python3
+    ls -l /usr/bin/python3
+    lrwxrwxrwx - root  9 Apr 01:07  /usr/bin/python3 -> python3.13
+    ls -l /bin/python3
+    lrwxrwxrwx - root  9 Apr 01:07  /bin/python3 -> python3.13
+```
 
 ----------------------------------------------------------------
 
