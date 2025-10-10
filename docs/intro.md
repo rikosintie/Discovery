@@ -247,13 +247,11 @@ This is not an exhaustive list, feel free to add to it.
 
 !!! Note Cisco hashing
 
-    ```text
     test(config)#username mhubbard secret ?
       1. 0      Specifies an UNENCRYPTED secret will follow
       1. 5      Specifies a MD5 HASHED secret will follow
       1. 8      Specifies a PBKDF2 HASHED secret will follow
       1. 9      Specifies a SCRYPT HASHED secret will follow
-```
 
 ----------------------------------------------------------------
 
