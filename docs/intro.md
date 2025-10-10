@@ -157,10 +157,10 @@ The script will pull any information that you put into the `<vendor-id>-config-f
 This is not an exhaustive list, feel free to add to it.
 
 1. What are the labeling requirements
-  a. Location on the equipment
-  b. What information
-  c. size
-  d. material
+    a. Location on the equipment
+    b. What information
+    c. size
+    d. material
 
 2. What are the Asset Tag requirements for switches, routers, servers?
 3. Is an escort required when we are on site?
@@ -168,81 +168,82 @@ This is not an exhaustive list, feel free to add to it.
 5. If after hours cut overs are required, who is the after hours contact?
 6. Will VPN be provided?
 7. When on site:
-  a. Are we allowed to connect our laptops to the network?
-  b. If not, will a jumpbox be provided?
- c. If using a jumpbox can we install tools like python or nmap?
+    1. Are we allowed to connect our laptops to the network?
+    1. If not, will a jumpbox be provided?
+    1. If using a jumpbox can we install tools like python or nmap?
 8. Can we use tools like nmap and Wireshark to discover devices?
- a. Here are some [nmap scripts](https://github.com/rikosintie/nmap-python) that I wrote for discovery.
+    1. Here are some [nmap scripts](https://github.com/rikosintie/nmap-python) that I wrote for discovery.
 9. Is a change request document required?
-  a. If so, how many days before the cut over?
-  b. Who creates the document?
-  c. Is there a template for the change request document?
-  d. Who approves the document?
-  e. Who will do the post cut over testing?
-  f. How long after the cut over until a sign off is completed?
+    1. If so, how many days before the cut over?
+    1. Who creates the document?
+    1. Is there a template for the change request document?
+    1. Who approves the document?
+    1. Who will do the post cut over testing?
+    1. How long after the cut over until a sign off is completed?
 10. If a monitoring tool such as Solarwinds Orion in use:
-  a. Who disables alerts for the devices being cut over?
-  b. Will we have access to monitor progress during the cut over?
-  c. Is a syslog server available that we can access?
+    1. Who disables alerts for the devices being cut over?
+    1. Will we have access to monitor progress during the cut over?
+    1. Is a syslog server available that we can access?
 11. Firmware
-  a. What firmware version should be installed?
-  b. If the project spans months, will switches be put on the current firmware before being deployed?
-  c. Who will upgrade the switches that have already been deployed?
+    1. What firmware version should be installed?
+    1. If the project spans months, will switches be put on the current firmware before being deployed?
+    1. Who will upgrade the switches that have already been deployed?
 12. Does the network team have access to M&O devices such as Environmental monitoring (BACnet), surveillance cameras, door access controls?
 13. Is DHCP used for non-server hosts i.e. cameras, door access panels, etc?
 14. If ClearPass will be used, DHCP allows devices to be profiled.
 15. Do you have a standard for host names?
-  a. A refresh is a good time to make a host name changes if needed.
+    1. A refresh is a good time to make a host name changes if needed.
 16. Do you have a management vlan?
-  a. If so, what are the management vlan IP addresses?
-  b. default gateway or gateway of last resort IP address?
+    1. If so, what are the management vlan IP addresses?
+    1. default gateway or gateway of last resort IP address?
 17. Authentication Server
-  a. Authentication Server IP address
-  b. Authentication Server credentials
+    1. Authentication Server IP address
+    1. Authentication Server credentials
 18. NTP Server
-  a. IP address
-  b. Authentication credentials
+    1. IP address
+    1. Authentication credentials
 19. Username/password for base configuration installation
-  a. Enable password for base configuration
+    1. Enable password for base configuration
+    2. Hashing type - scrypt recommeded :arrow: username Your-User algorithm-type scrypt secret Cleartext-Password
 20. Power cord connector requirements
-  a. NEMA 5-15 (Standard 120v plug)
-  b. NEMA L5-20 (120v twistlok plug)
-  c. NEMA L6-20 (240v twistlok plug)
-  d. IEC C14 (PDU Style plug)
+    1. NEMA 5-15 (Standard 120v plug)
+    2. NEMA L5-20 (120v twistlok plug)
+    3. NEMA L6-20 (240v twistlok plug)
+    4. IEC C14 (PDU Style plug)
 21. Routing protocols
-  a. Authentication type - Highly recommend using authentication to prevent takeover.
-  b. IPv4
-  c. IPv6 - If iPv6 isn't used, P2P routers are a good place to start
-  d. number of areas
+    1. Authentication type - Highly recommend using authentication to prevent takeover.
+    2. IPv4
+    3. IPv6 - If iPv6 isn't used, P2P routers are a good place to start
+    4. number of areas
 22. Rate Limits on edge ports
-  a. rate-limit broadcast
-  b. rate-limit multicast
-  c. rate-limit unknown-unicast
+    1. rate-limit broadcast
+    2. rate-limit multicast
+    3. rate-limit unknown-unicast
 23. Security
-  a. DHCP Snooping - Highly recommended, low effort to deploy
-  b. Dynamic ARP Inspection - Highly recommended. High effort to deploy
-  c. Authorized Managers - highly recommended
-  d. no tftp-server (only scp for copying files)
+    1. DHCP Snooping - Highly recommended, low effort to deploy
+    2. Dynamic ARP Inspection - Highly recommended. High effort to deploy
+    3. Authorized Managers - highly recommended
+    4. no tftp-server (only scp for copying files)
 24. snmp requirements
-  a. Version - V3 highly recommeded
-  b. community names
-  c. location
-  d. Required traps
+    1. Version - V3 highly recommeded
+    2. community names
+    3. location
+    4. Required traps
 25. What are the spanning-tree requirements?
-  a. Priority - Core should be lowest
-  b. root-guard - recommended
-  c. tcn-guard
-  d. loop-guard
-  e. mode - RPVST recommended
-  f. admin-edge-port
-  g. bpdu-protection - recommended
-  h. spanning-tree bpdu-protection-timeout 90
+    1. Priority - Core should be lowest
+    2. root-guard - recommended
+    3. tcn-guard
+    4. loop-guard
+    5. mode - RPVST recommended
+    6. admin-edge-port
+    7. bpdu-protection - recommended
+    8. spanning-tree bpdu-protection-timeout 90
 26. ssh - Old ciphers should be removed
-  a. Host Key type - ssh-rsa recommended
-  b. Ciphers - aes256-ctr recommended
-  c. MACs- hmac-sha2-512,hmac-sha2-256 recommended
-  d. key length - 2048 or larger recommended
-  e. Do you use ssh keys instead of passwords?
+    1. Host Key type - ssh-rsa recommended
+    2. Ciphers - aes256-ctr recommended
+    3. MACs- hmac-sha2-512,hmac-sha2-256 recommended
+    4. key length - 2048 or larger recommended
+    5. Do you use ssh keys instead of passwords?
 
 ----------------------------------------------------------------
 
