@@ -204,7 +204,7 @@ This is not an exhaustive list, feel free to add to it.
     1. Authentication credentials
 19. Username/password for base configuration installation
     1. Enable password for base configuration
-    2. Hashing type - scrypt recommended :fa-arrow-right: username Your-User algorithm-type scrypt secret Cleartext-Password
+    2. Hashing type - scrypt recommended -> username mhubbard algorithm-type scrypt secret Cleartext-Password
 20. Power cord connector requirements
     1. NEMA 5-15 (Standard 120v plug)
     2. NEMA L5-20 (120v twistlok plug)
@@ -248,10 +248,10 @@ This is not an exhaustive list, feel free to add to it.
 !!! Note Cisco hashing
 
     test(config)#username mhubbard secret ?
-      1. 0      Specifies an UNENCRYPTED secret will follow
-      1. 5      Specifies a MD5 HASHED secret will follow
-      1. 8      Specifies a PBKDF2 HASHED secret will follow
-      1. 9      Specifies a SCRYPT HASHED secret will follow
+    1. 0      Specifies an UNENCRYPTED secret will follow
+    1. 5      Specifies a MD5 HASHED secret will follow
+    1. 8      Specifies a PBKDF2 HASHED secret will follow
+    1. 9      Specifies a SCRYPT HASHED secret will follow
 
 ----------------------------------------------------------------
 
