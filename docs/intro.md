@@ -124,17 +124,17 @@ A `show running-configuration` is saved to the "Running" directory for each swit
 
 ## "Standard" Commands?
 
-This script started out to pull configs from Cisco 3750x switches. I was on a long term contract at a customer with about 500 Cisco 3750x switches and was moving to Aruba 6300CX.
+This script started out to pull configs from Cisco 3750x switches. I was on a long term contract at a customer with about 500 Cisco 3750x switches and was migrating to Aruba 6300CX switches.
 
 The script was a life saver pulling all the Change Request data automatically. I then used a great library called `cisco_config_parse` to read the Cisco running-configuration and convert it to Aruba CX format.
 
-When that contract ended I needed to do a refresh at at customer that had HPE Procurve switches. I thought "how hard could it be to add Procurve?" Well, it turned out to be an adventure. And then I wanted to pull some Cisco SG small business switch configs, then some Cisco XE. Wow, every vendor has a different way of naming commands. Here is a table that I started so that I could expand the script to cover almost any customer. You can see the problem of adding a new vendor to the mix. And any new vendor has to be supported by Netmiko and Google TextFSM. It's really a nightmare.
+When that contract ended I needed to do a refresh at customer that had HPE Procurve switches. I thought "how hard could it be to add Procurve?" Well, it turned out to be an adventure. And then I wanted to pull some Cisco SG small business switch configs, then some Cisco XE. Wow, every vendor has a different way of naming commands. Here is a table that I started so that I could expand the script to cover almost any customer. You can see the problem of adding a new vendor to the mix. And any new vendor has to be supported by Netmiko and Google TextFSM. It's really a nightmare.
 
 Then to create a port-map of IP, Vlan, Manufacturer I have to pull the mac-address table and parse it. But that is another challenge because:
 
 - hp_procurve - aabbcc-ddeeff
 - cisco ios - aabb.ccdd.eeff
-- aruba_cx - aa:bb:cc:dd:ee:ff
+- aruba_cx - aa\:bb\:cc\:dd\:ee\:ff
 - Windows aa-bb-cc-dd-ee-ff
 
 I finally wrote a python script to convert mac addresses from any format to all formats. It's named `convert-mac.py` and it gets installed when you clone the Discovery repo.
@@ -154,92 +154,95 @@ Currently I only have Procurve, cisco_ios and cisco_xe fully implemented.
 
 The script will pull any information that you put into the `<vendor-id>-config-file.txt` file but it can't answer all the questions! Here are some questions I ask during the kickoff meeting with the customer. Some of these questions are open ended and are meant to get the customer engaged in a conversation about the refresh.
 
-This is not a exhaustive list, feel free to add to it.
+This is not an exhaustive list, feel free to add to it.
 
-- What are the labeling requirements
-  - Location
-  - What information
-  - size
-  - material
-- What are the asset Tag requirements?
-- Is an escort required when we are on site?
-- How is access (Keys, codes, alarm codes, etc) granted?
-- If after hours cut overs are required, who is the after hours contact?
-- Will VPN be provided?
-- When on site:
-  - Are we allowed to connect our laptops to the network?
-  - If not, will a jumpbox be provided?
-  - If using a jumpbox can we install tools like python or nmap?
-- Can we use tools like nmap and Wireshark to discover devices?
-  - Here are some [nmap scripts](https://github.com/rikosintie/nmap-python) that I wrote for discovery.
-- Is a change request document required?
-  - If so, how many days before the cut over?
-  - Who creates the document?
-  - Is there a template for the change request document?
-- Who will do the post cut over testing?
-- How long after the cut over until a sign off is completed?
-- If a monitoring tool such as Solarwinds Orion in use:
-  - Who disables alerts for the devices being cut over?
-  - Will we have access to monitor progress during the cut over?
-- Is a syslog server available that we can access?
-- Firmware
-  - What firmware version should be installed?
-  - If the project spans months, will switches be put on the current firmware before being deployed?
-  - Who will upgrade the switches that have already been deployed?
-- Does the network team have access to M&O devices such as Environmental monitoring (BACnet), surveillance cameras, door access controls?
-- Is DHCP used for non-server hosts i.e. cameras, door access panels, etc?
-  - If ClearPass will be used, DHCP allows devices to be profiled.
-- Do you have a standard for host names?
-  - A refresh is a good time to make a host name changes if needed.
-- Do you have a management vlan?
-  - If so, what are the management vlan IP addresses?
-- default gateway or gateway of last resort IP address?
-- Authentication Server IP address
-- Authentication Server credentials
-- NTP Server
-  - IP address
-  - Authentication credentials
-- Username/password for base configuration installation
-- Enable password for base configuration
-- Power cord connector requirements
-  - NEMA 5-15 (Standard 120v plug)
-  - NEMA L5-20 (120v twistlok plug)
-  - NEMA L6-20 (240v twistlok plug)
-  - IEC C14 (PDU Style plug)
-- Routing protocols
-  - Authentication type
-  - IPv4
-  - IPv6
-  - number of areas
-- Rate Limits on edge ports
-  - rate-limit bcast
-  - rate-limit mcast
-  - rate-limit unknown-unicast in
-- Security
-  - DHCP Snooping?
-  - Dynamic ARP Inspection
-  - Authorized Managers
-  - no tftp-server (only scp for copying files)
-- snmp requirements
-  - Version
-  - community names
-  - location
-  - Required traps
-- What are the spanning-tree requirements?
-  - Priority
-  - root-guard
-  - tcn-guard
-  - loop-guard
-  - mode
-  - admin-edge-port
-  - bpdu-protection
-  - spanning-tree bpdu-protection-timeout 90
-- ssh - Old ciphers should be removed
-  - Host Key type?
-  - Ciphers?
-  - MACs?
-  - key length?
-  - Do you use ssh keys instead of passwords?
+1. What are the labeling requirements
+  a. Location on the equipment
+  b. What information
+  c. size
+  d. material
+
+2. What are the Asset Tag requirements for switches, routers, servers?
+3. Is an escort required when we are on site?
+4. How is access (Keys, codes, alarm codes, etc) granted?
+5. If after hours cut overs are required, who is the after hours contact?
+6. Will VPN be provided?
+7. When on site:
+  a. Are we allowed to connect our laptops to the network?
+  b. If not, will a jumpbox be provided?
+ c. If using a jumpbox can we install tools like python or nmap?
+8. Can we use tools like nmap and Wireshark to discover devices?
+ a. Here are some [nmap scripts](https://github.com/rikosintie/nmap-python) that I wrote for discovery.
+9. Is a change request document required?
+  a. If so, how many days before the cut over?
+  b. Who creates the document?
+  c. Is there a template for the change request document?
+  d. Who approves the document?
+  e. Who will do the post cut over testing?
+  f. How long after the cut over until a sign off is completed?
+10. If a monitoring tool such as Solarwinds Orion in use:
+  a. Who disables alerts for the devices being cut over?
+  b. Will we have access to monitor progress during the cut over?
+  c. Is a syslog server available that we can access?
+11. Firmware
+  a. What firmware version should be installed?
+  b. If the project spans months, will switches be put on the current firmware before being deployed?
+  c. Who will upgrade the switches that have already been deployed?
+12. Does the network team have access to M&O devices such as Environmental monitoring (BACnet), surveillance cameras, door access controls?
+13. Is DHCP used for non-server hosts i.e. cameras, door access panels, etc?
+14. If ClearPass will be used, DHCP allows devices to be profiled.
+15. Do you have a standard for host names?
+  a. A refresh is a good time to make a host name changes if needed.
+16. Do you have a management vlan?
+  a. If so, what are the management vlan IP addresses?
+  b. default gateway or gateway of last resort IP address?
+17. Authentication Server
+  a. Authentication Server IP address
+  b. Authentication Server credentials
+18. NTP Server
+  a. IP address
+  b. Authentication credentials
+19. Username/password for base configuration installation
+  a. Enable password for base configuration
+20. Power cord connector requirements
+  a. NEMA 5-15 (Standard 120v plug)
+  b. NEMA L5-20 (120v twistlok plug)
+  c. NEMA L6-20 (240v twistlok plug)
+  d. IEC C14 (PDU Style plug)
+21. Routing protocols
+  a. Authentication type - Highly recommend using authentication to prevent takeover.
+  b. IPv4
+  c. IPv6 - If iPv6 isn't used, P2P routers are a good place to start
+  d. number of areas
+22. Rate Limits on edge ports
+  a. rate-limit broadcast
+  b. rate-limit multicast
+  c. rate-limit unknown-unicast
+23. Security
+  a. DHCP Snooping - Highly recommended, low effort to deploy
+  b. Dynamic ARP Inspection - Highly recommended. High effort to deploy
+  c. Authorized Managers - highly recommended
+  d. no tftp-server (only scp for copying files)
+24. snmp requirements
+  a. Version - V3 highly recommeded
+  b. community names
+  c. location
+  d. Required traps
+25. What are the spanning-tree requirements?
+  a. Priority - Core should be lowest
+  b. root-guard - recommended
+  c. tcn-guard
+  d. loop-guard
+  e. mode - RPVST recommended
+  f. admin-edge-port
+  g. bpdu-protection - recommended
+  h. spanning-tree bpdu-protection-timeout 90
+26. ssh - Old ciphers should be removed
+  a. Host Key type - ssh-rsa recommended
+  b. Ciphers - aes256-ctr recommended
+  c. MACs- hmac-sha2-512,hmac-sha2-256 recommended
+  d. key length - 2048 or larger recommended
+  e. Do you use ssh keys instead of passwords?
 
 ----------------------------------------------------------------
 
