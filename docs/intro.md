@@ -246,11 +246,15 @@ This is not an exhaustive list, feel free to add to it.
     5. Do you use ssh keys instead of passwords?
 
 !!! Note Cisco hashing
-    `test(config)#username mhubbard secret ?`
-    - 0      Specifies an UNENCRYPTED secret will follow
-    - 5      Specifies a MD5 HASHED secret will follow
-    - 8      Specifies a PBKDF2 HASHED secret will follow
-    - 9      Specifies a SCRYPT HASHED secret will follow
+
+    ```text
+    test(config)#username mhubbard secret ?
+      - 0      Specifies an UNENCRYPTED secret will follow
+      - 5      Specifies a MD5 HASHED secret will follow
+      - 8      Specifies a PBKDF2 HASHED secret will follow
+      - 9      Specifies a SCRYPT HASHED secret will follow
+```
+
 ----------------------------------------------------------------
 
 ## License
