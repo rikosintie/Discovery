@@ -264,6 +264,32 @@ Cisco has added strong ciphers to newer versions of IOS(XE) and NXoS.
 
 ----------------------------------------------------------------
 
+### Customer Effort Post Cutover Validation Checklist
+
+Please enumerate all the applications and services that will be tested after the cutover is completed to validate that operations are successfully resumed and ready for production.
+
+**Example Validation Checklist**
+
+- Inbound Calling ✅
+- Outbound Calling✅
+- App A access✅
+- App B access✅
+- App C access✅
+- VPN IPSec connectivity✅
+- VPN Dial In Remote✅
+- WAN NAT DMZ App 1 URL Https✅
+- WAN NAT DMZ App 2 URL Https✅
+- Inbound NAT SFTP Transfer ✅
+- Fileshare 1 ✅
+- Fileshare 2 ✅
+- Fileshare 3 ✅
+- Print Services ✅
+- list any other service ✅
+
+PLEASE CUSTOMER - DO NOT RELY ON JUST ICMP/PING TO VALIDATE
+
+----------------------------------------------------------------
+
 ## License
 
 This project is licensed under the Unlicense - see the LICENSE file for details.
