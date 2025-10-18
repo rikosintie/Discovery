@@ -247,7 +247,11 @@ This is not an exhaustive list, feel free to add to it.
 
 ----------------------------------------------------------------
 
-Cisco has added strong ciphers to newer versions of IOS(XE) and NXoS. Type 9 is [scrypt](https://www.cyberyen.org/docs/scrypt) which is a "memory Hard" hash that is very difficult to reverse.
+Cisco has added strong ciphers to newer versions of IOS(XE) and NXoS.
+
+- Type 9 is [scrypt](https://www.cyberyen.org/docs/scrypt) which is a "memory Hard" hash that is very difficult to reverse.
+- Type 8 is [PBKDF2](https://cryptobook.nakov.com/mac-and-key-derivation/pbkdf2) is a cryptographic key derivation function, which is resistant to dictionary attacks and rainbow table attacks. It is based on iteratively deriving HMAC many times with some padding. The PBKDF2 algorithm is described in the Internet standard RFC 2898 (PKCS #5).
+- Type 5 is Message Digest 5 without salt so it is very easy to reverse using Hashcat or John the Ripper. You can sometimes paste the hash from the config into Google and find the plaintext password!
 
 !!! Cisco-Hashing
     ```text
