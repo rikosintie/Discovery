@@ -245,7 +245,11 @@ This is not an exhaustive list, feel free to add to it.
     4. key length - 2048 or larger recommended
     5. Do you use ssh keys instead of passwords?
 
-!!! Cisco Hashing
+----------------------------------------------------------------
+
+Cisco has added strong ciphers to newer versions of IOS(XE) and NXoS. Type 9 is [scrypt](https://www.cyberyen.org/docs/scrypt) which is a "memory Hard" hash that is very difficult to reverse.
+
+!!! Cisco-Hashing
     ```text
     test(config)#username mhubbard secret ?
        1. 0      Specifies an UNENCRYPTED secret will follow
