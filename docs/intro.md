@@ -238,14 +238,14 @@ This is not an exhaustive list, feel free to add to it.
     6. admin-edge-port
     7. bpdu-protection - recommended
     8. spanning-tree bpdu-protection-timeout 90
-26. ssh - Old ciphers should be removed
+26. ssh - [Old ciphers should be removed](https://rikosintie.github.io/Ubuntu4NetworkEngineers/SSH/#what-cryptographic-algorithms-should-i-use)
     1. Host Key type - ssh-rsa recommended
     2. Ciphers - aes256-ctr recommended
     3. MACs- hmac-sha2-512,hmac-sha2-256 recommended
     4. key length - 2048 or larger recommended
     5. Do you use ssh keys instead of passwords?
 
-!!! Note Cisco hashing
+!!! Cisco Hashing
     ```text
     test(config)#username mhubbard secret ?
        1. 0      Specifies an UNENCRYPTED secret will follow
