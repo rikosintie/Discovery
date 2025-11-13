@@ -165,10 +165,10 @@ This is not an exhaustive list, feel free to add to it.
 2. What are the Asset Tag requirements for switches, routers, servers?
 3. Is an escort required when we are on site?
 4. How is access granted
-   1. Keys
-   2. Badges
-   3. Keypad Code
-   4. Alarm codes
+    1. Keys
+    1. Badges
+    1. Keypad Code
+    1. Alarm codes
 5. If after hours cut overs are required, who is the after hours contact?
 6. Will VPN be provided?
 7. When on site:
