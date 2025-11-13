@@ -157,10 +157,10 @@ The script will pull any information that you put into the `<vendor-id>-config-f
 This is not an exhaustive list, feel free to add to it.
 
 1. What are the labeling requirements
-    a. Location on the equipment
-    b. What information
-    c. size
-    d. material
+    1. Location on the equipment
+    1. What information
+    1. size
+    1. material
 
 2. What are the Asset Tag requirements for switches, routers, servers?
 3. Is an escort required when we are on site?
