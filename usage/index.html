@@ -1,0 +1,2085 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A site dedicated to the Network Discovery project.">
+      
+      
+        <meta name="author" content="Michael Hubbard (@rikosintie)">
+      
+      
+        <link rel="canonical" href="https://discovery.rikosintie.com/usage/">
+      
+      
+        <link rel="prev" href="../Getting_Started/">
+      
+      
+        <link rel="next" href="../Helper-scripts/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon-alien-32x32.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Usage - Discovery</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.5%207.75A.75.75%200%200%201%207.25%207h1a.75.75%200%200%201%20.75.75v2.75h.25a.75.75%200%200%201%200%201.5h-2a.75.75%200%200%201%200-1.5h.25v-2h-.25a.75.75%200%200%201-.75-.75M8%206a1%201%200%201%201%200-2%201%201%200%200%201%200%202%22/%3E%3C/svg%3E');--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1%207.775V2.75C1%201.784%201.784%201%202.75%201h5.025c.464%200%20.91.184%201.238.513l6.25%206.25a1.75%201.75%200%200%201%200%202.474l-5.026%205.026a1.75%201.75%200%200%201-2.474%200l-6.25-6.25A1.75%201.75%200%200%201%201%207.775m1.5%200c0%20.066.026.13.073.177l6.25%206.25a.25.25%200%200%200%20.354%200l5.025-5.025a.25.25%200%200%200%200-.354l-6.25-6.25a.25.25%200%200%200-.177-.073H2.75a.25.25%200%200%200-.25.25ZM6%205a1%201%200%201%201%200%202%201%201%200%200%201%200-2%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M3.499.75a.75.75%200%200%201%201.5%200v.996C5.9%202.903%206.793%203.65%207.662%204.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873%2010.794-.045%2012.622.26%2014.408.558%2016%201.94%2016%204.25c0%201.278-.954%202.575-2.44%202.734l.146.508.065.22c.203.701.412%201.455.476%202.226.142%201.707-.4%203.03-1.487%203.898C11.714%2014.671%2010.27%2015%208.75%2015h-6a.75.75%200%200%201%200-1.5h1.376a4.5%204.5%200%200%201-.563-1.191%203.84%203.84%200%200%201-.05-2.063%204.65%204.65%200%200%201-2.025-.293.75.75%200%200%201%20.525-1.406c1.357.507%202.376-.006%202.698-.318l.009-.01a.747.747%200%200%201%201.06%200%20.75.75%200%200%201-.012%201.074c-.912.92-.992%201.835-.768%202.586.221.74.745%201.337%201.196%201.621H8.75c1.343%200%202.398-.296%203.074-.836.635-.507%201.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.4%202.4%200%200%201-.507-.441%203.1%203.1%200%200%201-.633-1.248.75.75%200%200%201%201.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738%200%201.25-.615%201.25-1.25%200-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706%201.345-.46.92-.27%201.774.019%203.062l.042.19.01.05c.348.443.666.949.94%201.553a.75.75%200%201%201-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7%205.527c-.814-.68-1.75-1.462-2.692-2.619a3.7%203.7%200%200%200-1.023.88c-.406.495-.663%201.036-.722%201.508.116.122.306.21.591.239.388.038.797-.06%201.032-.19a.75.75%200%200%201%20.728%201.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75%205.677V5.5c0-.984.48-1.94%201.077-2.664.46-.559%201.05-1.055%201.673-1.353z%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M6.457%201.047c.659-1.234%202.427-1.234%203.086%200l6.082%2011.378A1.75%201.75%200%200%201%2014.082%2015H1.918a1.75%201.75%200%200%201-1.543-2.575Zm1.763.707a.25.25%200%200%200-.44%200L1.698%2013.132a.25.25%200%200%200%20.22.368h12.164a.25.25%200%200%200%20.22-.368Zm.53%203.996v2.5a.75.75%200%200%201-1.5%200v-2.5a.75.75%200%200%201%201.5%200M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M13.78%204.22a.75.75%200%200%201%200%201.06l-7.25%207.25a.75.75%200%200%201-1.06%200L2.22%209.28a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018L6%2010.94l6.72-6.72a.75.75%200%200%201%201.06%200%22/%3E%3C/svg%3E');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.92%206.085h.001a.749.749%200%201%201-1.342-.67c.169-.339.436-.701.849-.977C6.845%204.16%207.369%204%208%204a2.76%202.76%200%200%201%201.637.525c.503.377.863.965.863%201.725%200%20.448-.115.83-.329%201.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6%206%200%200%200-.26.16%201%201%200%200%200-.276.245.75.75%200%200%201-1.248-.832c.184-.264.42-.489.692-.661q.154-.1.313-.195l.007-.004c.1-.061.182-.11.258-.161a1%201%200%200%200%20.277-.245C8.96%206.514%209%206.427%209%206.25a.61.61%200%200%200-.262-.525A1.27%201.27%200%200%200%208%205.5c-.369%200-.595.09-.74.187a1%201%200%200%200-.34.398M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.344%202.343za8%208%200%200%201%2011.314%2011.314A8.002%208.002%200%200%201%20.234%2010.089a8%208%200%200%201%202.11-7.746m1.06%2010.253a6.5%206.5%200%201%200%209.108-9.275%206.5%206.5%200%200%200-9.108%209.275M6.03%204.97%208%206.94l1.97-1.97a.749.749%200%200%201%201.275.326.75.75%200%200%201-.215.734L9.06%208l1.97%201.97a.749.749%200%200%201-.326%201.275.75.75%200%200%201-.734-.215L8%209.06l-1.97%201.97a.749.749%200%200%201-1.275-.326.75.75%200%200%201%20.215-.734L6.94%208%204.97%206.03a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018%22/%3E%3C/svg%3E');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M9.504.43a1.516%201.516%200%200%201%202.437%201.713L10.415%205.5h2.123c1.57%200%202.346%201.909%201.22%203.004l-7.34%207.142a1.25%201.25%200%200%201-.871.354h-.302a1.25%201.25%200%200%201-1.157-1.723L5.633%2010.5H3.462c-1.57%200-2.346-1.909-1.22-3.004zm1.047%201.074L3.286%208.571A.25.25%200%200%200%203.462%209H6.75a.75.75%200%200%201%20.694%201.034l-1.713%204.188%206.982-6.793A.25.25%200%200%200%2012.538%207H9.25a.75.75%200%200%201-.683-1.06l2.008-4.418.003-.006-.004-.009-.006-.006-.008-.001q-.005%200-.009.004%22/%3E%3C/svg%3E');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M4.72.22a.75.75%200%200%201%201.06%200l1%20.999a3.5%203.5%200%200%201%202.441%200l.999-1a.748.748%200%200%201%201.265.332.75.75%200%200%201-.205.729l-.775.776c.616.63.995%201.493.995%202.444v.327q0%20.15-.025.292c.408.14.764.392%201.029.722l1.968-.787a.75.75%200%200%201%20.556%201.392L13%207.258V9h2.25a.75.75%200%200%201%200%201.5H13v.5q-.002.615-.141%201.186l2.17.868a.75.75%200%200%201-.557%201.392l-2.184-.873A5%205%200%200%201%208%2016a5%205%200%200%201-4.288-2.427l-2.183.873a.75.75%200%200%201-.558-1.392l2.17-.868A5%205%200%200%201%203%2011v-.5H.75a.75.75%200%200%201%200-1.5H3V7.258L.971%206.446a.75.75%200%200%201%20.558-1.392l1.967.787c.265-.33.62-.583%201.03-.722a1.7%201.7%200%200%201-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72%201.28a.75.75%200%200%201%200-1.06m.53%206.28a.75.75%200%200%200-.75.75V11a3.5%203.5%200%201%200%207%200V7.25a.75.75%200%200%200-.75-.75ZM6.173%205h3.654A.17.17%200%200%200%2010%204.827V4.5a2%202%200%201%200-4%200v.327c0%20.096.077.173.173.173%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5%205.782V2.5h-.25a.75.75%200%200%201%200-1.5h6.5a.75.75%200%200%201%200%201.5H11v3.282l3.666%205.76C15.619%2013.04%2014.543%2015%2012.767%2015H3.233c-1.776%200-2.852-1.96-1.899-3.458Zm-2.4%206.565a.75.75%200%200%200%20.633%201.153h9.534a.75.75%200%200%200%20.633-1.153L12.225%2010.5h-8.45ZM9.5%202.5h-3V6c0%20.143-.04.283-.117.403L4.73%209h6.54L9.617%206.403A.75.75%200%200%201%209.5%206Z%22/%3E%3C/svg%3E');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1.75%202.5h10.5a.75.75%200%200%201%200%201.5H1.75a.75.75%200%200%201%200-1.5m4%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5m0%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5M2.5%207.75v6a.75.75%200%200%201-1.5%200v-6a.75.75%200%200%201%201.5%200%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRed+Hat+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Red Hat Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Usage - Discovery" />
+<meta property="og:description" content="A site dedicated to the Network Discovery project." />
+<meta property="og:image" content="https://discovery.rikosintie.com/assets/images/social/usage.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://discovery.rikosintie.com/usage/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="Usage - Discovery" />
+<meta property="twitter:description" content="A site dedicated to the Network Discovery project." />
+<meta property="twitter:image" content="https://discovery.rikosintie.com/assets/images/social/usage.png" />
+</head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#using-the-script" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Discovery" class="md-header__button md-logo" aria-label="Discovery" data-md-component="logo">
+      
+  <img src="../img/favicon-16x16.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Discovery
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Usage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../intro/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Intro
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Getting_Started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Usage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Helper-scripts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Helper Scripts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Using_PowerShell/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  PowerShell
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../SECURITY/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Security Policy
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Discovery" class="md-nav__button md-logo" aria-label="Discovery" data-md-component="logo">
+      
+  <img src="../img/favicon-16x16.png" alt="logo">
+
+    </a>
+    Discovery
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Intro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Getting_Started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create-the-device-inventory-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create the device inventory file
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Create the device inventory file">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#csvlens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSVLENS
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CSVLENS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-on-maclinux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install on Mac/Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-an-alias-for-csvlens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create an alias for csvlens
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-csvlens-on-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install CSVLENS on Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-bat-on-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install Bat on Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Password
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Password">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#creating-an-environment-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating an Environment Variable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#being-prompted-for-the-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Being prompted for the password
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update-the-config-filetxt-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update the -config-file.txt file
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Update the -config-file.txt file">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pulling-the-mac-address-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pulling the mac address table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cisco-ios-mac-address-table-exclude" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cisco IOS mac address table exclude
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cisco-xe-mac-address-table-exclude" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cisco XE mac address table exclude
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run-the-discovery-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run the discovery script
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Run the discovery script">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-options-are-available" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What options are available
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-do-the-arguments-do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What do the arguments do
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What do the arguments do">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#collecting-switch-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Collecting switch logs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#procurve-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procurve logs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cisco-logs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cisco Logs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-the-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setting the Password
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSH Logging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timeout
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#argument-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Argument Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#failure-to-connect-to-a-switch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure to connect to a switch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Failure to connect to a switch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-nmap-to-verify-switches-are-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use nmap to verify switches are up
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Use nmap to verify switches are up">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        THe process
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-nmap-to-verify-the-credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use nmap to verify the credentials
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-a-list-of-switches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building a list of switches
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Building a list of switches">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#review-the-bootstrap-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Review the bootstrap report
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#opening-the-report-in-a-chromium-based-browser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Opening the report in a Chromium based browser
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternative-ways-to-view-the-report-in-a-chromium-browser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alternative ways to view the report in a Chromium browser
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alternative ways to view the report in a Chromium browser">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#use-chrome-or-edge-browser-with-the-allow-allow-file-access-from-files-flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Chrome or edge browser with the allow --allow-file-access-from-files flag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-firefox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use Firefox
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-a-local-http-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use a local http server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#emoji-codes-used-in-the-panel-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emoji codes used in the panel function
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#emoji-codes-for-status-panels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emoji Codes for Status Panels
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Helper-scripts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helper Scripts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Using_PowerShell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PowerShell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SECURITY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security Policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="using-the-script">Using the Script</h1>
+<hr />
+<p><img alt="screenshot" src="../img/female-ne-tux-usage.resized.jpeg" /></p>
+<hr />
+<p>There are a few steps that need to be completed before starting the discovery process:</p>
+<ul>
+<li>Create a device inventory file</li>
+<li>Make changes to the procurve-config-file.txt file (if needed)</li>
+<li>Decide how you want store the password</li>
+<li>Update the mac.txt file to match the format of the switches</li>
+</ul>
+<hr />
+<h2 id="create-the-device-inventory-file">Create the device inventory file</h2>
+<p>You must create a csv file that contains the following:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>switch ip
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>netmiko vendor_id
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>switch hostname
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>username
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>format that the device needs to output mac addresses per interface
+</span></code></pre></div>
+<p>The supported Netmiko vendor_ids are:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>hp_procurve
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cisco_ios
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>cisco_xe
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>cisco_nx
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>aruba_cx
+</span></code></pre></div>
+<p>The format for each line in the <code>device-inventory</code> file is:</p>
+<p><code>ip_address,vendor_id,hostname,user,command to display mac addresses per intf</code></p>
+<p>Here is an example of a <code>device-inventory</code> file:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>192.168.10.52,hp_procurve,Procurve-2920-24,mhubbard,show mac-addre
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>192.168.10.253,cisco_xe,3850,mhubbard,show mac addr int
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>192.168.10.54,cisco_xe,4500,mhubbard,show mac addr int
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>192.168.10.15,cisco_ios,2960s,mhubbard,show mac addr int
+</span></code></pre></div>
+<p>In this example, there are hp_procurve, cisco_xe and cisco_ios devices. You can have as many devices in the file as you need. I have had as many 50 in one file.</p>
+<p><strong>Create one line for every switch that you want to process.</strong></p>
+<p>You can use either a spreadsheet program or a text editor to create the inventory file but it must have a ".csv" file extension. If you use vscode, there is a plugin called <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow CSV</a> that allows you to work with csv files in vscode. It also allows you to use SQL syntax to query the file. Very nice if the file gets to be long. Below is a screenshot to the Rainbow CSV <code>RBQL Console</code>. RBQL is short for Rainbow Query Language.</p>
+<hr />
+<p><img alt="screenshot" src="../img/Rainbow-parameters.png" /></p>
+<hr />
+<p>Rainbow CSV also has an <code>align</code> feature that makes it easier to read the columns. Here is a screenshot of a device file opened in vs code with Rainbow csv:</p>
+<hr />
+<p><img alt="screenshot" src="../img/Rainbow_csv.png" /></p>
+<hr />
+<p>Save the file as <code>device-inventory-&lt;site name&gt;.csv</code> in the root of the project folder.</p>
+<p>For example,
+<code>device-inventory-HQ.csv</code></p>
+<p>There is a sample file named device-inventory-area1.csv in the project. The site name is just a tag so that you can have as many device-inventory files as you need. At a large customer this might be the MDF and then a series of IDFs.</p>
+<h3 id="csvlens">CSVLENS</h3>
+<p>There is also a great terminal tool called <code>csvlens</code>. It's an open source project on <a href="https://github.com/YS-L/csvlens">GitHub csvlens</a>. It's cross platform and runs on Mac/Linux/Windows.</p>
+<h4 id="install-on-maclinux">Install on Mac/Linux</h4>
+<p>Homebrew is easiest way to install</p>
+<p><code>brew install csvlens</code> and your are done.</p>
+<p>If you don't use homebrew you can go to the <a href="https://github.com/YS-L/csvlens/releases">releases page</a>, download the tarball and install using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>tar<span class="w"> </span>xvf<span class="w"> </span>csvlens-x86_64-unknown-linux-gnu.tar.xz
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">cd</span><span class="w"> </span>csvlens-x86_64-unknown-linux-gnu
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>sudo<span class="w"> </span>mv<span class="w"> </span>csvlens<span class="w"> </span>/usr/bin
+</span></code></pre></div>
+<p>The mv command <code>moves</code> csvlens to `/usr/bin' so that you can call it from anywhere.</p>
+<p>The problem with installing csvlens this way is that you don't get automatic updates. This is a very active project and updates usually add nice features. You will have to manually download the tar file and repeat the process.</p>
+<p>Version 0.13.0 release notes:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>    Add --color-columns to display each column in a different color (#39)
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    Add --prompt to show a custom prompt message in the status bar (#135)
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    Expose freeze columns option in library usage (#124 by @jqnatividad)
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    Improve visibility of line numbers and borders
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    Add aarch64 release targets (#55)
+</span></code></pre></div>
+<p>The --color-columns is a nice addition. To view the device-inventory-home.csv file with colored columns use <code>csvlens --no-headers --color-columns device-inventory-home.csv</code>.</p>
+<h4 id="create-an-alias-for-csvlens">Create an alias for csvlens</h4>
+<p>You can create an alias in your ~/.bashrc or ~/.zshrc file:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># csvlens with colored columns</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">alias</span><span class="w"> </span><span class="nv">csvlens</span><span class="o">=</span><span class="s1">&#39;()csvlens --no-headers --color-columns $1&#39;</span>
+</span></code></pre></div>
+<p>Then use <code>csvlens device-inventory-home.csv</code> to get colors and no header.</p>
+<hr />
+<p><img alt="screenshot" src="../img/csvlens-color.png" /></p>
+<hr />
+<h4 id="install-csvlens-on-windows">Install CSVLENS on Windows</h4>
+<p><code>winget install --id YS-L.csvlens</code></p>
+<p>It's a little more of a challenge to on Windows to create the alias. You will need to use PowerShell as your terminal and update the profile text file. First, open a powershell terminal. I recommend installing the Windows Terminal so that you can have cmd.exe, PowerShell, and WSL terminals in one place. Then enter <code>notepad $PROFILE</code> to open the PowerShell profile for editing. Paste this into the bottom of the text file:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c"># Simplified function to run csvlens with specified arguments using @args</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">function</span> <span class="nb">Invoke-CsvLensWithArgs</span> <span class="p">{</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="n">csvlens</span><span class="p">.</span><span class="n">exe</span> <span class="p">-</span><span class="n">-color-columns</span> <span class="p">-</span><span class="n">-no-headers</span> <span class="nv">@args</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="p">}</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c"># Alias for the &#39;Invoke-CsvLensWithArgs&#39; function (explicitly set to Global scope)</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="nb">Set-Alias</span> <span class="n">-Name</span> <span class="n">cl</span> <span class="n">-Value</span> <span class="nb">Invoke-CsvLensWithArgs</span> <span class="n">-Scope</span> <span class="n">Global</span>
+</span></code></pre></div>
+<p>Save and close the file. Then back in the PowerShell terminal enter:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">echo </span><span class="nv">$PROFILE</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nb">type </span><span class="nv">$PROFILE</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">.</span> <span class="nv">$PROFILE</span>
+</span></code></pre></div>
+<p>This will:</p>
+<ul>
+<li>display the path to the <code>$PROFILE</code> file</li>
+<li>print the contents of the <code>$PROFILE</code> file</li>
+<li>reload the profile so that the alias works</li>
+</ul>
+<p>One big advantage to using Windows terminal with PowerShell is that it stores the history of your commands in a file. So you can close the terminal but not lose your history. PowerShell also comes with builtin aliases for several Linux commands like:</p>
+<ul>
+<li>cat - The Linux <code>cat</code> command to concatenate or display text files.</li>
+<li>clear - Clear the screen.</li>
+<li>cp - Linux copy command to copy files.</li>
+<li>echo - Echo text to the screen (stdout in Linux terms)</li>
+<li>ls - Linux <code>List Files</code> command</li>
+<li>mkdir - Linux Make Directory command</li>
+<li>mv - Linux move files command</li>
+<li>popd - Linux command to pop to the top level directory off the stack</li>
+<li>pushd - Linux command to push the current directory to the top of the stack</li>
+<li>pwd - Linux <code>Print Working Directory</code> command. Outputs the directory you are in.</li>
+<li>rm - Linux <code>Remove Files</code> command</li>
+</ul>
+<p>If you are creating bash scripts <code>popd</code> and <code>pushd</code> are useful. Having these aliases built in is great if you work on Mac, Linux and Windows since Mac/Linux share the same commands.</p>
+<h4 id="install-bat-on-windows">Install Bat on Windows</h4>
+<p>As long as we are installing cool utilities on Windows we should install <code>bat</code>. Bat is like <code>cat</code> on Linux but works on Windows also.</p>
+<p><code>winget install sharkdp.bat</code></p>
+<p>After that you can do <code>bat device-inventory-home.csv</code> and get a nice formatted, colored output. The advantage to <code>bat</code> over <code>csvlens</code> is that it works with any text file.</p>
+<hr />
+<h2 id="password">Password</h2>
+<p>Handling credentials is always an area of concern. The script supports two methods:</p>
+<ul>
+<li>Create an environment variable "cyberARK" and save the password to the variable.</li>
+<li>include <code>-p 1</code> on the command line to be prompted for the password</li>
+</ul>
+<p>Neither method is perfect but using either the environment variable or being prompted is more secure than having a csv file with plaintext passwords in it.</p>
+<h3 id="creating-an-environment-variable">Creating an Environment Variable</h3>
+<p>On Windows you use control panel to create a "user environment variable". You can follow these instructions <a href="https://www.tenforums.com/tutorials/121664-set-new-user-system-environment-variables-windows.html">user environment variables</a>. You have to log out and log in again to make the environment variable active.</p>
+<p>Set environment variable on macOS/Linux</p>
+<p>From the terminal that you will run the script in <code>export cyberARK=&lt;Password&gt;</code>, for example <code>export cyberARK=Sup3rs3cr3t</code>. You have to do the export in the terminal that the script will be run in. If you are using vscode and debugging in vscode, that means the vscode terminal.</p>
+<h3 id="being-prompted-for-the-password">Being prompted for the password</h3>
+<p>This is easier than setting up environment variable. You simply add <code>-p 1</code> to the command line.</p>
+<p>For example, to run the script for a site named HQ:</p>
+<p><code>python3 config-pull.py -s HQ -p 1</code></p>
+<p>When you press enter, you will see "Input the Password:" on the command line. Enter the password and press [enter]</p>
+<hr />
+<h2 id="update-the-config-filetxt-file">Update the <vendor_id>-config-file.txt file</h2>
+<p>This file contains all of the <code>show commands</code> that will be sent to the switches. The project includes sample files for hp_procurve, cisco_ios, and cisco_xe switches. The sample files have over 50 commands in them, including many that may not apply to the customer:</p>
+<ul>
+<li>show lacp peer</li>
+<li>show lacp local</li>
+<li>show lacp mad-passthrough</li>
+<li>show dhcp-server binding</li>
+<li>show dhcp-server pool</li>
+</ul>
+<p>If you don't need them for a particular customer you can just open the file and delete any that you don't need or add any that you do need. The goal is to have all the data needed to satisfy the Change Request requirements.</p>
+<p>The script looks for <code>&lt;vendor-id&gt;-config-file.txt</code>. You have to use that exact format. Since the script supports the following Netmiko vendor_ids:</p>
+<ul>
+<li>hp_procurve</li>
+<li>cisco_ios</li>
+<li>cisco_xe</li>
+<li>cisco_nx</li>
+<li>aruba_cx</li>
+</ul>
+<p>The config files will be named:</p>
+<ul>
+<li>hp_procurve-config-file.txt</li>
+<li>cisco_ios-config-file.txt</li>
+<li>cisco_xe-config-file.txt</li>
+<li>cisco_nx-config-file.txt</li>
+<li>aruba_cx-config-file.txt</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>On older switches, reading a lot of data can cause the CPU to go to 90% or higher! This will cause issues if OSPF or EIGRP is running and may cause the script to fail with a timeout. If this happens, remove some commands from the config-file and try again.</p>
+</div>
+<h3 id="pulling-the-mac-address-table">Pulling the mac address table</h3>
+<p>For pulling the mac-address table, which most customers want you to do before a cutover, I build an exclude statement using a regex to skip uplink ports. Here is an example for HPE Procurve that doesn't pull mac addresses for ports on modules A and B. These were uplinks on one of the switches that I developed the script on.</p>
+<p><code>show show mac-address | ex "A|B"</code></p>
+<p>In the example, the <code>|</code> symbol means logical OR. This works because the switch displays the mac address in lower case.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="w"> </span>show<span class="w"> </span>mac-address<span class="w"> </span><span class="p">|</span><span class="w"> </span>ex<span class="w"> </span><span class="s2">&quot;A|B&quot;</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span>-----------------<span class="w"> </span>-------------------------------<span class="w"> </span>----
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span>00c0b7-f4b43a<span class="w">     </span>C4<span class="w">                              </span><span class="m">1</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="m">282986</span>-40a427<span class="w">     </span>H24<span class="w">                             </span><span class="m">1</span>
+</span></code></pre></div>
+<p>Notice that port C4 has a lowercase a and b in the address and port H24 has a lowercase a. Since the regex is case sensitive this works.</p>
+<p>On a non-modular switch you can't use:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sh<span class="w"> </span>mac-address<span class="w"> </span><span class="p">|</span><span class="w"> </span>exclude<span class="w"> </span><span class="m">24</span><span class="p">|</span><span class="m">25</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w"> </span>Status<span class="w"> </span>and<span class="w"> </span>Counters<span class="w"> </span>-<span class="w"> </span>Port<span class="w"> </span>Address<span class="w"> </span>Table
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span>MAC<span class="w"> </span>Address<span class="w">   </span>Port<span class="w">    </span>VLAN
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span>-------------<span class="w"> </span>-------<span class="w"> </span>----
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span>00e04c-360348<span class="w"> </span><span class="m">5</span><span class="w">       </span><span class="m">10</span>
+</span></code></pre></div>
+<p>Because port 11 has <code>25</code> in the mac address</p>
+<p><code>b00cd1-372591 11      10</code></p>
+<p>And was excluded from the output.</p>
+<p>Here is a regex that will match only port 24 so that you can exclude port 24.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>show<span class="w"> </span>mac-address<span class="w"> </span><span class="p">|</span><span class="w"> </span>exclude<span class="w"> </span><span class="s2">&quot; [0]*24[ ]+&quot;</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w"> </span>Status<span class="w"> </span>and<span class="w"> </span>Counters<span class="w"> </span>-<span class="w"> </span>Port<span class="w"> </span>Address<span class="w"> </span>Table
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span>MAC<span class="w"> </span>Address<span class="w">   </span>Port<span class="w">    </span>VLAN
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span>-------------<span class="w"> </span>-------<span class="w"> </span>----
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">  </span>bc9fe4-c342ca<span class="w"> </span><span class="m">12</span><span class="w">      </span><span class="m">1</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">  </span>00e04c-360348<span class="w"> </span><span class="m">5</span><span class="w">       </span><span class="m">10</span>
+</span></code></pre></div>
+<p>You can also use the regex "|" OR symbol:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>show<span class="w"> </span>mac-address<span class="w"> </span><span class="p">|</span><span class="w"> </span>exclude<span class="w"> </span><span class="s2">&quot; [0]*5|24[ ]+&quot;</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w"> </span>Status<span class="w"> </span>and<span class="w"> </span>Counters<span class="w"> </span>-<span class="w"> </span>Port<span class="w"> </span>Address<span class="w"> </span>Table
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">  </span>MAC<span class="w"> </span>Address<span class="w">   </span>Port<span class="w">    </span>VLAN
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span>-------------<span class="w"> </span>-------<span class="w"> </span>----
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">  </span>bc9fe4-c342ca<span class="w"> </span><span class="m">12</span><span class="w">      </span><span class="m">1</span>
+</span></code></pre></div>
+<p>Notice that if you wanted to exclude port 1, 2, 3, or 4,  you would add a space after the number. Otherwise the regex would match 11, 21, 31, 41.</p>
+<p><strong>Or just forget the regex!</strong>
+The goal is to not include mac-addresses from uplinks and system MACs. But you would need to know what ports to exclude ahead of time. You can just dump the whole table. The only time I have seen this cause a problem was on a Cisco 6509 core that had six 48 port blades and several IDFs connected to the fiber card. There are a lot of mac in that table. The script worked but it took a while!</p>
+<p>I use this <a href="https://regexr.com/">site</a> to test/develop regex expressions.</p>
+<h3 id="cisco-ios-mac-address-table-exclude">Cisco IOS mac address table exclude</h3>
+<p>The Cisco IOS has this regex
+<code>show mac address-table | ex STATIC|Po|1/0/49</code></p>
+<p>This excludes ports with:</p>
+<ul>
+<li>STATIC</li>
+<li>Port Channels</li>
+<li>interface 1/0/49</li>
+</ul>
+<p><strong>Or just forget the regex!</strong>
+The goal is to not include mac-addresses from uplinks and system MACs. But you would need to know what ports to exclude ahead of time. You can just dump the whole table. The only time I have seen this cause a problem was on a Cisco 6509 core that had six 48 port blades and several IDFs connected to the fiber card. There are a lot of mac in that table. The script worked but it took a while!</p>
+<h3 id="cisco-xe-mac-address-table-exclude">Cisco XE mac address table exclude</h3>
+<p><code>show mac address-table | ex Po|ffff.ffff.ffff|static</code></p>
+<p>Again, the goal is to exclude uplinks.</p>
+<hr />
+<h2 id="run-the-discovery-script">Run the discovery script</h2>
+<p>Now that the project is set up and the inventory file is created, you can run the script. Make sure you are in the Discovery directory and run:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nb">source</span><span class="w"> </span>bin/activate
+</span></code></pre></div>
+<p>or</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>.<span class="se">\v</span>env<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
+</span></code></pre></div>
+<p>To activate the the virtual environment.</p>
+<h3 id="what-options-are-available">What options are available</h3>
+<p>You can run the script with -h to get help:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>python3<span class="w"> </span>procurve_Config_pull.py<span class="w"> </span>-h
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>usage:<span class="w"> </span>procurve_Config_pull.py<span class="w"> </span><span class="o">[</span>-h<span class="o">]</span><span class="w"> </span><span class="o">[</span>-e<span class="w"> </span>EVENT<span class="o">]</span><span class="w"> </span><span class="o">[</span>-l<span class="w"> </span>LOGGING<span class="o">]</span><span class="w"> </span><span class="o">[</span>-p<span class="w"> </span>PASSWORD<span class="o">]</span><span class="w"> </span><span class="o">[</span>-s<span class="w"> </span>SITE<span class="o">]</span><span class="w"> </span><span class="o">[</span>-t<span class="w"> </span>TIMEOUT<span class="o">]</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>-s<span class="w"> </span>site,<span class="w"> </span>-l<span class="w"> </span><span class="m">1</span><span class="w"> </span>create<span class="w"> </span>log.txt,<span class="w"> </span>-p<span class="w"> </span><span class="m">1</span><span class="w"> </span>prompt<span class="w"> </span><span class="k">for</span><span class="w"> </span>password,<span class="w"> </span>-t<span class="w"> </span><span class="m">1</span>-9<span class="w"> </span>timeout,<span class="w"> </span>-e<span class="w"> </span>W,I,M,D,E<span class="w"> </span>to<span class="w"> </span>pull<span class="w"> </span>logs
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>options:
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">            </span>show<span class="w"> </span>this<span class="w"> </span><span class="nb">help</span><span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span><span class="nb">exit</span>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">  </span>-e<span class="w"> </span>EVENT,<span class="w"> </span>--event<span class="w"> </span>EVENT
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">                        </span>-e<span class="w"> </span>W,I,M,D,E<span class="w"> </span>to<span class="w"> </span>pull<span class="w"> </span>switch<span class="w"> </span>logs
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">  </span>-l<span class="w"> </span>LOGGING,<span class="w"> </span>--logging<span class="w"> </span>LOGGING
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="w">                        </span>use<span class="w"> </span>-l<span class="w"> </span><span class="m">1</span><span class="w"> </span>to<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>ssh<span class="w"> </span>logging
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">  </span>-p<span class="w"> </span>PASSWORD,<span class="w"> </span>--password<span class="w"> </span>PASSWORD
+</span><span id="__span-14-15"><a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="w">                        </span>use<span class="w"> </span>-p<span class="w"> </span><span class="m">1</span><span class="w"> </span>to<span class="w"> </span>be<span class="w"> </span>prompted<span class="w"> </span><span class="k">for</span><span class="w"> </span>password
+</span><span id="__span-14-16"><a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="w">  </span>-s<span class="w"> </span>SITE,<span class="w"> </span>--site<span class="w"> </span>SITE<span class="w">  </span>Site<span class="w"> </span>name<span class="w"> </span>-<span class="w"> </span>ex.<span class="w"> </span>HQ
+</span><span id="__span-14-17"><a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a><span class="w">  </span>-t<span class="w"> </span>TIMEOUT,<span class="w"> </span>--timeout<span class="w"> </span>TIMEOUT
+</span><span id="__span-14-18"><a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="w">                        </span>use<span class="w"> </span>-t<span class="w"> </span><span class="m">1</span>-9<span class="w"> </span>to<span class="w"> </span><span class="nb">set</span><span class="w"> </span>timeout
+</span><span id="__span-14-19"><a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="o">(</span>Discovery<span class="o">)</span>
+</span></code></pre></div>
+<h3 id="what-do-the-arguments-do">What do the arguments do</h3>
+<p>The only required argument is <code>-s site</code>. This references the device-inventory file.</p>
+<h4 id="collecting-switch-logs">Collecting switch logs</h4>
+<p>Reviewing switch logs before a cut over can help you understand the health of the network. For example, you may find OSPF neighbors bouncing or an STP issue. Obviously if the network is large you can't review every switch in detail. But looking at key switches such as cores and distribution is worth a few minutes.</p>
+<p>Using <code>grep</code> you can parse hundreds of logs in a matter of seconds. The log files are saved to the CR-data folder. If you cd to the CR-data folder you can run this <code>grep</code> command to find lacp issues from any switch:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="hll">grep<span class="w"> </span>-Eir<span class="w"> </span><span class="s1">&#39;Blocked by LACP&#39;</span>
+</span></span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>test-CL-2930-48-1-log-1.txt:I<span class="w"> </span><span class="m">02</span>/02/24<span class="w"> </span><span class="m">17</span>:20:55<span class="w"> </span><span class="m">00435</span><span class="w"> </span>ports:<span class="w"> </span>port<span class="w"> </span><span class="m">22</span><span class="w"> </span>is<span class="w"> </span>Blocked<span class="w"> </span>by<span class="w"> </span>LACP
+</span></code></pre></div>
+<p>Or check STP:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="hll">grep<span class="w"> </span>-Eir<span class="w"> </span><span class="s1">&#39;stp:&#39;</span>
+</span></span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>Procurve-2920-24-CR-data.txt:I<span class="w"> </span><span class="m">01</span>/10/24<span class="w"> </span><span class="m">19</span>:01:57<span class="w"> </span><span class="m">03816</span><span class="w"> </span>stp:<span class="w"> </span>VLAN<span class="w"> </span><span class="m">850</span><span class="w"> </span>-<span class="w"> </span>Root<span class="w"> </span>changed<span class="w"> </span>from<span class="w"> </span><span class="m">32768</span>:<span class="w"> </span><span class="o">(</span>this<span class="w"> </span>device<span class="o">)</span>
+</span></code></pre></div>
+<p>I can't go into everything you should look for, but with some practice you will look like a genius finding intermittent issues on the customer's network!</p>
+<h4 id="procurve-logs">Procurve logs</h4>
+<p>The procurve switches allow you to pull five different types of logs:</p>
+<ul>
+<li>Warning (W) - This log contains warning messages</li>
+<li>Informational (I) - This log can grow very large and may need a large timeout value. If you have a lot of switches to discovery and they have large informational logs you may want to skip them.</li>
+<li>Major (M) - This log contains major messages</li>
+<li>Debug (D) - This log contains debug messages</li>
+<li>Error (E) - This log contains error messages</li>
+</ul>
+<p>If you want to pull logs from the switch add <code>-e</code> and the type of log. You can collect 1 or all 5. Separate the values with a comma. For example:</p>
+<p><code>-e W,I,M,D,E</code></p>
+<p>If you use <code>-e W</code> the script will send <code>show logging -r -W</code></p>
+<p>The reason I added the ability to collect individual logs is that I had time out issues sending <code>show logging -r</code> because the Procurve switches have a lot of storage for logs. This happened at a customer with large a stack of 2930s and an intermittent connectivity issue.</p>
+<p>But, it turned out to be useful because informational logs are a lot of noise. Being able to narrow down and look at just Warning or Major logs is nice.</p>
+<h4 id="cisco-logs">Cisco Logs</h4>
+<p>Cisco doesn't support all the options that the procurve does. If you want to collect logs on a cisco use <code>-e 1</code>. This will send <code>show logging</code> to the switch.</p>
+<p>I haven't run into the timeout issue on Cisco switches. I think this is because by default Cisco logging is set to only 4096 and most engineers don't change it.</p>
+<p>Using <code>grep</code> you can parse hundreds of logs in a matter of seconds. The log files are saved to the CR-data folder. If you cd to the CR-data folder you can run this <code>grep</code> command to find stacking messages from any switch:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="hll">grep<span class="w"> </span>-Eir<span class="w"> </span><span class="s1">&#39;stack_mgr:&#39;</span>
+</span></span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>Lab_3850-log-1.txt:*Jul<span class="w"> </span><span class="m">13</span><span class="w"> </span><span class="m">19</span>:33:52.175:<span class="w"> </span>%STACKMGR-4-SWITCH_ADDED:<span class="w"> </span>Switch<span class="w"> </span><span class="m">2</span><span class="w"> </span>R0/0:<span class="w"> </span>stack_mgr:<span class="w"> </span>Switch<span class="w"> </span><span class="m">2</span><span class="w"> </span>has<span class="w"> </span>been<span class="w"> </span>added<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>stack.
+</span></code></pre></div>
+<p><strong>Find <code>connected</code> ports</strong></p>
+<p>Customers often ask how many active ports are on a switch. This grep statement will return the port from the <code>show interface status | i connected</code> command:</p>
+<p><code>grep "connected" JC-MDF-4-CR-data.txt | awk '{print $1}' | sort | uniq | sort -t '/' -k1,1 -k2,2n -k3,3n</code></p>
+<p>Output</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>Gi1/0/1
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>Gi1/0/2
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>Gi1/0/3
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>Gi1/0/5
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>Gi1/0/9
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>Gi1/0/10
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>Gi1/0/12
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>Gi1/0/16
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>Gi1/0/17
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>Gi1/0/21
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>Gi1/0/25
+</span></code></pre></div>
+<p>📋 Explanation of the Command</p>
+<ul>
+<li>grep "connected" JC-MDF-4-CR-data.txt: This filters lines containing "connected" from the file.</li>
+<li>awk '{print $1}': This extracts the first column (the interface names).</li>
+<li>sort: This sorts the interface names, ensuring that duplicates are adjacent.</li>
+<li>uniq -c: This counts the occurrences of each unique interface name.</li>
+<li>sort -t '/' -k1,1 -k2,2n -k3,3n: This sorts the counted output correctly based on the interface name structure.</li>
+</ul>
+<p>If you want to return the entire line from the <code>show interface status | i connected</code> command use this grep:</p>
+<p><code>grep "connected" JC-MDF-4-CR-data.txt | sort | uniq | sort -t '/' -k1,1 -k2,2n -k3,3n</code></p>
+<p>Output</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Gi1/0/1   &lt; Uplink to SonicW connected    777        a-full a-1000 10/100/1000BaseTX
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>Gi1/0/2   &lt; Uplink to SonicW connected    20         a-full a-1000 10/100/1000BaseTX
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>Gi1/0/3   &lt; Uplink to SonicW connected    100        a-full a-1000 10/100/1000BaseTX
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>Gi1/0/5   &lt; Uplink to SonicW connected    778        a-full a-1000 10/100/1000BaseTX
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>Gi1/0/9   &lt; Voice Server &gt;   connected    90         a-full a-1000 10/100/1000BaseTX
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>Gi1/0/10  &lt; Voice Server &gt;   connected    90         a-full a-1000 10/100/1000BaseTX
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>Gi1/0/12  &lt; Safelok SRV 10.1 connected    100        a-full a-1000 10/100/1000BaseTX
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>Gi1/0/16  &lt; BacTalk Port &gt;   connected    778        a-half  a-100 10/100/1000BaseTX
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>Gi1/0/17  &lt; Voice Network &gt;  connected    90         a-full a-1000 10/100/1000BaseTX
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>Gi1/0/21  &lt; HIS &gt;            connected    780        a-full a-1000 10/100/1000BaseTX
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>Gi1/0/25  &lt; Uplink to 4500x  connected    trunk      a-full a-1000 1000BaseLX SFP
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>Gi1/0/25  &lt; Uplink to 4500x  connected    trunk      a-full a-1000 1000BaseLX SFP
+</span></code></pre></div>
+<hr />
+<h4 id="setting-the-password">Setting the Password</h4>
+<p>If you want to be prompted for a password add <code>-p 1</code>. If you don't use -p 1 you must set an environment variable <code>cyberARK</code> with the password. That is covered above in the "<a href="#password">password</a>" section.</p>
+<hr />
+<h4 id="ssh-logging">SSH Logging</h4>
+<p>If you want to enable ssh logging add <code>-l 1</code>. You would do that to troubleshoot if you are getting "time out" errors when the script tries to connect to a switch. It does not log anything from the switch.</p>
+<hr />
+<h4 id="timeout">Timeout</h4>
+<p>You can modify the timeout value using  <code>-t</code>. <strong>Note:</strong> the number sets the timeout value in 100s of seconds. If you use <code>-t 2</code> it will wait up to 200 seconds for the operation to complete.</p>
+<h3 id="argument-examples">Argument Examples</h3>
+<p>The minimum is to use -s for the site:</p>
+<p><code>python3 config-pull.py -s HQ</code></p>
+<p>To include the Warning log from HPE Procurve switches:</p>
+<p><code>python3 config-pull.py -s HQ -e W</code></p>
+<p>To include all logs and set timeout to 2:</p>
+<p><code>python3 config-pull.py -s HQ -e W,I,M,D,E -t 2</code></p>
+<p>To be prompted for a password:</p>
+<p><code>python3 config-pull.py -s HQ -p 1</code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>you may have to use python instead of python3 depending on your OS.</p>
+</div>
+<p>I recommend running the script on one network switch the first time instead of a long list of switches. That will let you see the content of the show commands and make changes if needed before spending time running it on a long list of switches.</p>
+<p>The files will be saved in the following directories:</p>
+<ul>
+<li>CR-data - files that are ready for viewing</li>
+<li>Interface - files that need further processing</li>
+<li>Failure-Logs</li>
+<li>port-maps - files for creating port maps</li>
+<li>Running - The "show running structured" output for each switch</li>
+</ul>
+<p>If you are having timeout or authentication issues, enable logging. Here is a sample output of the log.txt file that netmiko creates:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>DEBUG:paramiko.transport:starting<span class="w"> </span>thread<span class="w"> </span><span class="o">(</span>client<span class="w"> </span>mode<span class="o">)</span>:<span class="w"> </span>0xb4b346d0
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>DEBUG:paramiko.transport:Local<span class="w"> </span>version/idstring:<span class="w"> </span>SSH-2.0-paramiko_3.4.0
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>DEBUG:paramiko.transport:Remote<span class="w"> </span>version/idstring:<span class="w"> </span>SSH-2.0-Mocana<span class="w"> </span>SSH<span class="w"> </span><span class="m">6</span>.3
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>INFO:paramiko.transport:Connected<span class="w"> </span><span class="o">(</span>version<span class="w"> </span><span class="m">2</span>.0,<span class="w"> </span>client<span class="w"> </span>Mocana<span class="o">)</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>DEBUG:paramiko.transport:<span class="o">===</span><span class="w"> </span>Key<span class="w"> </span>exchange<span class="w"> </span><span class="nv">possibilities</span><span class="w"> </span><span class="o">===</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>DEBUG:paramiko.transport:kex<span class="w"> </span>algos:<span class="w"> </span>ecdh-sha2-nistp256,<span class="w"> </span>ecdh-sha2-nistp384,<span class="w"> </span>ecdh-sha2-nistp521,<span class="w"> </span>diffie-hellman-group-exchange-sha256,<span class="w"> </span>diffie-hellman-group14-sha1
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>DEBUG:paramiko.transport:server<span class="w"> </span>key:<span class="w"> </span>rsa-sha2-512,<span class="w"> </span>rsa-sha2-256,<span class="w"> </span>ssh-rsa
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>DEBUG:paramiko.transport:client<span class="w"> </span>encrypt:<span class="w"> </span>aes256-ctr,<span class="w"> </span>rijndael-cbc@lysator.liu.se,<span class="w"> </span>aes192-ctr,<span class="w"> </span>aes128-ctr
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>DEBUG:paramiko.transport:server<span class="w"> </span>encrypt:<span class="w"> </span>aes256-ctr,<span class="w"> </span>rijndael-cbc@lysator.liu.se,<span class="w"> </span>aes192-ctr,<span class="w"> </span>aes128-ctr
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>DEBUG:paramiko.transport:client<span class="w"> </span>mac:<span class="w"> </span>hmac-sha1-96,<span class="w"> </span>hmac-sha1
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>DEBUG:paramiko.transport:server<span class="w"> </span>mac:<span class="w"> </span>hmac-sha1-96,<span class="w"> </span>hmac-sha1
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>DEBUG:paramiko.transport:client<span class="w"> </span>compress:<span class="w"> </span>none
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>DEBUG:paramiko.transport:server<span class="w"> </span>compress:<span class="w"> </span>none
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>DEBUG:paramiko.transport:client<span class="w"> </span>lang:<span class="w"> </span>&lt;none&gt;
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>DEBUG:paramiko.transport:server<span class="w"> </span>lang:<span class="w"> </span>&lt;none&gt;
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>DEBUG:paramiko.transport:kex<span class="w"> </span>follows:<span class="w"> </span>False
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>DEBUG:paramiko.transport:<span class="o">===</span><span class="w"> </span>Key<span class="w"> </span>exchange<span class="w"> </span><span class="nv">agreements</span><span class="w"> </span><span class="o">===</span>
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>DEBUG:paramiko.transport:Kex:<span class="w"> </span>ecdh-sha2-nistp256
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>DEBUG:paramiko.transport:HostKey:<span class="w"> </span>rsa-sha2-512
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>DEBUG:paramiko.transport:Cipher:<span class="w"> </span>aes128-ctr
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a>DEBUG:paramiko.transport:MAC:<span class="w"> </span>hmac-sha1
+</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a>DEBUG:paramiko.transport:Compression:<span class="w"> </span>none
+</span><span id="__span-20-23"><a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a>DEBUG:paramiko.transport:<span class="o">===</span><span class="w"> </span>End<span class="w"> </span>of<span class="w"> </span>kex<span class="w"> </span><span class="nv">handshake</span><span class="w"> </span><span class="o">===</span>
+</span><span id="__span-20-24"><a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a>DEBUG:paramiko.transport:kex<span class="w"> </span>engine<span class="w"> </span>KexNistp256<span class="w"> </span>specified<span class="w"> </span>hash_algo<span class="w"> </span>&lt;built-in<span class="w"> </span><span class="k">function</span><span class="w"> </span>openssl_sha256&gt;
+</span><span id="__span-20-25"><a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a>DEBUG:paramiko.transport:Switch<span class="w"> </span>to<span class="w"> </span>new<span class="w"> </span>keys<span class="w"> </span>...
+</span><span id="__span-20-26"><a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a>DEBUG:paramiko.transport:Adding<span class="w"> </span>ssh-rsa<span class="w"> </span>host<span class="w"> </span>key<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="m">10</span>.112.254.60:<span class="w"> </span>b<span class="s1">&#39;47708eeea6cbecf20b5916d675feca3d&#39;</span>
+</span><span id="__span-20-27"><a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a>DEBUG:paramiko.transport:userauth<span class="w"> </span>is<span class="w"> </span>OK
+</span><span id="__span-20-28"><a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a>INFO:paramiko.transport:Auth<span class="w"> </span>banner:<span class="w"> </span>b<span class="s1">&#39;******************************************************************************\nThis system is the property of Michael Hubbard.\n\nUNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED.\n\nYou must have explicit permission to access this device.\n\nAll activities performed on this device are logged.\nAny violations of access policy will result in disciplinary action.\n****************************************************************************** \n\n&#39;</span>
+</span><span id="__span-20-29"><a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a>INFO:paramiko.transport:Authentication<span class="w"> </span><span class="o">(</span>password<span class="o">)</span><span class="w"> </span>successful!
+</span></code></pre></div>
+<p>Here is a sample output from running the script:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>config_pull.py<span class="w"> </span>-s<span class="w"> </span>area1<span class="w"> </span>-e<span class="w"> </span>W
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>-------------------------------------------------
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>Reading<span class="w"> </span>devices<span class="w"> </span>from:<span class="w"> </span>device-inventory-area1.csv
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>----------------------------------------------------------
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="m">01</span>/21/2024,<span class="w"> </span><span class="m">19</span>:02:50<span class="w"> </span>Connecting<span class="w"> </span>to<span class="w"> </span>switch<span class="w"> </span>Procurve-2920-24
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>----------------------------------------------------------
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>Exec<span class="w"> </span>time:<span class="w"> </span><span class="m">0</span>:00:01.279461
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>
+</span><span id="__span-21-12"><a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>Could<span class="w"> </span>not<span class="w"> </span>connect<span class="w"> </span>to<span class="w"> </span>Procurve-2920-24<span class="w"> </span>at<span class="w"> </span><span class="m">192</span>.168.10.50.<span class="w"> </span>The<span class="w"> </span>Credentials<span class="w"> </span>failed.<span class="w">  </span>Remove<span class="w"> </span>it<span class="w"> </span>from<span class="w"> </span>the<span class="w"> </span>device<span class="w"> </span>inventory<span class="w"> </span>file
+</span><span id="__span-21-13"><a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>----------------------------------------------------------
+</span><span id="__span-21-14"><a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a><span class="m">01</span>/21/2024,<span class="w"> </span><span class="m">19</span>:02:51<span class="w"> </span>Connecting<span class="w"> </span>to<span class="w"> </span>switch<span class="w"> </span>Procurve-2920-48
+</span><span id="__span-21-15"><a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>----------------------------------------------------------
+</span><span id="__span-21-16"><a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>
+</span><span id="__span-21-17"><a id="__codelineno-21-17" name="__codelineno-21-17" href="#__codelineno-21-17"></a>HP-2920-24G-PoEP#
+</span><span id="__span-21-18"><a id="__codelineno-21-18" name="__codelineno-21-18" href="#__codelineno-21-18"></a>
+</span><span id="__span-21-19"><a id="__codelineno-21-19" name="__codelineno-21-19" href="#__codelineno-21-19"></a>--------------------------------------------------------
+</span><span id="__span-21-20"><a id="__codelineno-21-20" name="__codelineno-21-20" href="#__codelineno-21-20"></a>processing<span class="w"> </span>procurve-config-file.txt<span class="w"> </span><span class="k">for</span><span class="w"> </span>Procurve-2920-48
+</span><span id="__span-21-21"><a id="__codelineno-21-21" name="__codelineno-21-21" href="#__codelineno-21-21"></a>--------------------------------------------------------
+</span><span id="__span-21-22"><a id="__codelineno-21-22" name="__codelineno-21-22" href="#__codelineno-21-22"></a>processing<span class="w"> </span>show<span class="w"> </span>logging<span class="w"> </span>-W<span class="w"> </span><span class="k">for</span><span class="w"> </span>Procurve-2920-48
+</span><span id="__span-21-23"><a id="__codelineno-21-23" name="__codelineno-21-23" href="#__codelineno-21-23"></a>--------------------------------------------------------
+</span><span id="__span-21-24"><a id="__codelineno-21-24" name="__codelineno-21-24" href="#__codelineno-21-24"></a>Writing<span class="w"> </span>show<span class="w"> </span>logging<span class="w"> </span>-W<span class="w"> </span>commands<span class="w"> </span>to<span class="w"> </span>/home/mhubbard/04_Tools/Discovery/CR-data/Procurve-2920-48-log-W.txt
+</span><span id="__span-21-25"><a id="__codelineno-21-25" name="__codelineno-21-25" href="#__codelineno-21-25"></a>--------------------------------------------------------
+</span><span id="__span-21-26"><a id="__codelineno-21-26" name="__codelineno-21-26" href="#__codelineno-21-26"></a>collecting<span class="w"> </span>show<span class="w"> </span>interface<span class="w"> </span><span class="k">for</span><span class="w"> </span>Procurve-2920-48
+</span><span id="__span-21-27"><a id="__codelineno-21-27" name="__codelineno-21-27" href="#__codelineno-21-27"></a>--------------------------------------------------------
+</span><span id="__span-21-28"><a id="__codelineno-21-28" name="__codelineno-21-28" href="#__codelineno-21-28"></a>collecting<span class="w"> </span>show<span class="w"> </span>system<span class="w"> </span><span class="k">for</span><span class="w"> </span>Procurve-2920-48
+</span><span id="__span-21-29"><a id="__codelineno-21-29" name="__codelineno-21-29" href="#__codelineno-21-29"></a>--------------------------------------------------------
+</span><span id="__span-21-30"><a id="__codelineno-21-30" name="__codelineno-21-30" href="#__codelineno-21-30"></a>collecting<span class="w"> </span>show<span class="w"> </span>cdp<span class="w"> </span>detail<span class="w"> </span><span class="k">for</span><span class="w"> </span>Procurve-2920-48
+</span><span id="__span-21-31"><a id="__codelineno-21-31" name="__codelineno-21-31" href="#__codelineno-21-31"></a>--------------------------------------------------------
+</span><span id="__span-21-32"><a id="__codelineno-21-32" name="__codelineno-21-32" href="#__codelineno-21-32"></a>collecting<span class="w"> </span>show<span class="w"> </span>interfaces<span class="w"> </span>brief<span class="w"> </span><span class="k">for</span><span class="w"> </span>Procurve-2920-48
+</span><span id="__span-21-33"><a id="__codelineno-21-33" name="__codelineno-21-33" href="#__codelineno-21-33"></a>--------------------------------------------------------
+</span><span id="__span-21-34"><a id="__codelineno-21-34" name="__codelineno-21-34" href="#__codelineno-21-34"></a>collecting<span class="w"> </span>show<span class="w"> </span>lldp<span class="w"> </span>neighbors<span class="w"> </span><span class="k">for</span><span class="w"> </span>Procurve-2920-48
+</span><span id="__span-21-35"><a id="__codelineno-21-35" name="__codelineno-21-35" href="#__codelineno-21-35"></a>--------------------------------------------------------
+</span><span id="__span-21-36"><a id="__codelineno-21-36" name="__codelineno-21-36" href="#__codelineno-21-36"></a>collecting<span class="w"> </span>show<span class="w"> </span>mac<span class="w"> </span>address<span class="w"> </span><span class="k">for</span><span class="w"> </span>Procurve-2920-48
+</span><span id="__span-21-37"><a id="__codelineno-21-37" name="__codelineno-21-37" href="#__codelineno-21-37"></a>--------------------------------------------------------
+</span><span id="__span-21-38"><a id="__codelineno-21-38" name="__codelineno-21-38" href="#__codelineno-21-38"></a>collecting<span class="w"> </span>show<span class="w"> </span>arp<span class="w"> </span><span class="k">for</span><span class="w"> </span>Procurve-2920-48
+</span><span id="__span-21-39"><a id="__codelineno-21-39" name="__codelineno-21-39" href="#__codelineno-21-39"></a>--------------------------------------------------------
+</span><span id="__span-21-40"><a id="__codelineno-21-40" name="__codelineno-21-40" href="#__codelineno-21-40"></a>Collecting<span class="w"> </span>show<span class="w"> </span>running-config<span class="w"> </span>from<span class="w"> </span>Procurve-2920-48
+</span><span id="__span-21-41"><a id="__codelineno-21-41" name="__codelineno-21-41" href="#__codelineno-21-41"></a>--------------------------------------------------------
+</span><span id="__span-21-42"><a id="__codelineno-21-42" name="__codelineno-21-42" href="#__codelineno-21-42"></a>Writing<span class="w"> </span>show<span class="w"> </span>commands<span class="w"> </span>to<span class="w"> </span>/home/mhubbard/04_Tools/Discovery/CR-data/Procurve-2920-48-CR-data.txt
+</span><span id="__span-21-43"><a id="__codelineno-21-43" name="__codelineno-21-43" href="#__codelineno-21-43"></a>-------------------------------------------------
+</span><span id="__span-21-44"><a id="__codelineno-21-44" name="__codelineno-21-44" href="#__codelineno-21-44"></a>Writing<span class="w"> </span>MAC<span class="w"> </span>addresses<span class="w"> </span>to<span class="w"> </span>/home/mhubbard/04_Tools/Discovery/port-maps/data/Procurve-2920-48-mac-address.txt
+</span><span id="__span-21-45"><a id="__codelineno-21-45" name="__codelineno-21-45" href="#__codelineno-21-45"></a>-------------------------------------------------
+</span><span id="__span-21-46"><a id="__codelineno-21-46" name="__codelineno-21-46" href="#__codelineno-21-46"></a>Writing<span class="w"> </span>ARP<span class="w"> </span>data<span class="w"> </span>to<span class="w"> </span>/home/mhubbard/04_Tools/Discovery/port-maps/data/Procurve-2920-48-arp.txt
+</span><span id="__span-21-47"><a id="__codelineno-21-47" name="__codelineno-21-47" href="#__codelineno-21-47"></a>-------------------------------------------------
+</span><span id="__span-21-48"><a id="__codelineno-21-48" name="__codelineno-21-48" href="#__codelineno-21-48"></a>Writing<span class="w"> </span>show<span class="w"> </span>run<span class="w"> </span>to<span class="w"> </span>/home/mhubbard/04_Tools/Discovery/port-maps/data/Procurve-2920-48-arp.txt
+</span><span id="__span-21-49"><a id="__codelineno-21-49" name="__codelineno-21-49" href="#__codelineno-21-49"></a>-------------------------------------------------
+</span><span id="__span-21-50"><a id="__codelineno-21-50" name="__codelineno-21-50" href="#__codelineno-21-50"></a>Writing<span class="w"> </span>interfaces<span class="w"> </span>json<span class="w"> </span>data<span class="w"> </span>to<span class="w"> </span>/home/mhubbard/04_Tools/Discovery/Interface/Procurve-2920-48-system.txt
+</span><span id="__span-21-51"><a id="__codelineno-21-51" name="__codelineno-21-51" href="#__codelineno-21-51"></a>-------------------------------------------------
+</span><span id="__span-21-52"><a id="__codelineno-21-52" name="__codelineno-21-52" href="#__codelineno-21-52"></a>Writing<span class="w"> </span>interfaces<span class="w"> </span>json<span class="w"> </span>data<span class="w"> </span>to<span class="w"> </span>/home/mhubbard/04_Tools/Discovery/Interface/Procurve-2920-48-interface.txt
+</span><span id="__span-21-53"><a id="__codelineno-21-53" name="__codelineno-21-53" href="#__codelineno-21-53"></a>-------------------------------------------------
+</span><span id="__span-21-54"><a id="__codelineno-21-54" name="__codelineno-21-54" href="#__codelineno-21-54"></a>Writing<span class="w"> </span>interfaces<span class="w"> </span>brief<span class="w"> </span>data<span class="w"> </span>to<span class="w"> </span>/home/mhubbard/04_Tools/Discovery/Interface/Procurve-2920-48-int_br.txt
+</span><span id="__span-21-55"><a id="__codelineno-21-55" name="__codelineno-21-55" href="#__codelineno-21-55"></a>-------------------------------------------------
+</span><span id="__span-21-56"><a id="__codelineno-21-56" name="__codelineno-21-56" href="#__codelineno-21-56"></a>Writing<span class="w"> </span>cdp<span class="w"> </span>neighbor<span class="w"> </span>data<span class="w"> </span>to<span class="w"> </span>/home/mhubbard/04_Tools/Discovery/Interface/Procurve-2920-48-cdp.txt
+</span><span id="__span-21-57"><a id="__codelineno-21-57" name="__codelineno-21-57" href="#__codelineno-21-57"></a>-------------------------------------------------
+</span><span id="__span-21-58"><a id="__codelineno-21-58" name="__codelineno-21-58" href="#__codelineno-21-58"></a>Writing<span class="w"> </span>show<span class="w"> </span>lldp<span class="w"> </span>data<span class="w"> </span>to<span class="w"> </span>/home/mhubbard/04_Tools/Discovery/Interface/Procurve-2920-48-lldp.txt
+</span><span id="__span-21-59"><a id="__codelineno-21-59" name="__codelineno-21-59" href="#__codelineno-21-59"></a>
+</span><span id="__span-21-60"><a id="__codelineno-21-60" name="__codelineno-21-60" href="#__codelineno-21-60"></a>-------------------------------------------------------
+</span><span id="__span-21-61"><a id="__codelineno-21-61" name="__codelineno-21-61" href="#__codelineno-21-61"></a>Successfully<span class="w"> </span>created<span class="w"> </span>config<span class="w"> </span>files<span class="w"> </span><span class="k">for</span><span class="w"> </span>Procurve-2920-48
+</span><span id="__span-21-62"><a id="__codelineno-21-62" name="__codelineno-21-62" href="#__codelineno-21-62"></a>-------------------------------------------------------
+</span><span id="__span-21-63"><a id="__codelineno-21-63" name="__codelineno-21-63" href="#__codelineno-21-63"></a>
+</span><span id="__span-21-64"><a id="__codelineno-21-64" name="__codelineno-21-64" href="#__codelineno-21-64"></a>Data<span class="w"> </span>collection<span class="w"> </span>is<span class="w"> </span>complete.
+</span><span id="__span-21-65"><a id="__codelineno-21-65" name="__codelineno-21-65" href="#__codelineno-21-65"></a>Total<span class="w"> </span>running<span class="w"> </span>time:<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span>Hours<span class="w"> </span><span class="m">1</span>.0<span class="w"> </span>Minutes<span class="w"> </span><span class="m">44</span>.67<span class="w"> </span>Seconds
+</span></code></pre></div>
+<hr />
+<h2 id="failure-to-connect-to-a-switch">Failure to connect to a switch</h2>
+<p>If a switch does not respond, the credentials are incorrect, or the SSH version is 1, a message will be printed to the console, a log file with the hostname and a reason code is written to hte <code>Failure-log</code> folder and the script will continue processing the next switch.</p>
+<p>It's really disruptive to the discovery process if the script cannot connect to multiple switches. That means you have to fix the problem, create a new inventory file with just the failed switches, then rerun the script on the subset. I was doing a discovery at a customer with over 240 switches. They had a lot of configuration issues and username/password variations. I ended up with around 40 switches that I couldn't log into.</p>
+<h3 id="use-nmap-to-verify-switches-are-up">Use nmap to verify switches are up</h3>
+<p>I recommend saving the switch IP addresses in a plain text file, one per line, and then using nmap to verify that ssh is working.</p>
+<h4 id="the-process">THe process</h4>
+<p>Create a new text file named <code>ip.txt</code>. If you are using vs code and the Rainbow csv extension you can simply run a query on the device-inventory file:</p>
+<p><code>select a1</code></p>
+<p>That will return all the IP addresses.</p>
+<p>At the bottom of vs code, click <code>query</code>.</p>
+<hr />
+<p><img alt="screenshot" src="../img/Rainbow-query.png" /></p>
+<hr />
+<p>When the query page opens, enter <code>select a1</code> and click <code>run</code>.</p>
+<hr />
+<p><img alt="screenshot" src="../img/Rainbow-parameters.png" /></p>
+<hr />
+<p>The query will return a list of IP addresses, 1 per line. Select all lines and paste them into ip.txt.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="m">192</span>.168.10.50
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="m">192</span>.168.10.52
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="m">192</span>.168.10.111
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="m">192</span>.168.10.230
+</span></code></pre></div>
+<p><strong>Run nmap with these arguments:</strong></p>
+<p><code>nmap -v -p 22 -iL ip.txt --reason -oN ip-dead.txt</code></p>
+<p>This tells nmap to use ip.txt for the target IP addresses, include the reason and save the output to ip-dead.txt.</p>
+<p>In this example only 3 devices are working:</p>
+<p><code>Nmap done at Sun Jan  7 20:05:46 2024 -- 4 IP addresses (3 hosts up) scanned</code></p>
+<p>If you don't get 100%, open <code>ip-dead.txt</code> and search for "down".</p>
+<h3 id="use-nmap-to-verify-the-credentials">Use nmap to verify the credentials</h3>
+<p>There isn't a simple way to verify that the credentials will work. If you have permission to run the nmap ssh-brute script you can verify using:</p>
+<p><code>nmap -p 22 --script ssh-brute --script-args userdb=user.lst,passdb=pass.lst -iL ip.txt</code></p>
+<p>Put your username in user.lst and your password in pass.lst.</p>
+<p>You will get back a report for each device:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>Nmap<span class="w"> </span>scan<span class="w"> </span>report<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="m">192</span>.168.10.52
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>Host<span class="w"> </span>is<span class="w"> </span>up<span class="w"> </span><span class="o">(</span><span class="m">0</span>.0033s<span class="w"> </span>latency<span class="o">)</span>.
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>PORT<span class="w">   </span>STATE<span class="w"> </span>SERVICE
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="m">22</span>/tcp<span class="w"> </span>open<span class="w">  </span>ssh
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="p">|</span><span class="w"> </span>ssh-brute:
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="p">|</span><span class="w">   </span>Accounts:
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="p">|</span><span class="w">     </span>sw_admin:Sup3rS3cr3t<span class="w"> </span>-<span class="w"> </span>Valid<span class="w"> </span>credentials
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="p">|</span>_<span class="w">  </span>Statistics:<span class="w"> </span>Performed<span class="w"> </span><span class="m">2</span><span class="w"> </span>guesses<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">2</span><span class="w"> </span>seconds,<span class="w"> </span>average<span class="w"> </span>tps:<span class="w"> </span><span class="m">1</span>.0
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>Nmap<span class="w"> </span>scan<span class="w"> </span>report<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="m">192</span>.168.10.111
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>Host<span class="w"> </span>is<span class="w"> </span>up<span class="w"> </span><span class="o">(</span><span class="m">0</span>.0028s<span class="w"> </span>latency<span class="o">)</span>.
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>PORT<span class="w">   </span>STATE<span class="w"> </span>SERVICE
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a><span class="m">22</span>/tcp<span class="w"> </span>open<span class="w">  </span>ssh
+</span><span id="__span-23-16"><a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a><span class="p">|</span><span class="w"> </span>ssh-brute:
+</span><span id="__span-23-17"><a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a><span class="p">|</span><span class="w">   </span>Accounts:<span class="w"> </span>No<span class="w"> </span>valid<span class="w"> </span>accounts<span class="w"> </span>found
+</span><span id="__span-23-18"><a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a><span class="p">|</span>_<span class="w">  </span>Statistics:<span class="w"> </span>Performed<span class="w"> </span><span class="m">2</span><span class="w"> </span>guesses<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">4</span><span class="w"> </span>seconds,<span class="w"> </span>average<span class="w"> </span>tps:<span class="w"> </span><span class="m">0</span>.5
+</span></code></pre></div>
+<p>Then use <code>grep -Eir -b6 "No valid" accounts.txt</code> to find the devices with no valid accounts.</p>
+<p><strong>Grep Arguments:</strong></p>
+<ul>
+<li>E - extended</li>
+<li>i - case-insensitive</li>
+<li>r - recursive</li>
+<li>-b6 - show 6 lines before the match</li>
+</ul>
+<hr />
+<h2 id="building-a-list-of-switches">Building a list of switches</h2>
+<p>Not all customers will have a clean list of switch IP addresses and host names. If there is a management network you may be able to look at the arp table and pull out the switches. As a last resort you can use the following process to build a list of switches.</p>
+<p>Run this nmap command to find devices with ssh <strong>and</strong> snmp open. Most devices that have ssh and snmp open are switches. You may have to do some additional filtering.</p>
+<p><code>sudo nmap -sU -sS -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl &lt;target ips&gt;</code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The stylesheet is from <a href="https://github.com/honze-net/nmap-bootstrap-xsl">honze-net-nmap-bootstrap-xsl</a>. This is a repository for creating nmap reports. Well worth a look.</p>
+</div>
+<p>!!! warning Failed to open normal output file procurve-scan.nmap for writing: Permission denied (13)
+    If you installed <code>nmap</code> using a snap on Ubuntu you will not be able to write a file as root to a folder you own.</p>
+<p>If you receive the <code>Permission denied (13)</code> message, add <code>/tmp/</code> to the filename:</p>
+<p><code>sudo nmap -sU -sS -T4 -sC -p U:161,T:22 -oA /tmp/procurve-scan -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl &lt;target ips&gt;</code></p>
+<p>The <code>-oA switch-scan</code> argument will create the following files:</p>
+<ul>
+<li>procurve-scan.xml - a standard XML file with the xsl link embedded</li>
+<li>procurve-scan.nmap - an nmap format file</li>
+<li>procurve-scan.gnmap - a greppable nmap format file</li>
+</ul>
+<p>The files will be owned by the root account since we need <code>sudo</code> for the UDP scan. Here are the permissions:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>$<span class="w"> </span>ls<span class="w"> </span>-l<span class="w"> </span>procurve-scan*
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w">  </span><span class="m">477</span><span class="w"> </span><span class="m">2024</span>-01-14<span class="w"> </span><span class="m">17</span>:13<span class="w"> </span>procurve-scan.gnmap
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w">  </span><span class="m">926</span><span class="w"> </span><span class="m">2024</span>-01-14<span class="w"> </span><span class="m">17</span>:13<span class="w"> </span>procurve-scan.nmap
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">3</span>.6K<span class="w"> </span><span class="m">2024</span>-01-14<span class="w"> </span><span class="m">17</span>:13<span class="w"> </span>procurve-scan.xml
+</span></code></pre></div>
+<p>Run the following to take ownership of the files:</p>
+<p><code>sudo chown $USER procurve-scan*</code></p>
+<p>The results:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>ls<span class="w"> </span>-l<span class="w"> </span>procurve-scan*
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>mhubbard<span class="w"> </span>root<span class="w">  </span><span class="m">477</span><span class="w"> </span><span class="m">2024</span>-01-14<span class="w"> </span><span class="m">17</span>:13<span class="w"> </span>procurve-scan.gnmap
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>mhubbard<span class="w"> </span>root<span class="w">  </span><span class="m">926</span><span class="w"> </span><span class="m">2024</span>-01-14<span class="w"> </span><span class="m">17</span>:13<span class="w"> </span>procurve-scan.nmap
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>-rw-r--r--<span class="w"> </span><span class="m">1</span><span class="w"> </span>mhubbard<span class="w"> </span>root<span class="w"> </span><span class="m">3</span>.6K<span class="w"> </span><span class="m">2024</span>-01-14<span class="w"> </span><span class="m">17</span>:13<span class="w"> </span>procurve-scan.xml
+</span></code></pre></div>
+<p>The output will look something like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>sudo<span class="w"> </span>nmap<span class="w"> </span>-sU<span class="w"> </span>-sS<span class="w"> </span>-T4<span class="w"> </span>-sC<span class="w"> </span>-p<span class="w"> </span>U:161,T:22<span class="w"> </span>-oA<span class="w"> </span>procurve-scan<span class="w"> </span>-n<span class="w"> </span>-Pn<span class="w"> </span>--open<span class="w"> </span>--stylesheet<span class="w"> </span><span class="o">[</span>nmap-bootstrap.xsl<span class="o">](</span>https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl<span class="o">)</span><span class="w"> </span><span class="m">192</span>.168.10.52
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>Host<span class="w"> </span>discovery<span class="w"> </span>disabled<span class="w"> </span><span class="o">(</span>-Pn<span class="o">)</span>.<span class="w"> </span>All<span class="w"> </span>addresses<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>marked<span class="w"> </span><span class="s1">&#39;up&#39;</span><span class="w"> </span>and<span class="w"> </span>scan<span class="w"> </span><span class="nb">times</span><span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>slower.
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>Starting<span class="w"> </span>Nmap<span class="w"> </span><span class="m">7</span>.91<span class="w"> </span><span class="o">(</span><span class="w"> </span>https://nmap.org<span class="w"> </span><span class="o">)</span><span class="w"> </span>at<span class="w"> </span><span class="m">2024</span>-01-14<span class="w"> </span><span class="m">17</span>:09<span class="w"> </span>PST
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>Nmap<span class="w"> </span>scan<span class="w"> </span>report<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="m">192</span>.168.10.52
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>Host<span class="w"> </span>is<span class="w"> </span>up<span class="w"> </span><span class="o">(</span><span class="m">0</span>.0032s<span class="w"> </span>latency<span class="o">)</span>.
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>PORT<span class="w">    </span>STATE<span class="w">         </span>SERVICE
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="m">22</span>/tcp<span class="w">  </span>open<span class="w">          </span>ssh
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a><span class="p">|</span><span class="w"> </span>ssh-hostkey:
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="p">|</span>_<span class="w">  </span><span class="m">1024</span><span class="w"> </span>cb:a8:d6:c7:da:bd:67:53:91:8c:c0:1b:49:d1:a1:2d<span class="w"> </span><span class="o">(</span>DSA<span class="o">)</span>
+</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a><span class="p">|</span><span class="w"> </span>ssh-os:
+</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a><span class="p">|</span>_<span class="w">  </span>SSH<span class="w"> </span>Banner:<span class="w"> </span>SSH-2.0-Mocana<span class="w"> </span>SSH<span class="w"> </span><span class="m">6</span>.3<span class="se">\x</span>0D
+</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a><span class="m">161</span>/udp<span class="w"> </span>open<span class="p">|</span>filtered<span class="w"> </span>snmp
+</span><span id="__span-26-14"><a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a><span class="p">|</span><span class="w"> </span>snmp-info:
+</span><span id="__span-26-15"><a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a><span class="p">|</span><span class="w">   </span>enterprise:<span class="w"> </span>Hewlett-Packard
+</span><span id="__span-26-16"><a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a><span class="p">|</span><span class="w">   </span>engineIDFormat:<span class="w"> </span>unknown
+</span><span id="__span-26-17"><a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a><span class="p">|</span><span class="w">   </span>engineIDData:<span class="w"> </span>000098f2b3fe8880
+</span><span id="__span-26-18"><a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a><span class="p">|</span><span class="w">   </span>snmpEngineBoots:<span class="w"> </span><span class="m">108</span>
+</span><span id="__span-26-19"><a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a><span class="p">|</span>_<span class="w">  </span>snmpEngineTime:<span class="w"> </span>5h40m26s
+</span><span id="__span-26-20"><a id="__codelineno-26-20" name="__codelineno-26-20" href="#__codelineno-26-20"></a>MAC<span class="w"> </span>Address:<span class="w"> </span><span class="m">98</span>:F2:B3:FE:88:80<span class="w"> </span><span class="o">(</span>Hewlett<span class="w"> </span>Packard<span class="w"> </span>Enterprise<span class="o">)</span>
+</span><span id="__span-26-21"><a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a>
+</span><span id="__span-26-22"><a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a>Host<span class="w"> </span>script<span class="w"> </span>results:
+</span><span id="__span-26-23"><a id="__codelineno-26-23" name="__codelineno-26-23" href="#__codelineno-26-23"></a><span class="p">|</span>_smbv2-enabled:<span class="w"> </span>ERROR:<span class="w"> </span>Script<span class="w"> </span>execution<span class="w"> </span>failed<span class="w"> </span><span class="o">(</span>use<span class="w"> </span>-d<span class="w"> </span>to<span class="w"> </span>debug<span class="o">)</span>
+</span><span id="__span-26-24"><a id="__codelineno-26-24" name="__codelineno-26-24" href="#__codelineno-26-24"></a>
+</span><span id="__span-26-25"><a id="__codelineno-26-25" name="__codelineno-26-25" href="#__codelineno-26-25"></a>Nmap<span class="w"> </span><span class="k">done</span>:<span class="w"> </span><span class="m">1</span><span class="w"> </span>IP<span class="w"> </span>address<span class="w"> </span><span class="o">(</span><span class="m">1</span><span class="w"> </span>host<span class="w"> </span>up<span class="o">)</span><span class="w"> </span>scanned<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">15</span>.03<span class="w"> </span>seconds
+</span></code></pre></div>
+<p>The "SSH Banner: SSH-2.0-Mocana SSH 6.3" is the ssh server that is running on the procurve switch. Over the years HPE has used different ssh servers but this banner will help identify Procurve switches.</p>
+<p>Let's look at the contents of the procurve-scan.gnmap file:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="c1"># Nmap 7.91 scan initiated Sun Jan 14 17:13:39 2024 as: nmap -sU -sS -T4 -sC -p U:161,T:22 -oA procurve-scan -n -Pn --open --stylesheet https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl 192.168.10.52</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>Host:<span class="w"> </span><span class="m">192</span>.168.10.52<span class="w"> </span><span class="o">()</span><span class="w">  </span>Status:<span class="w"> </span>Up
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>Host:<span class="w"> </span><span class="m">192</span>.168.10.52<span class="w"> </span><span class="o">()</span><span class="w">  </span>Ports:<span class="w"> </span><span class="m">22</span>/open/tcp//ssh///,<span class="w"> </span><span class="m">161</span>/open<span class="p">|</span>filtered/udp//snmp//Hewlett-Packard<span class="w"> </span>SNMPv3<span class="w"> </span>server/
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="c1"># Nmap done at Sun Jan 14 17:13:54 2024 -- 1 IP address (1 host up) scanned in 15.09 seconds</span>
+</span></code></pre></div>
+<p>If you are on Mac/Linux/Windows WSL or have git bash (or MobaXterm) installed on Windows you can use grep to pull out a list of the switches from procurve-scan.gnmap file. Use the following grep/awk command:</p>
+<p><code>bash
+ grep -Eir  "22/open/tcp//ssh///, 161/open|filtered/udp//snmp//" procurve.gnmap | awk '{ print $2 }'
+192.168.10.52</code></p>
+<p>The <code>grep</code> found just the "ssh, snmp" string and <code>awk</code> printed the data in column 2.</p>
+<h3 id="review-the-bootstrap-report">Review the bootstrap report</h3>
+<p>The "stylesheet" argument creates an xsl file to format the XML file that the script creates. You will be able to right-click on the xml file and open it in Firefox to see a nicely formatted report. This isn't required, it's just nice extra and you can give it the customer as documentation. Here is a simple example from my home lab:</p>
+<p><img alt="screenshot" src="../img/nmap-bootstrap-stylesheet.png" /></p>
+<h3 id="opening-the-report-in-a-chromium-based-browser">Opening the report in a Chromium based browser</h3>
+<p>If you want to open the report in a Chromium browser you will need to do the following:</p>
+<ul>
+<li>Open this <a href="https://www.freeformatter.com/xsl-transformer.html#before-output">page</a> in Chrome/Edge</li>
+<li>Paste the text from procurve-scan.xml into "Option 1: Copy-paste your XML document here"</li>
+<li>Open nmap-bootstrap-xsl in a text editor and on line 8, delete -  <code>doctype-system="about:legacy-compat"</code></li>
+<li>Paste the text into "Option 2: Option 1: Copy-paste your XSL document here"</li>
+<li>click <code>Transform XML</code></li>
+<li>Save the new text as procurve-scan.html. You lose a little bit of the report but it's still usable.</li>
+</ul>
+<h3 id="alternative-ways-to-view-the-report-in-a-chromium-browser">Alternative ways to view the report in a Chromium browser</h3>
+<p>The URL restriction occurs because the xsl file comes from an https server (github) and the file is on disk. If you use "settings, Developer tools, console", you will see this message:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>procurve-scan.xml:3<span class="w">  </span>Unsafe<span class="w"> </span>attempt<span class="w"> </span>to<span class="w"> </span>load<span class="w"> </span>URL
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>https://raw.githubusercontent.com/honze-net/nmap-bootstrap-xsl/master/nmap-bootstrap.xsl
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>from<span class="w"> </span>frame<span class="w"> </span>with<span class="w"> </span>URL
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>file:///home/mhubbard/04_Tools/Discovery/procurve-scan.xml.
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="s1">&#39;file:&#39;</span><span class="w"> </span>URLs<span class="w"> </span>are<span class="w"> </span>treated<span class="w"> </span>as<span class="w"> </span>unique<span class="w"> </span>security<span class="w"> </span>origins.
+</span></code></pre></div>
+<h4 id="use-chrome-or-edge-browser-with-the-allow-allow-file-access-from-files-flag">Use Chrome or edge browser with the allow --allow-file-access-from-files flag</h4>
+<p>Chromium based browsers provide a flag to allow local file access. This is a quick way to view the report. But keep in mind that there is a security risk if you don't close the browser after reviewing the report because it will open files without a warning.</p>
+<p><strong>On Linux</strong></p>
+<p>Navigate to the Chrome folder. On a debian based system this is <code>/opt/google/chrome</code>. Then start chrome using the following command:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="nb">cd</span><span class="w"> </span>/opt/google/chrome
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>$<span class="w"> </span>./chrome<span class="w"> </span>--allow-file-access-from-files
+</span></code></pre></div>
+<p>Now you can open procurve.html in Chrome and view the report. If you use this feature often, you can create an alias in the <code>~/.zshrc</code> file</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="c1"># start chrome and allow local file read</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="nb">alias</span><span class="w"> </span>chrome-local<span class="o">=</span><span class="s1">&#39;cd /opt/google/chrome;./chrome --allow-file-access-from-files&#39;</span>
+</span></code></pre></div>
+<p><strong>On Windows</strong></p>
+<p>You can copy this Chrome shortcut to the desktop and add the flag to the "Target" section:</p>
+<p><code>"C:\Program Files\Google\Chrome\Application\chrome.exe" --allow-file-access-from-files</code></p>
+<p>Use the new shortcut to open procurve.html in chrome and view the report. Again, close the browser after you are finished with the report to eliminate the security risk.</p>
+<h4 id="use-firefox">Use Firefox</h4>
+<p>To use firefox:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>Type<span class="w"> </span><span class="s2">&quot;about:config&quot;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>Firefox<span class="w"> </span>address<span class="w"> </span>bar
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>Search<span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="s2">&quot;security.fileuri.strict_origin_policy&quot;</span>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>Change<span class="w"> </span>the<span class="w"> </span>setting<span class="w"> </span>to<span class="w"> </span><span class="s2">&quot;false&quot;</span>
+</span></code></pre></div>
+<p>Now you can open procurve.html in Firefox and view the report. Don't forget to set security.fileuri.strict_origin_policy back to false when you are done.</p>
+<h4 id="use-a-local-http-server">Use a local http server</h4>
+<p>You can use the xsl file, nmap-bootstrap.xsl, that comes from cloning the repository. The drawback to this is that if you want to share the report, you have to include the xsl file.</p>
+<p>Change the nmap command to:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>nmap<span class="w"> </span>-sU<span class="w"> </span>-sS<span class="w"> </span>-T4<span class="w"> </span>-sC<span class="w"> </span>-p<span class="w"> </span>U:161,T:22<span class="w"> </span>-oA<span class="w"> </span>procurve-scan<span class="w"> </span>-n<span class="w"> </span>-Pn<span class="w"> </span>--open<span class="w"> </span>--stylesheet<span class="w"> </span>nmap-bootstrap.xsl<span class="w"> </span><span class="m">192</span>.168.10.52
+</span></code></pre></div>
+<p>Now spin up an http server using python:</p>
+<p><code>python3 -m http.server 8000</code></p>
+<p>Open a Chromium based browser and enter:</p>
+<p><code>http://localhost:8000/procurve-scan.xml</code></p>
+<p>The report will open and not be a limited version.</p>
+<p>Learning to use the python http server is a good skill. For example, if you have Aruba APs running in IAP mode and there are a mix of models you have to use http to upgrade them. This method works great on a laptop.</p>
+<h4 id="references">References</h4>
+<ul>
+<li><a href="https://www.freeformatter.com/xsl-transformer.html#before-output">XSL Transformer - XSLT</a></li>
+<li><a href="https://textslashplain.com/2019/10/09/navigating-to-file-urls/">Restrictions on File Urls</a></li>
+<li><a href="https://gist.github.com/ericlaw1979/deb716d8436890420c41c8a593bfd509">Transform XML+XSLT to plain html so that it loads without blocking</a></li>
+<li><a href="https://csuf-erp.screenstepslive.com/m/70023/l/1650548-enabling-internet-explorer-mode-in-microsoft-edge">Enabling Internet Explorer Mode in Microsoft Edge</a></li>
+<li><a href="https://github.com/honze-net/nmap-bootstrap-xsl">nmap-bootstrap-xsl</a></li>
+</ul>
+<h2 id="emoji-codes-used-in-the-panel-function">Emoji codes used in the panel function</h2>
+<p>If you want to expand on the script or change the emojis:</p>
+<h2 id="emoji-codes-for-status-panels">Emoji Codes for Status Panels</h2>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Emoji</th>
+<th>Unicode Code</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Success</td>
+<td>✅</td>
+<td><code>\u2705</code></td>
+<td>Checkmark</td>
+</tr>
+<tr>
+<td>Error / Failure</td>
+<td>❌</td>
+<td><code>\u274C</code></td>
+<td>Cross mark</td>
+</tr>
+<tr>
+<td>Warning</td>
+<td>⚠️</td>
+<td><code>\u26A0\uFE0F</code></td>
+<td>Warning sign</td>
+</tr>
+<tr>
+<td>Info / Notice</td>
+<td>ℹ️</td>
+<td><code>\u2139\uFE0F</code></td>
+<td>Info symbol</td>
+</tr>
+<tr>
+<td>Timeout / Wait</td>
+<td>⏱️</td>
+<td><code>\u23F1\uFE0F</code></td>
+<td>Stopwatch</td>
+</tr>
+<tr>
+<td>Processing / Running</td>
+<td>🔄</td>
+<td><code>\u1F501</code></td>
+<td>Clockwise arrows</td>
+</tr>
+<tr>
+<td>Connecting</td>
+<td>🔌</td>
+<td><code>\u1F50C</code></td>
+<td>Plug</td>
+</tr>
+<tr>
+<td>Save / Write</td>
+<td>💾</td>
+<td><code>\u1F4BE</code></td>
+<td>Floppy disk</td>
+</tr>
+<tr>
+<td>Search / Discovery</td>
+<td>🔍</td>
+<td><code>\u1F50D</code></td>
+<td>Magnifying glass</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>🌐</td>
+<td><code>\u1F310</code></td>
+<td>Globe</td>
+</tr>
+<tr>
+<td>Firewall / Security</td>
+<td>🔥</td>
+<td><code>\u1F525</code></td>
+<td>Flame</td>
+</tr>
+<tr>
+<td>DNS / Naming</td>
+<td>🏷️</td>
+<td><code>\u1F3F7\uFE0F</code></td>
+<td>Label</td>
+</tr>
+<tr>
+<td>System Boot / Start</td>
+<td>🚀</td>
+<td><code>\u1F680</code></td>
+<td>Rocket</td>
+</tr>
+<tr>
+<td>Power Off / Shutdown</td>
+<td>⏻</td>
+<td><code>\u23FB</code></td>
+<td>Power symbol</td>
+</tr>
+<tr>
+<td>Build / Compile</td>
+<td>🛠️</td>
+<td><code>\u1F6E0\uFE0F</code></td>
+<td>Wrench and hammer</td>
+</tr>
+</tbody>
+</table>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../Getting_Started/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Getting Started">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Getting Started
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../Helper-scripts/" class="md-footer__link md-footer__link--next" aria-label="Next: Helper Scripts">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Helper Scripts
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2025 <a href="https://github.com/rikosintie" target="_blank" rel="noopener">Michael Hubbard</a>
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/rikosintie" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/rikosintie" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/mwhubbard/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.tabs.link", "content.code.copy", "content.code.annotate", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.footer", "navigation.top", "search.suggest", "search.highlight", "toc.integrate"], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  </body>
+</html>
