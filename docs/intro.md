@@ -164,30 +164,34 @@ This is not an exhaustive list, feel free to add to it.
 
 2. What are the Asset Tag requirements for switches, routers, servers?
 3. Is an escort required when we are on site?
-4. How is access (Keys, codes, alarm codes, etc) granted?
+4. How is access granted
+   1. Keys
+   2. Badges
+   3. Keypad Code
+   4. Alarm codes
 5. If after hours cut overs are required, who is the after hours contact?
 6. Will VPN be provided?
 7. When on site:
     1. Are we allowed to connect our laptops to the network?
-    1. If not, will a jumpbox be provided?
-    1. If using a jumpbox can we install tools like python or nmap?
+    2. If not, will a jumpbox be provided?
+    3. If using a jumpbox can we install tools like python or nmap?
 8. Can we use tools like nmap and Wireshark to discover devices?
     1. Here are some [nmap scripts](https://github.com/rikosintie/nmap-python) that I wrote for discovery.
 9. Is a change request document required?
     1. If so, how many days before the cut over?
-    1. Who creates the document?
-    1. Is there a template for the change request document?
-    1. Who approves the document?
-    1. Who will do the post cut over testing?
-    1. How long after the cut over until a sign off is completed?
+    2. Who creates the document?
+    3. Is there a template for the change request document?
+    4. Who approves the document?
+    5. Who will do the post cut over testing?
+    6. How long after the cut over until a sign off is completed?
 10. If a monitoring tool such as Solarwinds Orion in use:
     1. Who disables alerts for the devices being cut over?
-    1. Will we have access to monitor progress during the cut over?
-    1. Is a syslog server available that we can access?
+    2. Will we have access to monitor progress during the cut over?
+    3. Is a syslog server available that we can access?
 11. Firmware
     1. What firmware version should be installed?
-    1. If the project spans months, will switches be put on the current firmware before being deployed?
-    1. Who will upgrade the switches that have already been deployed?
+    2. If the project spans months, will switches be put on the current firmware before being deployed?
+    3. Who will upgrade the switches that have already been deployed?
 12. Does the network team have access to M&O devices such as Environmental monitoring (BACnet), surveillance cameras, door access controls?
 13. Is DHCP used for non-server hosts i.e. cameras, door access panels, etc?
 14. If ClearPass will be used, DHCP allows devices to be profiled.
@@ -195,13 +199,13 @@ This is not an exhaustive list, feel free to add to it.
     1. A refresh is a good time to make a host name changes if needed.
 16. Do you have a management vlan?
     1. If so, what are the management vlan IP addresses?
-    1. default gateway or gateway of last resort IP address?
+    2. default gateway or gateway of last resort IP address?
 17. Authentication Server
     1. Authentication Server IP address
-    1. Authentication Server credentials
+    2. Authentication Server credentials
 18. NTP Server
     1. IP address
-    1. Authentication credentials
+    2. Authentication credentials
 19. Username/password for base configuration installation
     1. Enable password for base configuration
     2. Hashing type - scrypt recommended -> username mhubbard algorithm-type scrypt secret Cleartext-Password
