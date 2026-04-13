@@ -220,14 +220,15 @@ This is not an exhaustive list, feel free to add to it.
     3. IPv6 - If iPv6 isn't used, P2P routers are a good place to start
     4. number of areas
 22. Rate Limits on edge ports
-    1. rate-limit broadcast
-    2. rate-limit multicast
+    1. rate-limit broadcast 1 0.5
+    2. rate-limit multicast 1 0.5
     3. rate-limit unknown-unicast
 23. Security
     1. DHCP Snooping - Highly recommended, low effort to deploy
-    2. Dynamic ARP Inspection - Highly recommended. High effort to deploy
-    3. Authorized Managers - highly recommended
-    4. no tftp-server (only scp for copying files)
+    2. IP Address of DHCP Servers for dhcp-snooping
+    3. Dynamic ARP Inspection - Highly recommended. High effort to deploy
+    4. Authorized Managers - highly recommended
+    5. no tftp-server (only scp for copying files)
 24. snmp requirements
     1. Version - V3 highly recommended
     2. community names
@@ -242,7 +243,8 @@ This is not an exhaustive list, feel free to add to it.
     6. admin-edge-port
     7. bpdu-protection - recommended
     8. spanning-tree bpdu-protection-timeout 90
-26. ssh - [Old ciphers should be removed](https://rikosintie.github.io/Ubuntu4NetworkEngineers/SSH/#what-cryptographic-algorithms-should-i-use)
+26. Loop-protect on edge ports?
+27. ssh - [Old ciphers should be removed](https://rikosintie.github.io/Ubuntu4NetworkEngineers/SSH/#what-cryptographic-algorithms-should-i-use)
     1. Host Key type - ssh-rsa recommended
     2. Ciphers - aes256-ctr recommended
     3. MACs- hmac-sha2-512,hmac-sha2-256 recommended
