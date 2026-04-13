@@ -1,5 +1,17 @@
 show system
 show config status
+show running-config interface
+show running-config vlan
+show running-config change-history
+show running-config status
+show running-config router
+show running-config router ospf
+show running-config router ospf3
+show system information
+show system fans
+show system temperature
+show system power-supply
+show modules
 show oobm
 show oobm ip
 show time
@@ -39,7 +51,6 @@ show spanning-tree inconsistent-ports
 show spanning-tree bpdu-protection
 show power-over-ethernet brief | i Del
 show power
-show modules
 show ip ssh
 show snmp-server
 show dhcp-server binding
