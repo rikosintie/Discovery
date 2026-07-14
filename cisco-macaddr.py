@@ -89,6 +89,7 @@ Clear the IP address in case the next interface has a MAC but no IP address
 """
 
 import argparse
+import contextlib
 import hashlib
 import json
 import os
@@ -109,12 +110,14 @@ __license__ = "Unlicense"
 
 
 vernum = "1.1"
+
+
 def version():
     """
     This function prints the version of this program. It doesn't allow
     any argument.
     """
-#    print(AsciiArt)
+    #    print(AsciiArt)
     print("+----------------------------------------------------------------------+")
     print(
         "| "
@@ -163,11 +166,6 @@ def create_filename(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
     return int_report
 
 
-def get_current_path():
-    current_path = os.getcwd()
-    return current_path
-
-
 parser = argparse.ArgumentParser(
     description="-s site, -c core hostname in a Core/IDF deployment"
 )
@@ -206,7 +204,7 @@ with open(dev_inv_file) as devices_file:
 print("-" * (len(dev_inv_file) + 23))
 print(f"Reading devices from: {dev_inv_file}")
 print("-" * (len(dev_inv_file) + 23))
-uptime = []
+p = manuf.MacParser()
 for line in fabric:
     line = line.strip("\n")
     vendor = line.split(",")[1]
@@ -254,29 +252,24 @@ for line in fabric:
         print(fnf_error)
         print("IP Addresses will not be included because Mac2IP.json is not available")
         my_json_file = None
-    p = manuf.MacParser()
     # create a blank list to accept each line in the file
     data = []
-    # mydatafile = '01_' + hostname + '-mac-address.txt'
     try:
-        f = open(mac_file, "r")
+        with open(mac_file, "r") as f:
+            for line in f:
+                match_PC = re.search(r"([0-9A-F]{2}[-:]){5}([0-9A-F]{2})", line, re.I)
+                match_Cisco = re.search(r"([0-9A-F]{4}[.]){2}([0-9A-F]{4})", line, re.I)
+                match_HP = re.search(r"([0-9A-F]{6}[-])([0-9A-F]{6})", line, re.I)
+                # strip out lines without a mac address
+                if match_PC or match_Cisco or match_HP:
+                    data.append(line)
+                match_prompt = re.match(r"^(\S+?)(?:\([^)]*\))?#", line)
+                if match_prompt:
+                    device_name = match_prompt.group(1)
+                ic(device_name)
     except FileNotFoundError as fnf_error:
         print(fnf_error)
         sys.exit(0)
-    else:
-        for line in f:
-            match_PC = re.search(r"([0-9A-F]{2}[-:]){5}([0-9A-F]{2})", line, re.I)
-            match_Cisco = re.search(r"([0-9A-F]{4}[.]){2}([0-9A-F]{4})", line, re.I)
-            match_HP = re.search(r"([0-9A-F]{6}[-])([0-9A-F]{6})", line, re.I)
-            # strip out lines without a mac address
-            if match_PC or match_Cisco or match_HP:
-                data.append(line)
-            device_name_loc = line.find("#")
-            if device_name_loc != -1:
-                device_name = line[0:device_name_loc]
-                device_name = device_name.strip()
-            ic(device_name)
-        f.close()
     ct = len(data) - 1
     counter = 0
     IPs = []
@@ -294,6 +287,9 @@ for line in fabric:
         IP = IP.replace("    ~~~      F    F ", "")
         # extract MAC Address and save to hash_list for hashing
         L = str.split(IP)
+        if len(L) < 4:
+            counter += 1
+            continue
         Vlan = L[0]
         Mac = L[1]
         Mac_Type = L[2]
@@ -306,16 +302,13 @@ for line in fabric:
         #        Interface_Num = L[5]
         # ******************************************************
         ct2 = len(L)
-        count2 = 2
+        count2 = 3
         while count2 < ct2:
-            Interface_Num = L[count2]
-            if Interface_Num.find("/") == -1:
-                count2 += 1
-            #    print(Interface_Num)
-            else:
+            if "/" in L[count2]:
+                Interface_Num = L[count2]
                 break
-        #            continue
-        temp = hash_list.append(Mac)
+            count2 += 1
+        hash_list.append(Mac)
         if Mac in Mac_IP:
             IP_Data = Mac_IP[Mac]
         else:
@@ -365,28 +358,22 @@ for line in fabric:
     output_file = create_filename("port-maps", "-ports.txt", "Final")
     ic(output_file)
 
-    with open(output_file, "w") as f:
-        sys.stdout = f
-
-        # Redirect print statements to the file
+    with open(output_file, "w") as f, contextlib.redirect_stdout(f):
         version()
         print()
         print(f"Number of Entries: {d}")
         print()
         print(f"Device Name: {device_name}")
         if my_json_file:
-            header = "Vlan   IP Address       MAC Address       Interface   Vendor"
-            print("Vlan   IP Address       MAC Address       Interface   Vendor")
+            print(
+                "Vlan   IP Address       MAC Address       Type       Interface   Vendor"
+            )
             print("--" * 40)
         else:
-            header = "Vlan   MAC Address       Interface   Vendor"
-            print("Vlan   MAC Address       Interface   Vendor")
+            print("Vlan   MAC Address       Type       Interface   Vendor")
             print("--" * 30)
         for IP in IPs:
             print(IP)
-
-    # Reset print function to default
-    sys.stdout = sys.__stdout__
     """
     hash the string of all macs. This gives a quick way to compare the
     before and after MACS
