@@ -99,8 +99,8 @@ from icecream import ic
 
 import manuf
 
-# ic.enable()
-ic.disable()
+ic.enable()
+# ic.disable()
 
 __author__ = "Michael Hubbard"
 __author_email__ = "mhubbard@vectorusa.com"
@@ -109,21 +109,12 @@ __license__ = "Unlicense"
 
 
 vernum = "1.1"
-AsciiArt = """
- __  __    _    ____   ____    __  __                    __            _
-|  \/  |  / \  / ___| |___ \  |  \/  | __ _ _ __  _   _ / _| __ _  ___| |_
-| |\/| | / _ \| |       __) | | |\/| |/ _` | '_ \| | | | |_ / _` |/ __| __|
-| |  | |/ ___ \ |___   / __/  | |  | | (_| | | | | |_| |  _| (_| | (__| |_
-|_|  |_/_/   \_\____| |_____| |_|  |_|\__,_|_| |_|\__,_|_|  \__,_|\___|\__|
-"""
-
-
 def version():
     """
     This function prints the version of this program. It doesn't allow
     any argument.
     """
-    print(AsciiArt)
+#    print(AsciiArt)
     print("+----------------------------------------------------------------------+")
     print(
         "| "
@@ -242,7 +233,7 @@ for line in fabric:
     # create an empty dictionary to hold the mac-IP data
     Mac_IP = {}
     IP_Data = ""
-    device_name = ""
+    device_name = hostname
     # create an empty list to hold MAC addresses for hashing
     hash_list = []
     # open the json created by arp.py if it exists
@@ -285,7 +276,7 @@ for line in fabric:
                 device_name = line[0:device_name_loc]
                 device_name = device_name.strip()
             ic(device_name)
-        f.close
+        f.close()
     ct = len(data) - 1
     counter = 0
     IPs = []
