@@ -100,8 +100,8 @@ from icecream import ic
 
 import manuf
 
-ic.enable()
-# ic.disable()
+# ic.enable()
+ic.disable()
 
 __author__ = "Michael Hubbard"
 __author_email__ = "mhubbard@vectorusa.com"
