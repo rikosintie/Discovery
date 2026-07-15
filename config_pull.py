@@ -45,6 +45,10 @@ sent to the switch are saved to the CR-data folder as <hostname>-CR-data.txt.
 The script will also create file with a show running configuration in the Running
 folder called <hostname>-running-config.txt
 
+The function generate_mac_query_file_from_json() will read the interface JSON file and
+create a file with the show mac address-table interface commands for each interface.
+The file is saved in the port-maps folder as <hostname>-send-mac-address.txt
+
 ---Error Handling ---
 The connect handler is wrapped in a try/except block.
 If a time out occurs when connecting to a switch it is trapped, a message is
@@ -64,7 +68,8 @@ import sys
 import timeit
 from collections import defaultdict
 from datetime import datetime
-from pathlib import Path
+
+# from pathlib import Path
 from typing import Optional, Tuple, TypedDict
 
 from icecream import ic
@@ -203,8 +208,6 @@ def which_vendor(vendor: str) -> Tuple[str, str, str, str, bool]:
         case _:
             raise ValueError(f"Unsupported vendor: {vendor}")
 
-    return sh_run, show_lldp, show_arp, interface_key
-
 
 # function to create a "show mac address table file by reading the interface
 # JSON file.
@@ -243,6 +246,8 @@ def generate_mac_query_file_from_json(
 
     for entry in interface_data:
         intf_name = entry.get(interface_key)
+        if not intf_name:
+            continue
         # Skip VLAN interfaces (they can't be used in 'show mac address-table interface' queries)
         if intf_name.lower().startswith("vlan"):
             continue
@@ -250,22 +255,10 @@ def generate_mac_query_file_from_json(
             continue
         if intf_name.lower().startswith("tu"):
             continue
-        if not intf_name:
-            continue
 
         # Conditionally normalize interface names
         if force_prefix and re.match(r"^\d+/\d+/\d+$", intf_name):
             intf_name = f"GigabitEthernet{intf_name}"
-
-        # Extract interface type abbreviation for grep
-        match = re.match(r"([A-Za-z]+)", intf_name)
-        if match:
-            abbrev = match.group(1)[:2]
-        else:
-            abbrev = intf_name.split("/")[0]
-
-        # cmd = f"show mac address-table interface {intf_name} | i {abbrev}"
-        # cmd = f"{maddr} {intf_name} | i {abbrev}"
 
         cmd = f"{maddr} {intf_name}"
         commands.append(cmd)
@@ -572,11 +565,12 @@ sshv1_skip_count = 0
 for line in fabric:
     device_count += 1
     line = line.strip("\n")
-    ipaddr = line.split(",")[0]
-    vendor = line.split(",")[1]
-    hostname = line.split(",")[2]
-    username = line.split(",")[3]
-    maddr = line.split(",")[4]
+    fields = line.split(",")
+    ipaddr   = fields[0]
+    vendor   = fields[1]
+    hostname = fields[2]
+    username = fields[3]
+    maddr    = fields[4] if len(fields) > 4 else ""
     if maddr == "":
         # Show the input prompt using rich formatting
         print(
@@ -639,7 +633,10 @@ for line in fabric:
         # 🔍 Check SSH version before attempting connection
         banner = detect_ssh_version(ipaddr)
         if banner:
-            if banner.startswith("SSH-1."):
+            if banner.startswith("SSH-1.99"):
+                # SSH-1.99 is a hybrid banner — SSHv2 capable per RFC 4253
+                pass  # Let ConnectHandler try
+            elif banner.startswith("SSH-1."):
                 # Legacy SSHv1 — not supported
                 sshv1_skip_count += 1
                 skipped_devices.append(
@@ -662,9 +659,6 @@ for line in fabric:
                 log_message(strip_rich_markup(message))
                 device_count -= 1
                 continue
-            elif banner.startswith("SSH-1.99"):
-                # SSH-1.99 is a hybrid banner — usually safe for SSHv2
-                pass  # Let ConnectHandler try
             # else: SSH-2.0 — fully supported
         else:
             # No banner received — might not be an SSH server at all
@@ -754,10 +748,11 @@ for line in fabric:
         skipped_devices.append(
             {"hostname": hostname, "ip": ipaddr, "reason": "SSHv1 only"}
         )
-        print(
+        message = (
             f"Could not connect to {hostname} at {ipaddr}, remove it"
             " from the device inventory file"
         )
+        print(message)
         log_message(strip_rich_markup(message))
         remove_empty_lines(LOGFILE)
         print()
@@ -785,8 +780,20 @@ for line in fabric:
     border = "-" * (len(cfg_file) + len(hostname) + 18)
     print(f"[bold][blue]{border}[/blue][/bold]")
     remove_empty_lines(cfg_file)
-    with open(cfg_file) as config_file:
-        show_commands = config_file.readlines()
+    try:
+        with open(cfg_file) as config_file:
+            show_commands = config_file.readlines()
+    except FileNotFoundError:
+        message = f"Config file [red]{cfg_file}[/red] not found — skipping {hostname}"
+        print_panel(message, title="Missing Config File", border_style="red",
+                    title_emoji=emoji_for("error"))
+        log_message(strip_rich_markup(message))
+        skipped_devices.append(
+            {"hostname": hostname, "ip": ipaddr, "reason": f"{cfg_file} not found"}
+        )
+        device_count -= 1
+        net_connect.disconnect()
+        continue
     ic(show_commands)
     # Netmiko normally allows 100 seconds for send_command to complete
     # delay_factor=2 would allow 200 seconds.
@@ -912,6 +919,24 @@ for line in fabric:
                 strip_command=True,
                 use_textfsm=True,
             )
+        case "cisco_nxos":
+            output_show_int_br = net_connect.send_command(
+                "show interfaces status",
+                strip_command=True,
+                use_textfsm=True,
+            )
+        case "aruba_cx":
+            output_show_int_br = net_connect.send_command(
+                "show interfaces status",
+                strip_command=True,
+                use_textfsm=True,
+            )
+        case "aruba_osswitch":
+            output_show_int_br = net_connect.send_command(
+                "show interfaces status",
+                strip_command=True,
+                use_textfsm=True,
+            )
 
     # Use textFSM to create a json object with show lldp info remote
     print(
@@ -950,19 +975,28 @@ for line in fabric:
     # create a mac-address query file from the JSON interface data
     json_interface = create_filename("Interface", "-interface.json")
     output_mac_address = create_filename("port-maps", "-send-mac-addr.txt", "data")
-    generate_mac_query_file_from_json(
-        json_file_path=json_interface,
-        output_file_path=output_mac_address,
-        interface_key=interface_key,
-        force_prefix=force_prefix,
-    )
+    try:
+        generate_mac_query_file_from_json(
+            json_file_path=json_interface,
+            output_file_path=output_mac_address,
+            interface_key=interface_key,
+            force_prefix=force_prefix,
+        )
+    except ValueError as e:
+        message = f"[yellow]Skipping MAC query for {hostname}:[/yellow] {e}"
+        print_panel(message, title="No Valid Interfaces", border_style="yellow",
+                    title_emoji=emoji_for("warning"))
+        log_message(strip_rich_markup(message))
 
     border = "-" * (len(output_mac_address) + 1)
     print(f"[bold][blue]{border}[/blue][/bold]")
 
-    remove_empty_lines(output_mac_address)
-    with open(output_mac_address) as mac_add_file:
-        show_commands = mac_add_file.readlines()
+    if os.path.isfile(output_mac_address):
+        remove_empty_lines(output_mac_address)
+        with open(output_mac_address) as mac_add_file:
+            show_commands = mac_add_file.readlines()
+    else:
+        show_commands = []
     ic(show_commands)
     # Netmiko normally allows 100 seconds for send_command to complete
     # delay_factor=2 would allow 200 seconds.
