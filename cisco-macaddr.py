@@ -98,6 +98,9 @@ import re
 import socket
 import sys
 
+import dns.exception
+import dns.resolver
+import dns.reversename
 from icecream import ic
 
 import manuf
@@ -150,16 +153,28 @@ def remove_empty_lines(filename):
         filehandle.writelines(lines)
 
 
-def reverse_dns(ip: str, timeout: float = 1.0) -> str:
+def reverse_dns(ip: str, timeout: float = 1.0, dns_server: str = "") -> str:
     """
-    Reverse DNS lookup with a timeout. Returns the hostname(s) truncated at
-    the first '.' — multiple names joined with '/'. Returns 'No-PTR' when no
+    Reverse DNS lookup with a timeout. Returns hostname(s) truncated at the
+    first '.', joined with '/' for multiple names. Returns 'No-PTR' when no
     PTR record exists, 'Timeout' when the lookup exceeds the deadline.
+
+    When dns_server is provided, queries that server directly via dnspython
+    instead of using the system resolver.
     """
     def _lookup():
         try:
-            hostname, aliases, _ = socket.gethostbyaddr(ip)
-            names = [hostname] + [a for a in aliases if a != hostname]
+            if dns_server:
+                resolver = dns.resolver.Resolver(configure=False)
+                resolver.nameservers = [dns_server]
+                resolver.timeout = timeout
+                resolver.lifetime = timeout
+                rev_name = dns.reversename.from_address(ip)
+                answers = resolver.resolve(rev_name, "PTR")
+                names = [str(r.target).rstrip(".") for r in answers]
+            else:
+                hostname, aliases, _ = socket.gethostbyaddr(ip)
+                names = [hostname] + [a for a in aliases if a != hostname]
             truncated = [n.split(".")[0] for n in names]
             seen: set[str] = set()
             unique = []
@@ -168,13 +183,14 @@ def reverse_dns(ip: str, timeout: float = 1.0) -> str:
                     seen.add(n)
                     unique.append(n)
             return "/".join(unique)
-        except (socket.herror, socket.gaierror):
+        except (dns.resolver.NXDOMAIN, dns.resolver.NoAnswer,
+                dns.exception.DNSException, socket.herror, socket.gaierror):
             return "No-PTR"
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
         future = executor.submit(_lookup)
         try:
-            return future.result(timeout=timeout)
+            return future.result(timeout=timeout + 1.0)
         except concurrent.futures.TimeoutError:
             return "Timeout"
 
@@ -211,9 +227,16 @@ parser.add_argument(
     default="",
     help="Coreswitch hostname",
 )
+parser.add_argument(
+    "-d",
+    "--dns",
+    default="",
+    help="DNS server IP for reverse lookups - ex. 192.168.10.222",
+)
 args = parser.parse_args()
 site = args.site
 core = args.coreswitch
+dns_server = args.dns
 
 if site is None:
     print("-s site name is a required argument")
@@ -348,7 +371,7 @@ for line in fabric:
         print(IP_Data, Mac)
         # Reverse DNS lookup — only when we have a real IP address
         if my_json_file and IP_Data != "No-Match":
-            DNS_Name = reverse_dns(IP_Data)
+            DNS_Name = reverse_dns(IP_Data, dns_server=dns_server)
         else:
             DNS_Name = ""
         # pull the manufacturer with manuf
