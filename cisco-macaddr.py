@@ -102,6 +102,9 @@ import dns.exception
 import dns.resolver
 import dns.reversename
 from icecream import ic
+from rich.console import Console
+from rich.table import Table
+import rich.box
 
 import manuf
 
@@ -324,44 +327,57 @@ for line in fabric:
     except FileNotFoundError as fnf_error:
         print(fnf_error)
         sys.exit(0)
-    ct = len(data) - 1
-    counter = 0
-    IPs = []
     print()
     print("Device Name: %s " % device_name)
     print("PingInfo Data")
-    while counter <= ct:
-        IP = data[counter]
-        # Remove newline at end
-        IP = IP.strip("\n")
+
+    # Build the rich table — columns defined once based on whether ARP data is available
+    if my_json_file:
+        table = Table(
+            show_header=True,
+            header_style="bold",
+            box=rich.box.SIMPLE_HEAD,
+            show_edge=False,
+            pad_edge=False,
+        )
+        table.add_column("Vlan",        min_width=5)
+        table.add_column("IP Address",  min_width=16)
+        table.add_column("MAC Address", min_width=18)
+        table.add_column("Interface",   min_width=12)
+        table.add_column("Vendor",      min_width=14)
+        table.add_column("DNS Name")
+    else:
+        table = Table(
+            show_header=True,
+            header_style="bold",
+            box=rich.box.SIMPLE_HEAD,
+            show_edge=False,
+            pad_edge=False,
+        )
+        table.add_column("Vlan",        min_width=5)
+        table.add_column("MAC Address", min_width=18)
+        table.add_column("Interface",   min_width=12)
+        table.add_column("Vendor",      min_width=14)
+
+    for raw_line in data:
+        IP = raw_line.strip("\n")
         #   The Nexus line adds an * and spaces to the front of the line
         IP = IP.strip("*    ")
         #   The Nexus line includes additional fields that need to be stripped
         IP = IP.replace("  0         F      F   ", "")
         IP = IP.replace("    ~~~      F    F ", "")
-        # extract MAC Address and save to hash_list for hashing
         L = str.split(IP)
         if len(L) < 4:
-            counter += 1
             continue
         Vlan = L[0]
         Mac = L[1]
-        Mac_Type = L[2]
         Interface_Num = L[3]
         ic(Mac)
-        # The interface isn't in the same location in the output on all switches
-        # This loop seaches for a / in the value before picking the interface.
-        # Old method *******************************************
-        #    if Interface_Num.find('/') == -1:
-        #        Interface_Num = L[5]
-        # ******************************************************
-        ct2 = len(L)
-        count2 = 3
-        while count2 < ct2:
-            if "/" in L[count2]:
-                Interface_Num = L[count2]
+        # The interface isn't in the same location on all switches — search for '/'
+        for token in L[3:]:
+            if "/" in token:
+                Interface_Num = token
                 break
-            count2 += 1
         hash_list.append(Mac)
         if Mac in Mac_IP:
             IP_Data = Mac_IP[Mac]
@@ -374,62 +390,25 @@ for line in fabric:
             DNS_Name = reverse_dns(IP_Data, dns_server=dns_server)
         else:
             DNS_Name = ""
-        # pull the manufacturer with manuf
-        manufacture = p.get_manuf(Mac)
-        # Pad with spaces for output alignment
-        Front_Pad = 4 - len(Vlan)
-        Pad = 7 - len(Vlan) - Front_Pad
-        Vlan = (" " * Front_Pad) + Vlan + (" " * Pad)
-        # Pad MAC Address Field
-        Pad = 18 - len(Mac)
-        Mac = Mac + (" " * Pad)
-        # Pad Interface
-        Pad = 12 - len(Interface_Num)
-        Interface_Num = Interface_Num + (" " * Pad)
-        # Pad IP address field if the json file exists
+        manufacture = str(p.get_manuf(Mac) or "")
         if my_json_file:
-            Pad = 17 - len(IP_Data)
-            IP_Data = IP_Data + (" " * Pad)
-            # create the separator at 80 characters
-            Pad = "--" * 40
+            table.add_row(Vlan, IP_Data, Mac, Interface_Num, manufacture, DNS_Name)
         else:
-            # if not create the separator at 60 characters since there won't be IPs
-            Pad = "--" * 30
-        # Build the string — DNS Name is last so long names don't break alignment
-        IP = Vlan + IP_Data + Mac + Interface_Num + str(manufacture) + "   " + DNS_Name
-        IPs.append(str(IP))
-        #    IPs.append('--' * 40)
-        IPs.append(Pad)
-        # Clear the IP address in case the next interface has a MAC but no IP address
-        IP_Data = ""
-        counter = counter + 1
-    d = int(len(IPs) / 2)
+            table.add_row(Vlan, Mac, Interface_Num, manufacture)
 
-    # output_file = hostname + '-ports.txt'  # Specify the filename for the output file
-    # loc = get_current_path()
-    # loc = loc + "/Final/"
-    # output_file = (
-    #     loc + hostname + "-ports.txt"
-    # )  # Specify the filename for the output file
     output_file = create_filename("port-maps", "-ports.txt", "Final")
     ic(output_file)
 
-    with open(output_file, "w") as f, contextlib.redirect_stdout(f):
-        version()
-        print()
-        print(f"Number of Entries: {d}")
-        print()
-        print(f"Device Name: {device_name}")
-        if my_json_file:
-            print(
-                "Vlan   IP Address       MAC Address       Interface   Vendor      DNS Name"
-            )
-            print("--" * 40)
-        else:
-            print("Vlan   MAC Address       Interface   Vendor")
-            print("--" * 30)
-        for IP in IPs:
-            print(IP)
+    with open(output_file, "w") as f:
+        with contextlib.redirect_stdout(f):
+            version()
+            print()
+            print(f"Number of Entries: {table.row_count}")
+            print()
+            print(f"Device Name: {device_name}")
+            print()
+        file_console = Console(file=f, highlight=False, force_terminal=False)
+        file_console.print(table)
     """
     hash the string of all macs. This gives a quick way to compare the
     before and after MACS
