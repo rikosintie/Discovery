@@ -386,19 +386,17 @@ for line in fabric:
         # Pad Interface
         Pad = 12 - len(Interface_Num)
         Interface_Num = Interface_Num + (" " * Pad)
-        # Pad IP address and DNS name fields if the json file exists
+        # Pad IP address field if the json file exists
         if my_json_file:
             Pad = 17 - len(IP_Data)
             IP_Data = IP_Data + (" " * Pad)
-            Pad = max(0, 20 - len(DNS_Name))
-            DNS_Name = DNS_Name + (" " * Pad)
             # create the separator at 80 characters
             Pad = "--" * 40
         else:
             # if not create the separator at 60 characters since there won't be IPs
             Pad = "--" * 30
-        # Build the string
-        IP = Vlan + IP_Data + DNS_Name + Mac + Interface_Num + str(manufacture)
+        # Build the string — DNS Name is last so long names don't break alignment
+        IP = Vlan + IP_Data + Mac + Interface_Num + str(manufacture) + "   " + DNS_Name
         IPs.append(str(IP))
         #    IPs.append('--' * 40)
         IPs.append(Pad)
@@ -424,9 +422,9 @@ for line in fabric:
         print(f"Device Name: {device_name}")
         if my_json_file:
             print(
-                "Vlan   IP Address       DNS Name            MAC Address       Interface   Vendor"
+                "Vlan   IP Address       MAC Address       Interface   Vendor      DNS Name"
             )
-            print("--" * 42)
+            print("--" * 40)
         else:
             print("Vlan   MAC Address       Interface   Vendor")
             print("--" * 30)
