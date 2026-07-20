@@ -9,8 +9,8 @@
 - [What files are created](#what-files-are-created)
 - [Creating Port maps](#creating-port-maps)
   - [Running the port map scripts](#running-the-port-map-scripts)
-    - [Running the procurve-arp.py script](#running-the-procurve-arppy-script)
-    - [Running the procurve-macaddr.py script](#running-the-procurve-macaddrpy-script)
+    - [Running the \[vendor\]\]-arp.py script](#running-the-vendor-arppy-script)
+    - [Running the \[vendor\]-macaddr.py script](#running-the-vendor-macaddrpy-script)
 - [Core/IDF deployment](#coreidf-deployment)
 - [CDP Neighbor Reports](#cdp-neighbor-reports)
   - [The cdp scripts](#the-cdp-scripts)
@@ -28,7 +28,7 @@
 
 ## What files are created
 
-After the `procurve-Config-pull.py` script finishes, you can use the ***hostname-CR-data.txt*** files to get started planning. The script also creates JSON files for:
+After the `config-pull.py` script finishes, you can use the ***hostname-CR-data.txt*** files to get started planning. The script also creates JSON files for:
 
 - Port Maps
 - cdp neighbors
@@ -116,11 +116,14 @@ There are two general categories of switch deployments. The first is a distribut
 
 The second is a Core/IDF deployment where there is a layer 3 switch in an MDF and the closets are connected at layer 2. In this case, we have to use an argument in the procurve-macaddr.py script to tell it which hostname-arp.txt file to use for each hostname-mac-address.txt file.
 
-#### Running the procurve-arp.py script
+#### Running the [vendor]]-arp.py script
 
 Example of a distributed layer 3 deployment:
 
-`python3 procurve-arp.py -s area1`
+```bash
+python3 procurve-arp.py -s area1
+python3 cisco-arp.py -s area1
+```
 
 The script will create the hostname-Mac2IP.json and will print some information to the screen. The first information is the file being processed and the number of IPs and the IPs sorted. Here is an example:
 
@@ -154,17 +157,23 @@ Number of IP, MAC and Manufacture: 566
 
 If you have a need for this information great, if not just ignore it.
 
-#### Running the procurve-macaddr.py script
+#### Running the [vendor]-macaddr.py script
 
 This script reads the hostname-Mac2IP.json and hostname-mac-address.txt files and creates the port maps. The port maps are saved in the final folder under port-maps.
 
-`python3 procurve-macaddr.py -s area1`
+``` bash
+python3 procurve-macaddr.py -s JC-core`
+python3 cisco-arp.py -s JC-core
+```
 
 ## Core/IDF deployment
 
-In this case only the core switch has the arp records. The argument "-c coreswitch" is used to tell the switch to use the core-arp.txt file for all switches.
+In this case only the core switch has the arp records. The argument "-c coreswitch" is used to tell the switch to use the JC-core-arp.txt file for all switches.
 
-`python3 procurve-macaddr.py -s area1 -c coreswitch`
+``` bash
+python3 procurve-macaddr.py -s area1 -c coreswitch`
+python3 cisco-macaddr.py -s jc-edge -c JC-core
+```
 
 ----------------------------------------------------------------
 
