@@ -89,11 +89,13 @@ Clear the IP address in case the next interface has a MAC but no IP address
 """
 
 import argparse
+import concurrent.futures
 import contextlib
 import hashlib
 import json
 import os
 import re
+import socket
 import sys
 
 from icecream import ic
@@ -146,6 +148,35 @@ def remove_empty_lines(filename):
     with open(filename, "w") as filehandle:
         lines = filter(lambda x: x.strip(), lines)
         filehandle.writelines(lines)
+
+
+def reverse_dns(ip: str, timeout: float = 1.0) -> str:
+    """
+    Reverse DNS lookup with a timeout. Returns the hostname(s) truncated at
+    the first '.' — multiple names joined with '/'. Returns 'No-PTR' when no
+    PTR record exists, 'Timeout' when the lookup exceeds the deadline.
+    """
+    def _lookup():
+        try:
+            hostname, aliases, _ = socket.gethostbyaddr(ip)
+            names = [hostname] + [a for a in aliases if a != hostname]
+            truncated = [n.split(".")[0] for n in names]
+            seen: set[str] = set()
+            unique = []
+            for n in truncated:
+                if n not in seen:
+                    seen.add(n)
+                    unique.append(n)
+            return "/".join(unique)
+        except (socket.herror, socket.gaierror):
+            return "No-PTR"
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(_lookup)
+        try:
+            return future.result(timeout=timeout)
+        except concurrent.futures.TimeoutError:
+            return "Timeout"
 
 
 def create_filename(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
@@ -315,6 +346,11 @@ for line in fabric:
             IP_Data = "No-Match"
         #       print the pinginfo data
         print(IP_Data, Mac)
+        # Reverse DNS lookup — only when we have a real IP address
+        if my_json_file and IP_Data != "No-Match":
+            DNS_Name = reverse_dns(IP_Data)
+        else:
+            DNS_Name = ""
         # pull the manufacturer with manuf
         manufacture = p.get_manuf(Mac)
         # Pad with spaces for output alignment
@@ -324,23 +360,22 @@ for line in fabric:
         # Pad MAC Address Field
         Pad = 18 - len(Mac)
         Mac = Mac + (" " * Pad)
-        # Pad type field
-        Pad = 11 - len(Mac_Type)
-        Mac_Type = Mac_Type + (" " * Pad)
         # Pad Interface
         Pad = 12 - len(Interface_Num)
         Interface_Num = Interface_Num + (" " * Pad)
-        # Pad IP address field if the json file exists
+        # Pad IP address and DNS name fields if the json file exists
         if my_json_file:
             Pad = 17 - len(IP_Data)
             IP_Data = IP_Data + (" " * Pad)
+            Pad = max(0, 20 - len(DNS_Name))
+            DNS_Name = DNS_Name + (" " * Pad)
             # create the separator at 80 characters
             Pad = "--" * 40
         else:
             # if not create the separator at 60 characters since there won't be IPs
             Pad = "--" * 30
         # Build the string
-        IP = Vlan + IP_Data + Mac + Mac_Type + Interface_Num + str(manufacture)
+        IP = Vlan + IP_Data + DNS_Name + Mac + Interface_Num + str(manufacture)
         IPs.append(str(IP))
         #    IPs.append('--' * 40)
         IPs.append(Pad)
@@ -366,11 +401,11 @@ for line in fabric:
         print(f"Device Name: {device_name}")
         if my_json_file:
             print(
-                "Vlan   IP Address       MAC Address       Type       Interface   Vendor"
+                "Vlan   IP Address       DNS Name            MAC Address       Interface   Vendor"
             )
-            print("--" * 40)
+            print("--" * 42)
         else:
-            print("Vlan   MAC Address       Type       Interface   Vendor")
+            print("Vlan   MAC Address       Interface   Vendor")
             print("--" * 30)
         for IP in IPs:
             print(IP)
