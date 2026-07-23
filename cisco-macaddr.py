@@ -416,7 +416,7 @@ for line in fabric:
             print()
             print(f"Device Name: {device_name}")
             print()
-        file_console = Console(file=f, highlight=False, force_terminal=False)
+        file_console = Console(file=f, highlight=False, force_terminal=True, no_color=True)
         file_console.print(table)
     """
     hash the string of all macs. This gives a quick way to compare the
