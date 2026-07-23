@@ -35,7 +35,8 @@ Uses the Parser library for Wireshark's OUI database from
 https://github.com/coolbho3k/manuf to convert the MAC to a manufacture.
 The database needs to be updated occasionally using:
 
-python3 manuf.py -u
+curl -fSL -o ~/04_tools/Discovery/manuf \
+  https://www.wireshark.org/download/automated/data/manuf
 
 
 Changelog
@@ -69,7 +70,7 @@ Sorted list of MAC Addresses
 0027.0dbd.9f6e
 
 April 7, 2018
-Added output for PingInfoView (nirsoft.net)
+Added output for PingInfoView (https://nirsoft.net)
 
 PingInfo Data
 10.56.238.150 b499.ba01.bc82
@@ -101,10 +102,10 @@ import sys
 import dns.exception
 import dns.resolver
 import dns.reversename
+import rich.box
 from icecream import ic
 from rich.console import Console
 from rich.table import Table
-import rich.box
 
 import manuf
 
@@ -165,6 +166,7 @@ def reverse_dns(ip: str, timeout: float = 1.0, dns_server: str = "") -> str:
     When dns_server is provided, queries that server directly via dnspython
     instead of using the system resolver.
     """
+
     def _lookup():
         try:
             if dns_server:
@@ -186,8 +188,13 @@ def reverse_dns(ip: str, timeout: float = 1.0, dns_server: str = "") -> str:
                     seen.add(n)
                     unique.append(n)
             return "/".join(unique)
-        except (dns.resolver.NXDOMAIN, dns.resolver.NoAnswer,
-                dns.exception.DNSException, socket.herror, socket.gaierror):
+        except (
+            dns.resolver.NXDOMAIN,
+            dns.resolver.NoAnswer,
+            dns.exception.DNSException,
+            socket.herror,
+            socket.gaierror,
+        ):
             return "No-PTR"
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
@@ -339,12 +346,13 @@ for line in fabric:
             box=rich.box.SIMPLE_HEAD,
             show_edge=False,
             pad_edge=False,
+            show_lines=True,
         )
-        table.add_column("Vlan",        min_width=5)
-        table.add_column("IP Address",  min_width=16)
+        table.add_column("Vlan", min_width=5)
+        table.add_column("IP Address", min_width=16)
         table.add_column("MAC Address", min_width=18)
-        table.add_column("Interface",   min_width=12)
-        table.add_column("Vendor",      min_width=14)
+        table.add_column("Interface", min_width=12)
+        table.add_column("Vendor", min_width=14)
         table.add_column("DNS Name")
     else:
         table = Table(
@@ -353,11 +361,12 @@ for line in fabric:
             box=rich.box.SIMPLE_HEAD,
             show_edge=False,
             pad_edge=False,
+            show_lines=True,
         )
-        table.add_column("Vlan",        min_width=5)
+        table.add_column("Vlan", min_width=5)
         table.add_column("MAC Address", min_width=18)
-        table.add_column("Interface",   min_width=12)
-        table.add_column("Vendor",      min_width=14)
+        table.add_column("Interface", min_width=12)
+        table.add_column("Vendor", min_width=14)
 
     for raw_line in data:
         IP = raw_line.strip("\n")
@@ -383,7 +392,7 @@ for line in fabric:
             IP_Data = Mac_IP[Mac]
         else:
             IP_Data = "No-Match"
-        #       print the pinginfo data
+        # print the pinginfo data
         print(IP_Data, Mac)
         # Reverse DNS lookup — only when we have a real IP address
         if my_json_file and IP_Data != "No-Match":
