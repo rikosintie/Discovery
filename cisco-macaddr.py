@@ -118,7 +118,7 @@ __copyright__ = ""
 __license__ = "Unlicense"
 
 
-vernum = "1.1"
+vernum = "2.0"
 
 
 def version():
@@ -133,15 +133,18 @@ def version():
         + sys.argv[0]
         + " Version "
         + vernum
-        + "                                               |"
+        + "                                         |"
     )
     print("| This program is free software; you can redistribute it and/or modify |")
     print("| it in any way you want. If you improve it please send me a copy at   |")
     print("| the email address below.                                             |")
     print("|                                                                      |")
-    print("| Author: Michael Hubbard, michael.hubbard999@gmail.com                |")
-    print("|         mwhubbard.blogspot.com                                       |")
-    print("|         @rikosintie                                                  |")
+    print("|    Author: Michael Hubbard                                           |")
+    print("|     email: michael.hubbard999@gmail.com                              |")
+    print("|     email: mhubbard@network-dev.com                                  |")
+    print("|      Blog: mwhubbard.blogspot.com                                    |")
+    print("|         X: @rikosintie                                               |")
+    print("|  linkedin: www.linkedin.com/in/mwhubbard                             |")
     print("+----------------------------------------------------------------------+")
 
 
@@ -414,7 +417,9 @@ for line in fabric:
             print()
             print(f"Device Name: {device_name}")
             print()
-        file_console = Console(file=f, highlight=False, force_terminal=True, no_color=True)
+        file_console = Console(
+            file=f, highlight=False, force_terminal=True, no_color=True
+        )
         file_console.print(table)
     """
     hash the string of all macs. This gives a quick way to compare the
