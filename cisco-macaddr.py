@@ -342,7 +342,7 @@ for line in fabric:
     if my_json_file:
         table = Table(
             show_header=True,
-            header_style="bold",
+            header_style="",
             box=rich.box.SIMPLE_HEAD,
             show_edge=False,
             pad_edge=False,
@@ -357,7 +357,7 @@ for line in fabric:
     else:
         table = Table(
             show_header=True,
-            header_style="bold",
+            header_style="",
             box=rich.box.SIMPLE_HEAD,
             show_edge=False,
             pad_edge=False,
