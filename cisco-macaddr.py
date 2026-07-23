@@ -349,6 +349,7 @@ for line in fabric:
             box=rich.box.HORIZONTALS,
             show_edge=False,
             pad_edge=False,
+            show_lines=True,
         )
         table.add_column("Vlan", min_width=5)
         table.add_column("IP Address", min_width=16)
@@ -363,6 +364,7 @@ for line in fabric:
             box=rich.box.HORIZONTALS,
             show_edge=False,
             pad_edge=False,
+            show_lines=True,
         )
         table.add_column("Vlan", min_width=5)
         table.add_column("MAC Address", min_width=18)
