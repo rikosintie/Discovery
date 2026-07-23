@@ -45,4 +45,18 @@ port-maps/Final/port-maps.xlsx
 Running/Running.csv
 Running/Running.xlsx
 Failure-Logs/skipped_devices.csv
-Failure-Logs/skipped_devices.csv
+
+# ------------------------
+#  Generated script output
+# ------------------------
+CR-data/*-CR-data.txt
+CR-data/*-log-*.txt
+Interface/*-interface.json
+Interface/*-int_br.txt
+Interface/*-cdp.txt
+Interface/*-lldp.txt
+Interface/*-system.txt
+Interface/*-interface.txt
+Running/*-running-config.txt
+port-maps/data/
+port-maps/Final/*-ports.txt
