@@ -371,6 +371,7 @@ for line in fabric:
         table.add_column("Interface", min_width=12)
         table.add_column("Vendor", min_width=14)
 
+    pinginfo: list[str] = []
     for raw_line in data:
         IP = raw_line.strip("\n")
         #   The Nexus line adds an * and spaces to the front of the line
@@ -407,6 +408,13 @@ for line in fabric:
             table.add_row(Vlan, IP_Data, Mac, Interface_Num, manufacture, DNS_Name)
         else:
             table.add_row(Vlan, Mac, Interface_Num, manufacture)
+        # Build pinginfo entry — skip No-Match IPs, use DNS name if available
+        if IP_Data != "No-Match":
+            dns_valid = DNS_Name and DNS_Name not in ("No-PTR", "Timeout")
+            if dns_valid:
+                pinginfo.append(f"{IP_Data}, {DNS_Name}")
+            else:
+                pinginfo.append(f"{IP_Data}, {Mac}")
 
     output_file = create_filename("port-maps", "-ports.txt", "Final")
     ic(output_file)
@@ -423,6 +431,24 @@ for line in fabric:
             file=f, highlight=False, force_terminal=True, no_color=True
         )
         file_console.print(table)
+
+    # Write PingInfo file
+    pinginfo_file = create_filename("port-maps", "-pinginfo.txt", "pinginfo")
+    os.makedirs(os.path.dirname(pinginfo_file), exist_ok=True)
+    pinginfo_header = (
+        "===========\n"
+        "Pinginfo data to import into PingInfoView. PingInfoView is available here:\n\n"
+        "https://www.nirsoft.net/utils/multiple_ping_tool.html\n\n"
+        "Use PingInfoView to verify hosts pre/post cutover\n"
+        "===========\n\n"
+        f"Device Name: {device_name}\n\n"
+    )
+    with open(pinginfo_file, "w") as f:
+        f.write(pinginfo_header)
+        f.write("\n".join(pinginfo))
+        f.write("\n")
+    print(f"Writing PingInfo data to\n {pinginfo_file}")
+
     """
     hash the string of all macs. This gives a quick way to compare the
     before and after MACS
