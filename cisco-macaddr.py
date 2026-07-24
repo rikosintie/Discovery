@@ -412,9 +412,9 @@ for line in fabric:
         if IP_Data != "No-Match":
             dns_valid = DNS_Name and DNS_Name not in ("No-PTR", "Timeout")
             if dns_valid:
-                pinginfo.append(f"{IP_Data}, {DNS_Name}")
+                pinginfo.append(f"{IP_Data} {DNS_Name}")
             else:
-                pinginfo.append(f"{IP_Data}, {Mac}")
+                pinginfo.append(f"{IP_Data} {Mac}")
 
     output_file = create_filename("port-maps", "-ports.txt", "Final")
     ic(output_file)
