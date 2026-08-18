@@ -181,7 +181,7 @@ def which_vendor(vendor: str) -> Tuple[str, str, str, str, bool]:
                 "interface",
                 True,
             )
-        case "aruba_cx":
+        case "aruba_aoscx":
             return (
                 "show running-config",
                 "show lldp neighbors detail",
@@ -925,7 +925,7 @@ for line in fabric:
                 strip_command=True,
                 use_textfsm=True,
             )
-        case "aruba_cx":
+        case "aruba_aoscx":
             output_show_int_br = net_connect.send_command(
                 "show interfaces status",
                 strip_command=True,
