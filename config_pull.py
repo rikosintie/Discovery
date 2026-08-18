@@ -484,6 +484,12 @@ parser.add_argument(
     default="1",
     help="use -t 1-9 to set timeout",
 )
+parser.add_argument(
+    "--test-connect",
+    action="store_true",
+    default=False,
+    help="Test SSH connectivity to every device in the inventory and exit — no data is collected",
+)
 args = parser.parse_args()
 site = args.site
 
@@ -552,6 +558,43 @@ print(border)
 border = "-" * (len(dev_inv_file) + 23)
 print(f"[bold][blue]{border}[/blue][/bold]")
 print()
+
+if args.test_connect:
+    print_panel(
+        f"Testing SSH connectivity to {num_devices} device(s) in [cyan]{dev_inv_file}[/cyan]\n"
+        f"No data will be collected.",
+        title="Connectivity Test",
+        border_style="cyan",
+        title_emoji=emoji_for("connecting"),
+    )
+    for line in fabric:
+        line = line.strip("\n")
+        fields = line.split(",")
+        ipaddr = fields[0]
+        vendor = fields[1]
+        hostname = fields[2]
+        username = fields[3]
+        label = f"{hostname} ({ipaddr}, {vendor})"
+        try:
+            net_connect = ConnectHandler(
+                device_type=vendor,
+                ip=ipaddr,
+                username=username,
+                password=password,
+                conn_timeout=60,
+            )
+            prompt = net_connect.find_prompt()
+            net_connect.disconnect()
+            print(f"[green]OK[/green]       {label} -> {prompt}")
+        except AuthenticationException:
+            print(f"[red]AUTH FAIL[/red] {label}")
+        except NetmikoTimeoutException:
+            print(f"[yellow]TIMEOUT[/yellow]  {label}")
+        except (EOFError, SSHException, ValueError) as e:
+            print(f"[red]ERROR[/red]    {label}: {e}")
+    print()
+    print("[cyan]Connectivity test complete.[/cyan]")
+    sys.exit()
 
 # uptime: list[str] = []
 skipped_devices: list[dict] = []
