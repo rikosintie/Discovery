@@ -62,3 +62,5 @@ port-maps/data/
 port-maps/Final/*-ports.txt
 port-maps/pinginfo/
 task*
+JC*
+jc*
