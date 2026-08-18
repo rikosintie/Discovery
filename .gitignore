@@ -61,3 +61,4 @@ Running/*-running-config.txt
 port-maps/data/
 port-maps/Final/*-ports.txt
 port-maps/pinginfo/
+task*
