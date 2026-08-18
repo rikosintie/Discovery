@@ -30,6 +30,7 @@ include/
 test.py
 *.pyc
 venv/pyvenv.cfg
+/pyvenv.cfg
 # ------------------------
 #   offline text files
 # ------------------------
