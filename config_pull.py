@@ -148,7 +148,7 @@ def remove_empty_lines(filename: str) -> None:
 
 
 # function to return vendor specific commands and flags
-def which_vendor(vendor: str) -> Tuple[str, str, str, str, bool]:
+def which_vendor(vendor: str) -> tuple[str, str, str, str, bool]:
     """
     Returns vendor-specific command strings, JSON interface key, and prefix behavior.
 
@@ -609,11 +609,11 @@ for line in fabric:
     device_count += 1
     line = line.strip("\n")
     fields = line.split(",")
-    ipaddr   = fields[0]
-    vendor   = fields[1]
+    ipaddr = fields[0]
+    vendor = fields[1]
     hostname = fields[2]
     username = fields[3]
-    maddr    = fields[4] if len(fields) > 4 else ""
+    maddr = fields[4] if len(fields) > 4 else ""
     if maddr == "":
         # Show the input prompt using rich formatting
         print(
@@ -828,8 +828,12 @@ for line in fabric:
             show_commands = config_file.readlines()
     except FileNotFoundError:
         message = f"Config file [red]{cfg_file}[/red] not found — skipping {hostname}"
-        print_panel(message, title="Missing Config File", border_style="red",
-                    title_emoji=emoji_for("error"))
+        print_panel(
+            message,
+            title="Missing Config File",
+            border_style="red",
+            title_emoji=emoji_for("error"),
+        )
         log_message(strip_rich_markup(message))
         skipped_devices.append(
             {"hostname": hostname, "ip": ipaddr, "reason": f"{cfg_file} not found"}
@@ -1027,8 +1031,12 @@ for line in fabric:
         )
     except ValueError as e:
         message = f"[yellow]Skipping MAC query for {hostname}:[/yellow] {e}"
-        print_panel(message, title="No Valid Interfaces", border_style="yellow",
-                    title_emoji=emoji_for("warning"))
+        print_panel(
+            message,
+            title="No Valid Interfaces",
+            border_style="yellow",
+            title_emoji=emoji_for("warning"),
+        )
         log_message(strip_rich_markup(message))
 
     border = "-" * (len(output_mac_address) + 1)
