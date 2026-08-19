@@ -9,7 +9,7 @@
 There are a few steps that need to be completed before starting the discovery process:
 
 - Create a device inventory file
-- Make changes to the procurve-config-file.txt file (if needed)
+- Make changes to the [vendor]-config-file.txt file (if needed)
 - Decide how you want store the password
 - Update the mac.txt file to match the format of the switches
 
@@ -248,7 +248,7 @@ The config files will be named:
 
 For pulling the mac-address table, which most customers want you to do before a cutover, I build an exclude statement using a regex to skip uplink ports. Here is an example for HPE Procurve that doesn't pull mac addresses for ports on modules A and B. These were uplinks on one of the switches that I developed the script on.
 
-`show show mac-address | ex "A|B"`
+`show mac-address | ex "A|B"`
 
 In the example, the `|` symbol means logical OR. This works because the switch displays the mac address in lower case.
 
