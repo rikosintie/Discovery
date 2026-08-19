@@ -5,7 +5,7 @@ Reference
 https://github.com/rikosintie/Discovery
 https://pynet.twb-tech.com/blog/netmiko-read-timeout.html
 https://stackoverflow.com/questions/9539921/how-do-i-define-a-function-with-optional-arguments
-ntc templates are located at Discovery/lib/python3.11/site-packages/ntc_templates/templates
+ntc templates are located at Discovery/venv/lib/python3.13/site-packages/ntc_templates/templates
 https://pynet.twb-tech.com/blog/netmiko-and-textfsm.html
 
 Usage
@@ -70,7 +70,7 @@ from collections import defaultdict
 from datetime import datetime
 
 # from pathlib import Path
-from typing import Optional, Tuple, TypedDict
+from typing import Optional, TypedDict
 
 from icecream import ic
 from netmiko import ConnectHandler
