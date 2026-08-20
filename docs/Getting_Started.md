@@ -284,15 +284,15 @@ setuptools 69.0.3
 
 Now run the following:
 
-`pip install -r requirements.txt`
+`python3 -m pip install --no-deps -r requirements.lock.txt`
 
 You will see all the dependencies being downloaded and installed. Here is a snippet of the dependencies.
 
 ```bash
-$ pip install -r requirements.txt
-Collecting asttokens~=2.4.1 (from -r requirements.txt (line 1))
+$ python3 -m pip install --no-deps -r requirements.lock.txt
+Collecting asttokens~=2.4.1 (from -r requirements.lock.txt (line 1))
   Downloading asttokens-2.4.1-py2.py3-none-any.whl.metadata (5.2 kB)
-Collecting bcrypt~=4.1.2 (from -r requirements.txt (line 2))
+Collecting bcrypt~=4.1.2 (from -r requirements.lock.txt (line 2))
   Downloading bcrypt-4.1.2-cp39-abi3-manylinux_2_28_x86_64.whl.metadata (9.5 kB)
 ```
 
