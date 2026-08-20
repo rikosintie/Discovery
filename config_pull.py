@@ -84,7 +84,7 @@ from rich.table import Table
 # !!!!! Discovery Script - Does not change the running config !!!!!
 
 __author__ = "Michael Hubbard"
-__author_email__ = "michael.hubbard999@gmail.com"
+__author_email__ = "mhubbard@network-dev.com"
 __copyright__ = ""
 __license__ = "Unlicense"
 # -*- coding: utf-8 -*-
