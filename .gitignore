@@ -50,8 +50,9 @@ Failure-Logs/skipped_devices.csv
 # ------------------------
 #  Generated script output
 # ------------------------
-CR-data/*-CR-data.txt
+CR-data/*
 CR-data/*-log-*.txt
+Failure-Logs/*
 Interface/*-interface.json
 Interface/*-int_br.txt
 Interface/*-cdp.txt
