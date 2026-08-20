@@ -31,14 +31,12 @@ Vlan     MAC Address      Interface
   10    0c4d.e9c1.4a0d     Gi1/0/3   Apple
 --------------------------------------------------
 
-Uses the Parser library for Wireshark's OUI database from
-https://github.com/coolbho3k/manuf to convert the MAC to a manufacture.
-The database needs to be updated occasionally using:
+Uses manuf2 (https://pypi.org/project/manuf2/, a maintained fork of
+coolbho3k/manuf) to convert the MAC to a manufacturer. The OUI database
+ships bundled with the package, so no manual download/path setup is
+needed. To refresh it to the latest Wireshark OUI data, call
+manuf.MacParser(update=True) once.
 
-curl -fSL -o ~/04_tools/Discovery/manuf \
-  https://www.wireshark.org/download/automated/data/manuf
-
-# replace ~/04_tools/Discovery/manuf with path of your installation
 Changelog
 March 7, 2018
 Added code to read Mac2IP.json and use it as a dictionary of IP to MAC.
@@ -87,10 +85,9 @@ import dns.resolver
 import dns.reversename
 import rich.box
 from icecream import ic
+from manuf2 import manuf
 from rich.console import Console
 from rich.table import Table
-
-import manuf
 
 # ic.enable()
 ic.disable()
