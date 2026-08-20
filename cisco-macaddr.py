@@ -38,7 +38,7 @@ The database needs to be updated occasionally using:
 curl -fSL -o ~/04_tools/Discovery/manuf \
   https://www.wireshark.org/download/automated/data/manuf
 
-
+# replace ~/04_tools/Discovery/manuf with path of your installation
 Changelog
 March 7, 2018
 Added code to read Mac2IP.json and use it as a dictionary of IP to MAC.
@@ -52,22 +52,6 @@ Vlan     MAC Address      Interface      IP           Vendor
  ----------------------------------------------------------------
    20    0011.431b.b291     Gi1/0/16   10.129.20.174    Dell
  ----------------------------------------------------------------
-
-March 24, 2018
-Added an MD5 hash function to the list of MAC addresses. This gives a
-quick comparison of the before
-and after is some cables got swapped but are on the correct vlan.
-Added a sorted output of the MAC addresses. If there are differences
-before and after you can save the list of MACs and use MELD or Notepad++
-(with the compare plugin) to see what is different.
-
-Hash of all the MAC addresses
-6449620420f0d67bffd26b65e9a824a4
-
-Sorted list of MAC Addresses
-0018.c840.1295
-0018.c840.12a8
-0027.0dbd.9f6e
 
 April 7, 2018
 Added output for PingInfoView (https://nirsoft.net)
@@ -92,7 +76,6 @@ Clear the IP address in case the next interface has a MAC but no IP address
 import argparse
 import concurrent.futures
 import contextlib
-import hashlib
 import json
 import os
 import re
@@ -299,8 +282,6 @@ for line in fabric:
     Mac_IP = {}
     IP_Data = ""
     device_name = hostname
-    # create an empty list to hold MAC addresses for hashing
-    hash_list = []
     # open the json created by arp.py if it exists
     if core:
         temp = hostname
@@ -391,7 +372,6 @@ for line in fabric:
             if "/" in token:
                 Interface_Num = token
                 break
-        hash_list.append(Mac)
         if Mac in Mac_IP:
             IP_Data = Mac_IP[Mac]
         else:
@@ -449,26 +429,4 @@ for line in fabric:
         f.write("\n")
     print(f"Writing PingInfo data to\n {pinginfo_file}")
 
-    """
-    hash the string of all macs. This gives a quick way to compare the
-    before and after MACS
-    """
-
-    hash_list_str = str(hash_list)
-    # convert the string to bytes
-    b = hash_list_str.encode()
-    hash_object = hashlib.md5(b)
-    print()
-    print("Hash of all the MAC addresses")
-    print(hash_object.hexdigest())
-    print()
-
-    """
-    print out the MAC Addresses sorted for review.
-    This is useful if the patch cables got mixed up during replacement
-    """
-    print("Sorted list of MAC Addresses")
-    # print(hash_list)
-    for x in sorted(hash_list):
-        print(x)
     print("End of output")
