@@ -1,0 +1,36 @@
+terminal length 0
+show clock
+show ntp peer-status
+show ntp status
+show version | i uptime
+show sprom backplane | i Serial|MAC
+show rollback status
+show version | i N
+show ip arp
+show vlan brief
+show ip route 0.0.0.0
+show ip route
+show ip ospf neighbors
+show interface status
+show interface status | i connected
+show interface description
+show interface transceiver details
+show mac address-table | ex CPU|Po|1/0/49
+show cdp neighbors
+show cdp neighbors detail
+show lldp neighbors
+show lldp neighbors detail
+show power inline
+show spanning-tree
+show spanning-tree inconsistentports
+show spanning-tree blockedports
+show spanning-tree summary
+show spanning-tree detail
+show lacp neighbor
+show lacp system-identifier
+show interface trunk
+show ssh server
+show snmp
+show inventory
+show processes cpu
+show power inline module 1

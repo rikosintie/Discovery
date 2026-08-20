@@ -1,0 +1,26 @@
+terminal length 0
+show clock
+show ntp status
+show system
+show arp
+show vlan
+show ip route 0.0.0.0
+show ip route
+show ip ospf neighbor
+show interfaces status
+show interfaces description
+show interfaces transceiver
+show mac address-table
+show cdp neighbors
+show cdp neighbors detail
+show lldp neighbors
+show lldp neighbors detail
+show power inline
+show spanning-tree
+show lacp neighbor
+show interfaces trunk
+show ssh client
+show snmp
+show system
+show cpuUtilization
+show power inline gi1

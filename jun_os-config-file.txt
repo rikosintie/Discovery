@@ -1,0 +1,27 @@
+set cli screen-length 0
+show system uptime
+show ntp associations
+show ntp status
+show system commit diff
+show chassis hardware
+show arp
+show vlans
+show route 0.0.0.0/0
+show route
+show ospf neighbor
+show interfaces terse
+show interfaces terse | match up
+show interfaces descriptions
+show interfaces diagnostics optics
+show ethernet-switching table
+show lldp neighbors
+show lldp neighbors detail
+show poe
+show spanning-tree bridge
+show spanning-tree interface
+show lacp interfaces
+show lacp system-identifier
+show ip ssh
+show snmp v3
+show processes extensive
+show poe controller

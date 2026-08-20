@@ -1,0 +1,30 @@
+skip-page-display
+show clock
+show ntp associations
+show ntp status
+show version | i uptime
+show version
+show config diff
+show arp
+show vlan
+show ip route 0.0.0.0
+show ip route
+show ip ospf neighbor
+show interface brief
+show interface brief | i Up
+show interface description
+show optic 1
+show mac-address
+show lldp neighbors
+show lldp neighbors detail
+show inline-power
+show spanning-tree
+show spanning-tree error
+show spanning-tree summary
+show spanning-tree detail
+show link-aggregation
+show ip ssh
+show snmp server
+show module
+show process cpu
+show inline-power 1/1/1
