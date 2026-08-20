@@ -143,6 +143,28 @@ This script reads the hostname-Mac2IP.json and hostname-mac-address.txt files an
 
 `python3 procurve-macaddr.py -s area1`
 
+#### Running the cisco-macaddr.py script
+
+This script works the same way as procurve-macaddr.py — it reads the hostname-Mac2IP.json and hostname-mac-address.txt files and creates the port maps — but adds a manufacturer lookup via the maintained `manuf2` package and, when a DNS server is available, a reverse-DNS name column.
+
+`python3 cisco-macaddr.py -s area1`
+
+For a Core/IDF deployment, use `-c coreswitch` the same way as procurve-macaddr.py:
+
+`python3 cisco-macaddr.py -s jc-edge -c JC-core`
+
+To resolve DNS names for the IP addresses in the port map, pass a DNS server with `-d`:
+
+`python3 cisco-macaddr.py -s jc-edge -c JC-core -d 192.168.10.222`
+
+**Updating the vendor database**
+
+The manufacturer lookup relies on Wireshark's OUI database, which needs to be refreshed occasionally — newly-registered hardware won't have a vendor until it's in the database you have locally, and shows up as `None` instead. When that happens, run:
+
+`python3 cisco-macaddr.py --update-manuf`
+
+This downloads the latest OUI and WFA (Wi-Fi Alliance) data and exits. It doesn't need `-s site` and doesn't touch any inventory files.
+
 ## Core/IDF deployment
 
 In this case only the core switch has the arp records. The argument "-c coreswitch" is used to tell the switch to use the core-arp.txt file for all switches.
