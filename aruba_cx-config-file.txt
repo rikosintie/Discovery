@@ -1,0 +1,32 @@
+no page
+show clock
+show ntp associations
+show ntp status
+show system | i Uptime
+show system | i Serial|MAC
+checkpoint diff <cp1> <cp2>
+show version
+show arp
+show vlan
+show ip route 0.0.0.0/0
+show ip route
+show ospf neighbors
+show interface brief
+show interface brief | i up
+show interface description
+show interface transceiver detail
+show mac-address | ex CPU
+show lldp neighbor-info
+show lldp neighbor-info detail
+show inline-power
+show spanning-tree
+show spanning-tree detail
+show spanning-tree summary
+show lacp interfaces
+show lacp configuration
+show interface trunk
+show ssh
+show snmp
+show system
+show system resource-utilization
+show poe 1/1/1
