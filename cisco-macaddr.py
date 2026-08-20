@@ -226,7 +226,21 @@ parser.add_argument(
     default="",
     help="DNS server IP for reverse lookups - ex. 192.168.10.222",
 )
+parser.add_argument(
+    "--update-manuf",
+    action="store_true",
+    default=False,
+    help="Download the latest Wireshark OUI database (and WFA registry) and exit — "
+    "run this if new devices are showing up with no vendor",
+)
 args = parser.parse_args()
+
+if args.update_manuf:
+    print("Updating the manuf OUI database...")
+    manuf.MacParser(update=True)
+    print("Done.")
+    sys.exit()
+
 site = args.site
 core = args.coreswitch
 dns_server = args.dns
