@@ -1,4 +1,4 @@
-"""
+r"""
 # !!!!! Discovery Script - Does not change the running config !!!!!
 
 References:
@@ -33,11 +33,11 @@ Vlan   MAC Address       Interface   Vendor
 --------------------------------------------------
 
 
-Uses the Parser library for Wireshark's OUI database from
-https://github.com/coolbho3k/manuf to convert the MAC to a manufacture.
-The database needs to be updated occaisionally using:
-
-python3 manuf.py -u
+Uses manuf2 (https://pypi.org/project/manuf2/, a maintained fork of
+coolbho3k/manuf) to convert the MAC to a manufacturer. The OUI database
+ships bundled with the package, so no manual download/path setup is
+needed. To refresh it to the latest Wireshark OUI data, call
+manuf.MacParser(update=True) once.
 
 
 Changelog
@@ -93,8 +93,7 @@ import re
 import sys
 
 from icecream import ic
-
-import manuf
+from manuf2 import manuf  # type: ignore[import-untyped]
 
 ic.enable()
 # ic.disable()
@@ -109,7 +108,7 @@ __license__ = "Unlicense"
 #  Created by Michael Hubbard on 2024-01-20.
 
 vernum = "1.0"
-AsciiArt = """
+AsciiArt = r"""
  __  __    _    ____   ____    __  __                    __            _
 |  \/  |  / \  / ___| |___ \  |  \/  | __ _ _ __  _   _ / _| __ _  ___| |_
 | |\/| | / _ \| |       __) | | |\/| |/ _` | '_ \| | | | |_ / _` |/ __| __|
@@ -185,7 +184,21 @@ parser.add_argument(
 )
 parser.add_argument("-s", "--site", help="Site name - ex. HQ")
 # parser.add_argument('-o', '--output', type=str, help="Output file.")
+parser.add_argument(
+    "--update-manuf",
+    action="store_true",
+    default=False,
+    help="Download the latest Wireshark OUI database (and WFA registry) and exit — "
+    "run this if new devices are showing up with no vendor",
+)
 args = parser.parse_args()
+
+if args.update_manuf:
+    print("Updating the manuf OUI database...")
+    manuf.MacParser(update=True)
+    print("Done.")
+    sys.exit()
+
 site = args.site
 
 if site is None:

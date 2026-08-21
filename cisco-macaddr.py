@@ -84,8 +84,8 @@ import dns.exception
 import dns.resolver
 import dns.reversename
 import rich.box
-from icecream import ic
-from manuf2 import manuf
+from icecream import ic  # type: ignore[import-untyped]
+from manuf2 import manuf  # type: ignore[import-untyped]
 from rich.console import Console
 from rich.table import Table
 
@@ -101,7 +101,7 @@ __license__ = "Unlicense"
 vernum = "2.0"
 
 
-def version():
+def version() -> None:
     """
     This function prints the version of this program. It doesn't allow
     any argument.
@@ -128,15 +128,15 @@ def version():
     print("+----------------------------------------------------------------------+")
 
 
-def remove_empty_lines(filename):
+def remove_empty_lines(filename: str) -> None:
     if not os.path.isfile(filename):
-        print("{} does not exist ".format(filename))
+        print(f"{filename} does not exist ")
         return
     with open(filename) as filehandle:
         lines = filehandle.readlines()
 
     with open(filename, "w") as filehandle:
-        lines = filter(lambda x: x.strip(), lines)
+        lines = list(filter(lambda x: x.strip(), lines))
         filehandle.writelines(lines)
 
 
@@ -254,7 +254,7 @@ else:
 ic(dev_inv_file)
 # check if site's device inventory file exists
 if not os.path.isfile(dev_inv_file):
-    print("{} doesn't exist ".format(dev_inv_file))
+    print(f"{dev_inv_file} doesn't exist ")
     sys.exit()
 
 remove_empty_lines(dev_inv_file)
@@ -294,6 +294,7 @@ for line in fabric:
     IP_Data = ""
     device_name = hostname
     # open the json created by arp.py if it exists
+    my_json_file: str | None
     if core:
         temp = hostname
         hostname = core
@@ -316,9 +317,15 @@ for line in fabric:
     try:
         with open(mac_file, "r") as f:
             for line in f:
-                match_PC = re.search(r"([0-9A-F]{2}[-:]){5}([0-9A-F]{2})", line, re.I)
-                match_Cisco = re.search(r"([0-9A-F]{4}[.]){2}([0-9A-F]{4})", line, re.I)
-                match_HP = re.search(r"([0-9A-F]{6}[-])([0-9A-F]{6})", line, re.I)
+                match_PC = re.search(
+                    r"([0-9A-F]{2}[-:]){5}([0-9A-F]{2})", line, re.IGNORECASE
+                )
+                match_Cisco = re.search(
+                    r"([0-9A-F]{4}[.]){2}([0-9A-F]{4})", line, re.IGNORECASE
+                )
+                match_HP = re.search(
+                    r"([0-9A-F]{6}[-])([0-9A-F]{6})", line, re.IGNORECASE
+                )
                 # strip out lines without a mac address
                 if match_PC or match_Cisco or match_HP:
                     data.append(line)
@@ -330,7 +337,7 @@ for line in fabric:
         print(fnf_error)
         sys.exit(0)
     print()
-    print("Device Name: %s " % device_name)
+    print(f"Device Name: {device_name} ")
     print("PingInfo Data")
 
     # Build the rich table — columns defined once based on whether ARP data is available

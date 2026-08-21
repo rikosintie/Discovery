@@ -1,4 +1,4 @@
-"""
+r"""
 # !!!!! Helper Script - Does not change the running config !!!!!
 References:
 https://stackoverflow.com/questions/6545023/how-to-sort-ip-addresses-stored-in-dictionary-in-python/6545090#6545090
@@ -78,8 +78,7 @@ import sys
 from socket import inet_aton, inet_ntoa
 
 from icecream import ic
-
-import manuf
+from manuf2 import manuf  # type: ignore[import-untyped]
 
 __author__ = "Michael Hubbard"
 __author_email__ = "michael.hubbard999@gmail.com"
@@ -159,7 +158,21 @@ parser.add_argument(
     default="",
     help="Coreswitch hostname",
 )
+parser.add_argument(
+    "--update-manuf",
+    action="store_true",
+    default=False,
+    help="Download the latest Wireshark OUI database (and WFA registry) and exit — "
+    "run this if new devices are showing up with no vendor",
+)
 args = parser.parse_args()
+
+if args.update_manuf:
+    print("Updating the manuf OUI database...")
+    manuf.MacParser(update=True)
+    print("Done.")
+    sys.exit()
+
 site = args.site
 core = args.coreswitch
 
@@ -183,7 +196,7 @@ with open(dev_inv_file) as devices_file:
 
 # print("-" * (len(dev_inv_file) + 23))
 print("-" * (len(loc) + len(dev_inv_file) + 23))
-print(f"Reading devices from: {loc}\{dev_inv_file}")
+print(f"Reading devices from: {loc}\\{dev_inv_file}")
 print("-" * (len(loc) + len(dev_inv_file) + 23))
 uptime = []
 for line in fabric:
