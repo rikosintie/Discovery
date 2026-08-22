@@ -70,7 +70,7 @@ from collections import defaultdict
 from datetime import datetime
 
 # from pathlib import Path
-from typing import Optional, TypedDict
+from typing import TypedDict
 
 from icecream import ic
 from netmiko import ConnectHandler
@@ -393,7 +393,7 @@ def detect_ssh_version(ip: str, port: int = 22, timeout: int = 5) -> str | None:
             banner = sock.recv(1024).decode("utf-8", errors="ignore").strip()
             if banner.startswith("SSH-"):
                 return banner
-    except (socket.timeout, ConnectionRefusedError, OSError):
+    except OSError:
         return None
     return None
 
@@ -500,7 +500,7 @@ if args.logging != "":
     logger = logging.getLogger("netmiko")
 
 # Check for the password, exit if it doesn't exist
-password: Optional[str] = ""
+password: str | None = ""
 if args.password != "":
     password = getpass.getpass(prompt="Input the Password:")
 elif os.environ.get("cyberARK"):
