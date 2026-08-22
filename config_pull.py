@@ -30,8 +30,14 @@ Valid config file names are:
     cisco_ios-config-file.txt is used for all Cisco IOS switches
     cisco_xe-config-file.txt is used for all Cisco IOS XE switches
     cisco_nxos-config-file.txt is used for all Cisco NXOS switches
+    cisco_s300-config-file.txt is used for all Cisco SG/SGX 300 switches
     aruba_osswitch-config-file.txt is used for all Aruba OS switches
-    aruba_cx-config-file.txt is used for all Aruba CX switches
+    aruba_aoscx-config-file.txt is used for all Aruba CX (AOS-CX) switches
+    arista_eos-config-file.txt is used for all Arista EOS switches
+    dell_os6-config-file.txt is used for all Dell N-series (OS6) switches
+    brocade_fastiron-config-file.txt is used for all Brocade FastIron switches
+    ruckus_fastiron-config-file.txt is used for all Ruckus ICX/FastIron switches
+    juniper_junos-config-file.txt is used for all Juniper Junos switches
 
 4. Execute
 python3 cisco-Config-Pull.py -s test
@@ -147,6 +153,28 @@ def remove_empty_lines(filename: str) -> None:
         filehandle.writelines(lines)
 
 
+# Per-vendor "show mac address-table" command, keyed by the same netmiko
+# device_type string used in the CSV's vendor column. {interface} is filled
+# in per-port by generate_mac_query_file_from_json().
+MAC_COMMAND_MAP: dict[str, str] = {
+    # Space-separated syntax
+    "cisco_ios": "show mac add int {interface}",
+    "cisco_xe": "show mac add int {interface}",
+    "cisco_nxos": "show mac add int {interface}",
+    "cisco_s300": "show mac add int {interface}",
+    "arista_eos": "show mac address-table interface {interface}",
+    "dell_os6": "show mac address-table interface {interface}",
+    # Hyphenated syntax
+    "hp_procurve": "show mac-address {interface}",
+    "aruba_osswitch": "show mac-address {interface}",
+    "aruba_aoscx": "show mac-address-table interface {interface}",
+    "brocade_fastiron": "show mac-address ethernet {interface}",
+    "ruckus_fastiron": "show mac-address ethernet {interface}",
+    # OS-Specific
+    "juniper_junos": "show ethernet-switching table interface {interface}",
+}
+
+
 # function to return vendor specific commands and flags
 def which_vendor(vendor: str) -> tuple[str, str, str, str, bool]:
     """
@@ -205,6 +233,46 @@ def which_vendor(vendor: str) -> tuple[str, str, str, str, bool]:
                 "interface",
                 False,
             )
+        case "cisco_s300":
+            return (
+                "show running-config",
+                "show lldp neighbors detail",
+                "show arp",
+                "interface",
+                True,
+            )
+        case "arista_eos":
+            return (
+                "show running-config",
+                "show lldp neighbors detail",
+                "show ip arp",
+                "interface",
+                False,
+            )
+        case "dell_os6":
+            return (
+                "show running-config",
+                "show lldp neighbors detail",
+                "show arp",
+                "interface",
+                True,
+            )
+        case "brocade_fastiron" | "ruckus_fastiron":
+            return (
+                "show running-config",
+                "show lldp neighbors detail",
+                "show arp",
+                "interface",
+                False,
+            )
+        case "juniper_junos":
+            return (
+                "show configuration",
+                "show lldp neighbors",
+                "show arp",
+                "interface",
+                False,
+            )
         case _:
             raise ValueError(f"Unsupported vendor: {vendor}")
 
@@ -214,24 +282,31 @@ def which_vendor(vendor: str) -> tuple[str, str, str, str, bool]:
 def generate_mac_query_file_from_json(
     json_file_path: str,
     output_file_path: str,
+    vendor: str,
     interface_key: str = "interface",
     force_prefix: bool = True,
 ) -> None:
     """
     Reads a JSON file containing interface data and generates a configuration
-    file with 'show mac address-table interface ... | i XX' commands for each
-    valid interface.
+    file with the vendor's "show mac address-table" command for each valid
+    interface, looked up from MAC_COMMAND_MAP.
 
     Args:
         json_file_path (str): Path to the JSON file containing interface data.
         output_file_path (str): Path to the output text file where commands will be written.
+        vendor (str): Vendor ID string — looked up in MAC_COMMAND_MAP.
         interface_key (str): The key in the JSON dict that holds interface names.
         force_prefix (bool): If True, prepends 'GigabitEthernet' to bare interfaces like '1/0/1'.
 
     Raises:
         FileNotFoundError: If the specified JSON file does not exist.
-        ValueError: If no valid interface names are found in the JSON file.
+        ValueError: If the vendor has no entry in MAC_COMMAND_MAP, or no valid
+            interface names are found in the JSON file.
     """
+
+    command_template = MAC_COMMAND_MAP.get(vendor.lower())
+    if command_template is None:
+        raise ValueError(f"No MAC address command defined for vendor: {vendor}")
 
     if not os.path.isfile(json_file_path):
         raise FileNotFoundError(f"JSON file not found: {json_file_path}")
@@ -260,7 +335,7 @@ def generate_mac_query_file_from_json(
         if force_prefix and re.match(r"^\d+/\d+/\d+$", intf_name):
             intf_name = f"GigabitEthernet{intf_name}"
 
-        cmd = f"{maddr} {intf_name}"
+        cmd = command_template.format(interface=intf_name)
         commands.append(cmd)
 
     if not commands:
@@ -269,7 +344,7 @@ def generate_mac_query_file_from_json(
     with open(output_file_path, "w") as f:
         f.write("\n".join(commands))
 
-    print(f"Writing {len(commands)} '{maddr}' commands to\n {output_file_path}")
+    print(f"Writing {len(commands)} MAC address commands for {vendor} to\n {output_file_path}")
 
 
 def print_panel(
@@ -613,42 +688,6 @@ for line in fabric:
     vendor = fields[1]
     hostname = fields[2]
     username = fields[3]
-    maddr = fields[4] if len(fields) > 4 else ""
-    if maddr == "":
-        # Show the input prompt using rich formatting
-        print(
-            Panel.fit(
-                f"[yellow]show mac address entry is missing in [cyan]device-inventory-{site}.csv[/cyan] for [bold]{hostname}[/bold].[/yellow]\n\n"
-                f"[green]Enter 1[/green] to use [bold]'show mac-address'[/bold]\n"
-                f"[green]Enter 2[/green] to use [bold]'show mac address-table interface'[/bold]",
-                title="⚠ Missing Value",
-                border_style="red",
-            )
-        )
-
-        # Prompt the user for input (plain input, no styling inside input() itself)
-        choice = input("Enter 1 or 2: ")
-
-        # Apply their selection
-        if choice == "1":
-            # Procurve uses 'show mac-address'
-            maddr = "show mac-address"
-        elif choice == "2":
-            # Newer Cisco and other vendors use 'show mac address-table interface'
-            maddr = "show mac address-table interface"
-        else:
-            maddr = "show mac address-table interface"  # fallback
-            print(
-                "[red]Invalid choice. Defaulting to 'show mac address-table interface'[/red]"
-            )
-
-        # Show confirmation
-        print(
-            Panel(
-                f"[bold]Using:[/bold] [green]{maddr}[/green] for [yellow]{hostname}[/yellow]",
-                border_style="green",
-            )
-        )
 
     sh_run, show_lldp, show_arp, interface_key, force_prefix = which_vendor(vendor)
     ic(sh_run, show_lldp, show_arp, interface_key, force_prefix)
@@ -801,15 +840,7 @@ for line in fabric:
         print()
         print_times()
         continue
-    """
-    Valid config file names are:
-        hp_procurve-config-file.txt is used for all HP Procurve switches
-        cisco_ios-config-file.txt is used for all Cisco IOS switches
-        cisco_xe-config-file.txt is used for all Cisco IOS XE switches
-        cisco_nxos-config-file.txt is used for all Cisco NXOS switches
-        aruba_osswitch-config-file.txt is used for all Aruba OS switches
-        aruba_cx-config-file.txt is used for all Aruba CX switches
-    """
+    # See "Valid config file names" in the module docstring for the full list.
     cfg_file = f"{vendor}-config-file.txt"
     print()
     border = net_connect.find_prompt()
@@ -1027,6 +1058,7 @@ for line in fabric:
         generate_mac_query_file_from_json(
             json_file_path=json_interface,
             output_file_path=output_mac_address,
+            vendor=vendor,
             interface_key=interface_key,
             force_prefix=force_prefix,
         )
@@ -1034,7 +1066,7 @@ for line in fabric:
         message = f"[yellow]Skipping MAC query for {hostname}:[/yellow] {e}"
         print_panel(
             message,
-            title="No Valid Interfaces",
+            title="MAC Query Skipped",
             border_style="yellow",
             title_emoji=emoji_for("warning"),
         )
@@ -1065,7 +1097,7 @@ for line in fabric:
 
     #  Write the show mac address commands output to disk
     int_report = create_filename("port-maps", "-mac-address.txt", "data")
-    print(f"Writing '{maddr}' commands to\n {int_report}")
+    print(f"Writing MAC address commands for {vendor} to\n {int_report}")
     with open(int_report, "w") as file:
         file.write(output_mac_str)
     # border = "-" * (len(dev_inv_file) + 25)
