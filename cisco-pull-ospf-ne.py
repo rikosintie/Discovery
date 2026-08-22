@@ -97,7 +97,7 @@ for line in fabric:
     # password = line.split(",")[4]
     password = os.environ.get("cyberARK")
     if vendor.lower() == "cisco_ios":
-        now = datetime.now()
+        now = datetime.now().astimezone()
         start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
         print("-----------------------------------------------------")
         print(f"{start_time} Connecting to switch {hostname}")
@@ -116,7 +116,7 @@ for line in fabric:
                 f"Could not connect to {hostname}, remove it"
                 " from the device inventory file"
             )
-            end_time = datetime.now()
+            end_time = datetime.now().astimezone()
             print(f"\nExec time: {end_time - now}\n")
             break
         print(f"Processing {hostname}")

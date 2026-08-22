@@ -82,7 +82,7 @@ for line in fabric:
     password = line.split(",")[4]
     loc = "D:/Users/Michael.Hubbard/Documents/netmiko/Interface/"
     if vendor.lower() == "cisco_ios":
-        now = datetime.now()
+        now = datetime.now().astimezone()
         date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
         print(f"{date_time} Creating interface file for {hostname}")
         print(f"Configuring {hostname}")

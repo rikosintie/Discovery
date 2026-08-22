@@ -360,7 +360,7 @@ def log_message(message: str, context: str = "") -> None:
     """
     Append a plain-text message with timestamp to the logfile.
     """
-    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    now = datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S")
     log_entry = f"[{now}] {context + ': ' if context else ''}{message}\n"
     with open(LOGFILE, "a") as f:
         f.write(log_entry)
@@ -447,7 +447,7 @@ def print_skipped_devices_table(skipped: list[dict]) -> None:
 print()
 print()
 start = timeit.default_timer()
-now = datetime.now()
+now = datetime.now().astimezone()
 print(f"Script started at: {now.strftime('%m/%d/%Y, %H:%M:%S')}")
 print()
 parser = argparse.ArgumentParser(
@@ -729,7 +729,7 @@ for line in fabric:
         net_connect = ConnectHandler(**device)
 
     except NetmikoTimeoutException as e:
-        end_time: datetime = datetime.now()
+        end_time: datetime = datetime.now().astimezone()
         device_count -= 1
         time_out_count += 1
         skipped_devices.append(
@@ -885,7 +885,7 @@ for line in fabric:
                 border = "-" * (len(type) + len(int_report) + 36)
                 print(f"[bold][blue]{border}[/blue][/bold]")
         except NetmikoTimeoutException:
-            end_time = datetime.now()
+            end_time = datetime.now().astimezone()
             print(f"\nExec time: {end_time - now}\n")
             print(
                 f"Time out processing -{type} logs for {hostname} at {ipaddr}. The connection timed out. Try setting -e to a higher value"
