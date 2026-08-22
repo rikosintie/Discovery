@@ -9,7 +9,7 @@
 There are a few steps that need to be completed before starting the discovery process:
 
 - Create a device inventory file
-- Make changes to the config-file-[vendor].txt file (if needed)
+- Make changes to the discovery-[vendor].txt file (if needed)
 - Decide how you want store the password
 - Update the mac.txt file to match the format of the switches
 
@@ -213,7 +213,7 @@ When you press enter, you will see "Input the Password:" on the command line. En
 
 ----------------------------------------------------------------
 
-## Update the config-file-<vendor_id>.txt file
+## Update the discovery-<vendor_id>.txt file
 
 This file contains all of the `show commands` that will be sent to the switches. The project includes sample files for hp_procurve, cisco_ios, and cisco_xe switches. The sample files have over 50 commands in them, including many that may not apply to the customer:
 
@@ -225,7 +225,7 @@ This file contains all of the `show commands` that will be sent to the switches.
 
 If you don't need them for a particular customer you can just open the file and delete any that you don't need or add any that you do need. The goal is to have all the data needed to satisfy the Change Request requirements.
 
-The script looks for `config-file-<vendor-id>.txt`. You have to use that exact format. Since the script supports the following Netmiko vendor_ids:
+The script looks for `discovery-<vendor-id>.txt`. You have to use that exact format. Since the script supports the following Netmiko vendor_ids:
 
 - hp_procurve
 - cisco_ios
@@ -242,21 +242,21 @@ The script looks for `config-file-<vendor-id>.txt`. You have to use that exact f
 
 The config files will be named:
 
-- config-file-hp_procurve.txt
-- config-file-cisco_ios.txt
-- config-file-cisco_xe.txt
-- config-file-cisco_nxos.txt
-- config-file-cisco_s300.txt
-- config-file-aruba_osswitch.txt
-- config-file-aruba_aoscx.txt
-- config-file-arista_eos.txt
-- config-file-dell_os6.txt
-- config-file-brocade_fastiron.txt
-- config-file-ruckus_fastiron.txt
-- config-file-juniper_junos.txt
+- discovery-hp_procurve.txt
+- discovery-cisco_ios.txt
+- discovery-cisco_xe.txt
+- discovery-cisco_nxos.txt
+- discovery-cisco_s300.txt
+- discovery-aruba_osswitch.txt
+- discovery-aruba_aoscx.txt
+- discovery-arista_eos.txt
+- discovery-dell_os6.txt
+- discovery-brocade_fastiron.txt
+- discovery-ruckus_fastiron.txt
+- discovery-juniper_junos.txt
 
 !!! warning
-    On older switches, reading a lot of data can cause the CPU to go to 90% or higher! This will cause issues if OSPF or EIGRP is running and may cause the script to fail with a timeout. If this happens, remove some commands from the config-file and try again.
+    On older switches, reading a lot of data can cause the CPU to go to 90% or higher! This will cause issues if OSPF or EIGRP is running and may cause the script to fail with a timeout. If this happens, remove some commands from the discovery file and try again.
 
 ### Pulling the mac address table
 
@@ -603,7 +603,7 @@ Could not connect to Procurve-2920-24 at 192.168.10.50. The Credentials failed. 
 HP-2920-24G-PoEP#
 
 --------------------------------------------------------
-processing config-file-hp_procurve.txt for Procurve-2920-48
+processing discovery-hp_procurve.txt for Procurve-2920-48
 --------------------------------------------------------
 processing show logging -W for Procurve-2920-48
 --------------------------------------------------------

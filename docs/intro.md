@@ -16,7 +16,7 @@ The project currently supports the following devices:
 - Cisco Nexus
 - Aruba CX
 
-A plain text file is used to store the `show commands` that are sent to the switches. An example file for an HPE Procurve switch can be found [here](https://github.com/rikosintie/Discovery/blob/main/config-file-hp_procurve.txt). You are free to customize the file by adding or removing show commands as needed for your discovery.  The script saves the data to various directories for easy access.
+A plain text file is used to store the `show commands` that are sent to the switches. An example file for an HPE Procurve switch can be found [here](https://github.com/rikosintie/Discovery/blob/main/discovery-hp_procurve.txt). You are free to customize the file by adding or removing show commands as needed for your discovery.  The script saves the data to various directories for easy access.
 
 ## Who is this project for
 
@@ -35,7 +35,7 @@ The python discovery script [config-pull.py](https://github.com/rikosintie/Disco
 
 ### show commands
 
-The show commands are saved to a file named config-file-{vendor-id}.txt, where vendor-id is:
+The show commands are saved to a file named discovery-{vendor-id}.txt, where vendor-id is:
 
 - hp_procurve
 - cisco_ios
@@ -69,7 +69,7 @@ On the Procurve switches you can customize the output of show vlans. This HPE Te
 
 [Customizing the show VLANs output](https://techhub.hpe.com/eginfolib/networking/docs/switches/K-KA-KB/15-18/atmg/content/ch01s06.html)
 
-The config-file-hp_procurve.txt uses the following customizations:
+The discovery-hp_procurve.txt uses the following customizations:
 
 ```bash
 show vlan custom id name:15 ipaddr ipmask ipconfig state voice jumbo
@@ -159,7 +159,7 @@ Currently I only have Procurve, cisco_ios and cisco_xe fully implemented.
 
 ## Questions for Discovery and Deployment
 
-The script will pull any information that you put into the `config-file-<vendor-id>.txt` file but it can't answer all the questions! Here are some questions I ask during the kickoff meeting with the customer. Some of these questions are open ended and are meant to get the customer engaged in a conversation about the refresh.
+The script will pull any information that you put into the `discovery-<vendor-id>.txt` file but it can't answer all the questions! Here are some questions I ask during the kickoff meeting with the customer. Some of these questions are open ended and are meant to get the customer engaged in a conversation about the refresh.
 
 This is not an exhaustive list, feel free to add to it.
 

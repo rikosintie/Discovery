@@ -22,28 +22,29 @@ Example
 NOTE: the password is saved in user environment variable or entered when the script
 is executed.
 
-3. Create a file named config-file-<vendor_id>.txt in teh root of the Discovery
-folder. Place the configuration commands for the switches in it. Note that
+3. Create a file named discovery-<vendor_id>.txt in teh root of the Discovery
+folder. Place the show commands for the switches in it — this is a read-only
+discovery tool, it never sends configuration commands. Note that
 there are default files included. You can customize it to suit your needs.
-Valid config file names are:
-    config-file-hp_procurve.txt is used for all HP Procurve switches
-    config-file-cisco_ios.txt is used for all Cisco IOS switches
-    config-file-cisco_xe.txt is used for all Cisco IOS XE switches
-    config-file-cisco_nxos.txt is used for all Cisco NXOS switches
-    config-file-cisco_s300.txt is used for all Cisco SG/SGX 300 switches
-    config-file-aruba_osswitch.txt is used for all Aruba OS switches
-    config-file-aruba_aoscx.txt is used for all Aruba CX (AOS-CX) switches
-    config-file-arista_eos.txt is used for all Arista EOS switches
-    config-file-dell_os6.txt is used for all Dell N-series (OS6) switches
-    config-file-brocade_fastiron.txt is used for all Brocade FastIron switches
-    config-file-ruckus_fastiron.txt is used for all Ruckus ICX/FastIron switches
-    config-file-juniper_junos.txt is used for all Juniper Junos switches
+Valid discovery file names are:
+    discovery-hp_procurve.txt is used for all HP Procurve switches
+    discovery-cisco_ios.txt is used for all Cisco IOS switches
+    discovery-cisco_xe.txt is used for all Cisco IOS XE switches
+    discovery-cisco_nxos.txt is used for all Cisco NXOS switches
+    discovery-cisco_s300.txt is used for all Cisco SG/SGX 300 switches
+    discovery-aruba_osswitch.txt is used for all Aruba OS switches
+    discovery-aruba_aoscx.txt is used for all Aruba CX (AOS-CX) switches
+    discovery-arista_eos.txt is used for all Arista EOS switches
+    discovery-dell_os6.txt is used for all Dell N-series (OS6) switches
+    discovery-brocade_fastiron.txt is used for all Brocade FastIron switches
+    discovery-ruckus_fastiron.txt is used for all Ruckus ICX/FastIron switches
+    discovery-juniper_junos.txt is used for all Juniper Junos switches
 
 4. Execute
 python3 cisco-Config-Pull.py -s test
 
 The script will read the device-inventory-<sitename> file and
-execute the contents of the config-file-<vendor>.txt for each switch.
+execute the contents of the discovery-<vendor>.txt for each switch.
 
 For each switch in the inventory file the commands that were
 sent to the switch are saved to the CR-data folder as <hostname>-CR-data.txt.
@@ -528,13 +529,7 @@ now = datetime.now().astimezone()
 print(f"Script started at: {now.strftime('%m/%d/%Y, %H:%M:%S')}")
 print()
 parser = argparse.ArgumentParser(
-    description="-s site, -c config-file to use, -l 1 create ssh_log.txt, -p 1 prompt for password, -t 1-9 timeout, -e W,I,M,D,E (-e 1 for Cisco) to pull logs"
-)
-parser.add_argument(
-    "-c",
-    "--conf",  # Optional (but recommended) long version
-    default="",
-    help="config-file to use",
+    description="-s site, -l 1 create ssh_log.txt, -p 1 prompt for password, -t 1-9 timeout, -e W,I,M,D,E (-e 1 for Cisco) to pull logs"
 )
 parser.add_argument(
     "-e",
@@ -844,21 +839,21 @@ for line in fabric:
         continue
 
     """
-    Valid config file names are:
-        config-file-hp_procurve.txt is used for all HP Procurve switches
-        config-file-cisco_ios.txt is used for all Cisco IOS switches
-        config-file-cisco_xe.txt is used for all Cisco IOS XE switches
-        config-file-cisco_nxos.txt is used for all Cisco NXOS switches
-        config-file-cisco_s300.txt is used for all Cisco SG/SGX 300 switches
-        config-file-aruba_osswitch.txt is used for all Aruba OS switches
-        config-file-aruba_aoscx.txt is used for all Aruba CX (AOS-CX) switches
-        config-file-arista_eos.txt is used for all Arista EOS switches
-        config-file-dell_os6.txt is used for all Dell N-series (OS6) switches
-        config-file-brocade_fastiron.txt is used for all Brocade FastIron switches
-        config-file-ruckus_fastiron.txt is used for all Ruckus ICX/FastIron switches
-        config-file-juniper_junos.txt is used for all Juniper Junos switches
+    Valid discovery file names are:
+        discovery-hp_procurve.txt is used for all HP Procurve switches
+        discovery-cisco_ios.txt is used for all Cisco IOS switches
+        discovery-cisco_xe.txt is used for all Cisco IOS XE switches
+        discovery-cisco_nxos.txt is used for all Cisco NXOS switches
+        discovery-cisco_s300.txt is used for all Cisco SG/SGX 300 switches
+        discovery-aruba_osswitch.txt is used for all Aruba OS switches
+        discovery-aruba_aoscx.txt is used for all Aruba CX (AOS-CX) switches
+        discovery-arista_eos.txt is used for all Arista EOS switches
+        discovery-dell_os6.txt is used for all Dell N-series (OS6) switches
+        discovery-brocade_fastiron.txt is used for all Brocade FastIron switches
+        discovery-ruckus_fastiron.txt is used for all Ruckus ICX/FastIron switches
+        discovery-juniper_junos.txt is used for all Juniper Junos switches
     """
-    cfg_file = f"config-file-{vendor}.txt"
+    cfg_file = f"discovery-{vendor}.txt"
     print()
     border = net_connect.find_prompt()
     print(f"Connected to: [cyan]{border}[/cyan]")
