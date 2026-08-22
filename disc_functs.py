@@ -27,7 +27,7 @@ def remove_empty_lines(filename: str) -> str:
         Nothing - updated file is written to disk
     """
     if not os.path.isfile(filename):
-        print("{} does not exist ".format(filename))
+        print(f"{filename} does not exist ")
         return
     with open(filename) as filehandle:
         lines = filehandle.readlines()

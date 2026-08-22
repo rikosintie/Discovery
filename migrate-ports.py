@@ -37,7 +37,7 @@ from datetime import datetime
 
 def remove_empty_lines(filename):
     if not os.path.isfile(filename):
-        print("{} does not exist ".format(filename))
+        print(f"{filename} does not exist ")
         return
     with open(filename) as filehandle:
         lines = filehandle.readlines()
@@ -60,7 +60,7 @@ else:
 
 # check if site's device inventory file exists
 if not os.path.isfile(dev_inv_file):
-    print("{} doesn't exist ".format(dev_inv_file))
+    print(f"{dev_inv_file} doesn't exist ")
     sys.exit()
 
 remove_empty_lines(dev_inv_file)
@@ -84,7 +84,7 @@ for line in fabric:
     if vendor.lower() == "cisco_ios":
         now = datetime.now()
         date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-        print((str(date_time) + " Creating interface file for {}".format(hostname)))
+        print(f"{date_time} Creating interface file for {hostname}")
         print(f"Configuring {hostname}")
         cfg_file = loc + hostname + "-interface.txt"
         print()

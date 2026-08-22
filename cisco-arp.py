@@ -134,7 +134,7 @@ def long2ip(lng):
 
 def remove_empty_lines(filename):
     if not os.path.isfile(filename):
-        print("{} does not exist ".format(filename))
+        print(f"{filename} does not exist ")
         return
     with open(filename) as filehandle:
         lines = filehandle.readlines()
@@ -186,7 +186,7 @@ loc = get_current_path()
 # dev_inv_file = loc + dev_inv_file
 # check if site's device inventory file exists
 if not os.path.isfile(dev_inv_file):
-    print("{} doesn't exist ".format(dev_inv_file))
+    print(f"{dev_inv_file} doesn't exist ")
     sys.exit()
 
 remove_empty_lines(dev_inv_file)

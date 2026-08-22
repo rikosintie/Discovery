@@ -58,7 +58,7 @@ def remove_empty_lines(filename: str):
         Nothing - updated file is written to disk
     """
     if not os.path.isfile(filename):
-        print("{} does not exist ".format(filename))
+        print(f"{filename} does not exist ")
         return
     with open(filename) as filehandle:
         lines = filehandle.readlines()
@@ -112,7 +112,7 @@ ic(dev_inv_file)
 
 # check if site's device inventory file exists
 if not os.path.isfile(dev_inv_file):
-    print("{} doesn't exist ".format(dev_inv_file))
+    print(f"{dev_inv_file} doesn't exist ")
     sys.exit()
 
 remove_empty_lines(dev_inv_file)
@@ -128,7 +128,7 @@ for line in fabric:
 
     # check if switch's version file exists
     if not os.path.isfile(int_report):
-        print("{} doesn't exist ".format(int_report))
+        print(f"{int_report} doesn't exist ")
         sys.exit()
 
     with open(int_report, "r", encoding="utf-8") as file:

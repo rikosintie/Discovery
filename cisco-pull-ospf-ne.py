@@ -53,7 +53,7 @@ __license__ = "Unlicense"
 
 def remove_empty_lines(filename):
     if not os.path.isfile(filename):
-        print("{} does not exist ".format(filename))
+        print(f"{filename} does not exist ")
         return
     with open(filename) as filehandle:
         lines = filehandle.readlines()
@@ -76,7 +76,7 @@ else:
 
 # check if site's device inventory file exists
 if not os.path.isfile(dev_inv_file):
-    print("{} doesn't exist ".format(dev_inv_file))
+    print(f"{dev_inv_file} doesn't exist ")
     sys.exit()
 
 remove_empty_lines(dev_inv_file)
@@ -100,7 +100,7 @@ for line in fabric:
         now = datetime.now()
         start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
         print("-----------------------------------------------------")
-        print((str(start_time) + " Connecting to switch {}".format(hostname)))
+        print(f"{start_time} Connecting to switch {hostname}")
         print("-----------------------------------------------------")
         try:
             device = {
