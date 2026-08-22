@@ -862,7 +862,6 @@ for line in fabric:
             time_out = args.timeout
             for type in log_type:
                 print(f"Processing show logging -{type} for {hostname}")
-                output_event = f"output_event_{type}"
                 if type not in log_list:
                     print(f"logging argument {type} for {hostname} is not supported")
                     continue
@@ -870,8 +869,10 @@ for line in fabric:
                     show_logging = "show logging"
                 else:
                     show_logging = f"show logging -r -{type}"
-                output_event = net_connect.send_command(
-                    show_logging, strip_command=False, delay_factor=time_out
+                output_event = str(
+                    net_connect.send_command(
+                        show_logging, strip_command=False, delay_factor=time_out
+                    )
                 )
                 border = "-" * (len(cfg_file) + len(hostname) + 16)
                 print(f"[bold][blue]{border}[/blue][/bold]")
@@ -997,7 +998,7 @@ for line in fabric:
     print(
         f"collecting [bright_blue]'show arp'[/bright_blue] for [cyan]{hostname}[/cyan]"
     )
-    output_text_arp = net_connect.send_command(show_arp, read_timeout=200)
+    output_text_arp = str(net_connect.send_command(show_arp, read_timeout=200))
     border = "-" * (len(hostname) + 26)
     print(f"[bold][blue]{border}[/blue][/bold]")
 
@@ -1006,7 +1007,7 @@ for line in fabric:
         f"Collecting [bright_blue]'show running-config'[/bright_blue] from [cyan]{hostname}[/cyan]"
     )
     # print(net_connect.find_prompt())
-    output_text_run = net_connect.send_command(sh_run, read_timeout=360)
+    output_text_run = str(net_connect.send_command(sh_run, read_timeout=360))
     border = "-" * (len(hostname) + 38)
     print(f"[bold][blue]{border}[/blue][/bold]")
 
