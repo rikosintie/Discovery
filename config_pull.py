@@ -746,7 +746,7 @@ for line in fabric:
                 f"\nDevice may only support SSHv1 (deprecated on modern Linux)"
             )
         else:
-            message += f"\n[dim]{str(e)}[/dim]"
+            message += f"\n[dim]{e!s}[/dim]"
 
         print(
             Panel.fit(
