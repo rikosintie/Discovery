@@ -3,10 +3,10 @@ show clock
 show ntp associations
 show ntp status
 show kron schedule
+show ver | i WS
 show version | i uptime
 show version | i System serial number|Base ethernet MAC Address|ID
 show archive config differences
-show ver | i WS
 show ip arp
 show vlan brief
 show ip route 0.0.0.0
@@ -16,6 +16,7 @@ show interfaces status
 show interface status | i connected
 show interface description
 show interfaces transceiver detail
+show interfaces status err-disabled
 show mac address-table | ex CPU|Po|1/0/49
 show cdp neighbors
 show cdp neighbors detail
