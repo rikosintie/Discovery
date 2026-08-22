@@ -22,28 +22,28 @@ Example
 NOTE: the password is saved in user environment variable or entered when the script
 is executed.
 
-3. Create a file named <vendor_id>-config-file.txt in teh root of the Discovery
+3. Create a file named config-file-<vendor_id>.txt in teh root of the Discovery
 folder. Place the configuration commands for the switches in it. Note that
 there are default files included. You can customize it to suit your needs.
 Valid config file names are:
-    hp_procurve-config-file.txt is used for all HP Procurve switches
-    cisco_ios-config-file.txt is used for all Cisco IOS switches
-    cisco_xe-config-file.txt is used for all Cisco IOS XE switches
-    cisco_nxos-config-file.txt is used for all Cisco NXOS switches
-    cisco_s300-config-file.txt is used for all Cisco SG/SGX 300 switches
-    aruba_osswitch-config-file.txt is used for all Aruba OS switches
-    aruba_aoscx-config-file.txt is used for all Aruba CX (AOS-CX) switches
-    arista_eos-config-file.txt is used for all Arista EOS switches
-    dell_os6-config-file.txt is used for all Dell N-series (OS6) switches
-    brocade_fastiron-config-file.txt is used for all Brocade FastIron switches
-    ruckus_fastiron-config-file.txt is used for all Ruckus ICX/FastIron switches
-    juniper_junos-config-file.txt is used for all Juniper Junos switches
+    config-file-hp_procurve.txt is used for all HP Procurve switches
+    config-file-cisco_ios.txt is used for all Cisco IOS switches
+    config-file-cisco_xe.txt is used for all Cisco IOS XE switches
+    config-file-cisco_nxos.txt is used for all Cisco NXOS switches
+    config-file-cisco_s300.txt is used for all Cisco SG/SGX 300 switches
+    config-file-aruba_osswitch.txt is used for all Aruba OS switches
+    config-file-aruba_aoscx.txt is used for all Aruba CX (AOS-CX) switches
+    config-file-arista_eos.txt is used for all Arista EOS switches
+    config-file-dell_os6.txt is used for all Dell N-series (OS6) switches
+    config-file-brocade_fastiron.txt is used for all Brocade FastIron switches
+    config-file-ruckus_fastiron.txt is used for all Ruckus ICX/FastIron switches
+    config-file-juniper_junos.txt is used for all Juniper Junos switches
 
 4. Execute
 python3 cisco-Config-Pull.py -s test
 
 The script will read the device-inventory-<sitename> file and
-execute the contents of the <hostname>-config-file.txt for each switch.
+execute the contents of the config-file-<vendor>.txt for each switch.
 
 For each switch in the inventory file the commands that were
 sent to the switch are saved to the CR-data folder as <hostname>-CR-data.txt.
@@ -845,20 +845,20 @@ for line in fabric:
 
     """
     Valid config file names are:
-        hp_procurve-config-file.txt is used for all HP Procurve switches
-        cisco_ios-config-file.txt is used for all Cisco IOS switches
-        cisco_xe-config-file.txt is used for all Cisco IOS XE switches
-        cisco_nxos-config-file.txt is used for all Cisco NXOS switches
-        cisco_s300-config-file.txt is used for all Cisco SG/SGX 300 switches
-        aruba_osswitch-config-file.txt is used for all Aruba OS switches
-        aruba_aoscx-config-file.txt is used for all Aruba CX (AOS-CX) switches
-        arista_eos-config-file.txt is used for all Arista EOS switches
-        dell_os6-config-file.txt is used for all Dell N-series (OS6) switches
-        brocade_fastiron-config-file.txt is used for all Brocade FastIron switches
-        ruckus_fastiron-config-file.txt is used for all Ruckus ICX/FastIron switches
-        juniper_junos-config-file.txt is used for all Juniper Junos switches
+        config-file-hp_procurve.txt is used for all HP Procurve switches
+        config-file-cisco_ios.txt is used for all Cisco IOS switches
+        config-file-cisco_xe.txt is used for all Cisco IOS XE switches
+        config-file-cisco_nxos.txt is used for all Cisco NXOS switches
+        config-file-cisco_s300.txt is used for all Cisco SG/SGX 300 switches
+        config-file-aruba_osswitch.txt is used for all Aruba OS switches
+        config-file-aruba_aoscx.txt is used for all Aruba CX (AOS-CX) switches
+        config-file-arista_eos.txt is used for all Arista EOS switches
+        config-file-dell_os6.txt is used for all Dell N-series (OS6) switches
+        config-file-brocade_fastiron.txt is used for all Brocade FastIron switches
+        config-file-ruckus_fastiron.txt is used for all Ruckus ICX/FastIron switches
+        config-file-juniper_junos.txt is used for all Juniper Junos switches
     """
-    cfg_file = f"{vendor}-config-file.txt"
+    cfg_file = f"config-file-{vendor}.txt"
     print()
     border = net_connect.find_prompt()
     print(f"Connected to: [cyan]{border}[/cyan]")
