@@ -344,7 +344,9 @@ def generate_mac_query_file_from_json(
     with open(output_file_path, "w") as f:
         f.write("\n".join(commands))
 
-    print(f"Writing {len(commands)} MAC address commands for {vendor} to\n {output_file_path}")
+    print(
+        f"Writing {len(commands)} MAC address commands for {vendor} to\n {output_file_path}"
+    )
 
 
 def print_panel(
@@ -840,7 +842,22 @@ for line in fabric:
         print()
         print_times()
         continue
-    # See "Valid config file names" in the module docstring for the full list.
+
+    """
+    Valid config file names are:
+        hp_procurve-config-file.txt is used for all HP Procurve switches
+        cisco_ios-config-file.txt is used for all Cisco IOS switches
+        cisco_xe-config-file.txt is used for all Cisco IOS XE switches
+        cisco_nxos-config-file.txt is used for all Cisco NXOS switches
+        cisco_s300-config-file.txt is used for all Cisco SG/SGX 300 switches
+        aruba_osswitch-config-file.txt is used for all Aruba OS switches
+        aruba_aoscx-config-file.txt is used for all Aruba CX (AOS-CX) switches
+        arista_eos-config-file.txt is used for all Arista EOS switches
+        dell_os6-config-file.txt is used for all Dell N-series (OS6) switches
+        brocade_fastiron-config-file.txt is used for all Brocade FastIron switches
+        ruckus_fastiron-config-file.txt is used for all Ruckus ICX/FastIron switches
+        juniper_junos-config-file.txt is used for all Juniper Junos switches
+    """
     cfg_file = f"{vendor}-config-file.txt"
     print()
     border = net_connect.find_prompt()
