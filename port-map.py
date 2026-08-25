@@ -7,13 +7,19 @@ https://www.quora.com/How-do-I-write-a-dictionary-to-a-file-in-Python
 https://www.programiz.com/python-programming/break-continue
 https://www.ascii-art-generator.org/
 
-read mac-addr.txt containing the output of
+Reads the raw "show mac address-table" / "show mac-address" output (however
+config-pull.py collected it for the device's vendor — see MAC_COMMAND_MAP in
+config-pull.py) and creates a list of Vlan, Mac Address, interface and
+manufacturer. One script handles all supported vendors: it detects the MAC
+address format and column order per line rather than assuming a fixed layout,
+and — for vendors like HP ProCurve that don't repeat the interface on every
+row — carries the interface forward from the echoed command or block header.
+
+Cisco example, output of:
 show mac add int g1/0/1 | i Gi
 show mac add int g1/0/2 | i Gi
 show mac add int g1/0/3 | i Gi
 show mac add int g1/0/4 | i Gi
-
-and create a list of Vlan, Mac Address, interface and manufacturer.
 
 test-switch#show mac add int g1/0/1 | i Gi
   10    8434.97a7.708b    DYNAMIC     Gi1/0/1
@@ -42,7 +48,7 @@ March 7, 2018
 Added code to read Mac2IP.json and use it as a dictionary of IP to MAC.
 Mac2IP.json is created by running arp.py against the output
 "show ip arp" or "sh ip arp vlan x" on a core switch
-if Mac2IP.json is found in the same directory as macaddr.py it adds the
+if Mac2IP.json is found in the same directory as port-map.py it adds the
 IP address to the output.
 if Mac2IP.json is not found the IP address is not added
 Vlan     MAC Address      Interface      IP           Vendor
@@ -69,11 +75,17 @@ it would use the last IP address.
 
 Clear the IP address in case the next interface has a MAC but no IP address
     IP_Data = ''
+
+August 22, 2026
+Renamed from cisco-macaddr.py to port-map.py and generalized to replace
+procurve-macaddr.py and cx-macaddr.py — one script for all vendors, creating
+the port maps this project is named for. Vlan/MAC column order and
+interface-column presence differ by vendor; this now detects both instead
+of assuming Cisco's layout.
 """
 
 import argparse
 import concurrent.futures
-import contextlib
 import json
 import os
 import re
@@ -86,7 +98,9 @@ import dns.reversename
 import rich.box
 from icecream import ic  # type: ignore[import-untyped]
 from manuf2 import manuf  # type: ignore[import-untyped]
+from rich import print
 from rich.console import Console
+from rich.panel import Panel
 from rich.table import Table
 
 # ic.enable()
@@ -100,32 +114,79 @@ __license__ = "Unlicense"
 
 vernum = "2.0"
 
+# MAC addresses are expressed differently depending on the vendor:
+# aa:bb:cc:dd:ee:ff (Aruba CX), aabb.ccdd.eeff (Cisco), aabbcc-ddeeff (HP
+# ProCurve). This covers all three.
+MAC_FORMAT_PATTERNS = (
+    re.compile(r"([0-9A-F]{2}[-:]){5}([0-9A-F]{2})", re.IGNORECASE),
+    re.compile(r"([0-9A-F]{4}[.]){2}([0-9A-F]{4})", re.IGNORECASE),
+    re.compile(r"([0-9A-F]{6}[-])([0-9A-F]{6})", re.IGNORECASE),
+)
 
-def version() -> None:
+
+def line_has_mac(text: str) -> bool:
+    return any(rx.search(text) for rx in MAC_FORMAT_PATTERNS)
+
+
+# Locally-administered (U/L bit set) prefixes that are actually a fixed,
+# well-known convention rather than genuine per-connection randomization.
+# Most hypervisors (VMware, VirtualBox, Hyper-V) use real registered OUIs
+# and don't need an entry here — this is only for the few that don't.
+KNOWN_LOCAL_PREFIXES = {
+    "525400": "QEMU/KVM",  # libvirt's default MAC prefix range
+}
+
+
+def is_locally_administered(mac: str) -> bool:
     """
-    This function prints the version of this program. It doesn't allow
-    any argument.
+    True if the MAC's U/L bit (bit 1 of the first octet) is set — meaning
+    it's locally administered/randomized rather than a real vendor-assigned
+    OUI. Common on modern devices with MAC randomization enabled (phones,
+    laptops joining Wi-Fi) and on VMs (e.g. QEMU/libvirt's 52:54:00 range).
+    """
+    first_octet = int(normalize_mac(mac)[:2], 16)
+    return bool(first_octet & 0x02)
+
+
+def normalize_mac(mac: str) -> str:
+    """
+    Strip all separators and lowercase, so the same physical MAC compares
+    equal regardless of vendor notation (aabb.ccdd.eeff, aabbcc-ddeeff,
+    aa:bb:cc:dd:ee:ff). Needed because Mac2IP.json is built from the ARP
+    source's own MAC format (e.g. a Cisco core switch), which won't match
+    a differently-formatted target device (e.g. an HP ProCurve) without this.
+    """
+    return re.sub(r"[.:-]", "", mac).lower()
+
+
+def version(console: Console) -> None:
+    """
+    Prints the version banner via the given Console rather than the builtin
+    print() — a plain print() here would use rich's global default console,
+    which caches its terminal/color detection at first use and doesn't
+    re-detect it if sys.stdout is later redirected to a file, leaking ANSI
+    codes into the saved output.
     """
     #    print(AsciiArt)
-    print("+----------------------------------------------------------------------+")
-    print(
+    console.print("+----------------------------------------------------------------------+")
+    console.print(
         "| "
         + sys.argv[0]
         + " Version "
         + vernum
         + "                                         |"
     )
-    print("| This program is free software; you can redistribute it and/or modify |")
-    print("| it in any way you want. If you improve it please send me a copy at   |")
-    print("| the email address below.                                             |")
-    print("|                                                                      |")
-    print("|    Author: Michael Hubbard                                           |")
-    print("|     email: michael.hubbard999@gmail.com                              |")
-    print("|     email: mhubbard@network-dev.com                                  |")
-    print("|      Blog: mwhubbard.blogspot.com                                    |")
-    print("|         X: @rikosintie                                               |")
-    print("|  linkedin: www.linkedin.com/in/mwhubbard                             |")
-    print("+----------------------------------------------------------------------+")
+    console.print("| This program is free software; you can redistribute it and/or modify |")
+    console.print("| it in any way you want. If you improve it please send me a copy at   |")
+    console.print("| the email address below.                                             |")
+    console.print("|                                                                      |")
+    console.print("|    Author: Michael Hubbard                                           |")
+    console.print("|     email: michael.hubbard999@gmail.com                              |")
+    console.print("|     email: mhubbard@network-dev.com                                  |")
+    console.print("|      Blog: mwhubbard.blogspot.com                                    |")
+    console.print("|         X: @rikosintie                                               |")
+    console.print("|  linkedin: www.linkedin.com/in/mwhubbard                             |")
+    console.print("+----------------------------------------------------------------------+")
 
 
 def remove_empty_lines(filename: str) -> None:
@@ -249,6 +310,8 @@ if site is None:
     print("-s site name is a required argument")
     sys.exit()
 else:
+    # Use dashes, never underscores, in site names/hostnames — they're reused
+    # verbatim to build every downstream filename, and a mismatch fails silently.
     dev_inv_file = "device-inventory-" + site + ".csv"
 
 ic(dev_inv_file)
@@ -307,31 +370,49 @@ for line in fabric:
 
     try:
         with open(my_json_file) as f:
-            Mac_IP = json.load(f)
-    except FileNotFoundError as fnf_error:
-        print(fnf_error)
-        print("IP Addresses will not be included because Mac2IP.json is not available")
+            # Normalize keys so lookups work regardless of the source
+            # switch's MAC notation vs. the target device's own notation.
+            Mac_IP = {normalize_mac(k): v for k, v in json.load(f).items()}
+    except FileNotFoundError:
+        print(
+            Panel.fit(
+                f"[yellow]{my_json_file}[/yellow] was not found.\n\n"
+                f"IP Address and DNS Name columns will be blank for [cyan]{hostname}[/cyan].\n\n"
+                "This is usually a hostname mismatch — check that the "
+                "[bold]-c coreswitch[/bold] value passed to the arp script matches "
+                "the hostname exactly as it appears in the device-inventory csv "
+                "(including hyphens/underscores).",
+                title="⚠ Mac2IP.json Not Found",
+                border_style="yellow",
+            )
+        )
         my_json_file = None
-    # create a blank list to accept each line in the file
-    data = []
+    # create a blank list to accept each line in the file, paired with
+    # whatever interface was last seen in an echoed command/header line
+    data: list[tuple[str, str]] = []
+    current_interface = ""
     try:
         with open(mac_file, "r") as f:
             for line in f:
-                match_PC = re.search(
-                    r"([0-9A-F]{2}[-:]){5}([0-9A-F]{2})", line, re.IGNORECASE
-                )
-                match_Cisco = re.search(
-                    r"([0-9A-F]{4}[.]){2}([0-9A-F]{4})", line, re.IGNORECASE
-                )
-                match_HP = re.search(
-                    r"([0-9A-F]{6}[-])([0-9A-F]{6})", line, re.IGNORECASE
-                )
                 # strip out lines without a mac address
-                if match_PC or match_Cisco or match_HP:
-                    data.append(line)
+                if line_has_mac(line):
+                    data.append((line, current_interface))
                 match_prompt = re.match(r"^(\S+?)(?:\([^)]*\))?#", line)
                 if match_prompt:
                     device_name = match_prompt.group(1)
+                # Some vendors (HP ProCurve) don't repeat the interface on
+                # every MAC row — it only appears in the echoed command
+                # ("show mac-address 5") or the block header ("Status and
+                # Counters - Port Address Table - 5"). Carry it forward so
+                # later rows without their own interface token fall back to it.
+                mac_cmd = re.search(
+                    r"show mac-?add(?:ress)?\s+(\S+)\s*$", line, re.IGNORECASE
+                )
+                if mac_cmd:
+                    current_interface = mac_cmd.group(1)
+                table_header = re.search(r"Port Address Table\s*-\s*(\S+)", line)
+                if table_header:
+                    current_interface = table_header.group(1)
                 ic(device_name)
     except FileNotFoundError as fnf_error:
         print(fnf_error)
@@ -371,7 +452,7 @@ for line in fabric:
         table.add_column("Vendor", min_width=14)
 
     pinginfo: list[str] = []
-    for raw_line in data:
+    for raw_line, ctx_interface in data:
         IP = raw_line.strip("\n")
         #   The Nexus line adds an * and spaces to the front of the line
         IP = IP.strip("*    ")
@@ -379,19 +460,28 @@ for line in fabric:
         IP = IP.replace("  0         F      F   ", "")
         IP = IP.replace("    ~~~      F    F ", "")
         L = str.split(IP)
-        if len(L) < 4:
+        if len(L) < 2:
             continue
-        Vlan = L[0]
-        Mac = L[1]
-        Interface_Num = L[3]
+        # Column order differs by vendor: Cisco/Nexus print "VLAN MAC ...",
+        # while ProCurve and Aruba CX print "MAC VLAN ...". Detect which of
+        # the first two tokens is actually the MAC instead of assuming a
+        # fixed position.
+        if line_has_mac(L[0]):
+            Mac, Vlan = L[0], L[1]
+        else:
+            Vlan, Mac = L[0], L[1]
         ic(Mac)
-        # The interface isn't in the same location on all switches — search for '/'
-        for token in L[3:]:
+        # The interface isn't always in the same column — search all tokens
+        # for one that looks like an interface. Fall back to the interface
+        # carried forward from the echoed command/header (ProCurve, which
+        # doesn't repeat it on every row).
+        Interface_Num = ctx_interface
+        for token in L:
             if "/" in token:
                 Interface_Num = token
                 break
-        if Mac in Mac_IP:
-            IP_Data = Mac_IP[Mac]
+        if normalize_mac(Mac) in Mac_IP:
+            IP_Data = Mac_IP[normalize_mac(Mac)]
         else:
             IP_Data = "No-Match"
         # print the pinginfo data
@@ -401,7 +491,10 @@ for line in fabric:
             DNS_Name = reverse_dns(IP_Data, dns_server=dns_server)
         else:
             DNS_Name = ""
-        manufacture = str(p.get_manuf(Mac) or "")
+        if is_locally_administered(Mac):
+            manufacture = KNOWN_LOCAL_PREFIXES.get(normalize_mac(Mac)[:6], "Randomized")
+        else:
+            manufacture = str(p.get_manuf(Mac) or "")
         if my_json_file:
             table.add_row(Vlan, IP_Data, Mac, Interface_Num, manufacture, DNS_Name)
         else:
@@ -418,16 +511,15 @@ for line in fabric:
     ic(output_file)
 
     with open(output_file, "w") as f:
-        with contextlib.redirect_stdout(f):
-            version()
-            print()
-            print(f"Number of Entries: {table.row_count}")
-            print()
-            print(f"Device Name: {device_name}")
-            print()
         file_console = Console(
             file=f, highlight=False, force_terminal=True, no_color=True
         )
+        version(file_console)
+        file_console.print()
+        file_console.print(f"Number of Entries: {table.row_count}")
+        file_console.print()
+        file_console.print(f"Device Name: {device_name}")
+        file_console.print()
         file_console.print(table)
 
     # Write PingInfo file

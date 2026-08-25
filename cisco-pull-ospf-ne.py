@@ -15,6 +15,11 @@ Place the information for each switch in the file. Format is
 Example
 192.168.10.52,cisco_ios,gl-IDF1,mhubbard,7Snb7*BF^8
 
+IMPORTANT: use dashes, never underscores, in <site> and <hostname> — they get
+reused verbatim to build every other filename downstream. Mixing "Lab_3850"
+and "Lab-3850" produces two different sets of files that never find each
+other, and the failure is silent.
+
 4. Execute
 python3 cisco-pull-ospf-ne.py -s test
 

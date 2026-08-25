@@ -56,6 +56,8 @@ if site is None:
     print("-s site name is a required argument")
     sys.exit()
 else:
+    # Use dashes, never underscores, in site names/hostnames — they're reused
+    # verbatim to build every downstream filename, and a mismatch fails silently.
     dev_inv_file = "device-inventory-" + site
 
 # check if site's device inventory file exists

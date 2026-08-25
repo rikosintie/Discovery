@@ -22,6 +22,13 @@ Example
 NOTE: the password is saved in user environment variable or entered when the script
 is executed.
 
+IMPORTANT: use dashes, never underscores, in <site> and <hostname> — they get
+reused verbatim to build every other filename downstream (Mac2IP.json,
+mac-address.txt, port-maps output, -c coreswitch values, etc). A hostname
+typed as "Lab_3850" in one place and "Lab-3850" in another produces two
+different sets of files that never find each other, and the failure is
+silent — you just end up with missing columns, not an error.
+
 3. Create a file named discovery-<vendor_id>.txt in teh root of the Discovery
 folder. Place the show commands for the switches in it — this is a read-only
 discovery tool, it never sends configuration commands. Note that
@@ -41,7 +48,7 @@ Valid discovery file names are:
     discovery-juniper_junos.txt is used for all Juniper Junos switches
 
 4. Execute
-python3 cisco-Config-Pull.py -s test
+python3 config-pull.py -s test
 
 The script will read the device-inventory-<sitename> file and
 execute the contents of the discovery-<vendor>.txt for each switch.
@@ -95,7 +102,7 @@ __author_email__ = "mhubbard@network-dev.com"
 __copyright__ = ""
 __license__ = "Unlicense"
 # -*- coding: utf-8 -*-
-#  cisco_Config_Pull.py
+#  config-pull.py
 #  Procurve Change Request data collection
 #  Created by Michael Hubbard on 2023-12-20.
 
@@ -582,7 +589,7 @@ else:
     message = (
         "\n"
         "No password was found. Use:\n\n"
-        "[red]python config_pull.py -s site -p 1[/red]\n\n"
+        "[red]python config-pull.py -s site -p 1[/red]\n\n"
         "on the terminal to be prompted for a password,\n"
         "or set the environment variable: \n\n"
         "export [blue]cyberARK=your_password[/blue]\n\n"
