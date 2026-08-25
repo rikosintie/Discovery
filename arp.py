@@ -71,12 +71,14 @@ ic.disable()
 
 __author__ = "Michael Hubbard"
 __author_email__ = "michael.hubbard999@gmail.com"
+__author_email__ = "mhubbard@network-dev.com"
 __copyright__ = ""
 __license__ = "Unlicense"
 
 # MAC addresses are expressed differently depending on the vendor:
-# aa:bb:cc:dd:ee:ff / aa-bb-cc-dd-ee-ff, aabb.ccdd.eeff (Cisco), aabbcc-ddeeff
-# (HP ProCurve). This covers all three.
+# aa:bb:cc:dd:ee:ff or aa-bb-cc-dd-ee-ff (same pattern, either separator —
+# the latter is a Windows convention, not one we've seen from a switch),
+# aabb.ccdd.eeff (Cisco), aabbcc-ddeeff (HP ProCurve). Three patterns.
 MAC_FORMAT_PATTERNS = (
     re.compile(r"([0-9A-F]{2}[-:]){5}([0-9A-F]{2})", re.IGNORECASE),
     re.compile(r"([0-9A-F]{4}[.]){2}([0-9A-F]{4})", re.IGNORECASE),

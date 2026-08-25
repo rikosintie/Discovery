@@ -115,8 +115,9 @@ __license__ = "Unlicense"
 vernum = "2.0"
 
 # MAC addresses are expressed differently depending on the vendor:
-# aa:bb:cc:dd:ee:ff (Aruba CX), aabb.ccdd.eeff (Cisco), aabbcc-ddeeff (HP
-# ProCurve). This covers all three.
+# aa:bb:cc:dd:ee:ff (Aruba CX) or aa-bb-cc-dd-ee-ff (same pattern, either
+# separator — the latter is a Windows convention, not one we've seen from a
+# switch), aabb.ccdd.eeff (Cisco), aabbcc-ddeeff (HP ProCurve). Three patterns.
 MAC_FORMAT_PATTERNS = (
     re.compile(r"([0-9A-F]{2}[-:]){5}([0-9A-F]{2})", re.IGNORECASE),
     re.compile(r"([0-9A-F]{4}[.]){2}([0-9A-F]{4})", re.IGNORECASE),
