@@ -101,7 +101,7 @@ The second is a Core/IDF deployment where there is a layer 3 switch in an MDF an
 
 #### Running the arp.py script
 
-One script handles the arp step for every supported vendor — it used to be split into procurve-arp.py and cisco-arp.py. It finds the IP and MAC on each line by content rather than assuming a fixed column layout, so it doesn't matter whether the vendor prints Cisco-style `Internet <ip> <age> <mac> ARPA VlanN` or ProCurve-style `<ip> <mac> <type> <port>`.
+One script handles the arp step for every supported vendor — it used to be split into procurve-arp.py, cisco-arp.py, and cx-arp.py. It finds the IP and MAC on each line by content rather than assuming a fixed column layout, so it doesn't matter whether the vendor prints Cisco-style `Internet <ip> <age> <mac> ARPA VlanN`, ProCurve-style `<ip> <mac> <type> <port>`, or Aruba CX-style `<ip> <mac> <vlan> <port> <state> <vrf>`.
 
 Example of a distributed layer 3 deployment:
 
@@ -142,8 +142,6 @@ Number of IP, MAC and Manufacture: 566
 ```
 
 If you have a need for this information great, if not just ignore it.
-
-Aruba CX has its own separate script, cx-arp.py, since its raw `show arp` format and invocation are different enough that it isn't part of this merge.
 
 #### Running the port-map.py script
 

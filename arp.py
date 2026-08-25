@@ -42,10 +42,17 @@ port-map.py: find the IP-shaped and MAC-shaped tokens on each line instead
 of assuming a fixed position. Also fixed a real bug found along the way:
 procurve-arp.py wrote Mac2IP.json to port-maps/data/, but port-map.py only
 ever looks in port-maps/ — ProCurve-sourced Core/IDF deployments were
-silently never finding their Mac2IP.json. cx-arp.py (Aruba CX) is a
-separate, much bigger outlier — no CLI/device-inventory loop, hardcoded
-single-file I/O, a different raw format entirely — and is intentionally
-not part of this merge; it's still its own script.
+silently never finding their Mac2IP.json.
+
+August 25, 2026
+cx-arp.py (Aruba CX) retired too. Its raw "show arp" format — including
+real captures with and without a VRF column, echoed prompts, and even one
+capture with mixed MAC notations in the same file — turned out to already
+parse correctly with zero changes, since the content-detection approach
+never assumed a fixed column layout in the first place. cx-arp.py's actual
+gap wasn't parsing, it was that it never had a -s site/-c coreswitch/
+device-inventory CLI at all (hardcoded arp.txt in, hardcoded Mac2IP.json
+out) — this script's existing loop covers that for any vendor already.
 """
 
 import argparse
