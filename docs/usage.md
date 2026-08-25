@@ -77,6 +77,9 @@ For example,
 
 There is a sample file named device-inventory-area1.csv in the project. The site name is just a tag so that you can have as many device-inventory files as you need. At a large customer this might be the MDF and then a series of IDFs.
 
+!!! warning
+    Use dashes, never underscores, in site names and hostnames — anywhere they show up as part of a filename (`device-inventory-<site>.csv`, the hostname column, `-c coreswitch` values, etc). Every script derives filenames straight from these values, so a `Lab_3850` here and a `Lab-3850` there silently produces two different sets of files that never find each other — the arp/macaddr/port-map handoff breaks with no error, just quietly-missing IP/DNS columns. Pick one hostname spelling per device and use it everywhere, always with a dash.
+
 ### CSVLENS
 
 There is also a great terminal tool called `csvlens`. It's an open source project on [GitHub csvlens](https://github.com/YS-L/csvlens). It's cross platform and runs on Mac/Linux/Windows.
@@ -584,7 +587,7 @@ INFO:paramiko.transport:Authentication (password) successful!
 Here is a sample output from running the script:
 
 ```bash
-config_pull.py -s area1 -e W
+config-pull.py -s area1 -e W
 
 
 -------------------------------------------------

@@ -6,11 +6,11 @@
 
 ----------------------------------------------------------------
 
-The helper scripts are a collection of python scripts that read data that the config_pull.py created and turn that raw data into useful reports.
+The helper scripts are a collection of python scripts that read data that the config-pull.py created and turn that raw data into useful reports.
 
 ## What files are created
 
-After the `config_pull.py` script finishes, you can use the ***hostname-CR-data.txt*** files to get started planning. The script also creates JSON files for:
+After the `config-pull.py` script finishes, you can use the ***hostname-CR-data.txt*** files to get started planning. The script also creates JSON files for:
 
 - Port Maps
 - cdp neighbors
@@ -48,7 +48,7 @@ In addition, there is a script to convert mac addresses between different format
 
 There are two scripts in the discovery folder:
 
-- procurve-arp.py - converts the IP and Arp records into "key": "value" pairs
+- arp.py - converts the IP and Arp records into "key": "value" pairs
 
 Here is an example:
 
@@ -63,7 +63,7 @@ Here is an example:
 
 The Mac Address is used for the key since MACs are unique, the IP Address is used for the value. It saves the data to hostname-Mac2IP.json in the data folder.
 
-- procurve-macaddr.py - Matches the Mac address in the hostname-Mac2IP.json file to the mac address in the hostname-mac-address.txt file.
+- port-map.py - Matches the Mac address in the hostname-Mac2IP.json file to the mac address in the hostname-mac-address.txt file.
 
 The port maps return:
 
@@ -97,13 +97,19 @@ Having this information makes identifying special devices such as HVAC controlle
 
 There are two general categories of switch deployments. The first is a distributed layer 3 deployment where every closet has a layer 3 router. In that case, the procurve-Config-pull has created an arp.txt file and mac-address.txt file for every switch and the script reads the same inventory file and matches the hostname-arp.txt file with the hostname-mac-address.txt file.
 
-The second is a Core/IDF deployment where there is a layer 3 switch in an MDF and the closets are connected at layer 2. In this case, we have to use an argument in the procurve-macaddr.py script to tell it which hostname-arp.txt file to use for each hostname-mac-address.txt file.
+The second is a Core/IDF deployment where there is a layer 3 switch in an MDF and the closets are connected at layer 2. In this case, we have to use an argument in the port-map.py script to tell it which hostname-arp.txt file to use for each hostname-mac-address.txt file.
 
-#### Running the procurve-arp.py script
+#### Running the arp.py script
+
+One script handles the arp step for every supported vendor — it used to be split into procurve-arp.py and cisco-arp.py. It finds the IP and MAC on each line by content rather than assuming a fixed column layout, so it doesn't matter whether the vendor prints Cisco-style `Internet <ip> <age> <mac> ARPA VlanN` or ProCurve-style `<ip> <mac> <type> <port>`.
 
 Example of a distributed layer 3 deployment:
 
-`python3 procurve-arp.py -s area1`
+`python3 arp.py -s area1`
+
+For a Core/IDF deployment, use `-c coreswitch`:
+
+`python3 arp.py -s jc-edge -c JC-core`
 
 The script will create the hostname-Mac2IP.json and will print some information to the screen. The first information is the file being processed and the number of IPs and the IPs sorted. Here is an example:
 
@@ -137,45 +143,29 @@ Number of IP, MAC and Manufacture: 566
 
 If you have a need for this information great, if not just ignore it.
 
-#### Running the cisco-arp.py script
+Aruba CX has its own separate script, cx-arp.py, since its raw `show arp` format and invocation are different enough that it isn't part of this merge.
 
-This script works the same way as procurve-arp.py — same printed output, same hostname-Mac2IP.json result — just for Cisco devices.
+#### Running the port-map.py script
 
-`python3 cisco-arp.py -s area1`
+One script handles the port-map step for every supported vendor — it used to be split into procurve-macaddr.py and cisco-macaddr.py (plus a third, cx-macaddr.py, for Aruba CX). It reads the hostname-Mac2IP.json and hostname-mac-address.txt files, detects each line's MAC format and column order rather than assuming a fixed layout, and creates the port maps — with a manufacturer lookup via the maintained `manuf2` package and, when a DNS server is available, a reverse-DNS name column.
 
-For a Core/IDF deployment, use `-c coreswitch` the same way as procurve-arp.py:
+`python3 port-map.py -s area1`
 
-`python3 cisco-arp.py -s jc-edge -c JC-core`
+For a Core/IDF deployment, use `-c coreswitch`:
 
-#### Running the procurve-macaddr.py script
-
-This script reads the hostname-Mac2IP.json and hostname-mac-address.txt files and creates the port maps. The port maps are saved in the final folder under port-maps.
-
-`python3 procurve-macaddr.py -s area1`
-
-#### Running the cisco-macaddr.py script
-
-This script works the same way as procurve-macaddr.py — it reads the hostname-Mac2IP.json and hostname-mac-address.txt files and creates the port maps — but adds a manufacturer lookup via the maintained `manuf2` package and, when a DNS server is available, a reverse-DNS name column.
-
-`python3 cisco-macaddr.py -s area1`
-
-For a Core/IDF deployment, use `-c coreswitch` the same way as procurve-macaddr.py:
-
-`python3 cisco-macaddr.py -s jc-edge -c JC-core`
+`python3 port-map.py -s jc-edge -c JC-core`
 
 To resolve DNS names for the IP addresses in the port map, pass a DNS server with `-d`:
 
-`python3 cisco-macaddr.py -s jc-edge -c JC-core -d 192.168.10.222`
+`python3 port-map.py -s jc-edge -c JC-core -d 192.168.10.222`
 
 #### Updating the vendor (OUI) database
 
-All four scripts above (procurve-arp.py, cisco-arp.py, procurve-macaddr.py, cisco-macaddr.py) use the `manuf2` package to resolve a MAC address's manufacturer. The OUI database it ships with needs to be refreshed occasionally — newly-registered hardware won't have a vendor until it's in the database you have locally, and shows up as `None` instead. When that happens, run any one of:
+Both scripts above (arp.py, port-map.py) use the `manuf2` package to resolve a MAC address's manufacturer. The OUI database it ships with needs to be refreshed occasionally — newly-registered hardware won't have a vendor until it's in the database you have locally, and shows up as `None` instead. When that happens, run either:
 
 ```bash
-python3 procurve-arp.py --update-manuf
-python3 cisco-arp.py --update-manuf
-python3 procurve-macaddr.py --update-manuf
-python3 cisco-macaddr.py --update-manuf
+python3 arp.py --update-manuf
+python3 port-map.py --update-manuf
 ```
 
 Any of these downloads the latest OUI and WFA (Wi-Fi Alliance) data and exits — none of them need `-s site`, and none touch any inventory files.
@@ -184,7 +174,7 @@ Any of these downloads the latest OUI and WFA (Wi-Fi Alliance) data and exits �
 
 In this case only the core switch has the arp records. The argument "-c coreswitch" is used to tell the switch to use the core-arp.txt file for all switches.
 
-`python3 procurve-macaddr.py -s area1 -c coreswitch`
+`python3 port-map.py -s area1 -c coreswitch`
 
 ----------------------------------------------------------------
 

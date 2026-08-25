@@ -31,7 +31,7 @@ There are two types of scripts in the project:
 - Discovery - These are scripts that use netmiko to connect to a switch and pull down data. No configuration commands are sent so the script is safe to use in production.
 - Helper - These are scripts that take the data that was collected with the discovery script and convert usable reports. They are run offline and do not make any changes to the switches.
 
-The python discovery script [config-pull.py](https://github.com/rikosintie/Discovery/blob/main/config_pull.py) uses the industry standard  [netmiko](https://github.com/ktbyers/netmiko) Python library and the Network to Code [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run ***show commands*** and create JSON files. These two libraries hide the complexity of connecting to and interacting with network devices.
+The python discovery script [config-pull.py](https://github.com/rikosintie/Discovery/blob/main/config-pull.py) uses the industry standard  [netmiko](https://github.com/ktbyers/netmiko) Python library and the Network to Code [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run ***show commands*** and create JSON files. These two libraries hide the complexity of connecting to and interacting with network devices.
 
 ### show commands
 
