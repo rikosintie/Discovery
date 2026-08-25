@@ -74,3 +74,4 @@ config.toml
 site_name: My Docs1.yml
 device-inventory-home.csv
 port-maps/pinginfo/Lab*
+2920*
