@@ -113,6 +113,7 @@ MAC_FORMAT_PATTERNS = (
 
 
 def line_has_mac(text: str) -> bool:
+    """True if text contains a MAC address in any of the known vendor notations."""
     return any(rx.search(text) for rx in MAC_FORMAT_PATTERNS)
 
 
@@ -202,6 +203,17 @@ def version(console: Console) -> None:
 
 
 def remove_empty_lines(filename: str) -> None:
+    """
+    Removes blank lines from a file in place. The device-inventory read
+    loop will misparse a blank line as a device, so this needs to run
+    before the CSV is read.
+
+    Args:
+        filename (str): Path to the file to clean up.
+
+    Returns:
+        None — the file is rewritten on disk.
+    """
     if not os.path.isfile(filename):
         print(f"{filename} does not exist ")
         return
