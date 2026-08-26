@@ -1,5 +1,7 @@
-"""
-Reads the <hostname>-interface.json file created by config-pull.py and
+r"""
+!!!!! Helper Script - Does not change the running config !!!!!
+
+Reads the Interface/<hostname>-interface.json file created by config-pull.py and
 builds a migration config snippet for two kinds of interfaces that are
 "up": uplinks (module 1 ports, matched by the [0-8]/1/[0-9]{1,2} pattern —
 e.g. Gi1/1/3) and SVIs (VlanN). For each matching interface, writes an
@@ -16,6 +18,8 @@ References:
 https://linuxhandbook.com/python-write-list-file/
 https://www.tutorialspoint.com/python3/python_dictionary.htm
 """
+
+# !!!!! Helper Script - Does not change the running config !!!!!
 
 __author__ = "Michael Hubbard"
 __author_email__ = "michael.hubbard999@gmail.com"
@@ -58,6 +62,24 @@ def remove_empty_lines(filename: str) -> None:
         filehandle.writelines(lines)
 
 
+def create_filename(sub_dir1: str, extension: str = "", sub_dir2: str = "") -> str:
+    """
+    returns a valid path regardless of the OS
+
+    Args:
+        sub_dir1 (str): name of the sub directory off the cwd required
+        extension (str, optional): string appended after hostname - ex. -interface.txt
+        sub_dir2 (str, optional): if a nested sub_dir is used Defaults to "".
+
+    Returns:
+        str: full pathname of the file to be written
+    """
+    current_path = os.getcwd()
+    extension = hostname + extension
+    int_report = os.path.join(current_path, sub_dir1, sub_dir2, extension)
+    return int_report
+
+
 parser = argparse.ArgumentParser()
 parser.add_argument("-s", "--site", help="Site name - ex. HQ")
 args = parser.parse_args()
@@ -88,18 +110,14 @@ print("-" * (len(dev_inv_file) + 23))
 #  Create the interface-disable files
 for line in fabric:
     line = line.strip("\n")
-    ipaddr = line.split(",")[0]
     vendor = line.split(",")[1]
     hostname = line.split(",")[2]
-    username = line.split(",")[3]
-    password = line.split(",")[4]
-    loc = "D:/Users/Michael.Hubbard/Documents/netmiko/Interface/"
     if vendor.lower() == "cisco_ios":
         now = datetime.now().astimezone()
         date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
         print(f"{date_time} Creating interface file for {hostname}")
         print(f"Configuring {hostname}")
-        cfg_file = loc + hostname + "-interface.txt"
+        cfg_file = create_filename("Interface", "-interface.json")
         print()
         with open(cfg_file, "r") as json_file:
             interfaces = json.load(json_file)
@@ -160,6 +178,6 @@ for line in fabric:
                 )
 
         print(f"Number of ports to be migrated on {hostname}: {count}")
-        migrate = loc + hostname + "-interface-migrate.txt"
+        migrate = create_filename("Interface", "-interface-migrate.txt")
         with open(migrate, "w") as file:
             file.writelines(ports)
