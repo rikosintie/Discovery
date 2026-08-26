@@ -12,8 +12,10 @@ import urllib3
 """
 usage
 python CX-Log-Parse-API.py -f logfile.txt -o output.csv
-python CX-Log-Parse-API.py -i 192.168.10.233 -u admin -p H3lpd3sk -o 01_lab.csv
-                           -i 192.168.10.233 -u vector -p H3lpd3sk -o 01_lab.csv
+
+Pull logs from a a switch
+python CX-Log-Parse-API.py -i 192.168.10.233 -u admin -p SuperSecure -o 01_lab.csv
+
 To view the reference documentation for the REST v10.xx API, access the following URL using a browser:
 https://192.168.10.233/api/v10.10/
 """
@@ -35,14 +37,28 @@ def convert_timestamp(microseconds: str) -> str:
     Returns:
         str: The date and time in a human-readable format (YYYY-MM-DD HH:MM:SS.ffffff).
     """
-    HR_time: str = datetime.fromtimestamp(float(microseconds) / 1e6).strftime(
-        "%Y-%m-%d %H:%M:%S.%f"
+    HR_time: str = (
+        datetime.fromtimestamp(float(microseconds) / 1e6)
+        .astimezone()
+        .strftime("%Y-%m-%d %H:%M:%S.%f")
     )
     return HR_time
 
 
 # Function to parse log file
-def parse_logs(log_lines, csv_filename):
+def parse_logs(log_lines: list[str], csv_filename: str) -> None:
+    """
+    Parses raw CX log lines with log_pattern and writes the matched fields
+    to a CSV file.
+
+    Args:
+        log_lines (list[str]): Raw log lines, as read from a log file.
+        csv_filename (str): Path to the CSV file to write.
+
+    Returns:
+        None — the CSV file is written to disk. Lines that don't match
+        log_pattern are silently skipped.
+    """
     with open(csv_filename, "w", newline="") as csv_file:
         csv_writer = csv.writer(csv_file)
         # Write CSV header
@@ -70,8 +86,25 @@ def parse_logs(log_lines, csv_filename):
 
 
 # Function to retrieve logs from the Aruba CX switch via REST API
-def fetch_logs_from_switch(ip, username, password, url):
-    creds: dict[str] = {"username": username, "password": password}
+def fetch_logs_from_switch(
+    ip: str, username: str, password: str, url: str
+) -> list[str] | None:
+    """
+    Logs into an Aruba CX switch's REST API and fetches logs from the
+    given URL.
+
+    Args:
+        ip (str): IP address of the switch.
+        username (str): API username.
+        password (str): API password.
+        url (str): Full logs endpoint URL to fetch (see main() for how
+            it's built from the -s/-u/--limit/etc. arguments).
+
+    Returns:
+        list[str] | None: The response body split into lines, or None if
+        login or the log fetch failed.
+    """
+    creds: dict[str, str] = {"username": username, "password": password}
     session = requests.Session()
     try:
         login = session.post(
@@ -81,11 +114,11 @@ def fetch_logs_from_switch(ip, username, password, url):
             verify=False,
         )
         print(f"This is the login code: {login.status_code}")
-        firmware: list[str] = session.get(
+        firmware: requests.Response = session.get(
             f"https://{ip}/rest/v10.10/firmware", verify=False
         )
         print(firmware.json())
-    except Exception as e:
+    except requests.exceptions.RequestException as e:
         print(f"Error logging into switch: {e}")
         sys.exit()
 
@@ -107,7 +140,12 @@ def fetch_logs_from_switch(ip, username, password, url):
 
 
 # Main function
-def main():
+def main() -> None:
+    """
+    Parses CLI arguments and either processes a local log file (-f) or
+    fetches logs from an Aruba CX switch's REST API (-i), writing the
+    result to a CSV file (-o) either way.
+    """
     parser = argparse.ArgumentParser(
         description="Process logs from file or Aruba CX switch API."
     )
@@ -154,6 +192,7 @@ def main():
     # print(f"since: {since}, limit: {limit}")
     print(f"URL: {url}")
 
+    log_lines: list[str] | None
     if args.file and os.path.isfile(args.file):
         # Read logs from file
         with open(args.file, "r") as log_file:
@@ -199,7 +238,7 @@ def main():
 
                     # convert UNIX time to human readable and parse
                     HR_timestamp = convert_timestamp(timestamp)
-                    parts: str = HR_timestamp.split(" ")
+                    parts: list[str] = HR_timestamp.split(" ")
                     date: str = parts[0]
                     time: str = parts[1]
 
