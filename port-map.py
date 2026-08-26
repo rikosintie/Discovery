@@ -7,10 +7,12 @@ https://www.quora.com/How-do-I-write-a-dictionary-to-a-file-in-Python
 https://www.programiz.com/python-programming/break-continue
 https://www.ascii-art-generator.org/
 
-Reads the raw "show mac address-table" / "show mac-address" output (however
-config-pull.py collected it for the device's vendor — see MAC_COMMAND_MAP in
-config-pull.py) and creates a list of Vlan, Mac Address, interface and
-manufacturer. One script handles all supported vendors: it detects the MAC
+Reads the raw "show mac address-table" / "show mac-address" output collected
+by config-pull.py for the device's vendor — see MAC_COMMAND_MAP in
+config-pull.py, and creates a list of Vlan, Mac Address, interface,
+Vendor and DNS Name.
+
+One script handles all supported vendors: it detects the MAC
 address format and column order per line rather than assuming a fixed layout,
 and — for vendors like HP ProCurve that don't repeat the interface on every
 row — carries the interface forward from the echoed command or block header.
@@ -18,63 +20,45 @@ row — carries the interface forward from the echoed command or block header.
 Cisco example, output of:
 show mac add int g1/0/1 | i Gi
 show mac add int g1/0/2 | i Gi
-show mac add int g1/0/3 | i Gi
-show mac add int g1/0/4 | i Gi
 
-test-switch#show mac add int g1/0/1 | i Gi
+show mac add int g1/0/1 | i Gi
   10    8434.97a7.708b    DYNAMIC     Gi1/0/1
 test-switch#show mac add int g1/0/2 | i Gi
-test-switch#show mac add int g1/0/3 | i Gi
-  10    0c4d.e9c1.4a0d    DYNAMIC     Gi1/0/3
-test-switch#show mac add int g1/0/4 | i Gi
 
 Output
 Number Entries: 65
 
-Vlan     MAC Address      Interface
-  10    8434.97a7.708b     Gi1/0/1   HewlettP
+Vlan     IP Address         MAC Address          Interface      Vendor                       DNS Name
+10       192.168.10.222     000c.29b1.6c05       Gi1/0/47       VMware                       NVR
 --------------------------------------------------
-  10    0c4d.e9c1.4a0d     Gi1/0/3   Apple
+10       192.168.10.223     000c.29e0.a4db       Gi1/0/47       VMware                       ubuntu-server
 --------------------------------------------------
 
 Uses manuf2 (https://pypi.org/project/manuf2/, a maintained fork of
 coolbho3k/manuf) to convert the MAC to a manufacturer. The OUI database
 ships bundled with the package, so no manual download/path setup is
-needed. To refresh it to the latest Wireshark OUI data, call
-manuf.MacParser(update=True) once.
+needed. To refresh it, run python3 port-map.py --update-manuf — only
+needed if you're seeing "None" for the Vendor.
+
+Two other outputs get written each run:
+
+- If a Mac2IP.json exists for this host (or for the site's -c coreswitch
+  host, in a Core/IDF deployment) — built by arp.py from a "show ip arp" /
+  "show arp" capture — each MAC's IP is looked up in it and added to the
+  IP Address/DNS Name columns. If it's not found, those two columns are
+  left off the table entirely (see the "Mac2IP.json Not Found" warning).
+- A PingInfoView (https://nirsoft.net) import file —
+  port-maps/pinginfo/<hostname>-pinginfo.txt — pairing each reachable IP
+  with its DNS name (or MAC address, if no DNS name resolves), for
+  verifying hosts pre/post cutover.
 
 Changelog
-March 7, 2018
-Added code to read Mac2IP.json and use it as a dictionary of IP to MAC.
-Mac2IP.json is created by running arp.py against the output
-"show ip arp" or "sh ip arp vlan x" on a core switch
-if Mac2IP.json is found in the same directory as port-map.py it adds the
-IP address to the output.
-if Mac2IP.json is not found the IP address is not added
-Vlan     MAC Address      Interface      IP           Vendor
-   20    f8b1.56d2.3c13     Gi1/0/3   10.129.20.70    Dell
- ----------------------------------------------------------------
-   20    0011.431b.b291     Gi1/0/16   10.129.20.174    Dell
- ----------------------------------------------------------------
-
-April 7, 2018
-Added output for PingInfoView (https://nirsoft.net)
-
-PingInfo Data
-10.56.238.150 b499.ba01.bc82
-10.56.239.240 0026.5535.7b7a
-
-April 30, 2018
-Added better error trapping for the json and mac-addr.txt.
-Stopped stripping DYNAMIC and STATIC from the input.
-
-May 15, 2018
-Fixed a bug in the IP address selection loop. I wasn't clearing IP_Data at the
-end of the loop so is an interface didn't have an IP address in the json file
-it would use the last IP address.
-
-Clear the IP address in case the next interface has a MAC but no IP address
-    IP_Data = ''
+Added DNS lookup
+Added a -d/--dns argument. When set, each entry's IP is reverse-resolved
+(PTR lookup, via the given DNS server) and shown in a DNS Name column
+alongside the existing IP/MAC/Vendor data. Truncates each returned name at
+the first ".", joins multiple names with "/", and falls back to "No-PTR" or
+"Timeout" rather than leaving the column blank on failure.
 
 August 22, 2026
 Renamed from cisco-macaddr.py to port-map.py and generalized to replace
@@ -107,10 +91,13 @@ from rich.table import Table
 ic.disable()
 
 __author__ = "Michael Hubbard"
-__author_email__ = "mhubbard@vectorusa.com"
+__author_email__ = "michael.hubbard999@gmail.com"
+__author_email__ = "mhubbard@network-dev.com"
 __copyright__ = ""
 __license__ = "Unlicense"
-
+# -*- coding: utf-8 -*-
+#  port-map.py
+#  Change Request data collection
 
 vernum = "2.0"
 
@@ -169,7 +156,9 @@ def version(console: Console) -> None:
     codes into the saved output.
     """
     #    print(AsciiArt)
-    console.print("+----------------------------------------------------------------------+")
+    console.print(
+        "+----------------------------------------------------------------------+"
+    )
     console.print(
         "| "
         + sys.argv[0]
@@ -177,17 +166,39 @@ def version(console: Console) -> None:
         + vernum
         + "                                         |"
     )
-    console.print("| This program is free software; you can redistribute it and/or modify |")
-    console.print("| it in any way you want. If you improve it please send me a copy at   |")
-    console.print("| the email address below.                                             |")
-    console.print("|                                                                      |")
-    console.print("|    Author: Michael Hubbard                                           |")
-    console.print("|     email: michael.hubbard999@gmail.com                              |")
-    console.print("|     email: mhubbard@network-dev.com                                  |")
-    console.print("|      Blog: mwhubbard.blogspot.com                                    |")
-    console.print("|         X: @rikosintie                                               |")
-    console.print("|  linkedin: www.linkedin.com/in/mwhubbard                             |")
-    console.print("+----------------------------------------------------------------------+")
+    console.print(
+        "| This program is free software; you can redistribute it and/or modify |"
+    )
+    console.print(
+        "| it in any way you want. If you improve it please send me a copy at   |"
+    )
+    console.print(
+        "| the email address below.                                             |"
+    )
+    console.print(
+        "|                                                                      |"
+    )
+    console.print(
+        "|    Author: Michael Hubbard                                           |"
+    )
+    console.print(
+        "|     email: michael.hubbard999@gmail.com                              |"
+    )
+    console.print(
+        "|     email: mhubbard@network-dev.com                                  |"
+    )
+    console.print(
+        "|      Blog: mwhubbard.blogspot.com                                    |"
+    )
+    console.print(
+        "|         X: @rikosintie                                               |"
+    )
+    console.print(
+        "|  linkedin: www.linkedin.com/in/mwhubbard                             |"
+    )
+    console.print(
+        "+----------------------------------------------------------------------+"
+    )
 
 
 def remove_empty_lines(filename: str) -> None:
@@ -269,7 +280,8 @@ def create_filename(sub_dir1: str, extension: str = "", sub_dir2="") -> str:
 
 
 parser = argparse.ArgumentParser(
-    description="-s site, -c core hostname in a Core/IDF deployment"
+    description="-s site, -c core hostname in a Core/IDF deployment, "
+    "-d dns server for reverse lookups, --update-manuf to refresh the OUI database"
 )
 parser.add_argument(
     "-s",
@@ -311,7 +323,7 @@ if site is None:
     print("-s site name is a required argument")
     sys.exit()
 else:
-    # Use dashes, never underscores, in site names/hostnames — they're reused
+    # Use dashes, in site names/hostnames — they're reused
     # verbatim to build every downstream filename, and a mismatch fails silently.
     dev_inv_file = "device-inventory-" + site + ".csv"
 
@@ -338,20 +350,6 @@ for line in fabric:
     ic(mac_file)
 
     print()
-    # create a blank list to accept each line in the file
-    # data1 = []
-    # try:
-    #     f = open(mac_file, 'r')
-    # except FileNotFoundError:
-    #             print(f'{mac_file} does not exist')
-    # else:
-    #     print()
-
-    # MAC addresses are expressed differently depending on the manufacture and even model device
-    # the formats that this script can parse are:
-    # 0a:0a:0a:0a:0a:0a, 0a-0a-0a-0a-0a-0a, 0a0a0a.0a0a0a0 and 0a0a0a-0a0a0a
-    # this should cover most Cisco and HP devices.
-    #
 
     # create an empty dictionary to hold the mac-IP data
     Mac_IP = {}
