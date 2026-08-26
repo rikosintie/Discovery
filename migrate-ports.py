@@ -1,17 +1,16 @@
 """
-Import a json file of port status created by cisco-Config-Pull.py
-Pull out ports G*/1/* as these are the uplinks.
-# File name - 01_[hostname]-interface-disable.txt
-# read the file and send the commands to disable ports.
-create a log file 01_[hostname]-disable-output.txt
+Reads the <hostname>-interface.json file created by config-pull.py and
+builds a migration config snippet for two kinds of interfaces that are
+"up": uplinks (module 1 ports, matched by the [0-8]/1/[0-9]{1,2} pattern —
+e.g. Gi1/1/3) and SVIs (VlanN). For each matching interface, writes an
+"interface / description / ip address / exit" block to
+<hostname>-interface-migrate.txt, for pasting into the replacement switch's
+config during a cutover.
 
-See cisco-Config-Pull.py docstring for more information
-python interface.py -s <site name>
+This script does not connect to any switch — it only reads a JSON file
+already on disk and writes a text file. There is no netmiko/SSH involved.
 
----Error Handling ---
-The connect handler is wrapped in a try/except block.
-If a time out occurs when connecting to a switch it is trapped
-but the  script halts.
+python migrate-ports.py -s <site name>
 
 References:
 https://linuxhandbook.com/python-write-list-file/
@@ -19,23 +18,35 @@ https://www.tutorialspoint.com/python3/python_dictionary.htm
 """
 
 __author__ = "Michael Hubbard"
-__author_email__ = "mhubbard@vectorusa.com"
+__author_email__ = "michael.hubbard999@gmail.com"
+__author_email__ = "mhubbard@network-dev.com"
 __copyright__ = ""
 __license__ = "Unlicense"
+# -*- coding: utf-8 -*-
+#  migrate-ports.py
+# Cisco Change Request data collection
+
 
 import argparse
 import json
-
-# from netmiko import ConnectHandler
-# from netmiko import exceptions
-# from paramiko.ssh_exception import SSHException
 import os
 import re
 import sys
 from datetime import datetime
 
 
-def remove_empty_lines(filename):
+def remove_empty_lines(filename: str) -> None:
+    """
+    Removes blank lines from a file in place. The device-inventory read
+    loop will misparse a blank line as a device, so this needs to run
+    before the CSV is read.
+
+    Args:
+        filename (str): Path to the file to clean up.
+
+    Returns:
+        None — the file is rewritten on disk.
+    """
     if not os.path.isfile(filename):
         print(f"{filename} does not exist ")
         return
@@ -43,7 +54,7 @@ def remove_empty_lines(filename):
         lines = filehandle.readlines()
 
     with open(filename, "w") as filehandle:
-        lines = filter(lambda x: x.strip(), lines)
+        lines = list(filter(lambda x: x.strip(), lines))
         filehandle.writelines(lines)
 
 
@@ -56,7 +67,7 @@ if site is None:
     print("-s site name is a required argument")
     sys.exit()
 else:
-    # Use dashes, never underscores, in site names/hostnames — they're reused
+    # Use dashes in site names/hostnames — they're reused
     # verbatim to build every downstream filename, and a mismatch fails silently.
     dev_inv_file = "device-inventory-" + site
 
@@ -151,5 +162,4 @@ for line in fabric:
         print(f"Number of ports to be migrated on {hostname}: {count}")
         migrate = loc + hostname + "-interface-migrate.txt"
         with open(migrate, "w") as file:
-            for port in ports:
-                file.write(port)
+            file.writelines(ports)
