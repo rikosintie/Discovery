@@ -6,15 +6,15 @@ https://stackoverflow.com/questions/20944483/python-3-sort-a-dict-by-its-values
 https://docs.python.org/3.3/tutorial/datastructures.html
 
 Reads the raw "show ip arp" / "show arp" output (see the *-arp.txt files
-port-map.py's arp collection produces) and creates a sorted list of IP
-addresses and IP/MAC combinations, then writes Mac2IP.json for port-map.py
-to consume. One script handles all supported vendors: it finds the IP and
-MAC on each line by content rather than assuming a fixed column layout, so
+config-pull.py's arp collection produces in hte port-maps directory) and creates
+a sorted list of IP addresses and IP/MAC combinations, then writes Mac2IP.json
+for port-map.py to consume. One script handles all supported vendors: it finds
+the IP and MAC on each line by content rather than assuming a fixed column layout, so
 it doesn't matter whether the vendor prints "Internet <ip> <age> <mac> ARPA
-VlanN" (Cisco) or "<ip> <mac> <type> <port>" (ProCurve).
+Vlan" (Cisco) or "<ip> <mac> <type> <port>" (ProCurve).
 
 Example
-device-inventory-gl2
+device-inventory-gl2.csv
 
 command line
 python arp.py -s gl2
@@ -88,10 +88,12 @@ IP_PATTERN = re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b")
 
 
 def line_has_mac(text: str) -> bool:
+    """True if text contains a MAC address in any of the known vendor notations."""
     return any(rx.search(text) for rx in MAC_FORMAT_PATTERNS)
 
 
 def normalize_mac(mac: str) -> str:
+    """Strip separators and lowercase, so the same MAC compares equal across notations."""
     return re.sub(r"[.:-]", "", mac).lower()
 
 
@@ -118,16 +120,47 @@ def extract_ip_and_mac(line: str) -> tuple[str, str] | None:
 
 
 def ip2long(ip: str) -> int:
+    """
+    Converts a dotted-quad IP address to an integer, so IPs can be sorted
+    numerically instead of as strings (which would put 10.1.0.252 before
+    10.112.1.3).
+
+    Args:
+        ip (str): Dotted-quad IP address, e.g. "10.1.0.252".
+
+    Returns:
+        int: The IP address packed into a 32-bit unsigned integer.
+    """
     packed = inet_aton(ip)
     return struct.unpack("!L", packed)[0]
 
 
 def long2ip(lng: int) -> str:
+    """
+    Converts an integer produced by ip2long() back to dotted-quad notation.
+
+    Args:
+        lng (int): A 32-bit unsigned integer, as returned by ip2long().
+
+    Returns:
+        str: Dotted-quad IP address, e.g. "10.1.0.252".
+    """
     packed = struct.pack("!L", lng)
     return inet_ntoa(packed)
 
 
 def remove_empty_lines(filename: str) -> None:
+    """
+    Removes blank lines from a file in place. The device-inventory read
+    loop will misparse a blank line as a device, so this needs to run
+    before the CSV is read.
+
+    Args:
+        filename (str): Path to the file to clean up.
+
+    Returns:
+        None — the file is rewritten on disk.
+    """
     if not os.path.isfile(filename):
         print(f"{filename} does not exist ")
         return
