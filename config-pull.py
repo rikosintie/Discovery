@@ -12,15 +12,15 @@ Usage
 1. Clone the repo at https://github.com/rikosintie/Discovery/. The readme file
 in the repo detailed installation instructions.
 
-2. Create a file named device-inventory-<site>.
+2. Create a file named device-inventory-<site>.csv.
 Example
-device-inventory-test
+device-inventory-test.csv
 Place the information for each switch in the file. Format is
 <IP Address>,hp_procurve,<hostname>,<username>
 Example
 192.168.10.52,hp_procurve,gl-IDF1,mhubbard
-NOTE: the password is saved in user environment variable or entered when the script
-is executed.
+NOTE: the password is read from the cyberARK environment variable, or pass
+-p 1 to be prompted for it when the script is executed.
 
 IMPORTANT: use dashes, never underscores, in <site> and <hostname> — they get
 reused verbatim to build every other filename downstream (Mac2IP.json,
@@ -29,7 +29,7 @@ typed as "Lab_3850" in one place and "Lab-3850" in another produces two
 different sets of files that never find each other, and the failure is
 silent — you just end up with missing columns, not an error.
 
-3. Create a file named discovery-<vendor_id>.txt in teh root of the Discovery
+3. Create a file named discovery-<vendor_id>.txt in the root of the Discovery
 folder. Place the show commands for the switches in it — this is a read-only
 discovery tool, it never sends configuration commands. Note that
 there are default files included. You can customize it to suit your needs.
@@ -50,7 +50,7 @@ Valid discovery file names are:
 4. Execute
 python3 config-pull.py -s test
 
-The script will read the device-inventory-<sitename> file and
+The script will read the device-inventory-<site>.csv file and
 execute the contents of the discovery-<vendor>.txt for each switch.
 
 For each switch in the inventory file the commands that were
@@ -64,9 +64,11 @@ create a file with the show mac address-table interface commands for each interf
 The file is saved in the port-maps folder as <hostname>-send-mac-address.txt
 
 ---Error Handling ---
-The connect handler is wrapped in a try/except block.
-If a time out occurs when connecting to a switch it is trapped, a message is
-displayed and the script moves to the next switch.
+Each device is handled independently. A malformed inventory row, an
+unsupported vendor, a connect timeout, an authentication failure, a missing
+SSH banner, or an SSH transport error is trapped, reported, added to the
+skipped-devices summary, and the script moves on to the next switch. A
+summary table and Failure-Logs/skipped_devices.csv are written at the end.
 """
 
 # !!!!! Discovery Script - Does not change the running config !!!!!
@@ -162,6 +164,21 @@ def remove_empty_lines(filename: str) -> None:
     with open(filename, "w", encoding="utf-8") as filehandle:
         lines = list(filter(lambda x: x.strip(), lines))
         filehandle.writelines(lines)
+
+
+def check_textfsm(data: object, label: str) -> object:
+    """
+    netmiko returns a list of dicts when a TextFSM template matches and the
+    raw string when it does not. Warn (but still write) on a raw string so a
+    missing/again-changed template is visible instead of silently producing a
+    JSON file that is just a quoted blob.
+    """
+    if not isinstance(data, (list, dict)):
+        print(
+            f"[yellow]WARNING: no TextFSM match for '{label}' on {hostname} - "
+            f"writing the raw text instead of structured JSON.[/yellow]"
+        )
+    return data
 
 
 # Per-vendor "show mac address-table" command, keyed by the same netmiko
@@ -458,8 +475,6 @@ def strip_rich_markup(message: str) -> str:
     """
     Remove rich markup tags like [red], [bold] from log output.
     """
-    import re
-
     return re.sub(r"\[/?[^\]]+\]", "", message)
 
 
@@ -507,6 +522,14 @@ def print_skipped_devices_table(skipped: list[dict]) -> None:
     if not skipped:
         return
 
+    def ip_sort_key(entry: dict) -> tuple[int, int, int, int]:
+        # Fall back to a sentinel so a hostname or malformed value in the
+        # inventory's IP column can't crash the end-of-run summary.
+        try:
+            return tuple(int(part) for part in entry["ip"].split("."))
+        except (ValueError, AttributeError):
+            return (999, 999, 999, 999)
+
     grouped: dict[str, list[dict]] = defaultdict(list)
     for entry in skipped:
         grouped[entry["reason"]].append(entry)
@@ -522,7 +545,7 @@ def print_skipped_devices_table(skipped: list[dict]) -> None:
         table.add_column("IP Address", style="green")
 
         # Sort by IP address
-        entries.sort(key=lambda d: tuple(int(part) for part in d["ip"].split(".")))
+        entries.sort(key=ip_sort_key)
 
         for entry in entries:
             table.add_row(entry["hostname"], entry["ip"])
@@ -632,7 +655,9 @@ remove_empty_lines(dev_inv_file)
 
 with open(dev_inv_file, encoding="utf-8-sig") as devices_file:
     fabric = devices_file.readlines()
-    num_devices = len(fabric)
+    # Count only well-formed rows so the "X of Y" summary isn't inflated by
+    # comment or malformed lines that the device loop skips.
+    num_devices = sum(1 for row in fabric if len(row.split(",")) >= 4)
 
 border = "-" * (len(dev_inv_file) + 23)
 print(f"[bold][blue]{border}[/blue][/bold]")
@@ -846,16 +871,16 @@ for line in fabric:
         print()
         print()
         continue
-    except (EOFError, SSHException):
-        # catch unexpected exceptions
+    except (EOFError, SSHException) as e:
+        # Generic SSH transport failure - not necessarily SSHv1
         connection_fail_count += 1
         device_count -= 1
         skipped_devices.append(
-            {"hostname": hostname, "ip": ipaddr, "reason": "SSHv1 only"}
+            {"hostname": hostname, "ip": ipaddr, "reason": "SSH connection failed"}
         )
         message = (
-            f"Could not connect to {hostname} at {ipaddr}, remove it"
-            " from the device inventory file"
+            f"Could not connect to {hostname} at {ipaddr}: {e}\n"
+            "If this device only supports SSHv1 it cannot be reached by this tool."
         )
         print(message)
         log_message(strip_rich_markup(message))
@@ -1008,14 +1033,14 @@ for line in fabric:
                 textfsm_template=template_file,
             )
             # border = "-" * (len(cfg_file) + len(hostname) + 16)
-            border = "-" * +(len(hostname) + 37)
+            border = "-" * (len(hostname) + 37)
             print(f"[bold][blue]{border}[/blue][/bold]")
             # Use textFSM to create a json object of show system
             print(
                 f"collecting [bright_blue]'show system'[/bright_blue] for [cyan]{hostname}[/cyan]"
             )
             output_system = net_connect.send_command("show system", use_textfsm=True)
-            border = "-" * +(len(hostname) + 29)
+            border = "-" * (len(hostname) + 29)
             print(f"[bold][blue]{border}[/blue][/bold]")
             #  Write the JSON system data to a file
             int_report = create_filename("Interface", "-system.txt")
@@ -1033,7 +1058,9 @@ for line in fabric:
 
             # write the JSON system data to a file
             with open(int_report, "w", encoding="utf-8") as file:
-                output_system = json.dumps(output_system, indent=2)
+                output_system = json.dumps(
+                    check_textfsm(output_system, "show system"), indent=2
+                )
                 file.write(output_system)
             border = "-" * (len(int_report) + 1)
             print(f"[bold][blue]{border}[/blue][/bold]")
@@ -1102,7 +1129,7 @@ for line in fabric:
     int_report = create_filename("Interface", "-interface.json")
     print(f"Writing [cyan]'interfaces json data'[/cyan] to\n {int_report}")
     with open(int_report, "w", encoding="utf-8") as file:
-        output = json.dumps(output, indent=2)
+        output = json.dumps(check_textfsm(output, "show interfaces"), indent=2)
         file.write(output)
     border = "-" * (len(int_report) + 1)
     print(f"[bold][blue]{border}[/blue][/bold]")
@@ -1191,7 +1218,9 @@ for line in fabric:
     int_report = create_filename("Interface", "-int_br.txt")
     print(f"Writing 'show interfaces brief' data to\n {int_report}")
     with open(int_report, "w", encoding="utf-8") as file:
-        output_show_int_br = json.dumps(output_show_int_br, indent=2)
+        output_show_int_br = json.dumps(
+            check_textfsm(output_show_int_br, "show interfaces brief/status"), indent=2
+        )
         file.write(output_show_int_br)
     # print("-" * (len(dev_inv_file) + 23))
     border = "-" * (len(int_report) + 1)
@@ -1200,7 +1229,9 @@ for line in fabric:
     int_report = create_filename("Interface", "-cdp.txt")
     print(f"Writing 'show cdp neighbor' data to\n {int_report}")
     with open(int_report, "w", encoding="utf-8") as file:
-        output_cdp = json.dumps(output_cdp, indent=2)
+        output_cdp = json.dumps(
+            check_textfsm(output_cdp, "show cdp neighbor detail"), indent=2
+        )
         file.write(output_cdp)
     border = "-" * (len(int_report) + 1)
     print(f"[bold][blue]{border}[/blue][/bold]")
@@ -1209,7 +1240,9 @@ for line in fabric:
     int_report = create_filename("Interface", "-lldp.txt")
     print(f"Writing 'show lldp' data to\n {int_report}")
     with open(int_report, "w", encoding="utf-8") as file:
-        output_show_lldp = json.dumps(output_show_lldp, indent=2)
+        output_show_lldp = json.dumps(
+            check_textfsm(output_show_lldp, show_lldp), indent=2
+        )
         file.write(output_show_lldp)
     border = "-" * (len(int_report) + 1)
     print(f"[bold][blue]{border}[/blue][/bold]")
