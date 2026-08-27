@@ -1,51 +1,89 @@
+"""
+Lists the files present in each of the discovery output directories and
+saves those filename lists to CSV and Excel.
+
+On a long discovery (multiple sites, or multiple wiring closets), the
+customer will want a daily update on how many devices have been discovered
+and had data pulled so far. Running this script drops a dated snapshot of
+what's been collected in each output directory (CR-data, Interface,
+port-maps/Final, Running) without having to open every folder by hand.
+
+python filenames.py
+"""
+
 import csv
 import os
-from pathlib import Path
 
 import pandas as pd
 
-# reads all the files in the collection directories and saves the names to
-# an excel, and csv file.
 
+def get_filenames(directory_path: str) -> list[str]:
+    """
+    Returns the sorted list of filenames in a directory.
 
-def get_filenames(directory_path):
-    # Get a list of all filenames in the directory
+    Args:
+        directory_path (str): Directory to list.
+
+    Returns:
+        list[str]: Sorted filenames found in directory_path.
+    """
     filenames = os.listdir(directory_path)
     filenames.sort()
     return filenames
 
 
-# def save_to_excel(filename, data):
-#     df = pd.DataFrame(data, columns=["File Name"])
-#     df.to_excel(filename, index=False)
+def get_current_path() -> str:
+    """
+    Returns the current working directory.
+
+    Returns:
+        str: The current working directory.
+    """
+    return os.getcwd()
 
 
-def get_current_path():
-    current_path = os.getcwd()
-    # current_path = os.path.join(current_path, "Running")
+def save_to_excel(folder: str, filename: str, data: list[str]) -> None:
+    """
+    Saves a list of filenames to an Excel file.
 
-    return current_path
+    Args:
+        folder (str): Sub directory off the cwd to write filename into.
+        filename (str): Name of the Excel file to write.
+        data (list[str]): Filenames to save, one per row.
 
-
-def save_to_excel(folder, filename, data):
-    loc = get_current_path()
-    filename: str = os.path.join(loc, folder, filename)
+    Returns:
+        None — the Excel file is written to disk.
+    """
+    full_path = os.path.join(get_current_path(), folder, filename)
     df = pd.DataFrame(data, columns=["File Name"])
-    df.to_excel(filename, index=False)
+    df.to_excel(full_path, index=False)
 
 
-def save_to_csv(folder, filename, data):
-    loc = get_current_path()
-    filename: str = os.path.join(loc, folder, filename)
+def save_to_csv(folder: str, filename: str, data: list[str]) -> None:
+    """
+    Saves a list of filenames to a CSV file.
 
-    with open(filename, "w", newline="") as csvfile:
+    Args:
+        folder (str): Sub directory off the cwd to write filename into.
+        filename (str): Name of the CSV file to write.
+        data (list[str]): Filenames to save, one per row.
+
+    Returns:
+        None — the CSV file is written to disk.
+    """
+    full_path = os.path.join(get_current_path(), folder, filename)
+    with open(full_path, "w", newline="") as csvfile:
         csv_writer = csv.writer(csvfile)
         csv_writer.writerow(["File Name"])
         for row in data:
             csv_writer.writerow([row])
 
 
-def main():
+def main() -> None:
+    """
+    Lists the files in each discovery output directory and saves each
+    directory's filename list to its own CSV and Excel file.
+    """
     proj_directories = [
         "CR-data",
         "Interface",
@@ -54,29 +92,15 @@ def main():
     ]
 
     for folder in proj_directories:
-        # directory_path = "/home/mhubbard/Insync/michael.hubbard999@gmail.com/GoogleDrive/04_Tools/Discovery/Running/"  # Replace this with the actual directory path
-        directory_path = get_current_path()
-        directory_path = os.path.join(directory_path, folder)
-        # Get the filenames from the directorycurrent_path = os.path.join(current_path, "Running")
+        directory_path = os.path.join(get_current_path(), folder)
         filenames = get_filenames(directory_path)
 
-        # Save to CSV
-        # The port-maps folder stores the results in a subdirectory Final.
+        # The port-maps folder stores its results in a subdirectory (Final).
         # This removes the "/" and -Final from the name.
-        if "/" in folder:
-            csv_filename = folder.split("/")[0] + ".csv"
-        else:
-            csv_filename = folder + ".csv"
+        base_name = folder.split("/")[0] if "/" in folder else folder
 
-        save_to_csv(folder, csv_filename, filenames)
-
-        # Save to Excel
-        # This removes the "/" and -Final from the name.
-        if "/" in folder:
-            excel_filename = folder.split("/")[0] + ".xlsx"
-        else:
-            excel_filename = folder + ".xlsx"
-        save_to_excel(folder, excel_filename, filenames)
+        save_to_csv(folder, base_name + ".csv", filenames)
+        save_to_excel(folder, base_name + ".xlsx", filenames)
 
     print("Filenames have been saved to CSV and Excel files.")
 
