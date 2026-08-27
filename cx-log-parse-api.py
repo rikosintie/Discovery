@@ -10,6 +10,8 @@ it, or set the environment variable: export cyberARK=your_password
 
 To view the reference documentation for the REST v10.xx API, access the following URL using a browser:
 https://192.168.10.233/api/v10.10/
+or
+https://www.arubanetworks.com/techdocs/AOS-CX/10.10/PDF/rest_v10-0x.pdf
 """
 
 import argparse
