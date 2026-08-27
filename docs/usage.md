@@ -54,6 +54,20 @@ In this example, there are hp_procurve, cisco_xe and cisco_ios devices. You can 
 
 **Create one line for every switch that you want to process.**
 
+!!! note "The first column can be a DNS name"
+    The first column is labelled `ip_address`, but a DNS name works just as
+    well as long as it resolves on the machine running the script (for
+    example `idf1-sw.corp.example.com,cisco_ios,idf1-sw,mhubbard`). The
+    script resolves the name at connect time and the address it actually
+    reached is shown on the "Successfully created config files for" banner,
+    so you don't have to reopen the inventory file to SSH back in later.
+
+    A value that *looks* like a dotted-decimal address but isn't a valid one
+    — a fat-fingered octet such as `192.168.10.511` — is caught before the
+    connection is attempted. The device is reported as **Invalid IP
+    address**, added to the skipped-devices summary, and the script moves on
+    to the next line.
+
 You can use either a spreadsheet program or a text editor to create the inventory file but it must have a ".csv" file extension. If you use vscode, there is a plugin called [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) that allows you to work with csv files in vscode. It also allows you to use SQL syntax to query the file. Very nice if the file gets to be long. Below is a screenshot to the Rainbow CSV `RBQL Console`. RBQL is short for Rainbow Query Language.
 
 ----------------------------------------------------------------
@@ -372,25 +386,26 @@ To activate the the virtual environment.
 You can run the script with -h to get help:
 
 ```bash
-python3 procurve_Config_pull.py -h
+python3 config-pull.py -h
 
 
-usage: procurve_Config_pull.py [-h] [-e EVENT] [-l LOGGING] [-p PASSWORD] [-s SITE] [-t TIMEOUT]
+usage: config-pull.py [-h] [-e EVENT] [-l LOGGING] [-p PASSWORD] [-s SITE]
+                      [-t 1-9] [--test-connect]
 
--s site, -l 1 create log.txt, -p 1 prompt for password, -t 1-9 timeout, -e W,I,M,D,E to pull logs
+-s site, -l 1 create ssh_log.txt, -p 1 prompt for password, -t 1-9 timeout, -e
+W,I,M,D,E (-e 1 for Cisco) to pull logs
 
 options:
   -h, --help            show this help message and exit
-  -e EVENT, --event EVENT
-                        -e W,I,M,D,E to pull switch logs
-  -l LOGGING, --logging LOGGING
+  -e, --event EVENT     -e W,I,M,D,E to pull switch logs, -e 1 for Cisco
+  -l, --logging LOGGING
                         use -l 1 to enable ssh logging
-  -p PASSWORD, --password PASSWORD
+  -p, --password PASSWORD
                         use -p 1 to be prompted for password
-  -s SITE, --site SITE  Site name - ex. HQ
-  -t TIMEOUT, --timeout TIMEOUT
-                        use -t 1-9 to set timeout
-(Discovery)
+  -s, --site SITE       Site name - ex. HQ
+  -t, --timeout 1-9     use -t 1-9 to set the netmiko delay_factor
+  --test-connect        Test SSH connectivity to every device in the inventory
+                        and exit — no data is collected
 ```
 
 ### What do the arguments do
@@ -517,7 +532,19 @@ If you want to enable ssh logging add `-l 1`. You would do that to troubleshoot 
 
 #### Timeout
 
-You can modify the timeout value using  `-t`. **Note:** the number sets the timeout value in 100s of seconds. If you use `-t 2` it will wait up to 200 seconds for the operation to complete.
+You can modify the timeout value using  `-t`. **Note:** the number sets the timeout value in 100s of seconds. If you use `-t 2` it will wait up to 200 seconds for the operation to complete. Only the values `1` through `9` are accepted.
+
+----------------------------------------------------------------
+
+#### Test connectivity only
+
+Add `--test-connect` to try an SSH login to every device in the inventory and
+then exit without collecting any data. Each device is reported as `OK`,
+`AUTH FAIL`, `TIMEOUT`, `BAD IP` (invalid address in the first column), or
+`ERROR`. This is a fast way to shake out credential and reachability problems
+before committing to a full discovery run.
+
+`python3 config-pull.py -s HQ --test-connect`
 
 ### Argument Examples
 
@@ -647,7 +674,7 @@ Writing cdp neighbor data to /home/mhubbard/04_Tools/Discovery/Interface/Procurv
 Writing show lldp data to /home/mhubbard/04_Tools/Discovery/Interface/Procurve-2920-48-lldp.txt
 
 -------------------------------------------------------
-Successfully created config files for Procurve-2920-48
+Successfully created config files for Procurve-2920-48 at 192.168.10.51
 -------------------------------------------------------
 
 Data collection is complete.
@@ -658,7 +685,7 @@ Total running time: 0.0 Hours 1.0 Minutes 44.67 Seconds
 
 ## Failure to connect to a switch
 
-If a switch does not respond, the credentials are incorrect, or the SSH version is 1, a message will be printed to the console, a log file with the hostname and a reason code is written to hte `Failure-log` folder and the script will continue processing the next switch.
+If a switch does not respond, the credentials are incorrect, the SSH version is 1, the vendor id is not supported, or the first column is an invalid IP address, a message is printed to the console, the device is added to the skipped-devices summary (also written to `Failure-Logs/skipped_devices.csv`), and the script continues processing the next switch.
 
 It's really disruptive to the discovery process if the script cannot connect to multiple switches. That means you have to fix the problem, create a new inventory file with just the failed switches, then rerun the script on the subset. I was doing a discovery at a customer with over 240 switches. They had a lot of configuration issues and username/password variations. I ended up with around 40 switches that I couldn't log into.
 
