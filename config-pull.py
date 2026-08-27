@@ -237,6 +237,15 @@ CDP_PLATFORMS: frozenset[str] = frozenset(
 )
 
 
+# Command used to build the interface inventory (-interface.json, which feeds
+# generate_mac_query_file_from_json). Default is "show interfaces"; platforms
+# with no ntc-templates parser for that fall back to "show interfaces status",
+# which still yields a port list. Keyed by netmiko device_type.
+INTERFACE_INVENTORY_CMD: dict[str, str] = {
+    "cisco_s300": "show interfaces status",
+}
+
+
 # function to return vendor specific commands and flags
 def which_vendor(vendor: str) -> tuple[str, str, str, str, bool]:
     """
@@ -296,11 +305,13 @@ def which_vendor(vendor: str) -> tuple[str, str, str, str, bool]:
                 False,
             )
         case "cisco_s300":
+            # SG/SGx 300: LLDP has no "detail" variant, and the ntc parse of
+            # "show interfaces status" keys the port list on PORT, not INTERFACE.
             return (
                 "show running-config",
-                "show lldp neighbors detail",
+                "show lldp neighbors",
                 "show arp",
-                "interface",
+                "port",
                 True,
             )
         case "arista_eos":
@@ -1058,11 +1069,12 @@ for line in fabric:
             continue
 
     # Use textFSM to create a json object with interface stats
+    interface_cmd = INTERFACE_INVENTORY_CMD.get(vendor.lower(), "show interfaces")
     print(
-        f"collecting [bright_blue]'show interface'[/bright_blue] for [cyan]{hostname}[/cyan]"
+        f"collecting [bright_blue]'{interface_cmd}'[/bright_blue] for [cyan]{hostname}[/cyan]"
     )
 
-    output = net_connect.send_command("show interfaces", use_textfsm=True)
+    output = net_connect.send_command(interface_cmd, use_textfsm=True)
     border = "-" * (len(hostname) + 32)
     print(f"[bold][bright_blue]{border}[/bright_blue][/bold]")
     ic(output)
@@ -1161,6 +1173,12 @@ for line in fabric:
                 use_textfsm=True,
             )
         case "aruba_osswitch":
+            output_show_int_br = net_connect.send_command(
+                "show interfaces status",
+                strip_command=True,
+                use_textfsm=True,
+            )
+        case "cisco_s300":
             output_show_int_br = net_connect.send_command(
                 "show interfaces status",
                 strip_command=True,
