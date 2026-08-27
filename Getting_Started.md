@@ -173,6 +173,21 @@ wcwidth       0.2.12
 
 ```
 
+### Why the versions are pinned (especially paramiko)
+
+`requirements.lock.txt` is a full, exact-pin list and is installed with
+`--no-deps` so you get precisely these versions. Everything is kept at the
+latest release **except `paramiko`, which is pinned at `3.5.1` on purpose.**
+
+Older switches (HP Procurve 25xx/26xx/2920, older Cisco IOS, etc.) only
+offer SHA-1 `ssh-rsa` host keys and legacy ciphers. paramiko 4.x removed
+those from its defaults, so SSH to that gear fails with
+`Incompatible ssh peer (no acceptable host key)` / `no acceptable ciphers`.
+Do not upgrade paramiko past 3.x without retesting against real legacy
+switches. If it has already moved forward, run
+`python3 -m pip install 'paramiko==3.5.1'`. See the "Legacy switches"
+section of `usage.md` for the full explanation.
+
 ## 5. Deactivate the Virtual Environment
 
 When you are finished, deactivate the environment

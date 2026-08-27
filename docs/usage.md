@@ -689,6 +689,53 @@ If a switch does not respond, the credentials are incorrect, the SSH version is 
 
 It's really disruptive to the discovery process if the script cannot connect to multiple switches. That means you have to fix the problem, create a new inventory file with just the failed switches, then rerun the script on the subset. I was doing a discovery at a customer with over 240 switches. They had a lot of configuration issues and username/password variations. I ended up with around 40 switches that I couldn't log into.
 
+### Legacy switches: "no acceptable host key" / "no acceptable ciphers"
+
+If a switch that you *know* is reachable and has the right credentials fails
+with one of these paramiko errors:
+
+```text
+A paramiko SSHException occurred during connection creation:
+Incompatible ssh peer (no acceptable host key)
+```
+
+```text
+Incompatible ssh peer, no acceptable host key / no acceptable ciphers / no acceptable kex
+```
+
+...the problem is almost always the version of **paramiko**, not the switch.
+
+Older gear — HP Procurve 2510 / 2520 / 2620 / 2920, older Cisco IOS, and
+similar — only offers SHA-1 `ssh-rsa` host keys, `ssh-dss`, and legacy
+ciphers / key-exchange. Newer paramiko releases (4.x and up) remove those
+from their defaults, so the SSH session can't be negotiated at all.
+
+**This is why `requirements.txt` pins `paramiko==3.5.1`.** 3.5.1 is the last
+release verified to still negotiate `ssh-rsa` / `ssh-dss` / legacy ciphers
+with that equipment, and it satisfies netmiko 4.7.0's requirement of
+`paramiko>=3.5.0,<5.0`. **Do not bump paramiko past 3.x** unless you have
+retested against real legacy switches — a full "latest" refresh in
+2026-08 upgraded it to 4.0.0 and immediately broke every Procurve 2920.
+
+If you (or a `pip install --upgrade`) have already moved paramiko forward,
+put it back:
+
+```bash
+python3 -m pip install 'paramiko==3.5.1'
+```
+
+or reinstall the whole locked set:
+
+```bash
+python3 -m pip install --no-deps -r requirements.lock.txt
+```
+
+If you have pinned paramiko at 3.5.1 and *still* see `no acceptable
+ciphers` or `no acceptable kex` (a different message from the host-key one
+above), the next suspect is **cryptography** — it also drops legacy
+algorithms over time. Try an older release, e.g. `pip install
+'cryptography<44'`, and note the working version in `requirements.txt`.
+
 ### Use nmap to verify switches are up
 
 I recommend saving the switch IP addresses in a plain text file, one per line, and then using nmap to verify that ssh is working.

@@ -29,8 +29,10 @@ pandas==3.0.5
 # SSH to HP Procurve 2920s (and similar legacy switches):
 #   "Incompatible ssh peer (no acceptable host key)"
 # paramiko 4.x drops the ssh-rsa (SHA-1) host-key type from its defaults,
-# which those switches are the only thing they offer. 3.5.1 still negotiates
+# and that is the only host key those switches offer. 3.5.1 still negotiates
 # ssh-rsa / ssh-dss / legacy ciphers. netmiko 4.7.0 allows >=3.5.0,<5.0.
+# If 3.5.1 still hits "no acceptable ciphers/kex", try cryptography<44 next.
+# See the "Legacy switches" section of docs/usage.md.
 # Everything else in this file WAS refreshed to latest on 2026-08-27
 # (rich 15, textfsm 2, ntc_templates 9, cryptography 50, bcrypt 5, ...).
 paramiko==3.5.1
