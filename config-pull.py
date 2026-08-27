@@ -227,6 +227,16 @@ MAC_COMMAND_MAP: dict[str, str] = {
 }
 
 
+# Platforms where "show cdp neighbor detail" is worth collecting: the device
+# actually runs CDP AND ntc-templates has a matching parser. Every other
+# vendor either doesn't speak CDP (Arista, Juniper, Aruba CX, Brocade,
+# Ruckus, Dell) or has no template (cisco_s300), so the command is skipped
+# rather than writing an error blob to <hostname>-cdp.txt.
+CDP_PLATFORMS: frozenset[str] = frozenset(
+    {"cisco_ios", "cisco_xe", "cisco_nxos", "hp_procurve"}
+)
+
+
 # function to return vendor specific commands and flags
 def which_vendor(vendor: str) -> tuple[str, str, str, str, bool]:
     """
@@ -1056,13 +1066,25 @@ for line in fabric:
     border = "-" * (len(hostname) + 32)
     print(f"[bold][bright_blue]{border}[/bright_blue][/bold]")
     ic(output)
-    # Use textFSM to create a json object with cdp neighbors
-    print(
-        f"collecting [bright_blue]'show cdp detail'[/bright_blue] for [cyan]{hostname}[/cyan]"
-    )
-    output_cdp = net_connect.send_command("show cdp neighbor detail", use_textfsm=True)
-    border = "-" * (len(hostname) + 33)
-    print(f"[bold][blue]{border}[/blue][/bold]")
+    # Use textFSM to create a json object with cdp neighbors.
+    # Only collected for platforms that run CDP and have an ntc-templates
+    # parser (see CDP_PLATFORMS); skipped elsewhere so we don't save an
+    # error string as <hostname>-cdp.txt.
+    output_cdp: object = []
+    if vendor.lower() in CDP_PLATFORMS:
+        print(
+            f"collecting [bright_blue]'show cdp detail'[/bright_blue] for [cyan]{hostname}[/cyan]"
+        )
+        output_cdp = net_connect.send_command(
+            "show cdp neighbor detail", use_textfsm=True
+        )
+        border = "-" * (len(hostname) + 33)
+        print(f"[bold][blue]{border}[/blue][/bold]")
+    else:
+        print(
+            f"skipping [bright_blue]'show cdp detail'[/bright_blue] for [cyan]{hostname}[/cyan] "
+            f"([yellow]{vendor}[/yellow] does not use CDP)"
+        )
 
     # Use textFSM to create a json object with interface stats.
     # Initialized here so a vendor with no case below doesn't fall through
