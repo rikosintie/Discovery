@@ -75,6 +75,7 @@ summary table and Failure-Logs/skipped_devices.csv are written at the end.
 import argparse
 import csv
 import getpass
+import ipaddress
 import json
 import logging
 import os
@@ -164,6 +165,25 @@ def remove_empty_lines(filename: str) -> None:
     with open(filename, "w", encoding="utf-8") as filehandle:
         lines = list(filter(lambda x: x.strip(), lines))
         filehandle.writelines(lines)
+
+
+def check_inventory_ip(addr: str) -> str | None:
+    """
+    Validate the IP Address column of an inventory row.
+
+    Returns an error string when addr is a dotted-decimal / colon value that
+    is not a valid IPv4 or IPv6 address (e.g. 192.168.10.511), otherwise
+    None. Values that look like a DNS hostname are left alone so name-based
+    inventories keep working - netmiko / DNS will report those.
+    """
+    try:
+        ipaddress.ip_address(addr)
+        return None
+    except ValueError:
+        looks_like_ip = re.match(r"^\d{1,3}(\.\d{1,3}){3}$", addr) or ":" in addr
+        if looks_like_ip:
+            return f"Invalid IP address: {addr}"
+        return None
 
 
 def check_textfsm(data: object, label: str) -> object:
@@ -686,6 +706,10 @@ if args.test_connect:
             continue
         ipaddr, vendor, hostname, username = fields[0], fields[1], fields[2], fields[3]
         label = f"{hostname} ({ipaddr}, {vendor})"
+        ip_error = check_inventory_ip(ipaddr)
+        if ip_error:
+            print(f"[red]BAD IP[/red]   {label}: {ip_error}")
+            continue
         try:
             net_connect = ConnectHandler(
                 device_type=vendor,
@@ -728,6 +752,21 @@ for line in fabric:
     # Refresh per device so the banner and "Exec time" lines reflect this
     # switch's attempt, not the script start time.
     now = datetime.now().astimezone()
+
+    ip_error = check_inventory_ip(ipaddr)
+    if ip_error:
+        device_count -= 1
+        skipped_devices.append(
+            {"hostname": hostname, "ip": ipaddr, "reason": "Invalid IP address"}
+        )
+        print_panel(
+            f"Skipping [cyan]{hostname}[/cyan]: {ip_error}\n"
+            f"Fix the IP Address column for this row in {dev_inv_file}.",
+            title="Invalid IP Address",
+            border_style="red",
+            title_emoji=emoji_for("error"),
+        )
+        continue
 
     try:
         sh_run, show_lldp, show_arp, interface_key, force_prefix = which_vendor(vendor)
