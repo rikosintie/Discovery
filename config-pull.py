@@ -19,6 +19,10 @@ Place the information for each switch in the file. Format is
 <IP Address>,hp_procurve,<hostname>,<username>
 Example
 192.168.10.52,hp_procurve,gl-IDF1,mhubbard
+NOTE: the first column may also be a DNS name instead of an IP address, as
+long as it resolves on the machine running this script. A value that looks
+like a dotted-decimal address but is not valid (e.g. 192.168.10.511) is
+reported and skipped.
 NOTE: the password is read from the cyberARK environment variable, or pass
 -p 1 to be prompted for it when the script is executed.
 
@@ -853,6 +857,13 @@ for line in fabric:
 
         # ✅ Now try connecting
         net_connect = ConnectHandler(**device)
+        # Resolve whatever was in the inventory's IP column to the address we
+        # actually reached, so the "Done" banner can show it (handy when the
+        # inventory used a DNS name). Falls back to the raw value on failure.
+        try:
+            connected_ip = socket.gethostbyname(ipaddr)
+        except OSError:
+            connected_ip = ipaddr
 
     except NetmikoTimeoutException as e:
         end_time: datetime = datetime.now().astimezone()
@@ -1287,7 +1298,14 @@ for line in fabric:
     print(f"[bold][blue]{border}[/blue][/bold]")
     print()
 
-    message = f"[bright_green]Successfully created config files for[/bright_green] [cyan]{hostname}[/cyan]"
+    if connected_ip == ipaddr:
+        where = f"[cyan]{ipaddr}[/cyan]"
+    else:
+        where = f"[cyan]{ipaddr}[/cyan] ([cyan]{connected_ip}[/cyan])"
+    message = (
+        f"[bright_green]Successfully created config files for[/bright_green] "
+        f"[cyan]{hostname}[/cyan] at {where}"
+    )
     print(
         Panel.fit(
             message,
