@@ -550,6 +550,11 @@ def detect_ssh_version(ip: str, port: int = 22, timeout: int = 5) -> str | None:
 def write_skipped_devices_csv(filename: str) -> None:
     if not skipped_devices:
         return
+    # This path is built by hand (not via create_filename), so make sure the
+    # Failure-Logs dir exists - it is gitignored and absent on a fresh clone,
+    # and a run where every device is skipped before the connect stage never
+    # reaches the create_filename("Failure-Logs", ...) call in the loop.
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
     with open(filename, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["Hostname", "IP Address", "Reason"])
