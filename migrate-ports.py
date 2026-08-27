@@ -108,11 +108,13 @@ print(f"Reading devices from: {dev_inv_file}")
 print("-" * (len(dev_inv_file) + 23))
 
 #  Create the interface-disable files
+found_cisco_ios = False
 for line in fabric:
     line = line.strip("\n")
     vendor = line.split(",")[1]
     hostname = line.split(",")[2]
     if vendor.lower() == "cisco_ios":
+        found_cisco_ios = True
         now = datetime.now().astimezone()
         date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
         print(f"{date_time} Creating interface file for {hostname}")
@@ -158,7 +160,9 @@ for line in fabric:
             a = re.findall(regexpattern, interface["interface"])
             if interface["link_status"] == "up" and len(a):
                 count += 1
-                iName = interface["interface"]
+                # Aruba CX uses "vlan 10", not Cisco's "Vlan10" — lowercase,
+                # with a space before the number.
+                iName = re.sub(r"[Vv]lan(\d+)", r"vlan \1", interface["interface"])
                 iAddress = interface["ip_address"]
                 IP = "ip address "
                 if iAddress == "":
@@ -181,3 +185,6 @@ for line in fabric:
         migrate = create_filename("Interface", "-interface-migrate.txt")
         with open(migrate, "w") as file:
             file.writelines(ports)
+
+if not found_cisco_ios:
+    print(f"No cisco_ios switch found in {dev_inv_file}")
