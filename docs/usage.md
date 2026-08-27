@@ -91,6 +91,28 @@ For example,
 
 There is a sample file named device-inventory-area1.csv in the project. The site name is just a tag so that you can have as many device-inventory files as you need. At a large customer this might be the MDF and then a series of IDFs.
 
+#### Handling more than one login password
+
+At smaller sites without RADIUS or TACACS+ the switches often have several
+different local passwords. Rather than putting passwords in the inventory
+file, split the fleet into one inventory file per password and run the
+script once for each:
+
+```bash
+export cyberARK=oldpassword
+python3 config-pull.py -s acme-oldpw
+
+export cyberARK=newpassword
+python3 config-pull.py -s acme-newpw
+```
+
+Every run writes its output by hostname into the same `CR-data/`,
+`Interface/`, `Running/`, and `port-maps/` folders, so the results merge
+cleanly and the downstream tools (`arp.py`, `port-map.py`) don't care that
+the data came from more than one run. `--test-connect` is a quick way to
+find out which switches accept which password before committing to a full
+collection.
+
 !!! warning
     Use dashes, never underscores, in site names and hostnames — anywhere they show up as part of a filename (`device-inventory-<site>.csv`, the hostname column, `-c coreswitch` values, etc). Every script derives filenames straight from these values, so a `Lab_3850` here and a `Lab-3850` there silently produces two different sets of files that never find each other — the arp/macaddr/port-map handoff breaks with no error, just quietly-missing IP/DNS columns. Pick one hostname spelling per device and use it everywhere, always with a dash.
 
