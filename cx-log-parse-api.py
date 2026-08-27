@@ -1,5 +1,20 @@
+"""
+usage
+python CX-Log-Parse-API.py -f logfile.txt -o output.csv
+
+Pull logs from a switch
+python CX-Log-Parse-API.py -i 192.168.10.233 -u admin -p 1 -o 01_lab.csv
+
+The password is never passed on the command line. Use -p 1 to be prompted for
+it, or set the environment variable: export cyberARK=your_password
+
+To view the reference documentation for the REST v10.xx API, access the following URL using a browser:
+https://192.168.10.233/api/v10.10/
+"""
+
 import argparse
 import csv
+import getpass
 import json
 import os
 import re
@@ -9,16 +24,6 @@ from datetime import datetime
 import requests
 import urllib3
 
-"""
-usage
-python CX-Log-Parse-API.py -f logfile.txt -o output.csv
-
-Pull logs from a a switch
-python CX-Log-Parse-API.py -i 192.168.10.233 -u admin -p SuperSecure -o 01_lab.csv
-
-To view the reference documentation for the REST v10.xx API, access the following URL using a browser:
-https://192.168.10.233/api/v10.10/
-"""
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # Regex pattern for log parsing, with flexible handling for interface field (which can be '-')
 log_pattern = re.compile(
@@ -160,7 +165,10 @@ def main() -> None:
         "-n", "--username", help="Username for Aruba CX API", default="admin"
     )
     parser.add_argument(
-        "-p", "--password", help="Password for Aruba CX API", default="admin"
+        "-p",
+        "--password",
+        default="",
+        help="use -p 1 to be prompted for password",
     )
     # - - - - - -
     parser.add_argument("-l", "--priority", help="Log Level to filter on", default="7")
@@ -201,8 +209,25 @@ def main() -> None:
         print(f"Logs processed and saved to {args.output}")
 
     elif args.ip:
+        # Check for the password, exit if it doesn't exist
+        password: str | None = ""
+        if args.password != "":
+            password = getpass.getpass(prompt="Input the Password:")
+        elif os.environ.get("cyberARK"):
+            password = os.environ.get("cyberARK")
+        else:
+            print(
+                "\nNo password was found. Use:\n\n"
+                "python CX-Log-Parse-API.py -i <ip> -p 1\n\n"
+                "on the terminal to be prompted for a password,\n"
+                "or set the environment variable:\n\n"
+                "export cyberARK=your_password\n\n"
+                "on the terminal\n"
+            )
+            sys.exit()
+
         # Fetch logs from Aruba CX switch
-        log_lines = fetch_logs_from_switch(args.ip, args.username, args.password, url)
+        log_lines = fetch_logs_from_switch(args.ip, args.username, password, url)
         if log_lines:
             # Convert log lines to JSON
             response_dict = json.loads("\n".join(log_lines))
