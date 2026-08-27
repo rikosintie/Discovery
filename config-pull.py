@@ -135,6 +135,9 @@ def create_filename(sub_dir1: str, extension: str = "", sub_dir2: str = "") -> s
     current_path = os.getcwd()
     extension = hostname + extension
     int_report = os.path.join(current_path, sub_dir1, sub_dir2, extension)
+    # Some output dirs (e.g. port-maps/data) are gitignored and won't exist
+    # on a fresh clone - create the target dir before anything writes to it.
+    os.makedirs(os.path.dirname(int_report), exist_ok=True)
     return int_report
 
 
@@ -153,10 +156,10 @@ def remove_empty_lines(filename: str) -> None:
         print(f"{filename} does not exist.")
         return
 
-    with open(filename) as filehandle:
+    with open(filename, encoding="utf-8-sig") as filehandle:
         lines = filehandle.readlines()
 
-    with open(filename, "w") as filehandle:
+    with open(filename, "w", encoding="utf-8") as filehandle:
         lines = list(filter(lambda x: x.strip(), lines))
         filehandle.writelines(lines)
 
@@ -319,11 +322,11 @@ def generate_mac_query_file_from_json(
     if not os.path.isfile(json_file_path):
         raise FileNotFoundError(f"JSON file not found: {json_file_path}")
 
-    with open(json_file_path, "r") as file:
+    with open(json_file_path, encoding="utf-8") as file:
         try:
             interface_data = json.load(file)
         except json.JSONDecodeError as e:
-            raise ValueError(f"Invalid JSON: {e}")
+            raise ValueError(f"Invalid JSON: {e}") from e
 
     commands: list[str] = []
 
@@ -349,7 +352,7 @@ def generate_mac_query_file_from_json(
     if not commands:
         raise ValueError("No valid interfaces found in the JSON file.")
 
-    with open(output_file_path, "w") as f:
+    with open(output_file_path, "w", encoding="utf-8") as f:
         f.write("\n".join(commands))
 
     print(
@@ -447,7 +450,7 @@ def log_message(message: str, context: str = "") -> None:
     """
     now = datetime.now().astimezone().strftime("%Y-%m-%d %H:%M:%S")
     log_entry = f"[{now}] {context + ': ' if context else ''}{message}\n"
-    with open(LOGFILE, "a") as f:
+    with open(LOGFILE, "a", encoding="utf-8") as f:
         f.write(log_entry)
 
 
@@ -487,7 +490,7 @@ def detect_ssh_version(ip: str, port: int = 22, timeout: int = 5) -> str | None:
 def write_skipped_devices_csv(filename: str) -> None:
     if not skipped_devices:
         return
-    with open(filename, "w", newline="") as f:
+    with open(filename, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["Hostname", "IP Address", "Reason"])
         for entry in skipped_devices:
@@ -560,8 +563,11 @@ parser.add_argument("-s", "--site", help="Site name - ex. HQ")
 parser.add_argument(
     "-t",
     "--timeout",  # Optional (but recommended) long version
-    default="1",
-    help="use -t 1-9 to set timeout",
+    type=int,
+    choices=range(1, 10),
+    default=1,
+    metavar="1-9",
+    help="use -t 1-9 to set the netmiko delay_factor",
 )
 parser.add_argument(
     "--test-connect",
@@ -648,11 +654,12 @@ if args.test_connect:
     )
     for line in fabric:
         line = line.strip("\n")
-        fields = line.split(",")
-        ipaddr = fields[0]
-        vendor = fields[1]
-        hostname = fields[2]
-        username = fields[3]
+        fields = [field.strip() for field in line.split(",")]
+        if len(fields) < 4:
+            if line.strip():
+                print(f"Skipping malformed inventory line: {line!r}")
+            continue
+        ipaddr, vendor, hostname, username = fields[0], fields[1], fields[2], fields[3]
         label = f"{hostname} ({ipaddr}, {vendor})"
         try:
             net_connect = ConnectHandler(
@@ -685,15 +692,27 @@ sshv1_skip_count = 0
 # skipped_devices: list[tuple[str, str, str]] = []  # hostname, ip, reason
 
 for line in fabric:
-    device_count += 1
     line = line.strip("\n")
-    fields = line.split(",")
-    ipaddr = fields[0]
-    vendor = fields[1]
-    hostname = fields[2]
-    username = fields[3]
+    fields = [field.strip() for field in line.split(",")]
+    if len(fields) < 4:
+        if line.strip():
+            print(f"Skipping malformed inventory line: {line!r}")
+        continue
+    device_count += 1
+    ipaddr, vendor, hostname, username = fields[0], fields[1], fields[2], fields[3]
+    # Refresh per device so the banner and "Exec time" lines reflect this
+    # switch's attempt, not the script start time.
+    now = datetime.now().astimezone()
 
-    sh_run, show_lldp, show_arp, interface_key, force_prefix = which_vendor(vendor)
+    try:
+        sh_run, show_lldp, show_arp, interface_key, force_prefix = which_vendor(vendor)
+    except ValueError as e:
+        device_count -= 1
+        skipped_devices.append(
+            {"hostname": hostname, "ip": ipaddr, "reason": str(e)}
+        )
+        print(f"[yellow]Skipping {hostname} ({ipaddr}):[/yellow] {e}")
+        continue
     ic(sh_run, show_lldp, show_arp, interface_key, force_prefix)
     timeit_start: float = timeit.default_timer()
     start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
@@ -874,7 +893,7 @@ for line in fabric:
     print(f"[bold][blue]{border}[/blue][/bold]")
     remove_empty_lines(cfg_file)
     try:
-        with open(cfg_file) as config_file:
+        with open(cfg_file, encoding="utf-8") as config_file:
             show_commands = config_file.readlines()
     except FileNotFoundError:
         message = f"Config file [red]{cfg_file}[/red] not found — skipping {hostname}"
@@ -906,19 +925,22 @@ for line in fabric:
     # pull logs. Logs tend to time out because they are so large
     # you can set the timeout value up if they are timing out.
     if args.event != "":
+        event_type = ""
         try:
             log_list = ["W", "I", "M", "D", "E", "1"]
             log_type = args.event.split(",")
             time_out = args.timeout
-            for type in log_type:
-                print(f"Processing show logging -{type} for {hostname}")
-                if type not in log_list:
-                    print(f"logging argument {type} for {hostname} is not supported")
+            for event_type in log_type:
+                print(f"Processing show logging -{event_type} for {hostname}")
+                if event_type not in log_list:
+                    print(
+                        f"logging argument {event_type} for {hostname} is not supported"
+                    )
                     continue
-                if type == "1":
+                if event_type == "1":
                     show_logging = "show logging"
                 else:
-                    show_logging = f"show logging -r -{type}"
+                    show_logging = f"show logging -r -{event_type}"
                 output_event = str(
                     net_connect.send_command(
                         show_logging, strip_command=False, delay_factor=time_out
@@ -928,19 +950,26 @@ for line in fabric:
                 print(f"[bold][blue]{border}[/blue][/bold]")
 
                 #  Write the show logging output to disk
-                log_name = f"-log-{type}.txt"
+                log_name = f"-log-{event_type}.txt"
                 int_report = create_filename("CR-data", log_name)
-                print(f"Writing show logging -{type} commands to {int_report}")
-                with open(int_report, "w") as file:
+                print(f"Writing show logging -{event_type} commands to {int_report}")
+                with open(int_report, "w", encoding="utf-8") as file:
                     file.write(output_event)
-                border = "-" * (len(type) + len(int_report) + 36)
+                border = "-" * (len(event_type) + len(int_report) + 36)
                 print(f"[bold][blue]{border}[/blue][/bold]")
         except NetmikoTimeoutException:
             end_time = datetime.now().astimezone()
             print(f"\nExec time: {end_time - now}\n")
             print(
-                f"Time out processing -{type} logs for {hostname} at {ipaddr}. The connection timed out. Try setting -e to a higher value"
+                f"Time out processing -{event_type} logs for {hostname} at {ipaddr}. "
+                "The connection timed out. Try setting -e to a higher value"
             )
+            device_count -= 1
+            time_out_count += 1
+            skipped_devices.append(
+                {"hostname": hostname, "ip": ipaddr, "reason": "Timeout pulling logs"}
+            )
+            net_connect.disconnect()
             continue
 
     # Use textFSM to create a json object with interface stats
@@ -960,7 +989,10 @@ for line in fabric:
     border = "-" * (len(hostname) + 33)
     print(f"[bold][blue]{border}[/blue][/bold]")
 
-    # Use textFSM to create a json object with interface stats
+    # Use textFSM to create a json object with interface stats.
+    # Initialized here so a vendor with no case below doesn't fall through
+    # to the write with a stale value left over from the previous device.
+    output_show_int_br: object = []
     vendor = vendor.lower()
     match vendor:
         case "hp_procurve":
@@ -1000,7 +1032,7 @@ for line in fabric:
             )
 
             # write the JSON system data to a file
-            with open(int_report, "w") as file:
+            with open(int_report, "w", encoding="utf-8") as file:
                 output_system = json.dumps(output_system, indent=2)
                 file.write(output_system)
             border = "-" * (len(int_report) + 1)
@@ -1035,6 +1067,11 @@ for line in fabric:
                 strip_command=True,
                 use_textfsm=True,
             )
+        case _:
+            print(
+                f"[yellow]No 'show interfaces brief/status' collection defined for "
+                f"{vendor} - writing an empty {hostname}-int_br.txt[/yellow]"
+            )
 
     # Use textFSM to create a json object with show lldp info remote
     print(
@@ -1064,7 +1101,7 @@ for line in fabric:
     #  Write the JSON interface data to a file
     int_report = create_filename("Interface", "-interface.json")
     print(f"Writing [cyan]'interfaces json data'[/cyan] to\n {int_report}")
-    with open(int_report, "w") as file:
+    with open(int_report, "w", encoding="utf-8") as file:
         output = json.dumps(output, indent=2)
         file.write(output)
     border = "-" * (len(int_report) + 1)
@@ -1096,7 +1133,7 @@ for line in fabric:
 
     if os.path.isfile(output_mac_address):
         remove_empty_lines(output_mac_address)
-        with open(output_mac_address) as mac_add_file:
+        with open(output_mac_address, encoding="utf-8") as mac_add_file:
             show_commands = mac_add_file.readlines()
     else:
         show_commands = []
@@ -1117,7 +1154,7 @@ for line in fabric:
     #  Write the show mac address commands output to disk
     int_report = create_filename("port-maps", "-mac-address.txt", "data")
     print(f"Writing MAC address commands for {vendor} to\n {int_report}")
-    with open(int_report, "w") as file:
+    with open(int_report, "w", encoding="utf-8") as file:
         file.write(output_mac_str)
     # border = "-" * (len(dev_inv_file) + 25)
     border = "-" * (len(int_report) + 1)
@@ -1129,7 +1166,7 @@ for line in fabric:
     #  Write the CR Data show commands output to disk
     int_report = create_filename("CR-data", "-CR-data.txt")
     print(f"Writing 'show commands' to\n {int_report}")
-    with open(int_report, "w") as file:
+    with open(int_report, "w", encoding="utf-8") as file:
         file.write(output_show_str)
     border = "-" * (len(int_report) + 1)
     print(f"[bold][blue]{border}[/blue][/bold]")
@@ -1137,7 +1174,7 @@ for line in fabric:
     # Write the arp table plain text output to disk
     int_report = create_filename("port-maps", "-arp.txt", "data")
     print(f"Writing [bright_blue]'show arp'[/bright_blue] data to\n {int_report}")
-    with open(int_report, "w") as file:
+    with open(int_report, "w", encoding="utf-8") as file:
         file.write(output_text_arp)
     border = "-" * (len(int_report) + 1)
     print(f"[bold][blue]{border}[/blue][/bold]")
@@ -1145,7 +1182,7 @@ for line in fabric:
     #  Write the running config to disk
     int_report = create_filename("Running", "-running-config.txt")
     print(f"Writing 'show running' output to\n {int_report}")
-    with open(int_report, "w") as file:
+    with open(int_report, "w", encoding="utf-8") as file:
         file.write(output_text_run)
     border = "-" * (len(int_report) + 1)
     print(f"[bold][blue]{border}[/blue][/bold]")
@@ -1153,7 +1190,7 @@ for line in fabric:
     # Write the JSON interface brief data to a file
     int_report = create_filename("Interface", "-int_br.txt")
     print(f"Writing 'show interfaces brief' data to\n {int_report}")
-    with open(int_report, "w") as file:
+    with open(int_report, "w", encoding="utf-8") as file:
         output_show_int_br = json.dumps(output_show_int_br, indent=2)
         file.write(output_show_int_br)
     # print("-" * (len(dev_inv_file) + 23))
@@ -1162,7 +1199,7 @@ for line in fabric:
     # Write the JSON cdp neighbor data to a file
     int_report = create_filename("Interface", "-cdp.txt")
     print(f"Writing 'show cdp neighbor' data to\n {int_report}")
-    with open(int_report, "w") as file:
+    with open(int_report, "w", encoding="utf-8") as file:
         output_cdp = json.dumps(output_cdp, indent=2)
         file.write(output_cdp)
     border = "-" * (len(int_report) + 1)
@@ -1171,7 +1208,7 @@ for line in fabric:
     # Write the show lldp JSON data to a file
     int_report = create_filename("Interface", "-lldp.txt")
     print(f"Writing 'show lldp' data to\n {int_report}")
-    with open(int_report, "w") as file:
+    with open(int_report, "w", encoding="utf-8") as file:
         output_show_lldp = json.dumps(output_show_lldp, indent=2)
         file.write(output_show_lldp)
     border = "-" * (len(int_report) + 1)
