@@ -1,0 +1,49 @@
+# Enforce LF line endings across the repo.
+#
+# Text files are stored as LF in git and checked out as LF on every OS.
+# This repo historically had a mix of CRLF (Windows-edited) and LF files,
+# which made stray whole-file diffs whenever an editor flipped the endings.
+# Normalized to LF on 2026-08-27.
+
+* text=auto eol=lf
+
+# --- Force LF for source / config / docs ---
+*.py              text eol=lf
+*.pyi             text eol=lf
+*.sh              text eol=lf
+*.ps1             text eol=lf
+*.md              text eol=lf
+*.txt             text eol=lf
+*.csv             text eol=lf
+*.json            text eol=lf
+*.toml            text eol=lf
+*.cfg             text eol=lf
+*.ini             text eol=lf
+*.yml             text eol=lf
+*.yaml            text eol=lf
+*.textfsm         text eol=lf
+*.xml             text eol=lf
+*.xsl             text eol=lf
+*.html            text eol=lf
+*.dot             text eol=lf
+*.svg             text eol=lf
+*.lst             text eol=lf
+*.nmap            text eol=lf
+*.gnmap           text eol=lf
+*.code-workspace  text eol=lf
+UNLICENSE         text eol=lf
+
+# --- Binary: never normalize ---
+*.png    binary
+*.PNG    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.ico    binary
+*.pdf    binary
+*.xls    binary
+*.xlsx   binary
+
+# --- Vendored data: keep bytes exactly as downloaded ---
+manuf            -text
+port-maps/manuf  -text
