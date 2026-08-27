@@ -1,6 +1,8 @@
 r"""
 !!!!! Helper Script - Does not change the running config !!!!!
 
+This is for Cisco IOS to Aruba CX migration.
+
 Reads the Interface/<hostname>-interface.json file created by config-pull.py and
 builds a migration config snippet for two kinds of interfaces that are
 "up": uplinks (module 1 ports, matched by the [0-8]/1/[0-9]{1,2} pattern —

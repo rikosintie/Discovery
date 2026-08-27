@@ -502,6 +502,34 @@ Interface 6 - total_bytes 0
 Interface 7 - total_bytes 1,054,112
 ```
 
+### The port migration report
+
+migrate-ports.py builds a config snippet to help migrate a switch from Cisco IOS to Aruba CX. It's Cisco IOS only right now (checks the vendor column in the device-inventory file) — the source side of the migration. If no `cisco_ios` device is found in the device-inventory file, it prints a message saying so instead of silently producing no output.
+
+It looks at every interface in `Interface/<hostname>-interface.json` and, for ones that are up, includes two kinds:
+
+- **Uplinks on module 1** — matched by a `[0-8]/1/[0-9]{1,2}` pattern, e.g. `Gi1/1/3`. This is meant to catch trunk/uplink ports specifically, not every access port.
+- **SVIs** — any `VlanN` interface.
+
+For each match it writes an `interface` / `description` / `ip address` / `exit` block. The description line is always written, even if blank on the switch — there's no check for whether one is actually set. The IP address line is only included if the interface has one (VLANs typically do, physical uplinks typically don't).
+
+Uplink interface names get shortened to just the last 5 characters (`Gi1/1/3` becomes `1/1/3`, dropping the interface type) — this is deliberate, not a quirk to work around: Aruba CX doesn't use a "Gi"-style type prefix on interface names at all, so the shortened form is already the correct CX syntax to paste in as-is. SVI names are converted from Cisco's `VlanN` to Aruba CX's `vlan N` — lowercase, with a space before the number — since that's the syntax CX actually expects for both the `vlan` block and the `interface vlan` reference.
+
+`python3 migrate-ports.py -s sitename`
+
+The output is saved as `Interface/<hostname>-interface-migrate.txt`. Here is an example:
+
+```bash
+interface 1/1/4
+description < Fiber Link to Z420 >
+
+ exit
+interface vlan 10
+description < Management >
+ip address 192.168.10.253
+ exit
+```
+
 ----------------------------------------------------------------
 
 ## Convert MAC addresses
