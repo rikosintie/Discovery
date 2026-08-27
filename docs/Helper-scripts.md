@@ -532,6 +532,16 @@ ip address 192.168.10.253
 
 ----------------------------------------------------------------
 
+## Parsing Aruba CX logs
+
+`CX-Log-Parse.py` takes a syslog export already saved to disk and turns it into a CSV. `CX-Log-Parse-API.py` does the same thing, but can also pull the log directly from a switch over the REST API instead of starting from a file. Both use the same regex to split each log line into: date, time, timezone, hostname, process, PID, event type, event ID, log level, module, interface, and message.
+
+`python3 CX-Log-Parse.py -f logfile.txt`
+
+Raw CX syslog lines pack the date, time, fractional seconds, and UTC offset into one unbroken token, e.g. `2024-05-15T21:46:01.398675-07:00`. There's no delimiter between the seconds and the timezone, so searching or sorting by date or time alone in a text editor means eyeballing a wall of similar-looking timestamps — you can't easily filter "just today" or "just this hour" without regex. Splitting Date, Time, and Timezone into their own CSV columns means a spreadsheet program (or a CSV tool like `csvlens`) can sort, filter, and search each of those fields independently, the same way it can for hostname, interface, or log level.
+
+----------------------------------------------------------------
+
 ## Convert MAC addresses
 
 This simple script takes 1 argument, a MAC address in any of the following formats and returns it in all of the formats.
