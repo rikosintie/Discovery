@@ -34,6 +34,9 @@ other, and the failure is silent.
 3. Execute
 python3 cisco-pull-ospf-ne.py -s test
 
+Add -l 1 to log every read/write on the SSH channel to ssh_log.txt (use
+this to troubleshoot connection/timeout problems).
+
 The script reads device-inventory-<site>.csv and sends the show commands.
 Output files are written under CR-data/ off the current working directory.
 
@@ -48,6 +51,7 @@ script moves on to the next device.
 import argparse
 import getpass
 import json
+import logging
 import os
 import sys
 from datetime import datetime
@@ -117,8 +121,17 @@ parser.add_argument("-s", "--site", help="Site name - ex. MVMS")
 parser.add_argument(
     "-p", "--password", default="", help="use -p 1 to be prompted for password"
 )
+parser.add_argument(
+    "-l", "--logging", default="", help="use -l 1 to enable ssh logging"
+)
 args = parser.parse_args()
 site = args.site
+
+# if -l 1 is passed, turn on logging
+if args.logging != "":
+    #  log all reads and writes on the SSH channel
+    logging.basicConfig(filename="ssh_log.txt", level=logging.DEBUG)
+    logger = logging.getLogger("netmiko")
 
 if site is None:
     print("-s site name is a required argument")
