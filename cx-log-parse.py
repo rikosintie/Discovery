@@ -1,4 +1,6 @@
 r"""
+!!!!! Helper Script - Does not change the running config !!!!!
+
 Parses an Aruba CX syslog export into a CSV.
 
 Reads a log file already saved to disk (one CX syslog line per row, e.g.
@@ -11,6 +13,7 @@ The CSV can be imported into a spreadsheet program such as Excel, LibreOffice Ca
 sorting and searching.
 
 python CX-Log-Parse.py -f <log filename>
+!!!!! Helper Script - Does not change the running config !!!!!
 """
 
 import argparse
