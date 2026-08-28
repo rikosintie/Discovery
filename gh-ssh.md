@@ -62,7 +62,26 @@ Host github.com
 `IdentitiesOnly yes` stops ssh from offering every other key in
 `~/.ssh/` first (which can trip GitHub's "too many auth failures").
 
-## 4. Test
+## 4. Fix the permissions
+
+SSH refuses to use anything in `~/.ssh` that the group or other users can
+write, failing with `Bad owner or permissions on ~/.ssh/config`. It can
+show up only in VS Code while the terminal still works, because ssh may
+have cached an earlier good state. Restoring `~/.ssh/` from a backup is
+the usual trigger: `tar` preserves mode bits, but `cp`, a synced folder,
+or a FAT/exFAT drive does not.
+
+```bash
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/config ~/.ssh/id_github
+chmod 644 ~/.ssh/id_github.pub
+chown -R "$USER" ~/.ssh
+```
+
+Rule of thumb: `~/.ssh` and private keys are owner-only (`700` / `600`);
+`.pub` files and `known_hosts` may stay `644`.
+
+## 5. Test
 
 ```bash
 ssh -T git@github.com
@@ -78,7 +97,7 @@ If it says `Permission denied (publickey)`, the public key didn't land on
 GitHub or `~/.ssh/config` isn't pointing at the right key. Diagnose with
 `ssh -vT git@github.com`.
 
-## 5. Switch the repo's remote to SSH
+## 6. Switch the repo's remote to SSH
 
 Inside the repo:
 
@@ -94,7 +113,7 @@ Or clone fresh with the SSH URL:
 git clone git@github.com:rikosintie/Discovery.git
 ```
 
-## 6. Cache the passphrase for the session
+## 7. Cache the passphrase for the session
 
 ```bash
 ssh-add ~/.ssh/id_github
@@ -104,7 +123,7 @@ On GNOME the login keyring runs the SSH agent (`SSH_AUTH_SOCK` points at
 `/run/user/<uid>/keyring/ssh`), so it remembers the key across reboots
 after the first unlock. `ssh-add -l` lists what's currently loaded.
 
-## 7. Optional: drop the credential helper that was forgetting logins
+## 8. Optional: drop the credential helper that was forgetting logins
 
 ```bash
 git config --global --unset credential.helper
@@ -126,6 +145,9 @@ Only affects HTTPS remotes, which you're no longer using for this repo.
 - **`gh-pages` forced-update messages** on `git fetch` are just GitHub's
   Pages build bot republishing the docs site. They only touch
   `origin/gh-pages`, never `main`. Ignore them.
-- **Per-machine:** steps 1–4 and 6 are per machine; step 5 is per clone.
+- **Per-machine:** steps 1–5 and 7 are per machine; step 6 is per clone.
   The same public key can be added to GitHub from several machines, or
   give each machine its own key (easier to revoke one later).
+- **Before a reinstall:** back up `~/.ssh/` (as a `tar` archive, to keep
+  mode bits) and `~/.gitconfig`. Restoring the keypair skips step 2; you
+  still run step 4 to fix permissions and step 6 per clone.
