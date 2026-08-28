@@ -761,6 +761,52 @@ options:
                         skip subnets with more addresses than this (default: 2100)
 ```
 
+## Cross-platform examples
+
+=== "Linux"
+
+```text
+python3 pinger.py
+OS is Linux, sending 1 echo request per host
+IP addresses have been randomized
+Number of Subnets: 3
+90 hosts to ping at 20/s (~4s of launches)
+
+Pinging 30 hosts in 192.168.10.96/27
+```
+
+----------------------------------------------------------------
+
+=== "macOS"
+
+```text
+python3 pinger.py
+
+OS is Darwin, sending 1 echo request per host
+IP addresses have been randomized
+Number of Subnets: 3
+90 hosts to ping at 20/s (~4s of launches)
+
+Pinging 30 hosts in 192.168.10.96/27
+```
+
+----------------------------------------------------------------
+
+=== "Windows"
+
+```text
+ python3 pinger.py -r 10
+
+OS is Windows, sending 1 echo request per host
+IP addresses have been randomized
+Number of Subnets: 3
+90 hosts to ping at 10/s (~9s of launches)
+
+Pinging 30 hosts in 192.168.10.96/27
+```
+
+----------------------------------------------------------------
+
 ### Which subnets are worth pinging
 
 Desktops, laptops, access points, IP phones, and surveillance cameras
