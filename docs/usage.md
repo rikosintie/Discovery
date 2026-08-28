@@ -738,6 +738,24 @@ python3 pinger.py
 python3 pinger.py -f user-subnets.txt
 ```
 
+### Which subnets are worth pinging
+
+Desktops, laptops, access points, IP phones, and surveillance cameras
+send traffic all the time, so the switches already have a current ARP
+entry for them. Pinging those subnets adds noise without adding much to
+the port maps.
+
+The devices that need warming up are the ones that sit quiet until
+something talks to them:
+
+- Door access controllers
+- Building automation controllers (usually BACnet)
+- Environmental monitoring systems (usually EMS)
+- Any other IoT device that just waits for instructions
+
+When these devices live on their own segmented VLANs, point `pinger.py` at
+just those VLANs — there's no need to sweep the user subnets.
+
 ### Being gentle on EDR / NDR
 
 Firing ICMP at every address in a subnet all at once looks exactly like a

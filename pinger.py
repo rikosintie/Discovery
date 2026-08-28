@@ -228,8 +228,13 @@ def main() -> None:
         parser.error("--rate must be 0 (no limit) or a positive number")
 
     system = platform.system()
+    echoes = "1 echo request" if args.count == 1 else f"{args.count} echo requests"
     print()
-    print(f"OS is {system}")
+    print(f"OS is {system}, sending {echoes} per host")
+    if args.in_order:
+        print("IP addresses pinged in low-to-high order (--in-order)")
+    else:
+        print("IP addresses have been randomized")
 
     subnets = read_subnets(args.file)
     if not subnets:
