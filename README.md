@@ -13,6 +13,7 @@ Let's dig for some network gold!
 The full documentation including installation instructions can be found on my [GitHub Pages Repository](https://rikosintie.github.io/Discovery/intro)
 
 ----------------------------------------------------------------
+
 ## ASCIINEMA video
 
 Here is an [asciinema video](https://asciinema.org/a/726423) that shows the script running. In the video there are switches that have:
