@@ -44,6 +44,206 @@ In addition, there is a script to convert mac addresses between different format
 
 ----------------------------------------------------------------
 
+## Warming the ARP cache with pinger.py
+
+The port maps are only as complete as the ARP tables `config-pull.py`
+collects, and a switch only has an ARP entry for a host that has sent
+traffic recently. `pinger.py` reads a list of subnets and pings every host
+in them so the gateways learn all the endpoints before the discovery run.
+
+Put the subnets in a file (default `vlans.txt`), one per line. You can
+paste straight from a switch —
+
+```text
+show run | i ^interface|^ ip address
+
+interface Vlan10
+ ip address 10.20.10.1 255.255.255.0
+```
+
+— or list them as `address mask` or CIDR:
+
+```text
+10.20.10.0 255.255.255.0
+10.20.20.0/24
+```
+
+Blank lines, lines containing `interface`, and lines starting with `#` are
+ignored, so `#` comments a subnet out. Subnets larger than `-m/--max-hosts`
+addresses (default 2100, i.e. bigger than a `/21`) are skipped.
+
+```bash
+python3 pinger.py
+python3 pinger.py -f user-subnets.txt
+```
+
+### All command-line options
+
+```text
+python3 pinger.py -h
+
+usage: pinger.py [-h] [-f FILE] [-c COUNT] [-r RATE] [--in-order] [--tcp-ports TCP_PORTS] [--tcp-timeout TCP_TIMEOUT] [-m MAX_HOSTS]
+
+Ping every host in the subnets listed in a file to warm the ARP cache.
+
+options:
+  -h, --help            show this help message and exit
+  -f, --file FILE       subnet list file (default: vlans.txt)
+  -c, --count COUNT     ICMP echo requests per host (default: 1, which is enough for ARP)
+  -r, --rate RATE       max pings started per second, 0 = no limit (default: 20)
+  --in-order            ping hosts low-to-high instead of in random order
+  --tcp-ports TCP_PORTS
+                        TCP ports to try on hosts that ignore ICMP, comma-separated (default: "9100"); pass "" to disable the TCP probe
+  --tcp-timeout TCP_TIMEOUT
+                        seconds to wait for each TCP connection (default: 1.0)
+  -m, --max-hosts MAX_HOSTS
+                        skip subnets with more addresses than this (default: 2100)
+```
+
+### Cross-platform examples
+
+=== "Linux"
+
+```text
+python3 pinger.py
+OS is Linux, sending 1 echo request per host
+IP addresses have been randomized
+Number of Subnets: 3
+90 hosts to ping at 20/s (~4s of launches)
+
+Pinging 30 hosts in 192.168.10.96/27
+```
+
+----------------------------------------------------------------
+
+=== "macOS"
+
+```text
+python3 pinger.py
+
+OS is Darwin, sending 1 echo request per host
+IP addresses have been randomized
+Number of Subnets: 3
+90 hosts to ping at 20/s (~4s of launches)
+
+Pinging 30 hosts in 192.168.10.96/27
+```
+
+----------------------------------------------------------------
+
+=== "Windows"
+
+```text
+ python3 pinger.py -r 10
+
+OS is Windows, sending 1 echo request per host
+IP addresses have been randomized
+Number of Subnets: 3
+90 hosts to ping at 10/s (~9s of launches)
+
+Pinging 30 hosts in 192.168.10.96/27
+```
+
+----------------------------------------------------------------
+
+### Which subnets are worth pinging
+
+Desktops, laptops, access points, IP phones, and surveillance cameras
+send traffic all the time, so the switches already have a current ARP
+entry for them. Pinging those subnets adds noise without adding much to
+the port maps.
+
+The devices that need warming up are the ones that sit quiet until
+something talks to them:
+
+- Door access controllers
+- Building automation controllers (usually BACnet)
+- Environmental monitoring systems (usually EMS)
+- Any other IoT device that just waits for instructions
+
+When these devices live on their own segmented VLANs, point `pinger.py` at
+just those VLANs — there's no need to sweep the user subnets.
+
+### Being gentle on EDR / NDR
+
+Firing ICMP at every address in a subnet all at once looks exactly like a
+horizontal scan and can get the machine running `pinger.py` alerted on or
+quarantined at customers running CrowdStrike, SentinelOne, Darktrace, and
+similar. Two arguments keep the sweep quiet:
+
+- **`-r`, `--rate`** — the maximum number of pings started per second
+  (default `20`). This is the setting that keeps the traffic looking like
+  background noise instead of a scan. `--rate 0` removes the limit and
+  starts every ping at once (the old, noisy behaviour).
+- **`-c`, `--count`** — ICMP echo requests per host (default `1`). One
+  request is enough to make the gateway learn the MAC; raise it only if
+  you want more confidence that a host is really up.
+
+Host order within each subnet is randomised by default (add `--in-order`
+to disable). Before it starts, the script prints how many hosts it will
+ping and roughly how long the launches will take at the chosen rate.
+
+```bash
+# One echo per host, 10 per second - light background traffic.
+python3 pinger.py -r 10 -c 1
+```
+
+Even a paced sweep is quiet, not invisible — coordinate with the
+customer's SOC first.
+
+### Waking sleeping printers
+
+Printers are the hardest devices to get an ARP entry for: their NICs drop
+into a deep sleep and ignore ICMP echo, so even `-c 3` often comes back
+empty. Almost every network printer, though, keeps TCP port 9100 (RAW /
+JetDirect / AppSocket) open, and a bare TCP handshake to an open port
+wakes the NIC where a ping will not.
+
+After the ICMP pass, `pinger.py` opens one TCP connection to port 9100 on
+every host that stayed silent and closes it immediately. Nothing is
+written to the socket, so nothing prints. A host woken this way is
+reported as `active (tcp/9100)`.
+
+- **`--tcp-ports`** — comma-separated ports to try (default `9100`). Add
+  `9101,9102` for multi-port external print servers. Pass `--tcp-ports ""`
+  to switch the TCP probe off and go back to ICMP only.
+- **`--tcp-timeout`** — seconds to wait for each connection (default
+  `1.0`).
+
+```bash
+python3 pinger.py --tcp-ports 9100,9101,9102
+```
+
+A port-9100 sweep is lighter than a port scan but not invisible — some IDS
+flag it as printer reconnaissance. Keep coordinating with the SOC.
+
+**Waking one printer without a sweep.** If the customer would rather not
+run `pinger.py` at all, a single printer can be woken with a one-line
+Python call from the `Discovery` directory:
+
+```bash
+python3 -c "import pinger; print(pinger.tcp_probe('192.168.10.109', [9100], 1.0))"
+```
+
+Swap in the printer's address. It prints `9100` if the handshake
+completed — the printer is now awake and its MAC is back on the switch —
+or `None` if nothing answered on that port within a second. Nothing is
+sent to the printer, so no page comes out.
+
+**Or list every printer as a `/32`.** To wake a known set of printers on a
+normal run without touching the rest of the subnet, put each one in
+`vlans.txt` as a single-host entry:
+
+```text
+ip address 192.168.10.109/32
+ip address 192.168.10.110/32
+```
+
+`pinger.py` expands a `/32` to just that one address, so the run hits
+exactly the printers you listed.
+
+----------------------------------------------------------------
+
 ## Creating Port maps
 
 There are two scripts in the discovery folder:
