@@ -809,6 +809,31 @@ python3 pinger.py --tcp-ports 9100,9101,9102
 A port-9100 sweep is lighter than a port scan but not invisible — some IDS
 flag it as printer reconnaissance. Keep coordinating with the SOC.
 
+**Waking one printer without a sweep.** If the customer would rather not
+run `pinger.py` at all, a single printer can be woken with a one-line
+Python call from the `Discovery` directory:
+
+```bash
+python3 -c "import pinger; print(pinger.tcp_probe('192.168.10.109', [9100], 1.0))"
+```
+
+Swap in the printer's address. It prints `9100` if the handshake
+completed — the printer is now awake and its MAC is back on the switch —
+or `None` if nothing answered on that port within a second. Nothing is
+sent to the printer, so no page comes out.
+
+**Or list every printer as a `/32`.** To wake a known set of printers on a
+normal run without touching the rest of the subnet, put each one in
+`vlans.txt` as a single-host entry:
+
+```text
+ip address 192.168.10.109/32
+ip address 192.168.10.110/32
+```
+
+`pinger.py` expands a `/32` to just that one address, so the run hits
+exactly the printers you listed.
+
 ----------------------------------------------------------------
 
 ## Failure to connect to a switch
