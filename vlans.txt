@@ -1,7 +1,6 @@
 interface Vlan1
- ip address 192.168.1.1 255.255.255.224
+ ip address 192.168.10.1 255.255.255.224
 interface Vlan2
  ip address 10.175.2.1 255.255.255.224
 interface Vlan4
  ip address 10.175.4.1 255.255.255.224
-
