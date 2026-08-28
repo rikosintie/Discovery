@@ -738,6 +738,29 @@ python3 pinger.py
 python3 pinger.py -f user-subnets.txt
 ```
 
+### All command-line options
+
+```text
+python3 pinger.py -h
+
+usage: pinger.py [-h] [-f FILE] [-c COUNT] [-r RATE] [--in-order] [--tcp-ports TCP_PORTS] [--tcp-timeout TCP_TIMEOUT] [-m MAX_HOSTS]
+
+Ping every host in the subnets listed in a file to warm the ARP cache.
+
+options:
+  -h, --help            show this help message and exit
+  -f, --file FILE       subnet list file (default: vlans.txt)
+  -c, --count COUNT     ICMP echo requests per host (default: 1, which is enough for ARP)
+  -r, --rate RATE       max pings started per second, 0 = no limit (default: 20)
+  --in-order            ping hosts low-to-high instead of in random order
+  --tcp-ports TCP_PORTS
+                        TCP ports to try on hosts that ignore ICMP, comma-separated (default: "9100"); pass "" to disable the TCP probe
+  --tcp-timeout TCP_TIMEOUT
+                        seconds to wait for each TCP connection (default: 1.0)
+  -m, --max-hosts MAX_HOSTS
+                        skip subnets with more addresses than this (default: 2100)
+```
+
 ### Which subnets are worth pinging
 
 Desktops, laptops, access points, IP phones, and surveillance cameras
