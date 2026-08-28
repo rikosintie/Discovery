@@ -783,6 +783,32 @@ python3 pinger.py -r 10 -c 1
 Even a paced sweep is quiet, not invisible — coordinate with the
 customer's SOC first.
 
+### Waking sleeping printers
+
+Printers are the hardest devices to get an ARP entry for: their NICs drop
+into a deep sleep and ignore ICMP echo, so even `-c 3` often comes back
+empty. Almost every network printer, though, keeps TCP port 9100 (RAW /
+JetDirect / AppSocket) open, and a bare TCP handshake to an open port
+wakes the NIC where a ping will not.
+
+After the ICMP pass, `pinger.py` opens one TCP connection to port 9100 on
+every host that stayed silent and closes it immediately. Nothing is
+written to the socket, so nothing prints. A host woken this way is
+reported as `active (tcp/9100)`.
+
+- **`--tcp-ports`** — comma-separated ports to try (default `9100`). Add
+  `9101,9102` for multi-port external print servers. Pass `--tcp-ports ""`
+  to switch the TCP probe off and go back to ICMP only.
+- **`--tcp-timeout`** — seconds to wait for each connection (default
+  `1.0`).
+
+```bash
+python3 pinger.py --tcp-ports 9100,9101,9102
+```
+
+A port-9100 sweep is lighter than a port scan but not invisible — some IDS
+flag it as printer reconnaissance. Keep coordinating with the SOC.
+
 ----------------------------------------------------------------
 
 ## Failure to connect to a switch

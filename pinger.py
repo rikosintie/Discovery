@@ -19,6 +19,10 @@ quarantined. This script defaults to a *paced* sweep:
   * host order within each subnet is shuffled unless --in-order is given.
   * --count controls echoes per host (default 1, which is enough to
     populate an ARP entry).
+  * hosts that ignore ICMP are then tried once with a TCP connect to
+    port 9100 (--tcp-ports). Printer NICs routinely sleep through ICMP
+    but answer TCP; no data is sent, so no print job is queued. Set
+    --tcp-ports "" to disable.
 
 --rate 0 restores the old "start everything at once" behaviour.
 
@@ -50,15 +54,19 @@ Usage
     python3 pinger.py
     python3 pinger.py --file user-subnets.txt --rate 10 --count 1
     python3 pinger.py --rate 0 --in-order        # old fast/noisy behaviour
+    python3 pinger.py --tcp-ports 9100,9101,9102 # extra printer-server ports
+    python3 pinger.py --tcp-ports ""             # ICMP only, no TCP probe
 """
 
 import argparse
 import ipaddress
 import platform
 import random
+import socket
 import subprocess
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 def build_ping_command(ip: str, system: str, count: int) -> list[str]:
@@ -131,17 +139,44 @@ def read_subnets(path: str) -> list[ipaddress.IPv4Network | ipaddress.IPv6Networ
     return subnets
 
 
-def ping_hosts(
-    hosts: list[str], system: str, count: int, rate: int
-) -> dict[str, bool]:
-    """Ping each host, starting at most `rate` pings per second (0 = no cap).
+def tcp_probe(ip: str, ports: list[int], timeout: float) -> int | None:
+    """Return the first port in `ports` that accepts a TCP connection.
 
-    Finished pings are collected as we go so the number of open processes
-    and pipe handles stays small even on a large subnet.
+    The socket is opened and closed straight away with nothing written to
+    it: the handshake alone registers the host's MAC on the switch and its
+    ARP entry on the gateway, and sending no data means no print job lands
+    on port 9100. Returns None if every port refuses, filters, or times
+    out.
+    """
+    for port in ports:
+        try:
+            with socket.create_connection((ip, port), timeout=timeout):
+                return port
+        except OSError:
+            continue
+    return None
+
+
+def probe_hosts(
+    hosts: list[str],
+    system: str,
+    count: int,
+    rate: int,
+    tcp_ports: list[int],
+    tcp_timeout: float,
+) -> dict[str, str]:
+    """Warm every host's ARP entry and report how each one answered.
+
+    An ICMP echo pass first, starting at most `rate` pings per second
+    (0 = no cap); finished pings are collected as we go so the number of
+    open processes stays small even on a large subnet. Every host that
+    stays silent is then probed once per port in `tcp_ports` with a
+    `tcp_timeout`-second connect, which wakes NICs (printers especially)
+    that drop ICMP. Values are "icmp", "tcp/<port>", or "" for no answer.
     """
     interval = 1.0 / rate if rate > 0 else 0.0
     in_flight: dict[str, subprocess.Popen] = {}
-    results: dict[str, bool] = {}
+    results: dict[str, str] = {}
 
     def collect(block: bool) -> None:
         for ip in list(in_flight):
@@ -149,7 +184,7 @@ def ping_hosts(
             if not block and proc.poll() is None:
                 continue
             output, _ = proc.communicate()
-            results[ip] = host_answered(output)
+            results[ip] = "icmp" if host_answered(output) else ""
             del in_flight[ip]
 
     for ip in hosts:
@@ -163,13 +198,34 @@ def ping_hosts(
         collect(block=False)
 
     collect(block=True)
+
+    pending = [ip for ip, how in results.items() if not how]
+    if tcp_ports and pending:
+        with ThreadPoolExecutor(max_workers=min(64, len(pending))) as pool:
+            futures = {}
+            for ip in pending:
+                futures[pool.submit(tcp_probe, ip, tcp_ports, tcp_timeout)] = ip
+                if interval:
+                    time.sleep(interval)
+            for future in as_completed(futures):
+                port = future.result()
+                if port is not None:
+                    results[futures[future]] = f"tcp/{port}"
+
     return results
 
 
 def ping_subnet(
-    subnet, system: str, max_hosts: int, count: int, rate: int, shuffle: bool
+    subnet,
+    system: str,
+    max_hosts: int,
+    count: int,
+    rate: int,
+    shuffle: bool,
+    tcp_ports: list[int],
+    tcp_timeout: float,
 ) -> None:
-    """Ping every usable host in one subnet and print which ones answer."""
+    """Probe every usable host in one subnet and print which ones answer."""
     if subnet.num_addresses > max_hosts:
         print(f"Skipped {subnet} ({subnet.num_addresses} addresses > {max_hosts})")
         return
@@ -180,12 +236,13 @@ def ping_subnet(
 
     print()
     print(f"Pinging {len(hosts)} hosts in {subnet}")
-    results = ping_hosts(hosts, system, count, rate)
+    results = probe_hosts(hosts, system, count, rate, tcp_ports, tcp_timeout)
 
     print()
     print("------ Results from the Pings ------")
     for ip in sorted(results, key=ipaddress.ip_address):
-        print(f"{ip} {'active' if results[ip] else 'no response'}")
+        how = results[ip]
+        print(f"{ip} {f'active ({how})' if how else 'no response'}")
 
 
 def main() -> None:
@@ -215,6 +272,18 @@ def main() -> None:
         help="ping hosts low-to-high instead of in random order",
     )
     parser.add_argument(
+        "--tcp-ports",
+        default="9100",
+        help='TCP ports to try on hosts that ignore ICMP, comma-separated '
+        '(default: "9100"); pass "" to disable the TCP probe',
+    )
+    parser.add_argument(
+        "--tcp-timeout",
+        type=float,
+        default=1.0,
+        help="seconds to wait for each TCP connection (default: 1.0)",
+    )
+    parser.add_argument(
         "-m",
         "--max-hosts",
         type=int,
@@ -226,6 +295,14 @@ def main() -> None:
         parser.error("--count must be at least 1")
     if args.rate < 0:
         parser.error("--rate must be 0 (no limit) or a positive number")
+    try:
+        tcp_ports = [int(p) for p in args.tcp_ports.split(",") if p.strip()]
+    except ValueError:
+        parser.error("--tcp-ports must be comma-separated port numbers")
+    if any(not 0 < port < 65536 for port in tcp_ports):
+        parser.error("--tcp-ports values must be between 1 and 65535")
+    if args.tcp_timeout <= 0:
+        parser.error("--tcp-timeout must be greater than 0")
 
     system = platform.system()
     echoes = "1 echo request" if args.count == 1 else f"{args.count} echo requests"
@@ -235,6 +312,11 @@ def main() -> None:
         print("IP addresses pinged in low-to-high order (--in-order)")
     else:
         print("IP addresses have been randomized")
+    if tcp_ports:
+        joined = ", ".join(str(port) for port in tcp_ports)
+        print(f"ICMP non-responders will be TCP-probed on port(s) {joined}")
+    else:
+        print('TCP probe disabled (--tcp-ports "")')
 
     subnets = read_subnets(args.file)
     if not subnets:
@@ -258,6 +340,8 @@ def main() -> None:
             args.count,
             args.rate,
             shuffle=not args.in_order,
+            tcp_ports=tcp_ports,
+            tcp_timeout=args.tcp_timeout,
         )
 
 
