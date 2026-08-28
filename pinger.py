@@ -8,6 +8,20 @@ collected by config-pull.py, so those tables have to be populated first.
 Running this against the customer's user subnets a few minutes before the
 discovery pass gives every reachable host an ARP entry on its gateway.
 
+Being gentle on EDR / NDR
+-------------------------
+Customers increasingly run CrowdStrike, SentinelOne, Darktrace, etc. A
+host that fires ICMP at every address in a subnet all at once looks exactly
+like a horizontal scan and can get the source machine alerted on or
+quarantined. This script defaults to a *paced* sweep:
+
+  * --rate limits how many pings are started per second (default 20).
+  * host order within each subnet is shuffled unless --in-order is given.
+  * --count controls echoes per host (default 1, which is enough to
+    populate an ARP entry).
+
+--rate 0 restores the old "start everything at once" behaviour.
+
 Input
 -----
 A text file (default: vlans.txt) with one subnet per line. Two formats are
@@ -29,34 +43,38 @@ Blank lines, lines containing "interface", and lines starting with "#" are
 ignored, so you can comment a subnet out by prefixing it with "#".
 
 Subnets larger than --max-hosts addresses (default 2100, i.e. bigger than a
-/21) are skipped: firing thousands of ping processes at once is unreliable.
+/21) are skipped.
 
 Usage
 -----
     python3 pinger.py
-    python3 pinger.py --file user-subnets.txt --max-hosts 4100
+    python3 pinger.py --file user-subnets.txt --rate 10 --count 1
+    python3 pinger.py --rate 0 --in-order        # old fast/noisy behaviour
 """
 
 import argparse
 import ipaddress
 import platform
+import random
 import subprocess
 import sys
+import time
 
 
-def build_ping_command(ip: str, system: str) -> list[str]:
+def build_ping_command(ip: str, system: str, count: int) -> list[str]:
     """Return the platform-appropriate ``ping`` argv for a single host.
 
-    Three ICMP echoes, numeric output, with a short overall deadline so a
+    `count` ICMP echoes, numeric output, with a short overall deadline so a
     dead host does not hold the batch open.
     """
+    n = str(count)
     if system == "Windows":
-        return ["ping", "-n", "3", "-w", "1000", ip]
+        return ["ping", "-n", n, "-w", "1000", ip]
     if system == "Darwin":
         # macOS: -t is the total timeout in seconds
-        return ["ping", "-n", "-c", "3", "-t", "4", ip]
+        return ["ping", "-n", "-c", n, "-t", "4", ip]
     # Linux and everything else: -w is the deadline in seconds
-    return ["ping", "-n", "-c", "3", "-w", "4", ip]
+    return ["ping", "-n", "-c", n, "-w", "4", ip]
 
 
 def host_answered(output: bytes) -> bool:
@@ -113,33 +131,61 @@ def read_subnets(path: str) -> list[ipaddress.IPv4Network | ipaddress.IPv6Networ
     return subnets
 
 
-def ping_subnet(subnet, system: str, max_hosts: int) -> None:
+def ping_hosts(
+    hosts: list[str], system: str, count: int, rate: int
+) -> dict[str, bool]:
+    """Ping each host, starting at most `rate` pings per second (0 = no cap).
+
+    Finished pings are collected as we go so the number of open processes
+    and pipe handles stays small even on a large subnet.
+    """
+    interval = 1.0 / rate if rate > 0 else 0.0
+    in_flight: dict[str, subprocess.Popen] = {}
+    results: dict[str, bool] = {}
+
+    def collect(block: bool) -> None:
+        for ip in list(in_flight):
+            proc = in_flight[ip]
+            if not block and proc.poll() is None:
+                continue
+            output, _ = proc.communicate()
+            results[ip] = host_answered(output)
+            del in_flight[ip]
+
+    for ip in hosts:
+        in_flight[ip] = subprocess.Popen(
+            build_ping_command(ip, system, count),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
+        if interval:
+            time.sleep(interval)
+        collect(block=False)
+
+    collect(block=True)
+    return results
+
+
+def ping_subnet(
+    subnet, system: str, max_hosts: int, count: int, rate: int, shuffle: bool
+) -> None:
     """Ping every usable host in one subnet and print which ones answer."""
     if subnet.num_addresses > max_hosts:
         print(f"Skipped {subnet} ({subnet.num_addresses} addresses > {max_hosts})")
         return
 
+    hosts = [str(host) for host in subnet.hosts()]
+    if shuffle:
+        random.shuffle(hosts)
+
     print()
-    print(f"Pinging hosts in {subnet}")
-    procs = {
-        str(host): subprocess.Popen(
-            build_ping_command(str(host), system),
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-        )
-        for host in subnet.hosts()
-    }
+    print(f"Pinging {len(hosts)} hosts in {subnet}")
+    results = ping_hosts(hosts, system, count, rate)
 
     print()
     print("------ Results from the Pings ------")
-    # Every ping is already running; collect them in address order. Decide
-    # up/down from the output, not the exit code (see host_answered).
-    for ip, proc in procs.items():
-        output, _ = proc.communicate()
-        if host_answered(output):
-            print(f"{ip} active")
-        else:
-            print(f"{ip} no response")
+    for ip in sorted(results, key=ipaddress.ip_address):
+        print(f"{ip} {'active' if results[ip] else 'no response'}")
 
 
 def main() -> None:
@@ -150,6 +196,25 @@ def main() -> None:
         "-f", "--file", default="vlans.txt", help="subnet list file (default: vlans.txt)"
     )
     parser.add_argument(
+        "-c",
+        "--count",
+        type=int,
+        default=1,
+        help="ICMP echo requests per host (default: 1, which is enough for ARP)",
+    )
+    parser.add_argument(
+        "-r",
+        "--rate",
+        type=int,
+        default=20,
+        help="max pings started per second, 0 = no limit (default: 20)",
+    )
+    parser.add_argument(
+        "--in-order",
+        action="store_true",
+        help="ping hosts low-to-high instead of in random order",
+    )
+    parser.add_argument(
         "-m",
         "--max-hosts",
         type=int,
@@ -157,6 +222,10 @@ def main() -> None:
         help="skip subnets with more addresses than this (default: 2100)",
     )
     args = parser.parse_args()
+    if args.count < 1:
+        parser.error("--count must be at least 1")
+    if args.rate < 0:
+        parser.error("--rate must be 0 (no limit) or a positive number")
 
     system = platform.system()
     print()
@@ -167,9 +236,24 @@ def main() -> None:
         print("No subnets to ping.")
         sys.exit(1)
 
+    to_ping = [s for s in subnets if s.num_addresses <= args.max_hosts]
+    total_hosts = sum(sum(1 for _ in s.hosts()) for s in to_ping)
     print(f"Number of Subnets: {len(subnets)}")
+    if args.rate > 0 and total_hosts:
+        print(
+            f"{total_hosts} hosts to ping at {args.rate}/s "
+            f"(~{total_hosts / args.rate:.0f}s of launches)"
+        )
+
     for subnet in subnets:
-        ping_subnet(subnet, system, args.max_hosts)
+        ping_subnet(
+            subnet,
+            system,
+            args.max_hosts,
+            args.count,
+            args.rate,
+            shuffle=not args.in_order,
+        )
 
 
 if __name__ == "__main__":

@@ -705,6 +705,68 @@ Total running time: 0.0 Hours 1.0 Minutes 44.67 Seconds
 
 ----------------------------------------------------------------
 
+## Warming the ARP cache with pinger.py
+
+The port maps are only as complete as the ARP tables `config-pull.py`
+collects, and a switch only has an ARP entry for a host that has sent
+traffic recently. `pinger.py` reads a list of subnets and pings every host
+in them so the gateways learn all the endpoints before the discovery run.
+
+Put the subnets in a file (default `vlans.txt`), one per line. You can
+paste straight from a switch —
+
+```text
+show run | i ^interface|^ ip address
+
+interface Vlan10
+ ip address 10.20.10.1 255.255.255.0
+```
+
+— or list them as `address mask` or CIDR:
+
+```text
+10.20.10.0 255.255.255.0
+10.20.20.0/24
+```
+
+Blank lines, lines containing `interface`, and lines starting with `#` are
+ignored, so `#` comments a subnet out. Subnets larger than `-m/--max-hosts`
+addresses (default 2100, i.e. bigger than a `/21`) are skipped.
+
+```bash
+python3 pinger.py
+python3 pinger.py -f user-subnets.txt
+```
+
+### Being gentle on EDR / NDR
+
+Firing ICMP at every address in a subnet all at once looks exactly like a
+horizontal scan and can get the machine running `pinger.py` alerted on or
+quarantined at customers running CrowdStrike, SentinelOne, Darktrace, and
+similar. Two arguments keep the sweep quiet:
+
+- **`-r`, `--rate`** — the maximum number of pings started per second
+  (default `20`). This is the setting that keeps the traffic looking like
+  background noise instead of a scan. `--rate 0` removes the limit and
+  starts every ping at once (the old, noisy behaviour).
+- **`-c`, `--count`** — ICMP echo requests per host (default `1`). One
+  request is enough to make the gateway learn the MAC; raise it only if
+  you want more confidence that a host is really up.
+
+Host order within each subnet is randomised by default (add `--in-order`
+to disable). Before it starts, the script prints how many hosts it will
+ping and roughly how long the launches will take at the chosen rate.
+
+```bash
+# One echo per host, 10 per second - light background traffic.
+python3 pinger.py -r 10 -c 1
+```
+
+Even a paced sweep is quiet, not invisible — coordinate with the
+customer's SOC first.
+
+----------------------------------------------------------------
+
 ## Failure to connect to a switch
 
 If a switch does not respond, the credentials are incorrect, the SSH version is 1, the vendor id is not supported, or the first column is an invalid IP address, a message is printed to the console, the device is added to the skipped-devices summary (also written to `Failure-Logs/skipped_devices.csv`), and the script continues processing the next switch.
