@@ -59,6 +59,18 @@ def build_ping_command(ip: str, system: str) -> list[str]:
     return ["ping", "-n", "-c", "3", "-w", "4", ip]
 
 
+def host_answered(output: bytes) -> bool:
+    """True only if ping received a real ICMP echo reply.
+
+    The exit code alone is not reliable on Windows: when a host in a
+    directly-connected subnet does not exist, the local IP stack replies
+    "Destination host unreachable", which Windows ping counts as a reply and
+    exits 0. A genuine echo reply always carries "TTL=" (Windows) / "ttl="
+    (Linux, macOS); the unreachable and timeout messages never do.
+    """
+    return b"ttl=" in output.lower()
+
+
 def parse_subnet_line(line: str) -> str | None:
     """Turn one input line into an ``address/mask`` string, or None to skip it.
 
@@ -112,17 +124,19 @@ def ping_subnet(subnet, system: str, max_hosts: int) -> None:
     procs = {
         str(host): subprocess.Popen(
             build_ping_command(str(host), system),
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
         )
         for host in subnet.hosts()
     }
 
     print()
     print("------ Results from the Pings ------")
-    # Every ping is already running; just collect them in address order.
+    # Every ping is already running; collect them in address order. Decide
+    # up/down from the output, not the exit code (see host_answered).
     for ip, proc in procs.items():
-        if proc.wait() == 0:
+        output, _ = proc.communicate()
+        if host_answered(output):
             print(f"{ip} active")
         else:
             print(f"{ip} no response")
