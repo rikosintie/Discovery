@@ -136,8 +136,8 @@ if args.logging != "":
 if site is None:
     print("-s site name is a required argument")
     sys.exit()
-
-dev_inv_file = "device-inventory-" + site + ".csv"
+else:
+    dev_inv_file = "device-inventory-" + site + ".csv"
 
 # check if site's device inventory file exists
 if not os.path.isfile(dev_inv_file):
@@ -145,6 +145,7 @@ if not os.path.isfile(dev_inv_file):
     sys.exit()
 
 # Check for the password, exit if it doesn't exist
+password: str | None = ""
 if args.password != "":
     password = getpass.getpass(prompt="Input the Password:")
 else:
