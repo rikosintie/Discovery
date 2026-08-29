@@ -212,8 +212,8 @@ for line in fabric:
 
         # pull a config diff
         print(f"processing show archive config diff for {hostname}")
-        output_diff = net_connect.send_command(
-            "show archive config diff", read_timeout=360
+        output_diff = str(
+            net_connect.send_command("show archive config diff", read_timeout=360)
         )
 
         # Use TextFSM to create a json object with cdp neighbors
