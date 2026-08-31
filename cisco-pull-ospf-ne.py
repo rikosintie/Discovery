@@ -26,10 +26,11 @@ to be prompted for it.
 Example:
 export cyberARK=your_password
 
-IMPORTANT: use dashes, in <site> and <hostname> — they get
-reused verbatim to build every other filename downstream. Mixing "Lab_3850"
-and "Lab-3850" produces two different sets of files that never find each
+IMPORTANT: use dashes and lowercase letters, in <site> and <hostname> — they get reused verbatim to build every other filename downstream. Mixing "Lab_3850"
+and "lab-3850" produces two different sets of files that never find each
 other, and the failure is silent.
+
+Also, when searching for files it's much easier if all are lowercase.
 
 3. Execute
 python3 cisco-pull-ospf-ne.py -s test

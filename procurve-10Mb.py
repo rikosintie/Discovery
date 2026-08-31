@@ -106,8 +106,9 @@ if options.site_name is None:
     print("-s site name is a required argument")
     sys.exit()
 else:
-    # Use dashes, never underscores, in site names/hostnames — they're reused
-    # verbatim to build every downstream filename, and a mismatch fails silently.
+    # Use dashes and lowercase letters, in site names/hostnames — they're
+    # reused verbatim to build every downstream filename, and a mismatch
+    # fails silently. Lowercase also makes searching for files easier.
     dev_inv_file = "device-inventory-" + options.site_name + ".csv"
 
 ic(dev_inv_file)

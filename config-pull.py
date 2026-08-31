@@ -26,12 +26,13 @@ reported and skipped.
 NOTE: the password is read from the cyberARK environment variable, or pass
 -p 1 to be prompted for it when the script is executed.
 
-IMPORTANT: use dashes, never underscores, in <site> and <hostname> — they get
-reused verbatim to build every other filename downstream (Mac2IP.json,
+IMPORTANT: use dashes and lowercase letters, in <site> and <hostname> — they get reused verbatim to build every other filename downstream (Mac2IP.json,
 mac-address.txt, port-maps output, -c coreswitch values, etc). A hostname
-typed as "Lab_3850" in one place and "Lab-3850" in another produces two
+typed as "Lab_3850" in one place and "lab-3850" in another produces two
 different sets of files that never find each other, and the failure is
 silent — you just end up with missing columns, not an error.
+
+Also, when searching for files it's much easier if all are lowercase.
 
 3. Create a file named discovery-<vendor_id>.txt in the root of the Discovery
 folder. Place the show commands for the switches in it — this is a read-only
