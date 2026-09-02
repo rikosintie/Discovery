@@ -506,7 +506,7 @@ for line in fabric:
         if is_locally_administered(Mac):
             manufacture = KNOWN_LOCAL_PREFIXES.get(normalize_mac(Mac)[:6], "Randomized")
         else:
-            manufacture = str(p.get_manuf(Mac) or "")
+            manufacture = str(p.get_manuf(Mac) or "Unknown-OUI")
         if my_json_file:
             table.add_row(Vlan, IP_Data, Mac, Interface_Num, manufacture, DNS_Name)
         else:
