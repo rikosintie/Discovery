@@ -51,10 +51,10 @@ def remove_empty_lines(filename: str):
     if not os.path.isfile(filename):
         print(f"{filename} does not exist ")
         return
-    with open(filename) as filehandle:
+    with open(filename, encoding="utf-8-sig") as filehandle:
         lines = filehandle.readlines()
 
-    with open(filename, "w") as filehandle:
+    with open(filename, "w", encoding="utf-8") as filehandle:
         lines = filter(lambda x: x.strip(), lines)
         filehandle.writelines(lines)
 
@@ -109,7 +109,7 @@ if not os.path.isfile(dev_inv_file):
 
 remove_empty_lines(dev_inv_file)
 
-with open(dev_inv_file) as devices_file:
+with open(dev_inv_file, encoding="utf-8-sig") as devices_file:
     fabric = devices_file.readlines()
 
 # Build path to Interface/neighbors and build list of system files
@@ -124,7 +124,7 @@ for file_name in file_list:
     file_path_ne = os.path.join(loc1, file_name_ne)
     if os.path.exists(file_path_ne):
         os.remove(file_path_ne)
-    with open(file_path, "r") as file:
+    with open(file_path, "r", encoding="utf-8") as file:
         try:
             data = json.load(file)
             system = []
@@ -160,7 +160,7 @@ for line in fabric:
 
     int_report = get_current_path("CR-data", "-Port-data.txt")
     print(f"Writing CR data to {int_report}")
-    with open(int_report, "w") as file:
+    with open(int_report, "w", encoding="utf-8") as file:
         file.write(uptime)
         file.write(f"Number of Interfaces with traffic: {count}\n")
         for line in stack_info:

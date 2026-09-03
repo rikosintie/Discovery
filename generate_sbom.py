@@ -36,7 +36,7 @@ def read_pinned_packages(lock_file: str) -> list[tuple[str, str]]:
     lines and comments.
     """
     packages = []
-    with open(lock_file) as f:
+    with open(lock_file, encoding="utf-8") as f:
         for line in f:
             line = line.split("#", 1)[0].strip()
             if not line:
@@ -136,7 +136,7 @@ def main() -> None:
     if not packages:
         raise SystemExit(f"No pinned packages found in {LOCK_FILE}")
     sbom = build_sbom(packages)
-    with open(SBOM_FILE, "w") as f:
+    with open(SBOM_FILE, "w", encoding="utf-8") as f:
         json.dump(sbom, f, separators=(",", ":"))
     print(f"Wrote {len(packages)} packages to {SBOM_FILE}")
 

@@ -55,8 +55,8 @@ Log_file_Exists: Path = my_dir.joinpath(Log_filename)
 # Open log file and CSV file
 if Log_file_Exists.exists():
     with (
-        open(Log_filename, "r") as log_file,
-        open(csv_filename, "w", newline="") as csv_file,
+        open(Log_filename, "r", encoding="utf-8") as log_file,
+        open(csv_filename, "w", newline="", encoding="utf-8") as csv_file,
     ):
         csv_writer = csv.writer(csv_file)
 
