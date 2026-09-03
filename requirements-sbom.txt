@@ -1,0 +1,9 @@
+# One-off tooling dependency for generate_sbom.py / sbom.dot regeneration.
+# Not a runtime dependency of any Discovery script — install separately:
+#   pip install -r requirements-sbom.txt
+# Regenerating sbom.dot/sbom.svg also needs the system graphviz package
+# (for its `dot` binary and headers pygraphviz builds against):
+#   sudo apt install graphviz graphviz-dev
+spdx-tools==0.8.5
+networkx==3.6.1
+pygraphviz==2.0.1

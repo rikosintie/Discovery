@@ -313,16 +313,37 @@ This project is licensed under the Unlicense - see the LICENSE file for details.
 
 ## SBOM - a Software Bill of Materials
 
-Github has a feature for creating an SPDX compatible SBOM file. From the repository page click:
-Insights, Dependency Graph, Export SBOM.
+This project includes a file named sbom.json — an SPDX 2.3 compatible SBOM
+listing every pinned dependency in requirements.lock.txt.
 
-This project includes a file named sbom.json.
+It used to be exported by hand from GitHub's Dependency Graph (Insights,
+Dependency Graph, Export SBOM), but that only resolved fuzzy `~>` version
+ranges and required re-exporting from the browser every time a dependency
+changed. `generate_sbom.py` replaces that: it reads the exact pins already
+maintained in requirements.lock.txt and writes sbom.json directly, so the
+SBOM stays a single local command away from being current.
 
-You can use tools from the [SPDX project](https://github.com/spdx/tools-python) to validate and work with the sbom.json file. They have a python script that allows you to output a Graphviz format file. Here is the command I used to create sbom.dot.
+```bash
+python3 generate_sbom.py
+```
 
-`pyspdxtools -i sbom.json --graph -o sbom``
+This also regenerates sbom.dot via [SPDX project](https://github.com/spdx/tools-python)
+tooling (which both validates the document and renders the dependency
+graph). That step needs the one-off tooling dependencies in
+requirements-sbom.txt — spdx-tools, networkx, pygraphviz — plus the system
+`graphviz`/`graphviz-dev` packages pygraphviz builds against:
 
-You can use this site, [Graphviz Visual Editor](http://magjac.com/graphviz-visual-editor/) to convert the sbom.dot file to an SVG image. For this project the filename is spdx.svg.
+```bash
+pip install -r requirements-sbom.txt
+sudo apt install graphviz graphviz-dev
+```
+
+To finish with an SVG, render sbom.dot locally with Graphviz's own `dot`
+command (no need for an online converter):
+
+```bash
+dot -Tsvg sbom.dot -o sbom.svg
+```
 
 ----------------------------------------------------------------
 
