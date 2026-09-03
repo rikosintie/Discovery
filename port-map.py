@@ -90,6 +90,14 @@ from rich.table import Table
 # ic.enable()
 ic.disable()
 
+# On Windows, redirecting stdout to a file (e.g. `port-map.py ... > out.txt`)
+# makes Python fall back to the legacy console codepage (cp1252) instead of
+# UTF-8, which can't encode the unicode symbols/box-drawing characters rich
+# prints - crashing with UnicodeEncodeError on the first one. Force UTF-8
+# so redirected output works the same as an interactive terminal.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 __author__ = "Michael Hubbard"
 __author_email__ = "michael.hubbard999@gmail.com"
 __author_email__ = "mhubbard@network-dev.com"
@@ -156,7 +164,7 @@ def get_up_interfaces(interface_json_path: str) -> list[str]:
     which only captures port counters) rather than misreporting them.
     """
     try:
-        with open(interface_json_path) as f:
+        with open(interface_json_path, encoding="utf-8") as f:
             interfaces = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         return []
@@ -185,7 +193,7 @@ def get_interfaces_with_mac(mac_file_path: str) -> set[str]:
     seen_with_mac: set[str] = set()
     current_interface = ""
     try:
-        with open(mac_file_path) as f:
+        with open(mac_file_path, encoding="utf-8") as f:
             lines = f.readlines()
     except FileNotFoundError:
         return seen_with_mac
@@ -292,10 +300,10 @@ def remove_empty_lines(filename: str) -> None:
     if not os.path.isfile(filename):
         print(f"{filename} does not exist ")
         return
-    with open(filename) as filehandle:
+    with open(filename, encoding="utf-8-sig") as filehandle:
         lines = filehandle.readlines()
 
-    with open(filename, "w") as filehandle:
+    with open(filename, "w", encoding="utf-8") as filehandle:
         lines = list(filter(lambda x: x.strip(), lines))
         filehandle.writelines(lines)
 
@@ -426,7 +434,7 @@ if not os.path.isfile(dev_inv_file):
 
 remove_empty_lines(dev_inv_file)
 
-with open(dev_inv_file) as devices_file:
+with open(dev_inv_file, encoding="utf-8-sig") as devices_file:
     fabric = devices_file.readlines()
 
 print("-" * (len(dev_inv_file) + 23))
@@ -460,7 +468,7 @@ for line in fabric:
     # my_json_file = hostname + "-Mac2IP.json"
 
     try:
-        with open(my_json_file) as f:
+        with open(my_json_file, encoding="utf-8") as f:
             # Normalize keys so lookups work regardless of the source
             # switch's MAC notation vs. the target device's own notation.
             Mac_IP = {normalize_mac(k): v for k, v in json.load(f).items()}
@@ -483,7 +491,7 @@ for line in fabric:
     data: list[tuple[str, str]] = []
     current_interface = ""
     try:
-        with open(mac_file, "r") as f:
+        with open(mac_file, "r", encoding="utf-8") as f:
             for line in f:
                 # strip out lines without a mac address
                 if line_has_mac(line):
@@ -604,7 +612,7 @@ for line in fabric:
     output_file = create_filename("port-maps", "-ports.txt", "Final")
     ic(output_file)
 
-    with open(output_file, "w") as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         file_console = Console(
             file=f, highlight=False, force_terminal=True, no_color=True
         )
@@ -638,7 +646,7 @@ for line in fabric:
         "===========\n\n"
         f"Device Name: {device_name}\n\n"
     )
-    with open(pinginfo_file, "w") as f:
+    with open(pinginfo_file, "w", encoding="utf-8") as f:
         f.write(pinginfo_header)
         f.write("\n".join(pinginfo))
         f.write("\n")
