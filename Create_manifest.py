@@ -11,7 +11,7 @@ import os
 manifest = "offline.manifest"
 ignore = [".manifest", ".py", ".pyc", ".rb", ".sample", ".sass", ".sassc", ".scssc"]
 
-file = open(manifest, "w")
+file = open(manifest, "w", encoding="utf-8")
 file.write("CACHE MANIFEST\n")
 
 for root, dirs, files in os.walk("./"):

@@ -72,7 +72,7 @@ def save_to_csv(folder: str, filename: str, data: list[str]) -> None:
         None — the CSV file is written to disk.
     """
     full_path = os.path.join(get_current_path(), folder, filename)
-    with open(full_path, "w", newline="") as csvfile:
+    with open(full_path, "w", newline="", encoding="utf-8") as csvfile:
         csv_writer = csv.writer(csvfile)
         csv_writer.writerow(["File Name"])
         for row in data:

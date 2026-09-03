@@ -60,10 +60,10 @@ def remove_empty_lines(filename: str):
     if not os.path.isfile(filename):
         print(f"{filename} does not exist ")
         return
-    with open(filename) as filehandle:
+    with open(filename, encoding="utf-8-sig") as filehandle:
         lines = filehandle.readlines()
 
-    with open(filename, "w") as filehandle:
+    with open(filename, "w", encoding="utf-8") as filehandle:
         lines = filter(lambda x: x.strip(), lines)
         filehandle.writelines(lines)
 
@@ -120,7 +120,7 @@ if not os.path.isfile(dev_inv_file):
 
 remove_empty_lines(dev_inv_file)
 
-with open(dev_inv_file) as devices_file:
+with open(dev_inv_file, encoding="utf-8-sig") as devices_file:
     fabric = devices_file.readlines()
 
 
@@ -144,7 +144,7 @@ for line in fabric:
 
     int_report = get_current_path("CR-data", "-10Mb-Ports.txt")
     print(f"Writing CR data to {int_report}")
-    with open(int_report, "w") as file:
+    with open(int_report, "w", encoding="utf-8") as file:
         for line in stack_info:
             file.write(f"Interface {line}\n")
 

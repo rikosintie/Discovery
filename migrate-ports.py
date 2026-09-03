@@ -56,10 +56,10 @@ def remove_empty_lines(filename: str) -> None:
     if not os.path.isfile(filename):
         print(f"{filename} does not exist ")
         return
-    with open(filename) as filehandle:
+    with open(filename, encoding="utf-8-sig") as filehandle:
         lines = filehandle.readlines()
 
-    with open(filename, "w") as filehandle:
+    with open(filename, "w", encoding="utf-8") as filehandle:
         lines = list(filter(lambda x: x.strip(), lines))
         filehandle.writelines(lines)
 
@@ -106,7 +106,7 @@ if not os.path.isfile(dev_inv_file):
 
 remove_empty_lines(dev_inv_file)
 
-with open(dev_inv_file) as devices_file:
+with open(dev_inv_file, encoding="utf-8-sig") as devices_file:
     fabric = devices_file.readlines()
 
 print("-" * (len(dev_inv_file) + 23))
@@ -127,7 +127,7 @@ for line in fabric:
         print(f"Configuring {hostname}")
         cfg_file = create_filename("Interface", "-interface.json")
         print()
-        with open(cfg_file, "r") as json_file:
+        with open(cfg_file, "r", encoding="utf-8") as json_file:
             interfaces = json.load(json_file)
         ports = []
         count = 0
@@ -189,7 +189,7 @@ for line in fabric:
 
         print(f"Number of ports to be migrated on {hostname}: {count}")
         migrate = create_filename("Interface", "-interface-migrate.txt")
-        with open(migrate, "w") as file:
+        with open(migrate, "w", encoding="utf-8") as file:
             file.writelines(ports)
 
 if not found_cisco_ios:

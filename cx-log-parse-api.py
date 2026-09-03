@@ -67,7 +67,7 @@ def parse_logs(log_lines: list[str], csv_filename: str) -> None:
         None — the CSV file is written to disk. Lines that don't match
         log_pattern are silently skipped.
     """
-    with open(csv_filename, "w", newline="") as csv_file:
+    with open(csv_filename, "w", newline="", encoding="utf-8") as csv_file:
         csv_writer = csv.writer(csv_file)
         # Write CSV header
         csv_writer.writerow(
@@ -206,7 +206,7 @@ def main() -> None:
     log_lines: list[str] | None
     if args.file and os.path.isfile(args.file):
         # Read logs from file
-        with open(args.file, "r") as log_file:
+        with open(args.file, "r", encoding="utf-8") as log_file:
             log_lines = log_file.readlines()
         parse_logs(log_lines, args.output)
         print(f"Logs processed and saved to {args.output}")
@@ -251,7 +251,7 @@ def main() -> None:
             ]
 
             # Open CSV file for writing
-            with open(args.output, "w", newline="") as csvfile:
+            with open(args.output, "w", newline="", encoding="utf-8") as csvfile:
                 csvwriter = csv.writer(csvfile)
                 # Write the headers
                 csvwriter.writerow(headers)

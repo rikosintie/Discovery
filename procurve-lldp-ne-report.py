@@ -54,7 +54,7 @@ for file_name in file_list:
     file_path_ne = os.path.join(loc1, file_name_ne)
     if os.path.exists(file_path_ne):
         os.remove(file_path_ne)
-    with open(file_path, "r") as file:
+    with open(file_path, "r", encoding="utf-8") as file:
         try:
             data = json.load(file)
             lldp_neighbors = []
@@ -99,7 +99,7 @@ for file_name in file_list:
                     "\n",
                     divider,
                 ]
-                with open(file_path_ne, "a") as file:
+                with open(file_path_ne, "a", encoding="utf-8") as file:
                     for item in lldp_neighbors:
                         file.write("%s\n" % item)
         # except NameError:

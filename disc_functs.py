@@ -29,10 +29,10 @@ def remove_empty_lines(filename: str) -> str:
     if not os.path.isfile(filename):
         print(f"{filename} does not exist ")
         return
-    with open(filename) as filehandle:
+    with open(filename, encoding="utf-8-sig") as filehandle:
         lines = filehandle.readlines()
 
-    with open(filename, "w") as filehandle:
+    with open(filename, "w", encoding="utf-8") as filehandle:
         lines = filter(lambda x: x.strip(), lines)
         filehandle.writelines(lines)
 

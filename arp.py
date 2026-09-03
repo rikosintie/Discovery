@@ -164,10 +164,10 @@ def remove_empty_lines(filename: str) -> None:
     if not os.path.isfile(filename):
         print(f"{filename} does not exist ")
         return
-    with open(filename) as filehandle:
+    with open(filename, encoding="utf-8-sig") as filehandle:
         lines = filehandle.readlines()
 
-    with open(filename, "w") as filehandle:
+    with open(filename, "w", encoding="utf-8") as filehandle:
         lines = list(filter(lambda x: x.strip(), lines))
         filehandle.writelines(lines)
 
@@ -241,7 +241,7 @@ if not os.path.isfile(dev_inv_file):
 
 remove_empty_lines(dev_inv_file)
 
-with open(dev_inv_file) as devices_file:
+with open(dev_inv_file, encoding="utf-8-sig") as devices_file:
     fabric = devices_file.readlines()
 
 print("-" * (len(loc) + len(dev_inv_file) + 23))
@@ -261,7 +261,7 @@ for line in fabric:
     device_name = hostname
     data1: list[str] = []
     try:
-        with open(arp_file, "r") as f:
+        with open(arp_file, "r", encoding="utf-8") as f:
             for raw_line in f:
                 match_prompt = re.match(r"^(\S+?)(?:\([^)]*\))?#", raw_line)
                 if match_prompt:
@@ -273,7 +273,7 @@ for line in fabric:
 
     # Save the cleaned-up arp records
     save_device = create_filename("port-maps", "-arp.txt")
-    with open(save_device, "w") as device_file:
+    with open(save_device, "w", encoding="utf-8") as device_file:
         device_file.writelines(data1)
 
     IPs: list[str] = []
@@ -315,7 +315,7 @@ for line in fabric:
     # used (port-maps/, no "data" subdir) — port-map.py only ever looks
     # there, so writing anywhere else means it's silently never found.
     mydatafile = create_filename("port-maps", "-Mac2IP.json")
-    with open(mydatafile, "w") as f:
+    with open(mydatafile, "w", encoding="utf-8") as f:
         json.dump(Mac_IP, f, indent=4)
     print(f"Writing {mydatafile}")
 
