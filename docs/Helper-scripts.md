@@ -357,6 +357,42 @@ To resolve DNS names for the IP addresses in the port map, pass a DNS server wit
 
 `python3 port-map.py -s jc-edge -c JC-core -d 192.168.10.222`
 
+#### "UP with no learned MAC address" warning
+
+A switch port can show `link_status: up` (and `protocol_status: up`) in
+config-pull.py's `hostname-interface.json` capture while having no rows at
+all in `hostname-mac-address.txt` — the port is physically connected, but
+the device on it hasn't sent traffic recently enough to still be in the
+switch's MAC address table. Without a flag for this, that host is just
+silently missing from the port map.
+
+port-map.py cross-references the two files for each device and, when it
+finds any, prints a warning panel at the top of `hostname-ports.txt`,
+right below the version banner:
+
+```bash
+╭───── ⚠ 5 interface(s) UP with no learned MAC address ─────╮
+│ GigabitEthernet1/0/3                                       │
+│ GigabitEthernet1/0/27                                      │
+│ GigabitEthernet1/0/30                                      │
+│ GigabitEthernet1/0/35                                      │
+│ GigabitEthernet1/0/46                                      │
+│                                                              │
+│ Run pinger.py to refresh the mac address table              │
+│ (uplinks/trunks may show up here too — eyeball those out)   │
+╰──────────────────────────────────────────────────────────────╯
+```
+
+`pinger.py` is the recommended way to clear this — see [Warming the ARP
+cache with pinger.py](#warming-the-arp-cache-with-pingerpy). Run it against
+the site's subnets to generate traffic from those hosts, then re-run
+config-pull.py and port-map.py to pick up the newly-learned MAC entries.
+
+Uplink/trunk ports to other switches can legitimately show up in this list
+too, since a per-interface MAC query on a trunk is often empty by design.
+For now, eyeball those out; filtering them out automatically is a planned
+refinement.
+
 #### Updating the vendor (OUI) database
 
 Both scripts above (arp.py, port-map.py) use the `manuf2` package to resolve a MAC address's manufacturer. The OUI database it ships with needs to be refreshed occasionally — newly-registered hardware won't have a vendor until it's in the database you have locally, and shows up as `None` instead. When that happens, run either:

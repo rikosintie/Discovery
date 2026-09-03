@@ -1125,11 +1125,13 @@ for line in fabric:
             # border = "-" * (len(cfg_file) + len(hostname) + 16)
             border = "-" * (len(hostname) + 37)
             print(f"[bold][blue]{border}[/blue][/bold]")
-            # Use textFSM to create a json object of show system
+            # Use textFSM to create a json object of show system information
             print(
-                f"collecting [bright_blue]'show system'[/bright_blue] for [cyan]{hostname}[/cyan]"
+                f"collecting [bright_blue]'show system information'[/bright_blue] for [cyan]{hostname}[/cyan]"
             )
-            output_system = net_connect.send_command("show system", use_textfsm=True)
+            output_system = net_connect.send_command(
+                "show system information", use_textfsm=True
+            )
             border = "-" * (len(hostname) + 29)
             print(f"[bold][blue]{border}[/blue][/bold]")
             #  Write the JSON system data to a file
@@ -1149,7 +1151,7 @@ for line in fabric:
             # write the JSON system data to a file
             with open(int_report, "w", encoding="utf-8") as file:
                 output_system = json.dumps(
-                    check_textfsm(output_system, "show system"), indent=2
+                    check_textfsm(output_system, "show system information"), indent=2
                 )
                 file.write(output_system)
             border = "-" * (len(int_report) + 1)

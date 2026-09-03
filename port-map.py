@@ -148,6 +148,81 @@ def normalize_mac(mac: str) -> str:
     return re.sub(r"[.:-]", "", mac).lower()
 
 
+def get_up_interfaces(interface_json_path: str) -> list[str]:
+    """
+    Interfaces reported up/up (link and protocol) in a config-pull
+    -interface.json capture. Returns [] for vendors whose -interface.json
+    schema has no link_status/protocol_status fields (e.g. HP ProCurve,
+    which only captures port counters) rather than misreporting them.
+    """
+    try:
+        with open(interface_json_path) as f:
+            interfaces = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return []
+    up: list[str] = []
+    for entry in interfaces:
+        name = entry.get("interface")
+        if not name:
+            continue
+        if name.lower().startswith(("vlan", "lo", "tu")):
+            continue
+        if entry.get("link_status") == "up" and str(
+            entry.get("protocol_status", "")
+        ).startswith("up"):
+            up.append(name)
+    return up
+
+
+def get_interfaces_with_mac(mac_file_path: str) -> set[str]:
+    """
+    Interfaces that returned at least one MAC address entry in a raw
+    -mac-address.txt capture, keyed by whatever identifier the device
+    echoed back for that query block — the full interface name for Cisco
+    ("show mac add int GigabitEthernet1/0/3"), or the bare port number for
+    HP ProCurve ("show mac-address 3" / "Port Address Table - 3").
+    """
+    seen_with_mac: set[str] = set()
+    current_interface = ""
+    try:
+        with open(mac_file_path) as f:
+            lines = f.readlines()
+    except FileNotFoundError:
+        return seen_with_mac
+    for line in lines:
+        cmd = re.search(
+            r"show mac[\s-]?add(?:ress)?\s+(?:int(?:erface)?\s+)?(\S+)",
+            line,
+            re.IGNORECASE,
+        )
+        if cmd:
+            current_interface = cmd.group(1)
+            continue
+        table_header = re.search(r"Port Address Table\s*-\s*(\S+)", line)
+        if table_header:
+            current_interface = table_header.group(1)
+            continue
+        if current_interface and line_has_mac(line):
+            seen_with_mac.add(current_interface)
+    return seen_with_mac
+
+
+def find_up_interfaces_without_mac(
+    interface_json_path: str, mac_file_path: str
+) -> list[str]:
+    """
+    Interfaces that are up/up per -interface.json but have zero learned MAC
+    addresses in -mac-address.txt — the case plain ARP/MAC discovery
+    quietly misses: a live host that hasn't talked recently enough to still
+    be in the CAM table. Uplinks/trunks will show up here too, since a
+    filtered per-interface MAC query on them is often legitimately empty —
+    eyeball those out for now (filtering them out is a future refinement).
+    """
+    up = get_up_interfaces(interface_json_path)
+    with_mac = get_interfaces_with_mac(mac_file_path)
+    return [name for name in up if name not in with_mac]
+
+
 def version(console: Console) -> None:
     """
     Prints the version banner via the given Console rather than the builtin
@@ -360,6 +435,7 @@ for line in fabric:
     vendor = line.split(",")[1]
     hostname = line.split(",")[2]
     mac_file = create_filename("port-maps", "-mac-address.txt", "data")
+    interface_json_file = create_filename("Interface", "-interface.json")
     ic(mac_file)
 
     print()
@@ -519,6 +595,9 @@ for line in fabric:
             else:
                 pinginfo.append(f"{IP_Data} {Mac}")
 
+    up_no_mac = find_up_interfaces_without_mac(interface_json_file, mac_file)
+    ic(up_no_mac)
+
     output_file = create_filename("port-maps", "-ports.txt", "Final")
     ic(output_file)
 
@@ -527,6 +606,17 @@ for line in fabric:
             file=f, highlight=False, force_terminal=True, no_color=True
         )
         version(file_console)
+        if up_no_mac:
+            file_console.print()
+            file_console.print(
+                Panel.fit(
+                    "\n".join(up_no_mac)
+                    + "\n\nRun pinger.py to refresh the mac address table\n"
+                    "(uplinks/trunks may show up here too — eyeball those out)",
+                    title=f"⚠ {len(up_no_mac)} interface(s) UP with no learned MAC address",
+                    border_style="yellow",
+                )
+            )
         file_console.print()
         file_console.print(f"Number of Entries: {table.row_count}")
         file_console.print()
