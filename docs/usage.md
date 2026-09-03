@@ -11,7 +11,6 @@ There are a few steps that need to be completed before starting the discovery pr
 - Create a device inventory file
 - Make changes to the discovery-[vendor].txt file (if needed)
 - Decide how you want store the password
-- Update the mac.txt file to match the format of the switches
 
 ----------------------------------------------------------------
 
@@ -30,20 +29,17 @@ Here's a recording of the scripts being run end-to-end on Windows:
   });
 </script>
 
-`idleTimeLimit: 2` caps any pause in the recording (e.g. waiting on a switch) at 2 seconds of playback, the web equivalent of running `-i 2` in the `asciinema` CLI.
-
 ----------------------------------------------------------------
 
 ## Create the device inventory file
 
 You must create a csv file that contains the following:
 
-```test
+```text
 switch ip
 netmiko vendor_id
 switch hostname
 username
-format that the device needs to output mac addresses per interface
 ```
 
 The supported Netmiko vendor_ids are:
@@ -65,15 +61,20 @@ juniper_junos
 
 The format for each line in the `device-inventory` file is:
 
-`ip_address,vendor_id,hostname,user,command to display mac addresses per intf`
+`ip_address,vendor_id,hostname,user`
+
+You don't need to know the command your switch uses to display MAC
+addresses per interface — config-pull.py already knows it for every
+supported vendor_id (see `MAC_COMMAND_MAP` in config-pull.py) and builds it
+for you.
 
 Here is an example of a `device-inventory` file:
 
 ```text
-192.168.10.52,hp_procurve,Procurve-2920-24,mhubbard,show mac-addre
-192.168.10.253,cisco_xe,3850,mhubbard,show mac addr int
-192.168.10.54,cisco_xe,4500,mhubbard,show mac addr int
-192.168.10.15,cisco_ios,2960s,mhubbard,show mac addr int
+192.168.10.52,hp_procurve,Procurve-2920-24,mhubbard
+192.168.10.253,cisco_xe,3850,mhubbard
+192.168.10.54,cisco_xe,4500,mhubbard
+192.168.10.15,cisco_ios,2960s,mhubbard
 ```
 
 In this example, there are hp_procurve, cisco_xe and cisco_ios devices. You can have as many devices in the file as you need. I have had as many 50 in one file.
@@ -322,94 +323,6 @@ The config files will be named:
 
 !!! warning
     On older switches, reading a lot of data can cause the CPU to go to 90% or higher! This will cause issues if OSPF or EIGRP is running and may cause the script to fail with a timeout. If this happens, remove some commands from the discovery file and try again.
-
-### Pulling the mac address table
-
-For pulling the mac-address table, which most customers want you to do before a cutover, I build an exclude statement using a regex to skip uplink ports. Here is an example for HPE Procurve that doesn't pull mac addresses for ports on modules A and B. These were uplinks on one of the switches that I developed the script on.
-
-`show mac-address | ex "A|B"`
-
-In the example, the `|` symbol means logical OR. This works because the switch displays the mac address in lower case.
-
-```bash
- show mac-address | ex "A|B"
-
-  ----------------- ------------------------------- ----
-  00c0b7-f4b43a     C4                              1
-  282986-40a427     H24                             1
-```
-
-Notice that port C4 has a lowercase a and b in the address and port H24 has a lowercase a. Since the regex is case sensitive this works.
-
-On a non-modular switch you can't use:
-
-```bash
-sh mac-address | exclude 24|25
-
- Status and Counters - Port Address Table
-
-  MAC Address   Port    VLAN
-  ------------- ------- ----
-  00e04c-360348 5       10
-```
-
-Because port 11 has `25` in the mac address
-
-`b00cd1-372591 11      10`
-
-And was excluded from the output.
-
-Here is a regex that will match only port 24 so that you can exclude port 24.
-
-```bash
-show mac-address | exclude " [0]*24[ ]+"
-
- Status and Counters - Port Address Table
-
-  MAC Address   Port    VLAN
-  ------------- ------- ----
-  bc9fe4-c342ca 12      1
-  00e04c-360348 5       10
-```
-
-You can also use the regex "|" OR symbol:
-
-```bash
-show mac-address | exclude " [0]*5|24[ ]+"
-
- Status and Counters - Port Address Table
-
-  MAC Address   Port    VLAN
-  ------------- ------- ----
-  bc9fe4-c342ca 12      1
-```
-
-Notice that if you wanted to exclude port 1, 2, 3, or 4,  you would add a space after the number. Otherwise the regex would match 11, 21, 31, 41.
-
-**Or just forget the regex!**
-The goal is to not include mac-addresses from uplinks and system MACs. But you would need to know what ports to exclude ahead of time. You can just dump the whole table. The only time I have seen this cause a problem was on a Cisco 6509 core that had six 48 port blades and several IDFs connected to the fiber card. There are a lot of mac in that table. The script worked but it took a while!
-
-I use this [site](https://regexr.com/) to test/develop regex expressions.
-
-### Cisco IOS mac address table exclude
-
-The Cisco IOS has this regex
-`show mac address-table | ex STATIC|Po|1/0/49`
-
-This excludes ports with:
-
-- STATIC
-- Port Channels
-- interface 1/0/49
-
-**Or just forget the regex!**
-The goal is to not include mac-addresses from uplinks and system MACs. But you would need to know what ports to exclude ahead of time. You can just dump the whole table. The only time I have seen this cause a problem was on a Cisco 6509 core that had six 48 port blades and several IDFs connected to the fiber card. There are a lot of mac in that table. The script worked but it took a while!
-
-### Cisco XE mac address table exclude
-
-`show mac address-table | ex Po|ffff.ffff.ffff|static`
-
-Again, the goal is to exclude uplinks.
 
 ----------------------------------------------------------------
 
