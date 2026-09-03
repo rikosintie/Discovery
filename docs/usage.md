@@ -15,6 +15,25 @@ There are a few steps that need to be completed before starting the discovery pr
 
 ----------------------------------------------------------------
 
+## Watch it in action
+
+Here's a recording of the scripts being run end-to-end on Windows:
+
+<div id="discovery-demo"></div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    AsciinemaPlayer.create('../video/discover.cast', document.getElementById('discovery-demo'), {
+      idleTimeLimit: 2,
+      autoPlay: true,
+      theme: 'dracula'
+    });
+  });
+</script>
+
+`idleTimeLimit: 2` caps any pause in the recording (e.g. waiting on a switch) at 2 seconds of playback, the web equivalent of running `-i 2` in the `asciinema` CLI.
+
+----------------------------------------------------------------
+
 ## Create the device inventory file
 
 You must create a csv file that contains the following:
@@ -33,8 +52,15 @@ The supported Netmiko vendor_ids are:
 hp_procurve
 cisco_ios
 cisco_xe
-cisco_nx
-aruba_cx
+cisco_nxos
+cisco_s300
+aruba_osswitch
+aruba_aoscx
+arista_eos
+dell_os6
+brocade_fastiron
+ruckus_fastiron
+juniper_junos
 ```
 
 The format for each line in the `device-inventory` file is:
@@ -91,7 +117,7 @@ For example,
 
 There is a sample file named device-inventory-area1.csv in the project. The site name is just a tag so that you can have as many device-inventory files as you need. At a large customer this might be the MDF and then a series of IDFs.
 
-#### Handling more than one login password
+### Handling more than one login password
 
 At smaller sites without RADIUS or TACACS+ the switches often have several
 different local passwords. Rather than putting passwords in the inventory
