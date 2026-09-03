@@ -188,6 +188,15 @@ switches. If it has already moved forward, run
 `python3 -m pip install 'paramiko==3.5.1'`. See the "Legacy switches"
 section of `usage.md` for the full explanation.
 
+### Output directories are created automatically
+
+The scripts write to several output folders (`Interface`, `Running`,
+`CR-data`, `port-maps/data`, `port-maps/Final`, `port-maps/pinginfo`, ...).
+Most of these are gitignored, so a fresh clone won't have them yet — you
+don't need to create them by hand. Every script's `create_filename()`
+helper calls `os.makedirs(..., exist_ok=True)` before writing, so each
+folder is created the first time something needs to be written to it.
+
 ## 5. Deactivate the Virtual Environment
 
 When you are finished, deactivate the environment

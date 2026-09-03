@@ -187,6 +187,9 @@ def create_filename(sub_dir1: str, extension: str = "", sub_dir2: str = "") -> s
     current_path = os.getcwd()
     extension = hostname + extension
     int_report = os.path.join(current_path, sub_dir1, sub_dir2, extension)
+    # Some output dirs (e.g. port-maps/data) are gitignored and won't exist
+    # on a fresh clone - create the target dir before anything writes to it.
+    os.makedirs(os.path.dirname(int_report), exist_ok=True)
     return int_report
 
 

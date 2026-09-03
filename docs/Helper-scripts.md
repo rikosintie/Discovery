@@ -10,6 +10,10 @@ The helper scripts are a collection of python scripts that read data that the co
 
 ## What files are created
 
+Every folder mentioned below is created automatically the first time a
+script writes to it — most of them are gitignored, so a fresh clone won't
+have them yet, and that's expected. There's nothing to create by hand.
+
 After the `config-pull.py` script finishes, you can use the ***hostname-CR-data.txt*** files to get started planning. The script also creates JSON files for:
 
 - Port Maps
