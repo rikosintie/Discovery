@@ -347,6 +347,55 @@ Number of IP, MAC and Manufacture: 566
 
 If you have a need for this information great, if not just ignore it.
 
+#### Merging external ARP data (SonicWall, FortiGate, etc.)
+
+In a Core/IDF deployment, `-c coreswitch` assumes the core switch itself
+has an SVI (and therefore an ARP entry) for every VLAN. That's not always
+true — some sites route a subset of VLANs through a separate firewall
+(SonicWall, FortiGate, WatchGuard, ...) instead of the switch, so the
+switch's own `show ip arp` never sees those IPs and `port-map.py` reports
+those hosts as `No-Match` even though the firewall knows exactly who they
+are.
+
+`merge-sonicwall-arp.py` is a one-off for this: it reads a MAC/IP table
+exported from the firewall's ARP cache (for a SonicWall, `tz370_arp_cache.csv`
+with columns `IP Address,Type,MAC Address,Vendor,Interface,Timeout` — check
+your model's admin UI for the exact export path, it varies by SonicOS
+version), keeps only the interfaces/VLANs the core switch can't see,
+converts the MACs to the same `aabb.ccdd.eeff` format `arp.py` uses, and
+merges them into the existing `coreswitch-Mac2IP.json`.
+
+Run it **after** `arp.py` and **before** `port-map.py` — `arp.py` rebuilds
+`coreswitch-Mac2IP.json` from scratch every run, so anything merged in
+before that gets wiped:
+
+```bash
+python3 arp.py -s jcedge -c jc-core
+python3 merge-sonicwall-arp.py
+python3 port-map.py -s jcedge -c jc-core -d 10.100.126.6
+```
+
+Getting the CSV out of the SonicWall's web UI was rough — there's no clean
+export button on this model/firmware, so it was highlight, copy, paste into
+a text editor, then hand-clean the mess before it was usable as a CSV. If
+your firewall has SNMP enabled, `snmpwalk` against its ARP table is a much
+less painful way to get the same MAC/IP pairing from Linux:
+
+```bash
+snmpwalk -v2c -c <community> <firewall-ip> ipNetToMediaTable
+# or by OID directly:
+snmpwalk -v2c -c <community> <firewall-ip> .1.3.6.1.2.1.4.22
+```
+
+That returns the same information as the ARP cache page, in a script-
+friendly format that doesn't need de-duplicating by hand.
+
+As written, the script is hardcoded to one CSV path, one target
+Mac2IP.json, and one set of VLAN interfaces — it's meant to be opened and
+edited for your own site rather than run as a general-purpose tool. A
+FortiGate variant (`show arp` output instead of a SonicWall CSV export)
+is planned for a similar aggregation-switch-plus-firewall setup.
+
 #### Running the port-map.py script
 
 One script handles the port-map step for every supported vendor — it used to be split into procurve-macaddr.py and cisco-macaddr.py (plus a third, cx-macaddr.py, for Aruba CX). It reads the hostname-Mac2IP.json and hostname-mac-address.txt files, detects each line's MAC format and column order rather than assuming a fixed layout, and creates the port maps — with a manufacturer lookup via the maintained `manuf2` package and, when a DNS server is available, a reverse-DNS name column.
