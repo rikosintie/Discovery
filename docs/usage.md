@@ -59,14 +59,11 @@ ruckus_fastiron
 juniper_junos
 ```
 
+The filename follows this format: `device-inventory-sitename.csv
+
 The format for each line in the `device-inventory` file is:
 
 `ip_address,vendor_id,hostname,user`
-
-You don't need to know the command your switch uses to display MAC
-addresses per interface — config-pull.py already knows it for every
-supported vendor_id (see `MAC_COMMAND_MAP` in config-pull.py) and builds it
-for you.
 
 Here is an example of a `device-inventory` file:
 
@@ -84,7 +81,7 @@ In this example, there are hp_procurve, cisco_xe and cisco_ios devices. You can 
 !!! note "The first column can be a DNS name"
     The first column is labelled `ip_address`, but a DNS name works just as
     well as long as it resolves on the machine running the script (for
-    example `idf1-sw.corp.example.com,cisco_ios,idf1-sw,mhubbard`). The
+    example `idf1-sw.example.com,cisco_ios,idf1-sw,mhubbard`). The
     script resolves the name at connect time and the address it actually
     reached is shown on the "Successfully created config files for" banner,
     so you don't have to reopen the inventory file to SSH back in later.
@@ -116,14 +113,12 @@ Save the file as `device-inventory-<site name>.csv` in the root of the project f
 For example,
 `device-inventory-HQ.csv`
 
-There is a sample file named device-inventory-area1.csv in the project. The site name is just a tag so that you can have as many device-inventory files as you need. At a large customer this might be the MDF and then a series of IDFs.
+There is a sample file named device-inventory-area1.csv in the project. The site name is just a tag so that you can have as many device-inventory files as you need. At a large customer this might be the MDF and then a series of IDFs. Or if there are multiple locations, a device-inventory file for each site.
 
 ### Handling more than one login password
 
 At smaller sites without RADIUS or TACACS+ the switches often have several
-different local passwords. Rather than putting passwords in the inventory
-file, split the fleet into one inventory file per password and run the
-script once for each:
+different local passwords. In that case, split the switches into one inventory file per password and run the script once for each:
 
 ```bash
 export cyberARK=oldpassword
@@ -133,12 +128,17 @@ export cyberARK=newpassword
 python3 config-pull.py -s acme-newpw
 ```
 
-Every run writes its output by hostname into the same `CR-data/`,
-`Interface/`, `Running/`, and `port-maps/` folders, so the results merge
-cleanly and the downstream tools (`arp.py`, `port-map.py`) don't care that
-the data came from more than one run. `--test-connect` is a quick way to
-find out which switches accept which password before committing to a full
-collection.
+Every run writes its output by hostname into these folders
+
+- `CR-data/`
+- `Failure-logs`
+- `Interface/`
+- `port-maps/`
+- `Running/`
+
+so the results merge cleanly and the downstream tools (`arp.py`, `port-map.py`) don't care that the data came from more than one run.
+
+`--test-connect` is a quick way to find out which switches accept which password before committing to a full collection.
 
 !!! warning
     Use dashes and lowercase letters in site names and hostnames — anywhere they show up as part of a filename (`device-inventory-<site>.csv`, the hostname column, `-c coreswitch` values, etc). Every script derives filenames straight from these values, so a `Lab_3850` here and a `lab-3850` there silently produces two different sets of files that never find each other — the arp/macaddr/port-map handoff breaks with no error, just quietly-missing IP/DNS columns. Pick one hostname spelling per device and use it everywhere, always dashes and lowercase. Lowercase also makes searching for files easier.
@@ -279,7 +279,7 @@ When you press enter, you will see "Input the Password:" on the command line. En
 
 ----------------------------------------------------------------
 
-## Update the discovery-<vendor_id>.txt file
+## Update the discovery-vendor_id.txt file
 
 This file contains all of the `show commands` that will be sent to the switches. The project includes sample files for hp_procurve, cisco_ios, and cisco_xe switches. The sample files have over 50 commands in them, including many that may not apply to the customer:
 
