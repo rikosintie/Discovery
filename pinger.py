@@ -19,10 +19,15 @@ quarantined. This script defaults to a *paced* sweep:
   * host order within each subnet is shuffled unless --in-order is given.
   * --count controls echoes per host (default 1, which is enough to
     populate an ARP entry).
-  * hosts that ignore ICMP are then tried once with a TCP connect to
-    port 9100 (--tcp-ports). Printer NICs routinely sleep through ICMP
-    but answer TCP; no data is sent, so no print job is queued. Set
-    --tcp-ports "" to disable.
+  * hosts that are link-up and answering ARP but stay silent on ICMP
+    are then tried once with a TCP connect to port 9100 (--tcp-ports).
+    This catches host firewalls that drop echo and NICs whose firmware
+    answers ARP but ignores ICMP; a refused connection (TCP RST) counts
+    as alive too, since the host still refreshed its ARP / MAC entry. No
+    data is sent, so no print job is queued. It does nothing for a device
+    that is fully asleep with its switch port down - nothing on or off the
+    box can reach that until the port comes back up. Set --tcp-ports "" to
+    disable.
 
 --rate 0 restores the old "start everything at once" behaviour.
 
@@ -139,19 +144,23 @@ def read_subnets(path: str) -> list[ipaddress.IPv4Network | ipaddress.IPv6Networ
     return subnets
 
 
-def tcp_probe(ip: str, ports: list[int], timeout: float) -> int | None:
-    """Return the first port in `ports` that accepts a TCP connection.
+def tcp_probe(ip: str, ports: list[int], timeout: float) -> str | None:
+    """Return how `ip` answered a TCP connect, or None if it stayed silent.
 
-    The socket is opened and closed straight away with nothing written to
-    it: the handshake alone registers the host's MAC on the switch and its
-    ARP entry on the gateway, and sending no data means no print job lands
-    on port 9100. Returns None if every port refuses, filters, or times
-    out.
+    "tcp/<port>" means the port accepted the handshake; "rst/<port>" means
+    the host actively refused it. Either answer proves the host is alive
+    and has just refreshed its MAC on the switch and its ARP entry on the
+    gateway, which is the whole point of the probe, so a refusal is not
+    treated as a miss. Any socket that opens is closed straight away with
+    nothing written to it, so no print job lands on port 9100. Returns
+    None only when every port times out or ARP never resolves.
     """
     for port in ports:
         try:
             with socket.create_connection((ip, port), timeout=timeout):
-                return port
+                return f"tcp/{port}"
+        except ConnectionRefusedError:
+            return f"rst/{port}"
         except OSError:
             continue
     return None
@@ -171,8 +180,9 @@ def probe_hosts(
     (0 = no cap); finished pings are collected as we go so the number of
     open processes stays small even on a large subnet. Every host that
     stays silent is then probed once per port in `tcp_ports` with a
-    `tcp_timeout`-second connect, which wakes NICs (printers especially)
-    that drop ICMP. Values are "icmp", "tcp/<port>", or "" for no answer.
+    `tcp_timeout`-second connect, which picks up hosts that answer ARP but
+    drop ICMP. Values are "icmp", "tcp/<port>", "rst/<port>", or "" for no
+    answer.
     """
     interval = 1.0 / rate if rate > 0 else 0.0
     in_flight: dict[str, subprocess.Popen] = {}
@@ -208,9 +218,9 @@ def probe_hosts(
                 if interval:
                     time.sleep(interval)
             for future in as_completed(futures):
-                port = future.result()
-                if port is not None:
-                    results[futures[future]] = f"tcp/{port}"
+                how = future.result()
+                if how is not None:
+                    results[futures[future]] = how
 
     return results
 
