@@ -168,6 +168,41 @@ something talks to them:
 When these devices live on their own segmented VLANs, point `pinger.py` at
 just those VLANs — there's no need to sweep the user subnets.
 
+### How it works
+
+`pinger.py` runs two passes over the host list:
+
+1. **Paced ICMP sweep** — one echo per host by default, in randomized order,
+   started at no more than `--rate` per second so the traffic reads as
+   background noise rather than a horizontal scan.
+2. **TCP fallback** — every host that stayed silent on ICMP gets one TCP
+   connect to port 9100 (`--tcp-ports`), opened and closed with nothing
+   written to it. This catches hosts that are link-up and answering ARP but
+   drop ICMP: host firewalls, and printer NICs whose firmware answers ARP but
+   ignores echo. A refused connection (TCP RST) counts as alive — the RST
+   still proves the host is up and has just refreshed its MAC on the switch
+   and its ARP entry on the core.
+
+Each host prints as `active (icmp)`, `active (tcp/9100)`, `active (rst/9100)`,
+or `no response`.
+
+**What it can't reach.** A host that is fully asleep with its switch port down
+is unreachable by any probe — ICMP, TCP, or ARP — until the port comes back
+up. The TCP fallback only helps hosts that are still on the wire.
+
+**Run it off-subnet.** With an L3 core holding an SVI for every user subnet,
+run `pinger.py` from a host that reaches those subnets *through* the core. The
+core resolves each target itself to forward the packet and installs the ARP
+entry, which is what `config-pull.py` later collects. A same-subnet run only
+refreshes the local access switch's CAM table and never touches the core's ARP
+table.
+
+**Why the timing matters.** Cisco's default ARP timeout (4 h) outlives its CAM
+aging (5 min), so the core can list an ARP entry for a host whose
+access-switch port has already aged out of the CAM table — and `port-map.py`
+needs both. Running `pinger.py` a few minutes before the discovery pass
+refreshes both at once.
+
 ### Being gentle on EDR / NDR
 
 Firing ICMP at every address in a subnet all at once looks exactly like a
@@ -194,6 +229,11 @@ python3 pinger.py -r 10 -c 1
 
 Even a paced sweep is quiet, not invisible — coordinate with the
 customer's SOC first.
+
+At Fal.Con 2026 I walked a CrowdStrike engineer (Jeff) through how `pinger.py`
+works. His assessment was that the Falcon sensor on endpoints should not flag
+the paced sweep. A later run at a customer with `vlans.txt` set to
+`10.100.126.0/24` produced no CrowdStrike alerts.
 
 ### Waking sleeping printers
 
@@ -229,10 +269,11 @@ Python call from the `Discovery` directory:
 python3 -c "import pinger; print(pinger.tcp_probe('192.168.10.109', [9100], 1.0))"
 ```
 
-Swap in the printer's address. It prints `9100` if the handshake
-completed — the printer is now awake and its MAC is back on the switch —
-or `None` if nothing answered on that port within a second. Nothing is
-sent to the printer, so no page comes out.
+Swap in the printer's address. It prints `tcp/9100` if the handshake
+completed, or `rst/9100` if the printer refused the connection — either way
+the NIC is awake and its MAC is back on the switch — or `None` if nothing
+answered on that port within a second. Nothing is sent to the printer, so no
+page comes out.
 
 **Or list every printer as a `/32`.** To wake a known set of printers on a
 normal run without touching the rest of the subnet, put each one in
