@@ -18,6 +18,15 @@ capture names it as a neighbor) fold together case-insensitively. A link
 reported from both ends, or by both CDP and LLDP, collapses to one edge
 instead of drawing it twice.
 
+A phone (or any other leaf device) that CDP and LLDP name completely
+differently - a Mitel phone is "SEP00085D65B42D" to CDP and "regDN
+2281,MINET_6940" to LLDP, same handset - would otherwise show up as two
+separate nodes hanging off the same switch port. Since a leaf device is
+never itself a capture host, two different-looking neighbor names seen on
+the *same local port* of the *same switch* are merged into one node - the
+LLDP name is kept when both exist, since it tends to carry the more useful
+information (extension/DN) for phones in practice.
+
 Node roles
 ----------
 Every capture host is a switch by definition - config-pull.py only runs
@@ -146,45 +155,66 @@ def read_interface_speeds(host: str) -> dict[str, str]:
 
 
 class Node:
-    __slots__ = ("key", "label", "role", "is_host")
+    __slots__ = ("key", "label", "role", "is_host", "label_rank")
 
-    def __init__(self, key: str, label: str, role: str, is_host: bool):
+    def __init__(self, key: str, label: str, role: str, is_host: bool, label_rank: int = 0):
         self.key = key
         self.label = label
         self.role = role
         self.is_host = is_host
+        self.label_rank = label_rank
 
 
-def build_graph() -> tuple[dict[str, Node], dict[frozenset, dict]]:
-    """Scan every CDP/LLDP capture and return (nodes, edges), deduped."""
-    nodes: dict[str, Node] = {}
-    edges: dict[frozenset, dict] = {}
+# How much to trust a label when two sightings disagree on a leaf device's
+# name: an OUI guess is a last resort, CDP's device-id is often a MAC-derived
+# string (Mitel's "SEP<mac>"), LLDP's system name tends to carry the more
+# human-readable info (extension/DN) for the same phone.
+_LABEL_RANK = {"unnamed": 0, "cdp": 1, "lldp": 2}
+
+
+class _UnionFind:
+    """Tracks which leaf-device sightings turned out to be the same node."""
+
+    def __init__(self) -> None:
+        self._parent: dict[str, str] = {}
+
+    def find(self, key: str) -> str:
+        self._parent.setdefault(key, key)
+        while self._parent[key] != key:
+            self._parent[key] = self._parent[self._parent[key]]
+            key = self._parent[key]
+        return key
+
+    def union(self, a: str, b: str) -> None:
+        ra, rb = self.find(a), self.find(b)
+        if ra != rb:
+            self._parent[rb] = ra
+
+
+def build_graph() -> tuple[dict[str, Node], dict[object, dict]]:
+    """Scan every CDP/LLDP capture and return (nodes, edges), deduped.
+
+    Two passes: the first collects every sighting (a switch's own identity,
+    and everything it sees on each port) without committing to node
+    identity yet; the second resolves leaf devices that CDP and LLDP named
+    differently but that showed up on the exact same switch port - almost
+    certainly the same physical device - into one node before building the
+    final edge list.
+    """
+    host_keys: set[str] = set()
+    for kind in ("cdp", "lldp"):
+        for path in nc.discover_captures(kind):
+            host_keys.add(canonical_key(nc.host_from_capture(path, kind)))
+
+    sightings: list[dict] = []
+    port_neighbors: dict[tuple[str, str], set[str]] = {}
     speed_cache: dict[str, dict[str, str]] = {}
 
-    def upsert_node(key: str, label: str, role: str, is_host: bool) -> None:
-        existing = nodes.get(key)
-        if existing is None:
-            nodes[key] = Node(key, label, role, is_host)
-            return
-        if is_host:
-            # A capture host is always a switch, no matter how a neighbor's
-            # sighting of it (processed in either order) classified it.
-            existing.role = "core"
-            existing.is_host = True
-            existing.label = label
-        else:
-            if _ROLE_RANK[role] > _ROLE_RANK[existing.role]:
-                existing.role = role
-            # Prefer a name the device actually advertised over an
-            # OUI-guessed one, whichever sighting arrived first.
-            if "(unnamed)" in existing.label and "(unnamed)" not in label:
-                existing.label = label
-
-    for kind, classify in (("cdp", classify_cdp), ("lldp", classify_lldp)):
+    for kind in ("cdp", "lldp"):
+        classify = classify_cdp if kind == "cdp" else classify_lldp
         for path in nc.discover_captures(kind):
             host = nc.host_from_capture(path, kind)
             host_key = canonical_key(host)
-            upsert_node(host_key, host, "core", is_host=True)
 
             records = nc.load_records(path)
             if not records:
@@ -200,8 +230,6 @@ def build_graph() -> tuple[dict[str, Node], dict[frozenset, dict]]:
                 neighbor_key = canonical_key(raw_name)
                 if neighbor_key == host_key:
                     continue  # a device reporting itself - capture artifact
-                role = classify(rec.get("capabilities", ""))
-                upsert_node(neighbor_key, nc.tidy_name(raw_name), role, is_host=False)
 
                 local_if = nc.shorten_interface(rec.get("local_interface", ""))
                 if kind == "cdp":
@@ -210,26 +238,103 @@ def build_graph() -> tuple[dict[str, Node], dict[frozenset, dict]]:
                     remote_if = nc.shorten_interface(
                         rec.get("neighbor_port_id") or rec.get("neighbor_interface") or ""
                     )
-
-                edge_key = frozenset({(host_key, local_if), (neighbor_key, remote_if)})
-                speed = speeds.get(rec.get("local_interface", ""), "")
-                edge = edges.get(edge_key)
-                if edge is None:
-                    edges[edge_key] = {
-                        "a": host_key,
-                        "a_if": local_if,
-                        "b": neighbor_key,
-                        "b_if": remote_if,
-                        "speed": speed,
+                label = nc.tidy_name(raw_name)
+                sightings.append(
+                    {
+                        "host_key": host_key,
+                        "local_if": local_if,
+                        "neighbor_key": neighbor_key,
+                        "neighbor_is_host": neighbor_key in host_keys,
+                        "label": label,
+                        "label_rank": "unnamed" if "(unnamed)" in label else kind,
+                        "role": classify(rec.get("capabilities", "")),
+                        "remote_if": remote_if,
+                        "speed": speeds.get(rec.get("local_interface", ""), ""),
                     }
-                elif speed and not edge["speed"]:
-                    edge["speed"] = speed
+                )
+                if neighbor_key not in host_keys:
+                    port_neighbors.setdefault((host_key, local_if), set()).add(neighbor_key)
+
+    # Same switch port, two different neighbor names from CDP vs LLDP ->
+    # one physical device. Union them so both sightings resolve to one key.
+    merges = _UnionFind()
+    for distinct in port_neighbors.values():
+        if len(distinct) > 1:
+            first = next(iter(distinct))
+            for other in distinct:
+                merges.union(first, other)
+
+    nodes: dict[str, Node] = {}
+
+    def upsert_node(key: str, label: str, role: str, is_host: bool, rank: int = 0) -> None:
+        existing = nodes.get(key)
+        if existing is None:
+            nodes[key] = Node(key, label, role, is_host, rank)
+            return
+        if is_host:
+            # A capture host is always a switch, no matter how a neighbor's
+            # sighting of it (processed in either order) classified it.
+            existing.role = "core"
+            existing.is_host = True
+            existing.label = label
+        else:
+            if _ROLE_RANK[role] > _ROLE_RANK[existing.role]:
+                existing.role = role
+            if rank >= existing.label_rank:
+                existing.label = label
+                existing.label_rank = rank
+
+    for kind in ("cdp", "lldp"):
+        for path in nc.discover_captures(kind):
+            host = nc.host_from_capture(path, kind)
+            upsert_node(canonical_key(host), host, "core", is_host=True)
+
+    edges: dict[object, dict] = {}
+    for sighting in sightings:
+        neighbor_key = sighting["neighbor_key"]
+        if not sighting["neighbor_is_host"]:
+            neighbor_key = merges.find(neighbor_key)
+        upsert_node(
+            neighbor_key,
+            sighting["label"],
+            sighting["role"],
+            is_host=False,
+            rank=_LABEL_RANK[sighting["label_rank"]],
+        )
+
+        host_key, local_if = sighting["host_key"], sighting["local_if"]
+        if sighting["neighbor_is_host"]:
+            # Both switches may report this same link from their own end -
+            # a symmetric key collapses either direction to one edge.
+            edge_key = frozenset({(host_key, local_if), (neighbor_key, sighting["remote_if"])})
+        else:
+            # A leaf has no capture of its own to report the link back, so
+            # identity is just "this switch port" once cross-protocol
+            # sightings have already been merged into one neighbor_key above.
+            edge_key = (host_key, local_if, neighbor_key)
+
+        edge = edges.get(edge_key)
+        if edge is None:
+            edges[edge_key] = {
+                "a": host_key,
+                "a_if": local_if,
+                "b": neighbor_key,
+                "b_if": sighting["remote_if"],
+                "speed": sighting["speed"],
+            }
+        else:
+            if sighting["speed"] and not edge["speed"]:
+                edge["speed"] = sighting["speed"]
+            # Prefer a human-readable remote port ("Port 1") over a bare MAC
+            # when CDP and LLDP disagree on how to describe the same port.
+            if nc.is_mac(edge["b_if"]) and not nc.is_mac(sighting["remote_if"]):
+                edge["b_if"] = sighting["remote_if"]
 
     return nodes, edges
 
 
 def filter_graph(
-    nodes: dict[str, Node], edges: dict[frozenset, dict], roles: set[str] | None
+    nodes: dict[str, Node], edges: dict[object, dict], roles: set[str] | None
 ) -> tuple[dict[str, Node], list[dict]]:
     """Apply the role filter, then drop nodes that end up with no edges.
 
