@@ -59,7 +59,7 @@ ruckus_fastiron
 juniper_junos
 ```
 
-The filename follows this format: `device-inventory-sitename.csv
+The filename follows this format: `device-inventory-site.csv
 
 The format for each line in the `device-inventory` file is:
 
@@ -108,7 +108,7 @@ Rainbow CSV also has an `align` feature that makes it easier to read the columns
 
 ----------------------------------------------------------------
 
-Save the file as `device-inventory-<site name>.csv` in the root of the project folder.
+Save the file as `device-inventory-site.csv` in the root of the project folder.
 
 For example,
 `device-inventory-HQ.csv`
@@ -330,11 +330,15 @@ The config files will be named:
 
 Now that the project is set up and the inventory file is created, you can run the script. Make sure you are in the Discovery directory and run:
 
+Linux/Mac
+
 ```bash
 source bin/activate
 ```
 
 or
+
+Windows
 
 ```bash
 .\venv\Scripts\activate
