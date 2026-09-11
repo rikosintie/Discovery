@@ -855,9 +855,28 @@ python3 topo-map.py -o site1-topology
 ```
 
 Each run writes `<out>.dot`, `<out>.svg`, and `<out>.png` (default basename
-`topology`). Rendering shells out to Graphviz's `dot` command — install
-`graphviz` if it's missing (`sudo apt install graphviz` on Debian/Ubuntu) —
-no Python package is needed.
+`topology`). Rendering shells out to Graphviz's `dot` command, which has to
+be installed separately — it's a system package, not something
+`requirements.txt`/`pip install` can pull in for you.
+
+#### Installing Graphviz
+
+- **Linux (Debian/Ubuntu):** `sudo apt install graphviz`
+- **macOS:** `brew install graphviz` (same [Homebrew](https://formulae.brew.sh/formula/lldpd)
+  used elsewhere in this doc for `lldpd`)
+- **Windows:** `winget install --id Graphviz.Graphviz` from cmd or
+  PowerShell — see [Install Git](Getting_Started.md#install-git) for what to
+  do if `winget` itself isn't available (it ships with Windows 11 21H2+, but
+  older installs may not have it). No `winget`? The
+  [official installer](https://graphviz.org/download/) works too.
+
+Whichever way you install it, open a **new** terminal afterward — an
+already-running shell won't see a PATH change an installer just made. If
+`topo-map.py` still reports `dot` command was not found after that, `dot`
+isn't on PATH; the Windows installer in particular has historically shipped
+with "add Graphviz to the system PATH" unchecked by default; re-run it and
+enable that option, or add the install folder's `bin` directory to PATH by
+hand.
 
 Two examples from a real site, one per filtering mode:
 

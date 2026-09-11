@@ -71,16 +71,36 @@ Usage
     python3 topo-map.py -p               # phones only
     python3 topo-map.py -s -p            # core + phones (edge-switch view)
     python3 topo-map.py -o site1-topology
+
+Requires
+--------
+Graphviz's `dot` command on PATH - a system package, not a pip package, so
+`pip install`/requirements.txt won't get it:
+
+    Linux (Debian/Ubuntu): sudo apt install graphviz
+    macOS (Homebrew):      brew install graphviz
+    Windows (winget):      winget install --id Graphviz.Graphviz
+
+See docs/Helper-scripts.md for the Windows/macOS notes (PATH, installer
+fallback) that don't fit in a docstring.
 """
 
 import argparse
 import json
 import os
+import platform
 import re
 import subprocess
 import sys
 
 import ne_common as nc
+
+_INSTALL_HINTS = {
+    "Linux": "  Debian/Ubuntu: sudo apt install graphviz",
+    "Darwin": "  macOS (Homebrew): brew install graphviz",
+    "Windows": "  Windows (winget): winget install --id Graphviz.Graphviz\n"
+    "  No winget? Download the installer from https://graphviz.org/download/",
+}
 
 _PHONE_CDP_TOKENS = {"Phone"}
 _CORE_CDP_TOKENS = {"Router", "Switch"}
@@ -404,7 +424,13 @@ def render(dot_source: str, out_base: str) -> None:
             subprocess.run(["dot", f"-T{fmt}", dot_path, "-o", out_path], check=True)
             print(f"Wrote {out_path}")
         except FileNotFoundError:
-            print("Graphviz's `dot` command was not found - install graphviz to render images.")
+            print(
+                "Graphviz's `dot` command was not found on PATH - it's a system "
+                "package, not something `pip install` can get you.\n"
+                + _INSTALL_HINTS.get(platform.system(), _INSTALL_HINTS["Linux"])
+                + "\nAlready installed? Open a new terminal - PATH changes made by "
+                "an installer don't reach a session that was already running."
+            )
             sys.exit(1)
         except subprocess.CalledProcessError as exc:
             print(f"dot failed rendering {fmt}: {exc}")
