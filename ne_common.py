@@ -29,6 +29,7 @@ import dns.exception
 import dns.resolver
 import dns.reversename
 import rich.box
+from manuf2 import manuf  # type: ignore[import-untyped]
 from rich.console import Console
 from rich.table import Table
 
@@ -46,7 +47,16 @@ VERNUM = "1.0"
 # piped/redirected output identical to what you see on screen.
 CONSOLE_WIDTH = 130
 
-_MAC_WITH_SPACES = re.compile(r"^([0-9a-fA-F]{2} ){5}[0-9a-fA-F]{2}$")
+# The three MAC notations CDP/LLDP chassis/port IDs show up in: Cisco dotted
+# (aabb.ccdd.eeff), colon/dash (aa:bb:cc:dd:ee:ff), and ProCurve's own
+# space-separated form (aa bb cc dd ee ff).
+_MAC_PATTERNS = (
+    re.compile(r"^([0-9a-fA-F]{4}\.){2}[0-9a-fA-F]{4}$"),
+    re.compile(r"^([0-9a-fA-F]{2}[:\-]){5}[0-9a-fA-F]{2}$"),
+    re.compile(r"^([0-9a-fA-F]{2} ){5}[0-9a-fA-F]{2}$"),
+)
+
+_mac_parser: manuf.MacParser | None = None
 
 # Cisco long interface names -> the abbreviation the CLI itself accepts and
 # that "show mac address-table" already prints, so a neighbor report lines
@@ -104,17 +114,48 @@ def abbreviate_cdp_caps(caps: str) -> str:
     return " ".join(_CDP_CAP_WORDS.get(word, word) for word in text.split())
 
 
+def is_mac(text: str) -> bool:
+    """True if `text` is a MAC in any of the CDP/LLDP notations seen here."""
+    return any(pattern.match(text) for pattern in _MAC_PATTERNS)
+
+
+def resolve_unnamed(mac: str) -> str:
+    """Vendor guess for a neighbor that gave no name, only a chassis MAC.
+
+    LLDP (and CDP, in practice) only require a Chassis ID, Port ID, and TTL
+    - System Name is optional, and plenty of real endpoints never send it
+    (Windows' built-in LLDP responder on a NIC/dock is the common case, not
+    a misconfigured switch). Looked up the same way port-map.py resolves a
+    Vendor column, via manuf2's bundled OUI database.
+
+    The result is suffixed "(unnamed)" rather than shown bare - a bare
+    vendor name in the Name column would read as if the device advertised
+    it, when really we just guessed a manufacturer from the OUI.
+    """
+    global _mac_parser
+    if _mac_parser is None:
+        _mac_parser = manuf.MacParser()
+    normalized = re.sub(r"[.:\- ]", "", mac)
+    try:
+        colon_form = ":".join(normalized[i : i + 2] for i in range(0, 12, 2))
+        vendor = _mac_parser.get_manuf(colon_form) or "Unknown-OUI"
+    except (ValueError, IndexError):
+        vendor = "Unknown-OUI"
+    return f"{vendor} (unnamed)"
+
+
 def tidy_name(raw: str) -> str:
     """Trim a neighbor id to something that fits the Name column.
 
     "JC-Core.tricommanagement.local" -> "JC-Core" (a bare FQDN, so drop the
-    domain), "fc ec da c4 77 0b" -> "fc:ec:da:c4:77:0b" (a chassis MAC with
-    no device id). Free-text ids with a space, like "regDN 2148,MINET_6940",
-    are left alone.
+    domain). "90b1.1c63.485e" / "fc ec da c4 77 0b" -> a vendor guess via
+    resolve_unnamed(), since a chassis MAC with no device name is the
+    "everything is blank" case, not a hostname to cosmetically trim. Free-text
+    ids with a space, like "regDN 2148,MINET_6940", are left alone.
     """
     text = (raw or "").strip()
-    if _MAC_WITH_SPACES.match(text):
-        return text.replace(" ", ":").lower()
+    if is_mac(text):
+        return resolve_unnamed(text)
     # ProCurve's LLDP parse sometimes lands the sysdescr in neighbor_name
     # ("cisco WS-C3850-48U"); drop the vendor word so the column isn't just
     # a worse copy of Platform.
