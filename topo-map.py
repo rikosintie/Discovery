@@ -21,16 +21,23 @@ instead of drawing it twice.
 A phone (or any other leaf device) that CDP and LLDP name completely
 differently - a Mitel phone is "SEP00085D65B42D" to CDP and "regDN
 2281,MINET_6940" to LLDP, same handset - would otherwise show up as two
-separate nodes hanging off the same switch port. Since a leaf device is
-never itself a capture host, two different-looking neighbor names seen on
-the *same local port* of the *same switch* are merged into one node - the
-LLDP name is kept when both exist, since it tends to carry the more useful
-information (extension/DN) for phones in practice.
+separate nodes hanging off the same switch port. When a switch port has
+exactly one CDP neighbor and exactly one LLDP neighbor with different
+names, they're merged into one node - the LLDP name is kept when both
+exist, since it tends to carry the more useful information (extension/DN)
+for phones in practice. This merge is deliberately narrow: a port with more
+than one *real* LLDP neighbor - an IP phone with a PC daisy-chained into
+its passthrough port shows up as two independent LLDP sightings on the same
+switch port - is left as two separate nodes rather than guessed at.
 
-A neighbor whose name field is just its own chassis MAC (see ne_common.py's
-resolve_unnamed()) is labeled with its platform string when the record has
-one - "Cisco SG500X-24 (PID:SG500X-24-K9)-VSD" beats a MAC every time - and
-only falls back to an OUI-guessed vendor when there's no platform either.
+A neighbor whose name field is just an identifier in disguise - a bare
+chassis MAC, or an identifier restated with wrapper text ("Serial Number:
+00104939517A" for a ShoreTel phone, matching the MAC already given
+elsewhere in the same record; see ne_common.py's matching_identifier()) -
+is labeled with its platform, then manufacturer, then an OUI-guessed vendor
+as a last resort. The detector compares the digits themselves rather than
+any vendor's wording, so an Avaya or Polycom doing the same "name is really
+just an ID" trick is caught the same way, with no per-vendor phrase list.
 
 Node roles
 ----------
@@ -233,7 +240,7 @@ def build_graph() -> tuple[dict[str, Node], dict[object, dict]]:
             host_keys.add(canonical_key(nc.host_from_capture(path, kind)))
 
     sightings: list[dict] = []
-    port_neighbors: dict[tuple[str, str], set[str]] = {}
+    port_neighbors: dict[tuple[str, str], dict[str, set[str]]] = {}
     speed_cache: dict[str, dict[str, str]] = {}
 
     for kind in ("cdp", "lldp"):
@@ -265,10 +272,27 @@ def build_graph() -> tuple[dict[str, Node], dict[object, dict]]:
                         rec.get("neighbor_port_id") or rec.get("neighbor_interface") or ""
                     )
                 neighbor_platform = rec.get("platform", "")
-                label = nc.tidy_name(raw_name, neighbor_platform)
-                if not nc.is_mac(raw_name):
+                neighbor_manufacturer = rec.get("manufacturer", "")
+                identifiers = (
+                    rec.get("chassis_id", ""),
+                    rec.get("neighbor_port_id", ""),
+                    rec.get("mac_address", ""),
+                )
+                label = nc.tidy_name(
+                    raw_name, neighbor_platform, neighbor_manufacturer, identifiers
+                )
+                # A name that's just a bare MAC, or an identifier restated
+                # with wrapper text (a ShoreTel "Serial Number: <mac>"), is
+                # not a real advertised name - rank it by whatever
+                # resolve_unnamed() actually had to fall back to.
+                is_fake_name = nc.is_mac(raw_name) or bool(
+                    nc.matching_identifier(raw_name, identifiers)
+                )
+                if not is_fake_name:
                     label_rank = kind
-                elif nc.strip_vendor_prefix(neighbor_platform):
+                elif nc.strip_vendor_prefix(neighbor_platform) or nc.strip_vendor_prefix(
+                    neighbor_manufacturer
+                ):
                     label_rank = "platform"
                 else:
                     label_rank = "unnamed"
@@ -286,16 +310,22 @@ def build_graph() -> tuple[dict[str, Node], dict[object, dict]]:
                     }
                 )
                 if neighbor_key not in host_keys:
-                    port_neighbors.setdefault((host_key, local_if), set()).add(neighbor_key)
+                    by_kind = port_neighbors.setdefault((host_key, local_if), {})
+                    by_kind.setdefault(kind, set()).add(neighbor_key)
 
-    # Same switch port, two different neighbor names from CDP vs LLDP ->
-    # one physical device. Union them so both sightings resolve to one key.
+    # Same switch port, one CDP neighbor and one LLDP neighbor with different
+    # names -> almost certainly one physical device (CDP and LLDP just
+    # disagreeing on what to call it), so union them into one key. Only when
+    # it's exactly one-and-one, though: a port can legitimately have more
+    # than one *real* LLDP neighbor - an IP phone with a PC daisy-chained
+    # into its passthrough port shows up as two separate LLDP sightings on
+    # the same switch port, and those must stay two different nodes, not
+    # merge into one.
     merges = _UnionFind()
-    for distinct in port_neighbors.values():
-        if len(distinct) > 1:
-            first = next(iter(distinct))
-            for other in distinct:
-                merges.union(first, other)
+    for by_kind in port_neighbors.values():
+        cdp_keys, lldp_keys = by_kind.get("cdp", set()), by_kind.get("lldp", set())
+        if len(cdp_keys) == 1 and len(lldp_keys) == 1:
+            merges.union(next(iter(cdp_keys)), next(iter(lldp_keys)))
 
     nodes: dict[str, Node] = {}
 

@@ -46,6 +46,11 @@ def normalize(rec: dict) -> dict:
         "name": name,
         "mgmt": nc.clean_mgmt(rec.get("mgmt_address", "")),
         "platform": nc.strip_vendor_prefix(rec.get("platform", "")),
+        # CDP has no manufacturer field and no separate MAC field beyond
+        # chassis_id (already the name fallback above), but pass it along
+        # for consistency with lldp-ne.py's identifiers tuple.
+        "manufacturer": "",
+        "identifiers": (rec.get("chassis_id", ""),),
         "r_interface": nc.shorten_interface(rec.get("neighbor_interface", "")),
         "l_interface": nc.shorten_interface(rec.get("local_interface", "")),
         "caps": nc.abbreviate_cdp_caps(rec.get("capabilities", "")),

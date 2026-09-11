@@ -21,6 +21,12 @@ LLDP capabilities are already compact - letter flags ("B,T" = bridge,
 telephone) or short words - so they are passed through, only collapsing
 "bridge, router" to "bridge,router".
 
+A neighbor whose name is just an identifier restated with wrapper text -
+ShoreTel phones give "Serial Number: 00104939517A" where neighbor_port_id
+already has the same MAC - gets platform, then manufacturer, then an
+OUI-guessed vendor instead; see ne_common.py's matching_identifier() for how
+that's detected without hardcoding ShoreTel's wording.
+
 The report is also written to Interface/neighbors/<host>-lldp-ne.txt.
 
 Usage
@@ -55,6 +61,14 @@ def normalize(rec: dict) -> dict:
         "name": name,
         "mgmt": nc.clean_mgmt(rec.get("mgmt_address", "")),
         "platform": nc.strip_vendor_prefix(rec.get("platform", "")),
+        "manufacturer": nc.strip_vendor_prefix(rec.get("manufacturer", "")),
+        # Other fields LLDP gives for the same device, checked when `name`
+        # turns out to just be one of them restated with wrapper text.
+        "identifiers": (
+            rec.get("chassis_id", ""),
+            rec.get("neighbor_port_id", ""),
+            rec.get("mac_address", ""),
+        ),
         "r_interface": nc.shorten_interface(remote),
         "l_interface": nc.shorten_interface(rec.get("local_interface", "")),
         "caps": nc.tidy_lldp_caps(rec.get("capabilities", "")),
