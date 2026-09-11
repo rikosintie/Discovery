@@ -246,7 +246,8 @@ wakes the NIC where a ping will not.
 After the ICMP pass, `pinger.py` opens one TCP connection to port 9100 on
 every host that stayed silent and closes it immediately. Nothing is
 written to the socket, so nothing prints. A host woken this way is
-reported as `active (tcp/9100)`.
+reported as `active (tcp/9100)`, or `active (rst/9100)` if it refused the
+connection — either way the NIC is awake and its MAC is back on the switch.
 
 - **`--tcp-ports`** — comma-separated ports to try (default `9100`). Add
   `9101,9102` for multi-port external print servers. Pass `--tcp-ports ""`
@@ -616,6 +617,55 @@ Here is a screenshot of the csv report in Libre Office Calc:
 <img width="60%" src="https://github.com/rikosintie/Discovery/blob/main/images/csv-snippet.png" alt="CSV format">
 </p>
 
+### cdp-ne.py
+
+`procurve-cdp-ne-report.py` and `procurve-cdp-ne-csv.py` read a
+device-inventory file and re-run their own commands per device. `cdp-ne.py`
+instead reads the JSON `config-pull.py` already wrote to
+`Interface/<host>-cdp.txt` (Cisco IOS and HP ProCurve both speak CDP; other
+vendors don't) and prints a `port-map.py`-styled table:
+
+```bash
+python3 cdp-ne.py                        # every Interface/*-cdp.txt
+python3 cdp-ne.py -f Interface/jc-mdf-1-cdp.txt
+python3 cdp-ne.py -d 10.100.126.9        # PTR lookups via that server
+python3 cdp-ne.py --no-dns               # skip PTR lookups
+```
+
+```text
+Number of Entries: 5
+
+Device Name: jc-mdf-1
+
+Name               mgmt_address      Platform         R_Interface   L_Interface   Capabilities   DNS Name
+─────────────────────────────────────────────────────────────────────────────────────────────────────────
+SEP00085D65FF87    172.20.126.23     MINET_6940       Port 1        Gi1/0/13      Host Phone
+─────────────────────────────────────────────────────────────────────────────────────────────────────────
+JC-Core            10.100.126.253    WS-C4500X-16     Te1/1         Gi1/0/49      Ro Sw IGMP
+```
+
+R_Interface is the neighbor's port, L_Interface is the local one. Three
+fields are tidied so the table fits a screen:
+
+- **Platform** — the leading `cisco ` is stripped (`cisco WS-C4500X-16` ->
+  `WS-C4500X-16`).
+- **Capabilities** — `Router`/`Switch` are abbreviated (`Router Switch IGMP`
+  -> `Ro Sw IGMP`); everything else is left readable.
+- **Interfaces** — Cisco's long names are shortened
+  (`GigabitEthernet1/0/13` -> `Gi1/0/13`, `TenGigabitEthernet1/1` -> `Te1/1`)
+  to match what `show mac address-table` already prints.
+
+Name is trimmed too: a bare FQDN drops its domain
+(`JC-Core.tricommanagement.local` -> `JC-Core`), and a ProCurve neighbor that
+sent no device id — just a chassis MAC — is reformatted as
+`aa:bb:cc:dd:ee:ff` instead of `aa bb cc dd ee ff`.
+
+The report is also written to `Interface/neighbors/<host>-cdp-ne.txt`.
+
+> `procurve-cdp-ne-report.py` and `procurve-cdp-ne-csv.py` read field names
+> (`neighbor_id`, `neighbor_address`, ...) that no longer match the current
+> `-cdp.txt` captures — `cdp-ne.py` is the one to use going forward.
+
 ----------------------------------------------------------------
 
 ## LLDP neighbor Report
@@ -746,6 +796,46 @@ I left the labels just as they are in the `show command`. If you want to change 
 `remote_management_address = f'{"remote_management_address: " :>29}{data[counter]["remote_management_address"]}'`
 
 and change "remote_management_address: " to "remote IP address: "
+
+### lldp-ne.py
+
+Same idea as `cdp-ne.py`, reading the JSON `config-pull.py` wrote to
+`Interface/<host>-lldp.txt` instead of re-querying each device:
+
+```bash
+python3 lldp-ne.py                        # every Interface/*-lldp.txt
+python3 lldp-ne.py -f Interface/jc-mdf-1-lldp.txt
+python3 lldp-ne.py -d 10.100.126.9        # PTR lookups via that server
+python3 lldp-ne.py --no-dns               # skip PTR lookups
+```
+
+```text
+Number of Entries: 10
+
+Device Name: jc-idf-2
+
+Name                       mgmt_address      Platform         R_Interface      L_Interface   Capabilities   DNS Name
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+regDN 2148,MINET_6940      172.20.126.29     MINET_6940       0008.5d65.f3e9   Gi1/0/8       B,T
+JC-IDF-1                   10.100.126.236                     Te1/1            Gi1/0/49      B,R
+```
+
+Same columns as `cdp-ne.py`. R_Interface comes from `neighbor_port_id` on
+Cisco (already short, or a MAC for a device like a phone that reports one
+instead of a port name) and from `neighbor_interface` on ProCurve, which has
+no `neighbor_port_id` field. Capabilities are LLDP's own letter flags (`B,T`
+= bridge, telephone) or short words — already compact, so only
+`bridge, router` gets collapsed to `bridge,router`. Platform and interface
+names are tidied the same way as `cdp-ne.py`.
+
+A device with LLDP turned off (`% LLDP is not enabled`) is skipped with a
+message instead of erroring.
+
+The report is also written to `Interface/neighbors/<host>-lldp-ne.txt`.
+
+> `procurve-lldp-ne-report.py` reads field names (`neighbor_sysname`,
+> `remote_management_address`, ...) that no longer match the current
+> `-lldp.txt` captures — `lldp-ne.py` is the one to use going forward.
 
 ----------------------------------------------------------------
 
