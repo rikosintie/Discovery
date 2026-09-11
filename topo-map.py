@@ -27,6 +27,11 @@ the *same local port* of the *same switch* are merged into one node - the
 LLDP name is kept when both exist, since it tends to carry the more useful
 information (extension/DN) for phones in practice.
 
+A neighbor whose name field is just its own chassis MAC (see ne_common.py's
+resolve_unnamed()) is labeled with its platform string when the record has
+one - "Cisco SG500X-24 (PID:SG500X-24-K9)-VSD" beats a MAC every time - and
+only falls back to an OUI-guessed vendor when there's no platform either.
+
 Node roles
 ----------
 Every capture host is a switch by definition - config-pull.py only runs
@@ -186,10 +191,11 @@ class Node:
 
 
 # How much to trust a label when two sightings disagree on a leaf device's
-# name: an OUI guess is a last resort, CDP's device-id is often a MAC-derived
-# string (Mitel's "SEP<mac>"), LLDP's system name tends to carry the more
-# human-readable info (extension/DN) for the same phone.
-_LABEL_RANK = {"unnamed": 0, "cdp": 1, "lldp": 2}
+# name: an OUI guess is a last resort; a platform string ("Cisco SG500X-24")
+# beats that when the device sent one instead of a name; an actually
+# advertised name beats either, and LLDP's tends to be more human-readable
+# than CDP's MAC-derived device-id (Mitel's "SEP<mac>") for the same phone.
+_LABEL_RANK = {"unnamed": 0, "platform": 1, "cdp": 2, "lldp": 3}
 
 
 class _UnionFind:
@@ -258,7 +264,14 @@ def build_graph() -> tuple[dict[str, Node], dict[object, dict]]:
                     remote_if = nc.shorten_interface(
                         rec.get("neighbor_port_id") or rec.get("neighbor_interface") or ""
                     )
-                label = nc.tidy_name(raw_name)
+                neighbor_platform = rec.get("platform", "")
+                label = nc.tidy_name(raw_name, neighbor_platform)
+                if not nc.is_mac(raw_name):
+                    label_rank = kind
+                elif nc.strip_vendor_prefix(neighbor_platform):
+                    label_rank = "platform"
+                else:
+                    label_rank = "unnamed"
                 sightings.append(
                     {
                         "host_key": host_key,
@@ -266,7 +279,7 @@ def build_graph() -> tuple[dict[str, Node], dict[object, dict]]:
                         "neighbor_key": neighbor_key,
                         "neighbor_is_host": neighbor_key in host_keys,
                         "label": label,
-                        "label_rank": "unnamed" if "(unnamed)" in label else kind,
+                        "label_rank": label_rank,
                         "role": classify(rec.get("capabilities", "")),
                         "remote_if": remote_if,
                         "speed": speeds.get(rec.get("local_interface", ""), ""),
