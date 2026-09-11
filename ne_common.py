@@ -47,13 +47,16 @@ VERNUM = "1.0"
 # piped/redirected output identical to what you see on screen.
 CONSOLE_WIDTH = 130
 
-# The three MAC notations CDP/LLDP chassis/port IDs show up in: Cisco dotted
-# (aabb.ccdd.eeff), colon/dash (aa:bb:cc:dd:ee:ff), and ProCurve's own
-# space-separated form (aa bb cc dd ee ff).
+# The four MAC notations CDP/LLDP chassis/port IDs show up in: Cisco dotted
+# (aabb.ccdd.eeff), colon/dash (aa:bb:cc:dd:ee:ff), ProCurve's own
+# space-separated form (aa bb cc dd ee ff), and bare hex with no separator at
+# all - some Cisco Small Business gear (SG500X seen in the wild) reports its
+# base MAC as the CDP device-id with nothing configured, e.g. "d4d748d09b00".
 _MAC_PATTERNS = (
     re.compile(r"^([0-9a-fA-F]{4}\.){2}[0-9a-fA-F]{4}$"),
     re.compile(r"^([0-9a-fA-F]{2}[:\-]){5}[0-9a-fA-F]{2}$"),
     re.compile(r"^([0-9a-fA-F]{2} ){5}[0-9a-fA-F]{2}$"),
+    re.compile(r"^[0-9a-fA-F]{12}$"),
 )
 
 _mac_parser: manuf.MacParser | None = None
