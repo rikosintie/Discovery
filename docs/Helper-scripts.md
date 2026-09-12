@@ -908,7 +908,7 @@ backbone, plus every phone and AP hanging off each edge switch:
 the switch it's plugged into, no backbone context saved at jc-phones.png.
 
 !!! note
-    Mitel phones return their extension number so it's included in the diagram. It appears as `regDN 2201` for example.
+    Mitel phones return their extension number so it's included in the diagram. It appears as `regDN 2201` for example. It's a nice feature when you need to find a particular phone!
 
 ----------------------------------------------------------------
 
