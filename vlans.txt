@@ -1,3 +1,20 @@
-# interface Vlan1
-# ip address 192.168.10.100 255.255.255.224
-ip address 10.100.126.200/32
+interface Vlan10
+ ip address 192.168.10.253 255.255.255.0
+interface Vlan11
+ ip address 192.168.1.1 255.255.255.0
+interface Vlan20
+ ip address 10.1.20.1 255.255.255.0
+interface Vlan30
+ ip address 10.1.30.1 255.255.255.0
+interface Vlan40
+ ip address 10.1.40.1 255.255.255.0
+interface Vlan41
+ ip address 192.168.41.235 255.255.255.0
+interface Vlan42
+ ip address 192.168.42.235 255.255.255.0
+interface Vlan50
+ ip address 10.1.50.1 255.255.255.0
+interface Vlan60
+ ip address 192.168.100.253 255.255.255.0
+interface Vlan100
+ ip address 10.1.100.1 255.255.255.0
