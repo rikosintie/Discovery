@@ -905,7 +905,10 @@ backbone, plus every phone and AP hanging off each edge switch:
 ----------------------------------------------------------------
 
 **Phones only** (`python3 topo-map.py -p -o jc-phones`) — every phone and
-the switch it's plugged into, no backbone context saved at jc-phones.png:
+the switch it's plugged into, no backbone context saved at jc-phones.png.
+
+!!! note
+    Mitel phones return their extension number so it's included in the diagram. It appears as `regDN 2201` for example.
 
 ----------------------------------------------------------------
 
@@ -1001,7 +1004,7 @@ software_version: WB.16.10.0023
 
 There are two scripts for interfaces:
 
-- procurve-10Mb.py - Creates a list of interfaces that are running at 10Mbps full or half duplex.
+- 10Mb-ports.py - Creates a list of interfaces that are running at 10Mbps full or half duplex.
 - procurve-interface-in-use.py - Creates a list of interfaces that have a "total_byte" count not equal to 0.
 
 I wrote the script that creates the 10Mbps list because smartrate and mGig ports don't support 10Mbps rates. From personal experience I can tell you that it's better to find out in the discovery phase than the deployment phase.
@@ -1010,24 +1013,74 @@ Devices running at 10Mbps full or half are usually door access controllers or Bu
 
 The interface report for "in use" was requested so that decisions about consolidating interfaces could be made. It has the "uptime" of the switch as the first line in the file so that there is some context about the zero bytes. For example, if the switch has an uptime of a few days then the ports not in use could be employees on vacation for devices that are used infrequently.
 
-Each of these scripts uses the same device-inventory file as the procurve-Config-pull.py script so there is no configuration needed. Just use:
+`procurve-interface-in-use.py` still uses the same device-inventory file as `procurve-Config-pull.py` — `python3 procurve-interface-in-use.py -s sitename`. `10Mb-ports.py` was rewritten to match the standalone style of `cdp-ne.py`/`lldp-ne.py`/`topo-map.py`: no device-inventory file, no site name — it reads every `Interface/*-int_br.txt` capture directly.
 
-- `python3 procurve-10Mb.py -s sitename`
-- `python3 procurve-interface-in-use.py -s sitename`
+```bash
+python3 10Mb-ports.py                        # every Interface/*-int_br.txt
+python3 10Mb-ports.py -f Interface/2920-int_br.txt
+```
 
-The reports are saved into the "CR-data" directory.
+Both scripts save their reports into the "CR-data" directory.
 
 ### The 10Mbps interfaces report
 
-This script creates a simple text file with the filename format of "hostname-10Mb-Ports.txt". For example:
+Originally ProCurve-only (as `procurve-10Mb.py`); now also reads Cisco IOS/XE
+and Cisco Small Business/S300 captures. `int_br.txt` carries no vendor field,
+so the script detects which of the three shapes it's looking at from the
+keys already in the JSON:
+
+- **ProCurve** folds speed and duplex into one field: `"mode": "10FDx"`.
+- **Cisco IOS/XE** keeps them separate: `"speed": "10"` or `"a-10"`
+  (auto-negotiated), `"duplex": "full"`/`"a-full"` etc. — `"auto"`/`"auto"`
+  means the port never resolved a speed (nothing plugged in), not a 10Mb
+  link.
+- **Cisco S300** also keeps them separate, but with its own capitalization
+  and a `linkstate` field instead of `status`.
+
+`config-pull.py` collects this same file for `cisco_nxos`, `aruba_aoscx`,
+and `aruba_osswitch` too, but none of those three vendors have a `show
+interfaces status` textfsm template anywhere in this project as of this
+writing, so their captures come back as unparsed raw text rather than
+structured JSON. `10Mb-ports.py` detects that case and says so —
+"not structured data (no textfsm parser for this platform's...)" — instead
+of silently skipping the host or guessing at a format nobody has captured.
+
+The output format is unchanged: a simple text file named
+"hostname-10Mb-Ports.txt". For example:
 
 `Procurve-2930-48-10Mb-Ports.txt`
 
-Here is a snippet of the cdp neighbor text report:
+Here's a snippet:
 
 ```bash
 Interface 2 - 10FDx
 Interface 3 - 10HDx
+```
+
+Running it with no arguments sweeps every capture in `Interface/` in one
+pass — ProCurve and Cisco side by side, real output from a mixed-vendor site:
+
+```bash
+python3 10Mb-ports.py
+No 10Mbps interfaces found for 2920
+No 10Mbps interfaces found for jc-core
+No 10Mbps interfaces found for jc-idf-1
+No 10Mbps interfaces found for jc-idf-2
+No 10Mbps interfaces found for jc-idf-cam-1
+Writing CR data to CR-data/jc-mdf-1-10Mb-Ports.txt
+Hostname: jc-mdf-1 Interface: Gi1/0/3 - 10FDx
+Writing CR data to CR-data/jc-mdf-2-10Mb-Ports.txt
+Hostname: jc-mdf-2 Interface: Gi1/0/5 - 10HDx
+Hostname: jc-mdf-2 Interface: Gi1/0/7 - 10HDx
+Hostname: jc-mdf-2 Interface: Gi1/0/9 - 10HDx
+Writing CR data to CR-data/jc-mdf-3-10Mb-Ports.txt
+Hostname: jc-mdf-3 Interface: Gi1/0/48 - 10FDx
+No 10Mbps interfaces found for jc-mdf-4
+No 10Mbps interfaces found for jc-mdf-cam-1
+No 10Mbps interfaces found for jc-mdf-cam-2
+Writing CR data to CR-data/lab-3850-10Mb-Ports.txt
+Hostname: lab-3850 Interface: Gi1/0/4 - 10HDx
+Hostname: lab-3850 Interface: Gi1/0/25 - 10FDx
 ```
 
 The reason for the script is newer switches with `Smartrate` or `mGig` ports support:
