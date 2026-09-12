@@ -8,6 +8,11 @@
 
 The helper scripts are a collection of python scripts that read data that the config-pull.py created and turn that raw data into useful reports.
 
+Every report here is plain text, so the `grep` examples throughout this
+page work unchanged on Windows too, once you've
+[installed Coreutils for Windows](Getting_Started.md#install-coreutils-for-windows) —
+see that section for the one common gotcha (`sort` needs a `.exe` suffix).
+
 ## What files are created
 
 Every folder mentioned below is created automatically the first time a

@@ -96,6 +96,56 @@ WinGet, also known as the Windows Package Manager, is pre-installed on Windows 1
 
 Or you can install the `git` package from [The Official Git Page](https://git-scm.com/downloads/win). It seems better to use the Microsoft Store but I'm not a Windows expert.
 
+#### Install Coreutils for Windows
+
+Every `grep`/`sort`/`uniq`/`cut`/`find`/`wc`/`head`/`tail` example throughout
+these docs was written for Mac/Linux, since Windows never shipped these
+tools natively — until now. Microsoft publishes a native Windows build of
+the [uutils/coreutils](https://uutils.org/coreutils/docs/) project (a Rust
+reimplementation of the classic GNU tools) that includes a compatible
+`grep` and `find` too:
+
+```text
+winget install Microsoft.Coreutils
+```
+
+from cmd or PowerShell. This is the package to ask for —
+`winget install uutils.coreutils` (no `Microsoft.` prefix) installs a
+narrower package that's missing `grep` entirely, since `grep` and `find`
+are separate projects bundled in on top. See the full list of what's
+included on [Microsoft Learn](https://learn.microsoft.com/en-us/windows/core-utils/commands).
+
+**`sed` and `awk` are not part of this package** — they're their own
+separate GNU projects, not "core" utilities, and Microsoft hasn't shipped
+native ports of either. Where a command in these docs pipes through `awk`,
+run it from WSL or Git Bash instead, or replace it with PowerShell's own
+text handling (`-split`, `ForEach-Object`) — see the [connected-ports
+example](usage.md#find-connected-ports) for a worked substitute.
+
+**Name collisions.** A handful of the installed commands share a name with
+something PowerShell already has built in — `cat`, `cp`, `ls`, `mv`, `rm`,
+`sort`, and a few others are also PowerShell aliases (for `Get-Content`,
+`Copy-Item`, `Get-ChildItem`, etc.), and PowerShell checks its own aliases
+*before* it looks at `$env:PATH`, so typing the bare name runs the
+PowerShell one, not the coreutils one. The one that actually shows up in
+these docs is `sort`: PowerShell's `sort` is `Sort-Object`, which doesn't
+understand GNU sort's `-t`/`-k` flags at all. The fix is always the same —
+type the `.exe` suffix to skip the alias and go straight to the real
+binary:
+
+```text
+sort.exe -t '/' -k1,1 -k2,2n -k3,3n
+```
+
+`grep`, `find`, `cut`, `uniq`, `wc`, `head`, and `tail` have no such
+collision in PowerShell — they run as typed, no `.exe` needed. (cmd.exe has
+no alias layer at all, but Windows' own decades-old `sort.exe`/`find.exe`
+in `System32` can still shadow the coreutils version there depending on
+`PATH` order — the same `.exe`-suffix trick doesn't help in that shell,
+since cmd already resolves bare names straight to an `.exe`; if `sort`/`find`
+misbehave in cmd, check `where sort` and put the coreutils install
+directory earlier in `PATH`.)
+
 ----------------------------------------------------------------
 
 ### macOS

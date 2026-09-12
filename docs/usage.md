@@ -240,6 +240,15 @@ One big advantage to using Windows terminal with PowerShell is that it stores th
 
 If you are creating bash scripts `popd` and `pushd` are useful. Having these aliases built in is great if you work on Mac, Linux and Windows since Mac/Linux share the same commands.
 
+These same names are exactly what get shadowed if you also
+[install Coreutils for Windows](Getting_Started.md#install-coreutils-for-windows)
+for `grep`/`sort`/`find`/etc.: `cat`, `cp`, `ls`, `mv`, `pwd`, and `rm` are
+both a PowerShell alias *and* a real coreutils binary, and the alias always
+wins over the bare name. That's fine for these — they behave close enough
+to their Linux namesakes either way — but it's why `sort` specifically
+needs the `.exe` suffix throughout these docs: `Sort-Object` doesn't
+understand GNU sort's `-t`/`-k` flags at all.
+
 #### Install Bat on Windows
 
 As long as we are installing cool utilities on Windows we should install `bat`. Bat is like `cat` on Linux but works on Windows also.
@@ -381,6 +390,16 @@ The only required argument is `-s site`. This references the device-inventory fi
 
 Reviewing switch logs before a cut over can help you understand the health of the network. For example, you may find OSPF neighbors bouncing or an STP issue. Obviously if the network is large you can't review every switch in detail. But looking at key switches such as cores and distribution is worth a few minutes.
 
+!!! Note "Windows"
+    Every `grep` example on this page also works unchanged on Windows once
+    you've [installed Coreutils for Windows](Getting_Started.md#install-coreutils-for-windows) —
+    `grep` has no naming conflicts, so it runs exactly as written here. The
+    two things that do need a small change are `sort` (add `.exe`, since
+    PowerShell's own `Sort-Object` answers to the bare name) and `awk`
+    (not included at all — swap in PowerShell's `-split`). Both are shown
+    with worked examples at [Find connected ports](#find-connected-ports)
+    below.
+
 Using `grep` you can parse hundreds of logs in a matter of seconds. The log files are saved to the CR-data folder. If you cd to the CR-data folder you can run this `grep` command to find lacp issues from any switch:
 
 ```bash hl_lines='1'
@@ -430,7 +449,7 @@ grep -Eir 'stack_mgr:'
 Lab_3850-log-1.txt:*Jul 13 19:33:52.175: %STACKMGR-4-SWITCH_ADDED: Switch 2 R0/0: stack_mgr: Switch 2 has been added to the stack.
 ```
 
-**Find `connected` ports**
+#### Find connected ports
 
 Customers often ask how many active ports are on a switch. This grep statement will return the port from the `show interface status | i connected` command:
 
@@ -460,6 +479,20 @@ Gi1/0/25
 - uniq -c: This counts the occurrences of each unique interface name.
 - sort -t '/' -k1,1 -k2,2n -k3,3n: This sorts the counted output correctly based on the interface name structure.
 
+**On Windows** (after [installing Coreutils for Windows](Getting_Started.md#install-coreutils-for-windows)):
+`awk` isn't part of that package, so swap it for PowerShell's own `-split`,
+and add `.exe` to both `sort` calls so PowerShell doesn't hand them to its
+own `Sort-Object` alias instead:
+
+```powershell
+grep "connected" JC-MDF-4-CR-data.txt | ForEach-Object { ($_.Trim() -split '\s+')[0] } | sort.exe | uniq | sort.exe -t '/' -k1,1 -k2,2n -k3,3n
+```
+
+Same output as above — `($_.Trim() -split '\s+')[0]` is PowerShell's
+equivalent of `awk '{print $1}'`: trim any leading whitespace, split the
+line on whitespace, keep the first field (index `0`, since PowerShell
+counts from zero where `awk` counts from one).
+
 If you want to return the entire line from the `show interface status | i connected` command use this grep:
 
 `grep "connected" JC-MDF-4-CR-data.txt | sort | uniq | sort -t '/' -k1,1 -k2,2n -k3,3n`
@@ -479,6 +512,13 @@ Gi1/0/17  < Voice Network >  connected    90         a-full a-1000 10/100/1000Ba
 Gi1/0/21  < HIS >            connected    780        a-full a-1000 10/100/1000BaseTX
 Gi1/0/25  < Uplink to 4500x  connected    trunk      a-full a-1000 1000BaseLX SFP
 Gi1/0/25  < Uplink to 4500x  connected    trunk      a-full a-1000 1000BaseLX SFP
+```
+
+**On Windows**, this one needs no PowerShell substitute at all — `grep` and
+`uniq` run as typed, and `sort` just needs its `.exe` suffix twice:
+
+```powershell
+grep "connected" JC-MDF-4-CR-data.txt | sort.exe | uniq | sort.exe -t '/' -k1,1 -k2,2n -k3,3n
 ```
 
 ----------------------------------------------------------------
@@ -887,6 +927,16 @@ If you are on Mac/Linux/Windows WSL or have git bash (or MobaXterm) installed on
  ```
 
 The `grep` found just the "ssh, snmp" string and `awk` printed the data in column 2.
+
+Native PowerShell works too, once [Coreutils for Windows](Getting_Started.md#install-coreutils-for-windows)
+is installed — no WSL/git bash/MobaXterm needed, though `awk` still isn't
+part of that package, so it's the same `-split` swap as the connected-ports
+example above:
+
+```powershell
+grep -Eir "22/open/tcp//ssh///, 161/open|filtered/udp//snmp//" procurve.gnmap | ForEach-Object { ($_.Trim() -split '\s+')[1] }
+192.168.10.52
+```
 
 ### Review the bootstrap report
 
