@@ -1176,7 +1176,11 @@ This script creates a simple text file with the filename format of hostname-Port
 `Procurve-2920-48-Port-data.txt`
 
 The uptime line is read from the same host's own `-system.txt` capture, if
-one exists — no `-system.txt`, no uptime line, not an error. Here is a
+one exists — no `-system.txt`, no uptime line, not an error. Only ports
+that have actually passed traffic are listed — a zero-traffic port isn't
+shown at all, so "Number of Interfaces with traffic" and the line count
+below it always agree; a version that listed every port (zero-traffic ones
+included) made the two easy to miscount against each other. Here is a
 snippet:
 
 ```bash
@@ -1185,12 +1189,10 @@ System Uptime: 3 hours
 
 Number of Interfaces with traffic: 5
 Interface 1 - total_bytes 1,510,198
-Interface 2 - total_bytes 0
-Interface 3 - total_bytes 0
-Interface 4 - total_bytes 0
-Interface 5 - total_bytes 0
-Interface 6 - total_bytes 0
 Interface 7 - total_bytes 1,054,112
+Interface 12 - total_bytes 842,004
+Interface 18 - total_bytes 3,221,905
+Interface 24 - total_bytes 12,655
 ```
 
 ### The port migration report

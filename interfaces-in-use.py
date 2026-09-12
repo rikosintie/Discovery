@@ -102,10 +102,9 @@ def _procurve_ports(records: list[dict]) -> tuple[list[str], int]:
     for rec in records:
         rec = {k.lower(): v for k, v in rec.items()}
         total = rec.get("total_bytes", "0") or "0"
-        lines.append(f"{rec.get('port', '?')} - total_bytes {total}")
         if total != "0":
-            count += 1
-    return lines, count
+            lines.append(f"{rec.get('port', '?')} - total_bytes {total}")
+    return lines, len(lines)
 
 
 def _cisco_ios_ports(records: list[dict]) -> tuple[list[str], int]:
@@ -113,18 +112,17 @@ def _cisco_ios_ports(records: list[dict]) -> tuple[list[str], int]:
     are the closest equivalent.
     """
     lines: list[str] = []
-    count = 0
     for rec in records:
         rec = {k.lower(): v for k, v in rec.items()}
         in_pkts = rec.get("input_packets", "0") or "0"
         out_pkts = rec.get("output_packets", "0") or "0"
+        if in_pkts == "0" and out_pkts == "0":
+            continue
         lines.append(
             f"{rec.get('interface', '?')} - input_packets {in_pkts} "
             f"output_packets {out_pkts}"
         )
-        if in_pkts != "0" or out_pkts != "0":
-            count += 1
-    return lines, count
+    return lines, len(lines)
 
 
 def _aruba_aoscx_ports(records: list[dict]) -> tuple[list[str], int]:
@@ -132,19 +130,19 @@ def _aruba_aoscx_ports(records: list[dict]) -> tuple[list[str], int]:
     match ProCurve's "total_bytes" semantics.
     """
     lines: list[str] = []
-    count = 0
     for rec in records:
         rec = {k.lower(): v for k, v in rec.items()}
         total = int(rec.get("rx_total_bytes") or 0) + int(rec.get("tx_total_bytes") or 0)
-        lines.append(f"{rec.get('interface', '?')} - total_bytes {total}")
         if total:
-            count += 1
-    return lines, count
+            lines.append(f"{rec.get('interface', '?')} - total_bytes {total}")
+    return lines, len(lines)
 
 
 def find_ports_in_use(records: list[dict]) -> tuple[list[str], int] | None:
-    """(port lines, count with traffic), or None if this schema has no
-    usable traffic counter - either a recognized platform whose captured
+    """(port lines, count) for ports that have passed traffic - only those,
+    not every port - so the two can never drift apart the way "every port
+    listed, count printed separately" invites. None if this schema has no
+    usable traffic counter: either a recognized platform whose captured
     data just doesn't include one (Cisco S300), or a shape this script
     doesn't otherwise know.
     """
