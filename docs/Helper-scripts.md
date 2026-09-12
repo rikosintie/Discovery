@@ -851,7 +851,7 @@ python3 topo-map.py                  # the whole topology, unfiltered
 python3 topo-map.py -s               # core backbone only
 python3 topo-map.py -p               # phones (and each phone's own switch)
 python3 topo-map.py -s -p            # core backbone + phones/APs
-python3 topo-map.py -o site1-topology
+python3 topo-map.py -o site1-topology # use "site1-topology" as the filename
 ```
 
 Each run writes `<out>.dot`, `<out>.svg`, and `<out>.png` (default basename
@@ -878,17 +878,34 @@ with "add Graphviz to the system PATH" unchecked by default; re-run it and
 enable that option, or add the install folder's `bin` directory to PATH by
 hand.
 
-Two examples from a real site, one per filtering mode:
+Three examples from a real site, one per filtering mode:
 
 **Core backbone** (`python3 topo-map.py -s -o topology-core`) — every
 switch/router/AP, links between them only:
 
+----------------------------------------------------------------
+
 ![topology-core](img/topology-core.png)
+
+----------------------------------------------------------------
 
 **Edge switches** (`python3 topo-map.py -s -p -o topology-edge`) — the same
 backbone, plus every phone and AP hanging off each edge switch:
 
+----------------------------------------------------------------
+
 ![topology-edge](img/topology-edge.png)
+
+----------------------------------------------------------------
+
+**Phones only** (`python3 topo-map.py -p -o jc-phones`) — every phone and
+the switch it's plugged into, no backbone context saved at jc-phones.png:
+
+----------------------------------------------------------------
+
+![jc-phones](img/jc-phones.png)
+
+----------------------------------------------------------------
 
 ### Nodes and dedup
 
