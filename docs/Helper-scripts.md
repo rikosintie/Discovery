@@ -974,13 +974,48 @@ ProCurve-side edges show interfaces without a speed.
 
 ## The System Report
 
-The system report will be useful for filling out the Change request form or a transmittal. Again, being a plain text file you will be able to use grep to filter. For example:
+`system-report.py` (replacing `procurve-system-report.py`, which only
+understood ProCurve) reads `Interface/<host>-system.txt` and writes a
+labeled key:value summary per switch — handy for filling out a Change
+Request form or a transmittal. Being a plain text file, it's grep-friendly:
 
 `grep -Eir -b4 "serial number" *system-report.txt`
 
 To pull a list of serial numbers from the system reports.
 
-Here is a snippet of the system report:
+```bash
+python3 system-report.py                      # every Interface/*-system.txt
+python3 system-report.py -f Interface/2920-system.txt
+```
+
+`-system.txt` carries no vendor field, so the script detects which of five
+schemas it's looking at from the keys already in the JSON:
+
+- **ProCurve** (`show system information`) is the richest — contact,
+  location, CPU/memory, packet counters, in addition to serial/version/MAC.
+- **Cisco IOS/XE** (`show version`) gives hostname, one combined uptime
+  string, and hardware model/serial/MAC as lists (a stack reports one of
+  each per member — joined with commas here).
+- **Cisco NX-OS** (`show version`) gives hostname, uptime, platform,
+  serial, and the last reboot reason.
+- **Cisco S300** (`show version`) is the sparsest of all — only
+  software/boot/hardware version. No hostname, serial, or uptime field
+  exists in that command's output at all; the hostname shown falls back to
+  the capture's filename.
+- **Aruba AOS-CX** (`show system`) gives hostname, contact/location,
+  vendor/product, serial, MAC, version, and uptime as separate
+  weeks/days/hours/minutes fields (no combined string, unlike the Cisco
+  platforms — assembled into one line here).
+
+`config-pull.py` runs the matching command for every vendor above.
+`aruba_osswitch` (ArubaOS-Switch) is the one exception — no `show
+version`/`show system` textfsm template exists for it anywhere in this
+project, so its capture stays unparsed raw text. `system-report.py`
+detects that case and says so by name instead of guessing at a format
+nobody has captured, or crashing on a missing key.
+
+Here is a snippet of the ProCurve report — unchanged from
+`procurve-system-report.py`:
 
 ```bash
         Hostname: HP-2920-24G-PoEP
@@ -997,6 +1032,9 @@ software_version: WB.16.10.0023
  cpu_utilization: 47
         mem_free: 40,344,656
 ```
+
+The report is written to `Interface/neighbors/<host>-system-report.txt`,
+same as before.
 
 ----------------------------------------------------------------
 

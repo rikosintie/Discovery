@@ -1104,10 +1104,12 @@ for line in fabric:
             f"([yellow]{vendor}[/yellow] does not use CDP)"
         )
 
-    # Use textFSM to create a json object with interface stats.
-    # Initialized here so a vendor with no case below doesn't fall through
-    # to the write with a stale value left over from the previous device.
+    # Use textFSM to create a json object with interface stats, and one with
+    # system/version data. Both initialized here so a vendor with no case
+    # below doesn't fall through to the write with a stale value left over
+    # from the previous device.
     output_show_int_br: object = []
+    output_system: object = []
     vendor = vendor.lower()
     match vendor:
         case "hp_procurve":
@@ -1125,46 +1127,20 @@ for line in fabric:
             # border = "-" * (len(cfg_file) + len(hostname) + 16)
             border = "-" * (len(hostname) + 37)
             print(f"[bold][blue]{border}[/blue][/bold]")
-            # Use textFSM to create a json object of show system information
             print(
                 f"collecting [bright_blue]'show system information'[/bright_blue] for [cyan]{hostname}[/cyan]"
             )
             output_system = net_connect.send_command(
                 "show system information", use_textfsm=True
             )
-            border = "-" * (len(hostname) + 29)
-            print(f"[bold][blue]{border}[/blue][/bold]")
-            #  Write the JSON system data to a file
-            int_report = create_filename("Interface", "-system.txt")
-
-            message = f"Writing the system json data for [blue]{hostname}[/blue] to \n[cyan]{int_report}[/cyan].\n"
-
-            print_panel(
-                message,
-                title="System Data",
-                subtitle=f"System data for {hostname} completed",
-                border_style="cyan",
-                title_emoji=emoji_for("saving"),
-                expand=False,
-            )
-
-            # write the JSON system data to a file
-            with open(int_report, "w", encoding="utf-8") as file:
-                output_system = json.dumps(
-                    check_textfsm(output_system, "show system information"), indent=2
-                )
-                file.write(output_system)
-            border = "-" * (len(int_report) + 1)
-            print(f"[bold][blue]{border}[/blue][/bold]")
-        case "cisco_ios":
+        case "cisco_ios" | "cisco_xe":
             output_show_int_br = net_connect.send_command(
                 "show interfaces status",
                 strip_command=True,
                 use_textfsm=True,
             )
-        case "cisco_xe":
-            output_show_int_br = net_connect.send_command(
-                "show interfaces status",
+            output_system = net_connect.send_command(
+                "show version",
                 strip_command=True,
                 use_textfsm=True,
             )
@@ -1174,9 +1150,19 @@ for line in fabric:
                 strip_command=True,
                 use_textfsm=True,
             )
+            output_system = net_connect.send_command(
+                "show version",
+                strip_command=True,
+                use_textfsm=True,
+            )
         case "aruba_aoscx":
             output_show_int_br = net_connect.send_command(
                 "show interfaces status",
+                strip_command=True,
+                use_textfsm=True,
+            )
+            output_system = net_connect.send_command(
+                "show system",
                 strip_command=True,
                 use_textfsm=True,
             )
@@ -1186,9 +1172,17 @@ for line in fabric:
                 strip_command=True,
                 use_textfsm=True,
             )
+            # No "show version"/"show system" textfsm template exists for
+            # aruba_osswitch (ArubaOS-Switch) as of this writing - leave
+            # output_system at its empty default rather than save raw text.
         case "cisco_s300":
             output_show_int_br = net_connect.send_command(
                 "show interfaces status",
+                strip_command=True,
+                use_textfsm=True,
+            )
+            output_system = net_connect.send_command(
+                "show version",
                 strip_command=True,
                 use_textfsm=True,
             )
@@ -1323,6 +1317,18 @@ for line in fabric:
     # print("-" * (len(dev_inv_file) + 23))
     border = "-" * (len(int_report) + 1)
     print(f"[bold][blue]{border}[/blue][/bold]")
+
+    # Write the JSON system/version data to a file
+    int_report = create_filename("Interface", "-system.txt")
+    print(f"Writing 'show system/version' data to\n {int_report}")
+    with open(int_report, "w", encoding="utf-8") as file:
+        output_system = json.dumps(
+            check_textfsm(output_system, "show system information/version"), indent=2
+        )
+        file.write(output_system)
+    border = "-" * (len(int_report) + 1)
+    print(f"[bold][blue]{border}[/blue][/bold]")
+
     # Write the JSON cdp neighbor data to a file
     int_report = create_filename("Interface", "-cdp.txt")
     print(f"Writing 'show cdp neighbor' data to\n {int_report}")
