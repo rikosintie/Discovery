@@ -67,6 +67,8 @@ port-maps/pinginfo/
 task*
 JC*
 jc*
+!jc-phones.png
+!jc-phones.svg
 CX*
 Lab*
 device*
