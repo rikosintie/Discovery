@@ -244,6 +244,11 @@ CDP_PLATFORMS: frozenset[str] = frozenset(
 # which still yields a port list. Keyed by netmiko device_type.
 INTERFACE_INVENTORY_CMD: dict[str, str] = {
     "cisco_s300": "show interfaces status",
+    # AOS-CX's own command is singular ("show interface", not "interfaces")
+    # and its ntc-templates parser is filed under that exact name
+    # (aruba_aoscx_show_interface.textfsm) - the plural default never
+    # matched it, so every AOS-CX capture was landing as unparsed raw text.
+    "aruba_aoscx": "show interface",
 }
 
 

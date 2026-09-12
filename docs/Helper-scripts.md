@@ -1058,19 +1058,21 @@ same as before.
 There are two scripts for interfaces:
 
 - 10Mb-ports.py - Creates a list of interfaces that are running at 10Mbps full or half duplex.
-- procurve-interface-in-use.py - Creates a list of interfaces that have a "total_byte" count not equal to 0.
+- interfaces-in-use.py - Creates a list of interfaces that have ever passed traffic.
 
 I wrote the script that creates the 10Mbps list because smartrate and mGig ports don't support 10Mbps rates. From personal experience I can tell you that it's better to find out in the discovery phase than the deployment phase.
 
 Devices running at 10Mbps full or half are usually door access controllers or Building Automation controllers. You will not have any success getting them replaced before the deployment phase begins. To verify you can use the port maps and look up the manufacturer.
 
-The interface report for "in use" was requested so that decisions about consolidating interfaces could be made. It has the "uptime" of the switch as the first line in the file so that there is some context about the zero bytes. For example, if the switch has an uptime of a few days then the ports not in use could be employees on vacation for devices that are used infrequently.
+The interface report for "in use" was requested so that decisions about consolidating interfaces could be made. It has the switch's "uptime" as the first line in the file so that there is some context about the zero-traffic ports. For example, if the switch has an uptime of a few days then the ports not in use could be employees on vacation for devices that are used infrequently.
 
-`procurve-interface-in-use.py` still uses the same device-inventory file as `procurve-Config-pull.py` — `python3 procurve-interface-in-use.py -s sitename`. `10Mb-ports.py` was rewritten to match the standalone style of `cdp-ne.py`/`lldp-ne.py`/`topo-map.py`: no device-inventory file, no site name — it reads every `Interface/*-int_br.txt` capture directly.
+Both scripts were rewritten to match the standalone style of `cdp-ne.py`/`lldp-ne.py`/`topo-map.py`: no device-inventory file, no site name — each reads every matching `Interface/*.json`/`*.txt` capture directly. `interfaces-in-use.py` replaces `procurve-interface-in-use.py`, which pointed at `Interface/<host>-interface.txt` — a filename `config-pull.py` stopped writing once this capture moved to JSON, so that script could never have found a file to read, on any vendor.
 
 ```bash
 python3 10Mb-ports.py                        # every Interface/*-int_br.txt
 python3 10Mb-ports.py -f Interface/2920-int_br.txt
+python3 interfaces-in-use.py                 # every Interface/*-interface.json
+python3 interfaces-in-use.py -f Interface/2920-interface.json
 ```
 
 Both scripts save their reports into the "CR-data" directory.
@@ -1148,11 +1150,34 @@ I ran into a cutover where the switch had all mGig ports, but most of the device
 
 ### The ports in use report
 
+Originally ProCurve-only (as `procurve-interface-in-use.py`); now also reads
+Cisco IOS/XE and Aruba AOS-CX captures. `-interface.json` carries no vendor
+field, so the script detects which shape it's looking at from the keys
+already in the JSON:
+
+- **ProCurve** has a literal `"total_bytes"` counter per port — the most
+  direct signal there is.
+- **Cisco IOS/XE**'s `"show interfaces"` has no byte counter at all;
+  `"input_packets"`/`"output_packets"` are the closest equivalent, and are
+  what's checked and shown for this platform.
+- **Aruba AOS-CX** gives separate `rx_total_bytes`/`tx_total_bytes`,
+  summed here into one total to match ProCurve's semantics.
+
+Two more vendors are collected but can't answer "is this port in use":
+**Cisco S300** falls back to `"show interfaces status"` (its only available
+template), which has no traffic-counter field of any kind — a real data
+limitation, reported as such rather than guessed at. **Cisco NX-OS** and
+**ArubaOS-Switch** have no matching textfsm template for this command in
+this project as of this writing, so their captures are unparsed raw text;
+`interfaces-in-use.py` detects that case and says so by name too.
+
 This script creates a simple text file with the filename format of hostname-Port-data.txt. For example:
 
 `Procurve-2920-48-Port-data.txt`
 
-Here is a snippet of the cdp neighbor text report:
+The uptime line is read from the same host's own `-system.txt` capture, if
+one exists — no `-system.txt`, no uptime line, not an error. Here is a
+snippet:
 
 ```bash
 
