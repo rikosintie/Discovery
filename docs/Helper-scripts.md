@@ -859,7 +859,9 @@ Each run writes `<out>.dot`, `<out>.svg`, and `<out>.png` (default basename
 be installed separately — it's a system package, not something
 `requirements.txt`/`pip install` can pull in for you.
 
-#### Installing Graphviz
+----------------------------------------------------------------
+
+### Installing Graphviz
 
 - **Linux (Debian/Ubuntu):** `sudo apt install graphviz`
 - **macOS:** `brew install graphviz` (same [Homebrew](https://formulae.brew.sh/formula/lldpd)
@@ -877,6 +879,10 @@ isn't on PATH; the Windows installer in particular has historically shipped
 with "add Graphviz to the system PATH" unchecked by default; re-run it and
 enable that option, or add the install folder's `bin` directory to PATH by
 hand.
+
+----------------------------------------------------------------
+
+### Examples
 
 Three examples from a real site, one per filtering mode:
 
@@ -933,6 +939,8 @@ MAC (`d4d748d09b00`, no separators) as their CDP device id — is labeled with
 a `manuf2` OUI guess instead, e.g. `Cisco (unnamed)`, same as `cdp-ne.py`/
 `lldp-ne.py`'s Name column.
 
+----------------------------------------------------------------
+
 ### Filtering
 
 - **`-s`, `--core`** — keep only core-to-core links: the backbone.
@@ -949,6 +957,8 @@ a `manuf2` OUI guess instead, e.g. `Cisco (unnamed)`, same as `cdp-ne.py`/
 An edge survives a filter only if both its endpoints do (the `-p` exception
 above aside); a node left with no edges afterward is dropped rather than
 drawn floating.
+
+----------------------------------------------------------------
 
 ### Link speed
 
@@ -1019,6 +1029,16 @@ Here is a snippet of the cdp neighbor text report:
 Interface 2 - 10FDx
 Interface 3 - 10HDx
 ```
+
+The reason for the script is newer switches with `Smartrate` or `mGig` ports support:
+100Mbps
+1Gbps
+2.5Gbps
+5Gbps
+
+I ran into a cutover where the switch had all mGig ports, but most of the devices were all 10Mbps. It was an old parking garage and the OT devices were ancient.
+
+----------------------------------------------------------------
 
 ### The ports in use report
 
