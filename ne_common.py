@@ -12,6 +12,16 @@ the table fits an 80-column terminal:
   * capabilities  "Router Switch IGMP"    -> "Ro Sw IGMP"
   * interfaces    "TenGigabitEthernet1/1" -> "Te1/1"
 
+A neighbor whose name field is just an identifier in disguise - a bare MAC,
+or an identifier restated with wrapper text ("Serial Number: 00104939517A"
+for a ShoreTel phone, matching the MAC already given elsewhere in the same
+record) - gets the best available real fact instead: platform, then
+manufacturer, then an OUI-guessed vendor as a last resort. See
+matching_identifier() and resolve_unnamed() - the detector compares the
+digits themselves rather than any vendor's wording, so it needs no
+per-vendor phrase list to also catch, say, an Avaya or Polycom doing the
+same trick with different words.
+
 Each caller supplies its own record->dict normalizer, because the
 remote-port field differs by protocol; everything else lives here.
 """
@@ -122,19 +132,73 @@ def is_mac(text: str) -> bool:
     return any(pattern.match(text) for pattern in _MAC_PATTERNS)
 
 
-def resolve_unnamed(mac: str) -> str:
-    """Vendor guess for a neighbor that gave no name, only a chassis MAC.
+def matching_identifier(name: str, identifiers) -> str | None:
+    """The entry in `identifiers` that `name` is just restating, or None.
 
-    LLDP (and CDP, in practice) only require a Chassis ID, Port ID, and TTL
-    - System Name is optional, and plenty of real endpoints never send it
-    (Windows' built-in LLDP responder on a NIC/dock is the common case, not
-    a misconfigured switch). Looked up the same way port-map.py resolves a
-    Vendor column, via manuf2's bundled OUI database.
+    Some devices wrap an identifier in a word or two instead of sending a
+    real name - ShoreTel phones give "Serial Number: 00104939517A" where
+    neighbor_port_id already has the same MAC as "0010.4939.517a". Rather
+    than pattern-match "Serial Number:" (a fix that would only ever cover
+    ShoreTel), this checks whether `name` contains that MAC written out in
+    any of the notations is_mac() recognizes (bare, colon, dash, dot-grouped,
+    space) - vendor agnostic, since it's the digits that have to match, not
+    whatever English words or punctuation a particular vendor wrapped around
+    them. Works the same way for a hypothetical Avaya "MAC-0010.4939.517A"
+    or Polycom "SN 00-10-49-39-51-7A" with no new code; a plain word like
+    "Serial" can't false-match, since it requires the full 12 hex digits of
+    a real identifier in one recognized grouping, not a handful of
+    coincidental hex-looking letters.
 
-    The result is suffixed "(unnamed)" rather than shown bare - a bare
-    vendor name in the Name column would read as if the device advertised
-    it, when really we just guessed a manufacturer from the OUI.
+    `identifiers` is typically (chassis_id, neighbor_port_id, mac_address)
+    from the same record - whichever of those are present.
     """
+    name_lower = name.lower()
+    for identifier in identifiers:
+        bare = re.sub(r"[^0-9a-fA-F]", "", identifier or "")
+        if len(bare) != 12:
+            continue
+        bare = bare.lower()
+        notations = (
+            bare,
+            ":".join(bare[i : i + 2] for i in range(0, 12, 2)),
+            "-".join(bare[i : i + 2] for i in range(0, 12, 2)),
+            ".".join(bare[i : i + 4] for i in range(0, 12, 4)),
+            " ".join(bare[i : i + 2] for i in range(0, 12, 2)),
+        )
+        if any(notation in name_lower for notation in notations):
+            return identifier
+    return None
+
+
+def resolve_unnamed(mac: str, platform: str = "", manufacturer: str = "") -> str:
+    """Best available label for a neighbor that gave no real name, only an
+    identifier (a bare chassis MAC, or a name that's just an identifier
+    restated - see matching_identifier()).
+
+    A neighbor_name field is a courtesy, not a requirement: LLDP (and CDP, in
+    practice) only require a Chassis ID, Port ID, and TTL, so plenty of real
+    endpoints never send a name (Windows' built-in LLDP responder on a
+    NIC/dock is the common case, not a misconfigured switch). But the same
+    record often still has other fields worth showing instead, checked in
+    order of how likely they are to be useful across vendors - a schema
+    field beats guessing from text, so no per-vendor parsing is needed:
+
+      1. platform     - "Cisco SG500X-24 (PID:SG500X-24-K9)-VSD" beats a MAC.
+      2. manufacturer  - LLDP's own field for this; populated on some records
+                         (a Mitel phone) even when platform/name are blank.
+      3. an OUI guess  - looked up the same way port-map.py resolves a Vendor
+                         column, via manuf2's bundled database, and suffixed
+                         "(unnamed)" rather than shown bare - a bare vendor
+                         name would read as if the device advertised it, when
+                         really it's a guess from the MAC alone.
+    """
+    cleaned_platform = strip_vendor_prefix(platform)
+    if cleaned_platform:
+        return cleaned_platform
+    cleaned_manufacturer = strip_vendor_prefix(manufacturer)
+    if cleaned_manufacturer:
+        return cleaned_manufacturer
+
     global _mac_parser
     if _mac_parser is None:
         _mac_parser = manuf.MacParser()
@@ -147,18 +211,25 @@ def resolve_unnamed(mac: str) -> str:
     return f"{vendor} (unnamed)"
 
 
-def tidy_name(raw: str) -> str:
+def tidy_name(
+    raw: str, platform: str = "", manufacturer: str = "", identifiers=()
+) -> str:
     """Trim a neighbor id to something that fits the Name column.
 
     "JC-Core.tricommanagement.local" -> "JC-Core" (a bare FQDN, so drop the
-    domain). "90b1.1c63.485e" / "fc ec da c4 77 0b" -> a vendor guess via
-    resolve_unnamed(), since a chassis MAC with no device name is the
-    "everything is blank" case, not a hostname to cosmetically trim. Free-text
-    ids with a space, like "regDN 2148,MINET_6940", are left alone.
+    domain). "90b1.1c63.485e" (a bare MAC) or "Serial Number: 00104939517A"
+    (an identifier restated with wrapper text, per matching_identifier())
+    -> resolve_unnamed()'s platform/manufacturer/OUI-guess chain, since
+    either case is the "no real name" situation, not a hostname to
+    cosmetically trim. Free-text ids with a space, like "regDN
+    2148,MINET_6940", are left alone.
     """
     text = (raw or "").strip()
     if is_mac(text):
-        return resolve_unnamed(text)
+        return resolve_unnamed(text, platform, manufacturer)
+    disguised = matching_identifier(text, identifiers)
+    if disguised:
+        return resolve_unnamed(disguised, platform, manufacturer)
     # ProCurve's LLDP parse sometimes lands the sysdescr in neighbor_name
     # ("cisco WS-C3850-48U"); drop the vendor word so the column isn't just
     # a worse copy of Platform.
@@ -307,7 +378,12 @@ def build_table(
         else:
             dns_name = ""
         table.add_row(
-            tidy_name(row["name"]),
+            tidy_name(
+                row["name"],
+                row["platform"],
+                row.get("manufacturer", ""),
+                row.get("identifiers", ()),
+            ),
             row["mgmt"],
             row["platform"],
             row["r_interface"],
