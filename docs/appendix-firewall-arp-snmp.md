@@ -213,7 +213,7 @@ required.
 
 Confirming the SNMP MIB really is vendor-agnostic: the same
 `snmp_arp_cache.py`, no code changes, run against a FortiGate 60D
-(FortiOS 6.0.18) instead of a SonicWall.
+(FortiOS 6.0.18) instead of a SonicWall worked perfectly.
 
 ----------------------------------------------------------------
 
