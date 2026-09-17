@@ -269,7 +269,7 @@ end
 
 ----------------------------------------------------------------
 
-![Fortinet-Interface](img/fortinet-interface.png)
+![Fortinet-Interface](img/fortinet-interface.png){ width="300" }
 
 ----------------------------------------------------------------
 
@@ -286,7 +286,7 @@ end
 
 ----------------------------------------------------------------
 
-![Fortinet-snmp-info](img/fortinet-snmp.png)
+![Fortinet-snmp-info](img/fortinet-snmp.png){ width="300" }
 
 ----------------------------------------------------------------
 
@@ -310,7 +310,7 @@ end
 
 ----------------------------------------------------------------
 
-![Fortinet-snmp-community](img/fortinet-community.png)
+![Fortinet-snmp-community](img/fortinet-community.png){ width="300" }
 
 The community name field is essentially the password used for snmp. Do not save it in a text file accessible to every user. Save it in a password manager line `KeepassXC` or `Bitwarden`. You can use either of those for free on the automation VM.
 
