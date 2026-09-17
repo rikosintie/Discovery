@@ -24,6 +24,12 @@ Discovery.code-workspace
 /bak/
 
 # ------------------------
+#   MKDOCS BUILD OUTPUT
+# ------------------------
+/site/
+/.cache/
+
+# ------------------------
 #      MISCELLANEOUS
 # ------------------------
 bin/

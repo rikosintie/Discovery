@@ -8,10 +8,8 @@ code changes.
 
 Usage:
     python3 snmp_arp_cache.py --host 10.20.30.1
-    (or set SONICWALL_HOST instead of passing --host every time - handy for
-    the cron wrapper script, since there's no per-run prompt to fill in;
-    kept under its original name for backward compatibility even though the
-    script itself is no longer SonicWall-only)
+    (or set FIREWALL_HOST instead of passing --host every time - handy for
+    the cron wrapper script, since there's no per-run prompt to fill in)
 
 Reads the SNMP community string from an environment variable rather than a
 CLI argument or a hardcoded value, since a CLI argument would leave it
@@ -20,7 +18,7 @@ visible in shell history and `ps` output:
     SNMP_COMMUNITY   the v2c community string configured on the firewall
 
 There is no hardcoded default host - every site's firewall has a different
-management IP, so either --host or SONICWALL_HOST must be supplied.
+management IP, so either --host or FIREWALL_HOST must be supplied.
 
 Shells out to `snmpwalk` (Net-SNMP) rather than pulling in pysnmp/easysnmp,
 since snmpwalk is already installed and confirmed working on this box.
@@ -57,8 +55,8 @@ parser = argparse.ArgumentParser(
 parser.add_argument(
     "-H",
     "--host",
-    default=os.environ.get("SONICWALL_HOST"),
-    help="Firewall management IP to poll (or set SONICWALL_HOST) - ex. 10.20.30.1",
+    default=os.environ.get("FIREWALL_HOST"),
+    help="Firewall management IP to poll (or set FIREWALL_HOST) - ex. 10.20.30.1",
 )
 args = parser.parse_args()
 
@@ -78,7 +76,7 @@ ARP_LINE_RE = re.compile(
 
 def snmpwalk(oid, force_hex=False):
     if not HOST:
-        sys.exit("Missing firewall IP - pass --host or set SONICWALL_HOST")
+        sys.exit("Missing firewall IP - pass --host or set FIREWALL_HOST")
     if not COMMUNITY:
         sys.exit("Missing SNMP_COMMUNITY environment variable")
     cmd = ["snmpwalk", "-v2c", "-c", COMMUNITY]

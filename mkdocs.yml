@@ -2,6 +2,8 @@ site_name: Discovery
 site_author: Michael Hubbard (@rikosintie)
 site_description: A site dedicated to the Network Discovery project.
 site_url: https://discovery.rikosintie.com
+repo_url: https://github.com/rikosintie/Discovery
+repo_name: rikosintie/Discovery
 nav:
   - Home: README.md
   - Intro: intro.md
@@ -25,14 +27,19 @@ theme:
     - content.tabs.link
     - content.code.copy
     - content.code.annotate # (1)!
+    - header.autohide
     - navigation.tabs
     - navigation.tabs.sticky
     - navigation.sections
     - navigation.expand
     - navigation.footer
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.path
     - navigation.top
     - search.suggest
     - search.highlight
+    - search.share
     - toc.integrate
 
   language: en
@@ -63,10 +70,12 @@ theme:
       bug: octicons/bug-16
       example: octicons/beaker-16
       quote: octicons/quote-16
+    repo: fontawesome/brands/github
 
 plugins:
     - social
     - search
+    - glightbox
 
 extra_css:
   - https://cdn.jsdelivr.net/npm/asciinema-player@3.8.0/dist/bundle/asciinema-player.css
@@ -86,6 +95,7 @@ markdown_extensions:
   - attr_list
   - md_in_html
   - pymdownx.blocks.caption
+  - pymdownx.keys
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg

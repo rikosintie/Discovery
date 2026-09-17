@@ -24,28 +24,30 @@ the customer site built on Hyper-V, not on your own Windows workstation.
 | IP address | `10.100.126.100` |
 | OS | Ubuntu 26.04 Desktop (on Hyper-V) |
 
-If the customer doesn't already have one, stand up an Ubuntu 26.04 desktop
-VM first, replacing `mhubbard`, `discover`, and `10.100.126.100` with values
-for your customer.
+If the customer doesn't already have one, stand up an Ubuntu 26.04 desktop VM first replacing `mhubbard`, `discover`, and `10.100.126.100` with values for your customer.
 
-Install the following on the VM:
+Install the following on the VM.
 
-- `sudo apt update` — update the package repositories before installing
-- `git` — `sudo apt install git`
-- `python3` — `sudo apt install python3`
-- `python3-venv` — `sudo apt install python3-venv`
-- `snmp` — `sudo apt install snmp`
+- sudo apt update - Update the package repositories before installing
+- git - `sudo apt install git`
+- python3- `sudo apt install python3`
+- python3-venv - `sudo apt install python3-venv`
+- snmp - `sudo apt install snmp`
 
-Then clone the Discovery repo and follow the setup in
-[Getting Started](Getting_Started.md). Everything below — `bash`, `cron`,
-the Python `venv`, `git` — runs on that VM, typically reached over SSH from
-your own laptop.
+then clone the Discovery repo and follow the setup in [Getting Started](Getting_Started.md). Everything below —
+
+- `bash`
+- `cron`
+- the Python `venv`
+- `git`
+
+runs on that VM, typically reached over SSH from your own laptop.
 
 Skip this whole appendix if the customer's firewall doesn't terminate any
 VLANs directly (i.e. every VLAN routes through a switch SVI) — there's
 nothing for `snmp_arp_cache.py` to add in that case.
 
-## Why poll the firewall's ARP table
+## Why poll the firewall
 
 `arp.py`/`config-pull.py` get their MAC/ARP data by querying the switches —
 which only works for VLANs that actually have an SVI on a switch, since
@@ -86,7 +88,7 @@ For repeatable, scriptable access, the two real options are:
   JSON back). Every vendor's REST API is different, which is exactly why
   SNMP — a real standard — is the path this appendix builds on.
 
-## SonicWall
+## SonicWall SNMP
 
 SonicOS 7.x's GUI ARP Cache page (**Network > ARP > ARP Cache**) does not
 include an Export button in current firmware builds — that feature existed
@@ -188,11 +190,14 @@ sudo apt install snmp -y
 snmpwalk -v2c -c <community_string> 10.100.126.1 1.3.6.1.2.1.4.22
 ```
 
+(OID `1.3.6.1.2.1.4.22` is the standard ARP MIB, `ipNetToMediaTable`.)
+
+----------------------------------------------------------------
+
 ### Enabling SSH on the SonicWall (optional)
 
 Not required by the automated pipeline — SNMP is all `snmp_arp_cache.py`
-needs — but useful for manually running `show arp` or other CLI diagnostics
-on the firewall itself. SSH management is off by default per-interface:
+needs — but SSH is useful for manually running `show arp` or other CLI diagnostics on the firewall itself. SSH management is off by default per-interface:
 
 1. **Network > Interfaces** → edit the interface owning the management IP
 2. **Management** section → toggle **SSH** on
@@ -202,15 +207,43 @@ If connecting from a different zone/VLAN than the target interface, an
 access rule permitting SSH traffic from that source zone may also be
 required.
 
+----------------------------------------------------------------
+
 ## Example 2: FortiGate 60D (home lab)
 
 Confirming the SNMP MIB really is vendor-agnostic: the same
 `snmp_arp_cache.py`, no code changes, run against a FortiGate 60D
-(FortiOS 6.0.18) instead of a SonicWall. FortiGate was configured via CLI
-rather than GUI here. The `show` output further down is included as a
-reference for reading it — FortiOS only prints lines that differ from
-their defaults, which can make a config block look sparser than what's
-actually active and shown in the GUI.
+(FortiOS 6.0.18) instead of a SonicWall.
+
+----------------------------------------------------------------
+
+### ⚠ Before applying this on a production/customer box
+
+This config was built for a single-purpose home-lab monitoring setup and
+makes two changes that can silently break existing SNMP usage if applied
+elsewhere without checking first:
+
+- **Hosts is restrictive, not additive.** If another monitoring tool, RMM,
+  or NMS is already polling this device under the same community string
+  from a different source IP, setting Hosts to a single `/32` will lock
+  that tool out exactly the way it locked out this monitoring host
+  originally. Before narrowing Hosts on an existing production FortiGate,
+  check `show system snmp community` for any Hosts entries already
+  present, and check with the customer whether SNMP is already in use by
+  another platform (backup software, an RMM, a NOC tool, etc.) before
+  replacing that entry.
+- **`unset events` disables all trap events, not just queries.** Polling
+  (`snmpget`/`snmpwalk`, and most NMS "SNMP monitor" checks) is unaffected
+  by this — it only stops the FortiGate from proactively sending traps for
+  things like CPU-high, HA failover, or AV/IPS detections. If the
+  customer's monitoring depends on receiving traps rather than polling,
+  leave the SNMP Events toggles alone, or re-enable them.
+
+----------------------------------------------------------------
+
+## Fortigate SNMP
+
+The FortiGate was configured via CLI rather than GUI here. The `show` output further down is included as a reference for reading it — FortiOS only prints lines that differ from their defaults, which can make a config block look sparser than what's actually active and shown in the GUI.
 
 The full `show system interface internal` output has a lot in it — VLAN
 forwarding, IPv6, the interface's own IP — none of which is what you're
@@ -234,6 +267,12 @@ end
     `show system interface internal` first and add `snmp` to your own site's
     actual list instead of copying this one.
 
+----------------------------------------------------------------
+
+![Fortinet-Interface](img/fortinet-interface.png)
+
+----------------------------------------------------------------
+
 Live output from `show system snmp sysinfo`:
 
 ```text
@@ -245,12 +284,18 @@ config system snmp sysinfo
 end
 ```
 
+----------------------------------------------------------------
+
+![Fortinet-snmp-info](img/fortinet-snmp.png)
+
+----------------------------------------------------------------
+
 Live output from `show system snmp community`:
 
-```text
+```bash linenums="1"
 config system snmp community
     edit 1
-        set name "<community_string>"
+        set name "dvd0brx1"
         config hosts
             edit 1
                 set ip 192.168.10.150 255.255.255.255
@@ -258,9 +303,49 @@ config system snmp community
         end
         set query-v1-status disable
         set trap-v1-status disable
+        unset events
     next
 end
 ```
+
+----------------------------------------------------------------
+
+![Fortinet-snmp-community](img/fortinet-community.png)
+
+The community name field is essentially the password used for snmp. Do not save it in a text file accessible to every user. Save it in a password manager line `KeepassXC` or `Bitwarden`. You can use either of those for free on the automation VM.
+
+----------------------------------------------------------------
+
+![Fortinet-snmp-events](img/fortinet-community-config.png){ width="300" }
+
+----------------------------------------------------------------
+
+In the above screenshot, you can see that I disabled all snmp events because I don't have `Solarwinds`, `Nagios`, etc. receiving traps from the Fortigate. The `unset events` on line 11 above disables **ALL** snmp traps. Before running the code, run `config system snmp community` to check what is enabled. If all events are enabled, the default, no events will be shown.
+
+For an example, I enabled:
+
+- CPU usage too high
+- Available memory is low
+
+Here is what that looks like:
+
+```bash
+config system snmp community
+    edit 1
+        set name "dvd0brx1"
+        config hosts
+            edit 1
+                set ip 192.168.10.150 255.255.255.255
+            next
+        end
+        set query-v1-status disable
+        set trap-v1-status disable
+        set events cpu-high mem-low
+    next
+end
+```
+
+----------------------------------------------------------------
 
 Notes on reading this against the GUI screens:
 
@@ -280,10 +365,10 @@ Notes on reading this against the GUI screens:
   this config later), and the two `v1-status disable` lines (v1 is off in
   favor of v2c-only).
 
-Verify from the automation VM — the SNMP host restriction above means
-nothing else on the LAN can reach this at all:
+Verify from the automation VM and a host not listed in the `community name` — the SNMP host restriction above means nothing else on the LAN can reach this at all:
 
 ```bash
+# from the automation host
 # Basic reachability / sysDescr — should always answer if the agent is up
 snmpget -v2c -c <community_string> 192.168.10.254 1.3.6.1.2.1.1.1.0
 iso.3.6.1.2.1.1.1.0 = STRING: "Fortigate 60D"
@@ -302,7 +387,7 @@ iso.3.6.1.2.1.4.22.1.2.1.192.168.10.50 = Hex-STRING: FC EC DA C4 6E 55
 
 ----------------------------------------------------------------
 
-## The ARP polling script: snmp_arp_cache.py
+## The ARP polling script
 
 `snmp_arp_cache.py` ships in the Discovery repo alongside the other scripts
 — it arrives with `git clone`, no separate copy step needed. It walks the
@@ -311,11 +396,10 @@ format `merge-sonicwall-arp.py` already expects
 (`IP Address,Type,MAC Address,Vendor,Interface`), so no changes are needed
 to the merge script itself.
 
-The firewall's IP is a required `--host` argument (or `SONICWALL_HOST`
-environment variable — kept under its original name for backward
-compatibility even though the script itself is no longer SonicWall-only):
+The firewall's IP is a required `--host` argument (or `FIREWALL_HOST`
+environment variable):
 
-- `--host` / `SONICWALL_HOST` — the firewall's management IP, e.g. `10.100.126.1`
+- `--host` / `FIREWALL_HOST` — the firewall's management IP, e.g. `10.100.126.1`
 - `SNMP_COMMUNITY` — the v2c community string configured on the firewall (env
   var only — a CLI argument would leave it visible in shell history and `ps`
   output)
@@ -328,7 +412,7 @@ the rest of Discovery already uses (see
 ```bash
 cat >> ~/.config/discovery/cyberark.env << 'EOF'
 export SNMP_COMMUNITY=the_actual_community_string
-export SONICWALL_HOST=10.100.126.1
+export FIREWALL_HOST=10.100.126.1
 EOF
 ```
 
@@ -350,7 +434,9 @@ python3 snmp_arp_cache.py --host 10.100.126.1
 A successful run prints a count of entries written, e.g.
 `Wrote 42 entries to firewall_arp_cache.csv`.
 
-### Debugging notes (worth keeping for future sites)
+----------------------------------------------------------------
+
+### SNMP quirks worth knowing
 
 A couple of SNMP gotchas surfaced while getting this working, both worth
 watching for on any similar setup:
@@ -377,6 +463,8 @@ just quietly wrong output. When feeding one script's output into another,
 diff the header row against a known-working reference file rather than
 assuming a superset of columns is harmless.
 
+----------------------------------------------------------------
+
 ### Expected merge count
 
 `merge-sonicwall-arp.py` merges every row in the CSV unconditionally —
@@ -388,6 +476,10 @@ no-op rather than something to guard against. The printed merge count should
 equal the CSV's row count; if it's noticeably lower, something's wrong (a
 MAC that doesn't convert cleanly, a malformed row) and is worth investigating.
 
+Keep in mind that the whole point of polling the firewall is to capture ARP records that won't be on the core switch. I have had several customers that keep Surveillance cameras, the Guest devices (hotels), IoT devices, etc. as L2 on the network switches and do all of the routing on a Firewall.
+
+----------------------------------------------------------------
+
 ### Wiring the SNMP pull into daily automation
 
 Community string and firewall IP added to the existing credentials file,
@@ -397,7 +489,7 @@ Community string and firewall IP added to the existing credentials file,
 ```bash
 export cyberARK=the_actual_password
 export SNMP_COMMUNITY=the_actual_community_string
-export SONICWALL_HOST=10.100.126.1
+export FIREWALL_HOST=10.100.126.1
 ```
 
 Called in the wrapper script ahead of the merge step so the CSV exists

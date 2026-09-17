@@ -157,18 +157,16 @@ mkdir -p ~/.config/discovery
 cat > ~/.config/discovery/cyberark.env << 'EOF'
 export cyberARK=the_actual_password
 export SNMP_COMMUNITY=the_actual_community_string
-export SONICWALL_HOST=10.100.126.1
+export FIREWALL_HOST=10.100.126.1
 EOF
 chmod 600 ~/.config/discovery/cyberark.env
 ```
 
-(`SNMP_COMMUNITY` and `SONICWALL_HOST` are only needed if this site has a
+(`SNMP_COMMUNITY` and `FIREWALL_HOST` are only needed if this site has a
 firewall you're polling for ARP data — see
 [Polling a Firewall's ARP Table via SNMP](appendix-firewall-arp-snmp.md).
-`SONICWALL_HOST` keeps its original name for backward compatibility even
-though `snmp_arp_cache.py` works with any vendor's firewall; it has no
-hardcoded default IP, so it must be set to whatever this customer's firewall
-actually is.)
+`snmp_arp_cache.py` has no hardcoded default IP, so `FIREWALL_HOST` must be
+set to whatever this customer's firewall actually is.)
 
 View the file:
 
@@ -181,7 +179,7 @@ You should see:
 ```bash
 export cyberARK=the_actual_password
 export SNMP_COMMUNITY=the_actual_community_string
-export SONICWALL_HOST=10.100.126.1
+export FIREWALL_HOST=10.100.126.1
 ```
 
 ### Create the schedule
