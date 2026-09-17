@@ -340,10 +340,10 @@ You will see all the dependencies being downloaded and installed. Here is a snip
 
 ```bash
 $ python3 -m pip install --no-deps -r requirements.lock.txt
-Collecting asttokens~=2.4.1 (from -r requirements.lock.txt (line 1))
-  Downloading asttokens-2.4.1-py2.py3-none-any.whl.metadata (5.2 kB)
-Collecting bcrypt~=4.1.2 (from -r requirements.lock.txt (line 2))
-  Downloading bcrypt-4.1.2-cp39-abi3-manylinux_2_28_x86_64.whl.metadata (9.5 kB)
+Collecting ast_serialize==0.8.0 (from -r requirements.lock.txt (line 1))
+  Downloading ast_serialize-0.8.0-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.4 kB)
+Collecting asttokens==3.0.2 (from -r requirements.lock.txt (line 2))
+  Downloading asttokens-3.0.2-py3-none-any.whl.metadata (5.7 kB)
 ```
 
 Now if we run `pip list` we will see that the dependencies have been installed:
