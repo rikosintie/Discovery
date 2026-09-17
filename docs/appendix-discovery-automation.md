@@ -1,6 +1,4 @@
-# Automating Discovery with cron, Environment Variables, and bash
-
-## The automation host
+# Automating Discovery
 
 This appendix assumes a small Ubuntu 26.04 desktop VM at the customer site —
 not your own Windows workstation — that runs Discovery unattended on a
@@ -14,16 +12,26 @@ that VM, typically reached over SSH from your own laptop.
 | IP address | `10.100.126.100` |
 | OS | Ubuntu 26.04 Desktop (on Hyper-V) |
 
-If the VM doesn't exist yet, stand it up first: install `git`, `python3`,
-`python3-venv`, and `snmp`, then clone the Discovery repo and follow the setup
-in [Getting Started](Getting_Started.md).
+If the customer doesn't already have one, stand up an Ubuntu 26.04 desktop VM first replacing `mhubbard`, `discover`, and `10.100.126.100` with values for your customer.
+
+Install the following on the VM.
+
+- sudo apt update - Update the package repositories before installing
+- git - `sudo apt install git`
+- python3- `sudo apt install python3`
+- python3-venv - `sudo apt install python3-venv`
+- snmp - `sudo apt install snmp`
+
+ then clone the Discovery repo and follow the setup in [Getting Started](Getting_Started.md).
 
 Some steps below (the `SNMP_COMMUNITY` variable and the `snmp_arp_cache.py`
 line in the wrapper script) are only needed if the site also has a firewall
-whose ARP table you're pulling — see
-[Polling a Firewall's ARP Table via SNMP](appendix-firewall-arp-snmp.md).
+whose ARP table you're pulling — see [Polling a Firewall's ARP Table via SNMP](appendix-firewall-arp-snmp.md).
+
 Skip those specific pieces if not; everything else in this appendix applies
 regardless.
+
+----------------------------------------------------------------
 
 ## Credential handling for scripts
 
@@ -34,8 +42,14 @@ Never hardcode credentials in a script. Two solid patterns:
 - **OS keyring** (the `keyring` Python library) for interactive/dev-laptop
   use — stores secrets in the OS credential store instead of a plaintext file
 
-Either way, use a dedicated low-privilege account for API/SNMP access rather
-than an admin account, where the firmware supports scoped roles.
+Either way, this is about the password presented *to the switch or firewall*
+— a read-only SNMP community string, or an API key scoped to a monitoring
+role where the device's firmware supports it — not the automation host's own
+OS account. There's nothing to choose on the Ubuntu side: every example in
+these appendices runs as the one `mhubbard` account created during setup,
+and Ubuntu disables the root login by default anyway.
+
+----------------------------------------------------------------
 
 ## Getting scripts on and off the automation host
 
@@ -46,23 +60,36 @@ data file before the repo is fully set up, or a log/data file you want to
 look at locally afterward. `scp` (secure copy, built on SSH) handles both
 directions from a single command line.
 
-**Laptop → host** (push) — for example, copying a device-inventory CSV you
-built while scoping the site onto the VM before the first run:
+Two machines, two IPs — easy to mix up on site. Example values from a real
+engagement:
+
+| | |
+|---|---|
+| Host (automation VM) | `10.100.126.100` |
+| Laptop | `10.100.126.110` |
+
+**Laptop → host** (push) — run this from your laptop, `10.100.126.110`, for
+example, copying a device-inventory CSV you built while scoping the site
+onto the VM before the first run:
 
 ```bash
-scp device-inventory.csv mhubbard@10.100.126.100:~/Documents/04_tools/Discovery/
+scp device-inventory-cust1.csv mhubbard@10.100.126.100:~/Documents/Discovery/
 ```
 
-**Host → laptop** (pull) — for example, copying today's log back to your
-laptop to review locally:
+**Host → laptop** (pull) — also run from your laptop, `10.100.126.110`; `scp`
+has no way to reach out from the host uninvited, so the pull direction is
+still a command you type on the laptop, just with source and destination
+swapped. For example, copying today's log back to your laptop to review
+locally:
 
 ```bash
 scp mhubbard@10.100.126.100:~/discovery-daily.log .
 ```
 
 `scp SOURCE DESTINATION` — whichever side has the `user@host:` prefix is the
-remote end; the side without it is wherever you're running the command from.
-The trailing `.` in the pull example means "into my current directory."
+remote end (the automation host, `10.100.126.100`); the side without it is
+wherever you're running the command from (your laptop). The trailing `.` in
+the pull example means "into my current directory."
 
 !!! Note "Windows 11"
     `scp` ships built into Windows 11 as part of the OpenSSH client — no
@@ -108,7 +135,7 @@ Paste the following into nano, then `ctrl+o` to save, `ctrl+x` to close it:
 set -e
 
 source ~/.config/discovery/cyberark.env
-cd ~/Documents/04_tools/Discovery
+cd ~/Documents/Discovery
 source venv/bin/activate
 
 python3 snmp_arp_cache.py  # only if this site has a firewall to poll
@@ -204,7 +231,7 @@ An editor will open, scroll to the bottom and paste this in:
   repo:
 
   ```bash
-  cd ~/Documents/04_tools/Discovery
+  cd ~/Documents/Discovery
   rm -rf .git
   git init
   git add .
@@ -223,7 +250,7 @@ An editor will open, scroll to the bottom and paste this in:
   placed inside the repo — it shouldn't be) the credentials file:
 
   ```bash
-  cd ~/Documents/04_tools/Discovery
+  cd ~/Documents/Discovery
   nano .gitignore
   ```
 
