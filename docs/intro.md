@@ -316,12 +316,9 @@ This project is licensed under the Unlicense - see the LICENSE file for details.
 This project includes a file named sbom.json — an SPDX 2.3 compatible SBOM
 listing every pinned dependency in requirements.lock.txt.
 
-It used to be exported by hand from GitHub's Dependency Graph (Insights,
-Dependency Graph, Export SBOM), but that only resolved fuzzy `~>` version
-ranges and required re-exporting from the browser every time a dependency
-changed. `generate_sbom.py` replaces that: it reads the exact pins already
-maintained in requirements.lock.txt and writes sbom.json directly, so the
-SBOM stays a single local command away from being current.
+`generate_sbom.py` reads the exact pins already maintained in
+requirements.lock.txt and writes sbom.json directly, so the SBOM stays a
+single local command away from being current.
 
 ```bash
 python3 generate_sbom.py

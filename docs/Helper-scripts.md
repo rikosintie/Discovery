@@ -352,7 +352,7 @@ The second is a Core/IDF deployment where there is a layer 3 switch in an MDF an
 
 #### Running the arp.py script
 
-One script handles the arp step for every supported vendor — it used to be split into procurve-arp.py, cisco-arp.py, and cx-arp.py. It finds the IP and MAC on each line by content rather than assuming a fixed column layout, so it doesn't matter whether the vendor prints Cisco-style `Internet <ip> <age> <mac> ARPA VlanN`, ProCurve-style `<ip> <mac> <type> <port>`, or Aruba CX-style `<ip> <mac> <vlan> <port> <state> <vrf>`.
+One script handles the arp step for every supported vendor. It finds the IP and MAC on each line by content rather than assuming a fixed column layout, so it doesn't matter whether the vendor prints Cisco-style `Internet <ip> <age> <mac> ARPA VlanN`, ProCurve-style `<ip> <mac> <type> <port>`, or Aruba CX-style `<ip> <mac> <vlan> <port> <state> <vrf>`.
 
 Example of a distributed layer 3 deployment:
 
@@ -453,7 +453,7 @@ is planned for a similar aggregation-switch-plus-firewall setup.
 
 #### Running the port-map.py script
 
-One script handles the port-map step for every supported vendor — it used to be split into procurve-macaddr.py and cisco-macaddr.py (plus a third, cx-macaddr.py, for Aruba CX). It reads the hostname-Mac2IP.json and hostname-mac-address.txt files, detects each line's MAC format and column order rather than assuming a fixed layout, and creates the port maps — with a manufacturer lookup via the maintained `manuf2` package and, when a DNS server is available, a reverse-DNS name column.
+One script handles the port-map step for every supported vendor — ProCurve, Cisco, and Aruba CX. It reads the hostname-Mac2IP.json and hostname-mac-address.txt files, detects each line's MAC format and column order rather than assuming a fixed layout, and creates the port maps — with a manufacturer lookup via the maintained `manuf2` package and, when a DNS server is available, a reverse-DNS name column.
 
 `python3 port-map.py -s area1`
 
@@ -1092,10 +1092,9 @@ Both scripts save their reports into the "CR-data" directory.
 
 ### The 10Mbps interfaces report
 
-Originally ProCurve-only (as `procurve-10Mb.py`); now also reads Cisco IOS/XE
-and Cisco Small Business/S300 captures. `int_br.txt` carries no vendor field,
-so the script detects which of the three shapes it's looking at from the
-keys already in the JSON:
+Reads ProCurve, Cisco IOS/XE, and Cisco Small Business/S300 captures.
+`int_br.txt` carries no vendor field, so the script detects which of the
+three shapes it's looking at from the keys already in the JSON:
 
 - **ProCurve** folds speed and duplex into one field: `"mode": "10FDx"`.
 - **Cisco IOS/XE** keeps them separate: `"speed": "10"` or `"a-10"`
@@ -1163,10 +1162,9 @@ I ran into a cutover where the switch had all mGig ports, but most of the device
 
 ### The ports in use report
 
-Originally ProCurve-only (as `procurve-interface-in-use.py`); now also reads
-Cisco IOS/XE and Aruba AOS-CX captures. `-interface.json` carries no vendor
-field, so the script detects which shape it's looking at from the keys
-already in the JSON:
+Reads ProCurve, Cisco IOS/XE, and Aruba AOS-CX captures. `-interface.json`
+carries no vendor field, so the script detects which shape it's looking at
+from the keys already in the JSON:
 
 - **ProCurve** has a literal `"total_bytes"` counter per port — the most
   direct signal there is.

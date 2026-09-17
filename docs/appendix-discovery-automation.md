@@ -331,9 +331,7 @@ An editor will open, scroll to the bottom and paste this in:
 ### Finding what changed when something breaks
 
 The whole point of committing every daily run is that `git log` and
-`git diff` become a change-history tool for the network itself, not just for
-the script's own code — useful when a switch problem is suspected and the
-question is "what changed, and when," not just "something's different."
+`git diff` become a change-history tool for the network itself — useful when a switch problem is suspected and the question is "what changed, and when," not just "something's different."
 
 See which days have a commit, and when:
 
@@ -345,16 +343,28 @@ Diff two days' output directly — for example, if today's port map looks
 wrong, compare it against yesterday's:
 
 ```bash
-git diff HEAD~1 HEAD -- port-maps/Final/port-maps.csv
+git diff HEAD~1 HEAD -- port-maps/jc-core-Mac2IP.json
 ```
+
+An empty result just means that file didn't change between those two
+commits — not that the command is broken. `arp.py` rebuilds
+`<core>-Mac2IP.json` from scratch on every run, so it's a good file to test
+this against: it's virtually guaranteed to differ day to day. Other files
+(a switch config that hasn't changed, say) can easily go several days with
+no diff at all, and that's expected too.
 
 To find exactly which day a specific MAC or IP address first showed up (or
 disappeared) on a port, search the file's own commit history instead of
 diffing day by day:
 
 ```bash
-git log -p --follow -- port-maps/Final/port-maps.csv | grep -B5 "00:1a:2b:3c:4d:5e"
+git log -p --follow -- port-maps/Final/jc-mdf-1-ports.txt | grep -B5 "00:1a:2b:3c:4d:5e"
 ```
+
+(`-s jcedge` is a site/device-inventory group, not a single switch — it
+expands to one `Final/<hostname>-ports.txt` per switch it covers, e.g.
+`jc-mdf-1-ports.txt`, `jc-mdf-2-ports.txt`, `jc-idf-2-ports.txt`, and so on.
+Substitute whichever closet's file is actually in question.)
 
 `-p` shows the actual diff at each commit that touched the file, `--follow`
 keeps working even if the file was ever renamed, and the `grep -B5` pulls up
@@ -388,7 +398,7 @@ Paste this into nano:
 }
 ```
 
-#### Explanation
+### Explanation of settings
 
 - daily: Rotates the log file every single day.
 - rotate 12: Keeps a maximum history of 12 archived log files. On the 13th day, the oldest log file is permanently deleted.
