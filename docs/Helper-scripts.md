@@ -405,10 +405,11 @@ those hosts as `No-Match` even though the firewall knows exactly who they
 are.
 
 `merge-sonicwall-arp.py` is a one-off for this: it reads a MAC/IP table
-exported from the firewall's ARP cache (for a SonicWall, `tz370_arp_cache.csv`
-with columns `IP Address,Type,MAC Address,Vendor,Interface,Timeout` — check
-your model's admin UI for the exact export path, it varies by SonicOS
-version), keeps only the interfaces/VLANs the core switch can't see,
+exported from the firewall's ARP cache (`firewall_arp_cache.csv`, written by
+`snmp_arp_cache.py` — see
+[Polling a Firewall's ARP Table via SNMP](appendix-firewall-arp-snmp.md) for
+setup — with columns `IP Address,Type,MAC Address,Vendor,Interface`), keeps
+only the interfaces/VLANs the core switch can't see,
 converts the MACs to the same `aabb.ccdd.eeff` format `arp.py` uses, and
 merges them into the existing `coreswitch-Mac2IP.json`.
 
@@ -418,9 +419,16 @@ before that gets wiped:
 
 ```bash
 python3 arp.py -s jcedge -c jc-core
-python3 merge-sonicwall-arp.py
+python3 merge-sonicwall-arp.py -c jc-core
 python3 port-map.py -s jcedge -c jc-core -d 10.100.126.6
 ```
+
+`-c` matches whatever core switch name `arp.py`/`port-map.py` used — it
+determines which `port-maps/<core>-Mac2IP.json` gets updated. Every row in
+the CSV gets merged unconditionally — `port-map.py` only looks up
+`Mac2IP.json` by MAC and has no concept of the firewall's own Interface
+labels, so there's nothing to filter by (see
+[Polling a Firewall's ARP Table via SNMP](appendix-firewall-arp-snmp.md)).
 
 Getting the CSV out of the SonicWall's web UI was rough — there's no clean
 export button on this model/firmware, so it was highlight, copy, paste into

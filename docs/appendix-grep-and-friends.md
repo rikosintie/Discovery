@@ -1,6 +1,6 @@
-## Appendix: grep, awk, sort, and cut — Five Worked Examples
+# grep, awk, sort, and cut — Five Worked Examples
 
-### Why
+## Why
 
 Most network engineers coming from Windows have never used the core POSIX
 text tools. This appendix walks through five real examples of using `grep`
@@ -13,7 +13,7 @@ to get native versions of these tools, and the
 [grep pipeline examples](usage.md#find-connected-ports) in the Usage guide
 for PowerShell equivalents.
 
-### grep
+## grep
 
 One of the best tools in Linux! You can search a directory, or recursively
 through the file system, for a pattern inside a file.
@@ -36,7 +36,7 @@ DESCRIPTION
        default, grep prints the matching lines.
 ```
 
-### Example 1 — Pulling management IPs out of a directory of configs
+## Example 1 — Pulling management IPs out of a directory of configs
 
 I have backups of several switches in a directory. I wanted to pull out the
 management IP address for each switch. I knew they all started with
@@ -116,7 +116,7 @@ with the regex `[0-9]{1,3}\.` instead of hardcoding the octets. That uses a
 the `\` tells grep the `.` isn't a regex wildcard but a real dot. That's
 called "escaping." The `-E` flag is required and is called extended regex.
 
-### Example 2 — Finding a handful of Dell switches on a busy subnet
+## Example 2 — Finding a handful of Dell switches on a busy subnet
 
 A while back I needed to find a handful of Dell switches on a large subnet
 full of Dell computers and other devices. Since almost all of the MAC
@@ -173,7 +173,7 @@ grep telnet/// powerconnect.gnmap | awk '{ print $2 }'
 10.112.69.44
 ```
 
-### Example 3 — Finding unique IPs in a massive syslog
+## Example 3 — Finding unique IPs in a massive syslog
 
 In this example, I was looking for a set of switches that had IP addresses
 in the `10.255.255.` range. The syslog was massive, so opening it in an
@@ -194,7 +194,7 @@ grep 10.255.255 SyslogCatchAll.txt.001 | awk '{ print $4 }' | sort -u
 10.255.255.17
 ```
 
-### Example 4 — Pulling ports by manufacturer across a whole directory
+## Example 4 — Pulling ports by manufacturer across a whole directory
 
 I had a directory with 8 files in it. They contained VLAN IDs, IP addresses,
 MAC addresses, port numbers, and manufacturer names. I needed to pull out
@@ -260,7 +260,7 @@ look for the manufacturer, and then copy the information to a new file. I
 was migrating 72 sites and had to do this for each site — some sites had as
 many as 22 IDFs!
 
-### Example 5 — Pulling IP/port/name out of a set of systemd unit files
+## Example 5 — Pulling IP/port/name out of a set of systemd unit files
 
 Here's a listing of the files in `/etc/systemd/system/`:
 

@@ -10,10 +10,9 @@ nav:
   - Helper Scripts: Helper-scripts.md
   - PowerShell: Using_PowerShell.md
   - Appendix:
-      - grep, awk, sort, and cut: appendix-grep-and-friends.md
-      - SonicWall SNMP setup: sonicwall-snmp-setup.md
-      - SonicWall ARP polling & cron automation: appendix-sonicwall-arp-discovery-cron.md
-      - SNMP-based ARP cache polling: appendix-snmp-arp-polling.md
+      - grep and friends: appendix-grep-and-friends.md
+      - Firewall ARP via SNMP: appendix-firewall-arp-snmp.md
+      - Cron & env automation: appendix-discovery-automation.md
   - Security Policy: SECURITY.md
 
 theme:

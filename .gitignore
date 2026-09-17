@@ -19,6 +19,11 @@ Discovery.code-workspace
 *.swo
 
 # ------------------------
+#   SYNC TOOL ARTIFACTS
+# ------------------------
+/bak/
+
+# ------------------------
 #      MISCELLANEOUS
 # ------------------------
 bin/
@@ -72,6 +77,9 @@ jc*
 CX*
 Lab*
 device*
+device-inventory-jc*
+device-inventory-area2.csv
+device-inventory-area3.csv
 config.toml
 site_name: My Docs1.yml
 device-inventory-home.csv

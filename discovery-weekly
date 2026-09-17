@@ -1,0 +1,9 @@
+/home/vector/Documents/04_tools/Discovery/discovery-weekly.log {
+    daily
+    rotate 12
+    compress
+    missingok
+    notifempty
+    copytruncate
+    su mhubbard mhubbard
+}
