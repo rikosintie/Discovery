@@ -439,6 +439,26 @@ date) is visible.
 !!! note
     You can add/substitute `-A5` to see lines after a match. Claude/Gemini/ChatGPT are experts at git. If you want more examples ask them.
 
+Here is an example from this document. I added the note above, committed, then ran:
+
+----------------------------------------------------------------
+
+```bash linenums='1' hl_lines='1'
+git log -p --follow -- docs/appendix-discovery-automation.md | grep -B5 "add/substitute"
+@@ -434,6 +436,11 @@ date) is visible.
+
+ ----------------------------------------------------------------
+
++!!! note
++    You can add/substitute `-A5` to see lines after a match. Claude/Gemini/ChatGPT are experts at git. If you want more examples ask them.
+```
+
+----------------------------------------------------------------
+
+![git-log](img/git-log.png){ width="500"}
+
+In the image, you can see that the matched text is highlighted in red.
+
 ----------------------------------------------------------------
 
 ## Log rotation
@@ -468,7 +488,7 @@ Paste this into nano:
 
 ### Explanation of settings
 
-- daily: Rotates the log file every single day.
+- daily: Rotates the log file every single day. You can use `weekly` if disk space isn't an issue.
 - rotate 12: Keeps a maximum history of 12 archived log files. On the 13th day, the oldest log file is permanently deleted.
 - compress: Compresses the old log files using gzip to save disk space (saving them as .log.1.gz, .log.2.gz, etc.).
 - missingok: If the discovery-daily.log file is missing for some reason on a given day, do not throw an error; just move on silently.
