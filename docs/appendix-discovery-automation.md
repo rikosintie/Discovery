@@ -422,15 +422,22 @@ diffing day by day:
 git log -p --follow -- port-maps/Final/jc-mdf-1-ports.txt | grep -B5 "00:1a:2b:3c:4d:5e"
 ```
 
-(`-s jcedge` is a site/device-inventory group, not a single switch — it
-expands to one `Final/<hostname>-ports.txt` per switch it covers, e.g.
-`jc-mdf-1-ports.txt`, `jc-mdf-2-ports.txt`, `jc-idf-2-ports.txt`, and so on.
-Substitute whichever closet's file is actually in question.)
+----------------------------------------------------------------
+
+(`port-map.py` writes one `Final/<hostname>-ports.txt` per switch — a site
+with several closets ends up with `jc-mdf-1-ports.txt`, `jc-mdf-2-ports.txt`,
+`jc-idf-2-ports.txt`, and so on. Substitute whichever closet's file is
+actually in question.)
 
 `-p` shows the actual diff at each commit that touched the file, `--follow`
 keeps working even if the file was ever renamed, and the `grep -B5` pulls up
 the 5 lines before each match so the surrounding commit header (with its
 date) is visible.
+
+----------------------------------------------------------------
+
+!!! note
+    You can add/substitute `-A5` to see lines after a match. Claude/Gemini/ChatGPT are experts at git. If you want more examples ask them.
 
 ----------------------------------------------------------------
 
