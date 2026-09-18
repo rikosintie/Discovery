@@ -5,6 +5,8 @@ not your own Windows workstation — that runs Discovery unattended on a
 schedule. Everything below (`bash`, `cron`, the Python `venv`, `git`) runs on
 that VM, typically reached over SSH from your own laptop.
 
+Here is what I used at a customer recently:
+
 | | |
 |---|---|
 | Hostname | `discover` |
@@ -12,24 +14,32 @@ that VM, typically reached over SSH from your own laptop.
 | IP address | `10.100.126.100` |
 | OS | Ubuntu 26.04 Desktop (on Hyper-V) |
 
-If the customer doesn't already have one, stand up an Ubuntu 26.04 desktop VM first replacing `mhubbard`, `discover`, and `10.100.126.100` with values for your customer.
+If the customer doesn't already have one, stand up an Ubuntu 26.04 desktop VM first, replacing `mhubbard`, `discover`, and `10.100.126.100` with values for your customer.
+
+Update the package repositories before installing the necassary packages:
+
+`sudo apt update`
+
+----------------------------------------------------------------
 
 Install the following on the VM.
 
-- sudo apt update - Update the package repositories before installing
-- git - `sudo apt install git`
-- python3- `sudo apt install python3`
-- python3-venv - `sudo apt install python3-venv`
-- snmp - `sudo apt install snmp`
+- git: `sudo apt install git`
+- python3: `sudo apt install python3`
+- python3-venv:`sudo apt install python3-venv`
+- snmp:`sudo apt install snmp`
 - openssh-server - `sudo apt install openssh-server` — a Ubuntu Desktop
   install doesn't include this by default, and you'll need it to `ssh` into
-  the host at all, let alone run the `scp` examples later in this appendix
+  the host for management, and run the `scp` examples later in this appendix
 
- then clone the Discovery repo and follow the setup in [Getting Started](Getting_Started.md).
+Then clone the Discovery repo and follow the setup in [Getting Started](Getting_Started.md).
 
-Some steps below (the `SNMP_COMMUNITY` variable and the `snmp_arp_cache.py`
-line in the wrapper script) are only needed if the site also has a firewall
-whose ARP table you're pulling — see [Polling a Firewall's ARP Table via SNMP](appendix-firewall-arp-snmp.md).
+The following steps:
+
+- the `SNMP_COMMUNITY` variable
+- `snmp_arp_cache.py` line in the wrapper script
+
+are only needed if the site also has a firewall whose ARP table you're pulling — see [Polling a Firewall's ARP Table via SNMP](appendix-firewall-arp-snmp.md).
 
 Skip those specific pieces if not; everything else in this appendix applies
 regardless.
@@ -56,20 +66,16 @@ and Ubuntu disables the root login by default anyway.
 
 ## Getting scripts on and off the automation host
 
-The Discovery scripts themselves arrive via `git clone` — you won't normally
-need to copy those by hand. But you'll still occasionally need to move a
-one-off file between your laptop and the automation host: a site-specific
-data file before the repo is fully set up, or a log/data file you want to
-look at locally afterward. `scp` (secure copy, built on SSH) handles both
+The Discovery scripts themselves arrive via `git clone` — you don't need to copy those by hand. But you'll still occasionally need to move a one-off file between your laptop and the automation host: a site-specific data file before the repo is fully set up, or a log/data file you want to look at locally afterward. Use `scp` (secure copy, built on SSH) for both
 directions from a single command line.
 
 Two machines, two IPs — easy to mix up on site. Example values from a real
 engagement:
 
-| | |
-|---|---|
-| Host (automation VM) | `10.100.126.100` |
-| Laptop | `10.100.126.110` |
+- **Host (automation VM):** `10.100.126.100`
+- **My Laptop:** `10.100.126.110`
+
+----------------------------------------------------------------
 
 **Laptop → host** (push) — run this from your laptop, `10.100.126.110`, for
 example, copying a device-inventory CSV you built while scoping the site
@@ -79,6 +85,8 @@ onto the VM before the first run:
 scp device-inventory-cust1.csv mhubbard@10.100.126.100:~/Documents/Discovery/
 ```
 
+----------------------------------------------------------------
+
 **Host → laptop** (pull) — also run from your laptop, `10.100.126.110`; `scp`
 has no way to reach out from the host uninvited, so the pull direction is
 still a command you type on the laptop, just with source and destination
@@ -86,10 +94,14 @@ swapped. For example, copying today's log back to your laptop to review
 locally:
 
 ```bash
-scp mhubbard@10.100.126.100:~/discovery-daily.log .
+scp mhubbard@10.100.126.100:~/discovery-daily.log . # (1)!
 ```
 
+1. That trailing `.` means "into my current directory" — easy to miss, easy to break the command if you drop it.
+
 The trailing `.` in the pull example means "into my current directory."
+
+----------------------------------------------------------------
 
 `scp SOURCE DESTINATION` — whichever side has the `user@host:` prefix is the
 remote end (the automation host, `10.100.126.100`); the side without it is
