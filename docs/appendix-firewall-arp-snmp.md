@@ -494,6 +494,6 @@ export FIREWALL_HOST=10.100.126.1
 
 Called in the wrapper script ahead of the merge step so the CSV exists
 before `merge-sonicwall-arp.py` runs — see
-[Daily automation](appendix-discovery-automation.md#daily-automation-customer-site-example)
+[Daily automation](appendix-discovery-automation.md#daily-automation)
 in the Automating Discovery appendix for the full script. No changes are
 needed to the cron entry itself.

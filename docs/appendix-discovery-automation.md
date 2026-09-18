@@ -6,37 +6,72 @@ Everything below (`bash`, `cron`, the Python `venv`, `git`) runs on that VM, typ
 
 Here is what I used at a customer recently:
 
-- **OS**: Ubuntu 26.04 Desktop (on Hyper-V
+- **OS**: Ubuntu 26.04 Desktop (on Hyper-V)
 - **Hostname:** Discover
 - **IP address**: 10.100.126.100
 - **Username**: mhubbard
 
 If the customer doesn't already have one, stand up an Ubuntu 26.04 desktop VM first, replacing `mhubbard`, `discover`, and `10.100.126.100` with values for your customer.
 
-Update the package repositories before installing the necassary packages:
+Open a terminal, `ctrl+alt+t`, then update the package repositories before installing the necessary packages:
 
-`sudo apt update`
+```bash
+sudo apt update
+```
+
+If this is a new install you will probably see packages that need updating after the `sudo apt update` command finishes. If so, run:
+
+```bash
+sudo apt upgrade -y
+```
 
 ----------------------------------------------------------------
 
-Install the following on the VM.
+Install the following on the Ubuntu 26.04 Virtual Machine:
 
-- git: `sudo apt install git`
-- python3: `sudo apt install python3`
-- python3-venv:`sudo apt install python3-venv`
-- snmp:`sudo apt install snmp`
-- openssh-server - `sudo apt install openssh-server` — a Ubuntu Desktop
-  install doesn't include this by default, and you'll need it to `ssh` into
-  the host for management, and run the `scp` examples later in this appendix
+- git - The version control tool
+- python3 - The latest Python version
+- python3-venv - The Python virtual environment package
+- snmp - Needed only if you want to poll a firewall
+- openssh-server - Not included in an Ubuntu Desktop install by default; needed both to `ssh` into the host for management and to run the `scp` examples later in this appendix
 
-Then clone the Discovery repo and follow the setup in [Getting Started](Getting_Started.md).
+Paste these commands into the terminal an press enter. Click the :material-content-copy: icon on the right to copy the commands to the clipboard.
+
+```bash
+sudo apt install git -y
+sudo apt install python3 -y
+sudo apt install python3-venv -y
+sudo apt install snmp -y
+sudo apt install openssh-server -y
+```
+
+Then clone the Discovery repo:
+
+```bash
+cd ~/Documents
+git clone https://github.com/rikosintie/Discovery.git
+cd Discovery
+```
+
+Since Ubuntu and `python3-venv` are already covered above, create the
+virtual environment and install the pinned dependencies. The purpose of the virtual environment it to isolate the packages in Discovery from the Python packages that Ubuntu uses. If you want more detail see [Getting Started](Getting_Started.md#2-using-a-python-virtual-environment){: target="_blank" rel="noopener" }.
+
+```bash
+python -m venv venv --upgrade-deps --prompt="Discovery"
+source venv/bin/activate
+python3 -m pip install --no-deps -r requirements.lock.txt
+```
+
+`deactivate` stops the venv when you're done working in it interactively —
+the daily wrapper script (below) activates and deactivates it on its own
+each run, so this is only needed for manual testing.
 
 The following steps:
 
 - the `SNMP_COMMUNITY` variable
 - `snmp_arp_cache.py` line in the wrapper script
 
-are only needed if the site also has a firewall whose ARP table you're pulling — see [Polling a Firewall's ARP Table via SNMP](appendix-firewall-arp-snmp.md).
+are only needed if the site also has a firewall whose ARP table you're pulling — see [Polling a Firewall's ARP Table via SNMP](appendix-firewall-arp-snmp.md#being-prompted-for-the-password){: target="_blank" rel="noopener" }.
 
 Skip those specific pieces if not; everything else in this appendix applies
 regardless.
@@ -47,11 +82,8 @@ regardless.
 
 Nothing in Discovery ever takes a password on the command line, and none of
 the scripts have a password hardcoded. `config-pull.py` reads the switch
-password from the `cyberARK` environment variable (or prompts for it
-interactively with `-p 1`; see [Usage](usage.md)), and `snmp_arp_cache.py`
-reads `SNMP_COMMUNITY` and `FIREWALL_HOST` the same way.
-The username comes from the device-inventory file, not from a credential at
-all.
+password from the `cyberARK` environment variable or prompts for it
+interactively with `-p 1`; see [Usage](usage.md#password){: target="_blank" rel="noopener" }. The username comes from the device-inventory file. `snmp_arp_cache.py` reads `SNMP_COMMUNITY` and `FIREWALL_HOST` the same way.
 
 For unattended runs, the one thing that matters is protecting the file that
 supplies those environment variables — `~/.config/discovery/cyberark.env`,
@@ -163,7 +195,7 @@ scp discovery-daily.log mhubbard@10.100.126.110:~/Downloads/
 ## Daily automation
 
 A daily schedule is used here since the Discovery scripts are lightweight —
-a handful of SSH pulls against a small switch count, plus one SNMP walk
+a SSH pulls against switches, plus one SNMP walk
 against the firewall — and daily granularity on the MAC table / port maps
 is more useful for catching device moves close to when they happen.
 
@@ -176,9 +208,9 @@ run can be confirmed without digging through the log.
 
 ### Create a credentials file
 
-Credentials file (`~/.config/discovery/cyberark.env`, `chmod 600`) — despite
-the name, `cyberARK` isn't tied to any actual CyberArk vault here, just a
-plain exported value:
+The credentials file (`~/.config/discovery/cyberark.env`, `chmod 600`) — despite the name, `cyberARK` isn't tied to any actual CyberArk vault here, just a plain exported value. cyberARK is hard coded into config-pull.py, you cannot rename it without editing config-pull.py.
+
+Paste the following into the terminal. Replace `the_actual_password`, `the_actual_community_string` and the ip address with values from you environment.
 
 ```bash
 mkdir -p ~/.config/discovery
@@ -225,7 +257,15 @@ touch discovery-daily.sh
 nano discovery-daily.sh
 ```
 
-Paste the following into nano, then `ctrl+s` to save, `ctrl+x` to close it:
+Paste the following into nano, then `ctrl+s` to save, `ctrl+x` to close it.
+
+Just like in the credential file, change:
+
+- jc-4500
+- jc-edge
+- jc-core
+
+To values from your environment.
 
 ```bash
 #!/bin/bash
@@ -288,6 +328,8 @@ An editor will open, scroll to the bottom and paste this in:
 0 18 * * * /home/mhubbard/discovery-daily.sh >> /home/mhubbard/discovery-daily.log 2>&1
 ```
 
+The `0 18` means run at 18:00. If you want it to run at 23:30 use `30 23`.
+
 ----------------------------------------------------------------
 
 ## Git repo
@@ -305,8 +347,10 @@ An editor will open, scroll to the bottom and paste this in:
   git commit -m "Initial commit"
   ```
 
-- Set local commit identity to the site account rather than a personal name.
-  The `@localhost` is used since the VM isn't going to be sending email:
+- Set local commit identity to the site account rather than a real person's
+  name — `mhubbard` here is the automation VM's own account (the same one
+  from the table at the top of this appendix), not a human name. The
+  `@localhost` is used since the VM isn't going to be sending email:
 
   ```bash
   git config --global user.name "mhubbard"
@@ -336,6 +380,14 @@ An editor will open, scroll to the bottom and paste this in:
   ```bash
   git remote -v   # should return nothing
   ```
+
+!!! note "This means `git pull` won't work anymore, on purpose"
+    With no remote configured, there's nothing for `git pull` to pull from —
+    it'll just error out. That's the tradeoff for keeping customer data out
+    of the public repo's history. To pick up script updates later, clone a
+    fresh copy of Discovery somewhere else and copy over just the `.py`
+    files you need — don't `git pull` (or re-clone) directly into the
+    customer's own repo, since that would pull the public remote back in.
 
 ### Finding what changed when something breaks
 

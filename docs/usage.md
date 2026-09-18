@@ -96,7 +96,7 @@ You can use either a spreadsheet program or a text editor to create the inventor
 
 ----------------------------------------------------------------
 
-![screenshot](img/Rainbow-parameters.png)
+![screenshot](img/Rainbow-parameters.png){ width="300"}
 
 ----------------------------------------------------------------
 
@@ -190,7 +190,7 @@ Then use `csvlens device-inventory-home.csv` to get colors and no header.
 
 ----------------------------------------------------------------
 
-![screenshot](img/csvlens-color.png)
+![screenshot](img/csvlens-color.png){ width="500"}
 
 ----------------------------------------------------------------
 
@@ -745,7 +745,7 @@ algorithms over time. Try an older release, e.g. `pip install
 
 I recommend saving the switch IP addresses in a plain text file, one per line, and then using nmap to verify that ssh is working.
 
-#### THe process
+#### The process
 
 Create a new text file named `ip.txt`. If you are using vs code and the Rainbow csv extension you can simply run a query on the device-inventory file:
 
@@ -757,7 +757,7 @@ At the bottom of vs code, click `query`.
 
 ----------------------------------------------------------------
 
-![screenshot](img/Rainbow-query.png)
+![screenshot](img/Rainbow-query.png){ width="500"}
 
 ----------------------------------------------------------------
 

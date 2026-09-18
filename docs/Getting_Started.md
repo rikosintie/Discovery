@@ -201,7 +201,7 @@ If you don't want to install git, you can download a zip file from the [Network 
 
 ----------------------------------------------------------------
 
-![screenshot](img/GitHub-Code.png)
+![Github-Download](img/GitHub-Code.png)
 
 ----------------------------------------------------------------
 
@@ -224,7 +224,9 @@ Using a virtual environment eliminates that risk.
 
 ### Create the Python Virtual Environment
 
-`python -m venv venv --upgrade-deps --prompt="Discovery"`
+```bash
+python -m venv venv --upgrade-deps --prompt="Discovery"
+```
 
 This will create the standard "venv" directory but when activated will display "Discovery". I prefer this over using `python -m venv Discovery` because it's the standard way to create the virtual environment. But I like seeing Discovery instead of venv when I activate the environment.
 
@@ -252,7 +254,9 @@ Then I used `python3.12 -m venv venv --upgrade-deps --prompt="Discovery"` to suc
 
 ### On Windows 11
 
-`.\venv\Scripts\activate`
+```bash
+.\venv\Scripts\activate
+```
 
 Verify that python is in the venv folder:
 
@@ -290,7 +294,9 @@ I prefer to use zsh as my shell on Mac/Linux with the [Oh My Zsh package](https:
 
 ### On macOS/Linux
 
-`source venv/bin/activate`
+```bash
+source venv/bin/activate
+```
 
 #### Verify that Python is installed in the venv
 
@@ -325,7 +331,10 @@ Ubuntu 25.04 is not the LTS, 24.04 is. I installed 25.04 because I wanted to try
 You can use `pip list` to list the packages currently installed. If you run it now you will see:
 
 ```bash
-$ pip list
+pip list
+```
+
+```bash title='Command Output'
 Package    Version
 ---------- -------
 pip        23.3.2
@@ -334,11 +343,13 @@ setuptools 69.0.3
 
 Now run the following:
 
-`python3 -m pip install --no-deps -r requirements.lock.txt`
+```bash
+python3 -m pip install --no-deps -r requirements.lock.txt
+```
 
 You will see all the dependencies being downloaded and installed. Here is a snippet of the dependencies.
 
-```bash
+```bash title='Command Output'
 $ python3 -m pip install --no-deps -r requirements.lock.txt
 Collecting ast_serialize==0.8.0 (from -r requirements.lock.txt (line 1))
   Downloading ast_serialize-0.8.0-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.4 kB)
@@ -349,33 +360,21 @@ Collecting asttokens==3.0.2 (from -r requirements.lock.txt (line 2))
 Now if we run `pip list` we will see that the dependencies have been installed:
 
 ```text
-$ pip list
-Package       Version
-------------- -------
-asttokens     2.4.1
-bcrypt        4.1.2
-cffi          1.16.0
-colorama      0.4.6
-cryptography  41.0.7
-executing     2.0.1
-future        0.18.3
-icecream      2.1.3
-netmiko       4.3.0
-ntc_templates 4.1.0
-paramiko      3.4.0
-pip           23.3.2
-prettytable   3.9.0
-pycparser     2.21
-Pygments      2.17.2
-PyNaCl        1.5.0
-pyserial      3.5
-PyYAML        6.0.1
-scp           0.14.5
-setuptools    69.0.3
-six           1.16.0
-textfsm       1.1.3
-wcwidth       0.2.12
-
+pip list
+Package                    Version
+-------------------------- -----------
+ast_serialize              0.8.0
+asttokens                  3.0.2
+babel                      2.18.0
+backrefs                   8.0
+bcrypt                     5.0.0
+.
+. output truncated for brevity
+.
+beartype                   0.22.9
+boolean.py                 5.0
+webencodings               0.6.1
+xmltodict                  1.0.4
 ```
 
 ----------------------------------------------------------------
@@ -401,7 +400,9 @@ section of `usage.md` for the full explanation.
 
 When you are finished, deactivate the environment
 
-`deactivate`
+```bash
+deactivate
+````
 
 You will need to activate the virtual environment each time you want to run the scripts.
 
