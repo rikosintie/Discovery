@@ -10,7 +10,7 @@ python3 snmp_arp_cache.py
 python3 config-pull.py -s jc-4500
 python3 config-pull.py -s jcedge
 python3 arp.py -s jcedge -c jc-core
-python3 merge-sonicwall-arp.py -c jc-core
+python3 merge-firewall-arp.py -c jc-core
 python3 port-map.py -s jcedge -c jc-core -d 10.100.126.6
 
 deactivate
