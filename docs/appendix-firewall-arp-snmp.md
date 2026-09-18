@@ -12,19 +12,22 @@ vendor. Two real examples run it against, below: a **SonicWall TZ370** at a
 customer site, and a **FortiGate 60D** in a home lab. Both worked with the
 same script and no code changes.
 
+----------------------------------------------------------------
+
 ## The automation host
 
-Everything in this appendix runs on a small **Ubuntu 26.04 desktop VM** at
-the customer site built on Hyper-V, not on your own Windows workstation.
+This appendix assumes a small Ubuntu 26.04 desktop Virtual Machine at the customer site — not your own Windows workstation — that runs Discovery unattended on a schedule. HyperV, ESXi, KVM, ProxMox, doesn't matter what hosts it.
 
-| | |
-|---|---|
-| Hostname | `discover` |
-| Username | `mhubbard` |
-| IP address | `10.100.126.100` |
-| OS | Ubuntu 26.04 Desktop (on Hyper-V) |
+Here is what I used at a customer recently:
 
-If the customer doesn't already have one, stand up an Ubuntu 26.04 desktop VM first replacing `mhubbard`, `discover`, and `10.100.126.100` with values for your customer.
+- **OS**: Ubuntu 26.04 Desktop (on Hyper-V)
+- **Hostname:** Discover
+- **IP address**: 10.100.126.100
+- **Username**: mhubbard
+
+If the customer doesn't already have one, stand up an Ubuntu 26.04 desktop VM first, replacing `mhubbard`, `discover`, and `10.100.126.100` with values for your customer.
+
+----------------------------------------------------------------
 
 Install the following on the VM.
 
@@ -47,6 +50,8 @@ Skip this whole appendix if the customer's firewall doesn't terminate any
 VLANs directly (i.e. every VLAN routes through a switch SVI) — there's
 nothing for `snmp_arp_cache.py` to add in that case.
 
+----------------------------------------------------------------
+
 ## Why poll the firewall
 
 `arp.py`/`config-pull.py` get their MAC/ARP data by querying the switches —
@@ -56,7 +61,7 @@ Zones that terminate directly on the firewall instead — WAN, DMZ, Guest,
 Voice, and similar — never touch the switch fabric at all, so there's no ARP
 entry on any switch for `arp.py` to find; it isn't a parsing gap, the data
 genuinely isn't there. Polling the firewall's own ARP table via SNMP is the
-only way to get those entries, and `merge-sonicwall-arp.py` is what folds
+only way to get those entries, and `merge-firewall-arp.py` is what folds
 them into the same MAC/IP data `arp.py` already produced for everything
 else.
 
@@ -392,7 +397,7 @@ iso.3.6.1.2.1.4.22.1.2.1.192.168.10.50 = Hex-STRING: FC EC DA C4 6E 55
 `snmp_arp_cache.py` ships in the Discovery repo alongside the other scripts
 — it arrives with `git clone`, no separate copy step needed. It walks the
 ARP MIB via `snmpwalk` and writes `firewall_arp_cache.csv` in the same 5-column
-format `merge-sonicwall-arp.py` already expects
+format `merge-firewall-arp.py` already expects
 (`IP Address,Type,MAC Address,Vendor,Interface`), so no changes are needed
 to the merge script itself.
 
@@ -436,6 +441,56 @@ A successful run prints a count of entries written, e.g.
 
 ----------------------------------------------------------------
 
+### Real examples: SonicWall vs FortiGate
+
+Both examples below are genuine runs against real firewalls — the SonicWall
+one replays real captured ARP entries from the customer engagement described
+above, the FortiGate one is a live poll of the actual home-lab 60D.
+
+**SonicWall TZ370:**
+
+```bash
+$ python3 snmp_arp_cache.py --host 10.100.126.1
+Wrote 6 entries to firewall_arp_cache.csv
+```
+
+```text
+IP Address,Type,MAC Address,Vendor,Interface
+10.20.10.17,Dynamic,54:BF:64:99:E1:90,Dell,
+10.20.10.30,Dynamic,F0:79:59:39:41:C5,ASUSTekCOMPU,
+10.100.126.1,Static,18:C2:41:23:9D:10,SonicWall,
+10.100.126.130,Dynamic,4C:D7:17:24:62:45,Dell,
+192.168.2.1,Static,18:C2:41:23:9D:13,SonicWall,
+192.168.2.18,Dynamic,2C:27:D7:38:5A:39,HewlettPacka,
+```
+
+**FortiGate 60D:**
+
+```bash
+$ python3 snmp_arp_cache.py --host 192.168.10.254
+Wrote 21 entries to firewall_arp_cache.csv
+```
+
+```text
+IP Address,Type,MAC Address,Vendor,Interface
+35.129.96.1,Dynamic,0A:00:00:00:01:23,,
+192.168.10.13,Dynamic,64:52:99:69:FD:20,ChamberlainG,
+192.168.10.50,Dynamic,FC:EC:DA:C4:6E:55,Ubiquiti,
+192.168.10.105,Dynamic,00:9D:6B:A0:45:28,MurataManufa,
+192.168.10.123,Dynamic,9C:DA:A8:DA:6C:29,Apple,
+192.168.10.141,Dynamic,88:A2:9E:43:4D:DE,RaspberryPi,
+192.168.10.222,Dynamic,00:0C:29:B1:6C:05,VMware,
+... (21 total)
+```
+
+Both come out in the same 5-column shape regardless of vendor — that's the
+point of polling standard SNMP instead of a vendor-specific export. A blank
+`Vendor` (like `35.129.96.1` above) just means that MAC's OUI isn't in the
+local database, not a script problem — see `--update-manuf` on `port-map.py`
+if the OUI database needs refreshing.
+
+----------------------------------------------------------------
+
 ### SNMP quirks worth knowing
 
 A couple of SNMP gotchas surfaced while getting this working, both worth
@@ -457,7 +512,7 @@ watching for on any similar setup:
 
 Also worth noting: **CSV column count and naming must exactly match** what
 the downstream script expects. An extra `Timeout` column (with no SNMP
-equivalent to populate it) caused `merge-sonicwall-arp.py` to silently match
+equivalent to populate it) caused `merge-firewall-arp.py` to silently match
 zero rows even though the file parsed fine on its own — there was no error,
 just quietly wrong output. When feeding one script's output into another,
 diff the header row against a known-working reference file rather than
@@ -467,7 +522,7 @@ assuming a superset of columns is harmless.
 
 ### Expected merge count
 
-`merge-sonicwall-arp.py` merges every row in the CSV unconditionally —
+`merge-firewall-arp.py` merges every row in the CSV unconditionally —
 `port-map.py` only ever looks up `Mac2IP.json` by MAC and has no concept of
 the firewall's own Interface labels, so there's nothing worth filtering by.
 For a MAC the core switch's own ARP table already resolved correctly, the
@@ -475,6 +530,21 @@ firewall's cache should agree on the same IP, so the overwrite is a harmless
 no-op rather than something to guard against. The printed merge count should
 equal the CSV's row count; if it's noticeably lower, something's wrong (a
 MAC that doesn't convert cleanly, a malformed row) and is worth investigating.
+
+Running it against each of the two CSVs above:
+
+```bash
+$ python3 merge-firewall-arp.py -c jc-core
+Merged 6 entries from firewall_arp_cache.csv into port-maps/jc-core-Mac2IP.json
+```
+
+```bash
+$ python3 merge-firewall-arp.py -c jc-core
+Merged 21 entries from firewall_arp_cache.csv into port-maps/jc-core-Mac2IP.json
+```
+
+Both match their CSV's row count exactly — 6 in, 6 merged; 21 in, 21 merged
+— which is the healthy result described above.
 
 Keep in mind that the whole point of polling the firewall is to capture ARP records that won't be on the core switch. I have had several customers that keep Surveillance cameras, the Guest devices (hotels), IoT devices, etc. as L2 on the network switches and do all of the routing on a Firewall.
 
@@ -493,7 +563,7 @@ export FIREWALL_HOST=10.100.126.1
 ```
 
 Called in the wrapper script ahead of the merge step so the CSV exists
-before `merge-sonicwall-arp.py` runs — see
+before `merge-firewall-arp.py` runs — see
 [Daily automation](appendix-discovery-automation.md#daily-automation)
 in the Automating Discovery appendix for the full script. No changes are
 needed to the cron entry itself.

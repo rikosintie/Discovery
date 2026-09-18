@@ -14,7 +14,7 @@ Run AFTER arp.py and BEFORE port-map.py, since arp.py overwrites
 <core>-Mac2IP.json from scratch on every run:
 
     python3 arp.py -s jcedge -c jc-core
-    python3 merge-sonicwall-arp.py -c jc-core
+    python3 merge-firewall-arp.py -c jc-core
     python3 port-map.py -s jcedge -c jc-core -d 10.100.126.6
 
 Every row in the CSV gets merged in, unconditionally -- port-map.py only

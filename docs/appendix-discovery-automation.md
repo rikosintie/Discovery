@@ -2,8 +2,6 @@
 
 This appendix assumes a small Ubuntu 26.04 desktop Virtual Machine at the customer site — not your own Windows workstation — that runs Discovery unattended on a schedule. HyperV, ESXi, KVM, ProxMox, doesn't matter what hosts it.
 
-Everything below (`bash`, `cron`, the Python `venv`, `git`) runs on that VM, typically reached over SSH from your own laptop.
-
 Here is what I used at a customer recently:
 
 - **OS**: Ubuntu 26.04 Desktop (on Hyper-V)
@@ -12,6 +10,12 @@ Here is what I used at a customer recently:
 - **Username**: mhubbard
 
 If the customer doesn't already have one, stand up an Ubuntu 26.04 desktop VM first, replacing `mhubbard`, `discover`, and `10.100.126.100` with values for your customer.
+
+----------------------------------------------------------------
+
+## Set up the VM
+
+Everything below (`bash`, `cron`, the Python `venv`, `git`) runs on that VM, typically reached over SSH from your own laptop. If you are onsite, you can use the Ubuntu 26.04 desktop from the hypervisor.
 
 Open a terminal, `ctrl+alt+t`, then update the package repositories before installing the necessary packages:
 
@@ -71,7 +75,7 @@ The following steps:
 - the `SNMP_COMMUNITY` variable
 - `snmp_arp_cache.py` line in the wrapper script
 
-are only needed if the site also has a firewall whose ARP table you're pulling — see [Polling a Firewall's ARP Table via SNMP](appendix-firewall-arp-snmp.md#being-prompted-for-the-password){: target="_blank" rel="noopener" }.
+are only needed if the site also has a firewall whose ARP table you're pulling — see [Polling a Firewall's ARP Table via SNMP](appendix-firewall-arp-snmp.md){: target="_blank" rel="noopener" }.
 
 Skip those specific pieces if not; everything else in this appendix applies
 regardless.
@@ -279,7 +283,7 @@ python3 snmp_arp_cache.py  # only if this site has a firewall to poll
 python3 config-pull.py -s jc-4500
 python3 config-pull.py -s jcedge
 python3 arp.py -s jcedge -c jc-core
-python3 merge-sonicwall-arp.py -c jc-core  # only if this site has a firewall to poll
+python3 merge-firewall-arp.py -c jc-core  # only if this site has a firewall to poll
 python3 port-map.py -s jcedge -c jc-core -d 10.100.126.6
 
 deactivate
@@ -413,6 +417,40 @@ commits — not that the command is broken. `arp.py` rebuilds
 this against: it's virtually guaranteed to differ day to day. Other files
 (a switch config that hasn't changed, say) can easily go several days with
 no diff at all, and that's expected too.
+
+----------------------------------------------------------------
+
+You can also use `git diff filename` to the see difference between a committed file and one on disk:
+
+```bash hl_lines='1'
+git diff -- firewall_arp_cache.csv
+```
+
+```bash title='Command Output'
+diff --git a/firewall_arp_cache.csv b/firewall_arp_cache.csv
+index b350a9f..e0fe87e 100644
+--- a/firewall_arp_cache.csv
++++ b/firewall_arp_cache.csv
+@@ -1,19 +1,22 @@
+ IP Address,Type,MAC Address,Vendor,Interface
+-35.129.96.1,Dynamic,0A:00:00:00:01:23,,X2
+-192.168.10.13,Dynamic,64:52:99:69:FD:20,,X1
+-192.168.10.105,Dynamic,00:9D:6B:A0:45:28,,X1
+-192.168.10.107,Dynamic,F8:30:02:36:A6:09,,X1
+-192.168.10.108,Dynamic,44:67:55:03:D4:72,,X1
+... Output truncated for brevity
++35.129.96.1,Dynamic,0A:00:00:00:01:23,,
++192.168.10.13,Dynamic,64:52:99:69:FD:20,ChamberlainG,
++192.168.10.50,Dynamic,FC:EC:DA:C4:6E:55,Ubiquiti,
++192.168.10.52,Dynamic,98:F2:B3:FE:88:80,HewlettPacka,
++192.168.10.105,Dynamic,00:9D:6B:A0:45:28,MurataManufa,
++192.168.10.107,Dynamic,F8:30:02:36:A6:09,TexasInstrum,
++192.168.10.108,Dynamic,44:67:55:03:D4:72,OrbitIrrigat,
+```
+
+In this example, I had rewritten `snmp_arp_cache.py` to include the manufacture and drop the interface.
+
+----------------------------------------------------------------
 
 To find exactly which day a specific MAC or IP address first showed up (or
 disappeared) on a port, search the file's own commit history instead of
@@ -553,7 +591,7 @@ then:
 ```bash
 tail -f /home/mhubbard/discovery-daily.log       # watch script output live
 journalctl -u cron -f                            # confirm cron actually fired it
-watch -n 1 'ps aux | grep -E "config-pull|arp.py|merge-sonicwall|port-map"'  # optional
+watch -n 1 'ps aux | grep -E "config-pull|arp.py|merge-firewall|port-map"'  # optional
 ```
 
 Revert to the real schedule once confirmed.

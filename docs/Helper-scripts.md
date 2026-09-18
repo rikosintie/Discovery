@@ -404,7 +404,7 @@ switch's own `show ip arp` never sees those IPs and `port-map.py` reports
 those hosts as `No-Match` even though the firewall knows exactly who they
 are.
 
-`merge-sonicwall-arp.py` is a one-off for this: it reads a MAC/IP table
+`merge-firewall-arp.py` is a one-off for this: it reads a MAC/IP table
 exported from the firewall's ARP cache (`firewall_arp_cache.csv`, written by
 `snmp_arp_cache.py` — see
 [Polling a Firewall's ARP Table via SNMP](appendix-firewall-arp-snmp.md) for
@@ -419,7 +419,7 @@ before that gets wiped:
 
 ```bash
 python3 arp.py -s jcedge -c jc-core
-python3 merge-sonicwall-arp.py -c jc-core
+python3 merge-firewall-arp.py -c jc-core
 python3 port-map.py -s jcedge -c jc-core -d 10.100.126.6
 ```
 

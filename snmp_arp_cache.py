@@ -2,7 +2,7 @@
 """
 Poll a firewall's ARP cache via the standard SNMP ARP MIB and write it to
 firewall_arp_cache.csv in the same column layout as the SonicWall's manual
-GUI export, so merge-sonicwall-arp.py doesn't need to change. Vendor-agnostic:
+GUI export, so merge-firewall-arp.py doesn't need to change. Vendor-agnostic:
 confirmed working against both a SonicWall TZ370 and a FortiGate 60D with no
 code changes.
 
@@ -28,18 +28,18 @@ Columns produced: IP Address, Type, MAC Address, Vendor, Interface
 which has no SNMP equivalent -- see notes below)
 
 Notes / known limitations:
-  - "Vendor" is filled in via local OUI lookup (the `manuf` package, same OUI
+  - "Vendor" is filled in via local OUI lookup (the `manuf2` package, same OUI
     source used elsewhere in Discovery) if it's installed; otherwise left blank.
   - "Interface" is always left blank. It's kept as a column only so this CSV
     stays in the format the manual GUI export used, which is what
-    merge-sonicwall-arp.py expects -- but no downstream script actually
+    merge-firewall-arp.py expects -- but no downstream script actually
     reads it. A real value would have to be vendor-specific (interface
     naming schemes like SonicWall's "X0"-"X6" don't generalize), and the
     same information is one click away in the firewall's own GUI anyway,
     so it isn't worth building.
   - There is no SNMP equivalent to the GUI's "Expires in N minutes" column,
     so it's omitted entirely rather than filled with a placeholder, to match
-    the working CSV format merge-sonicwall-arp.py expects.
+    the working CSV format merge-firewall-arp.py expects.
 """
 
 import argparse
@@ -50,7 +50,7 @@ import subprocess
 import sys
 
 parser = argparse.ArgumentParser(
-    description="Poll a firewall's ARP cache via standard SNMP (any vendor) and write it to a CSV merge-sonicwall-arp.py can read."
+    description="Poll a firewall's ARP cache via standard SNMP (any vendor) and write it to a CSV merge-firewall-arp.py can read."
 )
 parser.add_argument(
     "-H",
@@ -95,9 +95,9 @@ def hex_to_mac(raw):
 
 
 def get_vendor_lookup():
-    """Return a lookup(mac) -> vendor function, using `manuf` if installed."""
+    """Return a lookup(mac) -> vendor function, using `manuf2` if installed."""
     try:
-        from manuf import manuf
+        from manuf2 import manuf
 
         parser = manuf.MacParser(update=False)
 
