@@ -1,18 +1,15 @@
 # Automating Discovery
 
-This appendix assumes a small Ubuntu 26.04 desktop VM at the customer site —
-not your own Windows workstation — that runs Discovery unattended on a
-schedule. Everything below (`bash`, `cron`, the Python `venv`, `git`) runs on
-that VM, typically reached over SSH from your own laptop.
+This appendix assumes a small Ubuntu 26.04 desktop Virtual Machine at the customer site — not your own Windows workstation — that runs Discovery unattended on a schedule. HyperV, ESXi, KVM, ProxMox, doesn't matter what hosts it.
+
+Everything below (`bash`, `cron`, the Python `venv`, `git`) runs on that VM, typically reached over SSH from your own laptop.
 
 Here is what I used at a customer recently:
 
-| | |
-|---|---|
-| Hostname | `discover` |
-| Username | `mhubbard` |
-| IP address | `10.100.126.100` |
-| OS | Ubuntu 26.04 Desktop (on Hyper-V) |
+- **OS**: Ubuntu 26.04 Desktop (on Hyper-V
+- **Hostname:** Discover
+- **IP address**: 10.100.126.100
+- **Username**: mhubbard
 
 If the customer doesn't already have one, stand up an Ubuntu 26.04 desktop VM first, replacing `mhubbard`, `discover`, and `10.100.126.100` with values for your customer.
 
@@ -48,23 +45,22 @@ regardless.
 
 ## Credential handling for scripts
 
-Never hardcode credentials in a script. Two solid patterns:
+Nothing in Discovery ever takes a password on the command line, and none of
+the scripts have a password hardcoded. `config-pull.py` reads the switch
+password from the `cyberARK` environment variable (or prompts for it
+interactively with `-p 1`; see [Usage](usage.md)), and `snmp_arp_cache.py`
+reads `SNMP_COMMUNITY` and `FIREWALL_HOST` the same way.
+The username comes from the device-inventory file, not from a credential at
+all.
 
-- **Environment variables** loaded from a file readable only by the running
-  user (`chmod 600`), sourced by the script or loaded via `python-dotenv`
-- **OS keyring** (the `keyring` Python library) for interactive/dev-laptop
-  use — stores secrets in the OS credential store instead of a plaintext file
-
-Either way, this is about the password presented *to the switch or firewall*
-— a read-only SNMP community string, or an API key scoped to a monitoring
-role where the device's firmware supports it — not the automation host's own
-OS account. There's nothing to choose on the Ubuntu side: every example in
-these appendices runs as the one `mhubbard` account created during setup,
-and Ubuntu disables the root login by default anyway.
+For unattended runs, the one thing that matters is protecting the file that
+supplies those environment variables — `~/.config/discovery/cyberark.env`,
+`chmod 600` so only the account running the scripts can read it (see
+[Create a credentials file](#create-a-credentials-file) below).
 
 ----------------------------------------------------------------
 
-## Getting scripts on and off the automation host
+## Getting scripts on/off the automation host
 
 The Discovery scripts themselves arrive via `git clone` — you don't need to copy those by hand. But you'll still occasionally need to move a one-off file between your laptop and the automation host: a site-specific data file before the repo is fully set up, or a log/data file you want to look at locally afterward. Use `scp` (secure copy, built on SSH) for both
 directions from a single command line.
@@ -99,8 +95,6 @@ scp mhubbard@10.100.126.100:~/discovery-daily.log . # (1)!
 
 1. That trailing `.` means "into my current directory" — easy to miss, easy to break the command if you drop it.
 
-The trailing `.` in the pull example means "into my current directory."
-
 ----------------------------------------------------------------
 
 `scp SOURCE DESTINATION` — whichever side has the `user@host:` prefix is the
@@ -121,6 +115,8 @@ ssh mhubbard@10.100.126.100
 ls *.sh *.log
 scp discovery-daily.log mhubbard@10.100.126.110:~/Downloads/
 ```
+
+----------------------------------------------------------------
 
 Sitting at the host's own desktop directly (Hyper-V console, or a customer
 who wants everything driven from the Ubuntu box's own screen instead of your
@@ -167,13 +163,14 @@ scp discovery-daily.log mhubbard@10.100.126.110:~/Downloads/
 ## Daily automation
 
 A daily schedule is used here since the Discovery scripts are lightweight —
-a handful of SSH pulls and an SNMP walk against a small switch/firewall
-count — and daily granularity on the MAC table / port maps is more useful
-for catching device moves close to when they happen.
+a handful of SSH pulls against a small switch count, plus one SNMP walk
+against the firewall — and daily granularity on the MAC table / port maps
+is more useful for catching device moves close to when they happen.
 
 Wrapper script (`~/discovery-daily.sh`) that sources credentials, activates
 the venv, runs the pull/merge/map sequence, commits results to a local git
-repo, and records a last-run status line:
+repo, and appends a timestamp to `~/discovery-last-run.txt` so a completed
+run can be confirmed without digging through the log.
 
 ----------------------------------------------------------------
 
