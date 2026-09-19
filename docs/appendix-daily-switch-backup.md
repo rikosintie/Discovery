@@ -36,30 +36,29 @@ only ever starts once, already configured correctly:
 sudo systemctl edit tftpd-hpa
 ```
 
-On Ubuntu 26.04 this opens an editor already showing every current setting
-as commented-out lines, including:
+On Ubuntu 26.04 this opens an editor with a blank area at the top to type
+into, followed by a large read-only reference dump of the unit's current
+settings — including a `# ProtectHome=yes` line — clearly marked as
+existing only for reference. **Don't edit anything in that reference
+section** — `systemctl` detects changes made there as "modifications
+outside of the staging area," discards them, and if that leaves the actual
+editable area empty, cancels the whole edit without writing anything
+(confirmed the hard way: editing that line in place produced exactly that
+error and silently wrote nothing).
 
-```ini
-[Service]
-# ProtectHome=yes
-```
-
-If you see that line, uncomment it and change `yes` to `no`:
+Instead, type a brand new override into the blank area at the top:
 
 ```ini
 [Service]
 ProtectHome=no
 ```
 
-Save and exit, then apply it:
+Save and exit — `systemctl edit` reloads the unit automatically, no
+separate `daemon-reload` needed.
 
-```bash
-sudo systemctl daemon-reload
-```
-
-If `# ProtectHome=yes` isn't in the editor's buffer at all, close without
-saving — a home-directory `TFTP_DIRECTORY` will already work, nothing to
-override.
+If `ProtectHome` doesn't appear anywhere in that reference dump, close
+without saving — a home-directory `TFTP_DIRECTORY` will already work,
+nothing to override.
 
 Config file is `/etc/default/tftpd-hpa`:
 
@@ -100,11 +99,95 @@ it will write to it — confirmed straight from `man in.tftpd`:
 > Files may be written only if they already exist and are publicly
 > writable, unless the `--create` option is specified.
 
-`add_switches-ufw.sh` handles both requirements from one pass over one
+`ufw_add_switches.sh` handles both requirements from one pass over one
 file: it opens port 69/udp (TFTP) for a switch's management IP, so nothing
 else on the LAN can reach the TFTP service, and creates + `chmod 777`s that
 switch's backup file at the same time. Only 69/udp is needed — TFTP has no
 relation to FTP's port 21, despite the similar name.
+
+There's no repo to clone this out of, so create it directly:
+
+```bash
+cd ~
+touch ufw_add_switches.sh
+nano ufw_add_switches.sh
+```
+
+Paste the following into nano, then `ctrl+o` to save, `ctrl+x` to close it:
+
+```bash
+#!/bin/bash
+# Open UFW for TFTP (port 69/udp) from a list of switch management IPs, and
+# pre-create the matching TFTP backup file (chmod 777) for each one so the
+# first kron push doesn't fail on a missing file.
+#
+# Reads "ip,filename" pairs from tftp-switches.txt (one per line, blank
+# lines and lines starting with # ignored) so a customer never has to edit
+# this script itself, just the IP/filename list.
+
+set -e
+
+FILE="${1:-tftp-switches.txt}"
+TFTP_ROOT="${TFTP_ROOT:-$HOME/tftp-root}"
+
+if [[ ! -f "$FILE" ]]; then
+  echo "Missing $FILE - create it with one 'ip,filename' pair per line" >&2
+  exit 1
+fi
+
+# A brand-new Ubuntu install ships ufw installed but inactive. Allow SSH
+# before enabling it so this doesn't cut off a remote session running over
+# the same connection that's executing this script. --force skips ufw's
+# interactive "this may disrupt existing ssh connections" confirmation,
+# which would otherwise hang a non-interactive run.
+sudo ufw allow ssh
+sudo ufw --force enable
+
+while IFS=',' read -r ip filename; do
+  ip="$(echo "$ip" | xargs)"
+  [[ -z "$ip" || "$ip" == \#* ]] && continue
+  filename="$(echo "$filename" | xargs)"
+  if [[ -z "$filename" ]]; then
+    echo "Missing filename for $ip in $FILE - each line needs 'ip,filename'" >&2
+    exit 1
+  fi
+
+  sudo ufw allow from "$ip" to any port 69 proto udp
+  touch "$TFTP_ROOT/$filename"
+  chmod 777 "$TFTP_ROOT/$filename"
+done < "$FILE"
+
+# Reload rules to apply
+sudo ufw reload
+
+# Show the resulting ruleset, rules sorted numerically by source IP.
+# Capturing to a variable first, rather than piping head and tail off the
+# same stream, avoids head consuming input tail still needs - a real,
+# reproducible gotcha when both read from one pipe. Named ufw_status rather
+# than status, since status is a read-only special variable in zsh (aliases
+# $?) - fine under this script's own #!/bin/bash, but a landmine if it's
+# ever sourced into a zsh shell instead of executed.
+#
+# Sorting by a fixed field number (e.g. sort -k6,6) doesn't work: ufw right
+# -pads single-digit rule numbers with a space ("[ 4]", two tokens) but not
+# double-digit ones ("[10]", one token), so every field after it shifts by
+# one once rule numbers reach 10 - confirmed on a real box with 16 rules.
+# Finding whichever field actually looks like an IPv4 address sidesteps
+# that entirely, regardless of rule-number width.
+ufw_status="$(sudo ufw status numbered)"
+echo "$ufw_status" | head -4
+echo "$ufw_status" | tail -n +5 | awk '{
+  key = ""
+  for (i = 1; i <= NF; i++) {
+    if ($i ~ /^[0-9]{1,3}(\.[0-9]{1,3}){3}$/) { key = $i; break }
+  }
+  print key "\t" $0
+}' | sort -k1,1 -V | cut -f2-
+```
+
+```bash
+chmod +x ufw_add_switches.sh
+```
 
 Both come from `tftp-switches.txt` — `ip,filename` pairs, one per line,
 blank lines and `#` comments ignored — so a customer never has to edit the
@@ -125,8 +208,7 @@ cat > tftp-switches.txt << 'EOF'
 10.100.126.244,JC-SPARE.wri
 EOF
 
-chmod +x add_switches-ufw.sh
-./add_switches-ufw.sh tftp-switches.txt
+./ufw_add_switches.sh tftp-switches.txt
 ```
 
 ----------------------------------------------------------------
@@ -184,28 +266,84 @@ second.
 
 ## 4. Verify and monitor
 
-`check_ufw.sh` and `ufw_audit.sh` both need root — checking UFW's own
-status, and (for `ufw_audit.sh`) writing to `/var/log/ufw-check.log`, both
-require it:
+One script, `ufw_check.sh`, covers both an ad-hoc interactive check and a
+scheduled audit trail — plain, it just prints UFW's current state; with
+`--log`, it also appends a timestamped, session-ID'd snapshot to
+`/var/log/ufw-check.log`. Create it the same way:
 
 ```bash
-sudo ./check_ufw.sh
+cd ~
+touch ufw_check.sh
+nano ufw_check.sh
 ```
 
-Run without `sudo`, both scripts now fail cleanly instead of printing
-partial, confusing output:
+```bash
+#!/bin/bash
+# Check UFW service and firewall status together. Plain, for an ad-hoc
+# interactive check. With --log, also appends a timestamped, session-ID'd
+# snapshot to /var/log/ufw-check.log - run it that way from cron for a
+# running audit trail of whether the firewall stayed enabled and
+# configured as expected.
+
+if [[ $EUID -ne 0 ]]; then
+  echo "This script needs root - run it with sudo." >&2
+  exit 1
+fi
+
+LOGFILE="/var/log/ufw-check.log"
+log_mode=false
+[[ "$1" == "--log" ]] && log_mode=true
+
+svc_enabled=$(systemctl is-enabled ufw 2>/dev/null)
+svc_state=$(systemctl is-active ufw 2>/dev/null)
+fw_state=$(ufw status | grep -i "Status:")
+
+if $log_mode; then
+  session_id="$(date +%Y%m%d%H%M%S)-$RANDOM"
+  echo "=== UFW Audit Check ==="
+  echo "Session ID: $session_id"
+  echo "Timestamp : $(date '+%Y-%m-%d %H:%M:%S')"
+else
+  echo "===UFW Service State (systemd)==="
+fi
+
+echo "Service enabled: $svc_enabled"
+echo "Service state  : $svc_state"
+echo "Firewall state : $fw_state"
+
+if $log_mode; then
+  {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Session $session_id"
+    echo "  Service enabled: $svc_enabled"
+    echo "  Service state  : $svc_state"
+    echo "  Firewall state : $fw_state"
+    echo "----------------------------------------"
+  } >> "$LOGFILE"
+fi
+```
+
+```bash
+chmod +x ufw_check.sh
+```
+
+It needs root either way — checking UFW's own status, and (with `--log`)
+writing to `/var/log/ufw-check.log`, both require it:
+
+```bash
+sudo ./ufw_check.sh
+```
+
+Run without `sudo`, it fails cleanly instead of printing partial, confusing
+output:
 
 ```text
-$ ./check_ufw.sh
-===UFW Service State (systemd)===
+$ ./ufw_check.sh
 This script needs root - run it with sudo.
 ```
 
-`ufw_audit.sh` appends a timestamped, session-ID'd snapshot to
-`/var/log/ufw-check.log` each time it runs — schedule it in cron (root's
-crontab, via `sudo crontab -e`) for a running audit trail of whether the
-firewall stayed enabled and configured as expected:
+For a running audit trail, schedule the `--log` form in cron (root's
+crontab, via `sudo crontab -e`):
 
 ```bash
-0 6 * * * /path/to/ufw_audit.sh
+0 6 * * * /path/to/ufw_check.sh --log
 ```
