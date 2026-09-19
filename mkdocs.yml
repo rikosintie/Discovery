@@ -16,6 +16,7 @@ nav:
       - Firewall ARP via SNMP: appendix-firewall-arp-snmp.md
       - Automating Discovery: appendix-discovery-automation.md
       - Daily Switch Backup: appendix-daily-switch-backup.md
+      - SSH Hardening: appendix-jump-box-hardening.md
   - Security Policy: SECURITY.md
 
 theme:

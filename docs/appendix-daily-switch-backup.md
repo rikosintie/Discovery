@@ -189,6 +189,13 @@ echo "$ufw_status" | tail -n +5 | awk '{
 chmod +x ufw_add_switches.sh
 ```
 
+That `sudo ufw allow ssh` inside the script is deliberately wide open —
+just enough to guarantee `ufw enable` doesn't lock out the session running
+it. Once everything below is working, see
+[Restricting SSH on the Automation Host](appendix-jump-box-hardening.md) to
+scope that down; the TFTP rules this script adds are already
+per-switch-IP, but SSH is left open to the whole LAN until that's done.
+
 Both come from `tftp-switches.txt` — `ip,filename` pairs, one per line,
 blank lines and `#` comments ignored — so a customer never has to edit the
 script itself, just this list:

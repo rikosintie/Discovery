@@ -37,7 +37,7 @@ Install the following on the Ubuntu 26.04 Virtual Machine:
 - python3 - The latest Python version
 - python3-venv - The Python virtual environment package
 - snmp - Needed only if you want to poll a firewall
-- openssh-server - Not included in an Ubuntu Desktop install by default; needed both to `ssh` into the host for management and to run the `scp` examples later in this appendix
+- openssh-server - Not included in an Ubuntu Desktop install by default; needed both to `ssh` into the host for management and to run the `scp` examples later in this appendix — see [Restricting SSH on the Automation Host](appendix-jump-box-hardening.md) once it's installed, since the default setup leaves SSH open to the whole LAN
 
 Paste these commands into the terminal an press enter. Click the :material-content-copy: icon on the right to copy the commands to the clipboard.
 
