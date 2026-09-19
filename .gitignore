@@ -58,6 +58,7 @@ Running/Running.csv
 Running/Running.xlsx
 Failure-Logs/skipped_devices.csv
 vlans.txt
+tftp-switches.txt
 
 # ------------------------
 #  Generated script output

@@ -15,6 +15,7 @@ nav:
       - grep and friends: appendix-grep-and-friends.md
       - Firewall ARP via SNMP: appendix-firewall-arp-snmp.md
       - Automating Discovery: appendix-discovery-automation.md
+      - Daily Switch Backup: appendix-daily-switch-backup.md
   - Security Policy: SECURITY.md
 
 theme:
