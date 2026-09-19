@@ -113,45 +113,42 @@ options:
 
 === "Linux"
 
-```text
-python3 pinger.py
-OS is Linux, sending 1 echo request per host
-IP addresses have been randomized
-Number of Subnets: 3
-90 hosts to ping at 20/s (~4s of launches)
+    ```text
+    python3 pinger.py
 
-Pinging 30 hosts in 192.168.10.96/27
-```
+    OS is Linux, sending 1 echo request per host
+    IP addresses have been randomized
+    Number of Subnets: 3
+    90 hosts to ping at 20/s (~4s of launches)
 
-----------------------------------------------------------------
+    Pinging 30 hosts in 192.168.10.96/27
+    ```
 
 === "macOS"
 
-```text
-python3 pinger.py
+    ```text
+    python3 pinger.py
 
-OS is Darwin, sending 1 echo request per host
-IP addresses have been randomized
-Number of Subnets: 3
-90 hosts to ping at 20/s (~4s of launches)
+    OS is Darwin, sending 1 echo request per host
+    IP addresses have been randomized
+    Number of Subnets: 3
+    90 hosts to ping at 20/s (~4s of launches)
 
-Pinging 30 hosts in 192.168.10.96/27
-```
-
-----------------------------------------------------------------
+    Pinging 30 hosts in 192.168.10.96/27
+    ```
 
 === "Windows"
 
-```text
- python3 pinger.py -r 10
+    ```text
+    python3 pinger.py -r 10
 
-OS is Windows, sending 1 echo request per host
-IP addresses have been randomized
-Number of Subnets: 3
-90 hosts to ping at 10/s (~9s of launches)
+    OS is Windows, sending 1 echo request per host
+    IP addresses have been randomized
+    Number of Subnets: 3
+    90 hosts to ping at 10/s (~9s of launches)
 
-Pinging 30 hosts in 192.168.10.96/27
-```
+    Pinging 30 hosts in 192.168.10.96/27
+    ```
 
 ----------------------------------------------------------------
 
@@ -172,6 +169,8 @@ something talks to them:
 
 When these devices live on their own segmented VLANs, point `pinger.py` at
 just those VLANs — there's no need to sweep the user subnets.
+
+----------------------------------------------------------------
 
 ### How it works
 
@@ -208,6 +207,8 @@ access-switch port has already aged out of the CAM table — and `port-map.py`
 needs both. Running `pinger.py` a few minutes before the discovery pass
 refreshes both at once.
 
+----------------------------------------------------------------
+
 ### Being gentle on EDR / NDR
 
 Firing ICMP at every address in a subnet all at once looks exactly like a
@@ -239,6 +240,52 @@ At Fal.Con 2026 I walked a CrowdStrike engineer (Jeff) through how `pinger.py`
 works. His assessment was that the Falcon sensor on endpoints should not flag
 the paced sweep. A later run at a customer with `vlans.txt` set to
 `10.100.126.0/24` produced no CrowdStrike alerts.
+
+----------------------------------------------------------------
+
+Here is an example from a recent engagement at a customer running CrowdStrike Falcon:
+
+```bash linenums='1' hl_lines='1'
+python3 pinger.py -f vlans.txt --tcp-ports 9100
+
+OS is Linux, sending 1 echo request per host
+IP addresses have been randomized
+ICMP non-responders will be TCP-probed on port(s) 9100
+Number of Subnets: 2
+316 hosts to ping at 20/s (~16s of launches)
+
+Pinging 62 hosts in 172.20.126.0/26
+
+------ Results from the Pings ------
+172.20.126.1 no response
+172.20.126.2 active (icmp)
+172.20.126.3 active (icmp)
+172.20.126.4 active (icmp)
+
+... Truncated for brevity
+
+Pinging 254 hosts in 10.100.126.0/24
+
+------ Results from the Pings ------
+10.100.126.1 active (icmp)
+10.100.126.2 no response
+10.100.126.3 no response
+10.100.126.4 no response
+10.100.126.5 active (icmp)
+10.100.126.6 active (icmp)
+```
+
+----------------------------------------------------------------
+
+The `------ Results from the Pings ------` output above looks sequential,
+but that's just for readability — the pings themselves were still sent in
+randomized order (confirmed with a Wireshark capture on this exact run).
+The script shuffles the send order before pinging, then always re-sorts the
+*printed* results back into ascending IP order afterward, so the two are
+independent: the traffic on the wire is randomized, the report you read is
+sorted.
+
+----------------------------------------------------------------
 
 ### Waking sleeping printers
 
