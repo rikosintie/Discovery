@@ -23,8 +23,43 @@ The server package is `tftpd-hpa` — not `tftp-hpa`, which is the client:
 ```bash
 sudo apt update
 sudo apt install tftpd-hpa -y
-sudo systemctl enable --now tftpd-hpa
 ```
+
+Some `tftpd-hpa` packages sandbox the service with `ProtectHome=yes` in
+their systemd unit, which makes `/home`, `/root`, and `/run/user`
+**completely inaccessible** to the daemon — not a permissions issue, an
+outright block, independent of `TFTP_DIRECTORY` or any `in.tftpd` flag.
+Check this — and fix it if needed — before enabling the service, so it
+only ever starts once, already configured correctly:
+
+```bash
+sudo systemctl edit tftpd-hpa
+```
+
+On Ubuntu 26.04 this opens an editor already showing every current setting
+as commented-out lines, including:
+
+```ini
+[Service]
+# ProtectHome=yes
+```
+
+If you see that line, uncomment it and change `yes` to `no`:
+
+```ini
+[Service]
+ProtectHome=no
+```
+
+Save and exit, then apply it:
+
+```bash
+sudo systemctl daemon-reload
+```
+
+If `# ProtectHome=yes` isn't in the editor's buffer at all, close without
+saving — a home-directory `TFTP_DIRECTORY` will already work, nothing to
+override.
 
 Config file is `/etc/default/tftpd-hpa`:
 
@@ -41,41 +76,14 @@ TFTP_OPTIONS="--secure"
 
 Use the real absolute path here, not a literal `~` — systemd never expands
 that regardless of directory. A customer-facing home-directory location is
-worth the extra step below: most customers can't navigate to `/srv`, but
+worth the override above: most customers can't navigate to `/srv`, but
 they can open **Files** and find `tftp-root` right under their home folder.
 
-Some `tftpd-hpa` packages sandbox the service with `ProtectHome=yes` in
-their systemd unit, which makes `/home`, `/root`, and `/run/user`
-**completely inaccessible** to the daemon — not a permissions issue, an
-outright block, independent of `TFTP_DIRECTORY` or any `in.tftpd` flag.
-Check yours before assuming you need to do anything about it:
+Now enable and start the service:
 
 ```bash
-grep ProtectHome /usr/lib/systemd/system/tftpd-hpa.service
+sudo systemctl enable --now tftpd-hpa
 ```
-
-If that prints `ProtectHome=yes`, override it with a drop-in:
-
-```bash
-sudo systemctl edit tftpd-hpa
-```
-
-Add these two lines in the editor that opens, save, and exit:
-
-```ini
-[Service]
-ProtectHome=no
-```
-
-Then apply it:
-
-```bash
-sudo systemctl daemon-reload
-sudo systemctl restart tftpd-hpa
-```
-
-If the `grep` above prints nothing, or `ProtectHome=no`, skip this override
-entirely — a home-directory `TFTP_DIRECTORY` will already work.
 
 Confirm it's running:
 
