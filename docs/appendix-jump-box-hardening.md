@@ -27,7 +27,7 @@ a management subnet, not the whole LAN.
 
 ## Scope SSH to a management subnet or a short allow-list
 
-Two equivalent patterns — pick whichever matches the site:
+Two equivalent patterns — pick whichever matches the site.
 
 **A dedicated management subnet**, if one exists:
 
@@ -35,49 +35,115 @@ Two equivalent patterns — pick whichever matches the site:
 sudo ufw allow from 10.100.100.0/24 to any port 22 proto tcp
 ```
 
-**A short list of trusted hosts**, if it doesn't — your own laptop, and
-maybe an MSP's jump host:
+**A short list of trusted hosts**, if it doesn't — your own laptop, an
+MSP's jump host, maybe a couple of coworkers. `ufw_add_admins.sh` adds one
+tagged rule per person from a list, so `sudo ufw status verbose` shows
+*why* each address is allowed instead of a bare IP to puzzle over later —
+and [ufw_check.sh](appendix-daily-switch-backup.md#4-verify-and-monitor)
+picks up the same comments in its own output.
+
+There's no repo to clone this out of, so create it directly:
 
 ```bash
-sudo ufw allow from 10.100.126.110 to any port 22 proto tcp comment 'admin laptop'
+cd ~
+touch ufw_add_admins.sh
+nano ufw_add_admins.sh
 ```
 
-(`10.100.126.110` is the same laptop IP used as the example throughout
-[Automating Discovery](appendix-discovery-automation.md#getting-scripts-onoff-the-automation-host).)
-The `comment` is optional but worth adding — `sudo ufw status verbose` will
-show it, which matters once there's more than one narrow rule to remember
-the reason for.
+Paste the following into nano, then `ctrl+o` to save, `ctrl+x` to close it:
+
+```bash
+#!/bin/bash
+# Open UFW for SSH (port 22/tcp) from a list of trusted admin IPs, each
+# tagged with a comment so ufw_check.sh's output shows why that address is
+# allowed - see the real example in appendix-jump-box-hardening.md.
+#
+# Doesn't touch any existing wide-open "Anywhere" rule - see that appendix
+# for removing it safely (add these scoped rules, confirm they work, then
+# delete the wide-open one, in that order).
+#
+# Reads "user,ip" pairs from ufw-admins.txt (one per line, blank lines and
+# lines starting with # ignored).
+
+set -e
+
+FILE="${1:-ufw-admins.txt}"
+
+if [[ ! -f "$FILE" ]]; then
+  echo "Missing $FILE - create it with one 'user,ip' pair per line" >&2
+  exit 1
+fi
+
+while IFS=',' read -r user ip; do
+  user="$(echo "$user" | xargs)"
+  [[ -z "$user" || "$user" == \#* ]] && continue
+  ip="$(echo "$ip" | xargs)"
+  if [[ -z "$ip" ]]; then
+    echo "Missing IP for $user in $FILE - each line needs 'user,ip'" >&2
+    exit 1
+  fi
+
+  sudo ufw allow from "$ip" to any port 22 proto tcp comment "${user}-admin-ssh"
+done < "$FILE"
+
+sudo ufw reload
+
+# Show the resulting ruleset, sorted numerically by source IP. Same
+# approach as ufw_add_switches.sh / ufw_check.sh: ufw right-pads
+# single-digit rule numbers with a space ("[ 4]", two tokens) but not
+# double-digit ones ("[10]", one token), so a fixed field number shifts
+# once rule numbers reach 10 - finding whichever field looks like an IPv4
+# address sidesteps that regardless of rule-number width.
+ufw_status="$(sudo ufw status numbered)"
+echo "$ufw_status" | head -4
+echo "$ufw_status" | tail -n +5 | awk '{
+  key = ""
+  for (i = 1; i <= NF; i++) {
+    if ($i ~ /^[0-9]{1,3}(\.[0-9]{1,3}){3}$/) { key = $i; break }
+  }
+  print key "\t" $0
+}' | sort -k1,1 -V | cut -f2-
+```
+
+```bash
+chmod +x ufw_add_admins.sh
+```
+
+`ufw-admins.txt` — `user,ip` pairs, one per line:
+
+```bash
+cat > ufw-admins.txt << 'EOF'
+mhubbard,10.100.126.110
+msp-admin,10.100.126.50
+EOF
+
+./ufw_add_admins.sh ufw-admins.txt
+```
+
+```text
+Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 2] 22/tcp                     ALLOW IN    10.100.126.50              # msp-admin-admin-ssh
+[ 3] 22/tcp                     ALLOW IN    10.100.126.110             # mhubbard-admin-ssh
+[ 1] 22/tcp                     ALLOW IN    Anywhere
+```
 
 ## Remove the wide-open rule — in the right order
 
-Add the scoped rule and confirm it works *before* removing the wide-open
-one, so there's never a moment with zero working SSH rule:
-
-```bash
-sudo ufw allow from 10.100.126.110 to any port 22 proto tcp
-sudo ufw reload
-```
-
-From the trusted machine, open a **new** SSH session without closing the
-one you're already using — confirming the new rule actually works before
-touching the old one means a mistake here doesn't lock you out:
+Confirm the scoped rules above actually work *before* removing the
+wide-open one, so there's never a moment with zero working SSH rule. From a
+trusted machine, open a **new** SSH session without closing the one you're
+already using — confirming the new rule works before touching the old one
+means a mistake here doesn't lock you out:
 
 ```bash
 ssh mhubbard@10.100.126.100
 ```
 
-Once that works, find and remove the wide-open rule:
-
-```bash
-sudo ufw status numbered
-```
-
-```text
-     To                         Action      From
-     --                         ------      ----
-[ 1] 22/tcp                     ALLOW IN    Anywhere
-[ 2] 22/tcp                     ALLOW IN    10.100.126.110
-```
+Once that works, remove the wide-open rule — `Anywhere` in the
+`ufw_add_admins.sh` output above, rule `[ 1]` in this example:
 
 ```bash
 sudo ufw delete 1
