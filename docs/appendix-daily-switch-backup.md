@@ -231,16 +231,16 @@ never been tested end-to-end.
 
 !!! note "Why not just add --create instead?"
     `in.tftpd`'s `--create` flag exists specifically to let it write brand
-    new files, which sounds like it should remove this whole step. If
-    `ProtectHome=yes` turned out to apply and needed the override above,
-    that's worth keeping in mind: a home-directory target failing with
-    `--create` doesn't mean `--create` is broken, it means `ProtectHome`
-    was still blocking the daemon from touching `/home` at all, and no
-    `in.tftpd` flag can get around that. Once `/home` is actually
-    reachable — whether that took an override or your `tftpd-hpa` build
-    never restricted it in the first place — `--create` should genuinely
-    remove the need for this step. Worth testing at a low-risk site before
-    relying on it, since this hasn't been verified end-to-end here.
+    new files, which sounds like it should remove this whole step — and
+    once the `ProtectHome=no` override above is in place, it genuinely
+    would (confirmed on a fresh Ubuntu 26.04 install). The reason to skip
+    it anyway is security, not uncertainty: without `--create`, TFTP can
+    only ever *overwrite* one of the specific files pre-created here — it
+    can't be handed a brand new filename by anyone who reaches port 69.
+    A switch inventory is fairly static, so pre-creating one file per
+    switch, once, is cheap insurance against an unlikely but real class of
+    attack: something on the LAN pushing an arbitrary file to this host
+    under a name nothing here is watching for.
 
 If this same automation host also runs the git-based
 [Automating Discovery](appendix-discovery-automation.md) setup, add
@@ -318,6 +318,24 @@ echo "Service enabled: $svc_enabled"
 echo "Service state  : $svc_state"
 echo "Firewall state : $fw_state"
 
+# Show the actual ruleset too, not just the summary above - sorted
+# numerically by source IP rather than by ufw's own rule numbers. Same
+# approach as ufw_add_switches.sh: ufw right-pads single-digit rule
+# numbers with a space ("[ 4]", two tokens) but not double-digit ones
+# ("[10]", one token), so a fixed field number shifts once rule numbers
+# reach 10 - finding whichever field looks like an IPv4 address sidesteps
+# that regardless of rule-number width.
+echo
+ufw_status="$(ufw status numbered)"
+echo "$ufw_status" | head -4
+echo "$ufw_status" | tail -n +5 | awk '{
+  key = ""
+  for (i = 1; i <= NF; i++) {
+    if ($i ~ /^[0-9]{1,3}(\.[0-9]{1,3}){3}$/) { key = $i; break }
+  }
+  print key "\t" $0
+}' | sort -k1,1 -V | cut -f2-
+
 if $log_mode; then
   {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] Session $session_id"
@@ -339,6 +357,10 @@ writing to `/var/log/ufw-check.log`, both require it:
 ```bash
 sudo ./ufw_check.sh
 ```
+
+Prints the service/firewall summary followed by the actual ruleset — the
+log file only ever gets the summary lines, not a full rule dump each run,
+to keep it from growing unbounded on a frequent cron schedule.
 
 Run without `sudo`, it fails cleanly instead of printing partial, confusing
 output:
