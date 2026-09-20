@@ -1,6 +1,6 @@
 #!/bin/bash
 # Open UFW for TFTP (port 69/udp) from a list of switch management IPs, and
-# pre-create the matching TFTP backup file (chmod 777) for each one so the
+# pre-create the matching TFTP backup file (chmod 666) for each one so the
 # first kron push doesn't fail on a missing file.
 #
 # Reads "ip,filename" pairs from tftp-switches.txt (one per line, blank
@@ -36,7 +36,7 @@ while IFS=',' read -r ip filename; do
 
   sudo ufw allow from "$ip" to any port 69 proto udp
   touch "$TFTP_ROOT/$filename"
-  chmod 777 "$TFTP_ROOT/$filename"
+  chmod 666 "$TFTP_ROOT/$filename"
 done < "$FILE"
 
 # Reload rules to apply

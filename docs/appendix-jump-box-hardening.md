@@ -130,6 +130,35 @@ Status: active
 [ 1] 22/tcp                     ALLOW IN    Anywhere
 ```
 
+To review the rules again later — including alongside TFTP's, if this host
+also runs [Daily Switch Backup](appendix-daily-switch-backup.md)'s
+`ufw_add_switches.sh` — use
+[ufw_check.sh](appendix-daily-switch-backup.md#4-verify-and-monitor)
+instead of `ufw status` directly; it prints the same sorted ruleset plus
+the service/firewall summary. Real example from a host running both:
+
+```bash
+sudo ./ufw_check.sh
+```
+
+```text
+===UFW Service State (systemd)===
+Service enabled: enabled
+Service state  : active
+Firewall state : Status: active
+
+Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 3] 22/tcp                     ALLOW IN    192.168.10.143             # G5-wireless-admin-ssh
+[ 4] 22/tcp                     ALLOW IN    192.168.10.223             # Ubuntu-Server-admin-ssh
+[ 2] 69/udp                     ALLOW IN    192.168.10.253
+[ 5] 22/tcp                     ALLOW IN    192.168.10.253             # 3850-admin-ssh
+[ 1] 22/tcp                     ALLOW IN    Anywhere
+[ 6] 22/tcp (v6)                ALLOW IN    Anywhere (v6)
+```
+
 ## Remove the wide-open rule — in the right order
 
 Confirm the scoped rules above actually work *before* removing the

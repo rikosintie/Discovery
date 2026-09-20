@@ -44,7 +44,9 @@ then clone the Discovery repo and follow the setup in [Getting Started](Getting_
 - the Python `venv`
 - `git`
 
-runs on that VM, typically reached over SSH from your own laptop.
+runs on that VM, typically reached over SSH from your own laptop — see
+[Restricting SSH on the Automation Host](appendix-jump-box-hardening.md) if
+that's still open to the whole LAN.
 
 Skip this whole appendix if the customer's firewall doesn't terminate any
 VLANs directly (i.e. every VLAN routes through a switch SVI) — there's

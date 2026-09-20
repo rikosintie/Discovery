@@ -6,15 +6,72 @@ running-config — no Discovery repo clone, no Python `venv`, no git commits.
 It only needs a TFTP server on the automation host and a few lines of
 `kron` (Cisco IOS's built-in job scheduler) on each switch.
 
+----------------------------------------------------------------
+
 ## Why this exists
 
 Built at a real customer engagement — the same site (`jc`) used throughout
-these appendices — before the [Automating Discovery](appendix-discovery-automation.md)
-tooling existed. `kron` is IOS-specific, and this approach doesn't discover
-anything: no port maps, no MAC/IP tracking over time, just a daily `show
-run` backup per switch. For a customer who doesn't want daily git commits
-or Python tooling on their automation VM, that's often all they actually
-want.
+these appendices — before the [Automating Discovery](appendix-discovery-automation.md) tooling existed. `kron` is IOS-specific, and this approach doesn't discover anything: no port maps, no MAC/IP tracking over time, just a daily `show run` backup per switch. For a customer who doesn't want daily git commits or Python tooling on their automation VM, that's often all they actually want.
+
+This VM is a good candidate to become a jump box — see
+[Restricting SSH on the Automation Host](appendix-jump-box-hardening.md).
+Restricting logins to a management subnet or a short trusted-host list,
+instead of leaving SSH open to the whole network, is worth doing here even
+if the customer never runs the full
+[Automating Discovery](appendix-discovery-automation.md) setup. For a
+customer working toward CMMC, or similar compliance requirements,
+this is a reasonable first step — not the whole story, but a real one.
+
+[Termius](https://docs.termius.com/) (subscription required) is worth a
+mention as a client — it makes managing switches and servers a
+more pleasant experience than juggling separate terminal windows. The subscription gives you the ability to instal; `Termius` on:
+
+- Windows
+- Mac
+- Linux
+- IOS
+- Android
+
+It's great if you are in a closet and need to make a quick change and only have your phone with you!
+
+----------------------------------------------------------------
+
+## Set up the VM
+
+This appendix assumes a small Ubuntu 26.04 desktop VM at the site — not
+your own Windows workstation. Hyper-V, ESXi, KVM, Proxmox — doesn't matter
+what hosts it.
+
+Here is an example:
+
+- **OS**: Ubuntu 26.04 Desktop (on Hyper-V)
+- **Hostname:** Discover
+- **IP address**: 10.100.126.100
+- **Username**: mhubbard
+
+If the customer doesn't already have one, stand up an Ubuntu 26.04 desktop
+VM first, replacing `mhubbard`, `discover`, and `10.100.126.100` with
+values for your customer.
+
+Open a terminal, `ctrl+alt+t`, then update the package repositories:
+
+```bash
+sudo apt update
+```
+
+If this is a new install you'll probably see packages that need updating
+once that finishes:
+
+```bash
+sudo apt upgrade -y
+```
+
+Install `openssh-server` for remote management — not included in an
+Ubuntu Desktop install by default:
+
+```bash
+sudo apt install openssh-server -y
+```
 
 ## 1. Install and configure the TFTP server
 
@@ -101,7 +158,7 @@ it will write to it — confirmed straight from `man in.tftpd`:
 
 `ufw_add_switches.sh` handles both requirements from one pass over one
 file: it opens port 69/udp (TFTP) for a switch's management IP, so nothing
-else on the LAN can reach the TFTP service, and creates + `chmod 777`s that
+else on the LAN can reach the TFTP service, and creates + `chmod 666`s that
 switch's backup file at the same time. Only 69/udp is needed — TFTP has no
 relation to FTP's port 21, despite the similar name.
 
@@ -118,7 +175,7 @@ Paste the following into nano, then `ctrl+o` to save, `ctrl+x` to close it:
 ```bash
 #!/bin/bash
 # Open UFW for TFTP (port 69/udp) from a list of switch management IPs, and
-# pre-create the matching TFTP backup file (chmod 777) for each one so the
+# pre-create the matching TFTP backup file (chmod 666) for each one so the
 # first kron push doesn't fail on a missing file.
 #
 # Reads "ip,filename" pairs from tftp-switches.txt (one per line, blank
@@ -154,7 +211,7 @@ while IFS=',' read -r ip filename; do
 
   sudo ufw allow from "$ip" to any port 69 proto udp
   touch "$TFTP_ROOT/$filename"
-  chmod 777 "$TFTP_ROOT/$filename"
+  chmod 666 "$TFTP_ROOT/$filename"
 done < "$FILE"
 
 # Reload rules to apply
@@ -224,10 +281,64 @@ Alternatively, open the GUI text editor and create tftp-switches.txt.
 
 ----------------------------------------------------------------
 
-`man in.tftpd` only requires the files be *writable* (`666` would satisfy
-that), but `777` is what's actually been running in production for years,
-so that's what the script uses rather than a theoretical minimum that's
-never been tested end-to-end.
+```bash linenums='1' hl_lines='1'
+sudo ./ufw_add_admins.sh ufw-admins.txt
+```
+
+----------------------------------------------------------------
+
+```bash title='Command Output'
+Rule added
+Rule added
+Rule added
+Firewall reloaded
+Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 3] 22/tcp                     ALLOW IN    192.168.10.143             # G5-wireless-admin-ssh
+[ 4] 22/tcp                     ALLOW IN    192.168.10.223             # Ubuntu-Server-admin-ssh
+[ 2] 69/udp                     ALLOW IN    192.168.10.253
+[ 5] 22/tcp                     ALLOW IN    192.168.10.253             # 3850-admin-ssh
+[ 1] 22/tcp                     ALLOW IN    Anywhere
+[ 6] 22/tcp (v6)                ALLOW IN    Anywhere (v6)
+```
+
+----------------------------------------------------------------
+
+!!! note
+    Notice that the `ssh any` is gone. If you are running this over ssh, make sure the device you are on is in the list or you will be locked out.
+
+Now you can use the `ufw_check.sh` script to view the tftp and ssh rules:
+
+```bash linenums='1' hl_lines='1'
+sudo ./ufw_check.sh
+```
+
+```bash title='Command Output'
+===UFW Service State (systemd)===
+Service enabled: enabled
+Service state  : active
+Firewall state : Status: active
+
+Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 3] 22/tcp                     ALLOW IN    192.168.10.143             # G5-wireless-admin-ssh
+[ 4] 22/tcp                     ALLOW IN    192.168.10.223             # Ubuntu-Server-admin-ssh
+[ 2] 69/udp                     ALLOW IN    192.168.10.253
+[ 5] 22/tcp                     ALLOW IN    192.168.10.253             # 3850-admin-ssh
+[ 1] 22/tcp                     ALLOW IN    Anywhere
+[ 6] 22/tcp (v6)                ALLOW IN    Anywhere (v6)
+```
+
+----------------------------------------------------------------
+
+`man in.tftpd` only requires the files be *writable*, and `666` is what
+the script uses — confirmed working in production, not just the
+theoretical minimum from the man page. It also doesn't set the execute
+bit `777` would, which these plaintext config backups never need.
 
 !!! note "Why not just add --create instead?"
     `in.tftpd`'s `--create` flag exists specifically to let it write brand
@@ -274,8 +385,7 @@ second.
 ## 4. Verify and monitor
 
 One script, `ufw_check.sh`, covers both an ad-hoc interactive check and a
-scheduled audit trail — plain, it just prints UFW's current state; with
-`--log`, it also appends a timestamped, session-ID'd snapshot to
+scheduled audit trail — without `--log`, it just prints UFW's current state; with `--log`, it also appends a timestamped, session-ID'd snapshot to
 `/var/log/ufw-check.log`. Create it the same way:
 
 ```bash
@@ -357,6 +467,23 @@ writing to `/var/log/ufw-check.log`, both require it:
 ```bash
 sudo ./ufw_check.sh
 ```
+
+```bash title='Command Output'
+===UFW Service State (systemd)===
+Service enabled: enabled
+Service state  : active
+Firewall state : Status: active
+
+Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 2] 69/udp                     ALLOW IN    192.168.10.253
+[ 1] 22/tcp                     ALLOW IN    Anywhere
+[ 3] 22/tcp (v6)                ALLOW IN    Anywhere (v6)
+```
+
+----------------------------------------------------------------
 
 Prints the service/firewall summary followed by the actual ruleset — the
 log file only ever gets the summary lines, not a full rule dump each run,

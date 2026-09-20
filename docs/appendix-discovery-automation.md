@@ -37,7 +37,7 @@ Install the following on the Ubuntu 26.04 Virtual Machine:
 - python3 - The latest Python version
 - python3-venv - The Python virtual environment package
 - snmp - Needed only if you want to poll a firewall
-- openssh-server - Not included in an Ubuntu Desktop install by default; needed both to `ssh` into the host for management and to run the `scp` examples later in this appendix — see [Restricting SSH on the Automation Host](appendix-jump-box-hardening.md) once it's installed, since the default setup leaves SSH open to the whole LAN
+- openssh-server - Not included in an Ubuntu Desktop install by default; needed both to `ssh` into the host for management and to run the `scp` examples later in this appendix
 
 Paste these commands into the terminal an press enter. Click the :material-content-copy: icon on the right to copy the commands to the clipboard.
 
@@ -48,6 +48,25 @@ sudo apt install python3-venv -y
 sudo apt install snmp -y
 sudo apt install openssh-server -y
 ```
+
+`openssh-server` starts itself immediately on install — no separate enable
+step needed there. `ufw` is a different story: a fresh Ubuntu install ships
+it installed but inactive, so without doing anything else, SSH (and
+`scp`, used throughout this appendix) is reachable from the whole LAN with
+no firewall in front of it at all. Turn `ufw` on with SSH allowed, in that
+order, before relying on either:
+
+```bash
+sudo ufw allow ssh
+sudo ufw --force enable
+```
+
+That's still wide open to any source on the LAN — good enough to get
+`scp` and the rest of this appendix working, but not where to leave it.
+This VM is a good candidate to become a jump box instead — see
+[Restricting SSH on the Automation Host](appendix-jump-box-hardening.md)
+for scoping logins down to a management subnet or a short trusted-host
+list once the rest of this setup is working.
 
 Then clone the Discovery repo:
 
