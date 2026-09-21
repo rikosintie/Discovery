@@ -659,10 +659,19 @@ taken by something else on that machine, `.Start()` fails immediately —
 the script now reports that clearly instead of dying silently, see the
 try/catch above.)
 
-Real output from an actual run — two backups landing seconds apart, with
-the trailing `-NNN` already cleaned up:
+Real output from an actual run on Windows — two backups landing seconds apart, with the trailing `-NNN` already cleaned up:
+
+----------------------------------------------------------------
 
 ![PowerShell Listener](img/http-serve.png)
+
+----------------------------------------------------------------
+
+Real output from an actual run on Linux — two backups landing seconds apart, with the trailing `-NNN` already cleaned up:
+
+![PowerShell Listener Linux](img/http-serve-linux.png)
+
+----------------------------------------------------------------
 
 ### Windows Firewall
 
