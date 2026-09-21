@@ -503,3 +503,160 @@ crontab, via `sudo crontab -e`):
 ```bash
 0 6 * * * /path/to/ufw_check.sh --log
 ```
+
+## PowerShell Alternative: HTTP Instead of TFTP
+
+Most customers running an automation host use Windows, not Ubuntu, and
+Windows has no built-in TFTP server. It doesn't need one, though — Cisco
+IOS supports pushing config over plain HTTP as well as TFTP, and
+PowerShell can receive that with a few lines of script, no extra software
+to install.
+
+### Schedule the backup on each switch (Cisco kron, HTTP version)
+
+Real config from a lab 3850, `sh run | sec kron`:
+
+```text
+kron occurrence WrConfig_Job at 21:52 recurring
+ policy-list Write_Config
+kron occurrence Undebug_Job at 22:00 recurring
+ policy-list Undebug
+kron policy-list Write_Config
+ cli wr mem
+ cli copy running-config http://192.168.10.104:8080/test.txt
+kron policy-list Undebug
+ cli und all
+```
+
+Same `cli wr mem`-first pattern as the TFTP version — only the transport
+line changes: `cli copy running-config http://<host>:8080/<file>` in place
+of `cli show run | redirect tftp://<host>/<file>`.
+
+### No file pre-creation needed
+
+TFTP's "the file has to already exist" rule (see step 2 above) is a
+`tftpd-hpa` behavior, not a protocol requirement — Windows enforces nothing
+of the kind, and the listener script below will happily create whatever
+filename a switch pushes. That's also the tradeoff: unlike the TFTP setup,
+there's no equivalent safety net limiting writes to a pre-approved list of
+filenames. The script below narrows the *where* instead (see the
+`GetFileName()` note in it), but not the *what*.
+
+### Create the listener script
+
+There's no repo to clone this out of either — create it directly. Open
+Notepad, paste the script below, then **File → Save As**, set **Save as
+type** to **All Files**, and name it `http-serve.ps1` (Notepad defaults to
+`.txt`, which would leave you with `http-serve.ps1.txt` instead):
+
+```powershell
+# Receives Cisco config backups pushed via `copy running-config http://...`
+# and writes them under $DestDir, cleaning up the numeric suffix IOS
+# appends to the URL path (observed on a real 3850: a push to ".../x.txt"
+# arrives with a URL path ending "x.txt-321" - the trailing "-NNN" gets
+# moved to just before the extension: "x-321.txt").
+#
+# Run this from an elevated (Administrator) PowerShell. HttpListener
+# refuses to bind a wildcard prefix like "http://+:8080/" from a normal
+# session ("Access is denied"), regardless of the port number - that's a
+# Windows http.sys URL-ACL restriction, unrelated to port 8080 itself
+# being non-privileged.
+
+$DestDir = "C:\Users\mhubbard\tftp-root"
+New-Item -ItemType Directory -Force -Path $DestDir | Out-Null
+
+$listener = New-Object System.Net.HttpListener
+$listener.Prefixes.Add("http://+:8080/")
+$listener.Start()
+Write-Host "Listening on port 8080, saving to $DestDir ..."
+
+while ($listener.IsListening) {
+    $context = $listener.GetContext()
+    $request = $context.Request
+
+    try {
+        # GetFileName() strips any directory-separator components from the
+        # URL path before it's used to build a filesystem path, so a
+        # request can't be crafted to write outside $DestDir.
+        $filename = [System.IO.Path]::GetFileName($request.Url.AbsolutePath.TrimStart('/'))
+        if ([string]::IsNullOrWhiteSpace($filename)) { $filename = "backup.cfg" }
+
+        # Fix filenames like 'name.txt-317' -> 'name-317.txt'
+        $filename = $filename -replace '(\.[a-zA-Z0-9]+)-(\d+)$', '-$2$1'
+
+        $destinationPath = Join-Path $DestDir $filename
+        $saveStream = [System.IO.File]::Create($destinationPath)
+        $request.InputStream.CopyTo($saveStream)
+        $saveStream.Close()
+
+        Write-Host "Saved: $destinationPath"
+        $context.Response.StatusCode = 200
+    } catch {
+        # Without this catch, a failed save (missing folder, no disk space,
+        # permissions) prints its own error but the loop carries on to the
+        # "Saved" line below regardless - confirmed the hard way - so this
+        # is the difference between an accurate log and a false "Saved"
+        # message for a file that was never actually written.
+        Write-Host "FAILED to save request: $_"
+        $context.Response.StatusCode = 500
+    } finally {
+        $context.Response.Close()
+    }
+}
+```
+
+Adjust `$DestDir` to match the account actually running this.
+
+### Allow the script to run
+
+PowerShell blocks unsigned `.ps1` scripts by default:
+
+```powershell
+powershell.exe -ExecutionPolicy Bypass
+```
+
+!!! warning
+    Make sure you're not violating company policy by enabling PowerShell
+    scripts to run, and that CrowdStrike, SentinelOne, or similar isn't
+    configured to lock down the workstation the moment that command runs.
+
+### Start the listener — as Administrator
+
+`HttpListener` refuses to bind `http://+:8080/` (a wildcard host) from an
+ordinary PowerShell session — Windows requires either an elevated session
+or a one-time URL reservation (`netsh http add urlacl`) for any account
+binding a wildcard prefix, regardless of the port number. Open PowerShell
+**as Administrator**, then:
+
+```powershell
+.\http-serve.ps1
+```
+
+Real output from an actual run — two backups landing seconds apart, with
+the trailing `-NNN` already cleaned up:
+
+![PowerShell Listener](img/http-serve.png)
+
+### Windows Firewall
+
+Most Windows servers in the field aren't running Windows Firewall at all,
+and turning it on for the first time on an existing production box is a
+good way to break something unrelated that's been quietly relying on it
+being off. This is deliberately not scripted the way `ufw_add_switches.sh`
+is for Ubuntu — check first:
+
+```powershell
+Get-NetFirewallProfile | Select-Object Name, Enabled
+```
+
+If every profile shows `Disabled`, there's nothing to do — port 8080 is
+already reachable. If Windows Firewall **is** active, add an inbound
+allow rule scoped to the switches, mirroring what `ufw_add_switches.sh`
+does on Ubuntu:
+
+```powershell
+New-NetFirewallRule -DisplayName "Cisco kron backups" -Direction Inbound -Protocol TCP -LocalPort 8080 -RemoteAddress 192.168.10.253 -Action Allow
+```
+
+Repeat with each switch's IP, or a comma-separated `-RemoteAddress` list —
+don't leave this rule scoped to `Any`.
