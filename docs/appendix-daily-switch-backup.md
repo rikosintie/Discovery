@@ -517,7 +517,7 @@ to install.
 Real config from a lab 3850, `sh run | sec kron`:
 
 ```text
-kron occurrence WrConfig_Job at 21:52 recurring
+kron occurrence WrConfig_Job at 21:00 recurring
  policy-list Write_Config
 kron occurrence Undebug_Job at 22:00 recurring
  policy-list Undebug
@@ -532,6 +532,8 @@ Same `cli wr mem`-first pattern as the TFTP version — only the transport
 line changes: `cli copy running-config http://<host>:8080/<file>` in place
 of `cli show run | redirect tftp://<host>/<file>`.
 
+----------------------------------------------------------------
+
 ### No file pre-creation needed
 
 TFTP's "the file has to already exist" rule (see step 2 above) is a
@@ -544,17 +546,21 @@ filenames. The script below narrows the *where* instead (see the
 
 ### Create the listener script
 
-There's no repo to clone this out of either — create it directly. Open
-Notepad, paste the script below, then **File → Save As**, set **Save as
-type** to **All Files**, and name it `http-serve.ps1` (Notepad defaults to
-`.txt`, which would leave you with `http-serve.ps1.txt` instead):
+There's no repo to clone this out of either — create it directly. Make a
+folder for it first — `tftp-root` to match the Linux side, though the name
+is just organizational now, nothing reads it — then, inside that folder,
+open Notepad, paste the script below, and **File → Save As**, set **Save
+as type** to **All Files**, and name it `http-serve.ps1` (Notepad defaults
+to `.txt`, which would leave you with `http-serve.ps1.txt` instead).
+Backups land in this same folder — wherever the script itself is saved.
 
 ```powershell
 # Receives Cisco config backups pushed via `copy running-config http://...`
-# and writes them under $DestDir, cleaning up the numeric suffix IOS
-# appends to the URL path (observed on a real 3850: a push to ".../x.txt"
-# arrives with a URL path ending "x.txt-321" - the trailing "-NNN" gets
-# moved to just before the extension: "x-321.txt").
+# and writes them into the same folder this script itself lives in,
+# cleaning up the numeric suffix IOS appends to the URL path (observed on
+# a real 3850: a push to ".../x.txt" arrives with a URL path ending
+# "x.txt-321" - the trailing "-NNN" gets moved to just before the
+# extension: "x-321.txt").
 #
 # Run this from an elevated (Administrator) PowerShell. HttpListener
 # refuses to bind a wildcard prefix like "http://+:8080/" from a normal
@@ -562,12 +568,28 @@ type** to **All Files**, and name it `http-serve.ps1` (Notepad defaults to
 # Windows http.sys URL-ACL restriction, unrelated to port 8080 itself
 # being non-privileged.
 
-$DestDir = "C:\Users\mhubbard\tftp-root"
-New-Item -ItemType Directory -Force -Path $DestDir | Out-Null
+# $PSScriptRoot (this script's own folder), not $PWD (wherever the shell
+# happened to be) - keeps backups landing in a predictable place if this
+# is ever launched a different way (Task Scheduler, a shortcut) where the
+# working directory isn't guaranteed to match where the script sits.
+$DestDir = $PSScriptRoot
 
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://+:8080/")
-$listener.Start()
+try {
+    $listener.Start()
+} catch {
+    # Without this, a port already in use (or, on Windows, a missing
+    # elevated session / URL reservation - see the note above) throws here
+    # uncaught, before the "Listening..." line ever prints, and the script
+    # just dies back to the prompt with no clue why - confirmed the hard
+    # way testing this on a second machine.
+    Write-Host "Could not start listening on port 8080: $($_.Exception.Message)"
+    Write-Host "If this is a port conflict, something else on this machine is already using it - check with:"
+    Write-Host "  netstat -ano | findstr :8080     (Windows)"
+    Write-Host "  sudo ss -ltnp | grep 8080         (Linux/macOS)"
+    exit 1
+}
 Write-Host "Listening on port 8080, saving to $DestDir ..."
 
 while ($listener.IsListening) {
@@ -605,8 +627,6 @@ while ($listener.IsListening) {
 }
 ```
 
-Adjust `$DestDir` to match the account actually running this.
-
 ### Allow the script to run
 
 PowerShell blocks unsigned `.ps1` scripts by default:
@@ -620,17 +640,24 @@ powershell.exe -ExecutionPolicy Bypass
     scripts to run, and that CrowdStrike, SentinelOne, or similar isn't
     configured to lock down the workstation the moment that command runs.
 
-### Start the listener — as Administrator
+### Start the listener — as Administrator on Windows
 
-`HttpListener` refuses to bind `http://+:8080/` (a wildcard host) from an
-ordinary PowerShell session — Windows requires either an elevated session
-or a one-time URL reservation (`netsh http add urlacl`) for any account
-binding a wildcard prefix, regardless of the port number. Open PowerShell
-**as Administrator**, then:
+On Windows, `HttpListener` refuses to bind `http://+:8080/` (a wildcard
+host) from an ordinary PowerShell session — it requires either an elevated
+session or a one-time URL reservation (`netsh http add urlacl`) for any
+account binding a wildcard prefix, regardless of the port number. Open
+PowerShell **as Administrator**, then:
 
 ```powershell
 .\http-serve.ps1
 ```
+
+(PowerShell is cross-platform — this same script runs unmodified on Linux
+or macOS `pwsh` too, and there the wildcard bind works without elevation.
+The one gotcha that turned up testing it that way: if port 8080 is already
+taken by something else on that machine, `.Start()` fails immediately —
+the script now reports that clearly instead of dying silently, see the
+try/catch above.)
 
 Real output from an actual run — two backups landing seconds apart, with
 the trailing `-NNN` already cleaned up:

@@ -7,6 +7,8 @@ management access to every switch (and firewall) on the network, over SSH,
 SNMP, or TFTP. That makes its own SSH access worth locking down, not
 leaving open to the whole LAN.
 
+----------------------------------------------------------------
+
 ## Why this matters here specifically
 
 Both appendices above install `openssh-server` and get SSH working, but
@@ -24,6 +26,8 @@ tightly enough that this is the one gap left:
 SSH is the one service actually meant for a human to use interactively —
 which also makes it the one worth aiming at a specific person's laptop or
 a management subnet, not the whole LAN.
+
+----------------------------------------------------------------
 
 ## Scope SSH to a management subnet or a short allow-list
 
@@ -50,7 +54,7 @@ touch ufw_add_admins.sh
 nano ufw_add_admins.sh
 ```
 
-Paste the following into nano, then `ctrl+o` to save, `ctrl+x` to close it:
+Paste the following into nano, then `ctrl+s` to save, `ctrl+x` to close it:
 
 ```bash
 #!/bin/bash
@@ -105,9 +109,17 @@ echo "$ufw_status" | tail -n +5 | awk '{
 }' | sort -k1,1 -V | cut -f2-
 ```
 
+----------------------------------------------------------------
+
+Make the script executable:
+
 ```bash
 chmod +x ufw_add_admins.sh
 ```
+
+----------------------------------------------------------------
+
+Create the text file:
 
 `ufw-admins.txt` — `user,ip` pairs, one per line:
 
@@ -116,11 +128,21 @@ cat > ufw-admins.txt << 'EOF'
 mhubbard,10.100.126.110
 msp-admin,10.100.126.50
 EOF
+```
 
+----------------------------------------------------------------
+
+Or use the Gnome Text editor to create the file.
+
+----------------------------------------------------------------
+
+Run the script to create the ssh rules:
+
+```bash
 ./ufw_add_admins.sh ufw-admins.txt
 ```
 
-```text
+```text title='Command Output'
 Status: active
 
      To                         Action      From
@@ -129,6 +151,8 @@ Status: active
 [ 3] 22/tcp                     ALLOW IN    10.100.126.110             # mhubbard-admin-ssh
 [ 1] 22/tcp                     ALLOW IN    Anywhere
 ```
+
+----------------------------------------------------------------
 
 To review the rules again later — including alongside TFTP's, if this host
 also runs [Daily Switch Backup](appendix-daily-switch-backup.md)'s
@@ -141,7 +165,7 @@ the service/firewall summary. Real example from a host running both:
 sudo ./ufw_check.sh
 ```
 
-```text
+```text title='Command Output'
 ===UFW Service State (systemd)===
 Service enabled: enabled
 Service state  : active
@@ -158,6 +182,8 @@ Status: active
 [ 1] 22/tcp                     ALLOW IN    Anywhere
 [ 6] 22/tcp (v6)                ALLOW IN    Anywhere (v6)
 ```
+
+----------------------------------------------------------------
 
 ## Remove the wide-open rule — in the right order
 
@@ -176,10 +202,11 @@ Once that works, remove the wide-open rule — `Anywhere` in the
 
 ```bash
 sudo ufw delete 1
+sudo ufw delete 6
 ```
 
 (Use whatever number the `Anywhere` rule actually shows as — it won't
-always be `1`.)
+always be `1`and `6`.)
 
 !!! warning "Have a fallback before you start"
     If a typo in the scoped rule locks out every remote session, the
