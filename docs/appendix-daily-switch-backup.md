@@ -6,6 +6,8 @@ running-config — no Discovery repo clone, no Python `venv`, no git commits.
 It only needs a TFTP server on the automation host and a few lines of
 `kron` (Cisco IOS's built-in job scheduler) on each switch.
 
+You can also skip the Ubuntu VM and use PowerShell on Windows/Mac/Linux. See [PowerShell Alternative: HTTP Instead of TFTP](appendix-daily-switch-backup.md#powershell-alternative-http-instead-of-tftp)
+
 ----------------------------------------------------------------
 
 ## Why this exists
@@ -24,7 +26,7 @@ this is a reasonable first step — not the whole story, but a real one.
 
 [Termius](https://docs.termius.com/) (subscription required) is worth a
 mention as a client — it makes managing switches and servers a
-more pleasant experience than juggling separate terminal windows. The subscription gives you the ability to instal; `Termius` on:
+more pleasant experience than juggling separate terminal windows. The subscription gives you the ability to install `Termius` on:
 
 - Windows
 - Mac
@@ -358,6 +360,8 @@ If this same automation host also runs the git-based
 `tftp-switches.txt` to `.gitignore` alongside `vlans.txt` — it's
 site-specific data, not something to commit.
 
+----------------------------------------------------------------
+
 ## 3. Schedule the backup on each switch (Cisco kron)
 
 ```text
@@ -504,6 +508,8 @@ crontab, via `sudo crontab -e`):
 0 6 * * * /path/to/ufw_check.sh --log
 ```
 
+----------------------------------------------------------------
+
 ## PowerShell Alternative: HTTP Instead of TFTP
 
 Most customers running an automation host use Windows, not Ubuntu, and
@@ -511,6 +517,8 @@ Windows has no built-in TFTP server. It doesn't need one, though — Cisco
 IOS supports pushing config over plain HTTP as well as TFTP, and
 PowerShell can receive that with a few lines of script, no extra software
 to install.
+
+----------------------------------------------------------------
 
 ### Schedule the backup on each switch (Cisco kron, HTTP version)
 
@@ -523,7 +531,7 @@ kron occurrence Undebug_Job at 22:00 recurring
  policy-list Undebug
 kron policy-list Write_Config
  cli wr mem
- cli copy running-config http://192.168.10.104:8080/test.txt
+ cli copy running-config http://192.168.10.104:8080/LAB_3850.txt
 kron policy-list Undebug
  cli und all
 ```
@@ -531,6 +539,104 @@ kron policy-list Undebug
 Same `cli wr mem`-first pattern as the TFTP version — only the transport
 line changes: `cli copy running-config http://<host>:8080/<file>` in place
 of `cli show run | redirect tftp://<host>/<file>`.
+
+This backs up the running config with the filename test.txt.
+
+----------------------------------------------------------------
+
+### Backup with a time/date stamp
+
+Cisco IOS also supports an `archive` section. I always include at least these commands in the `archive:
+
+```bash linenums='1'
+archive
+ log config
+  logging enable
+  logging size 1000
+ path http://192.168.10.104:8080/$h-$t.txt
+```
+
+- **log config** - Enters the config-change logging submode, which controls how IOS logs individual configuration commands as they're entered (separate from the archive-file feature itself)
+- **logging enable** - Turns on logging of configuration changes. Every config command entered by any user gets logged with a sequence number, timestamp, and the user who made the change. You'd view this with show archive log config all
+- **logging size 1000** - Sets the size of the config-change log buffer to 1000 entries (default is usually 100). Once full, older entries roll off
+- **path** http://192.168.10.104:8080/\$h-\$t.txt - This is back at the top-level archive mode (not inside log config) — it defines where archived copies of the config get saved. Here it's pointed at an HTTP server at 192.168.10.104:8080.
+  - $h = the router's hostname
+  - $t = a timestamp
+
+Here are the protocols that archive supports:
+
+```bash linenums='1' hl_lines='1'
+(config-archive)#path ?
+  crashinfo:  Write archive on crashinfo: file system
+  flash:      Write archive on flash: file system
+  ftp:        Write archive on ftp: file system
+  http:       Write archive on http: file system
+  https:      Write archive on https: file system
+  rcp:        Write archive on rcp: file system
+  scp:        Write archive on scp: file system
+  sftp:       Write archive on sftp: file system
+  tftp:       Write archive on tftp: file system
+```
+
+If you are making a lot of changes to the network, say adding a new vlan for segmentation or migrating to a new VoIP platform, add this command to the kron policy:
+
+```bash linenums='1' hl_lines='1'
+ cli archive config
+```
+
+After the `cli show run | redirect tftp://192.168.10.223/3850.txt` line.
+
+The `cli archive config` in the kron policy executes the `path` command in the Archive.
+
+----------------------------------------------------------------
+
+![PowerShell-Listener](img/http-serve.png)
+
+----------------------------------------------------------------
+
+In the above screenshot, I have:
+
+```bash linenums='1'
+cli copy running-config http://192.168.10.104:8080/LAB_3850.txt
+```
+
+In the `kron' policy` and the `path` in the archive. You don't need both, this is just an example showing both formats. If you just use:
+
+```bash linenums='1'
+cli copy running-config http://192.168.10.104:8080/LAB_3850.txt
+```
+
+It is overwritten every day.
+
+----------------------------------------------------------------
+
+### Archive logging
+
+With the `archive log` commands you can show who did what on the switch. Twice I have had a customer accuse me of breaking something. Luckily, I had the logging configured and had them run:
+
+```bash linenums='1' hl_lines='1'
+show archive log conf all
+```
+
+```bash title='show archive log conf all'
+ idx   sess           user@line      Logged command
+    1     1       mhubbard@vty1     |  logging enable
+    2     1       mhubbard@vty1     |  logging size 1000
+    3     1       mhubbard@vty1     |  path http://192.168.10.104:8080/$h-$t.txt
+    4     0       mhubbard@vty0     |vlan 12
+    5     0       mhubbard@vty0     | name Mitel-VoIP
+    6     0       mhubbard@vty0     | interface Vlan12
+    7     0       mhubbard@vty0     | ip address 192.168.12.1 255.255.255.0
+    8     0       mhubbard@vty0     | no ip redirects
+    9     0       mhubbard@vty0     | ip pim sparse-dense-mode
+   10     0       mhubbard@vty0     | ipv6 address dhcp
+   11     0       mhubbard@vty0     | ipv6 enable
+   12     0       mhubbard@vty0     | ipv6 nd managed-config-flag
+   13     0       mhubbard@vty0     | ipv6 nd other-config-flag
+   14     0       mhubbard@vty0     | ipv6 nd router-preference High
+   15     0       mhubbard@vty0     | ipv6 nd ra interval 30
+   16     0       mhubbard@vty0     | ipv6 nd ra dns server FD24:42B2:12CE::1
+```
 
 ----------------------------------------------------------------
 
@@ -562,11 +668,12 @@ Backups land in this same folder — wherever the script itself is saved.
 # "x.txt-321" - the trailing "-NNN" gets moved to just before the
 # extension: "x-321.txt").
 #
-# Run this from an elevated (Administrator) PowerShell. HttpListener
-# refuses to bind a wildcard prefix like "http://+:8080/" from a normal
-# session ("Access is denied"), regardless of the port number - that's a
-# Windows http.sys URL-ACL restriction, unrelated to port 8080 itself
-# being non-privileged.
+# On Windows, run this from an elevated (Administrator) PowerShell.
+# HttpListener refuses to bind a wildcard prefix like "http://+:8080/"
+# from a normal session ("Access is denied"), regardless of the port
+# number - that's a Windows http.sys URL-ACL restriction, unrelated to
+# port 8080 itself being non-privileged. On Linux/macOS this restriction
+# doesn't apply - no elevation is needed to bind ports above 1024.
 
 # $PSScriptRoot (this script's own folder), not $PWD (wherever the shell
 # happened to be) - keeps backups landing in a predictable place if this
@@ -587,13 +694,48 @@ try {
     Write-Host "Could not start listening on port 8080: $($_.Exception.Message)"
     Write-Host "If this is a port conflict, something else on this machine is already using it - check with:"
     Write-Host "  netstat -ano | findstr :8080     (Windows)"
-    Write-Host "  sudo ss -ltnp | grep 8080         (Linux/macOS)"
+    Write-Host "  sudo ss -ltnp | grep 8080         (Linux)"
+    Write-Host "  lsof -i :8080         (macOS)"
     exit 1
 }
 Write-Host "Listening on port 8080, saving to $DestDir ..."
 
+# Ctrl+C normally can't interrupt a blocked GetContext() call, since it's
+# a synchronous native wait rather than something that polls for
+# cancellation. Trapping CancelKeyPress explicitly and calling
+# listener.Stop() forces that blocked call to throw, which the catch
+# block below turns into a clean exit instead of an unkillable script.
+$cancelled = $false
+[Console]::TreatControlCAsInput = $false
+Register-ObjectEvent -InputObject ([Console]) -EventName CancelKeyPress -Action {
+    $Event.MessageData.Stop()
+    $script:cancelled = $true
+    $EventArgs.Cancel = $true
+} -MessageData $listener | Out-Null
+
 while ($listener.IsListening) {
-    $context = $listener.GetContext()
+    # GetContext() blocks in a native wait that Stop() doesn't reliably
+    # interrupt on Linux (it does on Windows, via http.sys) - confirmed
+    # the hard way testing both platforms. Using the async version and
+    # polling with a short timeout means the loop returns control
+    # regularly instead of blocking indefinitely, so $cancelled actually
+    # gets checked instead of the script hanging until the next request.
+    $contextTask = $listener.GetContextAsync()
+    while (-not $contextTask.AsyncWaitHandle.WaitOne(200)) {
+        if ($cancelled) { break }
+    }
+    if ($cancelled) { break }
+
+    try {
+        $context = $contextTask.GetAwaiter().GetResult()
+    } catch [System.Net.HttpListenerException] {
+        if ($cancelled) { break }
+        throw
+    } catch [System.ObjectDisposedException] {
+        if ($cancelled) { break }
+        throw
+    }
+
     $request = $context.Request
 
     try {
@@ -625,6 +767,8 @@ while ($listener.IsListening) {
         $context.Response.Close()
     }
 }
+
+Write-Host "Listener stopped."
 ```
 
 ### Allow the script to run
