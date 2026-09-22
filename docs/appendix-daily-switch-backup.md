@@ -695,7 +695,7 @@ Check what you're running:
 show running-config | include enable secret
 ```
 
-If you see enable secret 5 $1$..., convert it:
+If you see enable secret 5 \$1\$..., convert it:
 
 ```bash
 configure terminal
@@ -769,16 +769,36 @@ sed -E -i.bak 's/\$1\$[A-Za-z0-9.\/]+\$[A-Za-z0-9.\/]+/<removed>/g' config-backu
 find /path/to/archive -type f -name '*.txt' -exec sed -E -i.bak 's/\$1\$[A-Za-z0-9.\/]+\$[A-Za-z0-9.\/]+/<removed>/g' {} +
 ```
 
-!!! note
+!!! macOS
 
     macOS/BSD `sed` needs a space between `-i` and the backup suffix:
     `sed -E -i '.bak' '...' file` — the GNU form above (`-i.bak`, no space)
     will error out on a Mac.
 
+----------------------------------------------------------------
+
+!!! Type_8-9
+
     This only targets type 5 (`$1$`). If you're standardizing on type 9
     everywhere and want older archives fully consistent, type 8 and type 9
     hashes use `$8$` and `$9$` respectively — same pattern, just swap the
     literal prefix.
+
+----------------------------------------------------------------
+
+!!! Password_Cracking_Tutorial
+
+    If you've never seen a password-cracking session firsthand, Nate
+    Anderson's ["How I Became a Password Cracker"](https://arstechnica.com/security/2013/03/how-i-became-a-password-cracker/)
+    (Ars Technica, 2013) is a great, non-technical walkthrough of how
+    approachable this is — a reporter with zero prior experience cracking
+    thousands of real passwords in a single day using nothing but free
+    tools. The wordlist used above, RockYou, comes from a 2009 breach of
+    32 million real user passwords and is mirrored in
+    [Daniel Miessler's SecLists repo](https://github.com/danielmiessler/SecLists)
+    under `Passwords/Leaked-Databases/rockyou.txt.tar.gz` — it's the
+    default first-attempt wordlist for exactly this reason: real human
+    password choices, not generated strings.
 
 ----------------------------------------------------------------
 
