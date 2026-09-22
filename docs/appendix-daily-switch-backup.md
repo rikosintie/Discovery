@@ -522,6 +522,8 @@ to install.
 
 ### Schedule the backup on each switch (Cisco kron, HTTP version)
 
+This configuration creates a backup with the filename LAB_3850.txt.
+
 Real config from a lab 3850, `sh run | sec kron`:
 
 ```text
@@ -540,7 +542,7 @@ Same `cli wr mem`-first pattern as the TFTP version — only the transport
 line changes: `cli copy running-config http://<host>:8080/<file>` in place
 of `cli show run | redirect tftp://<host>/<file>`.
 
-This backs up the running config with the filename test.txt.
+This backs up the running config with the filename LAB_3850.txt. It overwrites the previous backup.
 
 ----------------------------------------------------------------
 
@@ -553,7 +555,6 @@ archive
  log config
   logging enable
   logging size 1000
- path http://192.168.10.104:8080/$h-$t.txt
 ```
 
 - **log config** - Enters the config-change logging submode, which controls how IOS logs individual configuration commands as they're entered (separate from the archive-file feature itself)
@@ -578,7 +579,26 @@ Here are the protocols that archive supports:
   tftp:       Write archive on tftp: file system
 ```
 
-If you are making a lot of changes to the network, say adding a new vlan for segmentation or migrating to a new VoIP platform, add this command to the kron policy:
+----------------------------------------------------------------
+
+If you are making a lot of changes to the network, say adding a new vlan for segmentation or migrating to a new VoIP platform, it makes sense to do the backup with time/date so you can roll back day by day if something goes wrong. Just make sure that you keep an eye on disk storage.
+
+!!! note
+    I set this up for a customer with 86 sites and over 2,000 switches. They had me point it to a Windows server. I asked them to spin up an Ubuntu VM in case they got ransomware. They laughed, and then they got ransomed.
+
+Backup with time/date - Add the path command using your IP address.
+
+```bash linenums='1'
+archive
+ log config
+  logging enable
+  logging size 1000
+ path http://192.168.10.104:8080/$h-$t.txt
+```
+
+----------------------------------------------------------------
+
+Then add this command to the kron policy:
 
 ```bash linenums='1' hl_lines='1'
  cli archive config
