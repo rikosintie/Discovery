@@ -598,7 +598,7 @@ cli archive config
 
 ----------------------------------------------------------------
 
-![PowerShell-Listener](img/http-serve.png)
+![PowerShell-Listener](img/http-serve.png){ width="400"}
 
 ----------------------------------------------------------------
 
@@ -986,13 +986,13 @@ Real output from an actual run on Windows — two backups landing seconds apart,
 
 ----------------------------------------------------------------
 
-![PowerShell Listener](img/http-serve.png)
+![PowerShell Listener](img/http-serve.png){ width="400"}
 
 ----------------------------------------------------------------
 
 Real output from an actual run on Linux — two backups landing seconds apart, with the trailing `-NNN` already cleaned up:
 
-![PowerShell Listener Linux](img/http-serve-linux.png)
+![PowerShell Listener Linux](img/http-serve-linux.png){ width="400"}
 
 ----------------------------------------------------------------
 
