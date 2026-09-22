@@ -663,7 +663,7 @@ protecting enable mode — see Type 5 vs. Type 9 secrets below for why that's wo
 
 ----------------------------------------------------------------
 
-Type 5 vs. Type 9 secrets — why this matters for archive logging
+### Type 5 vs. Type 9 secrets — why this matters for archive logging
 
 The archive log config output above shows exactly what changed and
 who changed it — but that log is only half the story if the enable
