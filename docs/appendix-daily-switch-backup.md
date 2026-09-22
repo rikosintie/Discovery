@@ -584,7 +584,7 @@ Here are the protocols that archive supports:
 If you are making a lot of changes to the network, say adding a new vlan for segmentation or migrating to a new VoIP platform, it makes sense to do the backup with time/date so you can roll back day by day if something goes wrong. Just make sure that you keep an eye on disk storage.
 
 !!! note
-    I set this up for a customer with 86 sites and over 2,000 switches. They had me point it to a Windows server. I asked them to spin up an Ubuntu VM in case they got ransomware. They laughed, and then they got ransomed.
+    I set this up for a large school district with 86 sites and over 2,000 switches. They had me point it to a Windows server. I asked them to spin up an Ubuntu VM on their substantial ESXi infrastructure in case they got ransomware. They laughed, and then they got ransomed. No access to the backups. And I had included their Cisco WLAN controllers. They went for full backup of infrastructure to zero backup in one day.
 
 Backup with time/date - Add the path command using your IP address.
 
@@ -604,7 +604,7 @@ Then add this command to the kron policy:
  cli archive config
 ```
 
-After the `cli show run | redirect tftp://192.168.10.223/3850.txt` line.
+after the `cli show run | redirect tftp://192.168.10.223/3850.txt` line.
 
 The `cli archive config` in the kron policy executes the `path` command in the Archive.
 
@@ -657,6 +657,128 @@ show archive log conf all
    15     0       mhubbard@vty0     | ipv6 nd ra interval 30
    16     0       mhubbard@vty0     | ipv6 nd ra dns server FD24:42B2:12CE::1
 ```
+
+That kind of audit trail is only as trustworthy as the credentials
+protecting enable mode — see Type 5 vs. Type 9 secrets below for why that's worth checking on every device.
+
+----------------------------------------------------------------
+
+Type 5 vs. Type 9 secrets — why this matters for archive logging
+
+The archive log config output above shows exactly what changed and
+who changed it — but that log is only half the story if the enable
+secret itself is weak. A show archive log config all audit trail
+doesn't help you much if an attacker with a config backup can just crack
+their way into enable mode and start making changes of their own.
+
+Cisco's older enable secret hashing (type 5, MD5-crypt) is fast to
+attack — genuinely fast. On a customer engagement at a California
+community college district, I was handed a config backup after an
+incident with no idea what the enable password was. I ran hashcat
+against it with the RockYou word list on a laptop — no GPU — and had the
+password back in 2 minutes, 29 seconds. That's type 5's real-world
+exposure: if the password is anywhere in a common word list, cracking it
+isn't a matter of hours or days, it's a coffee break.
+
+Type 9 (enable secret using scrypt) is a different animal. It's
+deliberately slow and memory-hard, specifically to make word list and
+brute-force attacks impractical even with GPU acceleration. The same
+attack that took under three minutes against type 5 wouldn't get
+anywhere close against a decent type 9 password in any realistic
+timeframe.
+
+Action item: audit every device and convert type 5 to type 9.
+
+Check what you're running:
+
+```bash
+show running-config | include enable secret
+```
+
+If you see enable secret 5 $1$..., convert it:
+
+```bash
+configure terminal
+enable algorithm-type scrypt secret <new-password>
+```
+
+A few notes:
+
+This requires a new password, not an in-place re-hash — IOS can't
+reverse a type 5 hash to re-encode it as type 9, so this is a real
+password change, not just a format upgrade. Plan for that across
+however many devices you're touching.
+
+Algorithm-type scrypt requires a reasonably current IOS release —
+confirm support before rolling this out across older gear. This applies to enable secret specifically. username `<user>` secret
+supports the same algorithm-type scrypt option and is worth checking
+at the same time.
+
+Don't stop at just the secret — a type 5 hash sitting in old backups,
+TFTP dumps, or archive snapshots is still crackable even after
+you've rotated the live config. If you're archiving configs long-term
+(see the time/date-stamped backups above), treat old backups as
+sensitive artifacts, not just historical records. I usually replace the hash with `<removed>` in old configs.
+
+----------------------------------------------------------------
+
+### Removing hashes from archives
+
+Mac/Linux have `sed` built in. If you're on Windows, see [Install Coreutils for Windows](Getting_Started.md#install-coreutils-for-windows) to get native versions of these tools.
+
+Converting the live `enable secret` to type 9 fixes the device going
+forward, but it doesn't touch anything already sitting in an `archive`, TFTP, or HTTP-pushed backup history. Every timestamped snapshot taken before the conversion still has the old type 5 hash in it — and as the 2-minutes-29-seconds example above shows, that hash doesn't need to be recent to be dangerous. If you're keeping long-term config history for rollback purposes, it's worth sweeping it for exposed type 5 hashes rather than leaving them sitting around indefinitely.
+
+Type 5 hashes always follow a fixed `$1$salt$hash` format, so you can
+match the hash itself directly with `sed` — this works regardless of
+whether it shows up under `enable secret 5`, `username ... secret 5`,
+or a VTY `password 5` line:
+
+**Preview only — print just the lines that would change, with the
+hash already replaced, without touching the file:**
+
+```bash
+sed -nE 's/\$1\$[A-Za-z0-9.\/]+\$[A-Za-z0-9.\/]+/<removed>/gp' config-backup.txt
+```
+
+----------------------------------------------------------------
+
+Real example from a customer archive
+
+```bash
+sed -nE 's/\$1\$[A-Za-z0-9.\/]+\$[A-Za-z0-9.\/]+/<removed>/gp'  jc-mdf-1-running-config.txt
+```
+
+----------------------------------------------------------------
+
+```bash title='Type 5 hash removed'
+enable secret 5 <removed>
+username mhubbard privilege 15 secret 5 <removed>
+username admin privilege 15 secret 5 <removed>
+```
+
+**In-place edit, keeping a `.bak` of the original (Linux/GNU sed):**
+
+```bash
+sed -E -i.bak 's/\$1\$[A-Za-z0-9.\/]+\$[A-Za-z0-9.\/]+/<removed>/g' config-backup.txt
+```
+
+**Bulk redaction across an entire archive directory:**
+
+```bash
+find /path/to/archive -type f -name '*.txt' -exec sed -E -i.bak 's/\$1\$[A-Za-z0-9.\/]+\$[A-Za-z0-9.\/]+/<removed>/g' {} +
+```
+
+!!! note
+
+    macOS/BSD `sed` needs a space between `-i` and the backup suffix:
+    `sed -E -i '.bak' '...' file` — the GNU form above (`-i.bak`, no space)
+    will error out on a Mac.
+
+    This only targets type 5 (`$1$`). If you're standardizing on type 9
+    everywhere and want older archives fully consistent, type 8 and type 9
+    hashes use `$8$` and `$9$` respectively — same pattern, just swap the
+    literal prefix.
 
 ----------------------------------------------------------------
 
