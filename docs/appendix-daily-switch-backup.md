@@ -687,7 +687,7 @@ attack that took under three minutes against type 5 wouldn't get
 anywhere close against a decent type 9 password in any realistic
 timeframe.
 
-Action item: audit every device and convert type 5 to type 9.
+**Action item:** audit every device and convert type 5 to type 9.
 
 Check what you're running:
 
@@ -702,23 +702,58 @@ configure terminal
 enable algorithm-type scrypt secret <new-password>
 ```
 
+**Example — converting a user account's secret:**
+
+Check what's currently configured:
+
+```bash
+show running-config | include username
+```
+
+A type 5 user credential looks like this:
+
+```bash
+username mhubbard privilege 15 secret 5 $1$abCd$XyZ123exampleHashValueHere
+```
+
+Convert it the same way as `enable secret` — a new password, using the
+`scrypt` algorithm instead of the default MD5-crypt:
+
+```bash
+configure terminal
+username mhubbard privilege 15 algorithm-type scrypt secret <new-password>
+```
+
+After the change, `show running-config | include username` should show
+the same account now hashed as type 9:
+
+```bash
+username mhubbard privilege 15 secret 9 $9$abC...longerScryptHashHere...
+```
+
+As with `enable secret`, this replaces the password outright — IOS can't
+convert an existing type 5 hash into type 9 in place, since scrypt needs
+the plaintext to hash it with. If you're rolling this out across many
+accounts, budget time to actually change (and redistribute) each
+password, not just flip a flag.
+
 A few notes:
 
-This requires a new password, not an in-place re-hash — IOS can't
-reverse a type 5 hash to re-encode it as type 9, so this is a real
-password change, not just a format upgrade. Plan for that across
-however many devices you're touching.
+- This requires a **new password**, not an in-place re-hash — IOS can't
+  reverse a type 5 hash to re-encode it as type 9, so this is a real
+  password change, not just a format upgrade. Plan for that across
+  however many devices you're touching.
+- `algorithm-type scrypt` requires a reasonably current IOS release —
+  confirm support before rolling this out across older gear.
+- This applies to `enable secret` and `username ... secret` alike, as
+  shown above — check both on every device.
+- Don't stop at just the secret — a type 5 hash sitting in old backups,
+  TFTP dumps, or `archive` snapshots is still crackable even after
+  you've rotated the live config. If you're archiving configs long-term
+  (see the time/date-stamped backups above), treat old backups as
+  sensitive artifacts, not just historical records.
 
-Algorithm-type scrypt requires a reasonably current IOS release —
-confirm support before rolling this out across older gear. This applies to enable secret specifically. username `<user>` secret
-supports the same algorithm-type scrypt option and is worth checking
-at the same time.
-
-Don't stop at just the secret — a type 5 hash sitting in old backups,
-TFTP dumps, or archive snapshots is still crackable even after
-you've rotated the live config. If you're archiving configs long-term
-(see the time/date-stamped backups above), treat old backups as
-sensitive artifacts, not just historical records. I usually replace the hash with `<removed>` in old configs.
+I usually replace the hash with `<removed>` in old configs.
 
 ----------------------------------------------------------------
 
