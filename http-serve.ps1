@@ -5,11 +5,12 @@
 # "x.txt-321" - the trailing "-NNN" gets moved to just before the
 # extension: "x-321.txt").
 #
-# Run this from an elevated (Administrator) PowerShell. HttpListener
-# refuses to bind a wildcard prefix like "http://+:8080/" from a normal
-# session ("Access is denied"), regardless of the port number - that's a
-# Windows http.sys URL-ACL restriction, unrelated to port 8080 itself
-# being non-privileged.
+# On Windows, run this from an elevated (Administrator) PowerShell.
+# HttpListener refuses to bind a wildcard prefix like "http://+:8080/"
+# from a normal session ("Access is denied"), regardless of the port
+# number - that's a Windows http.sys URL-ACL restriction, unrelated to
+# port 8080 itself being non-privileged. On Linux/macOS this restriction
+# doesn't apply - no elevation is needed to bind ports above 1024.
 
 # $PSScriptRoot (this script's own folder), not $PWD (wherever the shell
 # happened to be) - keeps backups landing in a predictable place if this
@@ -30,13 +31,48 @@ try {
     Write-Host "Could not start listening on port 8080: $($_.Exception.Message)"
     Write-Host "If this is a port conflict, something else on this machine is already using it - check with:"
     Write-Host "  netstat -ano | findstr :8080     (Windows)"
-    Write-Host "  sudo ss -ltnp | grep 8080         (Linux/macOS)"
+    Write-Host "  sudo ss -ltnp | grep 8080         (Linux)"
+    Write-Host "  lsof -i :8080         (macOS)"
     exit 1
 }
 Write-Host "Listening on port 8080, saving to $DestDir ..."
 
+# Ctrl+C normally can't interrupt a blocked GetContext() call, since it's
+# a synchronous native wait rather than something that polls for
+# cancellation. Trapping CancelKeyPress explicitly and calling
+# listener.Stop() forces that blocked call to throw, which the catch
+# block below turns into a clean exit instead of an unkillable script.
+$cancelled = $false
+[Console]::TreatControlCAsInput = $false
+Register-ObjectEvent -InputObject ([Console]) -EventName CancelKeyPress -Action {
+    $Event.MessageData.Stop()
+    $script:cancelled = $true
+    $EventArgs.Cancel = $true
+} -MessageData $listener | Out-Null
+
 while ($listener.IsListening) {
-    $context = $listener.GetContext()
+    # GetContext() blocks in a native wait that Stop() doesn't reliably
+    # interrupt on Linux (it does on Windows, via http.sys) - confirmed
+    # the hard way testing both platforms. Using the async version and
+    # polling with a short timeout means the loop returns control
+    # regularly instead of blocking indefinitely, so $cancelled actually
+    # gets checked instead of the script hanging until the next request.
+    $contextTask = $listener.GetContextAsync()
+    while (-not $contextTask.AsyncWaitHandle.WaitOne(200)) {
+        if ($cancelled) { break }
+    }
+    if ($cancelled) { break }
+
+    try {
+        $context = $contextTask.GetAwaiter().GetResult()
+    } catch [System.Net.HttpListenerException] {
+        if ($cancelled) { break }
+        throw
+    } catch [System.ObjectDisposedException] {
+        if ($cancelled) { break }
+        throw
+    }
+
     $request = $context.Request
 
     try {
@@ -68,3 +104,5 @@ while ($listener.IsListening) {
         $context.Response.Close()
     }
 }
+
+Write-Host "Listener stopped."
