@@ -548,35 +548,36 @@ This backs up the running config with the filename LAB_3850.txt. It overwrites t
 
 ### Backup with a time/date stamp
 
-Cisco IOS also supports an `archive` section. I always include at least these commands in the `archive:
+Cisco IOS also supports an `archive` section. I always include at least these commands in the `archive`:
 
 ```bash linenums='1'
 archive
- log config
-  logging enable
-  logging size 1000
+log config
+logging enable
+logging size 1000
+path http://192.168.10.104:8080/$h-$t.txt
 ```
 
 - **log config** - Enters the config-change logging submode, which controls how IOS logs individual configuration commands as they're entered (separate from the archive-file feature itself)
 - **logging enable** - Turns on logging of configuration changes. Every config command entered by any user gets logged with a sequence number, timestamp, and the user who made the change. You'd view this with show archive log config all
 - **logging size 1000** - Sets the size of the config-change log buffer to 1000 entries (default is usually 100). Once full, older entries roll off
 - **path** http://192.168.10.104:8080/\$h-\$t.txt - This is back at the top-level archive mode (not inside log config) — it defines where archived copies of the config get saved. Here it's pointed at an HTTP server at 192.168.10.104:8080.
-  - $h = the router's hostname
-  - $t = a timestamp
+- $h = the router's hostname
+- $t = a timestamp
 
 Here are the protocols that archive supports:
 
 ```bash linenums='1' hl_lines='1'
 (config-archive)#path ?
-  crashinfo:  Write archive on crashinfo: file system
-  flash:      Write archive on flash: file system
-  ftp:        Write archive on ftp: file system
-  http:       Write archive on http: file system
-  https:      Write archive on https: file system
-  rcp:        Write archive on rcp: file system
-  scp:        Write archive on scp: file system
-  sftp:       Write archive on sftp: file system
-  tftp:       Write archive on tftp: file system
+crashinfo:  Write archive on crashinfo: file system
+flash:      Write archive on flash: file system
+ftp:        Write archive on ftp: file system
+http:       Write archive on http: file system
+https:      Write archive on https: file system
+rcp:        Write archive on rcp: file system
+scp:        Write archive on scp: file system
+sftp:       Write archive on sftp: file system
+tftp:       Write archive on tftp: file system
 ```
 
 ----------------------------------------------------------------
@@ -584,29 +585,16 @@ Here are the protocols that archive supports:
 If you are making a lot of changes to the network, say adding a new vlan for segmentation or migrating to a new VoIP platform, it makes sense to do the backup with time/date so you can roll back day by day if something goes wrong. Just make sure that you keep an eye on disk storage.
 
 !!! note
-    I set this up for a large school district with 86 sites and over 2,000 switches. They had me point it to a Windows server. I asked them to spin up an Ubuntu VM on their substantial ESXi infrastructure in case they got ransomware. They laughed, and then they got ransomed. No access to the backups. And I had included their Cisco WLAN controllers. They went for full backup of infrastructure to zero backup in one day.
+    I set this up for a large school district with 86 sites and over 2,000 switches. They had me point it to a Windows server. I asked them to spin up an Ubuntu VM on their substantial ESXi infrastructure in case they got ransomware. They laughed, and then they got ransomed. No access to the backups. And I had included their Cisco WLAN controllers. They went from full backup of infrastructure to zero backup in one day.
 
-Backup with time/date - Add the path command using your IP address.
+Then add `cli archive config` to the kron policy, after the `cli show run | redirect tftp://192.168.10.104/LAB_3850.txt` line — this executes the `path` command from the `archive` section on the same schedule as the rest of the backup job:
 
-```bash linenums='1'
-archive
- log config
-  logging enable
-  logging size 1000
- path http://192.168.10.104:8080/$h-$t.txt
+```bash linenums='1' hl_lines='4'
+kron policy-list Write_Config
+cli wr mem
+cli show run | redirect tftp://192.168.10.104/LAB_3850.txt
+cli archive config
 ```
-
-----------------------------------------------------------------
-
-Then add this command to the kron policy:
-
-```bash linenums='1' hl_lines='1'
- cli archive config
-```
-
-after the `cli show run | redirect tftp://192.168.10.223/3850.txt` line.
-
-The `cli archive config` in the kron policy executes the `path` command in the Archive.
 
 ----------------------------------------------------------------
 
@@ -614,19 +602,13 @@ The `cli archive config` in the kron policy executes the `path` command in the A
 
 ----------------------------------------------------------------
 
-In the above screenshot, I have:
+The screenshot above shows both `cli copy running-config` (in the kron policy) and `path` (in the archive section) configured at once — that's just to illustrate both formats side by side, not something you need to run together:
 
 ```bash linenums='1'
 cli copy running-config http://192.168.10.104:8080/LAB_3850.txt
 ```
 
-In the `kron' policy` and the `path` in the archive. You don't need both, this is just an example showing both formats. If you just use:
-
-```bash linenums='1'
-cli copy running-config http://192.168.10.104:8080/LAB_3850.txt
-```
-
-It is overwritten every day.
+`cli copy running-config` alone overwrites the same filename every day; `cli archive config` alone gives you the timestamped history. Pick whichever matches what you actually need, or run both if you want a same-day quick-reference copy *and* a rollback history.
 
 ----------------------------------------------------------------
 
