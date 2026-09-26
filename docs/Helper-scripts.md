@@ -521,7 +521,9 @@ To resolve DNS names for the IP addresses in the port map, pass a DNS server wit
 Every run also writes `port-maps/pinginfo/hostname-pinginfo.txt` — an
 import file for [PingInfoView](https://www.nirsoft.net/utils/multiple_ping_tool.html)
 (a free NirSoft tool, **Windows only**, that pings a list of hosts and
-shows which ones respond). Each reachable IP from the port map is paired
+shows which ones respond). If you use Windows it's worth your time to look at [nirsoft.net](https://www.nirsoft.net) because he has a ton of free networking tools for Windows. It's nirsoft.net, not nirsoft.com. someone bought nirsoft.com and it's all malware I think!
+
+Each reachable IP from the port map is paired
 with its DNS name, or its MAC address if no DNS name resolves. The use
 case is verifying hosts across a cutover: export the list before the
 change, import it into PingInfoView, and watch which hosts go down and
