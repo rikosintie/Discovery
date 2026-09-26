@@ -77,7 +77,7 @@ cd Discovery
 ```
 
 Since Ubuntu and `python3-venv` are already covered above, create the
-virtual environment and install the pinned dependencies. The purpose of the virtual environment it to isolate the packages in Discovery from the Python packages that Ubuntu uses. If you want more detail see [Getting Started](Getting_Started.md#2-using-a-python-virtual-environment){: target="_blank" rel="noopener" }.
+virtual environment and install the pinned dependencies. The purpose of the virtual environment it to isolate the packages in Discovery from the Python packages that Ubuntu uses. If you want more detail see [Getting Started](../Getting_Started.md#2-using-a-python-virtual-environment){: target="_blank" rel="noopener" }.
 
 ```bash
 python -m venv venv --upgrade-deps --prompt="Discovery"
@@ -106,7 +106,7 @@ regardless.
 Nothing in Discovery ever takes a password on the command line, and none of
 the scripts have a password hardcoded. `config-pull.py` reads the switch
 password from the `cyberARK` environment variable or prompts for it
-interactively with `-p 1`; see [Usage](usage.md#password){: target="_blank" rel="noopener" }. The username comes from the device-inventory file. `snmp_arp_cache.py` reads `SNMP_COMMUNITY` and `FIREWALL_HOST` the same way.
+interactively with `-p 1`; see [Usage](../usage.md#password){: target="_blank" rel="noopener" }. The username comes from the device-inventory file. `snmp_arp_cache.py` reads `SNMP_COMMUNITY` and `FIREWALL_HOST` the same way.
 
 For unattended runs, the one thing that matters is protecting the file that
 supplies those environment variables — `~/.config/discovery/cyberark.env`,
@@ -358,7 +358,7 @@ The `0 18` means run at 18:00. If you want it to run at 23:30 use `30 23`.
 ## Git repo
 
 - Discovery is installed by `git clone`ing the public GitHub repo (see
-  [Getting Started](Getting_Started.md)), so remove the inherited remote and
+  [Getting Started](../Getting_Started.md)), so remove the inherited remote and
   history before running on customer data. This prevents customer data from
   accidentally being pushed back to the public repo:
 
@@ -501,7 +501,7 @@ Here is an example from this document. I added the note above, committed, then r
 ----------------------------------------------------------------
 
 ```bash linenums='1' hl_lines='1'
-git log -p --follow -- docs/appendix-discovery-automation.md | grep -B5 "add/substitute"
+git log -p --follow -- docs/appendix/appendix-discovery-automation.md | grep -B5 "add/substitute"
 @@ -434,6 +436,11 @@ date) is visible.
 
  ----------------------------------------------------------------

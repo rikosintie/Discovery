@@ -741,7 +741,7 @@ I usually replace the hash with `<removed>` in old configs.
 
 ### Removing hashes from archives
 
-Mac/Linux have `sed` built in. If you're on Windows, see [Install Coreutils for Windows](Getting_Started.md#install-coreutils-for-windows) to get native versions of these tools.
+Mac/Linux have `sed` built in. If you're on Windows, see [Install Coreutils for Windows](../Getting_Started.md#install-coreutils-for-windows) to get native versions of these tools.
 
 Converting the live `enable secret` to type 9 fixes the device going
 forward, but it doesn't touch anything already sitting in an `archive`, TFTP, or HTTP-pushed backup history. Every timestamped snapshot taken before the conversion still has the old type 5 hash in it — and as the 2-minutes-29-seconds example above shows, that hash doesn't need to be recent to be dangerous. If you're keeping long-term config history for rollback purposes, it's worth sweeping it for exposed type 5 hashes rather than leaving them sitting around indefinitely.

@@ -8,9 +8,9 @@ text tools. This appendix walks through five real examples of using `grep`
 data out of switch configs, nmap scans, syslogs, and systemd unit files —
 the kind of thing you'd otherwise be doing by hand in a text editor.
 
-If you're on Windows, see [Install Coreutils for Windows](Getting_Started.md#install-coreutils-for-windows)
+If you're on Windows, see [Install Coreutils for Windows](../Getting_Started.md#install-coreutils-for-windows)
 to get native versions of these tools, and the
-[grep pipeline examples](usage.md#find-connected-ports) in the Usage guide
+[grep pipeline examples](../usage.md#find-connected-ports) in the Usage guide
 for PowerShell equivalents.
 
 ## grep

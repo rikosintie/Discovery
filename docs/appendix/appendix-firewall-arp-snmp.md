@@ -37,7 +37,7 @@ Install the following on the VM.
 - python3-venv - `sudo apt install python3-venv`
 - snmp - `sudo apt install snmp`
 
-then clone the Discovery repo and follow the setup in [Getting Started](Getting_Started.md). Everything below —
+then clone the Discovery repo and follow the setup in [Getting Started](../Getting_Started.md). Everything below —
 
 - `bash`
 - `cron`

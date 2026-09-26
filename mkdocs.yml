@@ -23,11 +23,11 @@ nav:
       - Convert MAC: helper-scripts/convert-mac.md
   - PowerShell: Using_PowerShell.md
   - Appendix:
-      - grep and friends: appendix-grep-and-friends.md
-      - Firewall ARP via SNMP: appendix-firewall-arp-snmp.md
-      - Automating Discovery: appendix-discovery-automation.md
-      - Daily Switch Backup: appendix-daily-switch-backup.md
-      - SSH Hardening: appendix-jump-box-hardening.md
+      - grep and friends: appendix/appendix-grep-and-friends.md
+      - Firewall ARP via SNMP: appendix/appendix-firewall-arp-snmp.md
+      - Automating Discovery: appendix/appendix-discovery-automation.md
+      - Daily Switch Backup: appendix/appendix-daily-switch-backup.md
+      - SSH Hardening: appendix/appendix-jump-box-hardening.md
   - Security Policy: SECURITY.md
 
 theme:
