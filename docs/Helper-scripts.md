@@ -552,6 +552,16 @@ gping $(grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' Lab_3850-pinginfo.txt)
 
 ![gping](img/gping.png){ width="500" }
 
+| Column | Meaning |
+|--------|---------|
+| `last` | Latency of the most recent ping to that host |
+| `min` | Smallest latency recorded so far |
+| `max` | Largest latency recorded so far |
+| `avg` | Average latency across every ping so far |
+| `jtr` | Jitter — the average change in latency between one ping and the next, in the order they actually happened. High jitter means latency is bouncing around, even if the average looks fine |
+| `p95` | 95th-percentile latency — 95% of pings to that host were faster than this |
+| `t/o` | Timeouts — how many pings to that host got no response at all |
+
 **`fping`** (continuous text pings) — parse the same targets and sweep
 them all in parallel:
 
@@ -581,6 +591,8 @@ fping-info() {
     grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' "$1" | fping -l
 }
 ```
+
+----------------------------------------------------------------
 
 #### "UP with no learned MAC address" warning
 
