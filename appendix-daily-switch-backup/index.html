@@ -1,0 +1,2188 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A site dedicated to the Network Discovery project.">
+      
+      
+        <meta name="author" content="Michael Hubbard (@rikosintie)">
+      
+      
+        <link rel="canonical" href="https://discovery.rikosintie.com/appendix-daily-switch-backup/">
+      
+      
+        <link rel="prev" href="../appendix-discovery-automation/">
+      
+      
+        <link rel="next" href="../appendix-jump-box-hardening/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../img/favicon-alien-32x32.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Daily Switch Backup - Discovery</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.5%207.75A.75.75%200%200%201%207.25%207h1a.75.75%200%200%201%20.75.75v2.75h.25a.75.75%200%200%201%200%201.5h-2a.75.75%200%200%201%200-1.5h.25v-2h-.25a.75.75%200%200%201-.75-.75M8%206a1%201%200%201%201%200-2%201%201%200%200%201%200%202%22/%3E%3C/svg%3E');--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1%207.775V2.75C1%201.784%201.784%201%202.75%201h5.025c.464%200%20.91.184%201.238.513l6.25%206.25a1.75%201.75%200%200%201%200%202.474l-5.026%205.026a1.75%201.75%200%200%201-2.474%200l-6.25-6.25A1.75%201.75%200%200%201%201%207.775m1.5%200c0%20.066.026.13.073.177l6.25%206.25a.25.25%200%200%200%20.354%200l5.025-5.025a.25.25%200%200%200%200-.354l-6.25-6.25a.25.25%200%200%200-.177-.073H2.75a.25.25%200%200%200-.25.25ZM6%205a1%201%200%201%201%200%202%201%201%200%200%201%200-2%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M3.499.75a.75.75%200%200%201%201.5%200v.996C5.9%202.903%206.793%203.65%207.662%204.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873%2010.794-.045%2012.622.26%2014.408.558%2016%201.94%2016%204.25c0%201.278-.954%202.575-2.44%202.734l.146.508.065.22c.203.701.412%201.455.476%202.226.142%201.707-.4%203.03-1.487%203.898C11.714%2014.671%2010.27%2015%208.75%2015h-6a.75.75%200%200%201%200-1.5h1.376a4.5%204.5%200%200%201-.563-1.191%203.84%203.84%200%200%201-.05-2.063%204.65%204.65%200%200%201-2.025-.293.75.75%200%200%201%20.525-1.406c1.357.507%202.376-.006%202.698-.318l.009-.01a.747.747%200%200%201%201.06%200%20.75.75%200%200%201-.012%201.074c-.912.92-.992%201.835-.768%202.586.221.74.745%201.337%201.196%201.621H8.75c1.343%200%202.398-.296%203.074-.836.635-.507%201.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.4%202.4%200%200%201-.507-.441%203.1%203.1%200%200%201-.633-1.248.75.75%200%200%201%201.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738%200%201.25-.615%201.25-1.25%200-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706%201.345-.46.92-.27%201.774.019%203.062l.042.19.01.05c.348.443.666.949.94%201.553a.75.75%200%201%201-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7%205.527c-.814-.68-1.75-1.462-2.692-2.619a3.7%203.7%200%200%200-1.023.88c-.406.495-.663%201.036-.722%201.508.116.122.306.21.591.239.388.038.797-.06%201.032-.19a.75.75%200%200%201%20.728%201.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75%205.677V5.5c0-.984.48-1.94%201.077-2.664.46-.559%201.05-1.055%201.673-1.353z%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M6.457%201.047c.659-1.234%202.427-1.234%203.086%200l6.082%2011.378A1.75%201.75%200%200%201%2014.082%2015H1.918a1.75%201.75%200%200%201-1.543-2.575Zm1.763.707a.25.25%200%200%200-.44%200L1.698%2013.132a.25.25%200%200%200%20.22.368h12.164a.25.25%200%200%200%20.22-.368Zm.53%203.996v2.5a.75.75%200%200%201-1.5%200v-2.5a.75.75%200%200%201%201.5%200M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M13.78%204.22a.75.75%200%200%201%200%201.06l-7.25%207.25a.75.75%200%200%201-1.06%200L2.22%209.28a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018L6%2010.94l6.72-6.72a.75.75%200%200%201%201.06%200%22/%3E%3C/svg%3E');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.92%206.085h.001a.749.749%200%201%201-1.342-.67c.169-.339.436-.701.849-.977C6.845%204.16%207.369%204%208%204a2.76%202.76%200%200%201%201.637.525c.503.377.863.965.863%201.725%200%20.448-.115.83-.329%201.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6%206%200%200%200-.26.16%201%201%200%200%200-.276.245.75.75%200%200%201-1.248-.832c.184-.264.42-.489.692-.661q.154-.1.313-.195l.007-.004c.1-.061.182-.11.258-.161a1%201%200%200%200%20.277-.245C8.96%206.514%209%206.427%209%206.25a.61.61%200%200%200-.262-.525A1.27%201.27%200%200%200%208%205.5c-.369%200-.595.09-.74.187a1%201%200%200%200-.34.398M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.344%202.343za8%208%200%200%201%2011.314%2011.314A8.002%208.002%200%200%201%20.234%2010.089a8%208%200%200%201%202.11-7.746m1.06%2010.253a6.5%206.5%200%201%200%209.108-9.275%206.5%206.5%200%200%200-9.108%209.275M6.03%204.97%208%206.94l1.97-1.97a.749.749%200%200%201%201.275.326.75.75%200%200%201-.215.734L9.06%208l1.97%201.97a.749.749%200%200%201-.326%201.275.75.75%200%200%201-.734-.215L8%209.06l-1.97%201.97a.749.749%200%200%201-1.275-.326.75.75%200%200%201%20.215-.734L6.94%208%204.97%206.03a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018%22/%3E%3C/svg%3E');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M9.504.43a1.516%201.516%200%200%201%202.437%201.713L10.415%205.5h2.123c1.57%200%202.346%201.909%201.22%203.004l-7.34%207.142a1.25%201.25%200%200%201-.871.354h-.302a1.25%201.25%200%200%201-1.157-1.723L5.633%2010.5H3.462c-1.57%200-2.346-1.909-1.22-3.004zm1.047%201.074L3.286%208.571A.25.25%200%200%200%203.462%209H6.75a.75.75%200%200%201%20.694%201.034l-1.713%204.188%206.982-6.793A.25.25%200%200%200%2012.538%207H9.25a.75.75%200%200%201-.683-1.06l2.008-4.418.003-.006-.004-.009-.006-.006-.008-.001q-.005%200-.009.004%22/%3E%3C/svg%3E');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M4.72.22a.75.75%200%200%201%201.06%200l1%20.999a3.5%203.5%200%200%201%202.441%200l.999-1a.748.748%200%200%201%201.265.332.75.75%200%200%201-.205.729l-.775.776c.616.63.995%201.493.995%202.444v.327q0%20.15-.025.292c.408.14.764.392%201.029.722l1.968-.787a.75.75%200%200%201%20.556%201.392L13%207.258V9h2.25a.75.75%200%200%201%200%201.5H13v.5q-.002.615-.141%201.186l2.17.868a.75.75%200%200%201-.557%201.392l-2.184-.873A5%205%200%200%201%208%2016a5%205%200%200%201-4.288-2.427l-2.183.873a.75.75%200%200%201-.558-1.392l2.17-.868A5%205%200%200%201%203%2011v-.5H.75a.75.75%200%200%201%200-1.5H3V7.258L.971%206.446a.75.75%200%200%201%20.558-1.392l1.967.787c.265-.33.62-.583%201.03-.722a1.7%201.7%200%200%201-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72%201.28a.75.75%200%200%201%200-1.06m.53%206.28a.75.75%200%200%200-.75.75V11a3.5%203.5%200%201%200%207%200V7.25a.75.75%200%200%200-.75-.75ZM6.173%205h3.654A.17.17%200%200%200%2010%204.827V4.5a2%202%200%201%200-4%200v.327c0%20.096.077.173.173.173%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5%205.782V2.5h-.25a.75.75%200%200%201%200-1.5h6.5a.75.75%200%200%201%200%201.5H11v3.282l3.666%205.76C15.619%2013.04%2014.543%2015%2012.767%2015H3.233c-1.776%200-2.852-1.96-1.899-3.458Zm-2.4%206.565a.75.75%200%200%200%20.633%201.153h9.534a.75.75%200%200%200%20.633-1.153L12.225%2010.5h-8.45ZM9.5%202.5h-3V6c0%20.143-.04.283-.117.403L4.73%209h6.54L9.617%206.403A.75.75%200%200%201%209.5%206Z%22/%3E%3C/svg%3E');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1.75%202.5h10.5a.75.75%200%200%201%200%201.5H1.75a.75.75%200%200%201%200-1.5m4%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5m0%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5M2.5%207.75v6a.75.75%200%200%201-1.5%200v-6a.75.75%200%200%201%201.5%200%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRed+Hat+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Red Hat Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/asciinema-player@3.8.0/dist/bundle/asciinema-player.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+<meta property="og:type" content="website">
+<meta property="og:title" content="Daily Switch Backup - Discovery">
+<meta property="og:description" content="A site dedicated to the Network Discovery project.">
+<meta property="og:image" content="https://discovery.rikosintie.com/assets/images/social/appendix-daily-switch-backup.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://discovery.rikosintie.com/appendix-daily-switch-backup/">
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:title" content="Daily Switch Backup - Discovery">
+<meta property="twitter:description" content="A site dedicated to the Network Discovery project.">
+<meta property="twitter:image" content="https://discovery.rikosintie.com/assets/images/social/appendix-daily-switch-backup.png">
+<link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#daily-switch-backup-via-tftp-and-cisco-kron" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Discovery" class="md-header__button md-logo" aria-label="Discovery" data-md-component="logo">
+      
+  <img src="../img/favicon-16x16.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Discovery
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Daily Switch Backup
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="purple" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="lime" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard="" data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/rikosintie/Discovery" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    rikosintie/Discovery
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../intro/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Intro
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Getting_Started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../usage/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Usage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Helper-scripts/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Helper Scripts
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../Using_PowerShell/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  PowerShell
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../appendix-grep-and-friends/" class="md-tabs__link">
+          
+  
+  
+  Appendix
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../SECURITY/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Security Policy
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Discovery" class="md-nav__button md-logo" aria-label="Discovery" data-md-component="logo">
+      
+  <img src="../img/favicon-16x16.png" alt="logo">
+
+    </a>
+    Discovery
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/rikosintie/Discovery" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    rikosintie/Discovery
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Intro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Getting_Started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Helper-scripts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Helper Scripts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Using_PowerShell/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PowerShell
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked="">
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Appendix
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix-grep-and-friends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    grep and friends
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix-firewall-arp-snmp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Firewall ARP via SNMP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix-discovery-automation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automating Discovery
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Daily Switch Backup
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Daily Switch Backup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#why-this-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this exists
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set-up-the-vm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set up the VM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-install-and-configure-the-tftp-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Install and configure the TFTP server
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-open-the-firewall-and-pre-create-each-switchs-backup-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Open the firewall and pre-create each switch's backup file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-schedule-the-backup-on-each-switch-cisco-kron" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Schedule the backup on each switch (Cisco kron)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-verify-and-monitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Verify and monitor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#powershell-alternative-http-instead-of-tftp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PowerShell Alternative: HTTP Instead of TFTP
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PowerShell Alternative: HTTP Instead of TFTP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schedule-the-backup-on-each-switch-cisco-kron-http-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schedule the backup on each switch (Cisco kron, HTTP version)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#backup-with-a-timedate-stamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backup with a time/date stamp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#archive-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Archive logging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-5-vs-type-9-secrets-why-this-matters-for-archive-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Type 5 vs. Type 9 secrets — why this matters for archive logging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removing-hashes-from-archives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Removing hashes from archives
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-file-pre-creation-needed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No file pre-creation needed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-the-listener-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create the listener script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#allow-the-script-to-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Allow the script to run
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start-the-listener-as-administrator-on-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Start the listener — as Administrator on Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#windows-firewall" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows Firewall
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../appendix-jump-box-hardening/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SSH Hardening
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SECURITY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security Policy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation">
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href=".." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../appendix-grep-and-friends/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Appendix
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="daily-switch-backup-via-tftp-and-cisco-kron">Daily Switch Backup via TFTP and Cisco kron</h1>
+<p>A lighter-weight alternative to <a href="../appendix-discovery-automation/">Automating Discovery</a>
+for a customer who just wants a daily plaintext copy of every switch's
+running-config — no Discovery repo clone, no Python <code>venv</code>, no git commits.
+It only needs a TFTP server on the automation host and a few lines of
+<code>kron</code> (Cisco IOS's built-in job scheduler) on each switch.</p>
+<p>You can also skip the Ubuntu VM and use PowerShell on Windows/Mac/Linux. See <a href="./#powershell-alternative-http-instead-of-tftp">PowerShell Alternative: HTTP Instead of TFTP</a></p>
+<hr>
+<h2 id="why-this-exists">Why this exists</h2>
+<p>Built at a real customer engagement — the same site (<code>jc</code>) used throughout
+these appendices — before the <a href="../appendix-discovery-automation/">Automating Discovery</a> tooling existed. <code>kron</code> is IOS-specific, and this approach doesn't discover anything: no port maps, no MAC/IP tracking over time, just a daily <code>show run</code> backup per switch. For a customer who doesn't want daily git commits or Python tooling on their automation VM, that's often all they actually want.</p>
+<p>This VM is a good candidate to become a jump box — see
+<a href="../appendix-jump-box-hardening/">Restricting SSH on the Automation Host</a>.
+Restricting logins to a management subnet or a short trusted-host list,
+instead of leaving SSH open to the whole network, is worth doing here even
+if the customer never runs the full
+<a href="../appendix-discovery-automation/">Automating Discovery</a> setup. For a
+customer working toward CMMC, or similar compliance requirements,
+this is a reasonable first step — not the whole story, but a real one.</p>
+<p><a href="https://docs.termius.com/">Termius</a> (subscription required) is worth a
+mention as a client — it makes managing switches and servers a
+more pleasant experience than juggling separate terminal windows. The subscription gives you the ability to install <code>Termius</code> on:</p>
+<ul>
+<li>Windows</li>
+<li>Mac</li>
+<li>Linux</li>
+<li>IOS</li>
+<li>Android</li>
+</ul>
+<p>It's great if you are in a closet and need to make a quick change and only have your phone with you!</p>
+<hr>
+<h2 id="set-up-the-vm">Set up the VM</h2>
+<p>This appendix assumes a small Ubuntu 26.04 desktop VM at the site — not
+your own Windows workstation. Hyper-V, ESXi, KVM, Proxmox — doesn't matter
+what hosts it.</p>
+<p>Here is an example:</p>
+<ul>
+<li><strong>OS</strong>: Ubuntu 26.04 Desktop (on Hyper-V)</li>
+<li><strong>Hostname:</strong> Discover</li>
+<li><strong>IP address</strong>: 10.100.126.100</li>
+<li><strong>Username</strong>: mhubbard</li>
+</ul>
+<p>If the customer doesn't already have one, stand up an Ubuntu 26.04 desktop
+VM first, replacing <code>mhubbard</code>, <code>discover</code>, and <code>10.100.126.100</code> with
+values for your customer.</p>
+<p>Open a terminal, <code>ctrl+alt+t</code>, then update the package repositories:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+</span></code></pre></div>
+<p>If this is a new install you'll probably see packages that need updating
+once that finishes:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>upgrade<span class="w"> </span>-y
+</span></code></pre></div>
+<p>Install <code>openssh-server</code> for remote management — not included in an
+Ubuntu Desktop install by default:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>openssh-server<span class="w"> </span>-y
+</span></code></pre></div>
+<h2 id="1-install-and-configure-the-tftp-server">1. Install and configure the TFTP server</h2>
+<p>The server package is <code>tftpd-hpa</code> — not <code>tftp-hpa</code>, which is the client:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>tftpd-hpa<span class="w"> </span>-y
+</span></code></pre></div>
+<p>Some <code>tftpd-hpa</code> packages sandbox the service with <code>ProtectHome=yes</code> in
+their systemd unit, which makes <code>/home</code>, <code>/root</code>, and <code>/run/user</code>
+<strong>completely inaccessible</strong> to the daemon — not a permissions issue, an
+outright block, independent of <code>TFTP_DIRECTORY</code> or any <code>in.tftpd</code> flag.
+Check this — and fix it if needed — before enabling the service, so it
+only ever starts once, already configured correctly:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>edit<span class="w"> </span>tftpd-hpa
+</span></code></pre></div>
+<p>On Ubuntu 26.04 this opens an editor with a blank area at the top to type
+into, followed by a large read-only reference dump of the unit's current
+settings — including a <code># ProtectHome=yes</code> line — clearly marked as
+existing only for reference. <strong>Don't edit anything in that reference
+section</strong> — <code>systemctl</code> detects changes made there as "modifications
+outside of the staging area," discards them, and if that leaves the actual
+editable area empty, cancels the whole edit without writing anything
+(confirmed the hard way: editing that line in place produced exactly that
+error and silently wrote nothing).</p>
+<p>Instead, type a brand new override into the blank area at the top:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">[Service]</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="na">ProtectHome</span><span class="o">=</span><span class="s">no</span>
+</span></code></pre></div>
+<p>Save and exit — <code>systemctl edit</code> reloads the unit automatically, no
+separate <code>daemon-reload</code> needed.</p>
+<p>If <code>ProtectHome</code> doesn't appear anywhere in that reference dump, close
+without saving — a home-directory <code>TFTP_DIRECTORY</code> will already work,
+nothing to override.</p>
+<p>Config file is <code>/etc/default/tftpd-hpa</code>:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/default/tftpd-hpa
+</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>TFTP_USERNAME="tftp"
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>TFTP_DIRECTORY="/home/mhubbard/tftp-root"
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>TFTP_ADDRESS=":69"
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>TFTP_OPTIONS="--secure"
+</span></code></pre></div>
+<p>Use the real absolute path here, not a literal <code>~</code> — systemd never expands
+that regardless of directory. A customer-facing home-directory location is
+worth the override above: most customers can't navigate to <code>/srv</code>, but
+they can open <strong>Files</strong> and find <code>tftp-root</code> right under their home folder.</p>
+<p>Now enable and start the service:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>tftpd-hpa
+</span></code></pre></div>
+<p>Confirm it's running:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>systemctl<span class="w"> </span>status<span class="w"> </span>tftpd-hpa
+</span></code></pre></div>
+<h2 id="2-open-the-firewall-and-pre-create-each-switchs-backup-file">2. Open the firewall and pre-create each switch's backup file</h2>
+<p>TFTP has to have an existing filename with the correct permissions before
+it will write to it — confirmed straight from <code>man in.tftpd</code>:</p>
+<blockquote>
+<p>By default, tftpd will only allow upload of files that already exist ...
+Files may be written only if they already exist and are publicly
+writable, unless the <code>--create</code> option is specified.</p>
+</blockquote>
+<p><code>ufw_add_switches.sh</code> handles both requirements from one pass over one
+file: it opens port 69/udp (TFTP) for a switch's management IP, so nothing
+else on the LAN can reach the TFTP service, and creates + <code>chmod 666</code>s that
+switch's backup file at the same time. Only 69/udp is needed — TFTP has no
+relation to FTP's port 21, despite the similar name.</p>
+<p>There's no repo to clone this out of, so create it directly:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">cd</span><span class="w"> </span>~
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>touch<span class="w"> </span>ufw_add_switches.sh
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>nano<span class="w"> </span>ufw_add_switches.sh
+</span></code></pre></div>
+<p>Paste the following into nano, then <code>ctrl+o</code> to save, <code>ctrl+x</code> to close it:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="ch">#!/bin/bash</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1"># Open UFW for TFTP (port 69/udp) from a list of switch management IPs, and</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="c1"># pre-create the matching TFTP backup file (chmod 666) for each one so the</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># first kron push doesn't fail on a missing file.</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1">#</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="c1"># Reads "ip,filename" pairs from tftp-switches.txt (one per line, blank</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c1"># lines and lines starting with # ignored) so a customer never has to edit</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="c1"># this script itself, just the IP/filename list.</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="nb">set</span><span class="w"> </span>-e
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="nv">FILE</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">tftp</span><span class="p">-switches.txt</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="nv">TFTP_ROOT</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">TFTP_ROOT</span><span class="k">:-</span><span class="nv">$HOME</span><span class="p">/tftp-root</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>!<span class="w"> </span>-f<span class="w"> </span><span class="s2">"</span><span class="nv">$FILE</span><span class="s2">"</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Missing </span><span class="nv">$FILE</span><span class="s2"> - create it with one 'ip,filename' pair per line"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="k">fi</span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="c1"># A brand-new Ubuntu install ships ufw installed but inactive. Allow SSH</span>
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="c1"># before enabling it so this doesn't cut off a remote session running over</span>
+</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="c1"># the same connection that's executing this script. --force skips ufw's</span>
+</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="c1"># interactive "this may disrupt existing ssh connections" confirmation,</span>
+</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="c1"># which would otherwise hang a non-interactive run.</span>
+</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a>sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span>ssh
+</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a>sudo<span class="w"> </span>ufw<span class="w"> </span>--force<span class="w"> </span><span class="nb">enable</span>
+</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a>
+</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="k">while</span><span class="w"> </span><span class="nv">IFS</span><span class="o">=</span><span class="s1">','</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>-r<span class="w"> </span>ip<span class="w"> </span>filename<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="w">  </span><span class="nv">ip</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ip</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="k">)</span><span class="s2">"</span>
+</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="w">  </span><span class="o">[[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">"</span><span class="nv">$ip</span><span class="s2">"</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ip</span><span class="s2">"</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="se">\#</span>*<span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="k">continue</span>
+</span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a><span class="w">  </span><span class="nv">filename</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$filename</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>xargs<span class="k">)</span><span class="s2">"</span>
+</span><span id="__span-11-32"><a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">"</span><span class="nv">$filename</span><span class="s2">"</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-11-33"><a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Missing filename for </span><span class="nv">$ip</span><span class="s2"> in </span><span class="nv">$FILE</span><span class="s2"> - each line needs 'ip,filename'"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+</span><span id="__span-11-34"><a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a><span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+</span><span id="__span-11-35"><a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a><span class="w">  </span><span class="k">fi</span>
+</span><span id="__span-11-36"><a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a>
+</span><span id="__span-11-37"><a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a><span class="w">  </span>sudo<span class="w"> </span>ufw<span class="w"> </span>allow<span class="w"> </span>from<span class="w"> </span><span class="s2">"</span><span class="nv">$ip</span><span class="s2">"</span><span class="w"> </span>to<span class="w"> </span>any<span class="w"> </span>port<span class="w"> </span><span class="m">69</span><span class="w"> </span>proto<span class="w"> </span>udp
+</span><span id="__span-11-38"><a id="__codelineno-11-38" name="__codelineno-11-38" href="#__codelineno-11-38"></a><span class="w">  </span>touch<span class="w"> </span><span class="s2">"</span><span class="nv">$TFTP_ROOT</span><span class="s2">/</span><span class="nv">$filename</span><span class="s2">"</span>
+</span><span id="__span-11-39"><a id="__codelineno-11-39" name="__codelineno-11-39" href="#__codelineno-11-39"></a><span class="w">  </span>chmod<span class="w"> </span><span class="m">666</span><span class="w"> </span><span class="s2">"</span><span class="nv">$TFTP_ROOT</span><span class="s2">/</span><span class="nv">$filename</span><span class="s2">"</span>
+</span><span id="__span-11-40"><a id="__codelineno-11-40" name="__codelineno-11-40" href="#__codelineno-11-40"></a><span class="k">done</span><span class="w"> </span>&lt;<span class="w"> </span><span class="s2">"</span><span class="nv">$FILE</span><span class="s2">"</span>
+</span><span id="__span-11-41"><a id="__codelineno-11-41" name="__codelineno-11-41" href="#__codelineno-11-41"></a>
+</span><span id="__span-11-42"><a id="__codelineno-11-42" name="__codelineno-11-42" href="#__codelineno-11-42"></a><span class="c1"># Reload rules to apply</span>
+</span><span id="__span-11-43"><a id="__codelineno-11-43" name="__codelineno-11-43" href="#__codelineno-11-43"></a>sudo<span class="w"> </span>ufw<span class="w"> </span>reload
+</span><span id="__span-11-44"><a id="__codelineno-11-44" name="__codelineno-11-44" href="#__codelineno-11-44"></a>
+</span><span id="__span-11-45"><a id="__codelineno-11-45" name="__codelineno-11-45" href="#__codelineno-11-45"></a><span class="c1"># Show the resulting ruleset, rules sorted numerically by source IP.</span>
+</span><span id="__span-11-46"><a id="__codelineno-11-46" name="__codelineno-11-46" href="#__codelineno-11-46"></a><span class="c1"># Capturing to a variable first, rather than piping head and tail off the</span>
+</span><span id="__span-11-47"><a id="__codelineno-11-47" name="__codelineno-11-47" href="#__codelineno-11-47"></a><span class="c1"># same stream, avoids head consuming input tail still needs - a real,</span>
+</span><span id="__span-11-48"><a id="__codelineno-11-48" name="__codelineno-11-48" href="#__codelineno-11-48"></a><span class="c1"># reproducible gotcha when both read from one pipe. Named ufw_status rather</span>
+</span><span id="__span-11-49"><a id="__codelineno-11-49" name="__codelineno-11-49" href="#__codelineno-11-49"></a><span class="c1"># than status, since status is a read-only special variable in zsh (aliases</span>
+</span><span id="__span-11-50"><a id="__codelineno-11-50" name="__codelineno-11-50" href="#__codelineno-11-50"></a><span class="c1"># $?) - fine under this script's own #!/bin/bash, but a landmine if it's</span>
+</span><span id="__span-11-51"><a id="__codelineno-11-51" name="__codelineno-11-51" href="#__codelineno-11-51"></a><span class="c1"># ever sourced into a zsh shell instead of executed.</span>
+</span><span id="__span-11-52"><a id="__codelineno-11-52" name="__codelineno-11-52" href="#__codelineno-11-52"></a><span class="c1">#</span>
+</span><span id="__span-11-53"><a id="__codelineno-11-53" name="__codelineno-11-53" href="#__codelineno-11-53"></a><span class="c1"># Sorting by a fixed field number (e.g. sort -k6,6) doesn't work: ufw right</span>
+</span><span id="__span-11-54"><a id="__codelineno-11-54" name="__codelineno-11-54" href="#__codelineno-11-54"></a><span class="c1"># -pads single-digit rule numbers with a space ("[ 4]", two tokens) but not</span>
+</span><span id="__span-11-55"><a id="__codelineno-11-55" name="__codelineno-11-55" href="#__codelineno-11-55"></a><span class="c1"># double-digit ones ("[10]", one token), so every field after it shifts by</span>
+</span><span id="__span-11-56"><a id="__codelineno-11-56" name="__codelineno-11-56" href="#__codelineno-11-56"></a><span class="c1"># one once rule numbers reach 10 - confirmed on a real box with 16 rules.</span>
+</span><span id="__span-11-57"><a id="__codelineno-11-57" name="__codelineno-11-57" href="#__codelineno-11-57"></a><span class="c1"># Finding whichever field actually looks like an IPv4 address sidesteps</span>
+</span><span id="__span-11-58"><a id="__codelineno-11-58" name="__codelineno-11-58" href="#__codelineno-11-58"></a><span class="c1"># that entirely, regardless of rule-number width.</span>
+</span><span id="__span-11-59"><a id="__codelineno-11-59" name="__codelineno-11-59" href="#__codelineno-11-59"></a><span class="nv">ufw_status</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>sudo<span class="w"> </span>ufw<span class="w"> </span>status<span class="w"> </span>numbered<span class="k">)</span><span class="s2">"</span>
+</span><span id="__span-11-60"><a id="__codelineno-11-60" name="__codelineno-11-60" href="#__codelineno-11-60"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ufw_status</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-4
+</span><span id="__span-11-61"><a id="__codelineno-11-61" name="__codelineno-11-61" href="#__codelineno-11-61"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ufw_status</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-n<span class="w"> </span>+5<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{</span>
+</span><span id="__span-11-62"><a id="__codelineno-11-62" name="__codelineno-11-62" href="#__codelineno-11-62"></a><span class="s1">  key = ""</span>
+</span><span id="__span-11-63"><a id="__codelineno-11-63" name="__codelineno-11-63" href="#__codelineno-11-63"></a><span class="s1">  for (i = 1; i &lt;= NF; i++) {</span>
+</span><span id="__span-11-64"><a id="__codelineno-11-64" name="__codelineno-11-64" href="#__codelineno-11-64"></a><span class="s1">    if ($i ~ /^[0-9]{1,3}(\.[0-9]{1,3}){3}$/) { key = $i; break }</span>
+</span><span id="__span-11-65"><a id="__codelineno-11-65" name="__codelineno-11-65" href="#__codelineno-11-65"></a><span class="s1">  }</span>
+</span><span id="__span-11-66"><a id="__codelineno-11-66" name="__codelineno-11-66" href="#__codelineno-11-66"></a><span class="s1">  print key "\t" $0</span>
+</span><span id="__span-11-67"><a id="__codelineno-11-67" name="__codelineno-11-67" href="#__codelineno-11-67"></a><span class="s1">}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-k1,1<span class="w"> </span>-V<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-f2-
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>chmod<span class="w"> </span>+x<span class="w"> </span>ufw_add_switches.sh
+</span></code></pre></div>
+<p>That <code>sudo ufw allow ssh</code> inside the script is deliberately wide open —
+just enough to guarantee <code>ufw enable</code> doesn't lock out the session running
+it. Once everything below is working, see
+<a href="../appendix-jump-box-hardening/">Restricting SSH on the Automation Host</a> to
+scope that down; the TFTP rules this script adds are already
+per-switch-IP, but SSH is left open to the whole LAN until that's done.</p>
+<p>Both come from <code>tftp-switches.txt</code> — <code>ip,filename</code> pairs, one per line,
+blank lines and <code>#</code> comments ignored — so a customer never has to edit the
+script itself, just this list:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>cat<span class="w"> </span>&gt;<span class="w"> </span>tftp-switches.txt<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="s">10.100.126.253,JC-core.wri</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="s">10.100.126.236,JC-IDF-1.wri</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="s">10.100.126.237,JC-IDF-2.wri</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="s">10.100.126.242,JC-IDF-CAM-1.wri</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="s">10.100.126.231,JC-MDF-1.wri</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="s">10.100.126.232,JC-MDF-2.wri</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="s">10.100.126.243,JC-MDF-3.wri</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="s">10.100.126.235,JC-MDF-4.wri</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="s">10.100.126.241,JC-MDF-CAM-1.wri</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="s">10.100.126.238,JC-MDF-CAM-2.wri</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="s">10.100.126.244,JC-SPARE.wri</span>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="s">EOF</span>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>./ufw_add_switches.sh<span class="w"> </span>tftp-switches.txt
+</span></code></pre></div>
+<hr>
+<p>Alternatively, open the GUI text editor and create tftp-switches.txt.</p>
+<hr>
+<div class="language-bash highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="hll">sudo<span class="w"> </span>./ufw_add_admins.sh<span class="w"> </span>ufw-admins.txt
+</span></span></code></pre></div></td></tr></tbody></table></div>
+<hr>
+<div class="language-bash highlight"><span class="filename">Command Output</span><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Rule<span class="w"> </span>added
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>Rule<span class="w"> </span>added
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>Rule<span class="w"> </span>added
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>Firewall<span class="w"> </span>reloaded
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>Status:<span class="w"> </span>active
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">     </span>To<span class="w">                         </span>Action<span class="w">      </span>From
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">     </span>--<span class="w">                         </span>------<span class="w">      </span>----
+</span><span id="__span-15-9"><a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="o">[</span><span class="w"> </span><span class="m">3</span><span class="o">]</span><span class="w"> </span><span class="m">22</span>/tcp<span class="w">                     </span>ALLOW<span class="w"> </span>IN<span class="w">    </span><span class="m">192</span>.168.10.143<span class="w">             </span><span class="c1"># G5-wireless-admin-ssh</span>
+</span><span id="__span-15-10"><a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="o">[</span><span class="w"> </span><span class="m">4</span><span class="o">]</span><span class="w"> </span><span class="m">22</span>/tcp<span class="w">                     </span>ALLOW<span class="w"> </span>IN<span class="w">    </span><span class="m">192</span>.168.10.223<span class="w">             </span><span class="c1"># Ubuntu-Server-admin-ssh</span>
+</span><span id="__span-15-11"><a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="o">[</span><span class="w"> </span><span class="m">2</span><span class="o">]</span><span class="w"> </span><span class="m">69</span>/udp<span class="w">                     </span>ALLOW<span class="w"> </span>IN<span class="w">    </span><span class="m">192</span>.168.10.253
+</span><span id="__span-15-12"><a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="o">[</span><span class="w"> </span><span class="m">5</span><span class="o">]</span><span class="w"> </span><span class="m">22</span>/tcp<span class="w">                     </span>ALLOW<span class="w"> </span>IN<span class="w">    </span><span class="m">192</span>.168.10.253<span class="w">             </span><span class="c1"># 3850-admin-ssh</span>
+</span><span id="__span-15-13"><a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="o">[</span><span class="w"> </span><span class="m">1</span><span class="o">]</span><span class="w"> </span><span class="m">22</span>/tcp<span class="w">                     </span>ALLOW<span class="w"> </span>IN<span class="w">    </span>Anywhere
+</span><span id="__span-15-14"><a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="o">[</span><span class="w"> </span><span class="m">6</span><span class="o">]</span><span class="w"> </span><span class="m">22</span>/tcp<span class="w"> </span><span class="o">(</span>v6<span class="o">)</span><span class="w">                </span>ALLOW<span class="w"> </span>IN<span class="w">    </span>Anywhere<span class="w"> </span><span class="o">(</span>v6<span class="o">)</span>
+</span></code></pre></div>
+<hr>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Notice that the <code>ssh any</code> is gone. If you are running this over ssh, make sure the device you are on is in the list or you will be locked out.</p>
+</div>
+<p>Now you can use the <code>ufw_check.sh</code> script to view the tftp and ssh rules:</p>
+<div class="language-bash highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="hll">sudo<span class="w"> </span>./ufw_check.sh
+</span></span></code></pre></div></td></tr></tbody></table></div>
+<div class="language-bash highlight"><span class="filename">Command Output</span><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="o">===</span>UFW<span class="w"> </span>Service<span class="w"> </span>State<span class="w"> </span><span class="o">(</span>systemd<span class="o">)===</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>Service<span class="w"> </span>enabled:<span class="w"> </span>enabled
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>Service<span class="w"> </span>state<span class="w">  </span>:<span class="w"> </span>active
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>Firewall<span class="w"> </span>state<span class="w"> </span>:<span class="w"> </span>Status:<span class="w"> </span>active
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>Status:<span class="w"> </span>active
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="w">     </span>To<span class="w">                         </span>Action<span class="w">      </span>From
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="w">     </span>--<span class="w">                         </span>------<span class="w">      </span>----
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="o">[</span><span class="w"> </span><span class="m">3</span><span class="o">]</span><span class="w"> </span><span class="m">22</span>/tcp<span class="w">                     </span>ALLOW<span class="w"> </span>IN<span class="w">    </span><span class="m">192</span>.168.10.143<span class="w">             </span><span class="c1"># G5-wireless-admin-ssh</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="o">[</span><span class="w"> </span><span class="m">4</span><span class="o">]</span><span class="w"> </span><span class="m">22</span>/tcp<span class="w">                     </span>ALLOW<span class="w"> </span>IN<span class="w">    </span><span class="m">192</span>.168.10.223<span class="w">             </span><span class="c1"># Ubuntu-Server-admin-ssh</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="o">[</span><span class="w"> </span><span class="m">2</span><span class="o">]</span><span class="w"> </span><span class="m">69</span>/udp<span class="w">                     </span>ALLOW<span class="w"> </span>IN<span class="w">    </span><span class="m">192</span>.168.10.253
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="o">[</span><span class="w"> </span><span class="m">5</span><span class="o">]</span><span class="w"> </span><span class="m">22</span>/tcp<span class="w">                     </span>ALLOW<span class="w"> </span>IN<span class="w">    </span><span class="m">192</span>.168.10.253<span class="w">             </span><span class="c1"># 3850-admin-ssh</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="o">[</span><span class="w"> </span><span class="m">1</span><span class="o">]</span><span class="w"> </span><span class="m">22</span>/tcp<span class="w">                     </span>ALLOW<span class="w"> </span>IN<span class="w">    </span>Anywhere
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="o">[</span><span class="w"> </span><span class="m">6</span><span class="o">]</span><span class="w"> </span><span class="m">22</span>/tcp<span class="w"> </span><span class="o">(</span>v6<span class="o">)</span><span class="w">                </span>ALLOW<span class="w"> </span>IN<span class="w">    </span>Anywhere<span class="w"> </span><span class="o">(</span>v6<span class="o">)</span>
+</span></code></pre></div>
+<hr>
+<p><code>man in.tftpd</code> only requires the files be <em>writable</em>, and <code>666</code> is what
+the script uses — confirmed working in production, not just the
+theoretical minimum from the man page. It also doesn't set the execute
+bit <code>777</code> would, which these plaintext config backups never need.</p>
+<div class="admonition note">
+<p class="admonition-title">Why not just add --create instead?</p>
+<p><code>in.tftpd</code>'s <code>--create</code> flag exists specifically to let it write brand
+new files, which sounds like it should remove this whole step — and
+once the <code>ProtectHome=no</code> override above is in place, it genuinely
+would (confirmed on a fresh Ubuntu 26.04 install). The reason to skip
+it anyway is security, not uncertainty: without <code>--create</code>, TFTP can
+only ever <em>overwrite</em> one of the specific files pre-created here — it
+can't be handed a brand new filename by anyone who reaches port 69.
+A switch inventory is fairly static, so pre-creating one file per
+switch, once, is cheap insurance against an unlikely but real class of
+attack: something on the LAN pushing an arbitrary file to this host
+under a name nothing here is watching for.</p>
+</div>
+<p>If this same automation host also runs the git-based
+<a href="../appendix-discovery-automation/">Automating Discovery</a> setup, add
+<code>tftp-switches.txt</code> to <code>.gitignore</code> alongside <code>vlans.txt</code> — it's
+site-specific data, not something to commit.</p>
+<hr>
+<h2 id="3-schedule-the-backup-on-each-switch-cisco-kron">3. Schedule the backup on each switch (Cisco kron)</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>kron occurrence WrConfig_Job at 22:30 recurring
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a> policy-list Write_Config
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>!
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>kron policy-list Write_Config
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a> cli wr mem
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a> cli show run | redirect tftp://10.100.126.100/JC-MDF-1.wri
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>!
+</span></code></pre></div>
+<ul>
+<li><code>kron occurrence &lt;name&gt; at &lt;time&gt; recurring</code> — schedules a named job daily
+  at that time.</li>
+<li><code>policy-list &lt;name&gt;</code> under the occurrence — which set of commands to run.</li>
+<li><code>kron policy-list &lt;name&gt;</code> defines that set: <code>cli wr mem</code> saves the running
+  config to NVRAM first (so a reload before the next backup doesn't lose
+  in-flight changes), then <code>cli show run | redirect tftp://&lt;host&gt;/&lt;file&gt;</code>
+  pushes the running-config text straight to the TFTP server.</li>
+</ul>
+<p>Repeat per switch with the matching filename from step 2, and a distinct
+occurrence name if you'd rather not have every switch push in the same
+second.</p>
+<h2 id="4-verify-and-monitor">4. Verify and monitor</h2>
+<p>One script, <code>ufw_check.sh</code>, covers both an ad-hoc interactive check and a
+scheduled audit trail — without <code>--log</code>, it just prints UFW's current state; with <code>--log</code>, it also appends a timestamped, session-ID'd snapshot to
+<code>/var/log/ufw-check.log</code>. Create it the same way:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nb">cd</span><span class="w"> </span>~
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>touch<span class="w"> </span>ufw_check.sh
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>nano<span class="w"> </span>ufw_check.sh
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="ch">#!/bin/bash</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="c1"># Check UFW service and firewall status together. Plain, for an ad-hoc</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="c1"># interactive check. With --log, also appends a timestamped, session-ID'd</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="c1"># snapshot to /var/log/ufw-check.log - run it that way from cron for a</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="c1"># running audit trail of whether the firewall stayed enabled and</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="c1"># configured as expected.</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$EUID</span><span class="w"> </span>-ne<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"This script needs root - run it with sudo."</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="k">fi</span>
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="nv">LOGFILE</span><span class="o">=</span><span class="s2">"/var/log/ufw-check.log"</span>
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="nv">log_mode</span><span class="o">=</span><span class="nb">false</span>
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a><span class="o">[[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"--log"</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nv">log_mode</span><span class="o">=</span><span class="nb">true</span>
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a><span class="nv">svc_enabled</span><span class="o">=</span><span class="k">$(</span>systemctl<span class="w"> </span>is-enabled<span class="w"> </span>ufw<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="k">)</span>
+</span><span id="__span-20-18"><a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a><span class="nv">svc_state</span><span class="o">=</span><span class="k">$(</span>systemctl<span class="w"> </span>is-active<span class="w"> </span>ufw<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="k">)</span>
+</span><span id="__span-20-19"><a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a><span class="nv">fw_state</span><span class="o">=</span><span class="k">$(</span>ufw<span class="w"> </span>status<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">"Status:"</span><span class="k">)</span>
+</span><span id="__span-20-20"><a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>
+</span><span id="__span-20-21"><a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a><span class="k">if</span><span class="w"> </span><span class="nv">$log_mode</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-20-22"><a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a><span class="w">  </span><span class="nv">session_id</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>date<span class="w"> </span>+%Y%m%d%H%M%S<span class="k">)</span><span class="s2">-</span><span class="nv">$RANDOM</span><span class="s2">"</span>
+</span><span id="__span-20-23"><a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"=== UFW Audit Check ==="</span>
+</span><span id="__span-20-24"><a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Session ID: </span><span class="nv">$session_id</span><span class="s2">"</span>
+</span><span id="__span-20-25"><a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"Timestamp : </span><span class="k">$(</span>date<span class="w"> </span><span class="s1">'+%Y-%m-%d %H:%M:%S'</span><span class="k">)</span><span class="s2">"</span>
+</span><span id="__span-20-26"><a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a><span class="k">else</span>
+</span><span id="__span-20-27"><a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a><span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"===UFW Service State (systemd)==="</span>
+</span><span id="__span-20-28"><a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a><span class="k">fi</span>
+</span><span id="__span-20-29"><a id="__codelineno-20-29" name="__codelineno-20-29" href="#__codelineno-20-29"></a>
+</span><span id="__span-20-30"><a id="__codelineno-20-30" name="__codelineno-20-30" href="#__codelineno-20-30"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"Service enabled: </span><span class="nv">$svc_enabled</span><span class="s2">"</span>
+</span><span id="__span-20-31"><a id="__codelineno-20-31" name="__codelineno-20-31" href="#__codelineno-20-31"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"Service state  : </span><span class="nv">$svc_state</span><span class="s2">"</span>
+</span><span id="__span-20-32"><a id="__codelineno-20-32" name="__codelineno-20-32" href="#__codelineno-20-32"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"Firewall state : </span><span class="nv">$fw_state</span><span class="s2">"</span>
+</span><span id="__span-20-33"><a id="__codelineno-20-33" name="__codelineno-20-33" href="#__codelineno-20-33"></a>
+</span><span id="__span-20-34"><a id="__codelineno-20-34" name="__codelineno-20-34" href="#__codelineno-20-34"></a><span class="c1"># Show the actual ruleset too, not just the summary above - sorted</span>
+</span><span id="__span-20-35"><a id="__codelineno-20-35" name="__codelineno-20-35" href="#__codelineno-20-35"></a><span class="c1"># numerically by source IP rather than by ufw's own rule numbers. Same</span>
+</span><span id="__span-20-36"><a id="__codelineno-20-36" name="__codelineno-20-36" href="#__codelineno-20-36"></a><span class="c1"># approach as ufw_add_switches.sh: ufw right-pads single-digit rule</span>
+</span><span id="__span-20-37"><a id="__codelineno-20-37" name="__codelineno-20-37" href="#__codelineno-20-37"></a><span class="c1"># numbers with a space ("[ 4]", two tokens) but not double-digit ones</span>
+</span><span id="__span-20-38"><a id="__codelineno-20-38" name="__codelineno-20-38" href="#__codelineno-20-38"></a><span class="c1"># ("[10]", one token), so a fixed field number shifts once rule numbers</span>
+</span><span id="__span-20-39"><a id="__codelineno-20-39" name="__codelineno-20-39" href="#__codelineno-20-39"></a><span class="c1"># reach 10 - finding whichever field looks like an IPv4 address sidesteps</span>
+</span><span id="__span-20-40"><a id="__codelineno-20-40" name="__codelineno-20-40" href="#__codelineno-20-40"></a><span class="c1"># that regardless of rule-number width.</span>
+</span><span id="__span-20-41"><a id="__codelineno-20-41" name="__codelineno-20-41" href="#__codelineno-20-41"></a><span class="nb">echo</span>
+</span><span id="__span-20-42"><a id="__codelineno-20-42" name="__codelineno-20-42" href="#__codelineno-20-42"></a><span class="nv">ufw_status</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>ufw<span class="w"> </span>status<span class="w"> </span>numbered<span class="k">)</span><span class="s2">"</span>
+</span><span id="__span-20-43"><a id="__codelineno-20-43" name="__codelineno-20-43" href="#__codelineno-20-43"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ufw_status</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-4
+</span><span id="__span-20-44"><a id="__codelineno-20-44" name="__codelineno-20-44" href="#__codelineno-20-44"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ufw_status</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-n<span class="w"> </span>+5<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'{</span>
+</span><span id="__span-20-45"><a id="__codelineno-20-45" name="__codelineno-20-45" href="#__codelineno-20-45"></a><span class="s1">  key = ""</span>
+</span><span id="__span-20-46"><a id="__codelineno-20-46" name="__codelineno-20-46" href="#__codelineno-20-46"></a><span class="s1">  for (i = 1; i &lt;= NF; i++) {</span>
+</span><span id="__span-20-47"><a id="__codelineno-20-47" name="__codelineno-20-47" href="#__codelineno-20-47"></a><span class="s1">    if ($i ~ /^[0-9]{1,3}(\.[0-9]{1,3}){3}$/) { key = $i; break }</span>
+</span><span id="__span-20-48"><a id="__codelineno-20-48" name="__codelineno-20-48" href="#__codelineno-20-48"></a><span class="s1">  }</span>
+</span><span id="__span-20-49"><a id="__codelineno-20-49" name="__codelineno-20-49" href="#__codelineno-20-49"></a><span class="s1">  print key "\t" $0</span>
+</span><span id="__span-20-50"><a id="__codelineno-20-50" name="__codelineno-20-50" href="#__codelineno-20-50"></a><span class="s1">}'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span>-k1,1<span class="w"> </span>-V<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-f2-
+</span><span id="__span-20-51"><a id="__codelineno-20-51" name="__codelineno-20-51" href="#__codelineno-20-51"></a>
+</span><span id="__span-20-52"><a id="__codelineno-20-52" name="__codelineno-20-52" href="#__codelineno-20-52"></a><span class="k">if</span><span class="w"> </span><span class="nv">$log_mode</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-20-53"><a id="__codelineno-20-53" name="__codelineno-20-53" href="#__codelineno-20-53"></a><span class="w">  </span><span class="o">{</span>
+</span><span id="__span-20-54"><a id="__codelineno-20-54" name="__codelineno-20-54" href="#__codelineno-20-54"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"[</span><span class="k">$(</span>date<span class="w"> </span><span class="s1">'+%Y-%m-%d %H:%M:%S'</span><span class="k">)</span><span class="s2">] Session </span><span class="nv">$session_id</span><span class="s2">"</span>
+</span><span id="__span-20-55"><a id="__codelineno-20-55" name="__codelineno-20-55" href="#__codelineno-20-55"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"  Service enabled: </span><span class="nv">$svc_enabled</span><span class="s2">"</span>
+</span><span id="__span-20-56"><a id="__codelineno-20-56" name="__codelineno-20-56" href="#__codelineno-20-56"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"  Service state  : </span><span class="nv">$svc_state</span><span class="s2">"</span>
+</span><span id="__span-20-57"><a id="__codelineno-20-57" name="__codelineno-20-57" href="#__codelineno-20-57"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"  Firewall state : </span><span class="nv">$fw_state</span><span class="s2">"</span>
+</span><span id="__span-20-58"><a id="__codelineno-20-58" name="__codelineno-20-58" href="#__codelineno-20-58"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"----------------------------------------"</span>
+</span><span id="__span-20-59"><a id="__codelineno-20-59" name="__codelineno-20-59" href="#__codelineno-20-59"></a><span class="w">  </span><span class="o">}</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="s2">"</span><span class="nv">$LOGFILE</span><span class="s2">"</span>
+</span><span id="__span-20-60"><a id="__codelineno-20-60" name="__codelineno-20-60" href="#__codelineno-20-60"></a><span class="k">fi</span>
+</span></code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>chmod<span class="w"> </span>+x<span class="w"> </span>ufw_check.sh
+</span></code></pre></div>
+<p>It needs root either way — checking UFW's own status, and (with <code>--log</code>)
+writing to <code>/var/log/ufw-check.log</code>, both require it:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>sudo<span class="w"> </span>./ufw_check.sh
+</span></code></pre></div>
+<div class="language-bash highlight"><span class="filename">Command Output</span><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="o">===</span>UFW<span class="w"> </span>Service<span class="w"> </span>State<span class="w"> </span><span class="o">(</span>systemd<span class="o">)===</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>Service<span class="w"> </span>enabled:<span class="w"> </span>enabled
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>Service<span class="w"> </span>state<span class="w">  </span>:<span class="w"> </span>active
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>Firewall<span class="w"> </span>state<span class="w"> </span>:<span class="w"> </span>Status:<span class="w"> </span>active
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>Status:<span class="w"> </span>active
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="w">     </span>To<span class="w">                         </span>Action<span class="w">      </span>From
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="w">     </span>--<span class="w">                         </span>------<span class="w">      </span>----
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="o">[</span><span class="w"> </span><span class="m">2</span><span class="o">]</span><span class="w"> </span><span class="m">69</span>/udp<span class="w">                     </span>ALLOW<span class="w"> </span>IN<span class="w">    </span><span class="m">192</span>.168.10.253
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="o">[</span><span class="w"> </span><span class="m">1</span><span class="o">]</span><span class="w"> </span><span class="m">22</span>/tcp<span class="w">                     </span>ALLOW<span class="w"> </span>IN<span class="w">    </span>Anywhere
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="o">[</span><span class="w"> </span><span class="m">3</span><span class="o">]</span><span class="w"> </span><span class="m">22</span>/tcp<span class="w"> </span><span class="o">(</span>v6<span class="o">)</span><span class="w">                </span>ALLOW<span class="w"> </span>IN<span class="w">    </span>Anywhere<span class="w"> </span><span class="o">(</span>v6<span class="o">)</span>
+</span></code></pre></div>
+<hr>
+<p>Prints the service/firewall summary followed by the actual ruleset — the
+log file only ever gets the summary lines, not a full rule dump each run,
+to keep it from growing unbounded on a frequent cron schedule.</p>
+<p>Run without <code>sudo</code>, it fails cleanly instead of printing partial, confusing
+output:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>$ ./ufw_check.sh
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>This script needs root - run it with sudo.
+</span></code></pre></div>
+<p>For a running audit trail, schedule the <code>--log</code> form in cron (root's
+crontab, via <code>sudo crontab -e</code>):</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="m">0</span><span class="w"> </span><span class="m">6</span><span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>/path/to/ufw_check.sh<span class="w"> </span>--log
+</span></code></pre></div>
+<hr>
+<h2 id="powershell-alternative-http-instead-of-tftp">PowerShell Alternative: HTTP Instead of TFTP</h2>
+<p>Most customers running an automation host use Windows, not Ubuntu, and
+Windows has no built-in TFTP server. It doesn't need one, though — Cisco
+IOS supports pushing config over plain HTTP as well as TFTP, and
+PowerShell can receive that with a few lines of script, no extra software
+to install.</p>
+<hr>
+<h3 id="schedule-the-backup-on-each-switch-cisco-kron-http-version">Schedule the backup on each switch (Cisco kron, HTTP version)</h3>
+<p>This configuration creates a backup with the filename LAB_3850.txt.</p>
+<p>Real config from a lab 3850, <code>sh run | sec kron</code>:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>kron occurrence WrConfig_Job at 21:00 recurring
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a> policy-list Write_Config
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>kron occurrence Undebug_Job at 22:00 recurring
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a> policy-list Undebug
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>kron policy-list Write_Config
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a> cli wr mem
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a> cli copy running-config http://192.168.10.104:8080/LAB_3850.txt
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>kron policy-list Undebug
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a> cli und all
+</span></code></pre></div>
+<p>Same <code>cli wr mem</code>-first pattern as the TFTP version — only the transport
+line changes: <code>cli copy running-config http://&lt;host&gt;:8080/&lt;file&gt;</code> in place
+of <code>cli show run | redirect tftp://&lt;host&gt;/&lt;file&gt;</code>.</p>
+<p>This backs up the running config with the filename LAB_3850.txt. It overwrites the previous backup.</p>
+<hr>
+<h3 id="backup-with-a-timedate-stamp">Backup with a time/date stamp</h3>
+<p>Cisco IOS also supports an <code>archive</code> section. I always include at least these commands in the <code>archive</code>:</p>
+<div class="language-bash highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span>
+<span class="normal"><a href="#__codelineno-27-2">2</a></span>
+<span class="normal"><a href="#__codelineno-27-3">3</a></span>
+<span class="normal"><a href="#__codelineno-27-4">4</a></span>
+<span class="normal"><a href="#__codelineno-27-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1"></a>archive
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2"></a>log<span class="w"> </span>config
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3"></a>logging<span class="w"> </span><span class="nb">enable</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4"></a>logging<span class="w"> </span>size<span class="w"> </span><span class="m">1000</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5"></a>path<span class="w"> </span>http://192.168.10.104:8080/<span class="nv">$h</span>-<span class="nv">$t</span>.txt
+</span></code></pre></div></td></tr></tbody></table></div>
+<ul>
+<li><strong>log config</strong> - Enters the config-change logging submode, which controls how IOS logs individual configuration commands as they're entered (separate from the archive-file feature itself)</li>
+<li><strong>logging enable</strong> - Turns on logging of configuration changes. Every config command entered by any user gets logged with a sequence number, timestamp, and the user who made the change. You'd view this with show archive log config all</li>
+<li><strong>logging size 1000</strong> - Sets the size of the config-change log buffer to 1000 entries (default is usually 100). Once full, older entries roll off</li>
+<li><strong>path</strong> http://192.168.10.104:8080/$h-$t.txt - This is back at the top-level archive mode (not inside log config) — it defines where archived copies of the config get saved. Here it's pointed at an HTTP server at 192.168.10.104:8080.</li>
+<li>$h = the router's hostname</li>
+<li>$t = a timestamp</li>
+</ul>
+<p>Here are the protocols that archive supports:</p>
+<div class="language-bash highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-28-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-28-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-28-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-28-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-28-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-28-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-28-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-28-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-28-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-28-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1"></a><span class="hll"><span class="o">(</span>config-archive<span class="o">)</span><span class="c1">#path ?</span>
+</span></span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2"></a>crashinfo:<span class="w">  </span>Write<span class="w"> </span>archive<span class="w"> </span>on<span class="w"> </span>crashinfo:<span class="w"> </span>file<span class="w"> </span>system
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3"></a>flash:<span class="w">      </span>Write<span class="w"> </span>archive<span class="w"> </span>on<span class="w"> </span>flash:<span class="w"> </span>file<span class="w"> </span>system
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4"></a>ftp:<span class="w">        </span>Write<span class="w"> </span>archive<span class="w"> </span>on<span class="w"> </span>ftp:<span class="w"> </span>file<span class="w"> </span>system
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5"></a>http:<span class="w">       </span>Write<span class="w"> </span>archive<span class="w"> </span>on<span class="w"> </span>http:<span class="w"> </span>file<span class="w"> </span>system
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6"></a>https:<span class="w">      </span>Write<span class="w"> </span>archive<span class="w"> </span>on<span class="w"> </span>https:<span class="w"> </span>file<span class="w"> </span>system
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7"></a>rcp:<span class="w">        </span>Write<span class="w"> </span>archive<span class="w"> </span>on<span class="w"> </span>rcp:<span class="w"> </span>file<span class="w"> </span>system
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8"></a>scp:<span class="w">        </span>Write<span class="w"> </span>archive<span class="w"> </span>on<span class="w"> </span>scp:<span class="w"> </span>file<span class="w"> </span>system
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9"></a>sftp:<span class="w">       </span>Write<span class="w"> </span>archive<span class="w"> </span>on<span class="w"> </span>sftp:<span class="w"> </span>file<span class="w"> </span>system
+</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10"></a>tftp:<span class="w">       </span>Write<span class="w"> </span>archive<span class="w"> </span>on<span class="w"> </span>tftp:<span class="w"> </span>file<span class="w"> </span>system
+</span></code></pre></div></td></tr></tbody></table></div>
+<hr>
+<p>If you are making a lot of changes to the network, say adding a new vlan for segmentation or migrating to a new VoIP platform, it makes sense to do the backup with time/date so you can roll back day by day if something goes wrong. Just make sure that you keep an eye on disk storage.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>I set this up for a large school district with 86 sites and over 2,000 switches. They had me point it to a Windows server. I asked them to spin up an Ubuntu VM on their substantial ESXi infrastructure in case they got ransomware. They laughed, and then they got ransomed. No access to the backups. And I had included their Cisco WLAN controllers. They went from full backup of infrastructure to zero backup in one day.</p>
+</div>
+<p>Then add <code>cli archive config</code> to the kron policy, after the <code>cli show run | redirect tftp://192.168.10.104/LAB_3850.txt</code> line — this executes the <code>path</code> command from the <code>archive</code> section on the same schedule as the rest of the backup job:</p>
+<div class="language-bash highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-29-1">1</a></span>
+<span class="normal"><a href="#__codelineno-29-2">2</a></span>
+<span class="normal"><a href="#__codelineno-29-3">3</a></span>
+<span class="normal"><a href="#__codelineno-29-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1"></a>kron<span class="w"> </span>policy-list<span class="w"> </span>Write_Config
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2"></a>cli<span class="w"> </span>wr<span class="w"> </span>mem
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3"></a>cli<span class="w"> </span>show<span class="w"> </span>run<span class="w"> </span><span class="p">|</span><span class="w"> </span>redirect<span class="w"> </span>tftp://192.168.10.104/LAB_3850.txt
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4"></a><span class="hll">cli<span class="w"> </span>archive<span class="w"> </span>config
+</span></span></code></pre></div></td></tr></tbody></table></div>
+<hr>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../img/http-serve.png" data-desc-position="bottom"><img alt="PowerShell-Listener" src="../img/http-serve.png" width="400"></a></p>
+<hr>
+<p>The screenshot above shows both <code>cli copy running-config</code> (in the kron policy) and <code>path</code> (in the archive section) configured at once — that's just to illustrate both formats side by side, not something you need to run together:</p>
+<div class="language-bash highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-30-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1"></a>cli<span class="w"> </span>copy<span class="w"> </span>running-config<span class="w"> </span>http://192.168.10.104:8080/LAB_3850.txt
+</span></code></pre></div></td></tr></tbody></table></div>
+<p><code>cli copy running-config</code> alone overwrites the same filename every day; <code>cli archive config</code> alone gives you the timestamped history. Pick whichever matches what you actually need, or run both if you want a same-day quick-reference copy <em>and</em> a rollback history.</p>
+<hr>
+<h3 id="archive-logging">Archive logging</h3>
+<p>With the <code>archive log</code> commands you can show who did what on the switch. Twice I have had a customer accuse me of breaking something. Luckily, I had the logging configured and had them run:</p>
+<div class="language-bash highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-31-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1"></a><span class="hll">show<span class="w"> </span>archive<span class="w"> </span>log<span class="w"> </span>conf<span class="w"> </span>all
+</span></span></code></pre></div></td></tr></tbody></table></div>
+<div class="language-bash highlight"><span class="filename">show archive log conf all</span><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="w"> </span>idx<span class="w">   </span>sess<span class="w">           </span>user@line<span class="w">      </span>Logged<span class="w"> </span><span class="nb">command</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">    </span><span class="m">1</span><span class="w">     </span><span class="m">1</span><span class="w">       </span>mhubbard@vty1<span class="w">     </span><span class="p">|</span><span class="w">  </span>logging<span class="w"> </span><span class="nb">enable</span>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="w">    </span><span class="m">2</span><span class="w">     </span><span class="m">1</span><span class="w">       </span>mhubbard@vty1<span class="w">     </span><span class="p">|</span><span class="w">  </span>logging<span class="w"> </span>size<span class="w"> </span><span class="m">1000</span>
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="w">    </span><span class="m">3</span><span class="w">     </span><span class="m">1</span><span class="w">       </span>mhubbard@vty1<span class="w">     </span><span class="p">|</span><span class="w">  </span>path<span class="w"> </span>http://192.168.10.104:8080/<span class="nv">$h</span>-<span class="nv">$t</span>.txt
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="w">    </span><span class="m">4</span><span class="w">     </span><span class="m">0</span><span class="w">       </span>mhubbard@vty0<span class="w">     </span><span class="p">|</span>vlan<span class="w"> </span><span class="m">12</span>
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a><span class="w">    </span><span class="m">5</span><span class="w">     </span><span class="m">0</span><span class="w">       </span>mhubbard@vty0<span class="w">     </span><span class="p">|</span><span class="w"> </span>name<span class="w"> </span>Mitel-VoIP
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="w">    </span><span class="m">6</span><span class="w">     </span><span class="m">0</span><span class="w">       </span>mhubbard@vty0<span class="w">     </span><span class="p">|</span><span class="w"> </span>interface<span class="w"> </span>Vlan12
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a><span class="w">    </span><span class="m">7</span><span class="w">     </span><span class="m">0</span><span class="w">       </span>mhubbard@vty0<span class="w">     </span><span class="p">|</span><span class="w"> </span>ip<span class="w"> </span>address<span class="w"> </span><span class="m">192</span>.168.12.1<span class="w"> </span><span class="m">255</span>.255.255.0
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a><span class="w">    </span><span class="m">8</span><span class="w">     </span><span class="m">0</span><span class="w">       </span>mhubbard@vty0<span class="w">     </span><span class="p">|</span><span class="w"> </span>no<span class="w"> </span>ip<span class="w"> </span>redirects
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a><span class="w">    </span><span class="m">9</span><span class="w">     </span><span class="m">0</span><span class="w">       </span>mhubbard@vty0<span class="w">     </span><span class="p">|</span><span class="w"> </span>ip<span class="w"> </span>pim<span class="w"> </span>sparse-dense-mode
+</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a><span class="w">   </span><span class="m">10</span><span class="w">     </span><span class="m">0</span><span class="w">       </span>mhubbard@vty0<span class="w">     </span><span class="p">|</span><span class="w"> </span>ipv6<span class="w"> </span>address<span class="w"> </span>dhcp
+</span><span id="__span-32-12"><a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a><span class="w">   </span><span class="m">11</span><span class="w">     </span><span class="m">0</span><span class="w">       </span>mhubbard@vty0<span class="w">     </span><span class="p">|</span><span class="w"> </span>ipv6<span class="w"> </span><span class="nb">enable</span>
+</span><span id="__span-32-13"><a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a><span class="w">   </span><span class="m">12</span><span class="w">     </span><span class="m">0</span><span class="w">       </span>mhubbard@vty0<span class="w">     </span><span class="p">|</span><span class="w"> </span>ipv6<span class="w"> </span>nd<span class="w"> </span>managed-config-flag
+</span><span id="__span-32-14"><a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a><span class="w">   </span><span class="m">13</span><span class="w">     </span><span class="m">0</span><span class="w">       </span>mhubbard@vty0<span class="w">     </span><span class="p">|</span><span class="w"> </span>ipv6<span class="w"> </span>nd<span class="w"> </span>other-config-flag
+</span><span id="__span-32-15"><a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a><span class="w">   </span><span class="m">14</span><span class="w">     </span><span class="m">0</span><span class="w">       </span>mhubbard@vty0<span class="w">     </span><span class="p">|</span><span class="w"> </span>ipv6<span class="w"> </span>nd<span class="w"> </span>router-preference<span class="w"> </span>High
+</span><span id="__span-32-16"><a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a><span class="w">   </span><span class="m">15</span><span class="w">     </span><span class="m">0</span><span class="w">       </span>mhubbard@vty0<span class="w">     </span><span class="p">|</span><span class="w"> </span>ipv6<span class="w"> </span>nd<span class="w"> </span>ra<span class="w"> </span>interval<span class="w"> </span><span class="m">30</span>
+</span><span id="__span-32-17"><a id="__codelineno-32-17" name="__codelineno-32-17" href="#__codelineno-32-17"></a><span class="w">   </span><span class="m">16</span><span class="w">     </span><span class="m">0</span><span class="w">       </span>mhubbard@vty0<span class="w">     </span><span class="p">|</span><span class="w"> </span>ipv6<span class="w"> </span>nd<span class="w"> </span>ra<span class="w"> </span>dns<span class="w"> </span>server<span class="w"> </span>FD24:42B2:12CE::1
+</span></code></pre></div>
+<p>That kind of audit trail is only as trustworthy as the credentials
+protecting enable mode — see Type 5 vs. Type 9 secrets below for why that's worth checking on every device.</p>
+<hr>
+<h3 id="type-5-vs-type-9-secrets-why-this-matters-for-archive-logging">Type 5 vs. Type 9 secrets — why this matters for archive logging</h3>
+<p>The archive log config output above shows exactly what changed and
+who changed it — but that log is only half the story if the enable
+secret itself is weak. A show archive log config all audit trail
+doesn't help you much if an attacker with a config backup can just crack
+their way into enable mode and start making changes of their own.</p>
+<p>Cisco's older enable secret hashing (type 5, MD5-crypt) is fast to
+attack — genuinely fast. On a customer engagement at a California
+community college district, I was handed a config backup after an
+incident with no idea what the enable password was. I ran hashcat
+against it with the RockYou word list on a laptop — no GPU — and had the
+password back in 2 minutes, 29 seconds. That's type 5's real-world
+exposure: if the password is anywhere in a common word list, cracking it
+isn't a matter of hours or days, it's a coffee break.</p>
+<p>Type 9 (enable secret using scrypt) is a different animal. It's
+deliberately slow and memory-hard, specifically to make word list and
+brute-force attacks impractical even with GPU acceleration. The same
+attack that took under three minutes against type 5 wouldn't get
+anywhere close against a decent type 9 password in any realistic
+timeframe.</p>
+<p><strong>Action item:</strong> audit every device and convert type 5 to type 9.</p>
+<p>Check what you're running:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>show<span class="w"> </span>running-config<span class="w"> </span><span class="p">|</span><span class="w"> </span>include<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>secret
+</span></code></pre></div>
+<p>If you see enable secret 5 $1$..., convert it:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>configure<span class="w"> </span>terminal
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="nb">enable</span><span class="w"> </span>algorithm-type<span class="w"> </span>scrypt<span class="w"> </span>secret<span class="w"> </span>&lt;new-password&gt;
+</span></code></pre></div>
+<p><strong>Example — converting a user account's secret:</strong></p>
+<p>Check what's currently configured:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>show<span class="w"> </span>running-config<span class="w"> </span><span class="p">|</span><span class="w"> </span>include<span class="w"> </span>username
+</span></code></pre></div>
+<p>A type 5 user credential looks like this:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>username<span class="w"> </span>mhubbard<span class="w"> </span>privilege<span class="w"> </span><span class="m">15</span><span class="w"> </span>secret<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="nv">$1$abCd$XyZ123exampleHashValueHere</span>
+</span></code></pre></div>
+<p>Convert it the same way as <code>enable secret</code> — a new password, using the
+<code>scrypt</code> algorithm instead of the default MD5-crypt:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>configure<span class="w"> </span>terminal
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>username<span class="w"> </span>mhubbard<span class="w"> </span>privilege<span class="w"> </span><span class="m">15</span><span class="w"> </span>algorithm-type<span class="w"> </span>scrypt<span class="w"> </span>secret<span class="w"> </span>&lt;new-password&gt;
+</span></code></pre></div>
+<p>After the change, <code>show running-config | include username</code> should show
+the same account now hashed as type 9:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>username<span class="w"> </span>mhubbard<span class="w"> </span>privilege<span class="w"> </span><span class="m">15</span><span class="w"> </span>secret<span class="w"> </span><span class="m">9</span><span class="w"> </span><span class="nv">$9$abC</span>...longerScryptHashHere...
+</span></code></pre></div>
+<p>As with <code>enable secret</code>, this replaces the password outright — IOS can't
+convert an existing type 5 hash into type 9 in place, since scrypt needs
+the plaintext to hash it with. If you're rolling this out across many
+accounts, budget time to actually change (and redistribute) each
+password, not just flip a flag.</p>
+<p>A few notes:</p>
+<ul>
+<li>This requires a <strong>new password</strong>, not an in-place re-hash — IOS can't
+  reverse a type 5 hash to re-encode it as type 9, so this is a real
+  password change, not just a format upgrade. Plan for that across
+  however many devices you're touching.</li>
+<li><code>algorithm-type scrypt</code> requires a reasonably current IOS release —
+  confirm support before rolling this out across older gear.</li>
+<li>This applies to <code>enable secret</code> and <code>username ... secret</code> alike, as
+  shown above — check both on every device.</li>
+<li>Don't stop at just the secret — a type 5 hash sitting in old backups,
+  TFTP dumps, or <code>archive</code> snapshots is still crackable even after
+  you've rotated the live config. If you're archiving configs long-term
+  (see the time/date-stamped backups above), treat old backups as
+  sensitive artifacts, not just historical records.</li>
+</ul>
+<p>I usually replace the hash with <code>&lt;removed&gt;</code> in old configs.</p>
+<hr>
+<h3 id="removing-hashes-from-archives">Removing hashes from archives</h3>
+<p>Mac/Linux have <code>sed</code> built in. If you're on Windows, see <a href="../Getting_Started/#install-coreutils-for-windows">Install Coreutils for Windows</a> to get native versions of these tools.</p>
+<p>Converting the live <code>enable secret</code> to type 9 fixes the device going
+forward, but it doesn't touch anything already sitting in an <code>archive</code>, TFTP, or HTTP-pushed backup history. Every timestamped snapshot taken before the conversion still has the old type 5 hash in it — and as the 2-minutes-29-seconds example above shows, that hash doesn't need to be recent to be dangerous. If you're keeping long-term config history for rollback purposes, it's worth sweeping it for exposed type 5 hashes rather than leaving them sitting around indefinitely.</p>
+<p>Type 5 hashes always follow a fixed <code>$1$salt$hash</code> format, so you can
+match the hash itself directly with <code>sed</code> — this works regardless of
+whether it shows up under <code>enable secret 5</code>, <code>username ... secret 5</code>,
+or a VTY <code>password 5</code> line:</p>
+<p><strong>Preview only — print just the lines that would change, with the
+hash already replaced, without touching the file:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>sed<span class="w"> </span>-nE<span class="w"> </span><span class="s1">'s/\$1\$[A-Za-z0-9.\/]+\$[A-Za-z0-9.\/]+/&lt;removed&gt;/gp'</span><span class="w"> </span>config-backup.txt
+</span></code></pre></div>
+<hr>
+<p>Real example from a customer archive</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>sed<span class="w"> </span>-nE<span class="w"> </span><span class="s1">'s/\$1\$[A-Za-z0-9.\/]+\$[A-Za-z0-9.\/]+/&lt;removed&gt;/gp'</span><span class="w">  </span>jc-mdf-1-running-config.txt
+</span></code></pre></div>
+<hr>
+<div class="language-bash highlight"><span class="filename">Type 5 hash removed</span><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="nb">enable</span><span class="w"> </span>secret<span class="w"> </span><span class="m">5</span><span class="w"> </span>&lt;removed&gt;
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>username<span class="w"> </span>mhubbard<span class="w"> </span>privilege<span class="w"> </span><span class="m">15</span><span class="w"> </span>secret<span class="w"> </span><span class="m">5</span><span class="w"> </span>&lt;removed&gt;
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>username<span class="w"> </span>admin<span class="w"> </span>privilege<span class="w"> </span><span class="m">15</span><span class="w"> </span>secret<span class="w"> </span><span class="m">5</span><span class="w"> </span>&lt;removed&gt;
+</span></code></pre></div>
+<p><strong>In-place edit, keeping a <code>.bak</code> of the original (Linux/GNU sed):</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>sed<span class="w"> </span>-E<span class="w"> </span>-i.bak<span class="w"> </span><span class="s1">'s/\$1\$[A-Za-z0-9.\/]+\$[A-Za-z0-9.\/]+/&lt;removed&gt;/g'</span><span class="w"> </span>config-backup.txt
+</span></code></pre></div>
+<p><strong>Bulk redaction across an entire archive directory:</strong></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>find<span class="w"> </span>/path/to/archive<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-name<span class="w"> </span><span class="s1">'*.txt'</span><span class="w"> </span>-exec<span class="w"> </span>sed<span class="w"> </span>-E<span class="w"> </span>-i.bak<span class="w"> </span><span class="s1">'s/\$1\$[A-Za-z0-9.\/]+\$[A-Za-z0-9.\/]+/&lt;removed&gt;/g'</span><span class="w"> </span><span class="o">{}</span><span class="w"> </span>+
+</span></code></pre></div>
+<div class="admonition macos">
+<p class="admonition-title">Macos</p>
+<p>macOS/BSD <code>sed</code> needs a space between <code>-i</code> and the backup suffix:
+<code>sed -E -i '.bak' '...' file</code> — the GNU form above (<code>-i.bak</code>, no space)
+will error out on a Mac.</p>
+</div>
+<hr>
+<div class="admonition type_8-9">
+<p class="admonition-title">Type_8-9</p>
+<p>This only targets type 5 (<code>$1$</code>). If you're standardizing on type 9
+everywhere and want older archives fully consistent, type 8 and type 9
+hashes use <code>$8$</code> and <code>$9$</code> respectively — same pattern, just swap the
+literal prefix.</p>
+</div>
+<hr>
+<div class="admonition password_cracking_tutorial">
+<p class="admonition-title">Password_cracking_tutorial</p>
+<p>If you've never seen a password-cracking session firsthand, Nate
+Anderson's <a href="https://arstechnica.com/security/2013/03/how-i-became-a-password-cracker/">"How I Became a Password Cracker"</a>
+(Ars Technica, 2013) is a great, non-technical walkthrough of how
+approachable this is — a reporter with zero prior experience cracking
+thousands of real passwords in a single day using nothing but free
+tools. The wordlist used above, RockYou, comes from a 2009 breach of
+32 million real user passwords and is mirrored in
+<a href="https://github.com/danielmiessler/SecLists">Daniel Miessler's SecLists repo</a>
+under <code>Passwords/Leaked-Databases/rockyou.txt.tar.gz</code> — it's the
+default first-attempt wordlist for exactly this reason: real human
+password choices, not generated strings.</p>
+</div>
+<hr>
+<h3 id="no-file-pre-creation-needed">No file pre-creation needed</h3>
+<p>TFTP's "the file has to already exist" rule (see step 2 above) is a
+<code>tftpd-hpa</code> behavior, not a protocol requirement — Windows enforces nothing
+of the kind, and the listener script below will happily create whatever
+filename a switch pushes. That's also the tradeoff: unlike the TFTP setup,
+there's no equivalent safety net limiting writes to a pre-approved list of
+filenames. The script below narrows the <em>where</em> instead (see the
+<code>GetFileName()</code> note in it), but not the <em>what</em>.</p>
+<h3 id="create-the-listener-script">Create the listener script</h3>
+<p>There's no repo to clone this out of either — create it directly. Make a
+folder for it first — <code>tftp-root</code> to match the Linux side, though the name
+is just organizational now, nothing reads it — then, inside that folder,
+open Notepad, paste the script below, and <strong>File → Save As</strong>, set <strong>Save
+as type</strong> to <strong>All Files</strong>, and name it <code>http-serve.ps1</code> (Notepad defaults
+to <code>.txt</code>, which would leave you with <code>http-serve.ps1.txt</code> instead).
+Backups land in this same folder — wherever the script itself is saved.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="c"># Receives Cisco config backups pushed via `copy running-config http://...`</span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="c"># and writes them into the same folder this script itself lives in,</span>
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="c"># cleaning up the numeric suffix IOS appends to the URL path (observed on</span>
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="c"># a real 3850: a push to ".../x.txt" arrives with a URL path ending</span>
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a><span class="c"># "x.txt-321" - the trailing "-NNN" gets moved to just before the</span>
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a><span class="c"># extension: "x-321.txt").</span>
+</span><span id="__span-44-7"><a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a><span class="c">#</span>
+</span><span id="__span-44-8"><a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a><span class="c"># On Windows, run this from an elevated (Administrator) PowerShell.</span>
+</span><span id="__span-44-9"><a id="__codelineno-44-9" name="__codelineno-44-9" href="#__codelineno-44-9"></a><span class="c"># HttpListener refuses to bind a wildcard prefix like "http://+:8080/"</span>
+</span><span id="__span-44-10"><a id="__codelineno-44-10" name="__codelineno-44-10" href="#__codelineno-44-10"></a><span class="c"># from a normal session ("Access is denied"), regardless of the port</span>
+</span><span id="__span-44-11"><a id="__codelineno-44-11" name="__codelineno-44-11" href="#__codelineno-44-11"></a><span class="c"># number - that's a Windows http.sys URL-ACL restriction, unrelated to</span>
+</span><span id="__span-44-12"><a id="__codelineno-44-12" name="__codelineno-44-12" href="#__codelineno-44-12"></a><span class="c"># port 8080 itself being non-privileged. On Linux/macOS this restriction</span>
+</span><span id="__span-44-13"><a id="__codelineno-44-13" name="__codelineno-44-13" href="#__codelineno-44-13"></a><span class="c"># doesn't apply - no elevation is needed to bind ports above 1024.</span>
+</span><span id="__span-44-14"><a id="__codelineno-44-14" name="__codelineno-44-14" href="#__codelineno-44-14"></a>
+</span><span id="__span-44-15"><a id="__codelineno-44-15" name="__codelineno-44-15" href="#__codelineno-44-15"></a><span class="c"># $PSScriptRoot (this script's own folder), not $PWD (wherever the shell</span>
+</span><span id="__span-44-16"><a id="__codelineno-44-16" name="__codelineno-44-16" href="#__codelineno-44-16"></a><span class="c"># happened to be) - keeps backups landing in a predictable place if this</span>
+</span><span id="__span-44-17"><a id="__codelineno-44-17" name="__codelineno-44-17" href="#__codelineno-44-17"></a><span class="c"># is ever launched a different way (Task Scheduler, a shortcut) where the</span>
+</span><span id="__span-44-18"><a id="__codelineno-44-18" name="__codelineno-44-18" href="#__codelineno-44-18"></a><span class="c"># working directory isn't guaranteed to match where the script sits.</span>
+</span><span id="__span-44-19"><a id="__codelineno-44-19" name="__codelineno-44-19" href="#__codelineno-44-19"></a><span class="nv">$DestDir</span> <span class="p">=</span> <span class="nv">$PSScriptRoot</span>
+</span><span id="__span-44-20"><a id="__codelineno-44-20" name="__codelineno-44-20" href="#__codelineno-44-20"></a>
+</span><span id="__span-44-21"><a id="__codelineno-44-21" name="__codelineno-44-21" href="#__codelineno-44-21"></a><span class="nv">$listener</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Net</span><span class="p">.</span><span class="n">HttpListener</span>
+</span><span id="__span-44-22"><a id="__codelineno-44-22" name="__codelineno-44-22" href="#__codelineno-44-22"></a><span class="nv">$listener</span><span class="p">.</span><span class="n">Prefixes</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s2">"http://+:8080/"</span><span class="p">)</span>
+</span><span id="__span-44-23"><a id="__codelineno-44-23" name="__codelineno-44-23" href="#__codelineno-44-23"></a><span class="k">try</span> <span class="p">{</span>
+</span><span id="__span-44-24"><a id="__codelineno-44-24" name="__codelineno-44-24" href="#__codelineno-44-24"></a>    <span class="nv">$listener</span><span class="p">.</span><span class="n">Start</span><span class="p">()</span>
+</span><span id="__span-44-25"><a id="__codelineno-44-25" name="__codelineno-44-25" href="#__codelineno-44-25"></a><span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+</span><span id="__span-44-26"><a id="__codelineno-44-26" name="__codelineno-44-26" href="#__codelineno-44-26"></a>    <span class="c"># Without this, a port already in use (or, on Windows, a missing</span>
+</span><span id="__span-44-27"><a id="__codelineno-44-27" name="__codelineno-44-27" href="#__codelineno-44-27"></a>    <span class="c"># elevated session / URL reservation - see the note above) throws here</span>
+</span><span id="__span-44-28"><a id="__codelineno-44-28" name="__codelineno-44-28" href="#__codelineno-44-28"></a>    <span class="c"># uncaught, before the "Listening..." line ever prints, and the script</span>
+</span><span id="__span-44-29"><a id="__codelineno-44-29" name="__codelineno-44-29" href="#__codelineno-44-29"></a>    <span class="c"># just dies back to the prompt with no clue why - confirmed the hard</span>
+</span><span id="__span-44-30"><a id="__codelineno-44-30" name="__codelineno-44-30" href="#__codelineno-44-30"></a>    <span class="c"># way testing this on a second machine.</span>
+</span><span id="__span-44-31"><a id="__codelineno-44-31" name="__codelineno-44-31" href="#__codelineno-44-31"></a>    <span class="nb">Write-Host</span> <span class="s2">"Could not start listening on port 8080: </span><span class="p">$(</span><span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">Message</span><span class="p">)</span><span class="s2">"</span>
+</span><span id="__span-44-32"><a id="__codelineno-44-32" name="__codelineno-44-32" href="#__codelineno-44-32"></a>    <span class="nb">Write-Host</span> <span class="s2">"If this is a port conflict, something else on this machine is already using it - check with:"</span>
+</span><span id="__span-44-33"><a id="__codelineno-44-33" name="__codelineno-44-33" href="#__codelineno-44-33"></a>    <span class="nb">Write-Host</span> <span class="s2">"  netstat -ano | findstr :8080     (Windows)"</span>
+</span><span id="__span-44-34"><a id="__codelineno-44-34" name="__codelineno-44-34" href="#__codelineno-44-34"></a>    <span class="nb">Write-Host</span> <span class="s2">"  sudo ss -ltnp | grep 8080         (Linux)"</span>
+</span><span id="__span-44-35"><a id="__codelineno-44-35" name="__codelineno-44-35" href="#__codelineno-44-35"></a>    <span class="nb">Write-Host</span> <span class="s2">"  lsof -i :8080         (macOS)"</span>
+</span><span id="__span-44-36"><a id="__codelineno-44-36" name="__codelineno-44-36" href="#__codelineno-44-36"></a>    <span class="n">exit</span> <span class="n">1</span>
+</span><span id="__span-44-37"><a id="__codelineno-44-37" name="__codelineno-44-37" href="#__codelineno-44-37"></a><span class="p">}</span>
+</span><span id="__span-44-38"><a id="__codelineno-44-38" name="__codelineno-44-38" href="#__codelineno-44-38"></a><span class="nb">Write-Host</span> <span class="s2">"Listening on port 8080, saving to $DestDir ..."</span>
+</span><span id="__span-44-39"><a id="__codelineno-44-39" name="__codelineno-44-39" href="#__codelineno-44-39"></a>
+</span><span id="__span-44-40"><a id="__codelineno-44-40" name="__codelineno-44-40" href="#__codelineno-44-40"></a><span class="c"># Ctrl+C normally can't interrupt a blocked GetContext() call, since it's</span>
+</span><span id="__span-44-41"><a id="__codelineno-44-41" name="__codelineno-44-41" href="#__codelineno-44-41"></a><span class="c"># a synchronous native wait rather than something that polls for</span>
+</span><span id="__span-44-42"><a id="__codelineno-44-42" name="__codelineno-44-42" href="#__codelineno-44-42"></a><span class="c"># cancellation. Trapping CancelKeyPress explicitly and calling</span>
+</span><span id="__span-44-43"><a id="__codelineno-44-43" name="__codelineno-44-43" href="#__codelineno-44-43"></a><span class="c"># listener.Stop() forces that blocked call to throw, which the catch</span>
+</span><span id="__span-44-44"><a id="__codelineno-44-44" name="__codelineno-44-44" href="#__codelineno-44-44"></a><span class="c"># block below turns into a clean exit instead of an unkillable script.</span>
+</span><span id="__span-44-45"><a id="__codelineno-44-45" name="__codelineno-44-45" href="#__codelineno-44-45"></a><span class="nv">$cancelled</span> <span class="p">=</span> <span class="nv">$false</span>
+</span><span id="__span-44-46"><a id="__codelineno-44-46" name="__codelineno-44-46" href="#__codelineno-44-46"></a><span class="no">[Console]</span><span class="p">::</span><span class="n">TreatControlCAsInput</span> <span class="p">=</span> <span class="nv">$false</span>
+</span><span id="__span-44-47"><a id="__codelineno-44-47" name="__codelineno-44-47" href="#__codelineno-44-47"></a><span class="nb">Register-ObjectEvent</span> <span class="n">-InputObject</span> <span class="p">(</span><span class="no">[Console]</span><span class="p">)</span> <span class="n">-EventName</span> <span class="n">CancelKeyPress</span> <span class="n">-Action</span> <span class="p">{</span>
+</span><span id="__span-44-48"><a id="__codelineno-44-48" name="__codelineno-44-48" href="#__codelineno-44-48"></a>    <span class="nv">$Event</span><span class="p">.</span><span class="n">MessageData</span><span class="p">.</span><span class="n">Stop</span><span class="p">()</span>
+</span><span id="__span-44-49"><a id="__codelineno-44-49" name="__codelineno-44-49" href="#__codelineno-44-49"></a>    <span class="nv">$script:cancelled</span> <span class="p">=</span> <span class="nv">$true</span>
+</span><span id="__span-44-50"><a id="__codelineno-44-50" name="__codelineno-44-50" href="#__codelineno-44-50"></a>    <span class="nv">$EventArgs</span><span class="p">.</span><span class="n">Cancel</span> <span class="p">=</span> <span class="nv">$true</span>
+</span><span id="__span-44-51"><a id="__codelineno-44-51" name="__codelineno-44-51" href="#__codelineno-44-51"></a><span class="p">}</span> <span class="n">-MessageData</span> <span class="nv">$listener</span> <span class="p">|</span> <span class="nb">Out-Null</span>
+</span><span id="__span-44-52"><a id="__codelineno-44-52" name="__codelineno-44-52" href="#__codelineno-44-52"></a>
+</span><span id="__span-44-53"><a id="__codelineno-44-53" name="__codelineno-44-53" href="#__codelineno-44-53"></a><span class="k">while</span> <span class="p">(</span><span class="nv">$listener</span><span class="p">.</span><span class="n">IsListening</span><span class="p">)</span> <span class="p">{</span>
+</span><span id="__span-44-54"><a id="__codelineno-44-54" name="__codelineno-44-54" href="#__codelineno-44-54"></a>    <span class="c"># GetContext() blocks in a native wait that Stop() doesn't reliably</span>
+</span><span id="__span-44-55"><a id="__codelineno-44-55" name="__codelineno-44-55" href="#__codelineno-44-55"></a>    <span class="c"># interrupt on Linux (it does on Windows, via http.sys) - confirmed</span>
+</span><span id="__span-44-56"><a id="__codelineno-44-56" name="__codelineno-44-56" href="#__codelineno-44-56"></a>    <span class="c"># the hard way testing both platforms. Using the async version and</span>
+</span><span id="__span-44-57"><a id="__codelineno-44-57" name="__codelineno-44-57" href="#__codelineno-44-57"></a>    <span class="c"># polling with a short timeout means the loop returns control</span>
+</span><span id="__span-44-58"><a id="__codelineno-44-58" name="__codelineno-44-58" href="#__codelineno-44-58"></a>    <span class="c"># regularly instead of blocking indefinitely, so $cancelled actually</span>
+</span><span id="__span-44-59"><a id="__codelineno-44-59" name="__codelineno-44-59" href="#__codelineno-44-59"></a>    <span class="c"># gets checked instead of the script hanging until the next request.</span>
+</span><span id="__span-44-60"><a id="__codelineno-44-60" name="__codelineno-44-60" href="#__codelineno-44-60"></a>    <span class="nv">$contextTask</span> <span class="p">=</span> <span class="nv">$listener</span><span class="p">.</span><span class="n">GetContextAsync</span><span class="p">()</span>
+</span><span id="__span-44-61"><a id="__codelineno-44-61" name="__codelineno-44-61" href="#__codelineno-44-61"></a>    <span class="k">while</span> <span class="p">(</span><span class="o">-not</span> <span class="nv">$contextTask</span><span class="p">.</span><span class="n">AsyncWaitHandle</span><span class="p">.</span><span class="n">WaitOne</span><span class="p">(</span><span class="n">200</span><span class="p">))</span> <span class="p">{</span>
+</span><span id="__span-44-62"><a id="__codelineno-44-62" name="__codelineno-44-62" href="#__codelineno-44-62"></a>        <span class="k">if</span> <span class="p">(</span><span class="nv">$cancelled</span><span class="p">)</span> <span class="p">{</span> <span class="k">break</span> <span class="p">}</span>
+</span><span id="__span-44-63"><a id="__codelineno-44-63" name="__codelineno-44-63" href="#__codelineno-44-63"></a>    <span class="p">}</span>
+</span><span id="__span-44-64"><a id="__codelineno-44-64" name="__codelineno-44-64" href="#__codelineno-44-64"></a>    <span class="k">if</span> <span class="p">(</span><span class="nv">$cancelled</span><span class="p">)</span> <span class="p">{</span> <span class="k">break</span> <span class="p">}</span>
+</span><span id="__span-44-65"><a id="__codelineno-44-65" name="__codelineno-44-65" href="#__codelineno-44-65"></a>
+</span><span id="__span-44-66"><a id="__codelineno-44-66" name="__codelineno-44-66" href="#__codelineno-44-66"></a>    <span class="k">try</span> <span class="p">{</span>
+</span><span id="__span-44-67"><a id="__codelineno-44-67" name="__codelineno-44-67" href="#__codelineno-44-67"></a>        <span class="nv">$context</span> <span class="p">=</span> <span class="nv">$contextTask</span><span class="p">.</span><span class="n">GetAwaiter</span><span class="p">().</span><span class="n">GetResult</span><span class="p">()</span>
+</span><span id="__span-44-68"><a id="__codelineno-44-68" name="__codelineno-44-68" href="#__codelineno-44-68"></a>    <span class="p">}</span> <span class="k">catch</span> <span class="no">[System.Net.HttpListenerException]</span> <span class="p">{</span>
+</span><span id="__span-44-69"><a id="__codelineno-44-69" name="__codelineno-44-69" href="#__codelineno-44-69"></a>        <span class="k">if</span> <span class="p">(</span><span class="nv">$cancelled</span><span class="p">)</span> <span class="p">{</span> <span class="k">break</span> <span class="p">}</span>
+</span><span id="__span-44-70"><a id="__codelineno-44-70" name="__codelineno-44-70" href="#__codelineno-44-70"></a>        <span class="k">throw</span>
+</span><span id="__span-44-71"><a id="__codelineno-44-71" name="__codelineno-44-71" href="#__codelineno-44-71"></a>    <span class="p">}</span> <span class="k">catch</span> <span class="no">[System.ObjectDisposedException]</span> <span class="p">{</span>
+</span><span id="__span-44-72"><a id="__codelineno-44-72" name="__codelineno-44-72" href="#__codelineno-44-72"></a>        <span class="k">if</span> <span class="p">(</span><span class="nv">$cancelled</span><span class="p">)</span> <span class="p">{</span> <span class="k">break</span> <span class="p">}</span>
+</span><span id="__span-44-73"><a id="__codelineno-44-73" name="__codelineno-44-73" href="#__codelineno-44-73"></a>        <span class="k">throw</span>
+</span><span id="__span-44-74"><a id="__codelineno-44-74" name="__codelineno-44-74" href="#__codelineno-44-74"></a>    <span class="p">}</span>
+</span><span id="__span-44-75"><a id="__codelineno-44-75" name="__codelineno-44-75" href="#__codelineno-44-75"></a>
+</span><span id="__span-44-76"><a id="__codelineno-44-76" name="__codelineno-44-76" href="#__codelineno-44-76"></a>    <span class="nv">$request</span> <span class="p">=</span> <span class="nv">$context</span><span class="p">.</span><span class="n">Request</span>
+</span><span id="__span-44-77"><a id="__codelineno-44-77" name="__codelineno-44-77" href="#__codelineno-44-77"></a>
+</span><span id="__span-44-78"><a id="__codelineno-44-78" name="__codelineno-44-78" href="#__codelineno-44-78"></a>    <span class="k">try</span> <span class="p">{</span>
+</span><span id="__span-44-79"><a id="__codelineno-44-79" name="__codelineno-44-79" href="#__codelineno-44-79"></a>        <span class="c"># GetFileName() strips any directory-separator components from the</span>
+</span><span id="__span-44-80"><a id="__codelineno-44-80" name="__codelineno-44-80" href="#__codelineno-44-80"></a>        <span class="c"># URL path before it's used to build a filesystem path, so a</span>
+</span><span id="__span-44-81"><a id="__codelineno-44-81" name="__codelineno-44-81" href="#__codelineno-44-81"></a>        <span class="c"># request can't be crafted to write outside $DestDir.</span>
+</span><span id="__span-44-82"><a id="__codelineno-44-82" name="__codelineno-44-82" href="#__codelineno-44-82"></a>        <span class="nv">$filename</span> <span class="p">=</span> <span class="no">[System.IO.Path]</span><span class="p">::</span><span class="n">GetFileName</span><span class="p">(</span><span class="nv">$request</span><span class="p">.</span><span class="n">Url</span><span class="p">.</span><span class="n">AbsolutePath</span><span class="p">.</span><span class="n">TrimStart</span><span class="p">(</span><span class="s1">'/'</span><span class="p">))</span>
+</span><span id="__span-44-83"><a id="__codelineno-44-83" name="__codelineno-44-83" href="#__codelineno-44-83"></a>        <span class="k">if</span> <span class="p">(</span><span class="no">[string]</span><span class="p">::</span><span class="n">IsNullOrWhiteSpace</span><span class="p">(</span><span class="nv">$filename</span><span class="p">))</span> <span class="p">{</span> <span class="nv">$filename</span> <span class="p">=</span> <span class="s2">"backup.cfg"</span> <span class="p">}</span>
+</span><span id="__span-44-84"><a id="__codelineno-44-84" name="__codelineno-44-84" href="#__codelineno-44-84"></a>
+</span><span id="__span-44-85"><a id="__codelineno-44-85" name="__codelineno-44-85" href="#__codelineno-44-85"></a>        <span class="c"># Fix filenames like 'name.txt-317' -&gt; 'name-317.txt'</span>
+</span><span id="__span-44-86"><a id="__codelineno-44-86" name="__codelineno-44-86" href="#__codelineno-44-86"></a>        <span class="nv">$filename</span> <span class="p">=</span> <span class="nv">$filename</span> <span class="o">-replace</span> <span class="s1">'(\.[a-zA-Z0-9]+)-(\d+)$'</span><span class="p">,</span> <span class="s1">'-$2$1'</span>
+</span><span id="__span-44-87"><a id="__codelineno-44-87" name="__codelineno-44-87" href="#__codelineno-44-87"></a>
+</span><span id="__span-44-88"><a id="__codelineno-44-88" name="__codelineno-44-88" href="#__codelineno-44-88"></a>        <span class="nv">$destinationPath</span> <span class="p">=</span> <span class="nb">Join-Path</span> <span class="nv">$DestDir</span> <span class="nv">$filename</span>
+</span><span id="__span-44-89"><a id="__codelineno-44-89" name="__codelineno-44-89" href="#__codelineno-44-89"></a>        <span class="nv">$saveStream</span> <span class="p">=</span> <span class="no">[System.IO.File]</span><span class="p">::</span><span class="n">Create</span><span class="p">(</span><span class="nv">$destinationPath</span><span class="p">)</span>
+</span><span id="__span-44-90"><a id="__codelineno-44-90" name="__codelineno-44-90" href="#__codelineno-44-90"></a>        <span class="nv">$request</span><span class="p">.</span><span class="n">InputStream</span><span class="p">.</span><span class="n">CopyTo</span><span class="p">(</span><span class="nv">$saveStream</span><span class="p">)</span>
+</span><span id="__span-44-91"><a id="__codelineno-44-91" name="__codelineno-44-91" href="#__codelineno-44-91"></a>        <span class="nv">$saveStream</span><span class="p">.</span><span class="n">Close</span><span class="p">()</span>
+</span><span id="__span-44-92"><a id="__codelineno-44-92" name="__codelineno-44-92" href="#__codelineno-44-92"></a>
+</span><span id="__span-44-93"><a id="__codelineno-44-93" name="__codelineno-44-93" href="#__codelineno-44-93"></a>        <span class="nb">Write-Host</span> <span class="s2">"Saved: $destinationPath"</span>
+</span><span id="__span-44-94"><a id="__codelineno-44-94" name="__codelineno-44-94" href="#__codelineno-44-94"></a>        <span class="nv">$context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">StatusCode</span> <span class="p">=</span> <span class="n">200</span>
+</span><span id="__span-44-95"><a id="__codelineno-44-95" name="__codelineno-44-95" href="#__codelineno-44-95"></a>    <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+</span><span id="__span-44-96"><a id="__codelineno-44-96" name="__codelineno-44-96" href="#__codelineno-44-96"></a>        <span class="c"># Without this catch, a failed save (missing folder, no disk space,</span>
+</span><span id="__span-44-97"><a id="__codelineno-44-97" name="__codelineno-44-97" href="#__codelineno-44-97"></a>        <span class="c"># permissions) prints its own error but the loop carries on to the</span>
+</span><span id="__span-44-98"><a id="__codelineno-44-98" name="__codelineno-44-98" href="#__codelineno-44-98"></a>        <span class="c"># "Saved" line below regardless - confirmed the hard way - so this</span>
+</span><span id="__span-44-99"><a id="__codelineno-44-99" name="__codelineno-44-99" href="#__codelineno-44-99"></a>        <span class="c"># is the difference between an accurate log and a false "Saved"</span>
+</span><span id="__span-44-100"><a id="__codelineno-44-100" name="__codelineno-44-100" href="#__codelineno-44-100"></a>        <span class="c"># message for a file that was never actually written.</span>
+</span><span id="__span-44-101"><a id="__codelineno-44-101" name="__codelineno-44-101" href="#__codelineno-44-101"></a>        <span class="nb">Write-Host</span> <span class="s2">"FAILED to save request: $_"</span>
+</span><span id="__span-44-102"><a id="__codelineno-44-102" name="__codelineno-44-102" href="#__codelineno-44-102"></a>        <span class="nv">$context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">StatusCode</span> <span class="p">=</span> <span class="n">500</span>
+</span><span id="__span-44-103"><a id="__codelineno-44-103" name="__codelineno-44-103" href="#__codelineno-44-103"></a>    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+</span><span id="__span-44-104"><a id="__codelineno-44-104" name="__codelineno-44-104" href="#__codelineno-44-104"></a>        <span class="nv">$context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">Close</span><span class="p">()</span>
+</span><span id="__span-44-105"><a id="__codelineno-44-105" name="__codelineno-44-105" href="#__codelineno-44-105"></a>    <span class="p">}</span>
+</span><span id="__span-44-106"><a id="__codelineno-44-106" name="__codelineno-44-106" href="#__codelineno-44-106"></a><span class="p">}</span>
+</span><span id="__span-44-107"><a id="__codelineno-44-107" name="__codelineno-44-107" href="#__codelineno-44-107"></a>
+</span><span id="__span-44-108"><a id="__codelineno-44-108" name="__codelineno-44-108" href="#__codelineno-44-108"></a><span class="nb">Write-Host</span> <span class="s2">"Listener stopped."</span>
+</span></code></pre></div>
+<h3 id="allow-the-script-to-run">Allow the script to run</h3>
+<p>PowerShell blocks unsigned <code>.ps1</code> scripts by default:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="n">powershell</span><span class="p">.</span><span class="n">exe</span> <span class="n">-ExecutionPolicy</span> <span class="n">Bypass</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Make sure you're not violating company policy by enabling PowerShell
+scripts to run, and that CrowdStrike, SentinelOne, or similar isn't
+configured to lock down the workstation the moment that command runs.</p>
+</div>
+<h3 id="start-the-listener-as-administrator-on-windows">Start the listener — as Administrator on Windows</h3>
+<p>On Windows, <code>HttpListener</code> refuses to bind <code>http://+:8080/</code> (a wildcard
+host) from an ordinary PowerShell session — it requires either an elevated
+session or a one-time URL reservation (<code>netsh http add urlacl</code>) for any
+account binding a wildcard prefix, regardless of the port number. Open
+PowerShell <strong>as Administrator</strong>, then:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="p">.\</span><span class="n">http-serve</span><span class="p">.</span><span class="n">ps1</span>
+</span></code></pre></div>
+<p>(PowerShell is cross-platform — this same script runs unmodified on Linux
+or macOS <code>pwsh</code> too, and there the wildcard bind works without elevation.
+The one gotcha that turned up testing it that way: if port 8080 is already
+taken by something else on that machine, <code>.Start()</code> fails immediately —
+the script now reports that clearly instead of dying silently, see the
+try/catch above.)</p>
+<p>Real output from an actual run on Windows — two backups landing seconds apart, with the trailing <code>-NNN</code> already cleaned up:</p>
+<hr>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../img/http-serve.png" data-desc-position="bottom"><img alt="PowerShell Listener" src="../img/http-serve.png" width="400"></a></p>
+<hr>
+<p>Real output from an actual run on Linux — two backups landing seconds apart, with the trailing <code>-NNN</code> already cleaned up:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../img/http-serve-linux.png" data-desc-position="bottom"><img alt="PowerShell Listener Linux" src="../img/http-serve-linux.png" width="400"></a></p>
+<hr>
+<h3 id="windows-firewall">Windows Firewall</h3>
+<p>Most Windows servers in the field aren't running Windows Firewall at all,
+and turning it on for the first time on an existing production box is a
+good way to break something unrelated that's been quietly relying on it
+being off. This is deliberately not scripted the way <code>ufw_add_switches.sh</code>
+is for Ubuntu — check first:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="nb">Get-NetFirewallProfile</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">Name</span><span class="p">,</span> <span class="n">Enabled</span>
+</span></code></pre></div>
+<p>If every profile shows <code>Disabled</code>, there's nothing to do — port 8080 is
+already reachable. If Windows Firewall <strong>is</strong> active, add an inbound
+allow rule scoped to the switches, mirroring what <code>ufw_add_switches.sh</code>
+does on Ubuntu:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="nb">New-NetFirewallRule</span> <span class="n">-DisplayName</span> <span class="s2">"Cisco kron backups"</span> <span class="n">-Direction</span> <span class="n">Inbound</span> <span class="n">-Protocol</span> <span class="n">TCP</span> <span class="n">-LocalPort</span> <span class="n">8080</span> <span class="n">-RemoteAddress</span> <span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">10</span><span class="p">.</span><span class="n">253</span> <span class="n">-Action</span> <span class="n">Allow</span>
+</span></code></pre></div>
+<p>Repeat with each switch's IP, or a comma-separated <code>-RemoteAddress</code> list —
+don't leave this rule scoped to <code>Any</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../appendix-discovery-automation/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Automating Discovery">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Automating Discovery
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../appendix-jump-box-hardening/" class="md-footer__link md-footer__link--next" aria-label="Next: SSH Hardening">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                SSH Hardening
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2025 <a href="https://github.com/rikosintie" target="_blank" rel="noopener">Michael Hubbard</a>
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/rikosintie" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/rikosintie" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/mwhubbard/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.tabs.link", "content.code.copy", "content.code.annotate", "header.autohide", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.path", "navigation.top", "search.suggest", "search.highlight", "search.share", "toc.integrate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/asciinema-player@3.8.0/dist/bundle/asciinema-player.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
