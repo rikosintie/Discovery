@@ -9,7 +9,18 @@ nav:
   - Intro: intro.md
   - Getting Started: Getting_Started.md
   - Usage: usage.md
-  - Helper Scripts: Helper-scripts.md
+  - Helper Scripts:
+      - Overview: helper-scripts.md
+      - pinger.py: pinger.md
+      - Port Maps: port-maps.md
+      - CDP Reports: cdp-reports.md
+      - LLDP Reports: lldp-reports.md
+      - Topology Maps: topology-maps.md
+      - System Report: system-report.md
+      - Interface Reports: interface-reports.md
+      - Aruba CX Logs: aruba-cx-logs.md
+      - Daily Status: daily-status.md
+      - Convert MAC: convert-mac.md
   - PowerShell: Using_PowerShell.md
   - Appendix:
       - grep and friends: appendix-grep-and-friends.md
