@@ -311,7 +311,7 @@ connection — either way the NIC is awake and its MAC is back on the switch.
 - **`--tcp-timeout`** — seconds to wait for each connection (default
   `1.0`).
 
-```bash
+```text
 python3 pinger.py --tcp-ports 9100,9101,9102
 ```
 
@@ -377,7 +377,7 @@ The port maps return:
 
 Here is an example of the port map:
 
-```bash
+```text
 Number of Entries: 83
 
 Device Name: Test-Core
@@ -415,7 +415,7 @@ For a Core/IDF deployment, use `-c coreswitch`:
 
 The script will create the hostname-Mac2IP.json and will print some information to the screen. The first information is the file being processed and the number of IPs and the IPs sorted. Here is an example:
 
-```bash
+```text
 ----------------------------------------------------------------------------------------
 Reading devices from: /home/mhubbard/04_Tools/Discovery/port-maps/data/test-Core-arp.txt
 ----------------------------------------------------------------------------------------
@@ -427,7 +427,7 @@ Number of IP Addresses: 566
 
 The next output is IP and MAC Addresses. Here is an example:
 
-```bash
+```text
 Number of IP and MAC Addresses: 566
 -----------------------------------
 10.1.0.252 04d590-0e77ab
@@ -436,7 +436,7 @@ Number of IP and MAC Addresses: 566
 
 And finally, the IP, MAC and Manufacture. Here is an example:
 
-```bash
+```text
 Number of IP, MAC and Manufacture: 566
 --------------------------------------
 10.1.0.252 04d590-0e77ab Fortinet
@@ -526,6 +526,31 @@ with its DNS name, or its MAC address if no DNS name resolves. The use
 case is verifying hosts across a cutover: export the list before the
 change, import it into PingInfoView, and watch which hosts go down and
 come back afterward, without having to `ping` each one by hand.
+
+----------------------------------------------------------------
+
+Here is a screenshot of PingInfoView
+
+![pinginfoview](img/pinginfoview-home.png)
+
+----------------------------------------------------------------
+
+Notice the `Computers Group 1` and the `Infrastructure Group` titles? One of the best features of PingInfoView for daily use is that you can create groups. Here is the text file I use in my home lab to create that screenshot:
+
+```bash linenums='1' hl_lines='1'
+Group: Computers Group 1
+192.168.10.222 randc02.pu.pri
+192.168.10.223 ubuntu.pu.pri
+Group: Infrastructure Group 1
+192.168.10.50 Ubiquiti Office
+192.168.10.51 Ubiquiti garage
+192.168.10.52 2920
+192.168.10.252 ESXi
+192.168.10.253 3850
+192.168.10.253 Fortinet
+```
+
+----------------------------------------------------------------
 
 #### Mac/Linux equivalent: gping and fping
 
