@@ -542,6 +542,8 @@ brew install gping fping        # macOS
 sudo apt install gping fping    # Debian/Ubuntu
 ```
 
+----------------------------------------------------------------
+
 **`gping`** (visual terminal graphs) — parse the IPv4 targets out of a
 pinginfo file and graph them. Given more hosts than fit on one graph, it
 switches to the compact per-host stats table shown below automatically:
@@ -549,6 +551,8 @@ switches to the compact per-host stats table shown below automatically:
 ```bash
 gping $(grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' Lab_3850-pinginfo.txt)
 ```
+
+----------------------------------------------------------------
 
 ![gping](img/gping.png){ width="500" }
 
@@ -562,12 +566,32 @@ gping $(grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' Lab_3850-pinginfo.txt)
 | `p95` | 95th-percentile latency — 95% of pings to that host were faster than this |
 | `t/o` | Timeouts — how many pings to that host got no response at all |
 
+The chronological-order detail on `jtr` matters in practice: a host whose
+latency is *steadily drifting* (5ms creeping up to 50ms over a minute, say,
+from mounting congestion) has a wide `min`/`max` spread but a small change
+from any one ping to the next — low jitter, correctly, since nothing is
+actually unstable moment-to-moment. A host *ping-ponging* between 5ms and
+50ms every other ping has the exact same `min`/`max` spread, but every
+single step is a big jump — high jitter, correctly flagging the real
+instability. Sorting the values first (as `min`/`max`/`avg`/`p95` all do)
+would make those two situations look identical; `jtr` deliberately doesn't
+sort, because it's answering a different question than the rest of the
+table — not "how spread out are these latencies" but "how much does
+latency swing from one ping to the next." That's also the standard
+definition of jitter used in VoIP/QoS contexts (RFC 3550), so gping isn't
+reinventing the term — worth knowing precisely because it's easy to assume
+a "high/low" stat like this is sorted, when this one specifically isn't.
+
+----------------------------------------------------------------
+
 **`fping`** (continuous text pings) — parse the same targets and sweep
 them all in parallel:
 
 ```bash
 grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' Lab_3850-pinginfo.txt | fping -l
 ```
+
+----------------------------------------------------------------
 
 **Shell functions** (`~/.zshrc`) — add these to parse and ping any
 pinginfo file by name, instead of retyping the `grep` each time:
