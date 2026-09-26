@@ -37,6 +37,10 @@ In the final folder
 
 - hostname-ports.txt - The final output of two scripts for creating port maps
 
+In the "pinginfo" folder, below the port-maps folder
+
+- hostname-pinginfo.txt - A [PingInfoView](https://www.nirsoft.net/utils/multiple_ping_tool.html) import file pairing each reachable IP with its DNS name (or MAC address, if no DNS name resolves) — for verifying hosts pre/post cutover
+
 In the "Interface" folder
 
 - hostname-cdp.txt - JSON format of the "show cdp ne det" command
@@ -511,6 +515,72 @@ For a Core/IDF deployment, use `-c coreswitch`:
 To resolve DNS names for the IP addresses in the port map, pass a DNS server with `-d`:
 
 `python3 port-map.py -s jc-edge -c JC-core -d 192.168.10.222`
+
+#### PingInfoView export
+
+Every run also writes `port-maps/pinginfo/hostname-pinginfo.txt` — an
+import file for [PingInfoView](https://www.nirsoft.net/utils/multiple_ping_tool.html)
+(a free NirSoft tool, **Windows only**, that pings a list of hosts and
+shows which ones respond). Each reachable IP from the port map is paired
+with its DNS name, or its MAC address if no DNS name resolves. The use
+case is verifying hosts across a cutover: export the list before the
+change, import it into PingInfoView, and watch which hosts go down and
+come back afterward, without having to `ping` each one by hand.
+
+#### Mac/Linux equivalent: gping and fping
+
+PingInfoView being Windows-only doesn't leave Mac/Linux users without an
+option — `gping` (a live graph of ping times) and `fping` (a fast,
+parallel ping sweep) cover the same "watch a list of hosts across a
+cutover" use case, and both can read straight from an existing
+`hostname-pinginfo.txt` file.
+
+Install with your platform's package manager:
+
+```bash
+brew install gping fping        # macOS
+sudo apt install gping fping    # Debian/Ubuntu
+```
+
+**`gping`** (visual terminal graphs) — parse the IPv4 targets out of a
+pinginfo file and graph them. Given more hosts than fit on one graph, it
+switches to the compact per-host stats table shown below automatically:
+
+```bash
+gping $(grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' Lab_3850-pinginfo.txt)
+```
+
+![gping](img/gping.png){ width="500" }
+
+**`fping`** (continuous text pings) — parse the same targets and sweep
+them all in parallel:
+
+```bash
+grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' Lab_3850-pinginfo.txt | fping -l
+```
+
+**Shell functions** (`~/.zshrc`) — add these to parse and ping any
+pinginfo file by name, instead of retyping the `grep` each time:
+
+```zsh
+# Graph targets visually via gping
+gping-info() {
+    if [[ -z "$1" ]]; then
+        echo "Usage: gping-info <pinginfo-file>"
+        return 1
+    fi
+    gping $(grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' "$1")
+}
+
+# Sweep targets continuously via fping
+fping-info() {
+    if [[ -z "$1" ]]; then
+        echo "Usage: fping-info <pinginfo-file>"
+        return 1
+    fi
+    grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' "$1" | fping -l
+}
+```
 
 #### "UP with no learned MAC address" warning
 
