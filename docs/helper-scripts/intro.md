@@ -10,7 +10,7 @@ The helper scripts are a collection of python scripts that read data that the co
 
 Every report here is plain text, so the `grep` examples throughout this
 page work unchanged on Windows too, once you've
-[installed Coreutils for Windows](Getting_Started.md#install-coreutils-for-windows) —
+[installed Coreutils for Windows](../Getting_Started.md#install-coreutils-for-windows) —
 see that section for the one common gotcha (`sort` needs a `.exe` suffix).
 
 ## What files are created

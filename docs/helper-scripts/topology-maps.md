@@ -26,7 +26,7 @@ be installed separately — it's a system package, not something
 - **macOS:** `brew install graphviz` (same [Homebrew](https://formulae.brew.sh/formula/lldpd)
   used elsewhere in this doc for `lldpd`)
 - **Windows:** `winget install --id Graphviz.Graphviz` from cmd or
-  PowerShell — see [Install Git](Getting_Started.md#install-git) for what to
+  PowerShell — see [Install Git](../Getting_Started.md#install-git) for what to
   do if `winget` itself isn't available (it ships with Windows 11 21H2+, but
   older installs may not have it). No `winget`? The
   [official installer](https://graphviz.org/download/) works too.

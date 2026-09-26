@@ -10,17 +10,17 @@ nav:
   - Getting Started: Getting_Started.md
   - Usage: usage.md
   - Helper Scripts:
-      - Overview: helper-scripts.md
-      - pinger.py: pinger.md
-      - Port Maps: port-maps.md
-      - CDP Reports: cdp-reports.md
-      - LLDP Reports: lldp-reports.md
-      - Topology Maps: topology-maps.md
-      - System Report: system-report.md
-      - Interface Reports: interface-reports.md
-      - Aruba CX Logs: aruba-cx-logs.md
-      - Daily Status: daily-status.md
-      - Convert MAC: convert-mac.md
+      - Overview: helper-scripts/intro.md
+      - pinger.py: helper-scripts/pinger.md
+      - Port Maps: helper-scripts/port-maps.md
+      - CDP Reports: helper-scripts/cdp-reports.md
+      - LLDP Reports: helper-scripts/lldp-reports.md
+      - Topology Maps: helper-scripts/topology-maps.md
+      - System Report: helper-scripts/system-report.md
+      - Interface Reports: helper-scripts/interface-reports.md
+      - Aruba CX Logs: helper-scripts/aruba-cx-logs.md
+      - Daily Status: helper-scripts/daily-status.md
+      - Convert MAC: helper-scripts/convert-mac.md
   - PowerShell: Using_PowerShell.md
   - Appendix:
       - grep and friends: appendix-grep-and-friends.md
