@@ -39,7 +39,7 @@ In the final folder
 
 In the "pinginfo" folder, below the port-maps folder
 
-- hostname-pinginfo.txt - A [PingInfoView](https://www.nirsoft.net/utils/multiple_ping_tool.html) import file pairing each reachable IP with its DNS name (or MAC address, if no DNS name resolves) — for verifying hosts pre/post cutover
+- hostname-pinginfo.txt - A [PingInfoView](https://www.nirsoft.net/utils/multiple_ping_tool.html){: target="_blank" rel="noopener" } import file pairing each reachable IP with its DNS name (or MAC address, if no DNS name resolves) — for verifying hosts pre/post cutover
 
 In the "Interface" folder
 

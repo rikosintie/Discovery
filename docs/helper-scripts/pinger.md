@@ -1,37 +1,83 @@
 # Warming the ARP cache with pinger.py
 
+----------------------------------------------------------------
+
+![tux-pinger](img/tux-pinger.JPG)
+
+----------------------------------------------------------------
+
 The port maps are only as complete as the ARP tables `config-pull.py`
 collects, and a switch only has an ARP entry for a host that has sent
 traffic recently. `pinger.py` reads a list of subnets and pings every host
 in them so the gateways learn all the endpoints before the discovery run.
 
 Put the subnets in a file (default `vlans.txt`), one per line. You can
-paste straight from a switch —
+paste straight into a Cisco switch:
 
 ```text
-show run | i ^interface|^ ip address
-
-interface Vlan10
- ip address 10.20.10.1 255.255.255.0
+show run | i ^interface Vlan|^ ip address
 ```
+
+```bash title="Cisco IOS interfaces"
+LAB_3850#show run | i ^interface Vlan|^ ip address
+ ip address 10.10.10.10 255.255.255.255
+interface Vlan1
+interface Vlan10
+ ip address 192.168.10.253 255.255.255.0
+interface Vlan11
+ ip address 192.168.1.1 255.255.255.0
+interface Vlan12
+ ip address 192.168.12.1 255.255.255.0
+interface Vlan20
+ ip address 10.1.20.1 255.255.255.0
+interface Vlan30
+ ip address 10.1.30.1 255.255.255.0
+```
+
+----------------------------------------------------------------
+
+On an HPE Procurve:
+
+```unixconfig linenums='1' hl_lines='1'
+show running-config | include "^vlan|^   ip address"
+```
+
+```unixconfig title='Procurve interfaces'
+vlan 1
+   ip address dhcp-bootp
+vlan 10
+   ip address 192.168.10.52 255.255.255.0
+vlan 20
+   ip address 10.164.24.200 255.255.255.0
+   ip address 10.10.100.1 255.255.255.0
+vlan 850
+   ip address 10.254.34.18 255.255.255.252
+```
+
+----------------------------------------------------------------
 
 — or list them as `address mask` or CIDR:
 
 ```text
 10.20.10.0 255.255.255.0
 10.20.20.0/24
+10.10.10.11/32
 ```
+
+----------------------------------------------------------------
 
 Blank lines, lines containing `interface`, and lines starting with `#` are
 ignored, so `#` comments a subnet out. Subnets larger than `-m/--max-hosts`
 addresses (default 2100, i.e. bigger than a `/21`) are skipped.
 
-```bash
-python3 pinger.py
-python3 pinger.py -f user-subnets.txt
+```bash title="pinger.py example"
+python3 pinger.py # no options - use vlans.txt, -c =1, -r =20
+python3 pinger.py -f user-subnets.txt # custom address file
 ```
 
-## All command-line options
+----------------------------------------------------------------
+
+## Command-line options
 
 ```text
 python3 pinger.py -h
@@ -53,6 +99,8 @@ options:
   -m, --max-hosts MAX_HOSTS
                         skip subnets with more addresses than this (default: 2100)
 ```
+
+----------------------------------------------------------------
 
 ## Cross-platform examples
 
@@ -121,7 +169,7 @@ just those VLANs — there's no need to sweep the user subnets.
 
 `pinger.py` runs two passes over the host list:
 
-1. **Paced ICMP sweep** — one echo per host by default, in randomized order,
+1. **Paced ICMP sweep** — one echo request per host by default, in randomized order,
    started at no more than `--rate` per second so the traffic reads as
    background noise rather than a horizontal scan.
 2. **TCP fallback** — every host that stayed silent on ICMP gets one TCP
@@ -133,7 +181,9 @@ just those VLANs — there's no need to sweep the user subnets.
    and its ARP entry on the core.
 
 Each host prints as `active (icmp)`, `active (tcp/9100)`, `active (rst/9100)`,
-or `no response`.
+or `None`.
+
+----------------------------------------------------------------
 
 **What it can't reach.** A host that is fully asleep with its switch port down
 is unreachable by any probe — ICMP, TCP, or ARP — until the port comes back
@@ -146,7 +196,7 @@ entry, which is what `config-pull.py` later collects. A same-subnet run only
 refreshes the local access switch's CAM table and never touches the core's ARP
 table.
 
-**Why the timing matters.** Cisco's default ARP timeout (4 h) outlives its CAM
+**Why the timing matters.** Cisco's default ARP timeout (4 hours, HPE Procurve 20 minutes), outlives its CAM
 aging (5 min), so the core can list an ARP entry for a host whose
 access-switch port has already aged out of the CAM table — and `port-map.py`
 needs both. Running `pinger.py` a few minutes before the discovery pass
@@ -190,7 +240,7 @@ the paced sweep. A later run at a customer with `vlans.txt` set to
 
 Here is an example from a recent engagement at a customer running CrowdStrike Falcon:
 
-```bash linenums='1' hl_lines='1'
+```text linenums='1' hl_lines='1'
 python3 pinger.py -f vlans.txt --tcp-ports 9100
 
 OS is Linux, sending 1 echo request per host
