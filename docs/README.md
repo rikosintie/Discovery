@@ -18,6 +18,23 @@ The full documentation including installation instructions can be found on my [G
 
 ----------------------------------------------------------------
 
+## Watch it in action
+
+Here's a recording of the scripts being run end-to-end on Windows:
+
+<div id="discovery-demo"></div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    AsciinemaPlayer.create('../video/discover.cast', document.getElementById('discovery-demo'), {
+      idleTimeLimit: 2,
+      autoPlay: true,
+      theme: 'dracula'
+    });
+  });
+</script>
+
+----------------------------------------------------------------
+
 ## ASCIINEMA video
 
 Here is an [asciinema video](https://asciinema.org/a/726423) that shows the script running. In the video there are switches that have:
@@ -44,5 +61,6 @@ If you are getting into NetDevOps, I have a few resources that you might find us
 - [Juniper Migrating to JunOS from Cisco](https://github.com/rikosintie/JNCIA) - Some of the materials I used to pass the JCNIA certification exam.
 - [Juniper DevOps](https://github.com/rikosintie/Juniper-DevOps) Materials to study for the Juniper DevOps certification
 - [Networking Cook Book](https://github.com/rikosintie/CookBook) - Some configuration snippets for Cisco, Aruba CX and HPE Procurve switches.
+- [Where to start with Network Automation, Orchestration, and Observability?](https://github.com/Network-Automation-Forum/handyinfo/blob/main/docs/StartHere.md){: target="_blank" rel="noopener" }
 
 ----------------------------------------------------------------

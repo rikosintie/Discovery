@@ -10,17 +10,25 @@ This project was created to make the discovery process for a network refresh eas
 
 The project currently supports the following devices:
 
+- arista_eos (Limited testing done. I don't have access to hardware or VM)
+- Aruba CX
+- brocade_fastiron (Limited testing done. I don't have access to hardware or VM)
 - HPE Procurve
 - Cisco IOS
-- Cisco XE
 - Cisco Nexus
-- Aruba CX
+- Cisco XE
+- HPE Procurve
+- juniper_junos (Limited testing done. I need to spin up a VM to test on)
 
-A plain text file is used to store the `show commands` that are sent to the switches. An example file for an HPE Procurve switch can be found [here](https://github.com/rikosintie/Discovery/blob/main/discovery-hp_procurve.txt). You are free to customize the file by adding or removing show commands as needed for your discovery.  The script saves the data to various directories for easy access.
+A plain text file is used to store the `show commands` that are sent to the switches. Here is an example file for an [HPE Procurve switch](https://github.com/rikosintie/Discovery/blob/main/discovery-hp_procurve.txt){: target="_blank" rel="noopener" }. You are free to customize the file by adding or removing show commands as needed for your discovery.  The script saves the data to various directories for easy access.
 
 ## Who is this project for
 
-Anyone that needs to pull data from HPE Procurve, Cisco IOS or Aruba CX switches. You do not need to write any python code. Text files are used to collect the information used by the script. You do not need to be a Python programmer to use this project.
+Anyone that needs to pull data from switches. You do not need to write any code to use the project's scripts. Text files are used to collect the information used by the script. You do not need to be a Python programmer, or even a network engineer to use this project. There are enough examples for Windows/Mac/Linux that any IT employee should be able to use the tools.
+
+The Appendix [Automating Discovery](appendix/appendix-discovery-automation.md){: target="_blank" rel="noopener" } shows how to set the project up on a Virtual Machine and pull data daily/weekly. The purpose to track any `authorized/unauthorized` changes made to the switches.
+
+If you are new to network automation, this GitHub project has a lot of educational resources- [Where to start with Network Automation, Orchestration, and Observability?](https://github.com/Network-Automation-Forum/handyinfo/blob/main/docs/StartHere.md){: target="_blank" rel="noopener" }
 
 ----------------------------------------------------------------
 
@@ -144,14 +152,30 @@ Then to create a port-map of IP, Vlan, Manufacturer I have to pull the mac-addre
 - aruba_cx - aa\:bb\:cc\:dd\:ee\:ff
 - Windows aa-bb-cc-dd-ee-ff
 
-I finally wrote a python script to convert mac addresses from any format to all formats. It's named `convert-mac.py` and it gets installed when you clone the Discovery repo.
+I finally created a function that can take any MAC address format up front, create the report, and convert it back to the correct format. I also wrote a python script to convert mac addresses from any format to all formats in a one off mode. It's named `convert-mac.py` and it gets installed when you clone the Discovery repo.
+
+----------------------------------------------------------------
+
+```unixconfig hl_lines='1'
+python3 convert-mac.py --mac 64:e8:81:43:cc:4e
+```
+
+```text title='Convert MAC Output'
+64:e8:81:43:cc:4e
+64e881-43cc4e
+64e8.8143.cc4e
+64-e8-81-43-cc-4e
+64e88143cc4e
+```
+
+----------------------------------------------------------------
 
 Currently I only have Procurve, cisco_ios and cisco_xe fully implemented.
 
 | Task                     | Cisco IOS                                | Cisco NX-OS                              | Cisco SG/SGX (Small Biz)              | HP ProCurve                          | Juniper                              | Brocade                              | Dell N1500                            | Aruba CX                              |
 |--------------------------|-------------------------------------------|-------------------------------------------|----------------------------------------|---------------------------------------|----------------------------------------|----------------------------------------|----------------------------------------|----------------------------------------|
 | Show MAC address         | `show mac address-table` / `show mac-address` | `show mac address-table`                  | `show mac-address-table`               | `show mac-address`                    | `show ethernet-switching table`       | `show mac-address`                     | `show mac address-table`               | `show mac-address-table`               |
-| Show uptime              | `show version` (parse output)             | `show system uptime`                      | `show system` or GUI only               | `show system information`             | `show system uptime`                  | `show system uptime`                   | `show system`                          | `show system`                          |
+| Show uptime              | `show version` (parse output)             | `show system uptime`                      | `show system` or GUI only               | `show system information` (parse output)  | `show system uptime`                  | `show system uptime`                   | `show system` (parse output)            | `show system` (parse output)            |
 | Show model/serial        | `show inventory` / `show version`         | `show version` or `show sprom`            | `show system`                           | `show system information`             | `show chassis hardware`               | `show chassis`                         | `show system` or `show version`        | `show system`                          |
 | Show LLDP neighbors      | `show lldp neighbors detail`              | `show lldp neighbors`                     | Not supported or limited via GUI        | `show lldp info remote detail`        | `show lldp neighbors detail`          | `show lldp neighbors`                  | `show lldp neighbors`                  | `show lldp neighbors detail`           |
 
@@ -165,7 +189,7 @@ This is not an exhaustive list, feel free to add to it.
 
 1. What are the labeling requirements
     1. Location on the equipment
-    1. What information
+    1. What information (hostname, IP, etc.)
     1. size
     1. material
 
@@ -277,6 +301,10 @@ Cisco has added strong ciphers to newer versions of IOS(XE) and NXoS.
 
 ----------------------------------------------------------------
 
+The Aruba CX firmware has rock solid cryptographic algorithms out of the box. See the [Official Aruba Networks page](https://arubanetworking.hpe.com/techdocs/AOS-CX/10.13/HTML/security_83xx-8400-9300-10000/Content/Chp_SSH_serv/SSH_serv_cmds/ssh-cip.htm){: target="_blank" rel="noopener" } in the references below for the exact algorithms. For a table of ssh server commands, see the [Aruba CX SSH server commands](https://rikosintie.github.io/Ubuntu4NetworkEngineers/SSH/#aruba-cx-ssh-server-commands){: target="_blank" rel="noopener" } in my [Ubuntu for Network Engineers book](https://rikosintie.github.io/Ubuntu4NetworkEngineers){: target="_blank" rel="noopener" }.
+
+----------------------------------------------------------------
+
 ### Customer Effort Post Cutover Validation Checklist
 
 Please enumerate all the applications and services that will be tested after the cutover is completed to validate that operations are successfully resumed and ready for production.
@@ -349,3 +377,26 @@ dot -Tsvg sbom.dot -o sbom.svg
 Click here to open the [Security Policy](https://github.com/rikosintie/Discovery/blob/main/security.md)
 
 ----------------------------------------------------------------
+
+## Aruba CX SSH server commands
+
+The following commands cover everything you need to do to configure ssh on an Aruba CX.
+
+| Task | Command | Example|
+| :----- | :-------------- | : -----------|
+| Enabling the SSH server | ssh server vrf | ssh server vrf default |
+| Disabling the SSH server | no ssh server vrf | no ssh server vrf default |
+| Clearing the list of trusted SSH servers for your user account | ssh known-host remove | ssh known-host remove 192.168.10.130 |
+Configuring SSH to use a set of ciphers | ssh ciphers | ssh ciphers chacha20-poly1305@openssh.com aes256-ctr aes256-cbc |
+|Configuring SSH to use a set of host key algorithms | ssh host-key-algorithms | ssh host-key-algorithms ssh-rsa ssh-ed25519 ecdsa-sha2-nistp521 |
+| Configuring SSH to use a set of MACs | ssh macs | ssh macs hmac-sha2-256 hmac-sha2-512 |
+| Configuring SSH to use a set of key exchange algorithms | ssh key-exchange-algorithms | ssh key-exchange-algorithms ecdh-sha2-nistp256 |
+| Configuring SSH to use a set of public key algorithms | ssh public-key-algorithms | ssh public-key-algorithms x509v3-ssh-rsa ssh-rsa rsa-sha2-256 |
+| Showing the SSH server configuration | show ssh server | show ssh server all-vrfs |
+| Showing the active SSH sessions | show ssh server sessions | show ssh server sessions all-vrfs |
+| Showing the SSH server host keys | show ssh host-key | show ssh host-key ecdsa |
+| Show state of local password-based (for SSH) and SSH public key authentication | show ssh authentication-method | show ssh authentication-method |
+| Copying the client SSH public key into the key list | user authorized-key | user admin authorized-key ssh-ed25519 AAAAC3NzaC1lZD...uxn mhubbard@1S1K-G5-5587-2024-07-08 |
+| Removing SSH public keys from the key list | user authorized-key | no user admin authorized-key 2 |
+| Showing the SSH client public key list | show user | show user admin authorized-key |
+| Configuring SSH idle session timeout | cli-session | <ul><li>switch(config)# cli-session</li><li> switch(config-cli-session)# timeout 20</li></ul> |
