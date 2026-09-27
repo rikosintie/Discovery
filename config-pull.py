@@ -733,36 +733,40 @@ if args.test_connect:
         border_style="cyan",
         title_emoji=emoji_for("connecting"),
     )
-    for line in fabric:
-        line = line.strip("\n")
-        fields = [field.strip() for field in line.split(",")]
-        if len(fields) < 4:
-            if line.strip():
-                print(f"Skipping malformed inventory line: {line!r}")
-            continue
-        ipaddr, vendor, hostname, username = fields[0], fields[1], fields[2], fields[3]
-        label = f"{hostname} ({ipaddr}, {vendor})"
-        ip_error = check_inventory_ip(ipaddr)
-        if ip_error:
-            print(f"[red]BAD IP[/red]   {label}: {ip_error}")
-            continue
-        try:
-            net_connect = ConnectHandler(
-                device_type=vendor,
-                ip=ipaddr,
-                username=username,
-                password=password,
-                conn_timeout=60,
-            )
-            prompt = net_connect.find_prompt()
-            net_connect.disconnect()
-            print(f"[green]OK[/green]       {label} -> {prompt}")
-        except AuthenticationException:
-            print(f"[red]AUTH FAIL[/red] {label}")
-        except NetmikoTimeoutException:
-            print(f"[yellow]TIMEOUT[/yellow]  {label}")
-        except (EOFError, SSHException, ValueError) as e:
-            print(f"[red]ERROR[/red]    {label}: {e}")
+    try:
+        for line in fabric:
+            line = line.strip("\n")
+            fields = [field.strip() for field in line.split(",")]
+            if len(fields) < 4:
+                if line.strip():
+                    print(f"Skipping malformed inventory line: {line!r}")
+                continue
+            ipaddr, vendor, hostname, username = fields[0], fields[1], fields[2], fields[3]
+            label = f"{hostname} ({ipaddr}, {vendor})"
+            ip_error = check_inventory_ip(ipaddr)
+            if ip_error:
+                print(f"[red]BAD IP[/red]   {label}: {ip_error}")
+                continue
+            try:
+                net_connect = ConnectHandler(
+                    device_type=vendor,
+                    ip=ipaddr,
+                    username=username,
+                    password=password,
+                    conn_timeout=60,
+                )
+                prompt = net_connect.find_prompt()
+                net_connect.disconnect()
+                print(f"[green]OK[/green]       {label} -> {prompt}")
+            except AuthenticationException:
+                print(f"[red]AUTH FAIL[/red] {label}")
+            except NetmikoTimeoutException:
+                print(f"[yellow]TIMEOUT[/yellow]  {label}")
+            except (EOFError, SSHException, ValueError) as e:
+                print(f"[red]ERROR[/red]    {label}: {e}")
+    except KeyboardInterrupt:
+        print("\nInterrupted - stopping.")
+        sys.exit(130)
     print()
     print("[cyan]Connectivity test complete.[/cyan]")
     sys.exit()
@@ -776,606 +780,610 @@ connection_fail_count: int = 0
 sshv1_skip_count = 0
 # skipped_devices: list[tuple[str, str, str]] = []  # hostname, ip, reason
 
-for line in fabric:
-    line = line.strip("\n")
-    fields = [field.strip() for field in line.split(",")]
-    if len(fields) < 4:
-        if line.strip():
-            print(f"Skipping malformed inventory line: {line!r}")
-        continue
-    device_count += 1
-    ipaddr, vendor, hostname, username = fields[0], fields[1], fields[2], fields[3]
-    # Refresh per device so the banner and "Exec time" lines reflect this
-    # switch's attempt, not the script start time.
-    now = datetime.now().astimezone()
+try:
+    for line in fabric:
+        line = line.strip("\n")
+        fields = [field.strip() for field in line.split(",")]
+        if len(fields) < 4:
+            if line.strip():
+                print(f"Skipping malformed inventory line: {line!r}")
+            continue
+        device_count += 1
+        ipaddr, vendor, hostname, username = fields[0], fields[1], fields[2], fields[3]
+        # Refresh per device so the banner and "Exec time" lines reflect this
+        # switch's attempt, not the script start time.
+        now = datetime.now().astimezone()
 
-    ip_error = check_inventory_ip(ipaddr)
-    if ip_error:
-        device_count -= 1
-        skipped_devices.append(
-            {"hostname": hostname, "ip": ipaddr, "reason": "Invalid IP address"}
-        )
-        print_panel(
-            f"Skipping [cyan]{hostname}[/cyan]: {ip_error}\n"
-            f"Fix the IP Address column for this row in {dev_inv_file}.",
-            title="Invalid IP Address",
-            border_style="red",
-            title_emoji=emoji_for("error"),
-        )
-        continue
+        ip_error = check_inventory_ip(ipaddr)
+        if ip_error:
+            device_count -= 1
+            skipped_devices.append(
+                {"hostname": hostname, "ip": ipaddr, "reason": "Invalid IP address"}
+            )
+            print_panel(
+                f"Skipping [cyan]{hostname}[/cyan]: {ip_error}\n"
+                f"Fix the IP Address column for this row in {dev_inv_file}.",
+                title="Invalid IP Address",
+                border_style="red",
+                title_emoji=emoji_for("error"),
+            )
+            continue
 
-    try:
-        sh_run, show_lldp, show_arp, interface_key, force_prefix = which_vendor(vendor)
-    except ValueError as e:
-        device_count -= 1
-        skipped_devices.append(
-            {"hostname": hostname, "ip": ipaddr, "reason": str(e)}
-        )
-        print(f"[yellow]Skipping {hostname} ({ipaddr}):[/yellow] {e}")
-        continue
-    ic(sh_run, show_lldp, show_arp, interface_key, force_prefix)
-    timeit_start: float = timeit.default_timer()
-    start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-    LOGFILE = create_filename("Failure-Logs", "-failure.txt")
-    # print("-----------------------------------------------------")
-    border = "-" * (len(hostname) + 42)
-    print(f"[bold][blue]{border}[/blue][/bold]")
-    border = f"[bold][blue]{start_time}[/blue][/bold] Connecting to switch [cyan]{hostname}[/cyan]"
-    print(f"{border}")
-    border = "-" * (len(hostname) + 42)
-    print(f"[bold][blue]{border}[/blue][/bold]")
-    # this exposes the paramiko logging module so that the timeout exception
-    # can catch ssh v1, v1.5 mismatch errors.
-    logging.getLogger("paramiko").setLevel(logging.CRITICAL)
-    try:
-        device = {
-            "device_type": vendor,
-            "ip": ipaddr,
-            "username": username,
-            "password": password,
-            "conn_timeout": 60,
-        }
-        # 🔍 Check SSH version before attempting connection
-        banner = detect_ssh_version(ipaddr)
-        if banner:
-            if banner.startswith("SSH-1.99"):
-                # SSH-1.99 is a hybrid banner — SSHv2 capable per RFC 4253
-                pass  # Let ConnectHandler try
-            elif banner.startswith("SSH-1."):
-                # Legacy SSHv1 — not supported
-                sshv1_skip_count += 1
-                skipped_devices.append(
-                    {"hostname": hostname, "ip": ipaddr, "reason": "SSHv1 only"}
-                )
+        try:
+            sh_run, show_lldp, show_arp, interface_key, force_prefix = which_vendor(vendor)
+        except ValueError as e:
+            device_count -= 1
+            skipped_devices.append(
+                {"hostname": hostname, "ip": ipaddr, "reason": str(e)}
+            )
+            print(f"[yellow]Skipping {hostname} ({ipaddr}):[/yellow] {e}")
+            continue
+        ic(sh_run, show_lldp, show_arp, interface_key, force_prefix)
+        timeit_start: float = timeit.default_timer()
+        start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+        LOGFILE = create_filename("Failure-Logs", "-failure.txt")
+        # print("-----------------------------------------------------")
+        border = "-" * (len(hostname) + 42)
+        print(f"[bold][blue]{border}[/blue][/bold]")
+        border = f"[bold][blue]{start_time}[/blue][/bold] Connecting to switch [cyan]{hostname}[/cyan]"
+        print(f"{border}")
+        border = "-" * (len(hostname) + 42)
+        print(f"[bold][blue]{border}[/blue][/bold]")
+        # this exposes the paramiko logging module so that the timeout exception
+        # can catch ssh v1, v1.5 mismatch errors.
+        logging.getLogger("paramiko").setLevel(logging.CRITICAL)
+        try:
+            device = {
+                "device_type": vendor,
+                "ip": ipaddr,
+                "username": username,
+                "password": password,
+                "conn_timeout": 60,
+            }
+            # 🔍 Check SSH version before attempting connection
+            banner = detect_ssh_version(ipaddr)
+            if banner:
+                if banner.startswith("SSH-1.99"):
+                    # SSH-1.99 is a hybrid banner — SSHv2 capable per RFC 4253
+                    pass  # Let ConnectHandler try
+                elif banner.startswith("SSH-1."):
+                    # Legacy SSHv1 — not supported
+                    sshv1_skip_count += 1
+                    skipped_devices.append(
+                        {"hostname": hostname, "ip": ipaddr, "reason": "SSHv1 only"}
+                    )
 
+                    message = (
+                        f"[red]Unsupported SSH version[/red]: {banner}\n"
+                        f"This device only supports SSHv1 and cannot be accessed by this tool.\n"
+                        f"Use console or PuTTY if needed."
+                    )
+                    print(
+                        Panel.fit(
+                            message,
+                            title="🔐 SSHv1 Detected",
+                            border_style="red",
+                            subtitle=f"Skipping {hostname}",
+                        )
+                    )
+                    log_message(strip_rich_markup(message))
+                    device_count -= 1
+                    continue
+                # else: SSH-2.0 — fully supported
+            else:
+                # No banner received — might not be an SSH server at all
                 message = (
-                    f"[red]Unsupported SSH version[/red]: {banner}\n"
-                    f"This device only supports SSHv1 and cannot be accessed by this tool.\n"
-                    f"Use console or PuTTY if needed."
+                    f"[yellow]No SSH banner received[/yellow] from {ipaddr}\n"
+                    f"Unable to determine SSH compatibility.\nSkipping to avoid hang."
                 )
                 print(
                     Panel.fit(
                         message,
-                        title="🔐 SSHv1 Detected",
-                        border_style="red",
+                        title="⚠️ No SSH Response",
+                        border_style="yellow",
                         subtitle=f"Skipping {hostname}",
                     )
                 )
                 log_message(strip_rich_markup(message))
                 device_count -= 1
+                connection_fail_count += 1
+                skipped_devices.append(
+                    {"hostname": hostname, "ip": ipaddr, "reason": "No SSH banner received"}
+                )
                 continue
-            # else: SSH-2.0 — fully supported
-        else:
-            # No banner received — might not be an SSH server at all
-            message = (
-                f"[yellow]No SSH banner received[/yellow] from {ipaddr}\n"
-                f"Unable to determine SSH compatibility.\nSkipping to avoid hang."
-            )
-            print(
-                Panel.fit(
-                    message,
-                    title="⚠️ No SSH Response",
-                    border_style="yellow",
-                    subtitle=f"Skipping {hostname}",
-                )
-            )
-            log_message(strip_rich_markup(message))
-            device_count -= 1
-            connection_fail_count += 1
-            skipped_devices.append(
-                {"hostname": hostname, "ip": ipaddr, "reason": "No SSH banner received"}
-            )
-            continue
 
-        # ✅ Now try connecting
-        net_connect = ConnectHandler(**device)
-        # Resolve whatever was in the inventory's IP column to the address we
-        # actually reached, so the "Done" banner can show it (handy when the
-        # inventory used a DNS name). Falls back to the raw value on failure.
-        try:
-            connected_ip = socket.gethostbyname(ipaddr)
-        except OSError:
-            connected_ip = ipaddr
+            # ✅ Now try connecting
+            net_connect = ConnectHandler(**device)
+            # Resolve whatever was in the inventory's IP column to the address we
+            # actually reached, so the "Done" banner can show it (handy when the
+            # inventory used a DNS name). Falls back to the raw value on failure.
+            try:
+                connected_ip = socket.gethostbyname(ipaddr)
+            except OSError:
+                connected_ip = ipaddr
 
-    except NetmikoTimeoutException as e:
-        end_time: datetime = datetime.now().astimezone()
-        device_count -= 1
-        time_out_count += 1
-        skipped_devices.append(
-            {"hostname": hostname, "ip": ipaddr, "reason": "Timeout connecting"}
-        )
-        # Improved message with underlying exception
-        message = (
-            f"Could not connect to {hostname} at {ipaddr}.\n"
-            f"[red]The connection timed out.[/red]"
-        )
-        if "Protocol major versions differ" in str(e):
-            message += (
-                f"\n[bold yellow]Warning:[/bold yellow] SSH version mismatch detected on {hostname}."
-                f"\nDevice may only support SSHv1 (deprecated on modern Linux)"
-            )
-        else:
-            message += f"\n[dim]{e!s}[/dim]"
-
-        print(
-            Panel.fit(
-                message,
-                title="⚠️ Timeout",
-                border_style="yellow",
-                subtitle=f"Timeout connecting to {hostname}",
-            )
-        )
-        log_message(strip_rich_markup(message))
-        remove_empty_lines(LOGFILE)
-        print()
-        print_times()
-        continue
-
-    except AuthenticationException:
-        auth_fail_count += 1
-        device_count -= 1
-        skipped_devices.append(
-            {"hostname": hostname, "ip": ipaddr, "reason": "Authentication failed"}
-        )
-        message = f"Could not connect to {hostname} at {ipaddr}. \n[red]The Credentials failed.[/red] \nRemove [cyan]{hostname}[/cyan] from the device inventory file"
-        print(
-            Panel.fit(
-                message,
-                title="⚠️ Credentials",
-                border_style="yellow",
-                subtitle=f"Missing credentials {hostname}",
-            )
-        )
-        log_message(strip_rich_markup(message))
-        remove_empty_lines(LOGFILE)
-        print()
-        print_times()
-        print()
-        print()
-        continue
-    except (EOFError, SSHException) as e:
-        # Generic SSH transport failure - not necessarily SSHv1
-        connection_fail_count += 1
-        device_count -= 1
-        skipped_devices.append(
-            {"hostname": hostname, "ip": ipaddr, "reason": "SSH connection failed"}
-        )
-        message = (
-            f"Could not connect to {hostname} at {ipaddr}: {e}\n"
-            "If this device only supports SSHv1 it cannot be reached by this tool."
-        )
-        print(message)
-        log_message(strip_rich_markup(message))
-        remove_empty_lines(LOGFILE)
-        print()
-        print_times()
-        continue
-
-    """
-    Valid discovery file names are:
-        discovery-hp_procurve.txt is used for all HP Procurve switches
-        discovery-cisco_ios.txt is used for all Cisco IOS switches
-        discovery-cisco_xe.txt is used for all Cisco IOS XE switches
-        discovery-cisco_nxos.txt is used for all Cisco NXOS switches
-        discovery-cisco_s300.txt is used for all Cisco SG/SGX 300 switches
-        discovery-aruba_osswitch.txt is used for all Aruba OS switches
-        discovery-aruba_aoscx.txt is used for all Aruba CX (AOS-CX) switches
-        discovery-arista_eos.txt is used for all Arista EOS switches
-        discovery-dell_os6.txt is used for all Dell N-series (OS6) switches
-        discovery-brocade_fastiron.txt is used for all Brocade FastIron switches
-        discovery-ruckus_fastiron.txt is used for all Ruckus ICX/FastIron switches
-        discovery-juniper_junos.txt is used for all Juniper Junos switches
-    """
-    cfg_file = f"discovery-{vendor}.txt"
-    print()
-    border = net_connect.find_prompt()
-    print(f"Connected to: [cyan]{border}[/cyan]")
-    print()
-    border = "-" * (len(cfg_file) + len(hostname) + 18)
-    print(f"[bold][blue]{border}[/blue][/bold]")
-    print(
-        f"Processing [bright_blue]'{cfg_file}'[/bright_blue] for [cyan]{hostname}[/cyan]"
-    )
-    border = "-" * (len(cfg_file) + len(hostname) + 18)
-    print(f"[bold][blue]{border}[/blue][/bold]")
-    remove_empty_lines(cfg_file)
-    try:
-        with open(cfg_file, encoding="utf-8") as config_file:
-            show_commands = config_file.readlines()
-    except FileNotFoundError:
-        message = f"Config file [red]{cfg_file}[/red] not found — skipping {hostname}"
-        print_panel(
-            message,
-            title="Missing Config File",
-            border_style="red",
-            title_emoji=emoji_for("error"),
-        )
-        log_message(strip_rich_markup(message))
-        skipped_devices.append(
-            {"hostname": hostname, "ip": ipaddr, "reason": f"{cfg_file} not found"}
-        )
-        device_count -= 1
-        net_connect.disconnect()
-        continue
-    ic(show_commands)
-    # Netmiko normally allows 100 seconds for send_command to complete
-    # delay_factor=2 would allow 200 seconds.
-    output_show_str: str = ""
-    time_out = args.timeout
-    for command in show_commands:
-        output_show = net_connect.send_command(
-            command, strip_command=False, delay_factor=time_out
-        )
-        # ic(output_show)
-        output_show_str = f"{output_show_str} \n\n !++++++++++++++ \n\n  {output_show}"
-
-    # pull logs. Logs tend to time out because they are so large
-    # you can set the timeout value up if they are timing out.
-    if args.event != "":
-        event_type = ""
-        try:
-            log_list = ["W", "I", "M", "D", "E", "1"]
-            log_type = args.event.split(",")
-            time_out = args.timeout
-            for event_type in log_type:
-                print(f"Processing show logging -{event_type} for {hostname}")
-                if event_type not in log_list:
-                    print(
-                        f"logging argument {event_type} for {hostname} is not supported"
-                    )
-                    continue
-                if event_type == "1":
-                    show_logging = "show logging"
-                else:
-                    show_logging = f"show logging -r -{event_type}"
-                output_event = str(
-                    net_connect.send_command(
-                        show_logging, strip_command=False, delay_factor=time_out
-                    )
-                )
-                border = "-" * (len(cfg_file) + len(hostname) + 16)
-                print(f"[bold][blue]{border}[/blue][/bold]")
-
-                #  Write the show logging output to disk
-                log_name = f"-log-{event_type}.txt"
-                int_report = create_filename("CR-data", log_name)
-                print(f"Writing show logging -{event_type} commands to {int_report}")
-                with open(int_report, "w", encoding="utf-8") as file:
-                    file.write(output_event)
-                border = "-" * (len(event_type) + len(int_report) + 36)
-                print(f"[bold][blue]{border}[/blue][/bold]")
-        except NetmikoTimeoutException:
-            end_time = datetime.now().astimezone()
-            print(f"\nExec time: {end_time - now}\n")
-            print(
-                f"Time out processing -{event_type} logs for {hostname} at {ipaddr}. "
-                "The connection timed out. Try setting -e to a higher value"
-            )
+        except NetmikoTimeoutException as e:
+            end_time: datetime = datetime.now().astimezone()
             device_count -= 1
             time_out_count += 1
             skipped_devices.append(
-                {"hostname": hostname, "ip": ipaddr, "reason": "Timeout pulling logs"}
+                {"hostname": hostname, "ip": ipaddr, "reason": "Timeout connecting"}
             )
-            net_connect.disconnect()
+            # Improved message with underlying exception
+            message = (
+                f"Could not connect to {hostname} at {ipaddr}.\n"
+                f"[red]The connection timed out.[/red]"
+            )
+            if "Protocol major versions differ" in str(e):
+                message += (
+                    f"\n[bold yellow]Warning:[/bold yellow] SSH version mismatch detected on {hostname}."
+                    f"\nDevice may only support SSHv1 (deprecated on modern Linux)"
+                )
+            else:
+                message += f"\n[dim]{e!s}[/dim]"
+
+            print(
+                Panel.fit(
+                    message,
+                    title="⚠️ Timeout",
+                    border_style="yellow",
+                    subtitle=f"Timeout connecting to {hostname}",
+                )
+            )
+            log_message(strip_rich_markup(message))
+            remove_empty_lines(LOGFILE)
+            print()
+            print_times()
             continue
 
-    # Use textFSM to create a json object with interface stats
-    interface_cmd = INTERFACE_INVENTORY_CMD.get(vendor.lower(), "show interfaces")
-    print(
-        f"collecting [bright_blue]'{interface_cmd}'[/bright_blue] for [cyan]{hostname}[/cyan]"
-    )
+        except AuthenticationException:
+            auth_fail_count += 1
+            device_count -= 1
+            skipped_devices.append(
+                {"hostname": hostname, "ip": ipaddr, "reason": "Authentication failed"}
+            )
+            message = f"Could not connect to {hostname} at {ipaddr}. \n[red]The Credentials failed.[/red] \nRemove [cyan]{hostname}[/cyan] from the device inventory file"
+            print(
+                Panel.fit(
+                    message,
+                    title="⚠️ Credentials",
+                    border_style="yellow",
+                    subtitle=f"Missing credentials {hostname}",
+                )
+            )
+            log_message(strip_rich_markup(message))
+            remove_empty_lines(LOGFILE)
+            print()
+            print_times()
+            print()
+            print()
+            continue
+        except (EOFError, SSHException) as e:
+            # Generic SSH transport failure - not necessarily SSHv1
+            connection_fail_count += 1
+            device_count -= 1
+            skipped_devices.append(
+                {"hostname": hostname, "ip": ipaddr, "reason": "SSH connection failed"}
+            )
+            message = (
+                f"Could not connect to {hostname} at {ipaddr}: {e}\n"
+                "If this device only supports SSHv1 it cannot be reached by this tool."
+            )
+            print(message)
+            log_message(strip_rich_markup(message))
+            remove_empty_lines(LOGFILE)
+            print()
+            print_times()
+            continue
 
-    output = net_connect.send_command(interface_cmd, use_textfsm=True)
-    border = "-" * (len(hostname) + 32)
-    print(f"[bold][bright_blue]{border}[/bright_blue][/bold]")
-    ic(output)
-    # Use textFSM to create a json object with cdp neighbors.
-    # Only collected for platforms that run CDP and have an ntc-templates
-    # parser (see CDP_PLATFORMS); skipped elsewhere so we don't save an
-    # error string as <hostname>-cdp.txt.
-    output_cdp: object = []
-    if vendor.lower() in CDP_PLATFORMS:
-        print(
-            f"collecting [bright_blue]'show cdp detail'[/bright_blue] for [cyan]{hostname}[/cyan]"
-        )
-        output_cdp = net_connect.send_command(
-            "show cdp neighbor detail", use_textfsm=True
-        )
-        border = "-" * (len(hostname) + 33)
+        """
+        Valid discovery file names are:
+            discovery-hp_procurve.txt is used for all HP Procurve switches
+            discovery-cisco_ios.txt is used for all Cisco IOS switches
+            discovery-cisco_xe.txt is used for all Cisco IOS XE switches
+            discovery-cisco_nxos.txt is used for all Cisco NXOS switches
+            discovery-cisco_s300.txt is used for all Cisco SG/SGX 300 switches
+            discovery-aruba_osswitch.txt is used for all Aruba OS switches
+            discovery-aruba_aoscx.txt is used for all Aruba CX (AOS-CX) switches
+            discovery-arista_eos.txt is used for all Arista EOS switches
+            discovery-dell_os6.txt is used for all Dell N-series (OS6) switches
+            discovery-brocade_fastiron.txt is used for all Brocade FastIron switches
+            discovery-ruckus_fastiron.txt is used for all Ruckus ICX/FastIron switches
+            discovery-juniper_junos.txt is used for all Juniper Junos switches
+        """
+        cfg_file = f"discovery-{vendor}.txt"
+        print()
+        border = net_connect.find_prompt()
+        print(f"Connected to: [cyan]{border}[/cyan]")
+        print()
+        border = "-" * (len(cfg_file) + len(hostname) + 18)
         print(f"[bold][blue]{border}[/blue][/bold]")
-    else:
         print(
-            f"skipping [bright_blue]'show cdp detail'[/bright_blue] for [cyan]{hostname}[/cyan] "
-            f"([yellow]{vendor}[/yellow] does not use CDP)"
+            f"Processing [bright_blue]'{cfg_file}'[/bright_blue] for [cyan]{hostname}[/cyan]"
+        )
+        border = "-" * (len(cfg_file) + len(hostname) + 18)
+        print(f"[bold][blue]{border}[/blue][/bold]")
+        remove_empty_lines(cfg_file)
+        try:
+            with open(cfg_file, encoding="utf-8") as config_file:
+                show_commands = config_file.readlines()
+        except FileNotFoundError:
+            message = f"Config file [red]{cfg_file}[/red] not found — skipping {hostname}"
+            print_panel(
+                message,
+                title="Missing Config File",
+                border_style="red",
+                title_emoji=emoji_for("error"),
+            )
+            log_message(strip_rich_markup(message))
+            skipped_devices.append(
+                {"hostname": hostname, "ip": ipaddr, "reason": f"{cfg_file} not found"}
+            )
+            device_count -= 1
+            net_connect.disconnect()
+            continue
+        ic(show_commands)
+        # Netmiko normally allows 100 seconds for send_command to complete
+        # delay_factor=2 would allow 200 seconds.
+        output_show_str: str = ""
+        time_out = args.timeout
+        for command in show_commands:
+            output_show = net_connect.send_command(
+                command, strip_command=False, delay_factor=time_out
+            )
+            # ic(output_show)
+            output_show_str = f"{output_show_str} \n\n !++++++++++++++ \n\n  {output_show}"
+
+        # pull logs. Logs tend to time out because they are so large
+        # you can set the timeout value up if they are timing out.
+        if args.event != "":
+            event_type = ""
+            try:
+                log_list = ["W", "I", "M", "D", "E", "1"]
+                log_type = args.event.split(",")
+                time_out = args.timeout
+                for event_type in log_type:
+                    print(f"Processing show logging -{event_type} for {hostname}")
+                    if event_type not in log_list:
+                        print(
+                            f"logging argument {event_type} for {hostname} is not supported"
+                        )
+                        continue
+                    if event_type == "1":
+                        show_logging = "show logging"
+                    else:
+                        show_logging = f"show logging -r -{event_type}"
+                    output_event = str(
+                        net_connect.send_command(
+                            show_logging, strip_command=False, delay_factor=time_out
+                        )
+                    )
+                    border = "-" * (len(cfg_file) + len(hostname) + 16)
+                    print(f"[bold][blue]{border}[/blue][/bold]")
+
+                    #  Write the show logging output to disk
+                    log_name = f"-log-{event_type}.txt"
+                    int_report = create_filename("CR-data", log_name)
+                    print(f"Writing show logging -{event_type} commands to {int_report}")
+                    with open(int_report, "w", encoding="utf-8") as file:
+                        file.write(output_event)
+                    border = "-" * (len(event_type) + len(int_report) + 36)
+                    print(f"[bold][blue]{border}[/blue][/bold]")
+            except NetmikoTimeoutException:
+                end_time = datetime.now().astimezone()
+                print(f"\nExec time: {end_time - now}\n")
+                print(
+                    f"Time out processing -{event_type} logs for {hostname} at {ipaddr}. "
+                    "The connection timed out. Try setting -e to a higher value"
+                )
+                device_count -= 1
+                time_out_count += 1
+                skipped_devices.append(
+                    {"hostname": hostname, "ip": ipaddr, "reason": "Timeout pulling logs"}
+                )
+                net_connect.disconnect()
+                continue
+
+        # Use textFSM to create a json object with interface stats
+        interface_cmd = INTERFACE_INVENTORY_CMD.get(vendor.lower(), "show interfaces")
+        print(
+            f"collecting [bright_blue]'{interface_cmd}'[/bright_blue] for [cyan]{hostname}[/cyan]"
         )
 
-    # Use textFSM to create a json object with interface stats, and one with
-    # system/version data. Both initialized here so a vendor with no case
-    # below doesn't fall through to the write with a stale value left over
-    # from the previous device.
-    output_show_int_br: object = []
-    output_system: object = []
-    vendor = vendor.lower()
-    match vendor:
-        case "hp_procurve":
-            template_path = os.getcwd()
-            template_file = os.path.join(template_path, "sh_int_br.textfsm")
+        output = net_connect.send_command(interface_cmd, use_textfsm=True)
+        border = "-" * (len(hostname) + 32)
+        print(f"[bold][bright_blue]{border}[/bright_blue][/bold]")
+        ic(output)
+        # Use textFSM to create a json object with cdp neighbors.
+        # Only collected for platforms that run CDP and have an ntc-templates
+        # parser (see CDP_PLATFORMS); skipped elsewhere so we don't save an
+        # error string as <hostname>-cdp.txt.
+        output_cdp: object = []
+        if vendor.lower() in CDP_PLATFORMS:
             print(
-                f"collecting [bright_blue]'show interfaces brief'[/bright_blue] for [cyan]{hostname}[/cyan]"
+                f"collecting [bright_blue]'show cdp detail'[/bright_blue] for [cyan]{hostname}[/cyan]"
             )
-            output_show_int_br = net_connect.send_command(
-                "show interfaces brief",
-                strip_command=True,
-                use_textfsm=True,
-                textfsm_template=template_file,
+            output_cdp = net_connect.send_command(
+                "show cdp neighbor detail", use_textfsm=True
             )
-            # border = "-" * (len(cfg_file) + len(hostname) + 16)
-            border = "-" * (len(hostname) + 37)
+            border = "-" * (len(hostname) + 33)
             print(f"[bold][blue]{border}[/blue][/bold]")
+        else:
             print(
-                f"collecting [bright_blue]'show system information'[/bright_blue] for [cyan]{hostname}[/cyan]"
-            )
-            output_system = net_connect.send_command(
-                "show system information", use_textfsm=True
-            )
-        case "cisco_ios" | "cisco_xe":
-            output_show_int_br = net_connect.send_command(
-                "show interfaces status",
-                strip_command=True,
-                use_textfsm=True,
-            )
-            output_system = net_connect.send_command(
-                "show version",
-                strip_command=True,
-                use_textfsm=True,
-            )
-        case "cisco_nxos":
-            output_show_int_br = net_connect.send_command(
-                "show interfaces status",
-                strip_command=True,
-                use_textfsm=True,
-            )
-            output_system = net_connect.send_command(
-                "show version",
-                strip_command=True,
-                use_textfsm=True,
-            )
-        case "aruba_aoscx":
-            output_show_int_br = net_connect.send_command(
-                "show interfaces status",
-                strip_command=True,
-                use_textfsm=True,
-            )
-            output_system = net_connect.send_command(
-                "show system",
-                strip_command=True,
-                use_textfsm=True,
-            )
-        case "aruba_osswitch":
-            output_show_int_br = net_connect.send_command(
-                "show interfaces status",
-                strip_command=True,
-                use_textfsm=True,
-            )
-            # No "show version"/"show system" textfsm template exists for
-            # aruba_osswitch (ArubaOS-Switch) as of this writing - leave
-            # output_system at its empty default rather than save raw text.
-        case "cisco_s300":
-            output_show_int_br = net_connect.send_command(
-                "show interfaces status",
-                strip_command=True,
-                use_textfsm=True,
-            )
-            output_system = net_connect.send_command(
-                "show version",
-                strip_command=True,
-                use_textfsm=True,
-            )
-        case _:
-            print(
-                f"[yellow]No 'show interfaces brief/status' collection defined for "
-                f"{vendor} - writing an empty {hostname}-int_br.txt[/yellow]"
+                f"skipping [bright_blue]'show cdp detail'[/bright_blue] for [cyan]{hostname}[/cyan] "
+                f"([yellow]{vendor}[/yellow] does not use CDP)"
             )
 
-    # Use textFSM to create a json object with show lldp info remote
-    print(
-        f"collecting [bright_blue]'show lldp neighbors'[/bright_blue] for [cyan]{hostname}[/cyan]"
-    )
-    output_show_lldp = net_connect.send_command(show_lldp, use_textfsm=True)
-    border = "-" * (len(hostname) + 37)
-    print(f"[bold][blue]{border}[/blue][/bold]")
+        # Use textFSM to create a json object with interface stats, and one with
+        # system/version data. Both initialized here so a vendor with no case
+        # below doesn't fall through to the write with a stale value left over
+        # from the previous device.
+        output_show_int_br: object = []
+        output_system: object = []
+        vendor = vendor.lower()
+        match vendor:
+            case "hp_procurve":
+                template_path = os.getcwd()
+                template_file = os.path.join(template_path, "sh_int_br.textfsm")
+                print(
+                    f"collecting [bright_blue]'show interfaces brief'[/bright_blue] for [cyan]{hostname}[/cyan]"
+                )
+                output_show_int_br = net_connect.send_command(
+                    "show interfaces brief",
+                    strip_command=True,
+                    use_textfsm=True,
+                    textfsm_template=template_file,
+                )
+                # border = "-" * (len(cfg_file) + len(hostname) + 16)
+                border = "-" * (len(hostname) + 37)
+                print(f"[bold][blue]{border}[/blue][/bold]")
+                print(
+                    f"collecting [bright_blue]'show system information'[/bright_blue] for [cyan]{hostname}[/cyan]"
+                )
+                output_system = net_connect.send_command(
+                    "show system information", use_textfsm=True
+                )
+            case "cisco_ios" | "cisco_xe":
+                output_show_int_br = net_connect.send_command(
+                    "show interfaces status",
+                    strip_command=True,
+                    use_textfsm=True,
+                )
+                output_system = net_connect.send_command(
+                    "show version",
+                    strip_command=True,
+                    use_textfsm=True,
+                )
+            case "cisco_nxos":
+                output_show_int_br = net_connect.send_command(
+                    "show interfaces status",
+                    strip_command=True,
+                    use_textfsm=True,
+                )
+                output_system = net_connect.send_command(
+                    "show version",
+                    strip_command=True,
+                    use_textfsm=True,
+                )
+            case "aruba_aoscx":
+                output_show_int_br = net_connect.send_command(
+                    "show interfaces status",
+                    strip_command=True,
+                    use_textfsm=True,
+                )
+                output_system = net_connect.send_command(
+                    "show system",
+                    strip_command=True,
+                    use_textfsm=True,
+                )
+            case "aruba_osswitch":
+                output_show_int_br = net_connect.send_command(
+                    "show interfaces status",
+                    strip_command=True,
+                    use_textfsm=True,
+                )
+                # No "show version"/"show system" textfsm template exists for
+                # aruba_osswitch (ArubaOS-Switch) as of this writing - leave
+                # output_system at its empty default rather than save raw text.
+            case "cisco_s300":
+                output_show_int_br = net_connect.send_command(
+                    "show interfaces status",
+                    strip_command=True,
+                    use_textfsm=True,
+                )
+                output_system = net_connect.send_command(
+                    "show version",
+                    strip_command=True,
+                    use_textfsm=True,
+                )
+            case _:
+                print(
+                    f"[yellow]No 'show interfaces brief/status' collection defined for "
+                    f"{vendor} - writing an empty {hostname}-int_br.txt[/yellow]"
+                )
 
-    # collect arp
-    print(
-        f"collecting [bright_blue]'show arp'[/bright_blue] for [cyan]{hostname}[/cyan]"
-    )
-    output_text_arp = str(net_connect.send_command(show_arp, read_timeout=200))
-    border = "-" * (len(hostname) + 26)
-    print(f"[bold][blue]{border}[/blue][/bold]")
-
-    # Send show running
-    print(
-        f"Collecting [bright_blue]'show running-config'[/bright_blue] from [cyan]{hostname}[/cyan]"
-    )
-    # print(net_connect.find_prompt())
-    output_text_run = str(net_connect.send_command(sh_run, read_timeout=360))
-    border = "-" * (len(hostname) + 38)
-    print(f"[bold][blue]{border}[/blue][/bold]")
-
-    #  Write the JSON interface data to a file
-    int_report = create_filename("Interface", "-interface.json")
-    print(f"Writing [cyan]'interfaces json data'[/cyan] to\n {int_report}")
-    with open(int_report, "w", encoding="utf-8") as file:
-        output = json.dumps(check_textfsm(output, "show interfaces"), indent=2)
-        file.write(output)
-    border = "-" * (len(int_report) + 1)
-    print(f"[bold][blue]{border}[/blue][/bold]")
-
-    # create a mac-address query file from the JSON interface data
-    json_interface = create_filename("Interface", "-interface.json")
-    output_mac_address = create_filename("port-maps", "-send-mac-addr.txt", "data")
-    try:
-        generate_mac_query_file_from_json(
-            json_file_path=json_interface,
-            output_file_path=output_mac_address,
-            vendor=vendor,
-            interface_key=interface_key,
-            force_prefix=force_prefix,
+        # Use textFSM to create a json object with show lldp info remote
+        print(
+            f"collecting [bright_blue]'show lldp neighbors'[/bright_blue] for [cyan]{hostname}[/cyan]"
         )
-    except ValueError as e:
-        message = f"[yellow]Skipping MAC query for {hostname}:[/yellow] {e}"
-        print_panel(
-            message,
-            title="MAC Query Skipped",
-            border_style="yellow",
-            title_emoji=emoji_for("warning"),
+        output_show_lldp = net_connect.send_command(show_lldp, use_textfsm=True)
+        border = "-" * (len(hostname) + 37)
+        print(f"[bold][blue]{border}[/blue][/bold]")
+
+        # collect arp
+        print(
+            f"collecting [bright_blue]'show arp'[/bright_blue] for [cyan]{hostname}[/cyan]"
         )
-        log_message(strip_rich_markup(message))
+        output_text_arp = str(net_connect.send_command(show_arp, read_timeout=200))
+        border = "-" * (len(hostname) + 26)
+        print(f"[bold][blue]{border}[/blue][/bold]")
 
-    border = "-" * (len(output_mac_address) + 1)
-    print(f"[bold][blue]{border}[/blue][/bold]")
-
-    if os.path.isfile(output_mac_address):
-        remove_empty_lines(output_mac_address)
-        with open(output_mac_address, encoding="utf-8") as mac_add_file:
-            show_commands = mac_add_file.readlines()
-    else:
-        show_commands = []
-    ic(show_commands)
-    # Netmiko normally allows 100 seconds for send_command to complete
-    # delay_factor=2 would allow 200 seconds.
-    output_mac_str = ""
-    time_out = args.timeout
-    for command in show_commands:
-        output_show = net_connect.send_command(
-            command, strip_command=False, delay_factor=time_out
+        # Send show running
+        print(
+            f"Collecting [bright_blue]'show running-config'[/bright_blue] from [cyan]{hostname}[/cyan]"
         )
-        # ic(output_show)
-        output_mac_str = f"{output_mac_str} {output_show} \n"
-        ic(output_mac_str)
-        # output_mac_str = f"{output_show}"
+        # print(net_connect.find_prompt())
+        output_text_run = str(net_connect.send_command(sh_run, read_timeout=360))
+        border = "-" * (len(hostname) + 38)
+        print(f"[bold][blue]{border}[/blue][/bold]")
 
-    #  Write the show mac address commands output to disk
-    int_report = create_filename("port-maps", "-mac-address.txt", "data")
-    print(f"Writing MAC address commands for {vendor} to\n {int_report}")
-    with open(int_report, "w", encoding="utf-8") as file:
-        file.write(output_mac_str)
-    # border = "-" * (len(dev_inv_file) + 25)
-    border = "-" * (len(int_report) + 1)
-    print(f"[bold][blue]{border}[/blue][/bold]")
+        #  Write the JSON interface data to a file
+        int_report = create_filename("Interface", "-interface.json")
+        print(f"Writing [cyan]'interfaces json data'[/cyan] to\n {int_report}")
+        with open(int_report, "w", encoding="utf-8") as file:
+            output = json.dumps(check_textfsm(output, "show interfaces"), indent=2)
+            file.write(output)
+        border = "-" * (len(int_report) + 1)
+        print(f"[bold][blue]{border}[/blue][/bold]")
 
-    # Disconnect from the switch and start writing data to disk
-    net_connect.disconnect()
+        # create a mac-address query file from the JSON interface data
+        json_interface = create_filename("Interface", "-interface.json")
+        output_mac_address = create_filename("port-maps", "-send-mac-addr.txt", "data")
+        try:
+            generate_mac_query_file_from_json(
+                json_file_path=json_interface,
+                output_file_path=output_mac_address,
+                vendor=vendor,
+                interface_key=interface_key,
+                force_prefix=force_prefix,
+            )
+        except ValueError as e:
+            message = f"[yellow]Skipping MAC query for {hostname}:[/yellow] {e}"
+            print_panel(
+                message,
+                title="MAC Query Skipped",
+                border_style="yellow",
+                title_emoji=emoji_for("warning"),
+            )
+            log_message(strip_rich_markup(message))
 
-    #  Write the CR Data show commands output to disk
-    int_report = create_filename("CR-data", "-CR-data.txt")
-    print(f"Writing 'show commands' to\n {int_report}")
-    with open(int_report, "w", encoding="utf-8") as file:
-        file.write(output_show_str)
-    border = "-" * (len(int_report) + 1)
-    print(f"[bold][blue]{border}[/blue][/bold]")
+        border = "-" * (len(output_mac_address) + 1)
+        print(f"[bold][blue]{border}[/blue][/bold]")
 
-    # Write the arp table plain text output to disk
-    int_report = create_filename("port-maps", "-arp.txt", "data")
-    print(f"Writing [bright_blue]'show arp'[/bright_blue] data to\n {int_report}")
-    with open(int_report, "w", encoding="utf-8") as file:
-        file.write(output_text_arp)
-    border = "-" * (len(int_report) + 1)
-    print(f"[bold][blue]{border}[/blue][/bold]")
+        if os.path.isfile(output_mac_address):
+            remove_empty_lines(output_mac_address)
+            with open(output_mac_address, encoding="utf-8") as mac_add_file:
+                show_commands = mac_add_file.readlines()
+        else:
+            show_commands = []
+        ic(show_commands)
+        # Netmiko normally allows 100 seconds for send_command to complete
+        # delay_factor=2 would allow 200 seconds.
+        output_mac_str = ""
+        time_out = args.timeout
+        for command in show_commands:
+            output_show = net_connect.send_command(
+                command, strip_command=False, delay_factor=time_out
+            )
+            # ic(output_show)
+            output_mac_str = f"{output_mac_str} {output_show} \n"
+            ic(output_mac_str)
+            # output_mac_str = f"{output_show}"
 
-    #  Write the running config to disk
-    int_report = create_filename("Running", "-running-config.txt")
-    print(f"Writing 'show running' output to\n {int_report}")
-    with open(int_report, "w", encoding="utf-8") as file:
-        file.write(output_text_run)
-    border = "-" * (len(int_report) + 1)
-    print(f"[bold][blue]{border}[/blue][/bold]")
+        #  Write the show mac address commands output to disk
+        int_report = create_filename("port-maps", "-mac-address.txt", "data")
+        print(f"Writing MAC address commands for {vendor} to\n {int_report}")
+        with open(int_report, "w", encoding="utf-8") as file:
+            file.write(output_mac_str)
+        # border = "-" * (len(dev_inv_file) + 25)
+        border = "-" * (len(int_report) + 1)
+        print(f"[bold][blue]{border}[/blue][/bold]")
 
-    # Write the JSON interface brief data to a file
-    int_report = create_filename("Interface", "-int_br.txt")
-    print(f"Writing 'show interfaces brief' data to\n {int_report}")
-    with open(int_report, "w", encoding="utf-8") as file:
-        output_show_int_br = json.dumps(
-            check_textfsm(output_show_int_br, "show interfaces brief/status"), indent=2
+        # Disconnect from the switch and start writing data to disk
+        net_connect.disconnect()
+
+        #  Write the CR Data show commands output to disk
+        int_report = create_filename("CR-data", "-CR-data.txt")
+        print(f"Writing 'show commands' to\n {int_report}")
+        with open(int_report, "w", encoding="utf-8") as file:
+            file.write(output_show_str)
+        border = "-" * (len(int_report) + 1)
+        print(f"[bold][blue]{border}[/blue][/bold]")
+
+        # Write the arp table plain text output to disk
+        int_report = create_filename("port-maps", "-arp.txt", "data")
+        print(f"Writing [bright_blue]'show arp'[/bright_blue] data to\n {int_report}")
+        with open(int_report, "w", encoding="utf-8") as file:
+            file.write(output_text_arp)
+        border = "-" * (len(int_report) + 1)
+        print(f"[bold][blue]{border}[/blue][/bold]")
+
+        #  Write the running config to disk
+        int_report = create_filename("Running", "-running-config.txt")
+        print(f"Writing 'show running' output to\n {int_report}")
+        with open(int_report, "w", encoding="utf-8") as file:
+            file.write(output_text_run)
+        border = "-" * (len(int_report) + 1)
+        print(f"[bold][blue]{border}[/blue][/bold]")
+
+        # Write the JSON interface brief data to a file
+        int_report = create_filename("Interface", "-int_br.txt")
+        print(f"Writing 'show interfaces brief' data to\n {int_report}")
+        with open(int_report, "w", encoding="utf-8") as file:
+            output_show_int_br = json.dumps(
+                check_textfsm(output_show_int_br, "show interfaces brief/status"), indent=2
+            )
+            file.write(output_show_int_br)
+        # print("-" * (len(dev_inv_file) + 23))
+        border = "-" * (len(int_report) + 1)
+        print(f"[bold][blue]{border}[/blue][/bold]")
+
+        # Write the JSON system/version data to a file
+        int_report = create_filename("Interface", "-system.txt")
+        print(f"Writing 'show system/version' data to\n {int_report}")
+        with open(int_report, "w", encoding="utf-8") as file:
+            output_system = json.dumps(
+                check_textfsm(output_system, "show system information/version"), indent=2
+            )
+            file.write(output_system)
+        border = "-" * (len(int_report) + 1)
+        print(f"[bold][blue]{border}[/blue][/bold]")
+
+        # Write the JSON cdp neighbor data to a file
+        int_report = create_filename("Interface", "-cdp.txt")
+        print(f"Writing 'show cdp neighbor' data to\n {int_report}")
+        with open(int_report, "w", encoding="utf-8") as file:
+            output_cdp = json.dumps(
+                check_textfsm(output_cdp, "show cdp neighbor detail"), indent=2
+            )
+            file.write(output_cdp)
+        border = "-" * (len(int_report) + 1)
+        print(f"[bold][blue]{border}[/blue][/bold]")
+
+        # Write the show lldp JSON data to a file
+        int_report = create_filename("Interface", "-lldp.txt")
+        print(f"Writing 'show lldp' data to\n {int_report}")
+        with open(int_report, "w", encoding="utf-8") as file:
+            output_show_lldp = json.dumps(
+                check_textfsm(output_show_lldp, show_lldp), indent=2
+            )
+            file.write(output_show_lldp)
+        border = "-" * (len(int_report) + 1)
+        print(f"[bold][blue]{border}[/blue][/bold]")
+        print()
+
+        if connected_ip == ipaddr:
+            where = f"[cyan]{ipaddr}[/cyan]"
+        else:
+            where = f"[cyan]{ipaddr}[/cyan] ([cyan]{connected_ip}[/cyan])"
+        message = (
+            f"[bright_green]Successfully created config files for[/bright_green] "
+            f"[cyan]{hostname}[/cyan] at {where}"
         )
-        file.write(output_show_int_br)
-    # print("-" * (len(dev_inv_file) + 23))
-    border = "-" * (len(int_report) + 1)
-    print(f"[bold][blue]{border}[/blue][/bold]")
-
-    # Write the JSON system/version data to a file
-    int_report = create_filename("Interface", "-system.txt")
-    print(f"Writing 'show system/version' data to\n {int_report}")
-    with open(int_report, "w", encoding="utf-8") as file:
-        output_system = json.dumps(
-            check_textfsm(output_system, "show system information/version"), indent=2
+        print(
+            Panel.fit(
+                message,
+                title="✅ Done",
+                border_style="cyan",
+                # subtitle=f"Devices completed: {device_count}",
+                subtitle=f"{device_count} device completed of {num_devices} total",
+            )
         )
-        file.write(output_system)
-    border = "-" * (len(int_report) + 1)
-    print(f"[bold][blue]{border}[/blue][/bold]")
-
-    # Write the JSON cdp neighbor data to a file
-    int_report = create_filename("Interface", "-cdp.txt")
-    print(f"Writing 'show cdp neighbor' data to\n {int_report}")
-    with open(int_report, "w", encoding="utf-8") as file:
-        output_cdp = json.dumps(
-            check_textfsm(output_cdp, "show cdp neighbor detail"), indent=2
-        )
-        file.write(output_cdp)
-    border = "-" * (len(int_report) + 1)
-    print(f"[bold][blue]{border}[/blue][/bold]")
-
-    # Write the show lldp JSON data to a file
-    int_report = create_filename("Interface", "-lldp.txt")
-    print(f"Writing 'show lldp' data to\n {int_report}")
-    with open(int_report, "w", encoding="utf-8") as file:
-        output_show_lldp = json.dumps(
-            check_textfsm(output_show_lldp, show_lldp), indent=2
-        )
-        file.write(output_show_lldp)
-    border = "-" * (len(int_report) + 1)
-    print(f"[bold][blue]{border}[/blue][/bold]")
-    print()
-
-    if connected_ip == ipaddr:
-        where = f"[cyan]{ipaddr}[/cyan]"
-    else:
-        where = f"[cyan]{ipaddr}[/cyan] ([cyan]{connected_ip}[/cyan])"
-    message = (
-        f"[bright_green]Successfully created config files for[/bright_green] "
-        f"[cyan]{hostname}[/cyan] at {where}"
-    )
-    print(
-        Panel.fit(
-            message,
-            title="✅ Done",
-            border_style="cyan",
-            # subtitle=f"Devices completed: {device_count}",
-            subtitle=f"{device_count} device completed of {num_devices} total",
-        )
-    )
-    print()
-    print_times()
+        print()
+        print_times()
+except KeyboardInterrupt:
+    print("\nInterrupted - stopping.")
+    sys.exit(130)
 print()
 stop = timeit.default_timer()
 total_time = stop - start

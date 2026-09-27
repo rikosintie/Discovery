@@ -173,87 +173,91 @@ print("-" * (len(dev_inv_file) + 23))
 print(f"Reading devices from: {dev_inv_file}")
 print("-" * (len(dev_inv_file) + 23))
 
-for line in fabric:
-    line = line.strip("\n")
-    fields = [field.strip() for field in line.split(",")]
-    if len(fields) < 4:
-        print(f"Skipping malformed inventory line: {line!r}")
-        continue
-    ipaddr, vendor, hostname, username = fields[0], fields[1], fields[2], fields[3]
+try:
+    for line in fabric:
+        line = line.strip("\n")
+        fields = [field.strip() for field in line.split(",")]
+        if len(fields) < 4:
+            print(f"Skipping malformed inventory line: {line!r}")
+            continue
+        ipaddr, vendor, hostname, username = fields[0], fields[1], fields[2], fields[3]
 
-    if vendor.lower() != "cisco_ios":
-        continue
+        if vendor.lower() != "cisco_ios":
+            continue
 
-    now = datetime.now().astimezone()
-    start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-    print("-----------------------------------------------------")
-    print(f"{start_time} Connecting to switch {hostname}")
-    print("-----------------------------------------------------")
-    try:
-        device = {
-            "device_type": vendor,
-            "ip": ipaddr,
-            "username": username,
-            "password": password,
-            "conn_timeout": 60,
-        }
-        net_connect = ConnectHandler(**device)
-    except (
-        NetmikoTimeoutException,
-        NetmikoAuthenticationException,
-        EOFError,
-        SSHException,
-    ) as error:
-        print(f"Could not connect to {hostname}: {error}")
+        now = datetime.now().astimezone()
+        start_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+        print("-----------------------------------------------------")
+        print(f"{start_time} Connecting to switch {hostname}")
+        print("-----------------------------------------------------")
+        try:
+            device = {
+                "device_type": vendor,
+                "ip": ipaddr,
+                "username": username,
+                "password": password,
+                "conn_timeout": 60,
+            }
+            net_connect = ConnectHandler(**device)
+        except (
+            NetmikoTimeoutException,
+            NetmikoAuthenticationException,
+            EOFError,
+            SSHException,
+        ) as error:
+            print(f"Could not connect to {hostname}: {error}")
+            end_time = datetime.now().astimezone()
+            print(f"\nExec time: {end_time - now}\n")
+            continue
+
+        try:
+            print(f"Processing {hostname}")
+            print()
+            print(net_connect.find_prompt())
+
+            # pull a config diff
+            print(f"processing show archive config diff for {hostname}")
+            output_diff = str(
+                net_connect.send_command("show archive config diff", read_timeout=360)
+            )
+
+            # Use TextFSM to create a json object with cdp neighbors
+            print(f"processing show cdp for {hostname}")
+            output_cdp = net_connect.send_command(
+                "show cdp neighbor detail", use_textfsm=True
+            )
+
+            # Use TextFSM to create a json object with show ip eigrp neighbors
+            print(f"processing show eigrp ne for {hostname}")
+            output_eigrp_ne = net_connect.send_command(
+                "show ip eigrp neighbors", use_textfsm=True
+            )
+
+            # Use TextFSM to create a json object with ospf ne
+            print(f"processing show IP OSPF NE for {hostname}")
+            output_ospf_ne = net_connect.send_command(
+                "show ip ospf neighbor", use_textfsm=True
+            )
+        finally:
+            net_connect.disconnect()
+
+        # Write the config diff data to a file
+        int_report = create_filename("CR-data", "-diff.txt")
+        print(f"Writing config diff data to {int_report}")
+        with open(int_report, "w", encoding="utf-8") as file:
+            file.write(output_diff)
+
+        # Write the JSON OSPF NE data to a file
+        write_json("CR-data", "-ospf_ne.txt", output_ospf_ne)
+
+        # Write the JSON cdp neighbor data to a file
+        write_json("CR-data", "-cdp_ne.txt", output_cdp)
+
+        # Write the JSON eigrp neighbor data to a file
+        write_json("CR-data", "-eigrp_ne.txt", output_eigrp_ne)
+
         end_time = datetime.now().astimezone()
         print(f"\nExec time: {end_time - now}\n")
-        continue
-
-    try:
-        print(f"Processing {hostname}")
-        print()
-        print(net_connect.find_prompt())
-
-        # pull a config diff
-        print(f"processing show archive config diff for {hostname}")
-        output_diff = str(
-            net_connect.send_command("show archive config diff", read_timeout=360)
-        )
-
-        # Use TextFSM to create a json object with cdp neighbors
-        print(f"processing show cdp for {hostname}")
-        output_cdp = net_connect.send_command(
-            "show cdp neighbor detail", use_textfsm=True
-        )
-
-        # Use TextFSM to create a json object with show ip eigrp neighbors
-        print(f"processing show eigrp ne for {hostname}")
-        output_eigrp_ne = net_connect.send_command(
-            "show ip eigrp neighbors", use_textfsm=True
-        )
-
-        # Use TextFSM to create a json object with ospf ne
-        print(f"processing show IP OSPF NE for {hostname}")
-        output_ospf_ne = net_connect.send_command(
-            "show ip ospf neighbor", use_textfsm=True
-        )
-    finally:
-        net_connect.disconnect()
-
-    # Write the config diff data to a file
-    int_report = create_filename("CR-data", "-diff.txt")
-    print(f"Writing config diff data to {int_report}")
-    with open(int_report, "w", encoding="utf-8") as file:
-        file.write(output_diff)
-
-    # Write the JSON OSPF NE data to a file
-    write_json("CR-data", "-ospf_ne.txt", output_ospf_ne)
-
-    # Write the JSON cdp neighbor data to a file
-    write_json("CR-data", "-cdp_ne.txt", output_cdp)
-
-    # Write the JSON eigrp neighbor data to a file
-    write_json("CR-data", "-eigrp_ne.txt", output_eigrp_ne)
-
-    end_time = datetime.now().astimezone()
-    print(f"\nExec time: {end_time - now}\n")
+except KeyboardInterrupt:
+    print("\nInterrupted - stopping.")
+    sys.exit(130)

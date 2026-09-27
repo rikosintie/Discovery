@@ -115,82 +115,86 @@ print("-" * (len(dev_inv_file) + 23))
 
 #  Create the interface-disable files
 found_cisco_ios = False
-for line in fabric:
-    line = line.strip("\n")
-    vendor = line.split(",")[1]
-    hostname = line.split(",")[2]
-    if vendor.lower() == "cisco_ios":
-        found_cisco_ios = True
-        now = datetime.now().astimezone()
-        date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-        print(f"{date_time} Creating interface file for {hostname}")
-        print(f"Configuring {hostname}")
-        cfg_file = create_filename("Interface", "-interface.json")
-        print()
-        with open(cfg_file, "r", encoding="utf-8") as json_file:
-            interfaces = json.load(json_file)
-        ports = []
-        count = 0
-        #  Create a regex to match any port with [0-8]/1/[0-9]{1,2}
-        #  This will match all ports with a 1 as the module number
+try:
+    for line in fabric:
+        line = line.strip("\n")
+        vendor = line.split(",")[1]
+        hostname = line.split(",")[2]
+        if vendor.lower() == "cisco_ios":
+            found_cisco_ios = True
+            now = datetime.now().astimezone()
+            date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+            print(f"{date_time} Creating interface file for {hostname}")
+            print(f"Configuring {hostname}")
+            cfg_file = create_filename("Interface", "-interface.json")
+            print()
+            with open(cfg_file, "r", encoding="utf-8") as json_file:
+                interfaces = json.load(json_file)
+            ports = []
+            count = 0
+            #  Create a regex to match any port with [0-8]/1/[0-9]{1,2}
+            #  This will match all ports with a 1 as the module number
 
-        regexpattern = re.compile(r"\w*[0-8]/1/[0-9]{1,2}")
-        #  print(f'Regex pattern: {regexpattern}')
-        for interface in interfaces:
-            a = re.findall(regexpattern, interface["interface"])
-            if interface["link_status"] == "up" and len(a):
-                count += 1
-                iName = interface["interface"]
-                iName = iName[-5:]
-                iAddress = interface["ip_address"]
-                if iAddress == "":
-                    IP = ""
-                ports.append(
-                    "interface "
-                    + iName
-                    + "\n"
-                    + "description "
-                    + interface["description"]
-                    + "\n"
-                    + IP
-                    + interface["ip_address"]
-                    + "\n"
-                    + " exit"
-                    + "\n"
-                )
-        # look for Vlans
+            regexpattern = re.compile(r"\w*[0-8]/1/[0-9]{1,2}")
+            #  print(f'Regex pattern: {regexpattern}')
+            for interface in interfaces:
+                a = re.findall(regexpattern, interface["interface"])
+                if interface["link_status"] == "up" and len(a):
+                    count += 1
+                    iName = interface["interface"]
+                    iName = iName[-5:]
+                    iAddress = interface["ip_address"]
+                    if iAddress == "":
+                        IP = ""
+                    ports.append(
+                        "interface "
+                        + iName
+                        + "\n"
+                        + "description "
+                        + interface["description"]
+                        + "\n"
+                        + IP
+                        + interface["ip_address"]
+                        + "\n"
+                        + " exit"
+                        + "\n"
+                    )
+            # look for Vlans
 
-        regexpattern = re.compile(r"Vlan[0-9]{1,4}")
-        #  print(f'Regex pattern: {regexpattern}')
-        for interface in interfaces:
-            a = re.findall(regexpattern, interface["interface"])
-            if interface["link_status"] == "up" and len(a):
-                count += 1
-                # Aruba CX uses "vlan 10", not Cisco's "Vlan10" — lowercase,
-                # with a space before the number.
-                iName = re.sub(r"[Vv]lan(\d+)", r"vlan \1", interface["interface"])
-                iAddress = interface["ip_address"]
-                IP = "ip address "
-                if iAddress == "":
-                    IP = ""
-                ports.append(
-                    "interface "
-                    + iName
-                    + "\n"
-                    + "description "
-                    + interface["description"]
-                    + "\n"
-                    + IP
-                    + interface["ip_address"]
-                    + "\n"
-                    + " exit"
-                    + "\n"
-                )
+            regexpattern = re.compile(r"Vlan[0-9]{1,4}")
+            #  print(f'Regex pattern: {regexpattern}')
+            for interface in interfaces:
+                a = re.findall(regexpattern, interface["interface"])
+                if interface["link_status"] == "up" and len(a):
+                    count += 1
+                    # Aruba CX uses "vlan 10", not Cisco's "Vlan10" — lowercase,
+                    # with a space before the number.
+                    iName = re.sub(r"[Vv]lan(\d+)", r"vlan \1", interface["interface"])
+                    iAddress = interface["ip_address"]
+                    IP = "ip address "
+                    if iAddress == "":
+                        IP = ""
+                    ports.append(
+                        "interface "
+                        + iName
+                        + "\n"
+                        + "description "
+                        + interface["description"]
+                        + "\n"
+                        + IP
+                        + interface["ip_address"]
+                        + "\n"
+                        + " exit"
+                        + "\n"
+                    )
 
-        print(f"Number of ports to be migrated on {hostname}: {count}")
-        migrate = create_filename("Interface", "-interface-migrate.txt")
-        with open(migrate, "w", encoding="utf-8") as file:
-            file.writelines(ports)
+            print(f"Number of ports to be migrated on {hostname}: {count}")
+            migrate = create_filename("Interface", "-interface-migrate.txt")
+            with open(migrate, "w", encoding="utf-8") as file:
+                file.writelines(ports)
 
+except KeyboardInterrupt:
+    print("\nInterrupted - stopping.")
+    sys.exit(130)
 if not found_cisco_ios:
     print(f"No cisco_ios switch found in {dev_inv_file}")
