@@ -1,10 +1,13 @@
 # Creating Port maps
 
-There are two scripts in the discovery folder:
+Building a port map is a two-step process: `arp.py` builds an IP-to-MAC
+lookup table from a switch's ARP cache, then `port-map.py` matches that
+table against the switch's MAC address table to show what's plugged into
+every port.
 
-- arp.py - converts the IP and Arp records into "key": "value" pairs
-
-Here is an example:
+**`arp.py`** converts the IP and ARP records into `"mac": "ip"` pairs and
+saves them to hostname-Mac2IP.json in the data folder. The MAC address is
+used as the key since MACs are unique; the IP address is the value:
 
 ```bash
 {
@@ -15,9 +18,7 @@ Here is an example:
 }
 ```
 
-The Mac Address is used for the key since MACs are unique, the IP Address is used for the value. It saves the data to hostname-Mac2IP.json in the data folder.
-
-- port-map.py - Matches the Mac address in the hostname-Mac2IP.json file to the mac address in the hostname-mac-address.txt file.
+**`port-map.py`** matches the MAC address in the hostname-Mac2IP.json file to the mac address in the hostname-mac-address.txt file.
 
 The port maps return:
 
@@ -111,10 +112,9 @@ are.
 exported from the firewall's ARP cache (`firewall_arp_cache.csv`, written by
 `snmp_arp_cache.py` — see
 [Polling a Firewall's ARP Table via SNMP](../appendix/appendix-firewall-arp-snmp.md) for
-setup — with columns `IP Address,Type,MAC Address,Vendor,Interface`), keeps
-only the interfaces/VLANs the core switch can't see,
-converts the MACs to the same `aabb.ccdd.eeff` format `arp.py` uses, and
-merges them into the existing `coreswitch-Mac2IP.json`.
+setup — with columns `IP Address,Type,MAC Address,Vendor,Interface`),
+converts each MAC to the dot-grouped `aabb.ccdd.eeff` format, and merges
+them into the existing `coreswitch-Mac2IP.json`.
 
 Run it **after** `arp.py` and **before** `port-map.py` — `arp.py` rebuilds
 `coreswitch-Mac2IP.json` from scratch every run, so anything merged in
@@ -133,26 +133,30 @@ the CSV gets merged unconditionally — `port-map.py` only looks up
 labels, so there's nothing to filter by (see
 [Polling a Firewall's ARP Table via SNMP](../appendix/appendix-firewall-arp-snmp.md)).
 
-Getting the CSV out of the SonicWall's web UI was rough — there's no clean
-export button on this model/firmware, so it was highlight, copy, paste into
-a text editor, then hand-clean the mess before it was usable as a CSV. If
-your firewall has SNMP enabled, `snmpwalk` against its ARP table is a much
-less painful way to get the same MAC/IP pairing from Linux:
+`merge-firewall-arp.py` always writes MACs in that one dot-grouped format,
+regardless of what notation the core switch itself uses — it doesn't check
+whether the core switch is Cisco, ProCurve, or Aruba CX. That's not a
+problem: `port-map.py` strips every separator out of a MAC before comparing
+it (see its `normalize_mac`), specifically so a `Mac2IP.json` with mixed
+notation — some keys in the core switch's own format from `arp.py`, some in
+Cisco's from `merge-firewall-arp.py` — still matches correctly no matter
+which vendor's ARP table originally produced them.
+
+Enable SNMP on the firewall if it isn't already, then run
+`snmp_arp_cache.py` to build `firewall_arp_cache.csv` — see
+[Polling a Firewall's ARP Table via SNMP](../appendix/appendix-firewall-arp-snmp.md)
+for the setup steps. It's vendor-agnostic (confirmed working against both a
+SonicWall TZ370 and a FortiGate 60D with no code changes) and takes the
+firewall's IP via `-H`/`--host` (or the `FIREWALL_HOST` environment
+variable), so there's no per-site editing needed before running it.
+
+#### Testing snmp
 
 ```bash
 snmpwalk -v2c -c <community> <firewall-ip> ipNetToMediaTable
 # or by OID directly:
 snmpwalk -v2c -c <community> <firewall-ip> .1.3.6.1.2.1.4.22
 ```
-
-That returns the same information as the ARP cache page, in a script-
-friendly format that doesn't need de-duplicating by hand.
-
-As written, the script is hardcoded to one CSV path, one target
-Mac2IP.json, and one set of VLAN interfaces — it's meant to be opened and
-edited for your own site rather than run as a general-purpose tool. A
-FortiGate variant (`show arp` output instead of a SonicWall CSV export)
-is planned for a similar aggregation-switch-plus-firewall setup.
 
 ### Running the port-map.py script
 
