@@ -2,7 +2,7 @@
 
 ----------------------------------------------------------------
 
-![screenshot](img/intro4.resized.jpeg)
+![screenshot](img/tux-intro.jpg)
 
 ----------------------------------------------------------------
 
@@ -24,9 +24,9 @@ A plain text file is used to store the `show commands` that are sent to the swit
 
 ## Who is this project for
 
-Anyone that needs to pull data from switches. You do not need to write any code to use the project's scripts. Text files are used to collect the information used by the script. You do not need to be a Python programmer, or even a network engineer to use this project. There are enough examples for Windows/Mac/Linux that any IT employee should be able to use the tools.
+Anyone that needs to pull data from switches. You do not need to write any code to use the project's scripts. You do not need to be a Python programmer, or even a network engineer to use this project. There are enough examples for Windows/Mac/Linux that any IT employee should be able to use the tools.
 
-The Appendix [Automating Discovery](appendix/appendix-discovery-automation.md){: target="_blank" rel="noopener" } shows how to set the project up on a Virtual Machine and pull data daily/weekly. The purpose to track any `authorized/unauthorized` changes made to the switches.
+The Appendix [Automating Discovery](appendix/appendix-discovery-automation.md){: target="_blank" rel="noopener" } shows how to set the project up on a Virtual Machine and pull data daily/weekly. The purpose is to track any `authorized/unauthorized` changes made to the switches and have complete backups for recovery.
 
 If you are new to network automation, this GitHub project has a lot of educational resources- [Where to start with Network Automation, Orchestration, and Observability?](https://github.com/Network-Automation-Forum/handyinfo/blob/main/docs/StartHere.md){: target="_blank" rel="noopener" }
 
@@ -36,7 +36,7 @@ If you are new to network automation, this GitHub project has a lot of education
 
 There are two types of scripts in the project:
 
-- Discovery - These are scripts that use netmiko to connect to a switch and pull down data. No configuration commands are sent so the script is safe to use in production.
+- Discovery - These are scripts that use netmiko to connect to a switch and pull down data. No configuration commands are sent, so the script is safe to use in production.
 - Helper - These are scripts that take the data that was collected with the discovery script and convert usable reports. They are run offline and do not make any changes to the switches.
 
 The python discovery script [config-pull.py](https://github.com/rikosintie/Discovery/blob/main/config-pull.py) uses the industry standard  [netmiko](https://github.com/ktbyers/netmiko) Python library and the Network to Code [textFSM](https://github.com/networktocode/ntc-templates/tree/master) libraries to connect to a switch, run ***show commands*** and create JSON files. These two libraries hide the complexity of connecting to and interacting with network devices.
