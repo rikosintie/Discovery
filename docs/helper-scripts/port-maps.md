@@ -27,23 +27,24 @@ The port maps return:
 - MAC Address
 - Interface
 - Vendor ID
+- DNS Name (populated when a DNS server is passed with `-d`)
 
 Here is an example of the port map:
 
-```text
-Number of Entries: 83
+```text title="Port Map Example"
+Number of Entries: 42
 
-Device Name: Test-Core
-Vlan   IP Address       MAC Address       Interface   Vendor
---------------------------------------------------------------------------------
-   1   10.154.66.1      7c0507-1f6ee4         C1      Pegatron
-----------------------------------------------------------------------
-   1   10.154.66.2      7c0507-1b45ea         C2      Pegatron
-----------------------------------------------------------------------
-   1   10.154.68.25     00c0b7-e4b43a         C4      American
-----------------------------------------------------------------------
-  75   10.154.23.241    000c29-e97dd1         C5      VMware
-----------------------------------------------------------------------
+Device Name: lab-3850
+
+Vlan    IP Address         MAC Address          Interface      Vendor           DNS Name
+───────────────────────────────────────────────────────────────────────────────────────────────────────
+10      192.168.10.112     04db.56ed.ad58       Gi1/0/1        Apple            1S1K-iPad
+───────────────────────────────────────────────────────────────────────────────────────────────────────
+10      192.168.10.145     3817.c3c9.20c2       Gi1/0/1        HewlettPacka     Garage-325
+───────────────────────────────────────────────────────────────────────────────────────────────────────
+10      192.168.10.182     80be.afe1.cbf5       Gi1/0/1        HikvisionDig     Cam-Hikvision
+───────────────────────────────────────────────────────────────────────────────────────────────────────
+10      192.168.10.52      98f2.b3fe.8880       Gi1/0/1        HewlettPacka     2920-Garage
 ```
 
 Having this information makes identifying special devices such as HVAC controllers, Door access controllers, Cameras, etc. easier. It also allows you to verify that all devices are patched back into the correct port on the switch.
@@ -103,10 +104,52 @@ If you have a need for this information great, if not just ignore it.
 In a Core/IDF deployment, `-c coreswitch` assumes the core switch itself
 has an SVI (and therefore an ARP entry) for every VLAN. That's not always
 true — some sites route a subset of VLANs through a separate firewall
-(SonicWall, FortiGate, WatchGuard, ...) instead of the switch, so the
-switch's own `show ip arp` never sees those IPs and `port-map.py` reports
-those hosts as `No-Match` even though the firewall knows exactly who they
-are.
+(SonicWall, FortiGate, WatchGuard, ...) instead of using the core switch for
+routing, so the switch's own `show ip arp` never sees those IPs and
+`port-map.py` reports those hosts as `No-Match` even though the firewall
+knows exactly who they are.
+
+A common shape for this — a core switch handling routing for the corporate
+network itself, with a second firewall carved out for VLANs that never
+touch the core's own routing table:
+
+```mermaid
+flowchart TB
+    INET1(("Internet"))
+    INET2(("Internet"))
+
+    FW1["Corporate Firewall<br/>Internet access for Corporate VLANs"]
+    CORE["Core Switch<br/>L3 - routes Corporate VLANs<br/>L2 only for IoT / Surveillance / Guest Wi-Fi"]
+    FW2["Second Firewall<br/>own separate Internet uplink<br/>L3 gateway for IoT / Surveillance / Guest Wi-Fi"]
+
+    CORP["Corporate hosts"]
+    IOT["IoT devices"]
+    SURV["Surveillance cameras"]
+    GUEST["Guest Wi-Fi clients"]
+
+    INET1 --- FW1
+    FW1 --- CORE
+    CORE --- CORP
+
+    INET2 --- FW2
+    CORE ---|trunk: IoT / Surveillance / Guest Wi-Fi VLANs, switched only| FW2
+
+    IOT --- CORE
+    SURV --- CORE
+    GUEST --- CORE
+
+    FW2 -.-|default gateway| IOT
+    FW2 -.-|default gateway| SURV
+    FW2 -.-|default gateway| GUEST
+```
+
+The core switch is the L3 gateway (and has an SVI/ARP entry) for the
+Corporate VLANs, so `arp.py` sees those hosts fine. IoT, Surveillance, and
+Guest Wi-Fi only ever touch the core as a switched (L2) trunk — their real
+default gateway is the second firewall, which routes them out its own
+separate Internet connection. `arp.py` reading the core's `show ip arp`
+never sees those hosts; `firewall-merge.py` is what fills them back in from
+the second firewall's own ARP cache.
 
 `firewall-merge.py` is a one-off for this: it reads a MAC/IP table
 exported from the firewall's ARP cache (`firewall-arp.csv`, written by
@@ -162,6 +205,21 @@ snmpwalk -v2c -c <community> <firewall-ip> .1.3.6.1.2.1.4.22
 
 One script handles the port-map step for every supported vendor — ProCurve, Cisco, and Aruba CX. It reads the hostname-Mac2IP.json and hostname-mac-address.txt files, detects each line's MAC format and column order rather than assuming a fixed layout, and creates the port maps — with a manufacturer lookup via the maintained `manuf2` package and, when a DNS server is available, a reverse-DNS name column.
 
+```text
+python3 port-map.py -h
+usage: port-map.py [-h] [-s SITE] [-c CORESWITCH] [-d DNS] [--update-manuf]
+
+-s site, -c core hostname in a Core/IDF deployment, -d dns server for reverse lookups, --update-manuf to refresh the OUI database
+
+options:
+  -h, --help            show this help message and exit
+  -s, --site SITE       Site name - ex. HQ
+  -c, --coreswitch CORESWITCH
+                        Coreswitch hostname
+  -d, --dns DNS         DNS server IP for reverse lookups - ex. 192.168.10.222
+  --update-manuf        Download the latest Wireshark OUI database (and WFA registry) and exit — run this if new devices are showing up with no vendor
+```
+
 `python3 port-map.py -s area1`
 
 For a Core/IDF deployment, use `-c coreswitch`:
@@ -171,6 +229,17 @@ For a Core/IDF deployment, use `-c coreswitch`:
 To resolve DNS names for the IP addresses in the port map, pass a DNS server with `-d`:
 
 `python3 port-map.py -s jc-edge -c JC-core -d 192.168.10.222`
+
+### Updating the vendor (OUI) database
+
+Both scripts above (arp.py, port-map.py) use the `manuf2` package to resolve a MAC address's manufacturer. The OUI database it ships with needs to be refreshed occasionally — newly-registered hardware won't have a vendor until it's in the database you have locally, and shows up as `None` instead. When that happens, run either:
+
+```bash
+python3 arp.py --update-manuf
+python3 port-map.py --update-manuf
+```
+
+Both of these download the latest OUI and WFA (Wi-Fi Alliance) data and exit — none of them need `-s site`, and none touch any inventory files.
 
 ### PingInfoView export
 
@@ -336,20 +405,3 @@ Uplink/trunk ports to other switches can legitimately show up in this list
 too, since a per-interface MAC query on a trunk is often empty by design.
 For now, eyeball those out; filtering them out automatically is a planned
 refinement.
-
-### Updating the vendor (OUI) database
-
-Both scripts above (arp.py, port-map.py) use the `manuf2` package to resolve a MAC address's manufacturer. The OUI database it ships with needs to be refreshed occasionally — newly-registered hardware won't have a vendor until it's in the database you have locally, and shows up as `None` instead. When that happens, run either:
-
-```bash
-python3 arp.py --update-manuf
-python3 port-map.py --update-manuf
-```
-
-Any of these downloads the latest OUI and WFA (Wi-Fi Alliance) data and exits — none of them need `-s site`, and none touch any inventory files.
-
-## Core/IDF deployment
-
-In this case only the core switch has the arp records. The argument "-c coreswitch" is used to tell the switch to use the core-arp.txt file for all switches.
-
-`python3 port-map.py -s area1 -c coreswitch`

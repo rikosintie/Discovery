@@ -113,20 +113,20 @@ Once the data has been collected, there are helper scripts that use the JSON str
 
 There is also a helper script that reads the arp table of the layer 3 switch and creates a dictionary of mac address to IP address. Then reads the `show mac address-table interface` data and creates a port map. Here is a sample of what it looks like:
 
-```bash
-Number of Entries: 249
+```text title="Port Map Example"
+Number of Entries: 42
 
-Device Name: JC-IDF-1
-Vlan   IP Address       MAC Address                  Interface             Vendor
---------------------------------------------------------------------------------
- 100   10.100.126.35    1418.7736.5c5d    dynamic    TenGigabitEthernet1/1 Dell
---------------------------------------------------------------------------------
- 100   10.100.126.57    14b3.1f0b.61da    dynamic    TenGigabitEthernet1/1 Dell
---------------------------------------------------------------------------------
- 100   10.100.126.237   38ed.18ec.ccc1    dynamic    TenGigabitEthernet1/1 Cisco
---------------------------------------------------------------------------------
- 100   10.100.126.136   4487.fc94.9d02    dynamic    TenGigabitEthernet1/1 Elitegro
+Device Name: lab-3850
 
+Vlan    IP Address         MAC Address          Interface      Vendor           DNS Name
+───────────────────────────────────────────────────────────────────────────────────────────────────────
+10      192.168.10.112     04db.56ed.ad58       Gi1/0/1        Apple            1S1K-iPad
+───────────────────────────────────────────────────────────────────────────────────────────────────────
+10      192.168.10.145     3817.c3c9.20c2       Gi1/0/1        HewlettPacka     Garage-325
+───────────────────────────────────────────────────────────────────────────────────────────────────────
+10      192.168.10.182     80be.afe1.cbf5       Gi1/0/1        HikvisionDig     Cam-Hikvision
+───────────────────────────────────────────────────────────────────────────────────────────────────────
+10      192.168.10.52      98f2.b3fe.8880       Gi1/0/1        HewlettPacka     2920-Garage
 ```
 
 The port maps help with planning before a cutover and troubleshooting after a cutover.
