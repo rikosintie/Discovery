@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
 Poll a firewall's ARP cache via the standard SNMP ARP MIB and write it to
-firewall_arp_cache.csv in the same column layout as the SonicWall's manual
-GUI export, so merge-firewall-arp.py doesn't need to change. Vendor-agnostic:
+firewall-arp.csv in the same column layout as the SonicWall's manual
+GUI export, so firewall-merge.py doesn't need to change. Vendor-agnostic:
 confirmed working against both a SonicWall TZ370 and a FortiGate 60D with no
 code changes.
 
 Usage:
-    python3 snmp_arp_cache.py --host 10.20.30.1
+    python3 firewall-snmp.py --host 10.20.30.1
     (or set FIREWALL_HOST instead of passing --host every time - handy for
     the cron wrapper script, since there's no per-run prompt to fill in)
 
@@ -32,14 +32,14 @@ Notes / known limitations:
     source used elsewhere in Discovery) if it's installed; otherwise left blank.
   - "Interface" is always left blank. It's kept as a column only so this CSV
     stays in the format the manual GUI export used, which is what
-    merge-firewall-arp.py expects -- but no downstream script actually
+    firewall-merge.py expects -- but no downstream script actually
     reads it. A real value would have to be vendor-specific (interface
     naming schemes like SonicWall's "X0"-"X6" don't generalize), and the
     same information is one click away in the firewall's own GUI anyway,
     so it isn't worth building.
   - There is no SNMP equivalent to the GUI's "Expires in N minutes" column,
     so it's omitted entirely rather than filled with a placeholder, to match
-    the working CSV format merge-firewall-arp.py expects.
+    the working CSV format firewall-merge.py expects.
 """
 
 import argparse
@@ -50,7 +50,7 @@ import subprocess
 import sys
 
 parser = argparse.ArgumentParser(
-    description="Poll a firewall's ARP cache via standard SNMP (any vendor) and write it to a CSV merge-firewall-arp.py can read."
+    description="Poll a firewall's ARP cache via standard SNMP (any vendor) and write it to a CSV firewall-merge.py can read."
 )
 parser.add_argument(
     "-H",
@@ -62,7 +62,7 @@ args = parser.parse_args()
 
 HOST = args.host
 COMMUNITY = os.environ.get("SNMP_COMMUNITY")
-OUTFILE = "firewall_arp_cache.csv"
+OUTFILE = "firewall-arp.csv"
 
 ARP_TABLE_OID = "1.3.6.1.2.1.4.22"
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Merge a firewall's ARP cache (from snmp_arp_cache.py) into a core switch's
+Merge a firewall's ARP cache (from firewall-snmp.py) into a core switch's
 Mac2IP.json.
 
 A core switch's `-c` Mac2IP.json assumes it has an SVI (and therefore an
@@ -14,7 +14,7 @@ Run AFTER arp.py and BEFORE port-map.py, since arp.py overwrites
 <core>-Mac2IP.json from scratch on every run:
 
     python3 arp.py -s jcedge -c jc-core
-    python3 merge-firewall-arp.py -c jc-core
+    python3 firewall-merge.py -c jc-core
     python3 port-map.py -s jcedge -c jc-core -d 10.100.126.6
 
 Every row in the CSV gets merged in, unconditionally -- port-map.py only
@@ -33,7 +33,7 @@ import sys
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Merge a firewall's ARP cache (from snmp_arp_cache.py) into a core switch's Mac2IP.json."
+        description="Merge a firewall's ARP cache (from firewall-snmp.py) into a core switch's Mac2IP.json."
     )
     parser.add_argument(
         "-c",
@@ -44,9 +44,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--csv",
-        default="firewall_arp_cache.csv",
-        help="Firewall ARP CSV to merge in (default: firewall_arp_cache.csv, "
-        "written by snmp_arp_cache.py)",
+        default="firewall-arp.csv",
+        help="Firewall ARP CSV to merge in (default: firewall-arp.csv, "
+        "written by firewall-snmp.py)",
     )
     return parser.parse_args()
 
@@ -70,7 +70,7 @@ def main() -> None:
     try:
         csv_file = open(args.csv, newline="", encoding="utf-8")
     except FileNotFoundError:
-        sys.exit(f"Missing ARP CSV '{args.csv}' - run snmp_arp_cache.py first")
+        sys.exit(f"Missing ARP CSV '{args.csv}' - run firewall-snmp.py first")
 
     added = 0
     with csv_file as f:

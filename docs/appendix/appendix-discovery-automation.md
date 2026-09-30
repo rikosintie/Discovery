@@ -92,7 +92,7 @@ each run, so this is only needed for manual testing.
 The following steps:
 
 - the `SNMP_COMMUNITY` variable
-- `snmp_arp_cache.py` line in the wrapper script
+- `firewall-snmp.py` line in the wrapper script
 
 are only needed if the site also has a firewall whose ARP table you're pulling — see [Polling a Firewall's ARP Table via SNMP](appendix-firewall-arp-snmp.md){: target="_blank" rel="noopener" }.
 
@@ -106,7 +106,7 @@ regardless.
 Nothing in Discovery ever takes a password on the command line, and none of
 the scripts have a password hardcoded. `config-pull.py` reads the switch
 password from the `cyberARK` environment variable or prompts for it
-interactively with `-p 1`; see [Usage](../usage.md#password){: target="_blank" rel="noopener" }. The username comes from the device-inventory file. `snmp_arp_cache.py` reads `SNMP_COMMUNITY` and `FIREWALL_HOST` the same way.
+interactively with `-p 1`; see [Usage](../usage.md#password){: target="_blank" rel="noopener" }. The username comes from the device-inventory file. `firewall-snmp.py` reads `SNMP_COMMUNITY` and `FIREWALL_HOST` the same way.
 
 For unattended runs, the one thing that matters is protecting the file that
 supplies those environment variables — `~/.config/discovery/cyberark.env`,
@@ -248,7 +248,7 @@ chmod 600 ~/.config/discovery/cyberark.env
 (`SNMP_COMMUNITY` and `FIREWALL_HOST` are only needed if this site has a
 firewall you're polling for ARP data — see
 [Polling a Firewall's ARP Table via SNMP](appendix-firewall-arp-snmp.md).
-`snmp_arp_cache.py` has no hardcoded default IP, so `FIREWALL_HOST` must be
+`firewall-snmp.py` has no hardcoded default IP, so `FIREWALL_HOST` must be
 set to whatever this customer's firewall actually is.)
 
 View the file:
@@ -298,11 +298,11 @@ source ~/.config/discovery/cyberark.env
 cd ~/Documents/Discovery
 source venv/bin/activate
 
-python3 snmp_arp_cache.py  # only if this site has a firewall to poll
+python3 firewall-snmp.py  # only if this site has a firewall to poll
 python3 config-pull.py -s jc-4500
 python3 config-pull.py -s jcedge
 python3 arp.py -s jcedge -c jc-core
-python3 merge-firewall-arp.py -c jc-core  # only if this site has a firewall to poll
+python3 firewall-merge.py -c jc-core  # only if this site has a firewall to poll
 python3 port-map.py -s jcedge -c jc-core -d 10.100.126.6
 
 deactivate
@@ -316,7 +316,7 @@ echo "$(date '+%Y-%m-%d %H:%M') - run completed, exit $?" >> ~/discovery-last-ru
 (`-c jc-core` on the merge step is this customer's core switch name, matching
 `arp.py`'s `-c` value — **adjust it per site**. See
 [Polling a Firewall's ARP Table via SNMP](appendix-firewall-arp-snmp.md) for
-the SonicWall/FortiGate setup that feeds `snmp_arp_cache.py`.)
+the SonicWall/FortiGate setup that feeds `firewall-snmp.py`.)
 
 ----------------------------------------------------------------
 
@@ -442,14 +442,14 @@ no diff at all, and that's expected too.
 You can also use `git diff filename` to the see difference between a committed file and one on disk:
 
 ```bash hl_lines='1'
-git diff -- firewall_arp_cache.csv
+git diff -- firewall-arp.csv
 ```
 
 ```bash title='Command Output'
-diff --git a/firewall_arp_cache.csv b/firewall_arp_cache.csv
+diff --git a/firewall-arp.csv b/firewall-arp.csv
 index b350a9f..e0fe87e 100644
---- a/firewall_arp_cache.csv
-+++ b/firewall_arp_cache.csv
+--- a/firewall-arp.csv
++++ b/firewall-arp.csv
 @@ -1,19 +1,22 @@
  IP Address,Type,MAC Address,Vendor,Interface
 -35.129.96.1,Dynamic,0A:00:00:00:01:23,,X2
@@ -467,7 +467,7 @@ index b350a9f..e0fe87e 100644
 +192.168.10.108,Dynamic,44:67:55:03:D4:72,OrbitIrrigat,
 ```
 
-In this example, I had rewritten `snmp_arp_cache.py` to include the manufacture and drop the interface.
+In this example, I had rewritten `firewall-snmp.py` to include the manufacture and drop the interface.
 
 ----------------------------------------------------------------
 

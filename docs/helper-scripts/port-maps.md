@@ -108,9 +108,9 @@ switch's own `show ip arp` never sees those IPs and `port-map.py` reports
 those hosts as `No-Match` even though the firewall knows exactly who they
 are.
 
-`merge-firewall-arp.py` is a one-off for this: it reads a MAC/IP table
-exported from the firewall's ARP cache (`firewall_arp_cache.csv`, written by
-`snmp_arp_cache.py` — see
+`firewall-merge.py` is a one-off for this: it reads a MAC/IP table
+exported from the firewall's ARP cache (`firewall-arp.csv`, written by
+`firewall-snmp.py` — see
 [Polling a Firewall's ARP Table via SNMP](../appendix/appendix-firewall-arp-snmp.md) for
 setup — with columns `IP Address,Type,MAC Address,Vendor,Interface`),
 converts each MAC to the dot-grouped `aabb.ccdd.eeff` format, and merges
@@ -122,7 +122,7 @@ before that gets wiped:
 
 ```bash
 python3 arp.py -s jcedge -c jc-core
-python3 merge-firewall-arp.py -c jc-core
+python3 firewall-merge.py -c jc-core
 python3 port-map.py -s jcedge -c jc-core -d 10.100.126.6
 ```
 
@@ -133,17 +133,17 @@ the CSV gets merged unconditionally — `port-map.py` only looks up
 labels, so there's nothing to filter by (see
 [Polling a Firewall's ARP Table via SNMP](../appendix/appendix-firewall-arp-snmp.md)).
 
-`merge-firewall-arp.py` always writes MACs in that one dot-grouped format,
+`firewall-merge.py` always writes MACs in that one dot-grouped format,
 regardless of what notation the core switch itself uses — it doesn't check
 whether the core switch is Cisco, ProCurve, or Aruba CX. That's not a
 problem: `port-map.py` strips every separator out of a MAC before comparing
 it (see its `normalize_mac`), specifically so a `Mac2IP.json` with mixed
 notation — some keys in the core switch's own format from `arp.py`, some in
-Cisco's from `merge-firewall-arp.py` — still matches correctly no matter
+Cisco's from `firewall-merge.py` — still matches correctly no matter
 which vendor's ARP table originally produced them.
 
 Enable SNMP on the firewall if it isn't already, then run
-`snmp_arp_cache.py` to build `firewall_arp_cache.csv` — see
+`firewall-snmp.py` to build `firewall-arp.csv` — see
 [Polling a Firewall's ARP Table via SNMP](../appendix/appendix-firewall-arp-snmp.md)
 for the setup steps. It's vendor-agnostic (confirmed working against both a
 SonicWall TZ370 and a FortiGate 60D with no code changes) and takes the

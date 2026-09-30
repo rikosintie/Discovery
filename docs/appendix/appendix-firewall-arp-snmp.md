@@ -6,7 +6,7 @@ first place. Some VLANs terminate directly on the firewall instead, so no
 switch ever sees them. This appendix covers pulling those entries straight
 from the firewall via SNMP and merging them back in.
 
-The tooling here — `snmp_arp_cache.py` — just walks the standard ARP MIB
+The tooling here — `firewall-snmp.py` — just walks the standard ARP MIB
 (`ipNetToMediaTable`, OID `1.3.6.1.2.1.4.22`), so it isn't tied to one
 vendor. Two real examples run it against, below: a **SonicWall TZ370** at a
 customer site, and a **FortiGate 60D** in a home lab. Both worked with the
@@ -50,7 +50,7 @@ that's still open to the whole LAN.
 
 Skip this whole appendix if the customer's firewall doesn't terminate any
 VLANs directly (i.e. every VLAN routes through a switch SVI) — there's
-nothing for `snmp_arp_cache.py` to add in that case.
+nothing for `firewall-snmp.py` to add in that case.
 
 ----------------------------------------------------------------
 
@@ -63,7 +63,7 @@ Zones that terminate directly on the firewall instead — WAN, DMZ, Guest,
 Voice, and similar — never touch the switch fabric at all, so there's no ARP
 entry on any switch for `arp.py` to find; it isn't a parsing gap, the data
 genuinely isn't there. Polling the firewall's own ARP table via SNMP is the
-only way to get those entries, and `merge-firewall-arp.py` is what folds
+only way to get those entries, and `firewall-merge.py` is what folds
 them into the same MAC/IP data `arp.py` already produced for everything
 else.
 
@@ -181,7 +181,7 @@ default, so nothing else on the `/24` needs an explicit deny rule.
 
 !!! note
     v2c sends the community string in cleartext, which sounds worse than it
-    is here: `snmp_arp_cache.py` only ever calls `snmpwalk -v2c` — there's no
+    is here: `firewall-snmp.py` only ever calls `snmpwalk -v2c` — there's no
     SNMPv3 support to fall back to, so v2c is the only option regardless.
     The real protection isn't on the wire, it's the access rule from step 4
     above — SonicOS only accepts SNMP from `snmp-poller`'s IP at all, so
@@ -203,7 +203,7 @@ snmpwalk -v2c -c <community_string> 10.100.126.1 1.3.6.1.2.1.4.22
 
 ### Enabling SSH on the SonicWall (optional)
 
-Not required by the automated pipeline — SNMP is all `snmp_arp_cache.py`
+Not required by the automated pipeline — SNMP is all `firewall-snmp.py`
 needs — but SSH is useful for manually running `show arp` or other CLI diagnostics on the firewall itself. SSH management is off by default per-interface:
 
 1. **Network > Interfaces** → edit the interface owning the management IP
@@ -219,7 +219,7 @@ required.
 ## Example 2: FortiGate 60D (home lab)
 
 Confirming the SNMP MIB really is vendor-agnostic: the same
-`snmp_arp_cache.py`, no code changes, run against a FortiGate 60D
+`firewall-snmp.py`, no code changes, run against a FortiGate 60D
 (FortiOS 6.0.18) instead of a SonicWall worked perfectly.
 
 ----------------------------------------------------------------
@@ -396,10 +396,10 @@ iso.3.6.1.2.1.4.22.1.2.1.192.168.10.50 = Hex-STRING: FC EC DA C4 6E 55
 
 ## The ARP polling script
 
-`snmp_arp_cache.py` ships in the Discovery repo alongside the other scripts
+`firewall-snmp.py` ships in the Discovery repo alongside the other scripts
 — it arrives with `git clone`, no separate copy step needed. It walks the
-ARP MIB via `snmpwalk` and writes `firewall_arp_cache.csv` in the same 5-column
-format `merge-firewall-arp.py` already expects
+ARP MIB via `snmpwalk` and writes `firewall-arp.csv` in the same 5-column
+format `firewall-merge.py` already expects
 (`IP Address,Type,MAC Address,Vendor,Interface`), so no changes are needed
 to the merge script itself.
 
@@ -427,7 +427,7 @@ Then source it and run the script:
 
 ```bash
 source ~/.config/discovery/cyberark.env
-python3 snmp_arp_cache.py
+python3 firewall-snmp.py
 ```
 
 Or, to test one-off without touching the credentials file yet, pass `--host`
@@ -435,11 +435,11 @@ directly (still needs `SNMP_COMMUNITY` set some other way, since there's no
 CLI flag for it):
 
 ```bash
-python3 snmp_arp_cache.py --host 10.100.126.1
+python3 firewall-snmp.py --host 10.100.126.1
 ```
 
 A successful run prints a count of entries written, e.g.
-`Wrote 42 entries to firewall_arp_cache.csv`.
+`Wrote 42 entries to firewall-arp.csv`.
 
 ----------------------------------------------------------------
 
@@ -452,8 +452,8 @@ above, the FortiGate one is a live poll of the actual home-lab 60D.
 **SonicWall TZ370:**
 
 ```bash
-$ python3 snmp_arp_cache.py --host 10.100.126.1
-Wrote 6 entries to firewall_arp_cache.csv
+$ python3 firewall-snmp.py --host 10.100.126.1
+Wrote 6 entries to firewall-arp.csv
 ```
 
 ```text
@@ -469,8 +469,8 @@ IP Address,Type,MAC Address,Vendor,Interface
 **FortiGate 60D:**
 
 ```bash
-$ python3 snmp_arp_cache.py --host 192.168.10.254
-Wrote 21 entries to firewall_arp_cache.csv
+$ python3 firewall-snmp.py --host 192.168.10.254
+Wrote 21 entries to firewall-arp.csv
 ```
 
 ```text
@@ -514,7 +514,7 @@ watching for on any similar setup:
 
 Also worth noting: **CSV column count and naming must exactly match** what
 the downstream script expects. An extra `Timeout` column (with no SNMP
-equivalent to populate it) caused `merge-firewall-arp.py` to silently match
+equivalent to populate it) caused `firewall-merge.py` to silently match
 zero rows even though the file parsed fine on its own — there was no error,
 just quietly wrong output. When feeding one script's output into another,
 diff the header row against a known-working reference file rather than
@@ -524,7 +524,7 @@ assuming a superset of columns is harmless.
 
 ### Expected merge count
 
-`merge-firewall-arp.py` merges every row in the CSV unconditionally —
+`firewall-merge.py` merges every row in the CSV unconditionally —
 `port-map.py` only ever looks up `Mac2IP.json` by MAC and has no concept of
 the firewall's own Interface labels, so there's nothing worth filtering by.
 For a MAC the core switch's own ARP table already resolved correctly, the
@@ -536,13 +536,13 @@ MAC that doesn't convert cleanly, a malformed row) and is worth investigating.
 Running it against each of the two CSVs above:
 
 ```bash
-$ python3 merge-firewall-arp.py -c jc-core
-Merged 6 entries from firewall_arp_cache.csv into port-maps/jc-core-Mac2IP.json
+$ python3 firewall-merge.py -c jc-core
+Merged 6 entries from firewall-arp.csv into port-maps/jc-core-Mac2IP.json
 ```
 
 ```bash
-$ python3 merge-firewall-arp.py -c jc-core
-Merged 21 entries from firewall_arp_cache.csv into port-maps/jc-core-Mac2IP.json
+$ python3 firewall-merge.py -c jc-core
+Merged 21 entries from firewall-arp.csv into port-maps/jc-core-Mac2IP.json
 ```
 
 Both match their CSV's row count exactly — 6 in, 6 merged; 21 in, 21 merged
@@ -565,7 +565,7 @@ export FIREWALL_HOST=10.100.126.1
 ```
 
 Called in the wrapper script ahead of the merge step so the CSV exists
-before `merge-firewall-arp.py` runs — see
+before `firewall-merge.py` runs — see
 [Daily automation](appendix-discovery-automation.md#daily-automation)
 in the Automating Discovery appendix for the full script. No changes are
 needed to the cron entry itself.
