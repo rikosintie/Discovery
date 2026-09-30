@@ -29,6 +29,8 @@ The port maps return:
 - Vendor ID
 - DNS Name (populated when a DNS server is passed with `-d`)
 
+----------------------------------------------------------------
+
 Here is an example of the port map:
 
 ```text title="Port Map Example"
@@ -49,11 +51,15 @@ Vlan    IP Address         MAC Address          Interface      Vendor           
 
 Having this information makes identifying special devices such as HVAC controllers, Door access controllers, Cameras, etc. easier. It also allows you to verify that all devices are patched back into the correct port on the switch.
 
+----------------------------------------------------------------
+
 ## Running the port map scripts
 
 There are two general categories of switch deployments. The first is a distributed layer 3 deployment where every closet has a layer 3 router. In that case, the procurve-Config-pull has created an arp.txt file and mac-address.txt file for every switch and the script reads the same inventory file and matches the hostname-arp.txt file with the hostname-mac-address.txt file.
 
 The second is a Core/IDF deployment where there is a layer 3 switch in an MDF and the closets are connected at layer 2. In this case, we have to use an argument in the port-map.py script to tell it which hostname-arp.txt file to use for each hostname-mac-address.txt file.
+
+----------------------------------------------------------------
 
 ### Running the arp.py script
 
@@ -99,6 +105,8 @@ Number of IP, MAC and Manufacture: 566
 
 If you have a need for this information great, if not just ignore it.
 
+----------------------------------------------------------------
+
 ### Merging external ARP data (SonicWall, FortiGate, etc.)
 
 In a Core/IDF deployment, `-c coreswitch` assumes the core switch itself
@@ -119,28 +127,24 @@ flowchart TB
     INET2(("Internet"))
 
     FW1["Corporate Firewall<br/>Internet access for Corporate VLANs"]
-    CORE["Core Switch<br/>L3 - routes Corporate VLANs<br/>L2 only for IoT / Surveillance / Guest Wi-Fi"]
-    FW2["Second Firewall<br/>own separate Internet uplink<br/>L3 gateway for IoT / Surveillance / Guest Wi-Fi"]
+    CORE["Core Switch<br/>L3 - Corporate VLANs<br/>L2 only for IoT / Surveillance / Guest Wi-Fi"]
+    FW2["2nd Firewall<br/>separate Internet access<br/>L3 gateway for IoT / Surveillance / Guest Wi-Fi"]
 
-    CORP["Corporate hosts"]
     IOT["IoT devices"]
     SURV["Surveillance cameras"]
     GUEST["Guest Wi-Fi clients"]
 
     INET1 --- FW1
     FW1 --- CORE
-    CORE --- CORP
+
 
     INET2 --- FW2
-    CORE ---|trunk: IoT / Surveillance / Guest Wi-Fi VLANs, switched only| FW2
+    CORE ---|trunk: vlan 100, vlan 110, vlan 120, switched only| FW2
 
-    IOT --- CORE
-    SURV --- CORE
-    GUEST --- CORE
+    IOT ---|vlan 100| CORE
+    SURV ---|vlan 110| CORE
+    GUEST ---|vlan 120| CORE
 
-    FW2 -.-|default gateway| IOT
-    FW2 -.-|default gateway| SURV
-    FW2 -.-|default gateway| GUEST
 ```
 
 The core switch is the L3 gateway (and has an SVI/ARP entry) for the
@@ -193,13 +197,57 @@ SonicWall TZ370 and a FortiGate 60D with no code changes) and takes the
 firewall's IP via `-H`/`--host` (or the `FIREWALL_HOST` environment
 variable), so there's no per-site editing needed before running it.
 
+----------------------------------------------------------------
+
 #### Testing snmp
 
+On Ubuntu you can quickly install snmp and grab the ARP table from most files since they support the standard snmp MIB.
+
+Install snmp using:
+
 ```bash
+sudo apt update # Update the package repositories before installing
+sudo apt install snmp # install snmp
+```
+
+----------------------------------------------------------------
+
+Then run either of these commands. The `<community string>` is the snmp community (password). You will probably have to get that from your security team:
+
+```bash hl_lines='1 3'
 snmpwalk -v2c -c <community> <firewall-ip> ipNetToMediaTable
 # or by OID directly:
 snmpwalk -v2c -c <community> <firewall-ip> .1.3.6.1.2.1.4.22
 ```
+
+```text title='snmp output'
+snmpwalk -v2c -c dvd0brx1 192.168.10.254 .1.3.6.1.2.1.4.22
+iso.3.6.1.2.1.4.22.1.2.1.192.168.10.13 = Hex-STRING: 64 52 99 69 FD 20
+iso.3.6.1.2.1.4.22.1.2.1.192.168.10.105 = Hex-STRING: 00 9D 6B A0 45 28
+iso.3.6.1.2.1.4.22.1.2.1.192.168.10.107 = Hex-STRING: F8 30 02 36 A6 09
+iso.3.6.1.2.1.4.22.1.2.1.192.168.10.108 = Hex-STRING: 44 67 55 03 D4 72
+iso.3.6.1.2.1.4.22.1.2.1.192.168.10.112 = Hex-STRING: 04 DB 56 ED AD 58
+iso.3.6.1.2.1.4.22.1.2.1.192.168.10.113 = Hex-STRING: 2A 38 72 30 E7 AE
+```
+
+Having this skill can come in handy even it you don't need it for discovery. When trouble shooting a firewall issue, being able to rapidly pull the arp table is handy. If you are looking for specific IP address you could use:
+
+----------------------------------------------------------------
+
+```text
+snmpwalk -v2c -c dvd0brx1 192.168.10.254 .1.3.6.1.2.1.4.22 | grep 192.168.10.112
+```
+
+----------------------------------------------------------------
+
+```text title='Grep output'
+iso.3.6.1.2.1.4.22.1.1.1.192.168.10.112 = INTEGER: 1
+iso.3.6.1.2.1.4.22.1.2.1.192.168.10.112 = Hex-STRING: 04 DB 56 ED AD 58
+iso.3.6.1.2.1.4.22.1.3.1.192.168.10.112 = IpAddress: 192.168.10.112
+iso.3.6.1.2.1.4.22.1.4.1.192.168.10.112 = INTEGER: 3
+```
+
+----------------------------------------------------------------
 
 ### Running the port-map.py script
 
@@ -230,6 +278,8 @@ To resolve DNS names for the IP addresses in the port map, pass a DNS server wit
 
 `python3 port-map.py -s jc-edge -c JC-core -d 192.168.10.222`
 
+----------------------------------------------------------------
+
 ### Updating the vendor (OUI) database
 
 Both scripts above (arp.py, port-map.py) use the `manuf2` package to resolve a MAC address's manufacturer. The OUI database it ships with needs to be refreshed occasionally — newly-registered hardware won't have a vendor until it's in the database you have locally, and shows up as `None` instead. When that happens, run either:
@@ -240,6 +290,8 @@ python3 port-map.py --update-manuf
 ```
 
 Both of these download the latest OUI and WFA (Wi-Fi Alliance) data and exit — none of them need `-s site`, and none touch any inventory files.
+
+----------------------------------------------------------------
 
 ### PingInfoView export
 
@@ -290,7 +342,7 @@ cutover" use case, and both can read straight from an existing
 Install with your platform's package manager:
 
 ```bash
-brew install gping fping        # macOS
+brew install gping fping        # macOS/Ubuntu
 sudo apt install gping fping    # Debian/Ubuntu
 ```
 
@@ -308,6 +360,13 @@ gping $(grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' Lab_3850-pinginfo.txt)
 
 ![gping](img/gping.png){ width="500" }
 
+----------------------------------------------------------------
+
+Note the address `10.10.10.11` in the image. It's a loopback on a switch that hasn't come up yet. Notice that it has no data in the chart.
+
+----------------------------------------------------------------
+
+
 | Column | Meaning |
 |--------|---------|
 | `last` | Latency of the most recent ping to that host |
@@ -318,21 +377,22 @@ gping $(grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' Lab_3850-pinginfo.txt)
 | `p95` | 95th-percentile latency — 95% of pings to that host were faster than this |
 | `t/o` | Timeouts — how many pings to that host got no response at all |
 
-The chronological-order detail on `jtr` matters in practice: a host whose
-latency is *steadily drifting* (5ms creeping up to 50ms over a minute, say,
-from mounting congestion) has a wide `min`/`max` spread but a small change
-from any one ping to the next — low jitter, correctly, since nothing is
-actually unstable moment-to-moment. A host *ping-ponging* between 5ms and
-50ms every other ping has the exact same `min`/`max` spread, but every
-single step is a big jump — high jitter, correctly flagging the real
-instability. Sorting the values first (as `min`/`max`/`avg`/`p95` all do)
-would make those two situations look identical; `jtr` deliberately doesn't
-sort, because it's answering a different question than the rest of the
-table — not "how spread out are these latencies" but "how much does
-latency swing from one ping to the next." That's also the standard
-definition of jitter used in VoIP/QoS contexts (RFC 3550), so gping isn't
-reinventing the term — worth knowing precisely because it's easy to assume
-a "high/low" stat like this is sorted, when this one specifically isn't.
+!!! info
+    The chronological-order detail on `jtr` matters in practice: a host whose
+    latency is *steadily drifting* (5ms creeping up to 50ms over a minute, say,
+    from mounting congestion) has a wide `min`/`max` spread but a small change
+    from any one ping to the next — low jitter, correctly, since nothing is
+    actually unstable moment-to-moment. A host *ping-ponging* between 5ms and
+    50ms every other ping has the exact same `min`/`max` spread, but every
+    single step is a big jump — high jitter, correctly flagging the real
+    instability. Sorting the values first (as `min`/`max`/`avg`/`p95` all do)
+    would make those two situations look identical; `jtr` deliberately doesn't
+    sort, because it's answering a different question than the rest of the
+    table — not "how spread out are these latencies" but "how much does
+    latency swing from one ping to the next." That's also the standard
+    definition of jitter used in VoIP/QoS contexts (RFC 3550), so gping isn't
+    reinventing the term — worth knowing precisely because it's easy to assume
+    a "high/low" stat like this is sorted, when this one specifically isn't.
 
 ----------------------------------------------------------------
 
@@ -366,6 +426,14 @@ fping-info() {
     fi
     grep -oE '\b([0-9]{1,3}\.){3}[0-9]{1,3}\b' "$1" | fping -l
 }
+```
+
+----------------------------------------------------------------
+
+Here is a gping-info example run from the root of discovery:
+
+```bash
+gping-info port-maps/pinginfo/lab-3850-pinginfo.txt
 ```
 
 ----------------------------------------------------------------
