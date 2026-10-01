@@ -6,10 +6,12 @@
 
 ----------------------------------------------------------------
 
-The port maps script creates beautiful, text based reports for every active port on the switch. The data is useful before the cutover for planning and after the cutover for verification. The scripts needed to create the report are explained below. Here is a [sample report from my home lab](../assets/files/lab-3850-ports.md){: target="_blank" rel="noopener" } from my home lab.
+The port map scripts create beautiful, text based reports for every active port on the switch. The data is useful before the cutover for planning and after the cutover for verification. The scripts needed to create the report are explained below. Here is a [sample report from my home lab](../assets/files/lab-3850-ports.md){: target="_blank" rel="noopener" } from my home lab.
 
 !!! info
-    I add all infrastructure devices with staic IP addresses to DNS. I learned this would working for The Department of Homeland Security where all switches, routers, access controllers, etc. were in DNS.I can't tell you how nice it is to have teh DNS name in the report. CoPilot would be thrilled to write you PowerShell script to read a spreadsheet of IP address and Names and create the DNS record. Don't forget to create the reverse zone!
+    I add all infrastructure devices with static IP addresses to DNS. I learned this why working for The Department of Homeland Security where all switches, routers, access controllers, etc. were in DNS.I can't tell you how nice it is to have the DNS names in the report. And, if you have a solid naming convention you learn how to ping a switch by name pretty quickly.
+
+    CoPilot would be thrilled to write you PowerShell script to read a spreadsheet of IP addresses/Names and create the DNS records. For Free!! Don't forget to create the reverse zone!
 
 ----------------------------------------------------------------
 
