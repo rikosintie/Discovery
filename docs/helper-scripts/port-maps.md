@@ -1,5 +1,11 @@
 # Creating Port maps
 
+----------------------------------------------------------------
+
+![tux-ports](img/tux-ports.png)
+
+----------------------------------------------------------------
+
 Building a port map is a two-step process: `arp.py` builds an IP-to-MAC
 lookup table from a switch's ARP cache, then `port-map.py` matches that
 table against the switch's MAC address table to show what's plugged into
