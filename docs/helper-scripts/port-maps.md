@@ -6,6 +6,13 @@
 
 ----------------------------------------------------------------
 
+The port maps script creates beautiful, text based reports for every active port on the switch. The data is useful before the cutover for planning and after the cutover for verification. The scripts needed to create the report are explained below. Here is a [sample report from my home lab](../assets/files/lab-3850-ports.md){: target="_blank" rel="noopener" } from my home lab.
+
+!!! info
+    I add all infrastructure devices with staic IP addresses to DNS. I learned this would working for The Department of Homeland Security where all switches, routers, access controllers, etc. were in DNS.I can't tell you how nice it is to have teh DNS name in the report. CoPilot would be thrilled to write you PowerShell script to read a spreadsheet of IP address and Names and create the DNS record. Don't forget to create the reverse zone!
+
+----------------------------------------------------------------
+
 Building a port map is a two-step process: `arp.py` builds an IP-to-MAC
 lookup table from a switch's ARP cache, then `port-map.py` matches that
 table against the switch's MAC address table to show what's plugged into
