@@ -1,59 +1,15 @@
 # CDP Neighbor Reports
 
-The Procurve switches support the Cisco discovery protocol (cdp) even though it's a Cisco proprietary protocol. By default it's not running. If you want to use cdp you have to enable it.
-
-```bash
-HP-2920-24G-PoEP# config t
-HP-2920-24G-PoEP(config)# cdp run
-```
-
-Optionally you can enable cdp on only certain ports. For example,
-
-```bash
-HP-2920-24G-PoEP(config)# cdp enable ?
-[ethernet] PORT-LIST  Enter a port number, a list of ports or 'all' for all ports.
-```
-
-There is an argument that having CDP enabled on all ports is a security risk. You have to decide for yourself if the risk is worth the visibility of running CDP. Personally, my feeing is that if an attacker has unfettered access to your switches the game is already over so I enable it.
-
-The exception is for ports that connect to external entities such as an ISP or extranet partner.
-
-To view the list of ports that have cdp enabled:
-
-```bash
-sh cdp
-
- Global CDP information
-
-  Enable CDP [Yes] : Yes
-  CDP mode [rxonly] : rxonly
-
-
-  Port   CDP
-  ------ --------
-  1      enabled
-  2      enabled
-  3      enabled
-```
-
-To view all the cdp options, from configuration mode, you can use
-
-```bash
-cdp ?
- enable                Enable CDP on particular device ports.
- mode                  Set various modes of CDP (Cisco Discovery Protocol) processing.
- run                   Start CDP on the device.
- ```
-
-Cisco IOS switches run CDP by default, so none of this configuration is
-needed there — it's a ProCurve-only step. Both vendors' CDP neighbor data
-end up in the same place: `cdp-ne.py` below reads either one.
+CDP (Cisco Discovery Protocol) is Cisco-proprietary, but HP ProCurve speaks
+it too. Juniper (JunOS) and Brocade/Ruckus FastIron don't — they're
+LLDP-only, see [LLDP Neighbor Reports](lldp-reports.md) for those. Of the
+platforms Discovery supports, CDP neighbor data is only ever available from
+Cisco IOS/IOS-XE/NX-OS and HP ProCurve.
 
 ## cdp-ne.py
 
 `cdp-ne.py` reads the JSON `config-pull.py` already wrote to
-`Interface/<host>-cdp.txt` (Cisco IOS and HP ProCurve both speak CDP; other
-vendors don't) and prints a `port-map.py`-styled table:
+`Interface/<host>-cdp.txt` and prints a `port-map.py`-styled table:
 
 ```bash
 python3 cdp-ne.py                        # every Interface/*-cdp.txt
@@ -62,6 +18,9 @@ python3 cdp-ne.py -d 10.100.126.9        # PTR lookups via that server
 python3 cdp-ne.py --no-dns               # skip PTR lookups
 python3 cdp-ne.py --csv                  # also write a .csv report
 ```
+
+No entries, or fewer than expected? CDP has to be turned on per-switch first
+— see [Enabling CDP](#enabling-cdp) below.
 
 ```text
 Number of Entries: 5
@@ -94,3 +53,73 @@ sent no device id — just a chassis MAC — is reformatted as
 The report is also written to `Interface/neighbors/<host>-cdp-ne.txt`, and,
 with `--csv`, to `Interface/neighbors/<host>-cdp-ne.csv` — handy for sorting
 or filtering the results in a spreadsheet or the Rainbow CSV extension.
+
+## Enabling CDP
+
+### Cisco IOS
+
+CDP is not necessarily on out of the box — a factory-default 3850 came up
+with it disabled. Turn it on globally, then confirm:
+
+```bash
+Switch# configure terminal
+Switch(config)# cdp run
+Switch(config)# end
+Switch# show cdp
+```
+
+CDP is enabled per-interface by default once it's running globally; to turn
+it off on a specific port (for example, one facing an ISP or extranet
+partner):
+
+```bash
+Switch(config)# interface GigabitEthernet1/0/24
+Switch(config-if)# no cdp enable
+```
+
+### HP ProCurve
+
+Off by default; turn it on globally:
+
+```bash
+HP-2920-24G-PoEP# config t
+HP-2920-24G-PoEP(config)# cdp run
+```
+
+Optionally you can enable cdp on only certain ports. For example,
+
+```bash
+HP-2920-24G-PoEP(config)# cdp enable ?
+[ethernet] PORT-LIST  Enter a port number, a list of ports or 'all' for all ports.
+```
+
+There is an argument that having CDP enabled on all ports is a security risk. You have to decide for yourself if the risk is worth the visibility of running CDP. Personally, my feeing is that if an attacker has unfettered access to your switches the game is already over so I enable it.
+
+The exception is for ports that connect to external entities such as an ISP or extranet partner. I do not recommend every enabling `CDP` on a port connected to an ISP.
+
+To view the list of ports that have cdp enabled:
+
+```bash
+sh cdp
+
+ Global CDP information
+
+  Enable CDP [Yes] : Yes
+  CDP mode [rxonly] : rxonly
+
+
+  Port   CDP
+  ------ --------
+  1      enabled
+  2      enabled
+  3      enabled
+```
+
+To view all the cdp options, from configuration mode, you can use
+
+```bash
+cdp ?
+ enable                Enable CDP on particular device ports.
+ mode                  Set various modes of CDP (Cisco Discovery Protocol) processing.
+ run                   Start CDP on the device.
+ ```
