@@ -58,23 +58,37 @@ or filtering the results in a spreadsheet or the Rainbow CSV extension.
 
 ### Cisco IOS
 
-CDP is not necessarily on out of the box — a factory-default 3850 came up
-with it disabled. Turn it on globally, then confirm:
+CDP is on by default — it just won't show in `show run` on a factory-default
+switch, since that only prints lines that differ from the default. The
+defaults themselves show up with `show run all`:
 
 ```bash
-Switch# configure terminal
-Switch(config)# cdp run
-Switch(config)# end
+Switch# show run all | i cdp
+cdp advertise-v2
+cdp timer 60
+cdp holdtime 180
+cdp log mismatch duplex
+cdp run
+```
+
+Confirm it's active, and see per-port status, with:
+
+```bash
 Switch# show cdp
 ```
 
-CDP is enabled per-interface by default once it's running globally; to turn
-it off on a specific port (for example, one facing an ISP or extranet
-partner):
+To turn it off on a specific port (for example, one facing an ISP or
+extranet partner):
 
 ```bash
 Switch(config)# interface GigabitEthernet1/0/24
 Switch(config-if)# no cdp enable
+```
+
+And globally, if it's ever been turned off:
+
+```bash
+Switch(config)# cdp run
 ```
 
 ### HP ProCurve
