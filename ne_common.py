@@ -29,6 +29,7 @@ remote-port field differs by protocol; everything else lives here.
 from __future__ import annotations
 
 import concurrent.futures
+import csv
 import json
 import os
 import re
@@ -341,21 +342,65 @@ def load_records(path: str) -> list[dict] | None:
     return data
 
 
-def report_path(host: str, kind: str) -> str:
-    """Interface/neighbors/<host>-<kind>-ne.txt, creating the folder if needed."""
+def report_path(host: str, kind: str, ext: str = "txt") -> str:
+    """Interface/neighbors/<host>-<kind>-ne.<ext>, creating the folder if needed."""
     folder = os.path.join("Interface", "neighbors")
     os.makedirs(folder, exist_ok=True)
-    return os.path.join(folder, f"{host}-{kind}-ne.txt")
+    return os.path.join(folder, f"{host}-{kind}-ne.{ext}")
 
 
-def build_table(
+COLUMNS = (
+    "Name",
+    "mgmt_address",
+    "Platform",
+    "R_Interface",
+    "L_Interface",
+    "Capabilities",
+    "DNS Name",
+)
+
+
+def build_rows(
     records: list[dict], normalize, do_dns: bool = True, dns_server: str = ""
-) -> Table:
-    """A port-map.py-styled table of the normalized neighbor rows.
+) -> list[tuple[str, str, str, str, str, str, str]]:
+    """Normalized neighbor records -> plain row tuples, matching COLUMNS.
+
+    This is the single source of truth both build_table() (the on-screen /
+    text-report view) and write_csv() (the CSV report) draw from, so a
+    record is only normalized and DNS-looked-up once no matter how many
+    report formats get written for the same run.
 
     With do_dns, each neighbor's mgmt_address gets a reverse-DNS lookup for
     the DNS Name column (via dns_server if given, else the system resolver).
     """
+    rows = []
+    for rec in records:
+        row = normalize(rec)
+        if do_dns and row["mgmt"]:
+            dns_name = reverse_dns(row["mgmt"], dns_server=dns_server)
+        else:
+            dns_name = ""
+        rows.append(
+            (
+                tidy_name(
+                    row["name"],
+                    row["platform"],
+                    row.get("manufacturer", ""),
+                    row.get("identifiers", ()),
+                ),
+                row["mgmt"],
+                row["platform"],
+                row["r_interface"],
+                row["l_interface"],
+                row["caps"],
+                dns_name,
+            )
+        )
+    return rows
+
+
+def table_from_rows(rows: list[tuple[str, ...]]) -> Table:
+    """A port-map.py-styled rich Table from rows already built by build_rows()."""
     table = Table(
         show_header=True,
         header_style="",
@@ -371,27 +416,28 @@ def build_table(
     table.add_column("L_Interface", min_width=11)
     table.add_column("Capabilities", min_width=12)
     table.add_column("DNS Name")
-    for rec in records:
-        row = normalize(rec)
-        if do_dns and row["mgmt"]:
-            dns_name = reverse_dns(row["mgmt"], dns_server=dns_server)
-        else:
-            dns_name = ""
-        table.add_row(
-            tidy_name(
-                row["name"],
-                row["platform"],
-                row.get("manufacturer", ""),
-                row.get("identifiers", ()),
-            ),
-            row["mgmt"],
-            row["platform"],
-            row["r_interface"],
-            row["l_interface"],
-            row["caps"],
-            dns_name,
-        )
+    for row in rows:
+        table.add_row(*row)
     return table
+
+
+def build_table(
+    records: list[dict], normalize, do_dns: bool = True, dns_server: str = ""
+) -> Table:
+    """A port-map.py-styled table of the normalized neighbor rows.
+
+    With do_dns, each neighbor's mgmt_address gets a reverse-DNS lookup for
+    the DNS Name column (via dns_server if given, else the system resolver).
+    """
+    return table_from_rows(build_rows(records, normalize, do_dns, dns_server))
+
+
+def write_csv(rows: list[tuple[str, ...]], path: str) -> None:
+    """Write rows (as built by build_rows()) to a CSV file with a header row."""
+    with open(path, "w", newline="", encoding="utf-8") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(COLUMNS)
+        writer.writerows(rows)
 
 
 def stdout_console() -> Console:

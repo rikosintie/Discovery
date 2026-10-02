@@ -27,7 +27,8 @@ already has the same MAC - gets platform, then manufacturer, then an
 OUI-guessed vendor instead; see ne_common.py's matching_identifier() for how
 that's detected without hardcoding ShoreTel's wording.
 
-The report is also written to Interface/neighbors/<host>-lldp-ne.txt.
+The report is also written to Interface/neighbors/<host>-lldp-ne.txt, and,
+with --csv, to Interface/neighbors/<host>-lldp-ne.csv.
 
 Usage
 -----
@@ -35,6 +36,7 @@ Usage
     python3 lldp-ne.py -f Interface/jc-mdf-1-lldp.txt
     python3 lldp-ne.py -d 10.100.126.9        # PTR lookups via that server
     python3 lldp-ne.py --no-dns               # skip PTR lookups
+    python3 lldp-ne.py --csv                  # also write a .csv report
 """
 
 import argparse
@@ -96,6 +98,11 @@ def main() -> None:
         action="store_true",
         help="skip reverse-DNS lookups (leaves the DNS Name column blank)",
     )
+    parser.add_argument(
+        "--csv",
+        action="store_true",
+        help="also write Interface/neighbors/<host>-lldp-ne.csv",
+    )
     args = parser.parse_args()
 
     captures = nc.discover_captures(KIND, args.file)
@@ -113,15 +120,21 @@ def main() -> None:
             print(f"Skipping {path} - no LLDP data (LLDP not enabled?).")
             continue
 
-        table = nc.build_table(
+        rows = nc.build_rows(
             records, normalize, do_dns=not args.no_dns, dns_server=args.dns
         )
+        table = nc.table_from_rows(rows)
         nc.emit(screen, SCRIPT, host, table)
 
         out_path = nc.report_path(host, KIND)
         with open(out_path, "w", encoding="utf-8") as handle:
             nc.emit(nc.file_console(handle), SCRIPT, host, table)
         print(f"\nWrote {out_path}\n")
+
+        if args.csv:
+            csv_path = nc.report_path(host, KIND, ext="csv")
+            nc.write_csv(rows, csv_path)
+            print(f"Wrote {csv_path}\n")
 
 
 if __name__ == "__main__":

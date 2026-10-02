@@ -16,7 +16,8 @@ fields are tidied so the table fits a terminal (see ne_common.py):
     capabilities  "Router Switch IGMP"    -> "Ro Sw IGMP"
     interfaces    "GigabitEthernet1/0/13" -> "Gi1/0/13"
 
-The report is also written to Interface/neighbors/<host>-cdp-ne.txt.
+The report is also written to Interface/neighbors/<host>-cdp-ne.txt, and,
+with --csv, to Interface/neighbors/<host>-cdp-ne.csv.
 
 Usage
 -----
@@ -24,6 +25,7 @@ Usage
     python3 cdp-ne.py -f Interface/jc-mdf-1-cdp.txt
     python3 cdp-ne.py -d 10.100.126.9        # PTR lookups via that server
     python3 cdp-ne.py --no-dns               # skip PTR lookups
+    python3 cdp-ne.py --csv                  # also write a .csv report
 """
 
 import argparse
@@ -78,6 +80,11 @@ def main() -> None:
         action="store_true",
         help="skip reverse-DNS lookups (leaves the DNS Name column blank)",
     )
+    parser.add_argument(
+        "--csv",
+        action="store_true",
+        help="also write Interface/neighbors/<host>-cdp-ne.csv",
+    )
     args = parser.parse_args()
 
     captures = nc.discover_captures(KIND, args.file)
@@ -95,15 +102,21 @@ def main() -> None:
             print(f"Skipping {path} - no CDP data (device not running CDP?).")
             continue
 
-        table = nc.build_table(
+        rows = nc.build_rows(
             records, normalize, do_dns=not args.no_dns, dns_server=args.dns
         )
+        table = nc.table_from_rows(rows)
         nc.emit(screen, SCRIPT, host, table)
 
         out_path = nc.report_path(host, KIND)
         with open(out_path, "w", encoding="utf-8") as handle:
             nc.emit(nc.file_console(handle), SCRIPT, host, table)
         print(f"\nWrote {out_path}\n")
+
+        if args.csv:
+            csv_path = nc.report_path(host, KIND, ext="csv")
+            nc.write_csv(rows, csv_path)
+            print(f"Wrote {csv_path}\n")
 
 
 if __name__ == "__main__":
