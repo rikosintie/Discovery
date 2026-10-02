@@ -6,10 +6,11 @@
 
 ----------------------------------------------------------------
 
-The port map scripts create beautiful, text based reports for every active port on the switch. The data is useful before the cutover for planning and after the cutover for verification. The scripts needed to create the report are explained below. Here is a [sample report from my home lab](../assets/files/lab-3850-ports.md){: target="_blank" rel="noopener" } from my home lab.
+The port map script creates beautiful, text based reports for every active port on the switch. The data is useful before the cutover for planning and after the cutover for verification and troubleshooting. The two scripts needed to create the report are explained below. Here is a [sample report from my home lab](../assets/files/lab-3850-ports.md){: target="_blank" rel="noopener" } from my home lab.
 
 !!! info
-    I add all infrastructure devices with static IP addresses to DNS. I learned this why working for The Department of Homeland Security where all switches, routers, access controllers, etc. were in DNS.I can't tell you how nice it is to have the DNS names in the report. And, if you have a solid naming convention you learn how to ping a switch by name pretty quickly.
+
+    I add all infrastructure devices with static IP addresses to DNS. I learned this while working for The Department of Homeland Security where all switches, routers, access controllers, etc. were in DNS. It's nice to have the DNS names in the report. Especially if there are a lot of devices with the same MAC OUI. Instead of seeing a ton of "Sony" you see "Cam-Camper" or "Cam-Garage-North-inside". And, if you have a solid naming convention you learn how to ping a device by name pretty quickly.
 
     CoPilot would be thrilled to write you PowerShell script to read a spreadsheet of IP addresses/Names and create the DNS records. For Free!! Don't forget to create the reverse zone!
 
@@ -20,9 +21,11 @@ lookup table from a switch's ARP cache, then `port-map.py` matches that
 table against the switch's MAC address table to show what's plugged into
 every port.
 
-**`arp.py`** converts the IP and ARP records into `"mac": "ip"` pairs and
-saves them to hostname-Mac2IP.json in the data folder. The MAC address is
+**`arp.py`** converts the IP/MAC entries into `"mac": "ip"` pairs and
+saves them to `<hostname>`-Mac2IP.json in the data folder. The MAC address is
 used as the key since MACs are unique; the IP address is the value:
+
+----------------------------------------------------------------
 
 ```bash
 {
@@ -33,7 +36,9 @@ used as the key since MACs are unique; the IP address is the value:
 }
 ```
 
-**`port-map.py`** matches the MAC address in the hostname-Mac2IP.json file to the mac address in the hostname-mac-address.txt file.
+----------------------------------------------------------------
+
+**`port-map.py`** matches the MAC address in the `<hostname>`-Mac2IP.json file to the mac address in the `<hostname>`-mac-address.txt file.
 
 The port maps return:
 
@@ -66,13 +71,15 @@ Vlan    IP Address         MAC Address          Interface      Vendor           
 
 Having this information makes identifying special devices such as HVAC controllers, Door access controllers, Cameras, etc. easier. It also allows you to verify that all devices are patched back into the correct port on the switch.
 
+See [Example 4 — Pulling ports by manufacturer across a whole directory](../appendix/appendix-grep-and-friends.md#example-4-pulling-ports-across-a-directory){: target="_blank" rel="noopener" } for a detail example.
+
 ----------------------------------------------------------------
 
 ## Running the port map scripts
 
-There are two general categories of switch deployments. The first is a distributed layer 3 deployment where every closet has a layer 3 router. In that case, the procurve-Config-pull has created an arp.txt file and mac-address.txt file for every switch and the script reads the same inventory file and matches the hostname-arp.txt file with the hostname-mac-address.txt file.
+There are two general categories of switch deployments. The first is a distributed layer 3 deployment where every closet has a layer 3 router. In that case, the procurve-Config-pull has created an arp.txt file and mac-address.txt file for every switch and the script reads the same inventory file and matches the `<hostname>`-arp.txt file with the `<hostname>`-mac-address.txt file.
 
-The second is a Core/IDF deployment where there is a layer 3 switch in an MDF and the closets are connected at layer 2. In this case, we have to use an argument in the port-map.py script to tell it which hostname-arp.txt file to use for each hostname-mac-address.txt file.
+The second is a Core/IDF deployment where there is a layer 3 switch in an MDF and the closets are connected at layer 2. In this case, we have to use an argument in the port-map.py script to tell it which `<hostname>`-arp.txt file to use for each `<hostname>`-mac-address.txt file.
 
 ----------------------------------------------------------------
 
@@ -88,7 +95,7 @@ For a Core/IDF deployment, use `-c coreswitch`:
 
 `python3 arp.py -s jc-edge -c JC-core`
 
-The script will create the hostname-Mac2IP.json and will print some information to the screen. The first information is the file being processed and the number of IPs and the IPs sorted. Here is an example:
+The script will create the `<hostname>`-Mac2IP.json and will print some information to the screen. The first information is the file being processed and the number of IPs and the IPs sorted. Here is an example:
 
 ```text
 ----------------------------------------------------------------------------------------
@@ -216,7 +223,7 @@ variable), so there's no per-site editing needed before running it.
 
 #### Testing snmp
 
-On Ubuntu you can quickly install snmp and grab the ARP table from most files since they support the standard snmp MIB.
+On Ubuntu you can quickly install snmp and grab the ARP table from most firewalls since they support the standard snmp MIB.
 
 Install snmp using:
 
@@ -266,7 +273,7 @@ iso.3.6.1.2.1.4.22.1.4.1.192.168.10.112 = INTEGER: 3
 
 ### Running the port-map.py script
 
-One script handles the port-map step for every supported vendor — ProCurve, Cisco, and Aruba CX. It reads the hostname-Mac2IP.json and hostname-mac-address.txt files, detects each line's MAC format and column order rather than assuming a fixed layout, and creates the port maps — with a manufacturer lookup via the maintained `manuf2` package and, when a DNS server is available, a reverse-DNS name column.
+One script handles the port-map step for every supported vendor — ProCurve, Cisco, and Aruba CX. It reads the `<hostname>`-Mac2IP.json and `<hostname>`-mac-address.txt files, detects each line's MAC format and column order rather than assuming a fixed layout, and creates the port maps — with a manufacturer lookup via the maintained `manuf2` package and, when a DNS server is available, a reverse-DNS name column.
 
 ```text
 python3 port-map.py -h
@@ -310,7 +317,7 @@ Both of these download the latest OUI and WFA (Wi-Fi Alliance) data and exit —
 
 ### PingInfoView export
 
-Every run also writes `port-maps/pinginfo/hostname-pinginfo.txt` — an
+Every run also writes `port-maps/pinginfo/`<hostname>`-pinginfo.txt` — an
 import file for [PingInfoView](https://www.nirsoft.net/utils/multiple_ping_tool.html)
 (a free NirSoft tool, **Windows only**, that pings a list of hosts and
 shows which ones respond). If you use Windows it's worth your time to look at [nirsoft.net](https://www.nirsoft.net) because he has a ton of free networking tools for Windows. It's nirsoft.net, not nirsoft.com. someone bought nirsoft.com and it's all malware I think!
@@ -352,7 +359,7 @@ PingInfoView being Windows-only doesn't leave Mac/Linux users without an
 option — `gping` (a live graph of ping times) and `fping` (a fast,
 parallel ping sweep) cover the same "watch a list of hosts across a
 cutover" use case, and both can read straight from an existing
-`hostname-pinginfo.txt` file.
+`<hostname>`-pinginfo.txt` file.
 
 Install with your platform's package manager:
 
@@ -456,8 +463,8 @@ gping-info port-maps/pinginfo/lab-3850-pinginfo.txt
 ### "UP with no learned MAC address" warning
 
 A switch port can show `link_status: up` (and `protocol_status: up`) in
-config-pull.py's `hostname-interface.json` capture while having no rows at
-all in `hostname-mac-address.txt` — the port is physically connected, but
+config-pull.py's `<hostname>`-interface.json` capture while having no rows at
+all in `<hostname>`-mac-address.txt` — the port is physically connected, but
 the device on it hasn't sent traffic recently enough to still be in the
 switch's MAC address table. Without a flag for this, that host is just
 silently missing from the port map.
