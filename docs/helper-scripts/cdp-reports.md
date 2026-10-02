@@ -1,5 +1,11 @@
 # CDP Neighbor Reports
 
+----------------------------------------------------------------
+
+![Tux-cdp-neighbor](img/tux-cdp1.jpeg)
+
+----------------------------------------------------------------
+
 CDP (Cisco Discovery Protocol) is Cisco-proprietary, but HP ProCurve speaks
 it too. Juniper (JunOS) and Brocade/Ruckus FastIron don't — they're
 LLDP-only, see [LLDP Neighbor Reports](lldp-reports.md) for those. Of the
