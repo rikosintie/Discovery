@@ -194,7 +194,7 @@ grep 10.255.255 SyslogCatchAll.txt.001 | awk '{ print $4 }' | sort -u
 10.255.255.17
 ```
 
-## Example 4 — Pulling ports by manufacturer across a whole directory
+## Example 4 Pulling ports across a whole directory
 
 I had a directory with 8 files in it. They contained VLAN IDs, IP addresses,
 MAC addresses, port numbers, and manufacturer names. I needed to pull out
