@@ -1,7 +1,5 @@
 # grep, awk, sort, and cut — Five Worked Examples
 
-## Why
-
 Most network engineers coming from Windows have never used the core POSIX
 text tools. This appendix walks through five real examples of using `grep`
 (and its usual pipeline partners `awk`, `sort`, and `cut`) to rapidly pull
@@ -12,6 +10,8 @@ If you're on Windows, see [Install Coreutils for Windows](../Getting_Started.md#
 to get native versions of these tools, and the
 [grep pipeline examples](../usage.md#find-connected-ports) in the Usage guide
 for PowerShell equivalents.
+
+----------------------------------------------------------------
 
 ## grep
 
@@ -36,7 +36,9 @@ DESCRIPTION
        default, grep prints the matching lines.
 ```
 
-## Example 1 — Pulling management IPs out of a directory of configs
+----------------------------------------------------------------
+
+## Example 1 Pulling management IPs out of a directory of configs
 
 I have backups of several switches in a directory. I wanted to pull out the
 management IP address for each switch. I knew they all started with
@@ -116,7 +118,9 @@ with the regex `[0-9]{1,3}\.` instead of hardcoding the octets. That uses a
 the `\` tells grep the `.` isn't a regex wildcard but a real dot. That's
 called "escaping." The `-E` flag is required and is called extended regex.
 
-## Example 2 — Finding a handful of Dell switches on a busy subnet
+----------------------------------------------------------------
+
+## Example 2 Finding a handful of Dell switches on a busy subnet
 
 A while back I needed to find a handful of Dell switches on a large subnet
 full of Dell computers and other devices. Since almost all of the MAC
@@ -173,7 +177,9 @@ grep telnet/// powerconnect.gnmap | awk '{ print $2 }'
 10.112.69.44
 ```
 
-## Example 3 — Finding unique IPs in a massive syslog
+----------------------------------------------------------------
+
+## Example 3 Finding unique IPs in a massive syslog
 
 In this example, I was looking for a set of switches that had IP addresses
 in the `10.255.255.` range. The syslog was massive, so opening it in an
@@ -194,7 +200,9 @@ grep 10.255.255 SyslogCatchAll.txt.001 | awk '{ print $4 }' | sort -u
 10.255.255.17
 ```
 
-## Example 4 Pulling ports across a whole directory
+----------------------------------------------------------------
+
+## Example 4 Pulling ports across a directory
 
 I had a directory with 8 files in it. They contained VLAN IDs, IP addresses,
 MAC addresses, port numbers, and manufacturer names. I needed to pull out
@@ -232,6 +240,8 @@ The options:
 - `-b` — ignore leading blanks.
 - `-k` — sort a table on any column number using the `-k` option.
 
+----------------------------------------------------------------
+
 The result (truncated for space — there were a lot more ports returned):
 
 ```text
@@ -254,13 +264,17 @@ UOCbldgB-Sw1-ports.txt: 905 10.80.152.44 0009.9f00.21bf Gi1/0/16 Videx
 UOCbldgB-Sw2-ports.txt: 905 10.80.152.63 9c1c.12c4.f846 Gi1/0/13 ArubaaHe
 ```
 
+----------------------------------------------------------------
+
 These 8 switches had almost 400 ports (48 &times; 8), and this took less
 than a second to do. Manually, I would have had to open each of the 8 files,
 look for the manufacturer, and then copy the information to a new file. I
 was migrating 72 sites and had to do this for each site — some sites had as
 many as 22 IDFs!
 
-## Example 5 — Pulling IP/port/name out of a set of systemd unit files
+----------------------------------------------------------------
+
+## Example 5 Pulling IP/port/name out of a set of systemd unit files
 
 Here's a listing of the files in `/etc/systemd/system/`:
 
@@ -295,6 +309,8 @@ and the script path), keeping everything from the `-a` flag onward:
 ```bash
 grep -Ei "python3" /etc/systemd/system/haas*.service | cut -d' ' -f4-
 ```
+
+----------------------------------------------------------------
 
 ```text
 -t 192.168.10.143  --port 5055 --name MINIMILL
