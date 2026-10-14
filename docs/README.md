@@ -25,7 +25,7 @@ Here's a recording of the scripts being run end-to-end on Windows:
 <div id="discovery-demo"></div>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    AsciinemaPlayer.create('../video/discover.cast', document.getElementById('discovery-demo'), {
+    AsciinemaPlayer.create('video/discover.cast', document.getElementById('discovery-demo'), {
       idleTimeLimit: 2,
       autoPlay: true,
       theme: 'dracula'
