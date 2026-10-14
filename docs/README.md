@@ -37,7 +37,19 @@ Here's a recording of the scripts being run end-to-end on Windows:
 
 ## ASCIINEMA video
 
-Here is an [asciinema video](https://asciinema.org/a/726423) that shows the script running. In the video there are switches that have:
+Here is an [asciinema video](https://asciinema.org/a/726423) that shows the script running on Linux.
+
+<div id="discovery-linux-demo"></div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  AsciinemaPlayer.create('video/discover-linux.cast', document.getElementById('discovery-linux-demo'), {
+      idleTimeLimit: 2,
+      theme: 'dracula'
+  });
+});
+</script>
+
+In the video there are switches that have:
 
 - ssh V1 which isn't supported
 - a switch that didn't accept the credentials given
