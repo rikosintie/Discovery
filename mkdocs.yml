@@ -1,7 +1,7 @@
 site_name: Discovery
 site_author: Michael Hubbard (@rikosintie)
 site_description: A site dedicated to the Network Discovery project.
-site_url: https://discovery.rikosintie.com
+site_url: https://rikosintie.github.io/Discovery/
 repo_url: https://github.com/rikosintie/Discovery
 repo_name: rikosintie/Discovery
 nav:

@@ -1,26 +1,73 @@
-terminal length 0
-show clock
-show ntp status
-show system
-show arp
+term datadump
+show version
+show inventory
 show vlan
-show ip route 0.0.0.0
-show ip route
-show ip ospf neighbor
-show interfaces status
-show interfaces description
-show interfaces transceiver
-show mac address-table
-show cdp neighbors
-show cdp neighbors detail
-show lldp neighbors
-show lldp neighbors detail
+show interfaces des
+sh ip arp inspection statistics
+sh ip arp inspection GigabitEthernet1
+show interfaces status detailed
+show interfaces status GigabitEthernet1
+show interfaces status GigabitEthernet2
+show interfaces status GigabitEthernet3
+show interfaces status GigabitEthernet4
+show interfaces status GigabitEthernet5
+show interfaces status GigabitEthernet6
+show interfaces status GigabitEthernet7
+show interfaces status GigabitEthernet8
+show interfaces status GigabitEthernet9
+show interfaces status GigabitEthernet10
+show interfaces status GigabitEthernet11
+show interfaces status GigabitEthernet12
+show interfaces status GigabitEthernet13
+show interfaces status GigabitEthernet14
+show interfaces status GigabitEthernet15
+show interfaces status GigabitEthernet16
+show interfaces status GigabitEthernet17
+show interfaces status GigabitEthernet18
+show interfaces status GigabitEthernet19
+show interfaces status GigabitEthernet20
+show interfaces status GigabitEthernet21
+show interfaces status GigabitEthernet22
+show interfaces status GigabitEthernet23
+show interfaces status GigabitEthernet24
+show interfaces status GigabitEthernet25
+show interfaces status GigabitEthernet26
+show interfaces status GigabitEthernet27
+show interfaces status GigabitEthernet28
+show interfaces status GigabitEthernet29
+show interfaces status GigabitEthernet30
+show interfaces status GigabitEthernet31
+show interfaces status GigabitEthernet32
+show interfaces status GigabitEthernet33
+show interfaces status GigabitEthernet34
+show interfaces status GigabitEthernet35
+show interfaces status GigabitEthernet36
+show interfaces status GigabitEthernet37
+show interfaces status GigabitEthernet38
+show interfaces status GigabitEthernet39
+show interfaces status GigabitEthernet40
+show interfaces status GigabitEthernet41
+show interfaces status GigabitEthernet42
+show interfaces status GigabitEthernet43
+show interfaces status GigabitEthernet44
+show interfaces status GigabitEthernet45
+show interfaces status GigabitEthernet46
+show interfaces status GigabitEthernet47
+show interfaces status GigabitEthernet48
+show interfaces advertise
+show ip interface
+show interfaces port-channel
+show cdp ne detail
+show lldp configuration
+show lldp local
+show lldp local tlvs-overloading
+show spanning-tree active
+show spanning-tree blockedports
+show ip dhcp relay
+show clock
+show clock detail
 show power inline
-show spanning-tree
-show lacp neighbor
-show interfaces trunk
-show ssh client
-show snmp
-show system
-show cpuUtilization
-show power inline gi1
+show mac address-table count
+show mac address-table
+show bridge multicast mode
+terminal no datadump
