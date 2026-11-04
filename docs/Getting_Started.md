@@ -344,16 +344,16 @@ setuptools 69.0.3
 Now run the following:
 
 ```bash
-python3 -m pip install --no-deps -r requirements.lock.txt
+python3 -m pip install --no-deps -r requirements-lock.txt
 ```
 
 You will see all the dependencies being downloaded and installed. Here is a snippet of the dependencies.
 
 ```bash title='Command Output'
-$ python3 -m pip install --no-deps -r requirements.lock.txt
-Collecting ast_serialize==0.8.0 (from -r requirements.lock.txt (line 1))
+$ python3 -m pip install --no-deps -r requirements-lock.txt
+Collecting ast_serialize==0.8.0 (from -r requirements-lock.txt (line 1))
   Downloading ast_serialize-0.8.0-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.4 kB)
-Collecting asttokens==3.0.2 (from -r requirements.lock.txt (line 2))
+Collecting asttokens==3.0.2 (from -r requirements-lock.txt (line 2))
   Downloading asttokens-3.0.2-py3-none-any.whl.metadata (5.7 kB)
 ```
 
@@ -381,7 +381,7 @@ xmltodict                  1.0.4
 
 ### Why the versions are pinned (especially paramiko)
 
-`requirements.lock.txt` is a full, exact-pin list and is installed with
+`requirements-lock.txt` is a full, exact-pin list and is installed with
 `--no-deps` so you get precisely these versions. Everything is kept at the
 latest release **except `paramiko`, which is pinned at `3.5.1` on purpose.**
 

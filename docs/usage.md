@@ -732,7 +732,7 @@ python3 -m pip install 'paramiko==3.5.1'
 or reinstall the whole locked set:
 
 ```bash
-python3 -m pip install --no-deps -r requirements.lock.txt
+python3 -m pip install --no-deps -r requirements-lock.txt
 ```
 
 If you have pinned paramiko at 3.5.1 and *still* see `no acceptable

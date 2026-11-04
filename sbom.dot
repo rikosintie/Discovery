@@ -4,7 +4,7 @@ strict digraph "" {
 	"SPDXRef-DOCUMENT"	[color=indianred2,
 		element="CreationInfo(spdx_version='SPDX-2.3', spdx_id='SPDXRef-DOCUMENT', name='com.github.rikosintie/Discovery', document_namespace='https://\
 github.com/rikosintie/Discovery/sbom-edd89c50cdaa4bbf', creators=[Actor(actor_type=<ActorType.TOOL: 3>, name='generate_sbom.py', \
-email=None)], created=datetime.datetime(2026, 9, 3, 20, 6, 51), creator_comment='Generated locally from requirements.lock.txt — \
+email=None)], created=datetime.datetime(2026, 9, 3, 20, 6, 51), creator_comment='Generated locally from requirements-lock.txt — \
 every version below is an exact pin, not a resolved range.', data_license='CC0-1.0', external_document_refs=[], license_list_version=\
 None, document_comment=None)",
 		height=0.5,

@@ -82,7 +82,7 @@ virtual environment and install the pinned dependencies. The purpose of the virt
 ```bash
 python -m venv venv --upgrade-deps --prompt="Discovery"
 source venv/bin/activate
-python3 -m pip install --no-deps -r requirements.lock.txt
+python3 -m pip install --no-deps -r requirements-lock.txt
 ```
 
 `deactivate` stops the venv when you're done working in it interactively —

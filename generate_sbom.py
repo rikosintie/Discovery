@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 """
-Builds sbom.json (SPDX 2.3) from requirements.lock.txt.
+Builds sbom.json (SPDX 2.3) from requirements-lock.txt.
 
 Replaces the old workflow of manually exporting sbom.json from GitHub's
 Dependency Graph UI (Insights -> Dependency Graph -> Export SBOM), which
 requires a browser and only resolves fuzzy "~>" version ranges. This reads
-the exact pins already maintained in requirements.lock.txt, so the SBOM
+the exact pins already maintained in requirements-lock.txt, so the SBOM
 stays in sync with what's actually installed with a single local command.
 
 Usage:
@@ -24,7 +24,7 @@ import re
 import subprocess
 import uuid
 
-LOCK_FILE = "requirements.lock.txt"
+LOCK_FILE = "requirements-lock.txt"
 SBOM_FILE = "sbom.json"
 PROJECT_NAME = "com.github.rikosintie/Discovery"
 PROJECT_SPDX_ID = "SPDXRef-com.github.rikosintie-Discovery"
@@ -118,7 +118,7 @@ def build_sbom(packages: list[tuple[str, str]]) -> dict:
             "created": created,
             "creators": ["Tool: generate_sbom.py"],
             "comment": (
-                "Generated locally from requirements.lock.txt — every "
+                "Generated locally from requirements-lock.txt — every "
                 "version below is an exact pin, not a resolved range."
             ),
         },

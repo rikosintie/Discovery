@@ -95,3 +95,6 @@ port-maps/pinginfo/Lab*
 fortigate-60d-snmp-cli-reference.md
 # Claude Code local data
 .claude/
+*.env
+*-env.txt
+snmp.txt
