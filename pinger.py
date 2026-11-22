@@ -123,8 +123,13 @@ def parse_subnet_line(line: str) -> str | None:
     return None
 
 
-def read_subnets(path: str) -> list[ipaddress.IPv4Network | ipaddress.IPv6Network]:
-    """Read the subnet file and return a list of validated networks."""
+def read_subnets(path: str) -> list[ipaddress.IPv4Interface | ipaddress.IPv6Interface]:
+    """Read the subnet file and return a list of validated interfaces.
+
+    Interfaces rather than networks so the address as written in the file
+    (e.g. the SVI's 192.168.10.253/25) survives for the subnet summary;
+    `.network` gives the subnet to sweep.
+    """
     try:
         with open(path, encoding="utf-8") as handle:
             lines = handle.readlines()
@@ -138,7 +143,7 @@ def read_subnets(path: str) -> list[ipaddress.IPv4Network | ipaddress.IPv6Networ
         if candidate is None:
             continue
         try:
-            subnets.append(ipaddress.ip_network(candidate, strict=False))
+            subnets.append(ipaddress.ip_interface(candidate))
         except ValueError:
             print(f"Skipping unrecognized subnet line: {line.strip()!r}")
     return subnets
@@ -333,18 +338,30 @@ def main() -> None:
         print("No subnets to ping.")
         sys.exit(1)
 
-    to_ping = [s for s in subnets if s.num_addresses <= args.max_hosts]
-    total_hosts = sum(sum(1 for _ in s.hosts()) for s in to_ping)
-    print(f"Number of Subnets: {len(subnets)}")
+    summary = []
+    total_hosts = 0
+    for number, iface in enumerate(subnets, start=1):
+        net = iface.network
+        if net.num_addresses > args.max_hosts:
+            detail = f"skipped ({net.num_addresses} addresses > {args.max_hosts})"
+        else:
+            count = sum(1 for _ in net.hosts())
+            total_hosts += count
+            detail = f"{count} hosts"
+        summary.append(f"{number}. {iface.with_prefixlen} - {detail}")
+
     if args.rate > 0 and total_hosts:
         print(
             f"{total_hosts} hosts to ping at {args.rate}/s "
             f"(~{total_hosts / args.rate:.0f}s of launches)"
         )
+    print(f"Number of Subnets: {len(subnets)}")
+    print()
+    print("\n".join(summary))
 
-    for subnet in subnets:
+    for iface in subnets:
         ping_subnet(
-            subnet,
+            iface.network,
             system,
             args.max_hosts,
             args.count,

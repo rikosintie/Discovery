@@ -246,8 +246,11 @@ python3 pinger.py -f vlans.txt --tcp-ports 9100
 OS is Linux, sending 1 echo request per host
 IP addresses have been randomized
 ICMP non-responders will be TCP-probed on port(s) 9100
-Number of Subnets: 2
 316 hosts to ping at 20/s (~16s of launches)
+Number of Subnets: 2
+
+1. 172.20.126.0/26 - 62 hosts
+2. 10.100.126.0/24 - 254 hosts
 
 Pinging 62 hosts in 172.20.126.0/26
 
