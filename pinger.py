@@ -73,6 +73,7 @@ import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+STATUS_INTERVAL = 2.0  # seconds between "N addresses pinged" progress lines
 
 def build_ping_command(ip: str, system: str, count: int) -> list[str]:
     """Return the platform-appropriate ``ping`` argv for a single host.
@@ -202,7 +203,9 @@ def probe_hosts(
             results[ip] = "icmp" if host_answered(output) else ""
             del in_flight[ip]
 
-    for ip in hosts:
+    total = len(hosts)
+    next_status = time.monotonic() + STATUS_INTERVAL
+    for sent, ip in enumerate(hosts, start=1):
         in_flight[ip] = subprocess.Popen(
             build_ping_command(ip, system, count),
             stdout=subprocess.PIPE,
@@ -211,6 +214,9 @@ def probe_hosts(
         if interval:
             time.sleep(interval)
         collect(block=False)
+        if sent < total and time.monotonic() >= next_status:
+            print(f"{sent} addresses pinged, {total - sent} to go!")
+            next_status += STATUS_INTERVAL
 
     collect(block=True)
 

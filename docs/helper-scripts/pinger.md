@@ -221,7 +221,9 @@ similar. Two arguments keep the sweep quiet:
 
 Host order within each subnet is randomised by default (add `--in-order`
 to disable). Before it starts, the script prints how many hosts it will
-ping and roughly how long the launches will take at the chosen rate.
+ping and roughly how long the launches will take at the chosen rate. While
+each subnet's ICMP sweep runs, it prints a progress line every 2 seconds,
+such as `40 addresses pinged, 86 to go!`.
 
 ```bash
 # One echo per host, 10 per second - light background traffic.
