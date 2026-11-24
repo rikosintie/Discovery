@@ -53,6 +53,9 @@ show proc cpu sorted 5sec | e 0.00
 show ip ports all
 show ip arp
 show mac address-table | ex CPU|Po|ffff.ffff.ffff|static
+show ip dhcp snooping binding
+show ip dhcp snooping statistic
+show port-security
 show power inline g1/0/1 det | i Powered
 show power inline g1/0/2 det | i powered
 show power inline g1/0/3 det | i powered
