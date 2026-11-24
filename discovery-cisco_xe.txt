@@ -6,12 +6,13 @@ show ntp status
 show kron schedule
 show archive
 show version | i uptime
-show ver | i Software|Compiled|ROM:|WS|Last|restarted
-show ver | i License Level|Next
+show version | i Software|Compiled|ROM:|WS|Last|restarted
+show version | i MAC Address|Status|interfaces
 show version | i ID
+show inventory oid
 show archive config differences
-show errdisable recovery
-show environment
+show errdisable recovery | i Enabled|Timer interval
+show environment all
 show vlan brief
 show ip route 0.0.0.0
 show ip route
@@ -35,7 +36,6 @@ show cdp neighbors detail
 show lldp neighbors
 show lldp neighbors detail
 show power inline
-show power
 show spanning-tree
 show spanning-tree | i priority
 show spanning-tree inconsistentports
@@ -52,10 +52,11 @@ show inventory oid
 show proc cpu sorted 5sec | e 0.00
 show ip ports all
 show ip arp
-show mac address-table | ex CPU|Po|ffff.ffff.ffff|static
+show mac address-table | ex Po|ffff.ffff.ffff
 show ip dhcp snooping binding
 show ip dhcp snooping statistic
 show port-security
+show port-security address
 show power inline g1/0/1 det | i Powered
 show power inline g1/0/2 det | i powered
 show power inline g1/0/3 det | i powered
@@ -92,15 +93,15 @@ show power inline g1/0/33 det | i powered
 show power inline g1/0/34 det | i powered
 show power inline g1/0/35 det | i powered
 show power inline g1/0/36 det | i powered
-show power inline g1/0/37 det | i powered
-show power inline g1/0/38 det | i powered
-show power inline g1/0/39 det | i powered
-show power inline g1/0/40 det | i powered
-show power inline g1/0/41 det | i powered
-show power inline g1/0/42 det | i powered
-show power inline g1/0/43 det | i powered
-show power inline g1/0/44 det | i powered
-show power inline g1/0/45 det | i powered
-show power inline g1/0/46 det | i powered
-show power inline g1/0/47 det | i powered
-show power inline g1/0/48 det | i powered
+show power inline Te1/0/37 det | i powered
+show power inline Te1/0/38 det | i powered
+show power inline Te1/0/39 det | i powered
+show power inline Te1/0/40 det | i powered
+show power inline Te1/0/41 det | i powered
+show power inline Te1/0/42 det | i powered
+show power inline Te1/0/43 det | i powered
+show power inline Te1/0/44 det | i powered
+show power inline Te1/0/45 det | i powered
+show power inline Te1/0/46 det | i powered
+show power inline Te1/0/47 det | i powered
+show power inline Te1/0/48 det | i powered
