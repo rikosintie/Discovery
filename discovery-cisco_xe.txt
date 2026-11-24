@@ -4,10 +4,13 @@ show clock
 show ntp associations
 show ntp status
 show kron schedule
+show run | section kron
 show archive
+show run | section archive
 show version | i uptime
 show version | i Software|Compiled|ROM:|WS|Last|restarted
 show version | i MAC Address|Status|interfaces
+show version | i Next reboot|Smart License
 show version | i ID
 show inventory oid
 show archive config differences
@@ -35,7 +38,6 @@ show cdp neighbors
 show cdp neighbors detail
 show lldp neighbors
 show lldp neighbors detail
-show power inline
 show spanning-tree
 show spanning-tree | i priority
 show spanning-tree inconsistentports
@@ -57,6 +59,7 @@ show ip dhcp snooping binding
 show ip dhcp snooping statistic
 show port-security
 show port-security address
+show power inline
 show power inline g1/0/1 det | i Powered
 show power inline g1/0/2 det | i powered
 show power inline g1/0/3 det | i powered
